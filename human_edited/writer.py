@@ -1,5 +1,7 @@
 import sys
-sys.path.append('/home/lena/Nextcloud/apertus_data')
+from pathlib import Path
+project_root = Path(__file__).parent.parent
+sys.path.append(str(project_root))
 import tkinter as tk
 from tkinter import ttk, scrolledtext, messagebox
 import threading

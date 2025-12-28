@@ -1,13 +1,14 @@
 import sys
-sys.path.append('/home/lena/Nextcloud/apertus_data')
-
+import pathlib
+project_root = pathlib.Path(__file__).parent.parent.parent
+sys.path.append(str(project_root))
 from database import query_db
 from llm import get_llm
 from time import sleep
 from dotenv import load_dotenv
 
 
-load_dotenv(dotenv_path='/home/lena/Nextcloud/apertus_data/.env')
+load_dotenv(dotenv_path=str(project_root / '.env'))
 
 
 APERTUS_MODEL = 'publicai/swiss-ai/apertus-70b-instruct'
