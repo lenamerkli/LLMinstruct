@@ -1,0 +1,184 @@
+§u§
+```json
+{'content': '', 'model': 'Qwen3-8B', 'prompt': '<|im_start|>user\nWhat is the capital of France? Answer in one word.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nParis.', 'steps': [{'id': 151645, 'token': '', 'bytes': [], 'logprob': -1.1920928955078125e-07, 'top_logprobs': [{'id': 151645, 'token': '', 'bytes': [], 'logprob': -1.1920928955078125e-07}, {'id': 25521, 'token': ' ', 'bytes': [32, 226, 156], 'logprob': -16.08388900756836}, {'id': 11162, 'token': ' ', 'bytes': [32, 240, 159], 'logprob': -16.923240661621094}, {'id': 151668, 'token': '</think>', 'bytes': [60, 47, 116, 104, 105, 110, 107, 62], 'logprob': -18.03345489501953}, {'id': 26525, 'token': ' ', 'bytes': [32, 240, 159, 152], 'logprob': -19.131486892700195}, {'id': 220, 'token': ' ', 'bytes': [32], 'logprob': -19.501508712768555}, {'id': 320, 'token': ' (', 'bytes': [32, 40], 'logprob': -19.59912872314453}, {'id': 4710, 'token': ' \n\n', 'bytes': [32, 10, 10], 'logprob': -20.213687896728516}, {'id': 144247, 'token': '✅', 'bytes': [226, 156, 133], 'logprob': -20.252849578857422}, {'id': 9625, 'token': ' France', 'bytes': [32, 70, 114, 97, 110, 99, 101], 'logprob': -21.045610427856445}, {'id': 576, 'token': ' The', 'bytes': [32, 84, 104, 101], 'logprob': -21.258508682250977}, {'id': 2858, 'token': ' ', 'bytes': [32, 226], 'logprob': -21.77326011657715}, {'id': 63039, 'token': ' ', 'bytes': [32, 240, 159, 146], 'logprob': -22.083728790283203}, {'id': 51414, 'token': ' ', 'bytes': [32, 226, 157], 'logprob': -22.30482292175293}, {'id': 95069, 'token': ' ', 'bytes': [32, 240, 159, 148], 'logprob': -22.328670501708984}, {'id': 378, 'token': '', 'bytes': [226, 128], 'logprob': -22.563180923461914}], 'prob': 0.9999998807907176, 'top_probs': [{'id': 151645, 'token': '', 'bytes': [], 'prob': 0.9999998807907176}, {'id': 25521, 'token': ' ', 'bytes': [32, 226, 156], 'prob': 1.0347984188891271e-07}, {'id': 11162, 'token': ' ', 'bytes': [32, 240, 159], 'prob': 4.4702309874328374e-08}, {'id': 151668, 'token': '</think>', 'bytes': [60, 47, 116, 104, 105, 110, 107, 62], 'prob': 1.4728891041439447e-08}, {'id': 26525, 'token': ' ', 'bytes': [32, 240, 159, 152], 'prob': 4.912480188177183e-09}, {'id': 220, 'token': ' ', 'bytes': [32], 'prob': 3.393144675093299e-09}, {'id': 320, 'token': ' (', 'bytes': [32, 40], 'prob': 3.0775601187046434e-09}, {'id': 4710, 'token': ' \n\n', 'bytes': [32, 10, 10], 'prob': 1.6645884908090158e-09}, {'id': 144247, 'token': '✅', 'bytes': [226, 156, 133], 'prob': 1.6006603423779925e-09}, {'id': 9625, 'token': ' France', 'bytes': [32, 70, 114, 97, 110, 99, 101], 'prob': 7.244485089424359e-10}, {'id': 576, 'token': ' The', 'bytes': [32, 84, 104, 101], 'prob': 5.855270803758402e-10}, {'id': 2858, 'token': ' ', 'bytes': [32, 226], 'prob': 3.499397508900247e-10}, {'id': 63039, 'token': ' ', 'bytes': [32, 240, 159, 146], 'prob': 2.5654198249070985e-10}, {'id': 51414, 'token': ' ', 'bytes': [32, 226, 157], 'prob': 2.056546270740607e-10}, {'id': 95069, 'token': ' ', 'bytes': [32, 240, 159, 148], 'prob': 2.0080827843216336e-10}, {'id': 378, 'token': '', 'bytes': [226, 128], 'prob': 1.5883091242054712e-10}]}], 'raw': {'index': 0, 'content': '', 'tokens': [], 'id_slot': 0, 'stop': True, 'model': 'Qwen3-8B', 'tokens_predicted': 1, 'tokens_evaluated': 26, 'generation_settings': {'n_predict': 1, 'seed': 4294967295, 'temperature': 0.0, 'dynatemp_range': 0.0, 'dynatemp_exponent': 1.0, 'top_k': 20, 'top_p': 0.800000011920929, 'min_p': 0.0, 'top_n_sigma': -1.0, 'xtc_probability': 0.0, 'xtc_threshold': 0.10000000149011612, 'typical_p': 1.0, 'repeat_last_n': 64, 'repeat_penalty': 1.0, 'presence_penalty': 0.0, 'frequency_penalty': 0.0, 'dry_multiplier': 0.0, 'dry_base': 1.75, 'dry_allowed_length': 2, 'dry_penalty_last_n': 32768, 'dry_sequence_breakers': ['\n', ':', '"', '*'], 'mirostat': 0, 'mirostat_tau': 5.0, 'mirostat_eta': 0.10000000149011612, 'stop': [], 'max_tokens': 1, 'n_keep': 0, 'n_discard': 0, 'ignore_eos': False, 'stream': False, 'logit_bias': [], 'n_probs': 16, 'min_keep': 0, 'grammar': '', 'grammar_lazy': False, 'grammar_triggers': [], 'preserved_tokens': [], 'chat_format': 'Content-only', 'reasoning_format': 'auto', 'reasoning_in_content': False, 'thinking_forced_open': False, 'samplers': ['penalties', 'dry', 'top_n_sigma', 'top_k', 'typ_p', 'top_p', 'min_p', 'xtc', 'temperature'], 'speculative.n_max': 16, 'speculative.n_min': 0, 'speculative.p_min': 0.75, 'timings_per_token': False, 'post_sampling_probs': False, 'lora': []}, 'prompt': '<|im_start|>user\nWhat is the capital of France? Answer in one word.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nParis.', 'has_new_line': False, 'truncated': False, 'stop_type': 'eos', 'stopping_word': '', 'tokens_cached': 26, 'timings': {'cache_n': 0, 'prompt_n': 26, 'prompt_ms': 46.915, 'prompt_per_token_ms': 1.804423076923077, 'prompt_per_second': 554.1937546626879, 'predicted_n': 1, 'predicted_ms': 6.835, 'predicted_per_token_ms': 6.835, 'predicted_per_second': 146.3057790782736}, 'completion_probabilities': [{'id': 151645, 'token': '', 'bytes': [], 'logprob': -1.1920928955078125e-07, 'top_logprobs': [{'id': 151645, 'token': '', 'bytes': [], 'logprob': -1.1920928955078125e-07}, {'id': 25521, 'token': ' ', 'bytes': [32, 226, 156], 'logprob': -16.08388900756836}, {'id': 11162, 'token': ' ', 'bytes': [32, 240, 159], 'logprob': -16.923240661621094}, {'id': 151668, 'token': '</think>', 'bytes': [60, 47, 116, 104, 105, 110, 107, 62], 'logprob': -18.03345489501953}, {'id': 26525, 'token': ' ', 'bytes': [32, 240, 159, 152], 'logprob': -19.131486892700195}, {'id': 220, 'token': ' ', 'bytes': [32], 'logprob': -19.501508712768555}, {'id': 320, 'token': ' (', 'bytes': [32, 40], 'logprob': -19.59912872314453}, {'id': 4710, 'token': ' \n\n', 'bytes': [32, 10, 10], 'logprob': -20.213687896728516}, {'id': 144247, 'token': '✅', 'bytes': [226, 156, 133], 'logprob': -20.252849578857422}, {'id': 9625, 'token': ' France', 'bytes': [32, 70, 114, 97, 110, 99, 101], 'logprob': -21.045610427856445}, {'id': 576, 'token': ' The', 'bytes': [32, 84, 104, 101], 'logprob': -21.258508682250977}, {'id': 2858, 'token': ' ', 'bytes': [32, 226], 'logprob': -21.77326011657715}, {'id': 63039, 'token': ' ', 'bytes': [32, 240, 159, 146], 'logprob': -22.083728790283203}, {'id': 51414, 'token': ' ', 'bytes': [32, 226, 157], 'logprob': -22.30482292175293}, {'id': 95069, 'token': ' ', 'bytes': [32, 240, 159, 148], 'logprob': -22.328670501708984}, {'id': 378, 'token': '', 'bytes': [226, 128], 'logprob': -22.563180923461914}], 'prob': 0.9999998807907176, 'top_probs': [{'id': 151645, 'token': '', 'bytes': [], 'prob': 0.9999998807907176}, {'id': 25521, 'token': ' ', 'bytes': [32, 226, 156], 'prob': 1.0347984188891271e-07}, {'id': 11162, 'token': ' ', 'bytes': [32, 240, 159], 'prob': 4.4702309874328374e-08}, {'id': 151668, 'token': '</think>', 'bytes': [60, 47, 116, 104, 105, 110, 107, 62], 'prob': 1.4728891041439447e-08}, {'id': 26525, 'token': ' ', 'bytes': [32, 240, 159, 152], 'prob': 4.912480188177183e-09}, {'id': 220, 'token': ' ', 'bytes': [32], 'prob': 3.393144675093299e-09}, {'id': 320, 'token': ' (', 'bytes': [32, 40], 'prob': 3.0775601187046434e-09}, {'id': 4710, 'token': ' \n\n', 'bytes': [32, 10, 10], 'prob': 1.6645884908090158e-09}, {'id': 144247, 'token': '✅', 'bytes': [226, 156, 133], 'prob': 1.6006603423779925e-09}, {'id': 9625, 'token': ' France', 'bytes': [32, 70, 114, 97, 110, 99, 101], 'prob': 7.244485089424359e-10}, {'id': 576, 'token': ' The', 'bytes': [32, 84, 104, 101], 'prob': 5.855270803758402e-10}, {'id': 2858, 'token': ' ', 'bytes': [32, 226], 'prob': 3.499397508900247e-10}, {'id': 63039, 'token': ' ', 'bytes': [32, 240, 159, 146], 'prob': 2.5654198249070985e-10}, {'id': 51414, 'token': ' ', 'bytes': [32, 226, 157], 'prob': 2.056546270740607e-10}, {'id': 95069, 'token': ' ', 'bytes': [32, 240, 159, 148], 'prob': 2.0080827843216336e-10}, {'id': 378, 'token': '', 'bytes': [226, 128], 'prob': 1.5883091242054712e-10}]}]}, 'request': {'prompt': '<|im_start|>user\nWhat is the capital of France? Answer in one word.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nParis.', 'stream': False, 'n_predict': 1, 'n_probs': 16, 'post_sampling_probs': False, 'id_slot': 0, 'cache_prompt': True, 'temperature': 0.0}}
+```
+```python
+    def generate_probabilities(self, prompt: t.Union[str, t.List[t.Dict[str, str]]], enable_thinking: bool = False, temperature: float = None, top_k: int = None, top_p: float = None, min_p: float = None, n_predict: int = 1, grammar: str = None, seed: int = None, n_probs: int = 1, post_sampling_probs: bool = False, id_slot: int = 0, cache_prompt: bool = True) -> dict:
+        """
+                Return next-token probabilities (top-N) for each generated step.
+
+                This uses llama.cpp server native endpoint POST /completion with:
+                  - n_probs > 0 to request top token probabilities
+                  - post_sampling_probs=True to get probabilities (0..1) instead of logprobs
+
+                Notes:
+                  - This returns probabilities for the tokens the server *actually generates* (n_predict steps).
+                  - To “peek” only the immediate next token distribution, keep n_predict=1.
+                  - Setting cache_prompt=False avoids reusing KV cache across unrelated calls.
+                """
+        if isinstance(prompt, list):
+            prompt = self.apply_chat_template(prompt, enable_thinking)
+
+        json_data: t.Dict[str, t.Any] = {
+            "prompt": prompt,
+            "stream": False,  # easier: we want a single JSON response
+            "n_predict": int(n_predict),
+            "n_probs": int(n_probs),
+            "post_sampling_probs": bool(post_sampling_probs),
+            "id_slot": int(id_slot),
+            "cache_prompt": bool(cache_prompt),
+        }
+
+        # Optional sampling overrides
+        if temperature is not None:
+            json_data["temperature"] = float(temperature)
+        if top_k is not None:
+            json_data["top_k"] = int(top_k)
+        if top_p is not None:
+            json_data["top_p"] = float(top_p)
+        if min_p is not None:
+            json_data["min_p"] = float(min_p)
+        if grammar is not None:
+            json_data["grammar"] = grammar
+        if seed is not None:
+            json_data["seed"] = int(seed)
+
+        self._add_reader()
+        try:
+            resp = request("POST", f"http://127.0.0.1:{self._port}/completion", json=json_data)
+            if resp.status_code != 200:
+                raise Exception(resp.text)
+
+            try:
+                data = resp.json()
+            except JSONDecodeError as e:
+                raise Exception(f"Invalid JSON from llama-server: {e}\nRaw: {resp.text[:5000]}")
+
+            # The README calls it completion_probabilities, but some builds/fields may expose "probs".
+            steps = (
+                    data.get("completion_probabilities")
+                    or data.get("probs")
+                    or []
+            )
+
+            # Normalize shape so callers can just read:
+            #   steps[i]["token"], steps[i]["prob"], steps[i]["top_probs"]
+            #
+            # If post_sampling_probs=False, server returns logprob/top_logprobs.
+            # Convert to prob/top_probs for convenience.
+            if steps and not post_sampling_probs:
+                for step in steps:
+                    if "logprob" in step and "prob" not in step:
+                        step["prob"] = float(math.exp(step["logprob"]))
+                    if "top_logprobs" in step and "top_probs" not in step:
+                        step["top_probs"] = []
+                        for tp in step["top_logprobs"]:
+                            prob = float(math.exp(tp["logprob"])) if "logprob" in tp else None
+                            step["top_probs"].append({
+                                "id": tp.get("id"),
+                                "token": tp.get("token"),
+                                "bytes": tp.get("bytes"),
+                                "prob": prob,
+                            })
+
+            return {
+                "content": data.get("content", ""),
+                "model": data.get("model"),
+                "prompt": data.get("prompt", prompt),
+                "steps": steps,  # per generated token, with top_probs/top_logprobs
+                "raw": data,  # keep full response in case you want timings etc.
+                "request": json_data,  # helpful for debugging
+            }
+```
+How could I now when the assistant wants to end its turn?
+§a§
+To know when **llama.cpp thinks the assistant’s turn is over**, you don’t have to guess from probabilities—you can read the server’s explicit stop metadata.
+
+## 1) The reliable way: use `stop_type` (and `stopping_word`)
+When you call **POST `/completion`**, the response includes:
+
+- `stop_type` with values:
+  - `none` (still generating)
+  - `eos` (hit the model’s EOS token)
+  - `limit` (hit `n_predict`)
+  - `word` (hit one of your provided stop strings) 
+- `stopping_word`: the exact stop string that triggered stopping (only meaningful when `stop_type == "word"`) 
+
+So your “did the assistant want to end its turn?” check is simply:
+
+```python
+done = data.get("stop_type") in {"eos", "word", "limit"}
+```
+
+In the JSON you pasted, you already have:
+- `stop_type: "eos"`
+- `stop: true`
+
+That means the model ended because it emitted EOS (it’s done speaking).
+
+## 2) If you’re doing chat turns: set `stop` strings to mark end-of-turn
+For chat, you usually don’t want to rely only on EOS, because many chat templates use special separators like `<|im_end|>` / `<|im_start|>` etc.
+
+The `/completion` endpoint lets you pass:
+
+- `stop`: “a JSON array of stopping strings”
+- Those strings “will not be included in the completion” 
+
+Example (ChatML-ish):
+
+```json
+{
+  "prompt": "...",
+  "n_predict": 256,
+  "stop": ["<|im_end|>", "<|im_start|>user"]
+}
+```
+
+Then you’ll typically see `stop_type: "word"` and `stopping_word` telling you which boundary was hit. 
+
+This is the cleanest way to detect “assistant finished its turn” in a multi-turn transcript.
+
+## 3) Streaming case: watch the `stop` boolean in the SSE chunks
+If you set `stream: true`, llama.cpp streams tokens and you can watch:
+
+- `stop` boolean (in stream mode) to know when generation has ended 
+
+Also note: while streaming, the server says only `content`, `tokens`, and `stop` are returned until the end.   
+So if you need `stop_type`, you may need to read the final event / final payload (depending on your client implementation).
+
+## 4) “How do I get the probability it will end?” (EOS probability)
+What you’re currently getting (`completion_probabilities` / `top_probs`) is **token probabilities for the tokens the server actually generated** (for `n_predict` steps). 
+
+So, to estimate “chance the model ends now” you can:
+
+- run with `n_predict=1`
+- set `n_probs` high enough that EOS is likely to appear in `top_probs`
+- optionally set `post_sampling_probs=true` to get probabilities “after applying sampling chain” 
+- then look for EOS in `top_probs` and read its `prob`
+
+Caveat: llama.cpp does **not** provide “give me the probability of exactly token X” if token X is *not* in the returned top‑N list. If EOS isn’t in your top‑N, you can’t read its probability directly from that response.
+
+## 5) Small practical improvements to your wrapper
+### A) Return `stop_type` (and `stopping_word`) directly
+You already keep `raw`. Consider also returning:
+
+```python
+return {
+  ...
+  "stop_type": data.get("stop_type"),
+  "stopping_word": data.get("stopping_word", ""),
+}
+```
+
+### B) If you want the actual generated token id(s), enable `return_tokens`
+`return_tokens` returns raw generated token ids in `tokens`.   
+That makes EOS detection trivial even if the token text is empty.
+
+## 6) Bonus: use `/apply-template` to build the right chat prompt (if you’re mixing chat + `/completion`)
+If you’re constructing prompts manually, `/apply-template` will format your `{role, content}` messages using the server/model chat template, returning the formatted `prompt` string you should feed into `/completion`. 
+
+That makes it much easier to pick the correct `stop` strings (because you can see what separators the template actually uses).
+
+---
+
+If you paste the *exact* chat template text you’re using (or the formatted prompt produced by `/apply-template`), I can suggest the best `stop` array entries so “end of assistant turn” is detected reliably across models (ChatML vs Llama2 vs Qwen, etc.).

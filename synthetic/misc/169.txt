@@ -1,0 +1,64 @@
+§u§
+Leite die imaginäre Zahl $i$ mit der Eulerschen Identität her.
+§a§
+Um die imaginäre Zahl \(i\) mit der Eulerschen Identität herzuleiten, wird zunächst die Eulersche Identität betrachtet:
+
+\[
+e^{i\pi} + 1 = 0
+\]
+
+Diese Identität ist ein Spezialfall der allgemeinen Eulerschen Formel:
+
+\[
+e^{i\theta} = \cos \theta + i \sin \theta
+\]
+
+für \(\theta = \pi\). Die Eulersche Formel kann aus der Potenzreihenentwicklung der Exponentialfunktion, der Sinusfunktion und der Kosinusfunktion hergeleitet werden, wobei die Eigenschaften von \(i\) (insbesondere \(i^2 = -1\)) verwendet werden. Die Eulersche Identität selbst folgt direkt aus dieser Formel für \(\theta = \pi\):
+
+\[
+e^{i\pi} = \cos \pi + i \sin \pi = -1 + i \cdot 0 = -1
+\]
+
+und somit:
+
+\[
+e^{i\pi} + 1 = -1 + 1 = 0
+\]
+
+Um nun \(i\) herzuleiten, wird die allgemeine Eulersche Formel für \(\theta = \frac{\pi}{2}\) angewendet:
+
+\[
+e^{i\pi/2} = \cos \frac{\pi}{2} + i \sin \frac{\pi}{2}
+\]
+
+Einsetzen der Werte:
+
+\[
+\cos \frac{\pi}{2} = 0, \quad \sin \frac{\pi}{2} = 1
+\]
+
+ergibt:
+
+\[
+e^{i\pi/2} = 0 + i \cdot 1 = i
+\]
+
+Somit folgt:
+
+\[
+i = e^{i\pi/2}
+\]
+
+Obwohl die Eulersche Identität \(e^{i\pi} + 1 = 0\) direkt gegeben ist, wird zur Herleitung von \(i\) die allgemeine Eulersche Formel benötigt, da die Identität allein nicht ausreicht, um \(i\) explizit darzustellen. Die Herleitung zeigt, dass \(i\) als \(e^{i\pi/2}\) ausgedrückt werden kann, was mit der Definition von \(i\) als Lösung der Gleichung \(x^2 + 1 = 0\) konsistent ist, da:
+
+\[
+\left(e^{i\pi/2}\right)^2 = e^{i\pi} = -1
+\]
+
+und somit:
+
+\[
+i^2 = -1
+\]
+
+Die Eulersche Identität bestätigt diese Eigenschaft indirekt, da \(e^{i\pi} = -1\) gilt.

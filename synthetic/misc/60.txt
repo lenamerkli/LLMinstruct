@@ -1,0 +1,15 @@
+§u§
+On which path is the onedrive folder stored on c: ? I am not running windows, I am using a recovery tool.
+§a§
+Typically, OneDrive folders are stored in the following default path on Windows:
+
+`C:\Users\[Username]\OneDrive`
+
+However, since you're using a recovery tool and not directly in Windows, you might want to look in these additional potential locations:
+
+1. `C:\Users\[Username]\AppData\Local\Microsoft\OneDrive`
+2. `C:\Users\[Username]\AppData\Roaming\Microsoft\OneDrive`
+
+The exact path can vary slightly depending on the Windows version and OneDrive configuration. When using a recovery tool, you'll need to replace `[Username]` with the specific Windows user account name.
+
+If you're having trouble locating the folder, you might want to search for files with .onedrive extensions or look for a folder named specifically "OneDrive" in the user's directory.

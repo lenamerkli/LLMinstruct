@@ -1,0 +1,14 @@
+§u§
+```\begin{figure}[htbp]```
+What does `htbp` mean?
+§a§
+In LaTeX, `htbp` specifies the placement preferences for a floating figure. Each letter represents a different placement option:
+
+- `h` - "here" - Try to place the figure approximately at this point in the text
+- `t` - "top" - Place at the top of a page
+- `b` - "bottom" - Place at the bottom of a page
+- `p` - "page" - Place on a special page containing only floats (figures and tables)
+
+When you use `[htbp]`, you're telling LaTeX to try these placement options in order: first try to place it "here" in the text flow, then at the top of a page, then at the bottom, and finally on a separate float page if needed.
+
+LaTeX will choose the first option that works according to its typesetting rules and constraints. The order matters - it indicates your preference priority. You can use any combination of these letters, like `[ht]` or `[bp]`, depending on what placements you want to allow.

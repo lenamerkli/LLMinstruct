@@ -1,0 +1,101 @@
+§u§
+Wie erhöhe ich den Zeilenabstand in LaTeX?
+§a§
+Die Standardmethode, um den Zeilenabstand in LaTeX korrekt zu erhöhen (z. B. auf 1,5-zeilig für wissenschaftliche Arbeiten), ist die Verwendung des Pakets `setspace`.
+
+Hier sind die besten Möglichkeiten, den Zeilenabstand zu ändern:
+
+### 1. Die empfohlene Methode: Das Paket `setspace`
+
+Das Paket `setspace` ist die sauberste Lösung, da es den Zeilenabstand im Haupttext ändert, Fußnoten, Bildunterschriften und Tabellen jedoch automatisch einzeilig lässt.
+
+**Schritt-für-Schritt-Anleitung:**
+
+1.  **Paket einbinden:** Fügen Sie `\usepackage{setspace}` in der Präambel (vor `\begin{document}`) ein.
+2.  **Zeilenabstand festlegen:** Fügen Sie direkt nach `\begin{document}` den gewünschten Befehl ein.
+
+**Beispiel für 1,5-zeiligen Abstand (Standard für viele Unis):**
+
+```latex
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% 1. Paket laden
+\usepackage{setspace}
+
+\begin{document}
+
+% 2. Zeilenabstand aktivieren (direkt nach \begin{document})
+\onehalfspacing
+
+Dies ist ein Beispieltext mit anderthalbfachem Zeilenabstand. Das Paket 'setspace' sorgt dafür, dass dieser Text gestreckt wird, während andere Elemente (wie Fußnoten) normal bleiben.
+
+Dies ist die zweite Zeile des Beispiels.
+
+\end{document}
+```
+
+**Die wichtigsten Befehle von `setspace`:**
+
+*   `\singlespacing`: Einzeiliger Abstand (Standard).
+*   `\onehalfspacing`: Anderthalbzeiliger Abstand.
+*   `\doublespacing`: Doppelter Zeilenabstand.
+
+**Zeilenabstand für nur einen Abschnitt ändern:**
+
+Wenn Sie nur einen bestimmten Teil des Textes ändern möchten, verwenden Sie die `spacing`-Umgebung:
+
+```latex
+\begin{spacing}{2.0}
+Dieser Text hat den doppelten Zeilenabstand.
+\end{spacing}
+```
+
+---
+
+### 2. Die schnelle (aber weniger saubere) Methode: `\linespread`
+
+LaTeX bietet den Befehl `\renewcommand{\linespread}{Faktor}`. Dies ist einfacher, hat aber den Nachteil, dass **alles** (auch Fußnoten und Bildunterschriften) skaliert wird.
+
+Der "Faktor" ist nicht intuitiv:
+
+*   Für **1,5-zeilig** verwenden Sie `\linespread{1.25}` (oder manchmal `1.5`, je nach Dokumentklasse).
+*   Für **2-zeilig** verwenden Sie `\linespread{1.667}`.
+
+**Beispiel:**
+
+```latex
+\documentclass{article}
+
+% Änderung des Zeilenabstands in der Präambel
+\renewcommand{\linespread}{1.25} % Ungefähr 1,5-zeilig
+
+\begin{document}
+Der gesamte Text, inklusive Fußnoten, wird jetzt mit diesem Faktor multipliziert.
+\end{document}
+```
+
+**Fazit:** Verwenden Sie `\linespread` nur für schnelle Tests. Für finale Dokumente ist `setspace` vorzuziehen.
+
+---
+
+### 3. Speziell für KOMA-Script (scrartcl, scrreprt, scrbook)
+
+Wenn Sie eine KOMA-Script-Klasse verwenden (was in Deutschland üblich ist), können Sie den Zeilenabstand auch als Option in `\documentclass` übergeben.
+
+**Beispiel für 1,5-zeilig in KOMA-Script:**
+
+```latex
+\documentclass[
+    12pt,
+    onehalfspacing,  % <--- Hier wird der Zeilenabstand gesetzt
+    a4paper
+]{scrartcl}
+
+\begin{document}
+Dieser Text ist anderthalbzeilig, da die KOMA-Option genutzt wurde.
+\end{document}
+```
+
+KOMA-Script bietet die Optionen `singlespacing`, `onehalfspacing` und `doublespacing`. Diese Methode ist sehr elegant, funktioniert aber nur mit KOMA-Klassen.

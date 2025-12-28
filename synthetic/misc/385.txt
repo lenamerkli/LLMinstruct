@@ -1,0 +1,584 @@
+§u§
+Erkläre mir den Stoff für das Lernziel `Affine Abbildungen bilden, die Drehungen, Spiegelungen, Streckungen, Scherungen darstellen`
+§a§
+### **Affine Abbildungen: Drehungen, Spiegelungen, Streckungen, Scherungen**
+
+Affine Abbildungen sind eine wichtige Klasse von Transformationen in der Geometrie, die bestimmte Eigenschaften erhalten (z. B. Parallelität von Geraden). Sie lassen sich allgemein darstellen als:
+
+\[
+f(\vec{x}) = A \cdot \vec{x} + \vec{b}
+\]
+
+Dabei ist:
+- \( A \) eine lineare Abbildung (Matrix),
+- \( \vec{b} \) ein Verschiebungsvektor.
+
+Wir betrachten nun spezielle affine Abbildungen:
+
+---
+
+### **1. Drehung (Rotation)**
+- **Beschreibung:** Eine Drehung um einen Winkel \( \alpha \) (gegen den Uhrzeigersinn) um den Ursprung.
+- **Matrix \( A \):**
+  \[
+  A = \begin{pmatrix}
+  \cos \alpha & -\sin \alpha \\
+  \sin \alpha & \cos \alpha
+  \end{pmatrix}
+  \]
+- **Beispiel (Drehung um 90°):**
+  \[
+  A = \begin{pmatrix}
+  0 & -1 \\
+  1 & 0
+  \end{pmatrix}, \quad \vec{b} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}
+  \]
+  Ein Punkt \( (1, 0) \) wird abgebildet auf \( (0, 1) \).
+
+---
+
+### **2. Spiegelung**
+- **Beschreibung:** Spiegelung an einer Geraden durch den Ursprung.
+- **Matrix \( A \) (Spiegelung an der x-Achse):**
+  \[
+  A = \begin{pmatrix}
+  1 & 0 \\
+  0 & -1
+  \end{pmatrix}
+  \]
+- **Beispiel:** Der Punkt \( (2, 3) \) wird zu \( (2, -3) \).
+
+Für eine Spiegelung an einer beliebigen Geraden \( y = mx \) ist die Matrix komplizierter.
+
+---
+
+### **3. Streckung (Skalierung)**
+- **Beschreibung:** Vergrößerung/Verkleinerung in x- und/oder y-Richtung.
+- **Matrix \( A \):**
+  \[
+  A = \begin{pmatrix}
+  s_x & 0 \\
+  0 & s_y
+  \end{pmatrix}
+  \]
+  Dabei sind \( s_x \) und \( s_y \) die Skalierungsfaktoren.
+- **Beispiel (Streckung um Faktor 2 in x-Richtung):**
+  \[
+  A = \begin{pmatrix}
+  2 & 0 \\
+  0 & 1
+  \end{pmatrix}, \quad \vec{b} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}
+  \]
+  Der Punkt \( (1, 1) \) wird zu \( (2, 1) \).
+
+---
+
+### **4. Scherung (Shear)**
+- **Beschreibung:** Verzerrung entlang einer Achse.
+- **Matrix \( A \) (Scherung in x-Richtung mit Faktor \( k \)):**
+  \[
+  A = \begin{pmatrix}
+  1 & k \\
+  0 & 1
+  \end{pmatrix}
+  \]
+- **Beispiel (Scherung mit \( k = 1 \)):**
+  \[
+  A = \begin{pmatrix}
+  1 & 1 \\
+  0 & 1
+  \end{pmatrix}, \quad \vec{b} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}
+  \]
+  Der Punkt \( (1, 1) \) wird zu \( (2, 1) \).
+
+---
+
+### **Zusammenfassung**
+| Abbildung  | Matrix \( A \)                     | Beispiel (Wirkung)         |
+|------------|------------------------------------|----------------------------|
+| Drehung    | \( \begin{pmatrix} \cos \alpha & -\sin \alpha \\ \sin \alpha & \cos \alpha \end{pmatrix} \) | \( (1,0) \rightarrow (0,1) \) (90°) |
+| Spiegelung | \( \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix} \) (an x-Achse) | \( (2,3) \rightarrow (2,-3) \) |
+| Streckung  | \( \begin{pmatrix} s_x & 0 \\ 0 & s_y \end{pmatrix} \) | \( (1,1) \rightarrow (2,1) \) (\( s_x = 2 \)) |
+| Scherung   | \( \begin{pmatrix} 1 & k \\ 0 & 1 \end{pmatrix} \) | \( (1,1) \rightarrow (2,1) \) (\( k = 1 \)) |
+
+Affine Abbildungen kombinieren oft mehrere dieser Transformationen. Wichtig ist, dass die lineare Abbildung \( A \) die Art der Transformation bestimmt, während \( \vec{b} \) eine Verschiebung bewirkt.
+§u§
+Was ist die Matrix für die Spiegelung an der y-Achse und die Punktspiegelung? Was ist eine Scherung?
+§a§
+### **1. Spiegelung an der y-Achse**  
+Die Spiegelung an der y-Achse kehrt die x-Koordinate eines Punktes um, während die y-Koordinate gleich bleibt.  
+
+- **Matrix \( A \):**  
+  \[
+  A = \begin{pmatrix}
+  -1 & 0 \\
+  0 & 1
+  \end{pmatrix}
+  \]  
+- **Beispiel:**  
+  Der Punkt \( (3, 2) \) wird auf \( (-3, 2) \) abgebildet.  
+
+---
+
+### **2. Punktspiegelung (Spiegelung am Ursprung)**  
+Die Punktspiegelung am Ursprung kehrt beide Koordinaten um.  
+
+- **Matrix \( A \):**  
+  \[
+  A = \begin{pmatrix}
+  -1 & 0 \\
+  0 & -1
+  \end{pmatrix}
+  \]  
+- **Beispiel:**  
+  Der Punkt \( (4, -1) \) wird auf \( (-4, 1) \) abgebildet.  
+
+---
+
+### **3. Scherung (Shear)**  
+Eine Scherung ist eine lineare Verzerrung, bei der Punkte entlang einer Achse verschoben werden, während die andere Koordinate erhalten bleibt.  
+
+- **Scherung in x-Richtung (y bleibt fix):**  
+  \[
+  A = \begin{pmatrix}
+  1 & k \\  
+  0 & 1  
+  \end{pmatrix}
+  \]  
+  - **Wirkung:** \( (x, y) \rightarrow (x + k \cdot y, y) \)  
+  - **Beispiel (für \( k = 2 \)):**  
+    \( (1, 1) \rightarrow (3, 1) \)  
+
+- **Scherung in y-Richtung (x bleibt fix):**  
+  \[
+  A = \begin{pmatrix}
+  1 & 0 \\  
+  k & 1  
+  \end{pmatrix}
+  \]  
+  - **Wirkung:** \( (x, y) \rightarrow (x, k \cdot x + y) \)  
+  - **Beispiel (für \( k = 1 \)):**  
+    \( (2, 3) \rightarrow (2, 5) \)  
+
+#### **Anschauliche Erklärung:**  
+Stell dir ein Rechteck vor, das zu einem Parallelogramm verzerrt wird, indem die obere Kante seitlich verschoben wird – das ist eine Scherung.  
+
+---
+
+### **Zusammenfassung der Matrizen**  
+| Abbildung               | Matrix \( A \)                     | Beispiel (Wirkung)            |
+|-------------------------|------------------------------------|-------------------------------|
+| **Spiegelung y-Achse**  | \( \begin{pmatrix} -1 & 0 \\ 0 & 1 \end{pmatrix} \) | \( (3, 2) \rightarrow (-3, 2) \) |
+| **Punktspiegelung**     | \( \begin{pmatrix} -1 & 0 \\ 0 & -1 \end{pmatrix} \) | \( (4, -1) \rightarrow (-4, 1) \) |
+| **Scherung (x-Richtung)** | \( \begin{pmatrix} 1 & k \\ 0 & 1 \end{pmatrix} \) | \( (1, 1) \rightarrow (3, 1) \) (\( k=2 \)) |
+| **Scherung (y-Richtung)** | \( \begin{pmatrix} 1 & 0 \\ k & 1 \end{pmatrix} \) | \( (2, 3) \rightarrow (2, 5) \) (\( k=1 \)) |
+
+Falls du noch weitere Beispiele oder Anwendungen brauchst, frag gern!
+§u§
+`Für eine Spiegelung an einer beliebigen Geraden y=mx ist die Matrix komplizierter.` Was ist die Matrix?
+§a§
+### **Spiegelungsmatrix an einer beliebigen Geraden \( y = m x \)**
+
+Um eine Spiegelung an der Geraden \( y = m x \) (mit Steigung \( m \)) durchzuführen, müssen wir eine affine Abbildung konstruieren, die jeden Punkt \( \mathbf{p} = (x, y) \) an dieser Geraden spiegelt.  
+
+#### **Schritt 1: Spiegelung als lineare Abbildung (ohne Verschiebung)**
+Falls die Gerade durch den Ursprung geht (\( y = m x \)), können wir die Spiegelung als lineare Transformation \( \mathbf{p}' = A \mathbf{p} \) darstellen. Die Matrix \( A \) lässt sich wie folgt herleiten:
+
+1. **Steigungswinkel \( \theta \):**  
+   Die Gerade \( y = m x \) hat einen Winkel \( \theta \) zur x-Achse, wobei \( m = \tan \theta \).
+
+2. **Spiegelungsmatrix (2D):**  
+   Die Spiegelung an einer Ursprungsgeraden mit Winkel \( \theta \) wird durch folgende Matrix beschrieben:  
+   \[
+   A = \begin{pmatrix}
+   \cos(2\theta) & \sin(2\theta) \\
+   \sin(2\theta) & -\cos(2\theta)
+   \end{pmatrix}
+   \]
+
+3. **Mit \( m = \tan \theta \) ausgedrückt:**  
+   Unter Verwendung der trigonometrischen Identitäten  
+   \[
+   \cos(2\theta) = \frac{1 - m^2}{1 + m^2}, \quad \sin(2\theta) = \frac{2m}{1 + m^2}
+   \]  
+   ergibt sich:  
+   \[
+   A = \frac{1}{1 + m^2} \begin{pmatrix}
+   1 - m^2 & 2m \\
+   2m & m^2 - 1
+   \end{pmatrix}
+   \]
+
+---
+
+#### **Schritt 2: Beispiel**
+Für eine Spiegelung an der Winkelhalbierenden \( y = x \) (\( m = 1 \)):  
+\[
+A = \frac{1}{2} \begin{pmatrix}
+0 & 2 \\
+2 & 0
+\end{pmatrix} = \begin{pmatrix}
+0 & 1 \\
+1 & 0
+\end{pmatrix}
+\]  
+- Der Punkt \( (2, 3) \) wird zu \( (3, 2) \).
+
+---
+
+#### **Schritt 3: Falls die Gerade nicht durch den Ursprung geht (\( y = m x + b \))**
+Hier ist die Abbildung **affin** (nicht linear), und wir müssen zusätzlich verschieben:
+1. Verschiebe die Gerade in den Ursprung: \( \mathbf{p} \rightarrow \mathbf{p} - \mathbf{p}_0 \) (wobei \( \mathbf{p}_0 \) ein Punkt auf der Geraden ist, z. B. \( (0, b) \)).
+2. Spiegle wie oben.
+3. Rückverschiebung: \( \mathbf{p}' \rightarrow \mathbf{p}' + \mathbf{p}_0 \).
+
+---
+
+### **Zusammenfassung**
+- **Matrix für Spiegelung an \( y = m x \):**  
+  \[
+  A = \frac{1}{1 + m^2} \begin{pmatrix}
+  1 - m^2 & 2m \\
+  2m & m^2 - 1
+  \end{pmatrix}
+  \]
+- **Sonderfälle:**
+  - \( m = 0 \) (x-Achse): \( A = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix} \).
+  - \( m = 1 \) (Winkelhalbierende): \( A = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} \).
+
+Falls du die Herleitung oder ein konkretes Rechenbeispiel sehen möchtest, lass es mich wissen! 😊
+§u§
+Und was ist mit einer Scherung in eine beliebige Richtung?
+§a§
+### **Scherung (Shear) in beliebiger Richtung**
+
+Eine **Scherung** verzerrt ein Objekt entlang einer bestimmten Richtung, während eine dazu senkrechte Achse unverändert bleibt.  
+Bisher haben wir nur Scherungen entlang der **x-** oder **y-Achse** betrachtet. Jetzt erweitern wir das auf eine **beliebige Richtung**.
+
+---
+
+### **1. Allgemeine Scherungsmatrix (2D)**
+Eine Scherung kann entlang einer Geraden mit Richtungsvektor \( \mathbf{u} = (u_x, u_y) \) definiert werden, wobei die Senkrechte \( \mathbf{u}^\perp = (-u_y, u_x) \) fixiert bleibt.  
+
+Die **allgemeine Scherungsmatrix** (für Scherung entlang \( \mathbf{u} \) mit Stärke \( k \)) ist:
+\[
+A = I + k \cdot \frac{\mathbf{u} \otimes \mathbf{u}^\perp}{\|\mathbf{u}\|^2},
+\]
+wobei \( I \) die Einheitsmatrix ist und \( \otimes \) das dyadische Produkt (d. h., \( \mathbf{u} \otimes \mathbf{u}^\perp \) ergibt eine Matrix).
+
+#### **Explizite Formel**
+\[
+A = \begin{pmatrix}
+1 - k \cdot \frac{u_x u_y}{\|\mathbf{u}\|^2} & k \cdot \frac{u_x^2}{\|\mathbf{u}\|^2} \\
+-k \cdot \frac{u_y^2}{\|\mathbf{u}\|^2} & 1 + k \cdot \frac{u_x u_y}{\|\mathbf{u}\|^2}
+\end{pmatrix}
+\]
+
+#### **Vereinfachung, falls \( \mathbf{u} \) normiert ist (\( \|\mathbf{u}\| = 1 \))**
+\[
+A = \begin{pmatrix}
+1 - k u_x u_y & k u_x^2 \\
+-k u_y^2 & 1 + k u_x u_y
+\end{pmatrix}
+\]
+
+---
+
+### **2. Beispiele**
+#### **(a) Scherung entlang der x-Achse (klassischer Fall)**
+- Richtungsvektor \( \mathbf{u} = (1, 0) \), Scherstärke \( k \).  
+- Matrix:
+  \[
+  A = \begin{pmatrix}
+  1 & k \\
+  0 & 1
+  \end{pmatrix}
+  \]
+- **Wirkung:** \( (x, y) \mapsto (x + k y, y) \).
+
+#### **(b) Scherung entlang \( \mathbf{u} = (1, 1) \) (45°-Richtung)**
+- Normierter Vektor: \( \mathbf{u} = \left( \frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}} \right) \).
+- Matrix (für \( k = 1 \)):
+  \[
+  A = \begin{pmatrix}
+  1 - \frac{1}{2} & \frac{1}{2} \\
+  -\frac{1}{2} & 1 + \frac{1}{2}
+  \end{pmatrix}
+  = \begin{pmatrix}
+  0.5 & 0.5 \\
+  -0.5 & 1.5
+  \end{pmatrix}
+  \]
+- **Wirkung auf \( (1, 0) \):**
+  \[
+  \begin{pmatrix}
+  0.5 & 0.5 \\
+  -0.5 & 1.5
+  \end{pmatrix}
+  \begin{pmatrix}
+  1 \\ 0
+  \end{pmatrix}
+  = \begin{pmatrix}
+  0.5 \\ -0.5
+  \end{pmatrix}
+  \]
+
+---
+
+### **3. Alternative Herleitung (Basiswechsel)**
+1. **Wähle eine neue Basis** \( \{ \mathbf{u}, \mathbf{u}^\perp \} \).
+2. **Scherung in der neuen Basis** (wie klassische x-Scherung):
+   \[
+   A' = \begin{pmatrix}
+   1 & k \\
+   0 & 1
+   \end{pmatrix}
+   \]
+3. **Transformiere zurück in die Standardbasis**:
+   \[
+   A = T \cdot A' \cdot T^{-1},
+   \]
+   wobei \( T \) die Basiswechselmatrix ist (Spalten: \( \mathbf{u}, \mathbf{u}^\perp \)).
+
+---
+
+### **4. Zusammenfassung**
+| Scherungstyp           | Matrix (allgemein)                     | Beispiel (\( \mathbf{u} = (1, 1) \), \( k = 1 \)) |
+|------------------------|----------------------------------------|--------------------------------------------------|
+| **Klassische x-Scherung** | \( \begin{pmatrix} 1 & k \\ 0 & 1 \end{pmatrix} \) | \( (x, y) \mapsto (x + y, y) \) |
+| **Beliebige Richtung** | \( A = I + k \frac{\mathbf{u} \otimes \mathbf{u}^\perp}{\|\mathbf{u}\|^2} \) | \( \begin{pmatrix} 0.5 & 0.5 \\ -0.5 & 1.5 \end{pmatrix} \) |
+
+---
+
+### **5. Anschauliche Interpretation**
+- Eine Scherung in Richtung \( \mathbf{u} \) verschiebt jeden Punkt proportional zur Komponente senkrecht zu \( \mathbf{u} \).
+- **Anwendung:** In Computergrafik (Texturverzerrung), Materialwissenschaften (Deformation).
+
+Falls du ein konkretes Rechenbeispiel oder eine geometrische Veranschaulichung möchtest, lass es mich wissen! 😊
+§u§
+Gehen wir zum nächsten Lernziel: `Art der affinen Abbildung erkennen`
+§a§
+### **Art der affinen Abbildung erkennen**  
+
+Affine Abbildungen haben die Form:  
+\[
+f(\vec{x}) = A \vec{x} + \vec{b}, \quad \text{mit } A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}, \quad \vec{b} = \begin{pmatrix} e \\ f \end{pmatrix}.
+\]  
+Um die **Art der Abbildung** zu bestimmen, analysieren wir die Matrix \( A \) und den Verschiebungsvektor \( \vec{b} \).  
+
+---
+
+### **1. Schritt: Bestimmung der Abbildungstypen**
+#### **(a) Verschiebung (Translation)**
+- **Erkennungsmerkmal:**  
+  \( A = I \) (Einheitsmatrix), aber \( \vec{b} \neq \vec{0} \).  
+- **Beispiel:**  
+  \( f(x, y) = (x + 2, y - 3) \) → Reine Verschiebung um \( \vec{b} = (2, -3) \).
+
+#### **(b) Lineare Abbildung (ohne Verschiebung)**
+- **Erkennungsmerkmal:**  
+  \( \vec{b} = \vec{0} \), aber \( A \neq I \).  
+- **Mögliche Typen:**  
+  - Drehung, Spiegelung, Streckung, Scherung (siehe unten).
+
+#### **(c) Allgemeine affine Abbildung (Kombination aus linearer Abbildung + Verschiebung)**
+- **Erkennungsmerkmal:**  
+  \( A \neq I \) und \( \vec{b} \neq \vec{0} \).  
+- **Beispiel:**  
+  \( f(x, y) = (2x + y + 1, -y + 4) \) → Kombination aus Scherung und Verschiebung.
+
+---
+
+### **2. Schritt: Analyse der Matrix \( A \)**
+#### **(a) Drehung (Rotation)**
+- **Erkennungsmerkmal:**  
+  \( A \) ist eine **orthogonale Matrix** mit \( \det(A) = 1 \), d. h.:  
+  \[
+  A = \begin{pmatrix} \cos \theta & -\sin \theta \\ \sin \theta & \cos \theta \end{pmatrix}, \quad \text{und } a^2 + c^2 = 1, \ b^2 + d^2 = 1.
+  \]  
+- **Beispiel:**  
+  \( A = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix} \) → Drehung um \( 90^\circ \).
+
+#### **(b) Spiegelung**
+- **Erkennungsmerkmal:**  
+  \( A \) ist orthogonal mit \( \det(A) = -1 \).  
+  \[
+  A = \begin{pmatrix} \cos 2\theta & \sin 2\theta \\ \sin 2\theta & -\cos 2\theta \end{pmatrix}.
+  \]  
+- **Beispiel:**  
+  \( A = \begin{pmatrix} -1 & 0 \\ 0 & 1 \end{pmatrix} \) → Spiegelung an der y-Achse.
+
+#### **(c) Streckung (Skalierung)**
+- **Erkennungsmerkmal:**  
+  \( A \) ist diagonal:  
+  \[
+  A = \begin{pmatrix} s_x & 0 \\ 0 & s_y \end{pmatrix}, \quad s_x, s_y \neq 1.
+  \]  
+- **Sonderfall: Homothetie**, falls \( s_x = s_y \).  
+- **Beispiel:**  
+  \( A = \begin{pmatrix} 2 & 0 \\ 0 & 0.5 \end{pmatrix} \) → Streckung in x-Richtung (Faktor 2), Stauchung in y-Richtung (Faktor 0.5).
+
+#### **(d) Scherung (Shear)**
+- **Erkennungsmerkmal:**  
+  \( A \) hat die Form:  
+  \[
+  \begin{pmatrix} 1 & k \\ 0 & 1 \end{pmatrix} \quad \text{(x-Scherung)} \quad \text{oder} \quad \begin{pmatrix} 1 & 0 \\ k & 1 \end{pmatrix} \quad \text{(y-Scherung)}.
+  \]  
+- **Beispiel:**  
+  \( A = \begin{pmatrix} 1 & 2 \\ 0 & 1 \end{pmatrix} \) → Scherung in x-Richtung mit Faktor 2.
+
+#### **(e) Zusammengesetzte Abbildungen**
+Falls \( A \) keine der obigen Formen hat, kann es sich um eine **Kombination** handeln (z. B. Drehung + Streckung).  
+- **Hinweis:** Jede Matrix \( A \) lässt sich durch **Singulärwertzerlegung (SVD)** in Rotationen und Streckungen zerlegen.
+
+---
+
+### **3. Schritt: Bestimmung der Abbildung – Algorithmus**
+1. **Prüfe, ob \( A = I \):**  
+   - Falls ja → **Verschiebung** um \( \vec{b} \).  
+   - Falls nein → Weiter zu Schritt 2.  
+2. **Prüfe \( \vec{b} = \vec{0} \):**  
+   - Falls ja → **Lineare Abbildung** (analysiere \( A \)).  
+   - Falls nein → **Affine Abbildung** (Lineare Abb. + Verschiebung).  
+3. **Analysiere \( A \):**  
+   - **Orthogonal?** (\( A^T A = I \)) → Drehung (wenn \( \det(A) = 1 \)) oder Spiegelung (wenn \( \det(A) = -1 \)).  
+   - **Diagonal?** → Streckung.  
+   - **Dreiecksmatrix mit Diagonale 1?** → Scherung.  
+   - **Sonst** → Kombination mehrerer Transformationen.  
+
+---
+
+### **4. Beispiele**
+| Abbildung               | \( A \)                     | \( \vec{b} \)      | Erkennungsmerkmal                     |
+|-------------------------|-----------------------------|--------------------|---------------------------------------|
+| **Verschiebung**        | \( \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \) | \( \begin{pmatrix} 3 \\ -1 \end{pmatrix} \) | \( A = I \), \( \vec{b} \neq \vec{0} \). |
+| **Drehung (90°)**       | \( \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix} \) | \( \begin{pmatrix} 0 \\ 0 \end{pmatrix} \) | \( A \) orthogonal, \( \det(A) = 1 \). |
+| **Spiegelung (y-Achse)**| \( \begin{pmatrix} -1 & 0 \\ 0 & 1 \end{pmatrix} \) | \( \begin{pmatrix} 0 \\ 0 \end{pmatrix} \) | \( A \) orthogonal, \( \det(A) = -1 \). |
+| **Streckung**           | \( \begin{pmatrix} 2 & 0 \\ 0 & 3 \end{pmatrix} \) | \( \begin{pmatrix} 0 \\ 0 \end{pmatrix} \) | \( A \) diagonal. |
+| **Scherung (x-Richtung)**| \( \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix} \) | \( \begin{pmatrix} 0 \\ 0 \end{pmatrix} \) | Untere Dreiecksmatrix, Diagonale 1. |
+| **Affine Abbildung**    | \( \begin{pmatrix} 1 & 2 \\ 0 & 1 \end{pmatrix} \) | \( \begin{pmatrix} 5 \\ 0 \end{pmatrix} \) | Scherung + Verschiebung. |
+
+---
+
+### **5. Sonderfälle**
+- **Identität:** \( A = I \), \( \vec{b} = \vec{0} \) → Keine Änderung.  
+- **Projektion:** Falls \( \det(A) = 0 \) (z. B. \( A = \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix} \)) → Abbildung reduziert Dimension.  
+
+---
+
+### **Zusammenfassung**
+1. **Verschiebung?** Prüfe \( A = I \).  
+2. **Lineare Abbildung?** Prüfe \( \vec{b} = \vec{0} \).  
+3. **Typ der linearen Abbildung?** Analysiere \( A \) (Orthogonalität, Determinante, Diagonalform).  
+
+Mit dieser Systematik kannst du jede affine Abbildung identifizieren!
+§u§
+Vielen Dank. Gehen wir nun zum letzten Lernziel: `Affine Abbildungen verketten`
+§a§
+### **Affine Abbildungen verketten**
+
+Affine Abbildungen können hintereinander ausgeführt (verkettet) werden, was einer **Hintereinanderausführung von Transformationen** entspricht.  
+Das Ergebnis ist wieder eine affine Abbildung.  
+
+---
+
+## **1. Verkettung affiner Abbildungen**
+Seien zwei affine Abbildungen gegeben:
+\[
+f_1(\vec{x}) = A_1 \vec{x} + \vec{b}_1, \quad f_2(\vec{x}) = A_2 \vec{x} + \vec{b}_2.
+\]
+Dann ist die **Verkettung** \( f = f_2 \circ f_1 \) (erst \( f_1 \), dann \( f_2 \)) gegeben durch:
+\[
+f(\vec{x}) = f_2(f_1(\vec{x})) = A_2 (A_1 \vec{x} + \vec{b}_1) + \vec{b}_2 = \underbrace{(A_2 A_1)}_{A} \vec{x} + \underbrace{(A_2 \vec{b}_1 + \vec{b}_2)}_{\vec{b}}.
+\]
+Die **neue Matrix** \( A \) ist also das **Matrizenprodukt** \( A_2 A_1 \), und der **neue Verschiebungsvektor** ist \( A_2 \vec{b}_1 + \vec{b}_2 \).
+
+---
+
+### **2. Beispiel: Drehung + Verschiebung**
+Gegeben:
+- \( f_1 \): Drehung um \( 90^\circ \) (Matrix \( A_1 = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix} \), \( \vec{b}_1 = \vec{0} \)).
+- \( f_2 \): Verschiebung um \( \vec{b}_2 = \begin{pmatrix} 2 \\ 3 \end{pmatrix} \) (Matrix \( A_2 = I \)).
+
+Die Verkettung \( f = f_2 \circ f_1 \) ergibt:
+\[
+f(\vec{x}) = A_2 A_1 \vec{x} + A_2 \vec{b}_1 + \vec{b}_2 = I \cdot A_1 \vec{x} + I \cdot \vec{0} + \vec{b}_2 = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix} \vec{x} + \begin{pmatrix} 2 \\ 3 \end{pmatrix}.
+\]
+- **Wirkung auf \( (1, 0) \):**  
+  \[
+  f(1, 0) = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix} \begin{pmatrix} 1 \\ 0 \end{pmatrix} + \begin{pmatrix} 2 \\ 3 \end{pmatrix} = \begin{pmatrix} 0 \\ 1 \end{pmatrix} + \begin{pmatrix} 2 \\ 3 \end{pmatrix} = \begin{pmatrix} 2 \\ 4 \end{pmatrix}.
+  \]
+
+---
+
+### **3. Beispiel: Spiegelung + Scherung**
+Gegeben:
+- \( f_1 \): Spiegelung an der x-Achse (\( A_1 = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix} \), \( \vec{b}_1 = \vec{0} \)).
+- \( f_2 \): Scherung in x-Richtung (\( A_2 = \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix} \), \( \vec{b}_2 = \vec{0} \)).
+
+Die Verkettung \( f = f_2 \circ f_1 \) ergibt:
+\[
+A = A_2 A_1 = \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix} \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix} = \begin{pmatrix} 1 & -1 \\ 0 & -1 \end{pmatrix}, \quad \vec{b} = \vec{0}.
+\]
+- **Wirkung auf \( (1, 1) \):**  
+  \[
+  f(1, 1) = \begin{pmatrix} 1 & -1 \\ 0 & -1 \end{pmatrix} \begin{pmatrix} 1 \\ 1 \end{pmatrix} = \begin{pmatrix} 0 \\ -1 \end{pmatrix}.
+  \]
+
+---
+
+### **4. Wichtige Eigenschaften der Verkettung**
+1. **Nicht kommutativ:**  
+   \( f_2 \circ f_1 \neq f_1 \circ f_2 \) (Reihenfolge ist wichtig!).
+   - Beispiel:  
+     - **Erst Drehen, dann Verschieben** ≠ **Erst Verschieben, dann Drehen**.
+2. **Assoziativ:**  
+   \( (f_3 \circ f_2) \circ f_1 = f_3 \circ (f_2 \circ f_1) \).  
+3. **Inverse Abbildung:**  
+   Falls \( f(\vec{x}) = A \vec{x} + \vec{b} \), dann ist die Umkehrabbildung:  
+   \[
+   f^{-1}(\vec{y}) = A^{-1} \vec{y} - A^{-1} \vec{b}.
+   \]
+
+---
+
+### **5. Anwendung: Transformationen in der Computergrafik**
+In der Computergrafik werden affine Abbildungen oft verketten, um komplexe Transformationen zu beschreiben, z. B.:
+1. **Objekt drehen, dann verschieben.**
+2. **Skalieren, dann spiegeln.**
+3. **Mehrere Scherungen kombinieren.**
+
+---
+
+### **6. Zusammenfassung**
+| Regel                     | Formel                                                                 |
+|---------------------------|-----------------------------------------------------------------------|
+| **Verkettung**            | \( f_2 \circ f_1 (\vec{x}) = (A_2 A_1) \vec{x} + (A_2 \vec{b}_1 + \vec{b}_2) \) |
+| **Inverse Abbildung**     | \( f^{-1}(\vec{y}) = A^{-1} \vec{y} - A^{-1} \vec{b} \)               |
+| **Reihenfolge beachten!** | \( f_2 \circ f_1 \neq f_1 \circ f_2 \) (i. A. nicht kommutativ)       |
+
+---
+
+### **7. Übungsaufgabe**
+Gegeben:
+- \( f_1 \): Streckung in x-Richtung mit Faktor 2 (\( A_1 = \begin{pmatrix} 2 & 0 \\ 0 & 1 \end{pmatrix} \), \( \vec{b}_1 = \vec{0} \)).
+- \( f_2 \): Verschiebung um \( \vec{b}_2 = \begin{pmatrix} 0 \\ 5 \end{pmatrix} \) (\( A_2 = I \)).
+
+**Frage:** Wie lautet \( f = f_2 \circ f_1 \)?  
+**Lösung:**
+\[
+f(\vec{x}) = A_2 A_1 \vec{x} + \vec{b}_2 = \begin{pmatrix} 2 & 0 \\ 0 & 1 \end{pmatrix} \vec{x} + \begin{pmatrix} 0 \\ 5 \end{pmatrix}.
+\]
+- **Wirkung auf \( (1, 1) \):**  
+  \[
+  f(1, 1) = \begin{pmatrix} 2 & 0 \\ 0 & 1 \end{pmatrix} \begin{pmatrix} 1 \\ 1 \end{pmatrix} + \begin{pmatrix} 0 \\ 5 \end{pmatrix} = \begin{pmatrix} 2 \\ 1 \end{pmatrix} + \begin{pmatrix} 0 \\ 5 \end{pmatrix} = \begin{pmatrix} 2 \\ 6 \end{pmatrix}.
+  \]
+
+---
+
+### **Fazit**
+- Affine Abbildungen können durch **Matrizenmultiplikation und Vektoraddition** verknüpft werden.
+- Die **Reihenfolge der Transformationen** ist entscheidend.
+- Praktisch nützlich in **Robotik, Computergrafik und Physik**.
+
+Falls du weitere Beispiele oder Anwendungen brauchst, frag gern!

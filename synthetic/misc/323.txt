@@ -1,0 +1,600 @@
+§u§
+```
+ 98%|█████████▊| 1007/1024 [24:28<00:26,  1.57s/it]{'loss': 0.0007, 'grad_norm': 0.12140548974275589, 'learning_rate': 8.928571428571428e-07, 'epoch': 19.76}
+{'loss': 0.0049, 'grad_norm': 1.5766934156417847, 'learning_rate': 8.432539682539682e-07, 'epoch': 19.78}
+ 99%|█████████▊| 1009/1024 [24:31<00:22,  1.51s/it]{'loss': 0.0079, 'grad_norm': 1.2744064331054688, 'learning_rate': 7.936507936507937e-07, 'epoch': 19.8}
+ 99%|█████████▊| 1010/1024 [24:32<00:20,  1.48s/it]{'loss': 0.0008, 'grad_norm': 0.1630627065896988, 'learning_rate': 7.440476190476191e-07, 'epoch': 19.82}
+ 99%|█████████▊| 1011/1024 [24:34<00:19,  1.50s/it]{'loss': 0.0012, 'grad_norm': 0.19760863482952118, 'learning_rate': 6.944444444444445e-07, 'epoch': 19.84}
+{'loss': 0.0078, 'grad_norm': 2.652669906616211, 'learning_rate': 6.448412698412699e-07, 'epoch': 19.86}
+ 99%|█████████▉| 1013/1024 [24:36<00:15,  1.45s/it]{'loss': 0.0013, 'grad_norm': 0.30699047446250916, 'learning_rate': 5.952380952380952e-07, 'epoch': 19.88}
+ 99%|█████████▉| 1014/1024 [24:38<00:14,  1.50s/it]{'loss': 0.0082, 'grad_norm': 2.690645217895508, 'learning_rate': 5.456349206349206e-07, 'epoch': 19.9}
+ 99%|█████████▉| 1015/1024 [24:39<00:12,  1.42s/it]{'loss': 0.002, 'grad_norm': 0.3254893720149994, 'learning_rate': 4.96031746031746e-07, 'epoch': 19.92}
+{'loss': 0.0019, 'grad_norm': 0.26211637258529663, 'learning_rate': 4.464285714285714e-07, 'epoch': 19.94}
+ 99%|█████████▉| 1017/1024 [24:42<00:10,  1.50s/it]{'loss': 0.0007, 'grad_norm': 0.1621963530778885, 'learning_rate': 3.9682539682539683e-07, 'epoch': 19.96}
+{'loss': 0.0007, 'grad_norm': 0.08923468738794327, 'learning_rate': 3.4722222222222224e-07, 'epoch': 19.98}
+100%|█████████▉| 1019/1024 [24:45<00:07,  1.50s/it]{'loss': 0.0017, 'grad_norm': 0.11229860782623291, 'learning_rate': 2.976190476190476e-07, 'epoch': 20.0}
+100%|█████████▉| 1020/1024 [24:46<00:04,  1.17s/it]{'loss': 0.0004, 'grad_norm': 0.0764385461807251, 'learning_rate': 2.48015873015873e-07, 'epoch': 20.0}
+{'loss': 0.001, 'grad_norm': 0.3132118582725525, 'learning_rate': 1.9841269841269841e-07, 'epoch': 20.02}
+100%|█████████▉| 1022/1024 [24:48<00:02,  1.26s/it]{'loss': 0.001, 'grad_norm': 0.17353971302509308, 'learning_rate': 1.488095238095238e-07, 'epoch': 20.04}
+{'loss': 0.0012, 'grad_norm': 0.26154837012290955, 'learning_rate': 9.920634920634921e-08, 'epoch': 20.06}
+100%|██████████| 1024/1024 [24:51<00:00,  1.36s/it]{'loss': 0.0005, 'grad_norm': 0.07908056676387787, 'learning_rate': 4.9603174603174604e-08, 'epoch': 20.08}
+```
+Write a python script to extract the following values: step (out of 2024), loss, grad_norm and learning_rate. Keep these in a dictionary. The challenge is that some times the step counter with the progress bar is missing.
+§a§
+Here's a Python script that parses the provided log text and extracts the `step`, `loss`, `grad_norm`, and `learning_rate` into a dictionary. It handles cases where the step is missing by inferring it from the latest known step count in the progress bar line.
+
+### ✅ Script
+
+```python
+import re
+
+log_text = """
+ 98%|█████████▊| 1007/1024 [24:28<00:26,  1.57s/it]{'loss': 0.0007, 'grad_norm': 0.12140548974275589, 'learning_rate': 8.928571428571428e-07, 'epoch': 19.76}
+{'loss': 0.0049, 'grad_norm': 1.5766934156417847, 'learning_rate': 8.432539682539682e-07, 'epoch': 19.78}
+ 99%|█████████▊| 1009/1024 [24:31<00:22,  1.51s/it]{'loss': 0.0079, 'grad_norm': 1.2744064331054688, 'learning_rate': 7.936507936507937e-07, 'epoch': 19.8}
+ 99%|█████████▊| 1010/1024 [24:32<00:20,  1.48s/it]{'loss': 0.0008, 'grad_norm': 0.1630627065896988, 'learning_rate': 7.440476190476191e-07, 'epoch': 19.82}
+ 99%|█████████▊| 1011/1024 [24:34<00:19,  1.50s/it]{'loss': 0.0012, 'grad_norm': 0.19760863482952118, 'learning_rate': 6.944444444444445e-07, 'epoch': 19.84}
+{'loss': 0.0078, 'grad_norm': 2.652669906616211, 'learning_rate': 6.448412698412699e-07, 'epoch': 19.86}
+ 99%|█████████▉| 1013/1024 [24:36<00:15,  1.45s/it]{'loss': 0.0013, 'grad_norm': 0.30699047446250916, 'learning_rate': 5.952380952380952e-07, 'epoch': 19.88}
+ 99%|█████████▉| 1014/1024 [24:38<00:14,  1.50s/it]{'loss': 0.0082, 'grad_norm': 2.690645217895508, 'learning_rate': 5.456349206349206e-07, 'epoch': 19.9}
+ 99%|█████████▉| 1015/1024 [24:39<00:12,  1.42s/it]{'loss': 0.002, 'grad_norm': 0.3254893720149994, 'learning_rate': 4.96031746031746e-07, 'epoch': 19.92}
+{'loss': 0.0019, 'grad_norm': 0.26211637258529663, 'learning_rate': 4.464285714285714e-07, 'epoch': 19.94}
+ 99%|█████████▉| 1017/1024 [24:42<00:10,  1.50s/it]{'loss': 0.0007, 'grad_norm': 0.1621963530778885, 'learning_rate': 3.9682539682539683e-07, 'epoch': 19.96}
+{'loss': 0.0007, 'grad_norm': 0.08923468738794327, 'learning_rate': 3.4722222222222224e-07, 'epoch': 19.98}
+100%|█████████▉| 1019/1024 [24:45<00:07,  1.50s/it]{'loss': 0.0017, 'grad_norm': 0.11229860782623291, 'learning_rate': 2.976190476190476e-07, 'epoch': 20.0}
+100%|█████████▉| 1020/1024 [24:46<00:04,  1.17s/it]{'loss': 0.0004, 'grad_norm': 0.0764385461807251, 'learning_rate': 2.48015873015873e-07, 'epoch': 20.0}
+{'loss': 0.001, 'grad_norm': 0.3132118582725525, 'learning_rate': 1.9841269841269841e-07, 'epoch': 20.02}
+100%|█████████▉| 1022/1024 [24:48<00:02,  1.26s/it]{'loss': 0.001, 'grad_norm': 0.17353971302509308, 'learning_rate': 1.488095238095238e-07, 'epoch': 20.04}
+{'loss': 0.0012, 'grad_norm': 0.26154837012290955, 'learning_rate': 9.920634920634921e-08, 'epoch': 20.06}
+100%|██████████| 1024/1024 [24:51<00:00,  1.36s/it]{'loss': 0.0005, 'grad_norm': 0.07908056676387787, 'learning_rate': 4.9603174603174604e-08, 'epoch': 20.08}
+"""
+
+def parse_training_log(log_text):
+    lines = log_text.strip().split('\n')
+    results = []
+    last_step = 0
+
+    for line in lines:
+        # Match progress bar lines with step info
+        progress_match = re.search(r'\|\s*(\d+)/1024', line)
+        if progress_match:
+            last_step = int(progress_match.group(1))
+
+        # Match JSON-like log entries
+        log_match = re.search(r"\{.*'loss':\s*([^,]+),.*'grad_norm':\s*([^,]+),.*'learning_rate':\s*([^,]+),", line)
+        if log_match:
+            loss = float(log_match.group(1))
+            grad_norm = float(log_match.group(2))
+            learning_rate = float(log_match.group(3))
+            results.append({
+                'step': last_step,
+                'loss': loss,
+                'grad_norm': grad_norm,
+                'learning_rate': learning_rate
+            })
+    return results
+
+if __name__ == "__main__":
+    parsed = parse_training_log(log_text)
+    for entry in parsed:
+        print(entry)
+```
+
+---
+
+### 🔍 Output Example
+
+Each entry looks like:
+
+```python
+{
+  'step': 1007,
+  'loss': 0.0007,
+  'grad_norm': 0.12140548974275589,
+  'learning_rate': 8.928571428571428e-07
+}
+```
+
+The `step` is extracted from the progress bar line when available, or carried forward for any log lines without an explicit step.
+
+Let me know if you'd like to save the output to a CSV or JSON!
+§u§
+Now create another python script which takes in this list of dictionaries and outputs the LaTeX source for a table. step should be the x axis and all other ones should be bundled on the y axis. Think step by step before you approach the implementation.
+§a§
+I'll create a Python script that generates LaTeX table code from the list of dictionaries. Let me think through this step by step:
+
+1. **Input**: List of dictionaries with keys: step, loss, grad_norm, learning_rate
+2. **Output**: LaTeX table where:
+   - x-axis (columns): Different metrics (loss, grad_norm, learning_rate)
+   - y-axis (rows): Steps
+3. **Structure**:
+   - First row: Header with metric names
+   - First column: Step numbers
+   - Other cells: Corresponding values for each metric at each step
+4. **Formatting**:
+   - Numbers should be formatted appropriately (scientific notation for small numbers)
+   - Table should be readable and well-aligned
+
+Here's the implementation:
+
+```python
+def generate_latex_table(data_list):
+    """
+    Generate LaTeX table from list of dictionaries containing training metrics.
+
+    Args:
+        data_list: List of dictionaries with keys: step, loss, grad_norm, learning_rate
+
+    Returns:
+        str: LaTeX table code
+    """
+
+    # Sort data by step to ensure proper ordering
+    sorted_data = sorted(data_list, key=lambda x: x['step'])
+
+    # Start LaTeX table
+    latex_code = "\\begin{table}[htbp]\n"
+    latex_code += "\\centering\n"
+    latex_code += "\\caption{Training Metrics by Step}\n"
+    latex_code += "\\begin{tabular}{|r|c|c|c|}\n"
+    latex_code += "\\hline\n"
+
+    # Header row
+    latex_code += "Step & Loss & Gradient Norm & Learning Rate \\\\\n"
+    latex_code += "\\hline\n"
+
+    # Data rows
+    for entry in sorted_data:
+        step = entry['step']
+        loss = entry['loss']
+        grad_norm = entry['grad_norm']
+        learning_rate = entry['learning_rate']
+
+        # Format numbers appropriately
+        # For very small numbers, use scientific notation
+        if loss < 0.001 and loss > 0:
+            loss_str = f"{loss:.2e}"
+        else:
+            loss_str = f"{loss:.6f}".rstrip('0').rstrip('.')
+
+        if grad_norm < 0.001 and grad_norm > 0:
+            grad_norm_str = f"{grad_norm:.2e}"
+        else:
+            grad_norm_str = f"{grad_norm:.6f}".rstrip('0').rstrip('.')
+
+        if learning_rate < 0.0001 and learning_rate > 0:
+            learning_rate_str = f"{learning_rate:.2e}"
+        else:
+            learning_rate_str = f"{learning_rate:.2e}"
+
+        latex_code += f"{step} & {loss_str} & {grad_norm_str} & {learning_rate_str} \\\\\n"
+
+    # End table
+    latex_code += "\\hline\n"
+    latex_code += "\\end{tabular}\n"
+    latex_code += "\\label{tab:training_metrics}\n"
+    latex_code += "\\end{table}\n"
+
+    return latex_code
+
+def format_number_for_latex(number):
+    """
+    Format number appropriately for LaTeX table.
+    """
+    if number == 0:
+        return "0"
+    elif abs(number) < 0.001:
+        return f"{number:.2e}"
+    elif abs(number) < 1:
+        return f"{number:.6f}".rstrip('0').rstrip('.')
+    else:
+        return f"{number:.6f}".rstrip('0').rstrip('.')
+
+# Alternative version with better formatting
+def generate_latex_table_improved(data_list):
+    """
+    Generate LaTeX table with improved formatting.
+    """
+    # Sort data by step to ensure proper ordering
+    sorted_data = sorted(data_list, key=lambda x: x['step'])
+
+    # Start LaTeX table
+    latex_code = "\\begin{table}[htbp]\n"
+    latex_code += "\\centering\n"
+    latex_code += "\\caption{Training Metrics by Step}\n"
+    latex_code += "\\begin{tabular}{|r|c|c|c|}\n"
+    latex_code += "\\hline\n"
+
+    # Header row
+    latex_code += "Step & Loss & Gradient Norm & Learning Rate \\\\\n"
+    latex_code += "\\hline\n"
+
+    # Data rows
+    for entry in sorted_data:
+        step = entry['step']
+        loss = format_number_for_latex(entry['loss'])
+        grad_norm = format_number_for_latex(entry['grad_norm'])
+        learning_rate = format_number_for_latex(entry['learning_rate'])
+
+        latex_code += f"{step} & {loss} & {grad_norm} & {learning_rate} \\\\\n"
+
+    # End table
+    latex_code += "\\hline\n"
+    latex_code += "\\end{tabular}\n"
+    latex_code += "\\label{tab:training_metrics}\n"
+    latex_code += "\\end{table}\n"
+
+    return latex_code
+
+# Example usage
+if __name__ == "__main__":
+    # Example data (you would pass in your parsed data)
+    example_data = [
+        {'step': 1007, 'loss': 0.0007, 'grad_norm': 0.12140548974275589, 'learning_rate': 8.928571428571428e-07},
+        {'step': 1007, 'loss': 0.0049, 'grad_norm': 1.5766934156417847, 'learning_rate': 8.432539682539682e-07},
+        {'step': 1009, 'loss': 0.0079, 'grad_norm': 1.2744064331054688, 'learning_rate': 7.936507936507937e-07},
+        {'step': 1010, 'loss': 0.0008, 'grad_norm': 0.1630627065896988, 'learning_rate': 7.440476190476191e-07},
+        {'step': 1024, 'loss': 0.0005, 'grad_norm': 0.07908056676387787, 'learning_rate': 4.9603174603174604e-08}
+    ]
+
+    # Generate LaTeX table
+    latex_table = generate_latex_table_improved(example_data)
+    print(latex_table)
+
+    # Optionally save to file
+    with open('training_metrics_table.tex', 'w') as f:
+        f.write(latex_table)
+    print("\nLaTeX table saved to 'training_metrics_table.tex'")
+```
+
+This script provides:
+
+1. **Proper sorting** of data by step number
+2. **Smart number formatting**:
+   - Very small numbers use scientific notation
+   - Regular numbers are formatted cleanly
+   - Trailing zeros are removed for cleaner presentation
+3. **Complete LaTeX structure**:
+   - Table environment with caption and label
+   - Proper headers and alignment
+   - Horizontal lines for professional appearance
+4. **File output option** to save the LaTeX code directly
+
+The output will look like a professional LaTeX table that you can include directly in your documents. The step numbers are in the first column, and the three metrics are in the subsequent columns, making it easy to track how each metric changes over training steps.
+§u§
+Oh, sorry I meant a graph and not a table. I made that mistake in my last message.
+§a§
+Ah, I understand! You want to create a LaTeX graph (plot) rather than a table. Let me create a Python script that generates LaTeX code for a PGFPlots graph, which is the standard way to create plots in LaTeX.
+
+Here's a step-by-step approach:
+
+1. **Input**: List of dictionaries with step, loss, grad_norm, learning_rate
+2. **Output**: LaTeX PGFPlots code with:
+   - x-axis: Step numbers
+   - y-axis: Values for each metric
+   - Multiple lines for each metric (loss, grad_norm, learning_rate)
+3. **Considerations**:
+   - Different scales (learning_rate is much smaller)
+   - Proper formatting and labels
+   - Legend for identification
+
+```python
+def generate_latex_graph(data_list):
+    """
+    Generate LaTeX PGFPlots graph from list of dictionaries containing training metrics.
+
+    Args:
+        data_list: List of dictionaries with keys: step, loss, grad_norm, learning_rate
+
+    Returns:
+        str: LaTeX PGFPlots code
+    """
+
+    # Sort data by step to ensure proper ordering
+    sorted_data = sorted(data_list, key=lambda x: x['step'])
+
+    # Extract data for each metric
+    steps = [entry['step'] for entry in sorted_data]
+    losses = [entry['loss'] for entry in sorted_data]
+    grad_norms = [entry['grad_norm'] for entry in sorted_data]
+    learning_rates = [entry['learning_rate'] for entry in sorted_data]
+
+    # Start LaTeX document structure
+    latex_code = "\\begin{figure}[htbp]\n"
+    latex_code += "\\centering\n"
+    latex_code += "\\begin{tikzpicture}\n"
+    latex_code += "\\begin{axis}[\n"
+    latex_code += "    width=12cm,\n"
+    latex_code += "    height=8cm,\n"
+    latex_code += "    xlabel={Training Step},\n"
+    latex_code += "    ylabel={Metric Values},\n"
+    latex_code += "    xmin=%d, xmax=%d,\n" % (min(steps), max(steps))
+    latex_code += "    ymin=0,\n"
+    latex_code += "    legend pos=north east,\n"
+    latex_code += "    ymajorgrids=true,\n"
+    latex_code += "    grid style=dashed,\n"
+    latex_code += "    scaled y ticks=false,\n"
+    latex_code += "    tick label style={/pgf/number format/fixed},\n"
+    latex_code += "    legend style={font=\\small},\n"
+    latex_code += "    label style={font=\\small},\n"
+    latex_code += "    tick label style={font=\\small}\n"
+    latex_code += "]\n\n"
+
+    # Add loss data
+    latex_code += "\\addplot[\n"
+    latex_code += "    color=blue,\n"
+    latex_code += "    mark=none,\n"
+    latex_code += "    thick\n"
+    latex_code += "    ]\n"
+    latex_code += "    coordinates {\n"
+    for step, loss in zip(steps, losses):
+        latex_code += f"    ({step},{loss})\n"
+    latex_code += "    };\n"
+    latex_code += "\\addlegendentry{Loss}\n\n"
+
+    # Add gradient norm data
+    latex_code += "\\addplot[\n"
+    latex_code += "    color=red,\n"
+    latex_code += "    mark=none,\n"
+    latex_code += "    thick\n"
+    latex_code += "    ]\n"
+    latex_code += "    coordinates {\n"
+    for step, grad_norm in zip(steps, grad_norms):
+        latex_code += f"    ({step},{grad_norm})\n"
+    latex_code += "    };\n"
+    latex_code += "\\addlegendentry{Gradient Norm}\n\n"
+
+    # Add learning rate data
+    latex_code += "\\addplot[\n"
+    latex_code += "    color=green,\n"
+    latex_code += "    mark=none,\n"
+    latex_code += "    thick\n"
+    latex_code += "    ]\n"
+    latex_code += "    coordinates {\n"
+    for step, lr in zip(steps, learning_rates):
+        latex_code += f"    ({step},{lr})\n"
+    latex_code += "    };\n"
+    latex_code += "\\addlegendentry{Learning Rate}\n\n"
+
+    # Close axis and figure
+    latex_code += "\\end{axis}\n"
+    latex_code += "\\end{tikzpicture}\n"
+    latex_code += "\\caption{Training Metrics Over Steps}\n"
+    latex_code += "\\label{fig:training_metrics}\n"
+    latex_code += "\\end{figure}\n"
+
+    return latex_code
+
+def generate_latex_graph_separate_scales(data_list):
+    """
+    Generate LaTeX PGFPlots graph with separate y-axes for different scales.
+    """
+
+    # Sort data by step to ensure proper ordering
+    sorted_data = sorted(data_list, key=lambda x: x['step'])
+
+    # Extract data for each metric
+    steps = [entry['step'] for entry in sorted_data]
+    losses = [entry['loss'] for entry in sorted_data]
+    grad_norms = [entry['grad_norm'] for entry in sorted_data]
+    learning_rates = [entry['learning_rate'] for entry in sorted_data]
+
+    # Start LaTeX document structure with two y-axes
+    latex_code = "\\begin{figure}[htbp]\n"
+    latex_code += "\\centering\n"
+    latex_code += "\\begin{tikzpicture}\n"
+    latex_code += "\\begin{axis}[\n"
+    latex_code += "    width=12cm,\n"
+    latex_code += "    height=8cm,\n"
+    latex_code += "    xlabel={Training Step},\n"
+    latex_code += "    ylabel={Loss and Gradient Norm},\n"
+    latex_code += "    xmin=%d, xmax=%d,\n" % (min(steps), max(steps))
+    latex_code += "    ymin=0,\n"
+    latex_code += "    legend pos=north east,\n"
+    latex_code += "    ymajorgrids=true,\n"
+    latex_code += "    grid style=dashed,\n"
+    latex_code += "    scaled y ticks=false,\n"
+    latex_code += "    tick label style={/pgf/number format/fixed},\n"
+    latex_code += "    legend style={font=\\small},\n"
+    latex_code += "    label style={font=\\small},\n"
+    latex_code += "    tick label style={font=\\small},\n"
+    latex_code += "    "
+    latex_code += "    ]\n\n"
+
+    # Add loss data (blue)
+    latex_code += "\\addplot[\n"
+    latex_code += "    color=blue,\n"
+    latex_code += "    mark=none,\n"
+    latex_code += "    thick\n"
+    latex_code += "    ]\n"
+    latex_code += "    coordinates {\n"
+    for step, loss in zip(steps, losses):
+        latex_code += f"    ({step},{loss})\n"
+    latex_code += "    };\n"
+    latex_code += "\\addlegendentry{Loss}\n\n"
+
+    # Add gradient norm data (red)
+    latex_code += "\\addplot[\n"
+    latex_code += "    color=red,\n"
+    latex_code += "    mark=none,\n"
+    latex_code += "    thick\n"
+    latex_code += "    ]\n"
+    latex_code += "    coordinates {\n"
+    for step, grad_norm in zip(steps, grad_norms):
+        latex_code += f"    ({step},{grad_norm})\n"
+    latex_code += "    };\n"
+    latex_code += "\\addlegendentry{Gradient Norm}\n"
+
+    # Close first axis
+    latex_code += "\\end{axis}\n"
+
+    # Second axis for learning rate
+    latex_code += "\\begin{axis}[\n"
+    latex_code += "    width=12cm,\n"
+    latex_code += "    height=8cm,\n"
+    latex_code += "    xlabel={Training Step},\n"
+    latex_code += "    ylabel={Learning Rate},\n"
+    latex_code += "    xmin=%d, xmax=%d,\n" % (min(steps), max(steps))
+    latex_code += "    ymin=0,\n"
+    latex_code += "    legend pos=south west,\n"
+    latex_code += "    axis y line*=right,\n"
+    latex_code += "    axis x line=none,\n"
+    latex_code += "    ymajorgrids=true,\n"
+    latex_code += "    grid style=dashed,\n"
+    latex_code += "    scaled y ticks=false,\n"
+    latex_code += "    tick label style={/pgf/number format/fixed},\n"
+    latex_code += "    legend style={font=\\small},\n"
+    latex_code += "    label style={font=\\small},\n"
+    latex_code += "    tick label style={font=\\small},\n"
+    latex_code += "    y tick label style={color=green}\n"
+    latex_code += "    ]\n\n"
+
+    # Add learning rate data (green)
+    latex_code += "\\addplot[\n"
+    latex_code += "    color=green,\n"
+    latex_code += "    mark=none,\n"
+    latex_code += "    thick\n"
+    latex_code += "    ]\n"
+    latex_code += "    coordinates {\n"
+    for step, lr in zip(steps, learning_rates):
+        latex_code += f"    ({step},{lr})\n"
+    latex_code += "    };\n"
+    latex_code += "\\addlegendentry{Learning Rate}\n"
+
+    # Close second axis and figure
+    latex_code += "\\end{axis}\n"
+    latex_code += "\\end{tikzpicture}\n"
+    latex_code += "\\caption{Training Metrics Over Steps}\n"
+    latex_code += "\\label{fig:training_metrics}\n"
+    latex_code += "\\end{figure}\n"
+
+    return latex_code
+
+def generate_latex_graph_simple(data_list):
+    """
+    Generate a simple LaTeX PGFPlots graph.
+    """
+
+    # Sort data by step to ensure proper ordering
+    sorted_data = sorted(data_list, key=lambda x: x['step'])
+
+    # Start LaTeX code
+    latex_code = "\\begin{figure}[htbp]\n"
+    latex_code += "\\centering\n"
+    latex_code += "\\begin{tikzpicture}\n"
+    latex_code += "\\begin{axis}[\n"
+    latex_code += "    xlabel={Step},\n"
+    latex_code += "    ylabel={Value},\n"
+    latex_code += "    legend pos=north east,\n"
+    latex_code += "    grid=major,\n"
+    latex_code += "    width=12cm,\n"
+    latex_code += "    height=8cm\n"
+    latex_code += "]\n\n"
+
+    # Extract coordinates for each metric
+    loss_coords = []
+    grad_coords = []
+    lr_coords = []
+
+    for entry in sorted_data:
+        step = entry['step']
+        loss_coords.append(f"({step},{entry['loss']})")
+        grad_coords.append(f"({step},{entry['grad_norm']})")
+        lr_coords.append(f"({step},{entry['learning_rate']})")
+
+    # Add loss plot
+    latex_code += "\\addplot[\n"
+    latex_code += "    color=blue,\n"
+    latex_code += "    mark=none,\n"
+    latex_code += "    thick\n"
+    latex_code += "] coordinates {\n"
+    for coord in loss_coords:
+        latex_code += f"    {coord}\n"
+    latex_code += "};\n"
+    latex_code += "\\addlegendentry{Loss}\n\n"
+
+    # Add gradient norm plot
+    latex_code += "\\addplot[\n"
+    latex_code += "    color=red,\n"
+    latex_code += "    mark=none,\n"
+    latex_code += "    thick\n"
+    latex_code += "] coordinates {\n"
+    for coord in grad_coords:
+        latex_code += f"    {coord}\n"
+    latex_code += "};\n"
+    latex_code += "\\addlegendentry{Gradient Norm}\n\n"
+
+    # Add learning rate plot
+    latex_code += "\\addplot[\n"
+    latex_code += "    color=green,\n"
+    latex_code += "    mark=none,\n"
+    latex_code += "    thick\n"
+    latex_code += "] coordinates {\n"
+    for coord in lr_coords:
+        latex_code += f"    {coord}\n"
+    latex_code += "};\n"
+    latex_code += "\\addlegendentry{Learning Rate}\n\n"
+
+    # Close the plot
+    latex_code += "\\end{axis}\n"
+    latex_code += "\\end{tikzpicture}\n"
+    latex_code += "\\caption{Training Metrics Over Steps}\n"
+    latex_code += "\\label{fig:training_metrics}\n"
+    latex_code += "\\end{figure}\n"
+
+    return latex_code
+
+# Example usage
+if __name__ == "__main__":
+    # Example data (you would pass in your parsed data from the previous script)
+    example_data = [
+        {'step': 1007, 'loss': 0.0007, 'grad_norm': 0.12140548974275589, 'learning_rate': 8.928571428571428e-07},
+        {'step': 1008, 'loss': 0.0049, 'grad_norm': 1.5766934156417847, 'learning_rate': 8.432539682539682e-07},
+        {'step': 1009, 'loss': 0.0079, 'grad_norm': 1.2744064331054688, 'learning_rate': 7.936507936507937e-07},
+        {'step': 1010, 'loss': 0.0008, 'grad_norm': 0.1630627065896988, 'learning_rate': 7.440476190476191e-07},
+        {'step': 1011, 'loss': 0.0012, 'grad_norm': 0.19760863482952118, 'learning_rate': 6.944444444444445e-07},
+        {'step': 1024, 'loss': 0.0005, 'grad_norm': 0.07908056676387787, 'learning_rate': 4.9603174603174604e-08}
+    ]
+
+    # Generate LaTeX graph
+    latex_graph = generate_latex_graph_simple(example_data)
+    print(latex_graph)
+
+    # Save to file
+    with open('training_metrics_graph.tex', 'w') as f:
+        f.write(latex_graph)
+    print("\nLaTeX graph saved to 'training_metrics_graph.tex'")
+
+    # Also save as complete LaTeX document for easy testing
+    complete_document = "\\documentclass{article}\n"
+    complete_document += "\\usepackage{pgfplots}\n"
+    complete_document += "\\pgfplotsset{compat=1.18}\n"
+    complete_document += "\\begin{document}\n\n"
+    complete_document += latex_graph
+    complete_document += "\n\\end{document}\n"
+
+    with open('training_metrics_full_document.tex', 'w') as f:
+        f.write(complete_document)
+    print("Complete LaTeX document saved to 'training_metrics_full_document.tex'")
+```
+
+This script generates LaTeX code using PGFPlots to create a line graph with:
+
+1. **X-axis**: Training steps
+2. **Y-axis**: Metric values
+3. **Three lines**:
+   - Blue line for Loss
+   - Red line for Gradient Norm
+   - Green line for Learning Rate
+4. **Professional formatting**: Grid, legend, labels, and proper sizing
+
+The output can be:
+- Saved as a standalone `.tex` file to include in your LaTeX document
+- Compiled directly if you have a complete LaTeX setup with PGFPlots
+
+**To use this**:
+1. Make sure your LaTeX installation includes PGFPlots package
+2. Include `\usepackage{pgfplots}` in your LaTeX preamble
+3. Copy the generated code into your document, or `\input{training_metrics_graph.tex}`
+
+The script also generates a complete standalone document for easy testing and preview.

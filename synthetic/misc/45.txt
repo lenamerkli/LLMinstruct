@@ -1,0 +1,51 @@
+§u§
+I have two functions in python. Both require each other. It works if they are both in one python file. How could I move them to two different files?
+§a§
+
+
+Two functions that call each other are mutually recursive. The problem is that putting import statements at the top of both modules creates a circular import. The solution is to avoid top-level imports and import the other module inside the function that needs it.
+
+Example: move each function to its own file and import the other lazily.
+
+# even.py
+def is_even(n):
+    if n == 0:
+        return True
+    # local import avoids circular import
+    from odd import is_odd
+    return is_odd(n - 1)
+
+# odd.py
+def is_odd(n):
+    if n == 1:
+        return True
+    from even import is_even
+    return is_even(n - 1)
+
+# main.py
+from even import is_even
+print(is_even(42))  # True
+
+If you prefer top-level imports, you must avoid importing specific names and use the module instead, plus import inside the function as a fallback:
+
+# even.py
+import odd as _odd
+def is_even(n):
+    if n == 0:
+        return True
+    return _odd.is_odd(n - 1)
+
+# odd.py
+def is_odd(n):
+    if n == 1:
+        return True
+    from even import is_even  # fallback for direct runs or circular cases
+    return is_even(n - 1)
+
+# main.py
+from even import is_even
+print(is_even(42))
+
+Key points:
+- Don’t do from other import func at module scope if the other module also imports this module at its module scope.
+- Importing inside the function (“lazy import”) is the simplest and most robust fix for mutual recursion across modules.

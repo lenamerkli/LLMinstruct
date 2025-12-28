@@ -1,0 +1,34 @@
+{
+    "topic": "Todesfälle durch Tabak",
+    "original_statements": [
+        "Sie wagen es nicht, sich mit einer Industrie anzulegen, für 9’000 bis 10’000 Todesfälle pro Jahr in der Schweiz verantwortlich ist.",
+        "Durch Rauchen stirbt man nicht.",
+        "Die Todesfälle durch Tabak sind 15 % der Todesfälle in der Schweiz.",
+        "Wissen Sie, wie viele Menschen jedes Jahr an den Folgen des Rauchens sterben?",
+        "Gemäss dem Bundesamt fur Gesundheit BAG ist Rauchen das grösste vermeidbare Gesundheitsrisiko in den westlichen Industrienationen.",
+        "Rauchen tötet.",
+        "Zum Schutz der Kinder und Jugendlichen vor Tabakwerbung!",
+        "Der WHO-Tabakverantwortliche Ruediger Krech entgegnete, Zigaretten seien eben nicht ein Produkt wie andere.",
+        "Zigaretten seien Drogen, die abhängig machen.",
+        "Ja, aber es sind ungefähr ... keine Ahnung ... ich glaube 300 oder so."
+    ],
+    "statements": [
+        "Sie wagen es nicht, sich mit einer Industrie anzulegen, für 9’000 bis 10’000 Todesfälle pro Jahr in der Schweiz verantwortlich ist.",
+        "Durch Rauchen stirbt man nicht.",
+        "Die Todesfälle durch Tabak sind 15 % der Todesfälle in der Schweiz.",
+        "Wissen Sie, wie viele Menschen jedes Jahr an den Folgen des Rauchens sterben?",
+        "Gemäss dem Bundesamt fur Gesundheit BAG ist Rauchen das grösste vermeidbare Gesundheitsrisiko in den westlichen Industrienationen.",
+        "Rauchen tötet.",
+        "Zum Schutz der Kinder und Jugendlichen vor Tabakwerbung!",
+        "Der WHO-Tabakverantwortliche Ruediger Krech entgegnete, Zigaretten seien eben nicht ein Produkt wie andere.",
+        "Zigaretten seien Drogen, die abhängig machen.",
+        "Ja, aber es sind ungefähr ... keine Ahnung ... ich glaube 300 oder so."
+    ],
+    "fact": "Tabak ist für 15 % der Todesfälle in der Schweiz verantwortlich. Das sind 9'000 bis 10'000 Tote pro Jahr.",
+    "sources": [
+        "https://anneepolitique.swiss/dossiers/1479-dossier-initiative-populaire-oui-a-la-protection-des-enfants-et-des-jeunes-contre-la-publicite-pour-le-tabac-et-mise-en-oeuvre",
+        "https://www.bag.admin.ch/bag/de/home/gesund-leben/sucht-und-gesundheit/tabak.html"
+    ],
+    "prompt": "Ich forsche zu Falschmeldungen und Lügen zum Thema `Todesfälle durch Tabak`. Dafür habe ich eine Liste an Aussagen zu diesem Thema zusammengestellt:\n```text\nSie wagen es nicht, sich mit einer Industrie anzulegen, für 9’000 bis 10’000 Todesfälle pro Jahr in der Schweiz verantwortlich ist.\n$\nDurch Rauchen stirbt man nicht.\n$\nDie Todesfälle durch Tabak sind 15 % der Todesfälle in der Schweiz.\n$\nWissen Sie, wie viele Menschen jedes Jahr an den Folgen des Rauchens sterben?\n$\nGemäss dem Bundesamt fur Gesundheit BAG ist Rauchen das grösste vermeidbare Gesundheitsrisiko in den westlichen Industrienationen.\n$\nRauchen tötet.\n$\nZum Schutz der Kinder und Jugendlichen vor Tabakwerbung!\n$\nDer WHO-Tabakverantwortliche Ruediger Krech entgegnete, Zigaretten seien eben nicht ein Produkt wie andere.\n$\nZigaretten seien Drogen, die abhängig machen.\n$\nJa, aber es sind ungefähr ... keine Ahnung ... ich glaube 300 oder so.\n```\nDeine Aufgabe ist es, mindestens 15 weitere Aussagen zu diesem Thema `Todesfälle durch Tabak` zu schreiben. Reine Lügen, die Wahrheit und unklare Aussagen sollen vorkommen. Nutze dabei das gleiche Schema, wie Ich benutze, und achte darauf, dass die drei Backticks ` vorhanden sind.\n",
+    "response": ""
+}

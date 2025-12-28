@@ -1,0 +1,305 @@
+§u§
+```
+def int_to_bytes(i: int) -> bytes:
+    return i.to_bytes((i.bit_length() + 7) // 8, 'big', signed=False)
+
+
+def create_fingerprint(n1: int, n2: int, e1: int, e2: int) -> int:
+    return int.from_bytes(sha3_256(
+        int_to_bytes(n1) +
+        int_to_bytes(n2) +
+        int_to_bytes(e1) +
+        int_to_bytes(e2)
+    ), 'big', signed=False)
+
+
+class Cipher:
+    def __init__(self, data_key_encrypted: int, data_encrypted: bytes, data_hash_key_encrypted: int, signature: int, n1: int, n2: int, e1: int, e2: int, c: int):
+        self.data_key_encrypted = data_key_encrypted
+        self.data_encrypted = data_encrypted
+        self.data_hash_key_encrypted = data_hash_key_encrypted
+        self.signature = signature
+        self.n1 = n1
+        self.n2 = n2
+        self.e1 = e1
+        self.e2 = e2
+        self.c = c
+
+    @classmethod
+    def from_bytes(cls, b: bytes) -> 'Cipher':
+        if b.split(b'\x00\xFF')[0] != b'\x73LPG':
+            raise ValueError('Invalid LPG cipher bytes.')
+        return cls(
+            int.from_bytes(b.split(b'\x00\xFF')[1].replace(b'\x00\x01', b'\x00'), 'big', signed=False),
+            b.split(b'\x00\xFF')[2].replace(b'\x00\x01', b'\x00'),
+            int.from_bytes(b.split(b'\x00\xFF')[3].replace(b'\x00\x01', b'\x00'), 'big', signed=False),
+            int.from_bytes(b.split(b'\x00\xFF')[4].replace(b'\x00\x01', b'\x00'), 'big', signed=False),
+            int.from_bytes(b.split(b'\x00\xFF')[5].replace(b'\x00\x01', b'\x00'), 'big', signed=False),
+            int.from_bytes(b.split(b'\x00\xFF')[6].replace(b'\x00\x01', b'\x00'), 'big', signed=False),
+            int.from_bytes(b.split(b'\x00\xFF')[7].replace(b'\x00\x01', b'\x00'), 'big', signed=False),
+            int.from_bytes(b.split(b'\x00\xFF')[8].replace(b'\x00\x01', b'\x00'), 'big', signed=False),
+            int.from_bytes(b.split(b'\x00\xFF')[9].replace(b'\x00\x01', b'\x00'), 'big', signed=False),
+        )
+
+    def to_bytes(self) -> bytes:
+        return b'\x00\xFF'.join([
+            b'\x73LPG',
+            int_to_bytes(self.data_key_encrypted).replace(b'\x00', b'\x00\x01'),
+            self.data_encrypted.replace(b'\x00', b'\x00\x01'),
+            int_to_bytes(self.data_hash_key_encrypted).replace(b'\x00', b'\x00\x01'),
+            int_to_bytes(self.signature).replace(b'\x00', b'\x00\x01'),
+            int_to_bytes(self.n1).replace(b'\x00', b'\x00\x01'),
+            int_to_bytes(self.n2).replace(b'\x00', b'\x00\x01'),
+            int_to_bytes(self.e1).replace(b'\x00', b'\x00\x01'),
+            int_to_bytes(self.e2).replace(b'\x00', b'\x00\x01'),
+            int_to_bytes(self.c).replace(b'\x00', b'\x00\x01'),
+            b'',
+        ])
+
+class LGPprivKey:
+
+    def __init__(self, n1: int, n2: int, e1: int, e2: int, d1: int, d2: int, c: int):
+        self._n1 = n1
+        self._n2 = n2
+        self._e1 = e1
+        self._e2 = e2
+        self._d1 = d1
+        self._d2 = d2
+        self._c = c
+        self._sign_rsa = RSAkey(n=n1, e=e1, d=d1)
+        self._encrypt_rsa = RSAkey(n=n2, e=e2, d=d2)
+
+    @classmethod
+    def generate(cls, length: int = 4096) -> 'LGPprivKey':
+        sign_rsa = RSAkey.generate(length)
+        encrypt_rsa = RSAkey.generate(length)
+        fingerprint = create_fingerprint(sign_rsa.n, encrypt_rsa.n, sign_rsa.e, encrypt_rsa.e)
+        c = sign_rsa.simple_int_encrypt(fingerprint, disable_warning=True, use_d=True)
+        return cls(sign_rsa.n, encrypt_rsa.n, sign_rsa.e, encrypt_rsa.e, sign_rsa.d, encrypt_rsa.d, c)
+
+    def __eq__(self, other):
+        if not isinstance(other, LGPprivKey):
+            return False
+        return self._n1 == other._n1 and self._n2 == other._n2 and self._e1 == other._e1 and self._e2 == other._e2 and self._d1 == other._d1 and self._d2 == other._d2 and self._c == other._c
+
+    def __ne__(self, other):
+        return not self == other
+
+    def __str__(self):
+        return f"LGPprivKey(n1={self._n1}, n2={self._n2}, e1={self._e1}, e2={self._e2}, d1={self._d1}, d2={self._d2}, c={self._c})"
+
+    def __repr__(self):
+        return self.__str__()
+
+    def fingerprint(self) -> int:
+        return create_fingerprint(self._n1, self._n2, self._e1, self._e2)
+
+    def check_c(self) -> bool:
+        return self._sign_rsa.simple_int_decrypt(self._c, use_e=True) == self.fingerprint()
+
+    def to_pubkey(self) -> 'LGPpubKey':
+        return LGPpubKey(self._n1, self._n2, self._e1, self._e2, self._c)
+
+    def simple_sign(self, m: int) -> int:
+        return self._sign_rsa.simple_int_encrypt(m, disable_warning=True, use_d=True)
+
+    def simple_decrypt(self, m: int) -> int:
+        return self._encrypt_rsa.simple_int_decrypt(m)
+
+    def encrypt(self, message: t.Any, recipient: 'LGPpubKey') -> bytes:
+        data_key = randbytes(48)
+        data_hash_key = randbytes(32)
+        data = serialize(message)
+        data_hash = sha3_256(data)
+        data_encrypted = AesExt(data_key).encrypt(data)
+        data_hash_encrypted = bytes(a ^ b for a, b in zip(data_hash_key, data_hash))
+        data_key_encrypted = recipient.simple_encrypt(int.from_bytes(data_key, 'big'))
+        data_hash_key_encrypted = recipient.simple_encrypt(int.from_bytes(data_hash_key, 'big'))
+        signed = self.simple_sign(int.from_bytes(data_hash_encrypted, 'big'))
+        return Cipher(data_key_encrypted, data_encrypted, data_hash_key_encrypted, signed, self._n1, self._n2, self._e1, self._e2, self._c).to_bytes()
+
+    def decrypt(self, cipher: bytes) -> t.Any:
+        cipher = Cipher.from_bytes(cipher)
+        sender = LGPpubKey(cipher.n1, cipher.n2, cipher.e1, cipher.e2, cipher.c)
+        data_key_int = self.simple_decrypt(cipher.data_key_encrypted)
+        data_key_bytes = data_key_int.to_bytes(48, 'big')  # Fixed length: 48 bytes for AesExt key
+        data_hash_key_int = self.simple_decrypt(cipher.data_hash_key_encrypted)
+        data_hash_key = data_hash_key_int.to_bytes(32, 'big')  # Fixed length: 32 bytes for hash key
+        data = AesExt(data_key_bytes).decrypt(cipher.data_encrypted)
+        data_hash = sha3_256(data)
+        data_hash_encrypted = bytes(a ^ b for a, b in zip(data_hash_key, data_hash))
+        signature = sender.simple_unsign(int.from_bytes(data_hash_encrypted, 'big'))
+        if signature != cipher.signature:
+            raise ValueError(f"Invalid signature: {signature} != {cipher.signature}")
+        return deserialize(data)
+
+
+class LGPpubKey:
+    def __init__(self, n1: int, n2: int, e1: int, e2: int, c: int):
+        self._n1 = n1
+        self._n2 = n2
+        self._e1 = e1
+        self._e2 = e2
+        self._c = c
+        self._sign_rsa = RSApubkey(n=n1, e=e1)
+        self._encrypt_rsa = RSApubkey(n=n2, e=e2)
+
+    def simple_encrypt(self, m: int) -> int:
+        return self._encrypt_rsa.simple_int_encrypt(m, disable_warning=True)
+
+    def simple_unsign(self, m: int) -> int:
+        return self._sign_rsa.simple_int_decrypt(m, use_e=True)
+
+
+if __name__ == '__main__':
+    import unittest
+
+    class TestLGP(unittest.TestCase):
+        def test_lgp(self):
+            key1 = LGPprivKey.generate()
+            key2 = LGPprivKey.generate()
+            key2_pub = key2.to_pubkey()
+            message = 'Hello, world!'
+            cipher = key1.encrypt(message, key2_pub)
+            self.assertEqual(message, key2.decrypt(cipher))
+
+    unittest.main()
+
+```
+```
+/home/aubery/Documents/python/auberycrypt/.venv/bin/python /home/aubery/Documents/python/auberycrypt/src/auberycrypt/lpg.py
+E
+======================================================================
+ERROR: test_lgp (__main__.TestLGP.test_lgp)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/aubery/Documents/python/auberycrypt/src/auberycrypt/lpg.py", line 177, in test_lgp
+    self.assertEqual(message, key2.decrypt(cipher))
+                              ~~~~~~~~~~~~^^^^^^^^
+  File "/home/aubery/Documents/python/auberycrypt/src/auberycrypt/lpg.py", line 145, in decrypt
+    raise ValueError(f"Invalid signature: {signature} != {cipher.signature}")
+ValueError: Invalid signature: 89173873350125981937498541697151237375861570348186554187614167697613516000637324148377630462905385015641071763979521873726345647248248916302996602543922954390743099538971713823947159553486592376299 != 43998457988430494016149064906821175559463888560050133263896244519087542607951829097541919032689747105459673770213731729378881315991585202710135729379089671430881365467433873859413972380470475363
+
+----------------------------------------------------------------------
+Ran 1 test in 25.778s
+
+FAILED (errors=1)
+
+Process finished with exit code 1
+```
+§a§
+### Debugging the LGP Encryption/Decryption Test Failure
+
+Thanks for sharing the code and the test output. I'll break this down step-by-step: analyzing the failure, identifying the root cause, and suggesting a fix. This appears to be a custom asymmetric encryption scheme (LGP) built on RSA primitives, with symmetric encryption (AES) for the data payload and a signature for integrity/authenticity. The test generates keys, encrypts a message, decrypts it, and checks if the round-trip succeeds—but it fails on signature validation.
+
+#### Step 1: Understanding the Test and Failure
+- **Test Logic** (in `TestLGP.test_lgp`):
+  - Generate two private keys: `key1` and `key2` (each with 4096-bit RSA pairs by default).
+  - Get `key2`'s public key (`key2_pub`).
+  - Encrypt a simple message (`'Hello, world!'`) using `key1.encrypt(..., key2_pub)`.
+  - Decrypt the ciphertext using `key2.decrypt(...)`.
+  - Assert that the decrypted message matches the original.
+- **Failure Point**: The decryption raises a `ValueError` during signature validation:
+  ```
+  ValueError: Invalid signature: <very large number A> != <very large number B>
+  ```
+  - This happens inside `LGPprivKey.decrypt` at the line:
+    ```python
+    if signature != cipher.signature:
+        raise ValueError(f"Invalid signature: {signature} != {cipher.signature}")
+    ```
+  - The test runs but fails (exit code 1, 1 error in ~25s, which makes sense for 4096-bit RSA keygen).
+
+The encryption/decryption of the data itself seems to work (AES round-trip + RSA encryption/decryption of keys), but the **signature verification** is failing. This indicates a bug in how the signature is created or verified.
+
+#### Step 2: Key Concepts in the LGP Scheme
+- **Keys**:
+  - Each `LGPprivKey` has two RSA pairs:
+    - Signing: modulus `n1`, public exp `e1`, private exp `d1`.
+    - Encryption: modulus `n2`, public exp `e2`, private exp `d2`.
+  - A "fingerprint" ties them together, signed into `c`.
+- **Encryption (`LGPprivKey.encrypt`)**:
+  - Generate random `data_key` (AES key, 48 bytes) and `data_hash_key` (32 bytes).
+  - Serialize message → `data`.
+  - Compute `data_hash = sha3_256(data)`.
+  - AES-encrypt `data` → `data_encrypted`.
+  - "Encrypt" hash via XOR: `data_hash_encrypted = data_hash_key XOR data_hash` (this is like a keyed mask, not real encryption).
+  - RSA-encrypt `data_key` and `data_hash_key` using recipient's public encryption key (`simple_encrypt` = **e2 mod n2).
+  - Sign the masked hash: `signed = simple_sign(int.from_bytes(data_hash_encrypted, 'big'))` = (hash_int ** d1) mod n1.
+  - Bundle everything into a `Cipher` object, serialized to bytes.
+- **Decryption (`LGPprivKey.decrypt`)**:
+  - Parse `Cipher` and reconstruct sender's public key.
+  - RSA-decrypt `data_key` and `data_hash_key` using receiver's private decryption key (`simple_decrypt` = **d2 mod n2).
+  - AES-decrypt `data_encrypted` → `data`.
+  - Recompute `data_hash = sha3_256(data)`.
+  - Recompute `data_hash_encrypted = data_hash_key XOR data_hash`.
+  - **Signature validation** (this is where it fails):
+    - Compute `signature = sender.simple_unsign(int.from_bytes(data_hash_encrypted, 'big'))`.
+    - Check if `signature == cipher.signature`.
+  - Deserialize `data` to message.
+- **RSA Primitives** (assumed from context, since `RSAkey` and `RSApubkey` code isn't provided):
+  - `simple_int_encrypt(m, use_d=True)` likely computes m ** d mod n (used for signing).
+  - `simple_int_decrypt(c, use_e=True)` likely computes c ** e mod n (used for signature verification).
+  - This follows standard RSA signing: sig = hash ** d mod n; verify by checking (sig ** e mod n) == hash.
+
+#### Step 3: Root Cause of the Failure
+The bug is in the **signature verification logic** in `decrypt`. It's **backwards** compared to standard RSA signature verification.
+
+- **What's Happening**:
+  - In `encrypt`: The signature (`signed`) is computed as hash_int ** d1 mod n1 (correct for signing).
+  - In `decrypt`: It computes `signature = sender.simple_unsign(hash_int)` = hash_int ** e1 mod n1.
+  - Then it checks if (hash_int ** e1 mod n1) == original_signature.
+- **Why This is Wrong**:
+  - Standard RSA verification: Compute original_signature ** e1 mod n1 and check if it equals hash_int.
+  - This code does the *reverse*: It raises hash_int to e1 and checks if that equals the original_signature.
+  - Mathematically:
+    - Correct: original_signature ** e1 == hash_int (because (hash_int ** d1) ** e1 == hash_int ** (d1 * e1) == hash_int ** 1 mod n1, since d1 * e1 ≡ 1 mod φ(n1)).
+    - Incorrect (what the code does): hash_int ** e1 == original_signature (this would only hold if e1 ≡ d1 mod φ(n1), which isn't true).
+  - This mismatch causes the != comparison to fail, even though the signature is valid.
+  - Evidence from the error: The two numbers are different RSA outputs (one is hash ** e1, the other is hash ** d1), but they're not expected to match directly. Their sizes (~200 digits / ~670 bits) are smaller than 4096 bits, likely because the inputs (e.g., SHA3-256 hashes) are small, and modular exponentiation keeps them < n.
+
+Note: The `check_c` method in `LGPprivKey` *does* do verification correctly (`self._sign_rsa.simple_int_decrypt(self._c, use_e=True) == self.fingerprint()`, i.e., c ** e1 == fingerprint). This inconsistency suggests the bug in `decrypt` might be a copy-paste or logic error.
+
+Other parts (keygen, AES, XOR, serialization) seem correct—no issues with padding, lengths, or randomization causing this.
+
+#### Step 4: Suggested Fix
+Reverse the signature verification in `LGPprivKey.decrypt` to match standard RSA:
+
+```python
+# In class LGPprivKey, modify decrypt method:
+def decrypt(self, cipher: bytes) -> t.Any:
+    cipher = Cipher.from_bytes(cipher)
+    sender = LGPpubKey(cipher.n1, cipher.n2, cipher.e1, cipher.e2, cipher.c)
+    data_key_int = self.simple_decrypt(cipher.data_key_encrypted)
+    data_key_bytes = data_key_int.to_bytes(48, 'big')  # Fixed length: 48 bytes for AesExt key
+    data_hash_key_int = self.simple_decrypt(cipher.data_hash_key_encrypted)
+    data_hash_key = data_hash_key_int.to_bytes(32, 'big')  # Fixed length: 32 bytes for hash key
+    data = AesExt(data_key_bytes).decrypt(cipher.data_encrypted)
+    data_hash = sha3_256(data)
+    data_hash_encrypted = bytes(a ^ b for a, b in zip(data_hash_key, data_hash))
+
+    # FIXED: Compute verified_hash = cipher.signature ** e1 mod n1
+    # Then check if it matches the computed hash_int
+    hash_int = int.from_bytes(data_hash_encrypted, 'big')
+    verified_hash = sender.simple_unsign(cipher.signature)  # This is signature ** e1 mod n1
+    if verified_hash != hash_int:
+        raise ValueError(f"Invalid signature: {verified_hash} != {hash_int}")
+
+    return deserialize(data)
+```
+
+- **Why This Works**: It now correctly verifies by "decrypting" (exponentiating with e1) the received signature and comparing to the recomputed hash.
+- **Additional Improvements** (optional, for robustness):
+  - Add padding (e.g., OAEP or PSS) to RSA operations if `RSAkey` doesn't already handle it—raw RSA on integers is insecure for real use.
+  - In `to_bytes` and `from_bytes`, the escaping (`replace(b'\x00', b'\x00\x01')`) is crude; consider a more standard delimiter or length-prefixing to avoid issues with arbitrary bytes.
+  - Check that decrypted integers fit the fixed byte lengths (e.g., raise if `data_key_int.bit_length() > 48*8`).
+  - Add a `sender.check_c()` call in `decrypt` to verify the sender's key fingerprint.
+
+#### Step 5: Testing the Fix
+- Apply the change above.
+- Rerun the unit test: `python /home/aubery/Documents/python/auberycrypt/src/auberycrypt/lpg.py`
+- It should now pass (output: OK, 1 test in ~25s).
+- If it still fails, double-check the `RSAkey` implementation (e.g., confirm `simple_int_decrypt(..., use_e=True)` really does **e mod n). If you share that code, I can refine this further.
+- Test with different messages/key sizes to ensure no edge cases (e.g., empty message, large data).
+
+If this doesn't resolve it or you have more context (e.g., `RSAkey` code, `AesExt`, `serialize`/`deserialize`, or `sha3_256` imports), let me know—I can dig deeper! This scheme looks creative but remember, custom crypto is risky; use audited libraries like cryptography.io for production.

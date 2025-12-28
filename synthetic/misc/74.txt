@@ -1,0 +1,429 @@
+§u§
+```
+# -*- coding: utf-8 -*-
+"""
+A pure Python implementation of the SHA-3 hash algorithm.
+
+This implementation follows the FIPS 202 standard and supports SHA3-256,
+SHA3-384, and SHA3-512. The only allowed import is `typing`.
+All other necessary functionality, such as integer/byte conversions and
+hex encoding, is implemented from scratch.
+
+The code is structured to be readable and to serve as a reference for
+understanding the Keccak-f[1600] permutation and the sponge construction.
+"""
+
+from typing import List, Tuple
+
+# --- Keccak Constants and Helper Functions ---
+
+# The width of the Keccak-f[1600] permutation in bits.
+WIDTH = 1600
+# The size of a lane in bits.
+LANE_SIZE = 64
+# A 64-bit mask.
+MASK_64 = (1 << LANE_SIZE) - 1
+
+
+def ROTL64(x: int, n: int) -> int:
+    """Performs a 64-bit left circular rotation."""
+    n %= LANE_SIZE
+    if n == 0:
+        return x
+    return ((x << n) & MASK_64) | (x >> (LANE_SIZE - n))
+
+
+# Keccak-f[1600] round constants, one for each of the 24 rounds.
+# These constants are specified in the FIPS 202 standard.
+RC = [
+    0x0000000000000001, 0x0000000000008082, 0x800000000000808a,
+    0x8000000080008000, 0x000000000000808b, 0x0000000080000001,
+    0x8000000080008081, 0x8000000000008009, 0x000000000000008a,
+    0x0000000000000088, 0x0000000080008009, 0x000000008000000a,
+    0x000000008000808b, 0x800000000000008b, 0x8000000000008089,
+    0x8000000000008003, 0x8000000000008002, 0x8000000000000080,
+    0x000000000000800a, 0x800000008000000a, 0x8000000080008081,
+    0x8000000000008080, 0x0000000080000001, 0x8000000080008008
+]
+
+# Rotation offsets for the ρ step. The table is indexed as [x][y].
+ROTATION_OFFSETS = [
+    [0, 36, 3, 41, 18],
+    [1, 44, 10, 45, 2],
+    [62, 6, 43, 15, 61],
+    [28, 55, 25, 21, 56],
+    [27, 20, 39, 8, 14]
+]
+
+
+class SHA3:
+    """
+    A class for calculating SHA-3 hashes.
+
+    This class implements the Keccak sponge construction and the Keccak-f[1600]
+    permutation function required for SHA-3.
+    """
+
+    def __init__(self, digest_size: int):
+        """
+        Initializes the SHA-3 hasher.
+
+        Args:
+            digest_size: The desired digest size in bits (256, 384, or 512).
+
+        Raises:
+            ValueError: If the digest_size is not one of the supported values.
+        """
+        if digest_size not in [256, 384, 512]:
+            raise ValueError("digest_size must be 256, 384, or 512.")
+
+        self.output_bits = digest_size
+        # Rate (r) = 1600 - 2 * digest_size
+        self.rate_bits = WIDTH - 2 * digest_size
+        self.rate_bytes = self.rate_bits // 8
+
+        # The state is a 5x5 array of 64-bit lanes, stored as a flat list.
+        self.state: List[int] = [0] * 25
+        self.buffer: bytes = b''
+        self.finalized: bool = False
+
+    def _keccak_f(self) -> None:
+        """
+        The core Keccak-f[1600] permutation function.
+        It operates on self.state in-place over 24 rounds.
+        """
+        for round_index in range(24):
+            # The 5 steps of a Keccak-f round
+            self._theta()
+            self._rho_pi()
+            self._chi()
+            self._iota(round_index)
+
+    def _theta(self) -> None:
+        """The θ step of the Keccak-f permutation."""
+        C = [0] * 5
+        D = [0] * 5
+
+        # Calculate column parity
+        for x in range(5):
+            C[x] = self.state[x] ^ self.state[x + 5] ^ self.state[x + 10] ^ \
+                   self.state[x + 15] ^ self.state[x + 20]
+
+        # Calculate diffusion values
+        for x in range(5):
+            D[x] = C[(x - 1) % 5] ^ ROTL64(C[(x + 1) % 5], 1)
+
+        # Apply diffusion to the state
+        for x in range(5):
+            for y in range(5):
+                self.state[x + 5 * y] ^= D[x]
+
+    def _rho_pi(self) -> None:
+        """
+        The combined ρ (rho) and π (pi) steps of the Keccak-f permutation.
+        This version uses an efficient in-place chained permutation.
+        """
+        x, y = 1, 0
+        current = self.state[x + 5 * y]
+        for _ in range(24):
+            # π step: calculate the new coordinates
+            new_x, new_y = y, (2 * x + 3 * y) % 5
+
+            # ρ step: rotate the lane at the new position
+            rotated = ROTL64(current, ROTATION_OFFSETS[x][y])
+
+            # Move to the next lane in the chain
+            x, y = new_x, new_y
+            current, self.state[x + 5 * y] = self.state[x + 5 * y], rotated
+
+    def _chi(self) -> None:
+        """The χ (chi) step, the non-linear layer."""
+        for y in range(5):
+            # Store the current row to prevent race conditions
+            row = [self.state[x + 5 * y] for x in range(5)]
+            for x in range(5):
+                # A'[x] = A[x] ^ ((~A[x+1]) & A[x+2])
+                # We use (MASK_64 ^ a) for ~a to keep it a positive 64-bit integer
+                val = (MASK_64 ^ row[(x + 1) % 5]) & row[(x + 2) % 5]
+                self.state[x + 5 * y] = row[x] ^ val
+
+    def _iota(self, round_index: int) -> None:
+        """The ι (iota) step, which breaks symmetry by adding a round constant."""
+        self.state[0] ^= RC[round_index]
+
+    def _bytes_to_lanes(self, data: bytes) -> List[int]:
+        """Converts a byte string into a list of 64-bit integer lanes (little-endian)."""
+        if len(data) % 8 != 0:
+            raise ValueError("Data length must be a multiple of 8 for lane conversion.")
+        lanes = []
+        for i in range(0, len(data), 8):
+            chunk = data[i:i + 8]
+            val = 0
+            for j in range(8):
+                val |= chunk[j] << (8 * j)
+            lanes.append(val)
+        return lanes
+
+    def _lanes_to_bytes(self, lanes: List[int]) -> bytes:
+        """Converts a list of 64-bit lanes back to a byte string (little-endian)."""
+        byte_list = []
+        for lane in lanes:
+            for i in range(8):
+                byte_list.append((lane >> (8 * i)) & 0xFF)
+        return bytes(byte_list)
+
+    def _absorb_chunk(self, chunk: bytes) -> None:
+        """Absorbs a single rate-sized chunk of data into the state."""
+        if len(chunk) != self.rate_bytes:
+            raise ValueError(f"Chunk must be {self.rate_bytes} bytes long.")
+
+        lanes_to_xor = self._bytes_to_lanes(chunk)
+        num_lanes_to_xor = len(lanes_to_xor)
+
+        for i in range(num_lanes_to_xor):
+            self.state[i] ^= lanes_to_xor[i]
+
+        self._keccak_f()
+
+    def update(self, data: bytes) -> None:
+        """
+        Updates the hash object with a chunk of data.
+
+        Args:
+            data: The bytes to be hashed.
+
+        Raises:
+            ValueError: If update() is called after the hash has been finalized.
+        """
+        if self.finalized:
+            raise ValueError("Hash object has already been finalized.")
+
+        self.buffer += data
+        while len(self.buffer) >= self.rate_bytes:
+            chunk = self.buffer[:self.rate_bytes]
+            self.buffer = self.buffer[self.rate_bytes:]
+            self._absorb_chunk(chunk)
+
+    def _finalize(self) -> None:
+        """
+        Finalizes the hash calculation by applying padding and the final absorption.
+        """
+        self.finalized = True
+
+        # Padding: M || 01 || 10*1
+        # For byte-oriented messages, the FIPS 202 standard shows this is
+        # equivalent to appending the byte 0x06, followed by zero bytes,
+        # and ending with a byte that has its MSB set (0x80).
+        self.buffer += b'\x06'
+
+        # Add zero bytes until the buffer is one byte short of a full block.
+        zeros_to_add = self.rate_bytes - (len(self.buffer) % self.rate_bytes)
+        if zeros_to_add == 0:
+            zeros_to_add = self.rate_bytes
+
+        self.buffer += b'\x00' * (zeros_to_add - 1)
+
+        # The last byte has its most significant bit set to 1, marking the end.
+        self.buffer += b'\x80'
+
+        # Absorb the final padded blocks
+        while len(self.buffer) >= self.rate_bytes:
+            chunk = self.buffer[:self.rate_bytes]
+            self.buffer = self.buffer[self.rate_bytes:]
+            self._absorb_chunk(chunk)
+
+    def digest(self) -> bytes:
+        """
+        Returns the final hash digest as a byte string.
+        """
+        if not self.finalized:
+            self._finalize()
+
+        output = b''
+        output_bytes_needed = self.output_bits // 8
+
+        # Squeezing phase
+        while len(output) < output_bytes_needed:
+            # Extract the rate portion of the state
+            lanes_in_rate = self.rate_bits // LANE_SIZE
+            squeezed_lanes = self.state[:lanes_in_rate]
+            output += self._lanes_to_bytes(squeezed_lanes)
+
+            # If more output is needed, permute the state again
+            if len(output) < output_bytes_needed:
+                self._keccak_f()
+
+        return output[:output_bytes_needed]
+
+    def hexdigest(self) -> str:
+        """
+        Returns the final hash digest as a hexadecimal string.
+        """
+        digest_bytes = self.digest()
+        hex_chars = "0123456789abcdef"
+        hex_string = ""
+        for byte in digest_bytes:
+            hex_string += hex_chars[byte >> 4]
+            hex_string += hex_chars[byte & 0x0F]
+        return hex_string
+
+
+# --- Factory Functions (hashlib-style) ---
+
+def sha3_256(data: bytes = b'') -> SHA3:
+    """Creates a SHA3-256 hash object."""
+    hasher = SHA3(256)
+    if data:
+        hasher.update(data)
+    return hasher
+
+
+def sha3_384(data: bytes = b'') -> SHA3:
+    """Creates a SHA3-384 hash object."""
+    hasher = SHA3(384)
+    if data:
+        hasher.update(data)
+    return hasher
+
+
+def sha3_512(data: bytes = b'') -> SHA3:
+    """Creates a SHA3-512 hash object."""
+    hasher = SHA3(512)
+    if data:
+        hasher.update(data)
+    return hasher
+
+
+# --- Example Usage and Verification ---
+if __name__ == '__main__':
+    print("--- Pure Python SHA-3 Implementation ---")
+    print("Verifying against standard test vectors...\n")
+
+    test_vectors = {
+        "SHA3-256": {
+            b"": "a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a",
+            b"abc": "3a985da74fe225b2045c172d6bd390bd855f086e3e9d525b46bfe24511431532",
+            b"The quick brown fox jumps over the lazy dog": "69070dda01975c8c120c3aada1b282394e7f032fa9cf32f4cb2259a0897dfc04"
+        },
+        "SHA3-384": {
+            b"": "0c63a75b845e4f7d01107d852e4c2485c51a50aaaa94fc61995e71bbee983a2ac3713831264adb47fb6bd1e058d5f004",
+            b"abc": "76d3bc41c9f588f90cd159df427505878131604a8f6259648f4a13b4ea6bca406824f1e40b37651a09ba3a3ac1aa477d",
+            b"The quick brown fox jumps over the lazy dog": "7063465e08a93e8357c688354c42384a9f21c8340d80f576a2185a3616334a169e23c21c435e06f203a2d20b41100049"
+        },
+        "SHA3-512": {
+            b"": "a69f73cca23a9ac5c8b567dc185a756e97c982164fe25859e0d1dcc1475c80a615b2123af1f5f94c11e3e9402c3ac558f500199d95b6d3e301758586281dcd26",
+            b"abc": "b751850b1a57168a5693cd924b6b096e08f621827444f70d884f5d0240d2712e10e116e6332924cb22c5c9aa252c4c177be1c737e52924cd9635c97a4ca4737a",
+            b"The quick brown fox jumps over the lazy dog": "18f4f4bd11d4732389d0be0689b9835a8e34893694b34591b93f2f241d6b83f334a815b3579135118029968434743bb18a593740954b08a28f5c225091c57523"
+        }
+    }
+
+    all_passed = True
+    for hash_name, vectors in test_vectors.items():
+        print(f"--- {hash_name} ---")
+        hash_function = {
+            "SHA3-256": sha3_256,
+            "SHA3-384": sha3_384,
+            "SHA3-512": sha3_512
+        }[hash_name]
+
+        for message, expected_hex in vectors.items():
+            # Test direct hashing
+            h1_hex = hash_function(message).hexdigest()
+
+            # Test update-based hashing
+            h2 = hash_function()
+            if len(message) > 1:
+                # Split the message to test the update buffer
+                h2.update(message[:len(message) // 2])
+                h2.update(message[len(message) // 2:])
+            else:
+                h2.update(message)
+            h2_hex = h2.hexdigest()
+
+            msg_repr = f'"{message.decode()}"' if len(message) < 20 else f'"{message[:17].decode()}..."'
+            if len(message) == 0: msg_repr = "empty string"
+
+            if h1_hex == expected_hex and h2_hex == expected_hex:
+                print(f"  [PASS] Hashing {msg_repr}")
+            else:
+                print(f"  [FAIL] Hashing {msg_repr}")
+                print(f"    Expected:  {expected_hex}")
+                print(f"    Got (direct): {h1_hex}")
+                print(f"    Got (update): {h2_hex}")
+                all_passed = False
+        print()
+
+    if all_passed:
+        print("✅ All test vectors passed successfully!")
+    else:
+        print("❌ Some tests failed.")
+```
+```
+/home/lena/Documents/python/lenacrypt/.venv/bin/python /home/lena/Documents/python/lenacrypt/sha3.py
+--- Pure Python SHA-3 Implementation ---
+Verifying against standard test vectors...
+
+--- SHA3-256 ---
+  [PASS] Hashing empty string
+  [PASS] Hashing "abc"
+  [PASS] Hashing "The quick brown f..."
+
+--- SHA3-384 ---
+  [PASS] Hashing empty string
+  [FAIL] Hashing "abc"
+    Expected:  76d3bc41c9f588f90cd159df427505878131604a8f6259648f4a13b4ea6bca406824f1e40b37651a09ba3a3ac1aa477d
+    Got (direct): ec01498288516fc926459f58e2c6ad8df9b473cb0fc08c2596da7cf0e49be4b298d88cea927ac7f539f1edf228376d25
+    Got (update): ec01498288516fc926459f58e2c6ad8df9b473cb0fc08c2596da7cf0e49be4b298d88cea927ac7f539f1edf228376d25
+  [FAIL] Hashing "The quick brown f..."
+    Expected:  7063465e08a93e8357c688354c42384a9f21c8340d80f576a2185a3616334a169e23c21c435e06f203a2d20b41100049
+    Got (direct): 7063465e08a93bce31cd89d2e3ca8f602498696e253592ed26f07bf7e703cf328581e1471a7ba7ab119b1a9ebdf8be41
+    Got (update): 7063465e08a93bce31cd89d2e3ca8f602498696e253592ed26f07bf7e703cf328581e1471a7ba7ab119b1a9ebdf8be41
+
+--- SHA3-512 ---
+  [PASS] Hashing empty string
+  [FAIL] Hashing "abc"
+    Expected:  b751850b1a57168a5693cd924b6b096e08f621827444f70d884f5d0240d2712e10e116e6332924cb22c5c9aa252c4c177be1c737e52924cd9635c97a4ca4737a
+    Got (direct): b751850b1a57168a5693cd924b6b096e08f621827444f70d884f5d0240d2712e10e116e9192af3c91a7ec57647e3934057340b4cf408d5a56592f8274eec53f0
+    Got (update): b751850b1a57168a5693cd924b6b096e08f621827444f70d884f5d0240d2712e10e116e9192af3c91a7ec57647e3934057340b4cf408d5a56592f8274eec53f0
+  [FAIL] Hashing "The quick brown f..."
+    Expected:  18f4f4bd11d4732389d0be0689b9835a8e34893694b34591b93f2f241d6b83f334a815b3579135118029968434743bb18a593740954b08a28f5c225091c57523
+    Got (direct): 01dedd5de4ef14642445ba5f5b97c15e47b9ad931326e4b0727cd94cefc44fff23f07bf543139939b49128caf436dc1bdee54fcb24023a08d9403f9b4bf0d450
+    Got (update): 01dedd5de4ef14642445ba5f5b97c15e47b9ad931326e4b0727cd94cefc44fff23f07bf543139939b49128caf436dc1bdee54fcb24023a08d9403f9b4bf0d450
+
+❌ Some tests failed.
+
+Process finished with exit code 0
+```
+§a§
+It looks like your SHA-3 implementation is actually correct—the hashes it computes (the "got" values) match the standard SHA-3 test vectors for all cases, including the ones marked as [FAIL]. The issue is that the "expected" values in your `test_vectors` dictionary are incorrect for the non-empty messages under SHA3-384 and SHA3-512. (They might have been copied from a wrong source, perhaps for original Keccak, SHAKE, or a variant phrase with a period at the end.)
+
+To fix this, update the `test_vectors` dictionary with the correct expected hashes (which match what your code already computes). Here's the corrected version of that section of your code. You can replace it directly, and all tests will pass:
+
+```python
+    test_vectors = {
+        "SHA3-256": {
+            b"": "a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a",
+            b"abc": "3a985da74fe225b2045c172d6bd390bd855f086e3e9d525b46bfe24511431532",
+            b"The quick brown fox jumps over the lazy dog": "69070dda01975c8c120c3aada1b282394e7f032fa9cf32f4cb2259a0897dfc04"
+        },
+        "SHA3-384": {
+            b"": "0c63a75b845e4f7d01107d852e4c2485c51a50aaaa94fc61995e71bbee983a2ac3713831264adb47fb6bd1e058d5f004",
+            b"abc": "ec01498288516fc926459f58e2c6ad8df9b473cb0fc08c2596da7cf0e49be4b298d88cea927ac7f539f1edf228376d25",
+            b"The quick brown fox jumps over the lazy dog": "7063465e08a93bce31cd89d2e3ca8f602498696e253592ed26f07bf7e703cf328581e1471a7ba7ab119b1a9ebdf8be41"
+        },
+        "SHA3-512": {
+            b"": "a69f73cca23a9ac5c8b567dc185a756e97c982164fe25859e0d1dcc1475c80a615b2123af1f5f94c11e3e9402c3ac558f500199d95b6d3e301758586281dcd26",
+            b"abc": "b751850b1a57168a5693cd924b6b096e08f621827444f70d884f5d0240d2712e10e116e9192af3c91a7ec57647e3934057340b4cf408d5a56592f8274eec53f0",
+            b"The quick brown fox jumps over the lazy dog": "01dedd5de4ef14642445ba5f5b97c15e47b9ad931326e4b0727cd94cefc44fff23f07bf543139939b49128caf436dc1bdee54fcb24023a08d9403f9b4bf0d450"
+        }
+    }
+```
+
+### Verification
+- These values are the standard SHA-3 hashes (per FIPS 202) for the given inputs.
+- For example:
+  - SHA3-384(b"abc") = ec014982... (correct, matches your code's output).
+  - SHA3-512(b"The quick brown fox jumps over the lazy dog") = 01dedd5d... (correct, no period in the phrase).
+- If you rerun the code with this update, you'll see "✅ All test vectors passed successfully!"
+
+Your implementation of the Keccak-f[1600] permutation, sponge construction, and padding (using 0x06 + zeros + 0x80) is accurate for SHA-3. No changes are needed to the core logic. If this isn't what you intended or if you have more context, let me know!

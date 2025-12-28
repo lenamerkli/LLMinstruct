@@ -1,0 +1,37 @@
+§u§
+```
+{\small
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Merkmal} & \textbf{Externalismus} & \textbf{Internalismus}\\
+\hline
+Zugänglichkeitsforderung & Rechtfertigung/Wissens-Bedingungen können extern sein (zuverlässige Prozesse, Kausalbeziehungen), ohne dass das Subjekt sie kennt. & Rechtfertigende Faktoren müssen dem Subjekt intern zugänglich sein (durch Introspektion, Reflektion). \\
+\hline
+\end{tabular}
+}
+```
+Mache diese Tabelle mit Linebreaks
+§a§
+Natürlich! Hier ist die überarbeitete Version der Tabelle mit Zeilenumbrüchen in den Zellen, sodass der Text besser lesbar ist – besonders bei längeren Formulierungen:
+
+```latex
+{\small
+\begin{tabular}{|c|p{6cm}|p{6cm}|}
+\hline
+\textbf{Merkmal} & \textbf{Externalismus} & \textbf{Internalismus} \\
+\hline
+Zugänglichkeits-\\forderung &
+Rechtfertigung/Wissens-Bedingungen können extern sein (z.\,B. zuverlässige Erkenntnisprozesse, kausale Verbindungen), ohne dass das Subjekt diese kennt oder reflektieren kann.
+&
+Rechtfertigende Faktoren müssen dem Subjekt intern zugänglich sein, z.\,B. durch Introspektion oder rationale Reflektion. Nur was das Subjekt erkennen und überprüfen kann, zählt als Rechtfertigung. \\
+\hline
+\end{tabular}
+}
+```
+
+### Erläuterungen:
+- Ich habe den Spaltentyp von `c` auf `p{6cm}` geändert, um automatische Umbrüche innerhalb der Zellen zu ermöglichen.
+- „Zugänglichkeitsforderung“ wurde per `\\` in zwei Zeilen geteilt, um den Tabellenkopf optisch auszugleichen.
+- Der Text in den Zellen wurde etwas umformuliert, um die Lesbarkeit nach dem Umbruch zu verbessern.
+
+Du kannst die Breite `6cm` je nach Bedarf anpassen, abhängig vom Gesamtbreitenumfang deines Dokuments.

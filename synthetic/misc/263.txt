@@ -1,0 +1,43 @@
+§u§
+Angular 22:
+```
+ ng serve
+Initial chunk files | Names         | Raw size
+main.js             | main          | 66.77 kB |
+styles.css          | styles        |  8.87 kB |
+polyfills.js        | polyfills     | 95 bytes |
+
+                    | Initial total | 75.73 kB
+
+Application bundle generation complete. [2.708 seconds] - 2025-12-10T07:32:06.128Z
+
+▲ [WARNING] Deprecation [plugin angular-sass]
+
+    src/app/page/hash/hash.scss:1:8:
+      1 │ @import '../../../styles.scss';
+        ╵         ^
+
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+  More info and automated migrator: https://sass-lang.com/d/import
+
+
+▲ [WARNING] Deprecation [plugin angular-sass]
+
+    src/app/page/login/login.scss:2:8:
+      2 │ @import '../../../styles.scss';
+        ╵         ^
+
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+  More info and automated migrator: https://sass-lang.com/d/import
+
+
+Watch mode enabled. Watching for file changes...
+NOTE: Raw file sizes do not reflect development server per-request transformations.
+  ➜  Local:   http://localhost:4200/
+  ➜  press h + enter to show help
+```
+§a§

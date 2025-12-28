@@ -1,0 +1,186 @@
+§u§
+```latex
+\section{Lernziele}
+\subsection{Genetik: Genregulation bei Pro- und Eukaryoten}
+\begin{itemize}
+    \item Sie können erklären, was grundsätzlich unter Genregulation verstanden wird un durch welche Faktoren sie beeinflusst werden kann.
+    \item Sie können die Bedeutung der Genregulation für die Energieeffizienz und Anpassungsfähigkeit von Zellen präzise erläutern.
+    \item Sie können die funktionellen Einheiten eines Operons skizzieren und entsprechende Abbildungen korrekt mit Fachbegriffen beschriften.
+    \item SIe können die Substratinduktion mit Endproduktrepression vergleichen und beide Prinzipien anhand eines Beispiels (lac- und trp-Operon) von Prokaryoten erläutern.
+    \item Sie können zwischen den zwei Zuständen (`on', `off') von Operonen unterscheiden.
+    \item Sie können erklären, wieso solche Genregulationsmöglichkeiten einen evolutionären Überlebensvorteil bedeuten.
+    \item Sie können aufzeigen, weshalb die Genregulation bei Eukaryoten komplexer aufgebaut ist als bei Prokaryoten.
+    \item Sie können die verschiedenen möglichen Ebenen der Genregulation bei Eukaryoten anhand eines Beispiels erklären und systematisch miteinander vergleichen.
+    \item Sie können die epigenetische Regulation in eigenen Worten erklären.
+    \item Sie können aufzeigen, was Euchromatin und Heterochromatin molekularbiologisch unterscheidet.
+\end{itemize}
+
+\subsection{Gentechnik: Allgemeines}
+\begin{itemize}
+    \item Sie können in eigenen Worten erklären, was generell unter Gentechnik verstanden wird.
+    \item Sie können die grundlegenden Ziele der Gentechnik nennen und zuordnen.
+    \item Sie können erklären, weshalb der universale gentische Code eine Voraussetzung für die Übertragung von Genen zwischen Arten ist.
+    \item Sie können konkrete Beispiele der Gentechnik den fünf Anwenungsbereichen (rot, grün, blau, weiss, grau) korrekt zuordnen.
+    \item Sie können zwischen transgenen, cisgenen oder antisense Organismen unterscheiden und diese miteinander vergleichen.
+\end{itemize}
+
+\subsection{Gentechnik: transgene Organismen}
+\begin{itemize}
+    \item Sie können den grundlegenden Ablauf der Herstellung eines transgenen Organismus schrittweise und nachvollziehbar aufzeigen.
+    \item Sie können alle Teilschritte (Isolierung, Vektoren, Restriktion, Transformation, Selektion, Proteinproduktion) in eigenen Worten erläutern und grob skizzieren.
+    \item Sie können erklären, was ein Vektor ist und welche Transfektionsmethoden für welche Organismengruppen geeignet sind.
+    \item Sie können die Funktion von Restriktionsenzymen in Bakterien und im Labor veranschaulichen.
+    \item Sie können einzeichnen wie ein bestimmtes Restriktionsenzym die DNA schneidet, und entscheiden, ob dabei `sticky ends' oder `blunt ends' entstehen (Erkennungssequenzen werden angegeben, NICHT auswendig lernen).
+    \item Sie können den Nutzen von Restriktionsenzymen in der Gentechnik präzise erläutern.
+    \item Sie können `rekombinante DNA' definieren und veranschaulichen, wie diese mittels Restriktionsenzyme und Ligasen gezielt hergestellt wird.
+    \item Sie können Mindestens zwei Methoden aufzeigen, mit denen rekombinante Bakterien nach der Transfektion schrittweise selektioniert werden können.
+\end{itemize}
+
+\subsection{Gentechnik: Forensik, PCR}
+\begin{itemize}
+    \item Sie können erklären, welche DNA-Bereiche für einen genetischen Fingerabdruck grundsätzlich geeignet sind.
+    \item Sie können erläutern, inwiefern die Analyse repetitiver Sequenzen bei der Identifizierung von Individuen helfen kann.
+    \item Sie können in eigenen Worten beschreiben was `STR' bedeutet.
+    \item Sie können begründen weshalb STR-Regionen für die eindeutige Identifizierung besonders aussagekräftig sind.
+    \item Sie können erläutern, weshalb DNA vor der Analyse vervielfältigt werden muss (PCR).
+    \item Sie können den genauen Ablauf und die konkreten Komponenten einer PCR beschreiben oder skizzieren.
+    \item Sie können die Schritte der PCR (Denaturierung, Hybridisierung und Polymerisation) korrekt wiedergeben.
+    \item Sie können für ein gegebenes DNA-Segment Primer für die PCR entwerfen oder vorhersagen, wo ein gegebener Primer an die DNA bindet.
+    \item Sie können erklären wie durch die Elektrophorese Längenunterschiede in DNA-Fragmenten sichtbar gemacht werden und wie diese Interpretiert werden.
+    \item Sie können vergleichend erklären, wie die klassische Gelelektrophorese und die Kapillarelektrophorese funktionieren und sich unterscheiden.
+    \item Sie können STR-Muster (Banden oder Peaks) interpretieren (inkl. Bedeutung von Lage und Höhe der Peaks sowie Achsenbeschriftung) und daraus fundierte Aussagen zur Identifikation oder zu Verwandtschaftsverhältnissen ableiten.
+\end{itemize}
+
+\subsection{Gentechnik: CRISPR/Cas}
+\begin{itemize}
+    \item Sie können CRISPR/Cas9 mit früheren Genomeditierungsmethoden vergleichen und begründen, weshalb es als `bedeutenste Neuerung der Molekularbiologie' gilt.
+    \item Sie können die Funktion und den Ablauf des natürlichen CRISPR/Cas9 Systems in Bakterien strukturiert und in eigenen Worten ausführen.
+    \item Sie können erläutern, wie das natürliche CRISPR-System als gentechnische Methode genutzt werden kann und welche Anpassungen dafür nötig sind.
+    \item Sie können das natürliche CRISPR/Cas System mit dem künstlichen CRISPR/Cas System der Gentechnik vergleichen.
+    \item Sie können die Funktionen aller im Skript behandelten Komponenten des CRISPR-Systems (z. B. spacer, repeat, tracrRNA, tracrDNA, crRNA, gRNA, Cas-Gene, Cas-Proteine usw.) beschreiben und deren Zusammenspiel anhand Abbildungen erklären.
+    \item Sie können die beiden Reparaturmechanismen NHEJ und HDR beschreiben und erklären, wie sie in Kombination mit CRISPR zu Gen-Knockouts oder gezielten Genveränderungen führen.
+    \item Sie können erklären, wie man prinzipiell Gene einfügt oder funktionsunfähig macht mithilfe des CRISPR-Systems.
+    \item Sie können konzeptuell abgrenzen, für welche genetischen Krankheiten oder Eigenschaften CRISPR geeignet ist -- und für welche nicht.
+    \item Sie können wichtige Anwendungsbereiche von CRISPR nennen und ein aktuelles Beispiel in eigenen Worten erläutern.
+\end{itemize}
+```
+Überprüfe dieses Dokument auf Fehler.
+§a§
+Hier sind die Korrekturen für den LaTeX-Code, unterteilt in Rechtschreibung, Grammatik/Zeichensetzung und fachliche Anmerkungen.
+
+### 1. Rechtschreibung und Tippfehler
+
+*   **Abschnitt 1.1 (Genetik), Punkt 1:**
+    *   *Falsch:* „...verstanden wird **un** durch...“
+    *   *Korrektur:* „...verstanden wird **und** durch...“
+*   **Abschnitt 1.1 (Genetik), Punkt 4:**
+    *   *Falsch:* „**SIe** können...“
+    *   *Korrektur:* „**Sie** können...“
+*   **Abschnitt 1.2 (Gentechnik: Allgemeines), Punkt 3:**
+    *   *Falsch:* „...der universale **gentische** Code...“
+    *   *Korrektur:* „...der universale **genetische** Code...“
+*   **Abschnitt 1.2 (Gentechnik: Allgemeines), Punkt 4:**
+    *   *Falsch:* „...den fünf **Anwenungsbereichen**...“
+    *   *Korrektur:* „...den fünf **Anwendungsbereichen**...“
+*   **Abschnitt 1.3 (Transgene Organismen), Punkt 8:**
+    *   *Falsch:* „Sie können **Mindestens** zwei...“
+    *   *Korrektur:* „Sie können **mindestens** zwei...“ (Kleinschreibung im Satz)
+*   **Abschnitt 1.4 (Forensik, PCR), Punkt 9:**
+    *   *Falsch:* „...wie diese **Interpretiert** werden.“
+    *   *Korrektur:* „...wie diese **interpretiert** werden.“ (Verb, Kleinschreibung)
+*   **Abschnitt 1.5 (CRISPR/Cas), Punkt 1:**
+    *   *Falsch:* „...als ‚**bedeutenste** Neuerung...‘“
+    *   *Korrektur:* „...als ‚**bedeutendste** Neuerung...‘“ (da fehlt ein 'd')
+
+### 2. Grammatik und Zeichensetzung
+
+*   **Kommasetzung bei Nebensätzen:**
+    Es fehlen an mehreren Stellen Kommas vor Fragewörtern (wie, was, weshalb), die Nebensätze einleiten.
+    *   *Bsp:* „...einzeichnen**,** wie ein bestimmtes...“ (Abschnitt 1.3, Punkt 5)
+    *   *Bsp:* „...beschreiben**,** was ‚STR‘ bedeutet.“ (Abschnitt 1.4, Punkt 3)
+    *   *Bsp:* „...begründen**,** weshalb STR-Regionen...“ (Abschnitt 1.4, Punkt 4)
+    *   *Bsp:* „...erklären**,** wie durch die Elektrophorese...“ (Abschnitt 1.4, Punkt 9)
+*   **Bindestriche bei zusammengesetzten Begriffen:**
+    *   *Abschnitt 1.2, Punkt 5:* „...**antisense Organismen**...“ → Besser: „**Antisense-Organismen**“ (oder zumindest *Antisense Organismen*, aber im Deutschen werden zusammengesetzte Nomen gekoppelt).
+*   **Kasus (Fall):**
+    *   *Abschnitt 1.3, Punkt 7:* „...mittels Restriktionsenzyme...“
+    *   *Korrektur:* „...mittels **Restriktionsenzymen**...“ (Der Genitiv Plural ohne Artikel ist im Deutschen oft uneindeutig, daher wird hier meist der Dativ verwendet oder die Endung angepasst. Alternativ: „mithilfe von Restriktionsenzymen“).
+
+### 3. Fachliche / Terminologische Anmerkungen
+
+*   **Operonen vs. Operons:**
+    *   In Abschnitt 1.1, Punkt 3 nutzen Sie „Operons“ (korrekt), in Punkt 5 „Operonen“.
+    *   *Empfehlung:* Bleiben Sie einheitlich. Der Duden empfiehlt **Operons** als Plural, in der Fachsprache hört man beides, aber Konsistenz ist besser.
+*   **tracrDNA:**
+    *   In Abschnitt 1.5, Punkt 5 steht: „...spacer, repeat, tracrRNA, **tracrDNA**, crRNA...“
+    *   *Anmerkung:* Der Begriff **tracrDNA** ist im Kontext der CRISPR-Funktionsweise ungewöhnlich. Es gibt zwar die DNA-Sequenz, die für die tracrRNA codiert, aber als funktionelle Komponente des Komplexes (neben Cas9, crRNA, tracrRNA) wird sie meist nicht separat gelistet. Prüfen Sie, ob dieser Begriff in Ihrem Skript so definiert wurde. Falls nicht, ist es vermutlich ein Tippfehler.
+
+### Korrigierter LaTeX-Code (Ausschnitt)
+
+Hier ist der Code mit den eingearbeiteten Korrekturen:
+
+```latex
+\section{Lernziele}
+\subsection{Genetik: Genregulation bei Pro- und Eukaryoten}
+\begin{itemize}
+    \item Sie können erklären, was grundsätzlich unter Genregulation verstanden wird und durch welche Faktoren sie beeinflusst werden kann.
+    \item Sie können die Bedeutung der Genregulation für die Energieeffizienz und Anpassungsfähigkeit von Zellen präzise erläutern.
+    \item Sie können die funktionellen Einheiten eines Operons skizzieren und entsprechende Abbildungen korrekt mit Fachbegriffen beschriften.
+    \item Sie können die Substratinduktion mit Endproduktrepression vergleichen und beide Prinzipien anhand eines Beispiels (lac- und trp-Operon) von Prokaryoten erläutern.
+    \item Sie können zwischen den zwei Zuständen (`on', `off') von Operons unterscheiden.
+    \item Sie können erklären, wieso solche Genregulationsmöglichkeiten einen evolutionären Überlebensvorteil bedeuten.
+    \item Sie können aufzeigen, weshalb die Genregulation bei Eukaryoten komplexer aufgebaut ist als bei Prokaryoten.
+    \item Sie können die verschiedenen möglichen Ebenen der Genregulation bei Eukaryoten anhand eines Beispiels erklären und systematisch miteinander vergleichen.
+    \item Sie können die epigenetische Regulation in eigenen Worten erklären.
+    \item Sie können aufzeigen, was Euchromatin und Heterochromatin molekularbiologisch unterscheidet.
+\end{itemize}
+
+\subsection{Gentechnik: Allgemeines}
+\begin{itemize}
+    \item Sie können in eigenen Worten erklären, was generell unter Gentechnik verstanden wird.
+    \item Sie können die grundlegenden Ziele der Gentechnik nennen und zuordnen.
+    \item Sie können erklären, weshalb der universale genetische Code eine Voraussetzung für die Übertragung von Genen zwischen Arten ist.
+    \item Sie können konkrete Beispiele der Gentechnik den fünf Anwendungsbereichen (rot, grün, blau, weiss, grau) korrekt zuordnen.
+    \item Sie können zwischen transgenen, cisgenen oder Antisense-Organismen unterscheiden und diese miteinander vergleichen.
+\end{itemize}
+
+\subsection{Gentechnik: transgene Organismen}
+\begin{itemize}
+    \item Sie können den grundlegenden Ablauf der Herstellung eines transgenen Organismus schrittweise und nachvollziehbar aufzeigen.
+    \item Sie können alle Teilschritte (Isolierung, Vektoren, Restriktion, Transformation, Selektion, Proteinproduktion) in eigenen Worten erläutern und grob skizzieren.
+    \item Sie können erklären, was ein Vektor ist und welche Transfektionsmethoden für welche Organismengruppen geeignet sind.
+    \item Sie können die Funktion von Restriktionsenzymen in Bakterien und im Labor veranschaulichen.
+    \item Sie können einzeichnen, wie ein bestimmtes Restriktionsenzym die DNA schneidet, und entscheiden, ob dabei `sticky ends' oder `blunt ends' entstehen (Erkennungssequenzen werden angegeben, NICHT auswendig lernen).
+    \item Sie können den Nutzen von Restriktionsenzymen in der Gentechnik präzise erläutern.
+    \item Sie können `rekombinante DNA' definieren und veranschaulichen, wie diese mittels Restriktionsenzymen und Ligasen gezielt hergestellt wird.
+    \item Sie können mindestens zwei Methoden aufzeigen, mit denen rekombinante Bakterien nach der Transfektion schrittweise selektioniert werden können.
+\end{itemize}
+
+\subsection{Gentechnik: Forensik, PCR}
+\begin{itemize}
+    \item Sie können erklären, welche DNA-Bereiche für einen genetischen Fingerabdruck grundsätzlich geeignet sind.
+    \item Sie können erläutern, inwiefern die Analyse repetitiver Sequenzen bei der Identifizierung von Individuen helfen kann.
+    \item Sie können in eigenen Worten beschreiben, was `STR' bedeutet.
+    \item Sie können begründen, weshalb STR-Regionen für die eindeutige Identifizierung besonders aussagekräftig sind.
+    \item Sie können erläutern, weshalb DNA vor der Analyse vervielfältigt werden muss (PCR).
+    \item Sie können den genauen Ablauf und die konkreten Komponenten einer PCR beschreiben oder skizzieren.
+    \item Sie können die Schritte der PCR (Denaturierung, Hybridisierung und Polymerisation) korrekt wiedergeben.
+    \item Sie können für ein gegebenes DNA-Segment Primer für die PCR entwerfen oder vorhersagen, wo ein gegebener Primer an die DNA bindet.
+    \item Sie können erklären, wie durch die Elektrophorese Längenunterschiede in DNA-Fragmenten sichtbar gemacht werden und wie diese interpretiert werden.
+    \item Sie können vergleichend erklären, wie die klassische Gelelektrophorese und die Kapillarelektrophorese funktionieren und sich unterscheiden.
+    \item Sie können STR-Muster (Banden oder Peaks) interpretieren (inkl. Bedeutung von Lage und Höhe der Peaks sowie Achsenbeschriftung) und daraus fundierte Aussagen zur Identifikation oder zu Verwandtschaftsverhältnissen ableiten.
+\end{itemize}
+
+\subsection{Gentechnik: CRISPR/Cas}
+\begin{itemize}
+    \item Sie können CRISPR/Cas9 mit früheren Genomeditierungsmethoden vergleichen und begründen, weshalb es als `bedeutendste Neuerung der Molekularbiologie' gilt.
+    \item Sie können die Funktion und den Ablauf des natürlichen CRISPR/Cas9 Systems in Bakterien strukturiert und in eigenen Worten ausführen.
+    \item Sie können erläutern, wie das natürliche CRISPR-System als gentechnische Methode genutzt werden kann und welche Anpassungen dafür nötig sind.
+    \item Sie können das natürliche CRISPR/Cas System mit dem künstlichen CRISPR/Cas System der Gentechnik vergleichen.
+    \item Sie können die Funktionen aller im Skript behandelten Komponenten des CRISPR-Systems (z. B. spacer, repeat, tracrRNA, crRNA, gRNA, Cas-Gene, Cas-Proteine usw.) beschreiben und deren Zusammenspiel anhand Abbildungen erklären.
+    \item Sie können die beiden Reparaturmechanismen NHEJ und HDR beschreiben und erklären, wie sie in Kombination mit CRISPR zu Gen-Knockouts oder gezielten Genveränderungen führen.
+    \item Sie können erklären, wie man prinzipiell Gene einfügt oder funktionsunfähig macht mithilfe des CRISPR-Systems.
+    \item Sie können konzeptuell abgrenzen, für welche genetischen Krankheiten oder Eigenschaften CRISPR geeignet ist -- und für welche nicht.
+    \item Sie können wichtige Anwendungsbereiche von CRISPR nennen und ein aktuelles Beispiel in eigenen Worten erläutern.
+\end{itemize}
+```

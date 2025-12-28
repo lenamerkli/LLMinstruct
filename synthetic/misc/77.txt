@@ -1,0 +1,99 @@
+§u§
+```
+\documentclass[12pt, a4paper]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[hyphens]{url}
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage{pdfpages}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{pgfplots}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{setspace}
+\usepackage[backend=biber, style=authoryear, sorting=nty, urldate=long]{biblatex}
+
+\pgfplotsset{compat=1.18}
+
+\DeclareNameAlias{sortname}{family-given} % https://tex.stackexchange.com/questions/361486/mixed-last-first-and-first-last-names-in-reference-list
+\renewcommand{\cite}[1]{\textit{\parencite{#1}}}
+
+\setcounter{biburlnumpenalty}{100} % https://tex.stackexchange.com/questions/22854/url-line-breaks-with-biblatex
+\setcounter{biburlucpenalty}{100}
+\setcounter{biburllcpenalty}{100}
+
+\hypersetup{
+    breaklinks=true,
+}
+
+\titleformat{\chapter}[block]
+  {\normalfont\huge\bfseries}{\thechapter.}{1em}{\Huge} % tex.stackexchange.com/questions/18604/chapter-formatting
+\titlespacing*{\chapter}{0pt}{-19pt}{0pt}
+
+\addbibresource{references.bib}
+
+
+\begin{document}
+```
+This is the beginning of my paper. How can I remove the coloured boxes around links?
+§a§
+To **remove the colored boxes around links** (such as those created by `\cite`, URLs, or section links) in your LaTeX document using the `hyperref` package, you need to modify the `hypersetup` options.
+
+By default, `hyperref` adds colored borders (usually red or blue boxes) around clickable links for visibility in the PDF. These are called **link borders** or **annotations**. To remove them, use the `hidelinks` option.
+
+### ✅ Solution: Add `hidelinks` to `\hypersetup`
+
+Replace or update your current `\hypersetup` block like this:
+
+```latex
+\hypersetup{
+    breaklinks=true,
+    hidelinks
+}
+```
+
+Or, if you want more explicit control:
+
+```latex
+\hypersetup{
+    breaklinks=true,
+    hidelinks,
+    colorlinks=false,     % disables colored links
+    pdfborder={0 0 0},    % ensures no border box
+}
+```
+
+But in practice, `hidelinks` alone is sufficient and commonly used.
+
+---
+
+### 🔍 What `hidelinks` does:
+- Removes colored boxes (borders) around hyperlinks
+- Removes background/foreground colors from links
+- Keeps the links clickable in the PDF
+- Improves aesthetics for printed or submitted documents
+
+---
+
+### 📝 Updated Code Snippet
+
+```latex
+\hypersetup{
+    breaklinks=true,
+    hidelinks
+}
+```
+
+That’s it! Now when you compile (with PDFLaTeX or similar), all colored boxes around citations, URLs, table of contents entries, etc., will be gone — but the links will still work in the PDF.
+
+✅ Example effect:
+- `\cite{smith2020}` will appear as *italic text in parentheses*, without a colored box.
+- URLs and TOC links will be plain text but still clickable.
+
+Let me know if you'd prefer to keep **colored text** but **no boxes** (e.g., blue text without underlines/boxes) — that’s also possible!

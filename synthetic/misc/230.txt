@@ -1,0 +1,33 @@
+§u§
+bash get all recent commands that contain `onedrive`
+§a§
+# Search Bash History for "onedrive"
+
+## Quick Methods
+
+**Using `history` command with grep:**
+```bash
+history | grep onedrive
+```
+
+**Case-insensitive search:**
+```bash
+history | grep -i onedrive
+```
+
+**Search directly in history file:**
+```bash
+grep onedrive ~/.bash_history
+```
+
+## For Zsh Users
+```bash
+grep onedrive ~/.zsh_history
+```
+
+## Interactive Search
+Press `Ctrl + R` and type `onedrive` to reverse-search through your history interactively.
+
+---
+
+The `history | grep` method shows command numbers, while searching the file directly just shows the commands.

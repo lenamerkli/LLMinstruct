@@ -1,0 +1,25 @@
+§u§
+Are there any worldedit commands to remove water (including waterlocked, but not the waterlocked blocks itself)?
+§a§
+**Yes, WorldEdit provides commands to remove both regular water blocks and water from waterlogged blocks (like slabs, stairs, etc.) while preserving the blocks themselves.**
+
+### For Local Pools (Point-Based, No Selection Needed)
+- **//drain [-w] <radius>**  
+  Drains connected water (or lava) starting from your position within the specified radius.  
+  - The `-w` flag also un-waterlogs any waterlogged blocks in the area, leaving them dry.  
+  - **Example**: `//drain -w 50` (drains a 50-block radius pool, including waterlogged blocks).  
+  - **Note**: Only affects connected liquids; non-connected pools need separate commands. Blocks like kelp or seagrass can't be un-waterlogged (they require `//removenear kelp 50` first).
+
+### For a Selected Region (Full Removal)
+1. Select your region (e.g., `//wand`, left-click pos1, right-click pos2, `//sel cuboid`).  
+2. **//replace water air**  
+   Removes all regular water blocks (source and flowing) in the selection, replacing them with air.  
+3. **//set ^[waterlogged=false]**  
+   Dries all waterlogged blocks in the selection by setting their `waterlogged` state to `false`, without changing block types. Non-waterloggable blocks are unaffected.  
+
+- **Combined Effect**: Clears all water sources while keeping waterlogged blocks intact.  
+- **Alternative for Step 3** (more targeted):  
+  `//mask ^[waterlogged=true]` (masks only wet waterlogged blocks), then `//set ^[waterlogged=false]`, then `//mask` to clear.  
+- **Pro Tip**: The `^` prefix in patterns preserves the original block type and applies only the specified state change (e.g., `waterlogged`).
+
+These work in WorldEdit 7.3+ (current as of 2025). Test in a creative world 

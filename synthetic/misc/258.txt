@@ -1,0 +1,82 @@
+§u§
+Wie füge ich biblatex zu einem
+```
+\documentclass[
+  DIN,          
+  A4,           
+  fontsize=12pt,
+  parskip=half-,
+]{scrlttr2}
+```
+hinzu?
+§a§
+Um BibLaTeX zu einem LaTeX-Dokument mit der KOMA-Script-Klasse `scrlttr2` hinzuzufügen, musst du es im Präambel laden und einige Anpassungen vornehmen, da `scrlttr2` (eine Briefklasse) standardmäßig kein `\section`-Kommando definiert, das BibLaTeX für die Überschrift der Bibliographie benötigt. Hier ist eine schrittweise Anleitung, basierend auf bewährten Lösungen. Ich gehe davon aus, dass du eine `.bib`-Datei (z. B. `literatur.bib`) hast, in der deine Quellen gespeichert sind.
+
+### 1. **Lade BibLaTeX im Präambel**
+Füge nach `\documentclass` und vor `\begin{document}` (also im Präambel-Bereich) die folgende Zeile hinzu:
+
+```latex
+\usepackage[style=numeric, backend=biber]{biblatex}  % Ersetze 'numeric' durch deinen gewünschten Stil (z. B. 'authoryear')
+\addbibresource{literatur.bib}  % Ersetze 'literatur.bib' durch den Namen deiner .bib-Datei
+```
+
+- **Erklärung**: 
+  - `style=numeric` ist ein Standardstil (nummerierte Referenzen). Andere Optionen: `authoryear` für Autor-Jahr-System oder `alphabetic` für alphabetische Labels. Passe es an deine Bedürfnisse an.
+  - `backend=biber` ist der empfohlene Backend (besser als `bibtex`). Stelle sicher, dass Biber in deiner LaTeX-Umgebung installiert ist (z. B. in Overleaf oder TeXLive).
+  - `\addbibresource` lädt deine Bibliographie-Datei. Der Pfad ist relativ zum Haupt-.tex-File.
+
+### 2. **Definiere eine benutzerdefinierte Überschrift für die Bibliographie**
+Da `scrlttr2` kein `\section` hat, erstelle eine eigene Heading-Definition im Präambel (nach dem Laden von BibLaTeX):
+
+```latex
+\defbibheading{letterbib}[\refname]{#1}  % #1 ist der Titel (z. B. "Literaturverzeichnis")
+```
+
+- **Erklärung**: 
+  - Dies definiert eine Heading namens `letterbib`, die den Standardtitel (sprachspezifisch, z. B. "References" oder "Literaturverzeichnis") verwendet, ohne auf `\section` angewiesen zu sein.
+  - Optional: Passe die Formatierung an, z. B. für fette Überschrift: `\defbibheading{letterbib}[\refname]{\textbf{#1}}`.
+  - Wenn du "Bibliography" statt "References" bevorzugst, verwende `[\bibname]` statt `[\refname]`.
+
+### 3. **Zitiere Quellen im Dokumenttext**
+Verwende `\cite{schlüssel}` oder ähnliche Befehle, wo du referenzieren möchtest. Beispiel:
+
+```latex
+\documentclass[
+  DIN,          
+  A4,           
+  fontsize=12pt,
+  parskip=half-,
+]{scrlttr2}
+
+\usepackage[style=numeric, backend=biber]{biblatex}
+\addbibresource{literatur.bib}
+\defbibheading{letterbib}[\refname]{#1}
+
+\begin{document}
+\begin{letter}{Empfänger\\Adresse}
+\opening{Sehr geehrte Damen und Herren,}
+
+Hier eine Referenz: \cite{beispielquelle}.
+
+\closing{Mit freundlichen Grüßen}
+\end{letter}
+
+\printbibliography[heading=letterbib]  % Platziere dies nach dem Briefinhalt
+\end{document}
+```
+
+- **Erklärung**: 
+  - Zitiere mit `\cite{schlüssel}`, wobei `schlüssel` der Eintrag aus deiner `.bib`-Datei ist.
+  - Die Bibliographie wird mit `\printbibliography[heading=letterbib]` am Ende des Dokuments ausgegeben. In `scrlttr2` platziere sie idealerweise nach `\end{letter}`, aber vor `\end{document}`, um sie als Anhang zum Brief zu haben.
+
+### 4. **Kompiliere das Dokument**
+- Kompiliere mit: `pdflatex datei.tex` → `biber datei` → `pdflatex datei.tex` (zweimal, um Referenzen aufzulösen).
+- In Editoren wie Overleaf: Stelle im Menü auf "Biber" als Bibliographie-Backend um.
+
+### Hinweise und mögliche Probleme
+- **Kompatibilität**: Diese Methode macht BibLaTeX vollständig kompatibel mit `scrlttr2`, ohne die Klasse zu verändern. Es funktioniert auch mit mehreren Briefen in einem Dokument (z. B. in einer `\begin{letter}`-Umgebung).
+- **Sprache**: Für deutsche Dokumente lade `\usepackage[ngerman]{babel}` und setze `language=ngerman` in BibLaTeX-Optionen, um Überschriften wie "Literaturverzeichnis" zu bekommen.
+- **Fehlerbehebung**: Wenn du einen Fehler wie "Undefined control sequence \section" bekommst, liegt es an der fehlenden Heading-Definition – die obige Lösung behebt das.
+- **Weitere Anpassungen**: Für erweiterte Optionen (z. B. Sortierung) schau in die BibLaTeX-Dokumentation. Wenn du eine spezifische `.bib`-Datei oder Stil brauchst, passe die Beispiele an.
+
+Falls du mehr Details zu deiner `.bib`-Datei oder einem bestimmten Stil angibst, kann ich die Anleitung präziser machen.

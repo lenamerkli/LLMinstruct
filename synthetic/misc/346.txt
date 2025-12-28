@@ -1,0 +1,60 @@
+§u§
+Wie räumt Descartes den radikalen Zweifel vom Anfang der Meditationen aus und woran scheitert seine Überlegung letztlich?
+§a§
+ ## Descartes' Aufhebung des radikalen Zweifels und ihre systematische Aporie
+
+Descartes entfaltet in *Meditationes de prima philosophia* (1641) eine dreistufige Strategie, den anfänglichen Zweifel zu überwinden, die jedoch in einen schwerwiegenden Zirkelschluss mündet.
+
+---
+
+### 1. Die Architektur der Zweifelsaufhebung
+
+#### **Stufe 1: Das cogito als epistemischer Grundanker**
+Der radikale Zweifel erreicht seinen Höhepunkt in der dritten Meditation mit dem *deus deceptor*-Gedanken: Ein allmächtiger, böser Gott könnte sogar die mathematischen Wahrheiten ($2+3=5$) systematisch täuschen. Descartes findet jedoch einen unbezweifelbaren Felsen:
+
+>  »Cogito, ergo sum« –  »Ich denke, also bin ich.«
+
+Die Gewissheit des eigenen Denkensvollzugs übersteht jeden Zweifel, da das Zweifeln selbst bereits ein Denken ist. Dies liefert Descartes **eine unerschütterliche erste Gewissheit**, die nicht aus der Welt, sondern aus der Selbstreflexion des Subjekts gewonnen wird (res cogitans).
+
+#### **Stufe 2: Der Gottesbeweis als Garantie der Erkenntnisfähigkeit**
+Das cogito allein reicht nicht, um die Außenwelt zu rehabilitieren. Descartes muss beweisen, dass Gott:
+1. **Existiert** (zwei Beweise: ontologischer Beweis aus der Idee der Vollkommenheit, sowie kosmologischer Beweis aus der Endlichkeit des Ich)
+2. **Kein deceptor** ist, sondern ein *ens perfectissimum* (vollkommenstes Wesen)
+
+Aus Gottes Vollkommenheit folgt nach Descartes das **Wahrheitsprinzip**:  
+»Was ich klar und deutlich (*clare et distincte*) erkenne, ist notwendigerweise wahr.«  
+Gott garantiert die Übereinstimmung von Erkenntnis und Sein, weil ein guter Gott keine systematische Täuschung zulassen kann.
+
+#### **Stufe 3: Rehabilitierung der Welt**
+Mit der Gottesgarantie im Rücken kann Descartes den Zweifel an der Außenwelt (*res extensa*) zurücknehmen. Die mathematische Naturwissenschaft wird wieder möglich, da ihre Prinzipien klar und deutlich erkennbar sind.
+
+---
+
+### 2. Das systematische Scheitern: Der *Cartesian Circle*
+
+Die Argumentation kollabiert jedoch in einen **vicious circle** (erstmals von Antoine Arnauld identifiziert):
+
+#### **Der Zirkel**
+1. Descartes benötigt **Gott** als Garanten für die Wahrheit des klar und deutlich Erkannten.
+2. Der Gottesbeweis selbst beruht jedoch auf **Prämissen**, die nur gelten, wenn das klar und deutlich Erkannte bereits wahr ist.
+
+**Formale Struktur des Zirkels:**
+- Behauptung: $P \rightarrow Q$ (Wenn Gott existiert, dann ist klar/distinkte Erkenntnis wahr)
+- Beweis für $P$ (Gott existiert) verwendet $Q$ als Validitätskriterium
+- Also: $Q \rightarrow P$
+
+Die Argumentation ist zirkulär: Ohne vorherige Gewissheit der Erkenntnis kann kein Gottesbeweis gelingen, aber ohne Gottesbeweis gibt es keine Gewissheit.
+
+#### **Weitere Aporien**
+
+1. **Subjekt-Objekt-Spaltung**: Durch die radikale Trennung von *res cogitans* und *res extensa* entsteht das **Leib-Seele-Problem**: Wie kann ein denkendes Subjekt auf eine materielle Welt zugreifen? Descartes' Lösung über den *pinealis*-Zentralort im Gehirn ist ad hoc und unbefriedigend.
+
+2. **Der *deus deceptor* kehrt zurück**: Die Vollkommenheit Gottes wird aus der Idee der Vollkommenheit abgeleitet. Doch der Zweifel konnte ebensogut von Gott selbst kommen – warum sollte eine Idee im endlichen Geist die wahre Natur Gottes garantieren?
+
+3. **Intersubjektivitätsproblem**: Das *cogito* ist solipsistisch. Die Rehabilitierung der Welt bleibt eine private Leistung des Einzelnen. Descartes kann nicht erklären, wie verschiedene *cogitos* eine gemeinsame objektive Welt erreichen.
+
+---
+
+### 3. Fazit
+
+Descartes’ Genie liegt in der **methodischen Radikalisierung des Zweifels** zur Fundierung von Gewissheit. Das Scheitern ist jedoch systembedingt: Er kann die **Selbstgewissheit des Subjekts** nur mit **metaphysischer Garantie** verbinden, muss diese Garantie aber aus eben jener noch unsicheren Subjektivität beweisen. Der *Cartesian Circle* markiert die **unauflösbare Spannung** zwischen autonomem Subjekt und objektiver Wahrheit – ein Dilemma, das erst Kant mit seiner transzendentalen Wende zu lösen versucht.

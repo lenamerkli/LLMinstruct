@@ -1,0 +1,487 @@
+§u§
+```python
+class LLaMaCPP:
+
+    def __init__(self):
+        """
+        Initialize a new instance of LLaMaCPP
+        """
+        super().__init__()
+        self._model_name = None
+        self._process = None
+        self._readers = 0
+        self._read_lock = Lock()
+        self._write_lock = Lock()
+        self._port = 8432
+
+    def _add_reader(self):
+        with self._read_lock:
+            self._readers += 1
+            if self._readers == 1:
+                self._write_lock.acquire()
+
+    def _remove_reader(self):
+        with self._read_lock:
+            self._readers -= 1
+            if self._readers == 0:
+                self._write_lock.release()
+
+    @staticmethod
+    def min_none(a: t.Any, b: t.Any) -> t.Any:
+        """
+        Returns the minimum of two values, or the single value if one of them is None.
+
+        :param a: First value
+        :param b: Second value
+        :return: The minimum of a and b, or a/b if one of them is None
+        """
+        if a is None:
+            return b
+        if b is None:
+            return a
+        return min(a, b)
+
+    def calculate_offload_layers(self, model_name: str, short_model_name: str) -> int:
+        """
+        Calculates the number of layers to offload
+
+        :param model_name: The name of the model
+        :param short_model_name: The short name of the model
+        :return: The number of layers to offload
+        """
+        free_vram = self.check_free_vram() - 256
+        llm_size = getsize(f"/opt/llms/{model_name}") / (1024 ** 2)  # from bytes to MiB
+        llm_size = llm_size * 1.1  # Adjust for fluctuation
+        layers = LOCAL_MODELS[short_model_name]['layers']
+        vram_per_layer = llm_size / layers
+        return min(int(free_vram / vram_per_layer), layers)
+
+    @staticmethod
+    def check_free_vram() -> int:
+        """
+        Checks the amount of free VRAM on the GPU
+
+        :return: The amount of free VRAM in MiB
+        :raises Exception: If `nvidia-smi` fails
+        """
+        # BEGIN https://discuss.pytorch.org/t/it-there-anyway-to-let-program-select-free-gpu-automatically/17560
+        nvidia_smi = run([
+            'nvidia-smi',
+            '--query-gpu=memory.free',
+            '--format=csv,nounits,noheader'
+        ], stdout=PIPE, text=True)
+        # END https://discuss.pytorch.org/t/it-there-anyway-to-let-program-select-free-gpu-automatically/17560
+        if nvidia_smi.returncode != 0:
+            raise Exception(nvidia_smi.stderr)
+        return int(nvidia_smi.stdout)
+
+    def set_model(self, model_name: str) -> None:
+        """
+        Sets the model to use
+
+        :param model_name: The file name of the model to use, including the `.gguf` extension
+        :return: None
+        :raises Exception: If the model is not found
+        """
+        if model_name not in self.list_available_models():
+            raise Exception(f"Model {model_name} not found")
+        with self._write_lock:
+            self._model_name = model_name
+
+    def get_model(self) -> str:
+        return self._model_name
+
+    def load_model(
+            self,
+            print_log: bool = False,
+            seed: int = None,
+            threads: int = None,
+            kv_cache_type: t.Optional[t.Literal['f16', 'bf16', 'q8_0', 'q5_0', 'q4_0']] = None,
+            context: int = None,
+            temperature: float = None,
+            top_p: float = None,
+            top_k: int = None,
+            min_p: float = None,
+            cpu_only: bool = False,
+    ) -> None:
+        """
+        Load the selected model into memory
+
+        :param print_log: Whether to print the stdout from llama.cpp into the stdout
+        :param seed: Random seed for reproducible outputs
+        :param threads: The number of threads to use (default: 16)
+        :param kv_cache_type: The type of key-value cache to use (default: q8_0)
+        :param context: The maximum context size to allocate (depends on the model's default)
+        :param temperature: Controls randomness in generation. Higher values (e.g., 0.8) make output more random, lower values (e.g., 0.2) make it more deterministic
+        :param top_k: Limits sampling to the k most likely tokens at each step. If set to 0 or None, no limit is applied
+        :param top_p: Nucleus sampling - only considers tokens whose cumulative probability exceeds the probability threshold p
+        :param min_p: Minimum probability threshold for token sampling - excludes tokens below this probability
+        :param cpu_only: Use CPU-only mode
+        :return: None
+        :raises Exception: If a model is already loaded, the model name is not set, or the model is not found
+        """
+        if self.process_is_alive():
+            raise Exception("A model is already loaded. Use stop() before loading a new model.")
+        if self._model_name is None:
+            raise Exception("Model not set")
+        short_name = self.short_model_name(self._model_name)
+        if short_name is None:
+            raise Exception(f"Model {self._model_name} not found")
+        # BEGIN https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md
+        if seed is None:
+            seed = -1
+        if threads is None:
+            threads = 16
+        if kv_cache_type is None:
+            kv_cache_type = 'q8_0'
+        context = self.min_none(context, LOCAL_MODELS[short_name]['context'])
+        index = 'sampling'
+        if index not in LOCAL_MODELS[short_name]:
+            index = 'sampling_thinking'
+        if temperature is None:
+            temperature = LOCAL_MODELS[short_name][index]['temperature']
+        if top_p is None:
+            top_p = LOCAL_MODELS[short_name][index]['top_p']
+        if top_k is None:
+            top_k = LOCAL_MODELS[short_name][index]['top_k']
+        if min_p is None:
+            min_p = LOCAL_MODELS[short_name][index]['min_p']
+        while is_port_in_use(self._port):
+            self._port += 1
+        with self._write_lock:
+            if not cpu_only:
+                offload_layers = self.calculate_offload_layers(self._model_name, short_name)
+            else:
+                offload_layers = 0
+            print(f"Loading model {self._model_name} with {offload_layers} layers offloaded")
+            command = [
+                '/opt/llama.cpp/bin/llama-server',
+                '--threads', str(threads),
+                '--ctx-size', str(context),
+                '--no-escape',
+                '--cache-type-k', kv_cache_type,
+                '--cache-type-v', kv_cache_type,
+                '--mlock',
+                '--n-gpu-layers', str(offload_layers),
+                '--model', f'/opt/llms/{self._model_name}',
+                '--seed', str(seed),
+                '--temp', str(temperature),
+                '--top-k', str(top_k),
+                '--top-p', str(top_p),
+                '--min-p', str(min_p),
+                '--host', '127.0.0.1',
+                '--port', str(self._port),
+                '--alias', short_name,
+                '--slots',
+                '--metrics',
+                '--parallel', '2',
+            ]
+            # END https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md
+            if print_log:
+                stdout = None
+                stderr = None
+                print(command)
+            else:
+                stdout = PIPE
+                stderr = PIPE
+            self._process = Popen(command, stdout=stdout, stderr=stderr, text=True)
+        return None
+
+    def apply_chat_template(self, conversation: t.List[t.Dict[str, str]], enable_thinking: bool = False) -> str:
+        """
+        Applies the chat template to the conversation
+
+        :param conversation: The conversation in ChatML format
+        :param enable_thinking: Whether to enable thinking (only supported on certain models)
+        :return: The conversation as a string
+        """
+        short_name = self.short_model_name(self._model_name)
+        chat_template: str = LOCAL_MODELS[short_name]['chat_template']
+        template = Template(chat_template)
+        options: t.Dict[str, t.Any] = {
+            'messages': conversation,
+            'tools': [],
+            'add_generation_prompt': True,
+            'enable_thinking': False,
+        }
+        if LOCAL_MODELS[short_name]['thinking']:
+            if LOCAL_MODELS[short_name]['optional_thinking']:
+                options['enable_thinking'] = enable_thinking
+            else:
+                options['enable_thinking'] = True
+        else:
+            options['enable_thinking'] = False
+        return template.render(**options)
+
+    def generate(self, prompt: t.Union[str, t.List[t.Dict[str, str]]], enable_thinking: bool = False, temperature: float = None, top_k: int = None, top_p: float = None, min_p: float = None, n_predict: int = None, grammar: str = None, seed: int = None) -> str:
+        """
+        Generate an answer or completion using the large language model based on the prompt
+        
+        :param prompt: Either a string containing the prompt text or a list of message dictionaries in ChatML format
+        :param enable_thinking: Whether to enable the model's thinking mode, if supported by the model
+        :param temperature: Controls randomness in generation. Higher values (e.g., 0.8) make output more random, lower values (e.g., 0.2) make it more deterministic
+        :param top_k: Limits sampling to the k most likely tokens at each step. If set to 0 or None, no limit is applied
+        :param top_p: Nucleus sampling - only considers tokens whose cumulative probability exceeds the probability threshold p
+        :param min_p: Minimum probability threshold for token sampling - excludes tokens below this probability
+        :param n_predict: Maximum number of tokens to predict/generate
+        :param grammar: Optional grammar constraints for structured generation
+        :param seed: Random seed for reproducible outputs
+        :return: The generated text response from the model
+        :raises Exception: If the model is not loaded or the request fails
+        """
+        if isinstance(prompt, list):
+            prompt = self.apply_chat_template(prompt, enable_thinking)
+        json_data: t.Dict[str, t.Any] = {
+            'prompt': prompt,
+        }
+        # BEGIN https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md
+        if temperature is not None:
+            json_data['temperature'] = temperature
+        if top_k is not None:
+            json_data['top_k'] = top_k
+        if top_p is not None:
+            json_data['top_p'] = top_p
+        if min_p is not None:
+            json_data['min_p'] = min_p
+        if n_predict is not None:
+            json_data['n_predict'] = n_predict
+        if grammar is not None:
+            json_data['grammar'] = grammar
+        if seed is not None:
+            json_data['seed'] = seed
+        self._add_reader()
+        try:
+            # req = request('POST', f"http://127.0.0.1:{self._port}/completion", json=json_data)
+            # if req.status_code != 200:
+            #     raise Exception(req.text)
+            # json_return = req.json()
+            # return json_return['content']
+            value = stream_passthrough_llama_cpp(json_data, self._port)
+            return value
+        # END https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md
+        finally:
+            self._remove_reader()
+
+    def generate_probabilites(self, prompt: t.Union[str, t.List[t.Dict[str, str]]], enable_thinking: bool = False, temperature: float = None, top_k: int = None, top_p: float = None, min_p: float = None, grammar: str = None, seed: int = None) -> dict:
+        
+
+    def process_is_alive(self) -> bool:
+        """
+        Checks if the process is still running
+
+        :return: True if the process is running, False otherwise
+        """
+        self._add_reader()
+        try:
+            if self._process is None:
+                return False
+            return self._process.poll() is None
+        finally:
+            self._remove_reader()
+
+    def is_loading(self) -> bool:
+        """
+        Checks if the model is loading
+
+        :return: True if the model is loading, False otherwise
+        """
+        self._add_reader()
+        try:
+            req = request('GET', f"http://127.0.0.1:{self._port}/health")
+            return req.status_code == 503
+        except RequestException:
+            return False
+        finally:
+            self._remove_reader()
+
+    def is_running(self) -> bool:
+        """
+        Checks if the model is running
+
+        :return: True if the model is running, False otherwise
+        """
+        self._add_reader()
+        try:
+            req = request('GET', f"http://127.0.0.1:{self._port}/health")
+            return req.status_code == 200
+        except RequestException:
+            return False
+        finally:
+            self._remove_reader()
+
+    def has_error(self) -> bool:
+        """
+        Checks if the model has an error
+
+        :return: True if the model has an error, False otherwise
+        """
+        self._add_reader()
+        try:
+            req = request('GET', f"http://127.0.0.1:{self._port}/health")
+            return req.status_code not in [200, 503]
+        except RequestException:
+            return True
+        finally:
+            self._remove_reader()
+
+    def stop(self) -> None:
+        """
+        Stop the model
+        """
+        with self._write_lock:
+            if self._process is None:
+                return None
+            self._process.terminate()
+            return None
+
+    def kill(self):
+        """
+        Kill the model using SIGKILL
+        """
+        with self._write_lock:
+            if self._process is None:
+                return None
+            self._process.kill()
+            return None
+
+    def get_system_message(self) -> t.List[t.Dict[str, str]]:
+        """
+        Get the system message for the selected model
+
+        :return: The system message in ChatML format
+        """
+        short_name = self.short_model_name(self._model_name)
+        system_message = LOCAL_MODELS[short_name]['system_message']
+        if system_message == '':
+            return []
+        return [{'role': 'system', 'content': system_message}]
+
+    @staticmethod
+    def list_available_models() -> t.List[str]:
+        """
+        List available models
+        """
+        directory_list = listdir('/opt/llms/')
+        model_list = []
+        for entry in directory_list:
+            if entry.endswith('.gguf') and LLaMaCPP.short_model_name(entry) is not None:
+                model_list.append(entry)
+        return model_list
+
+    @staticmethod
+    def short_model_name(model_name: str) -> t.Optional[str]:
+        """
+        Extract the short model name from the long model file name
+
+        :param model_name: The long model file name
+        :return: The short model name (or None if not found)
+        """
+        for model in sorted(LOCAL_MODELS.keys(), key=lambda x: len(x) , reverse=True):
+            if model_name.startswith(model):
+                return model
+        return None
+
+def stream_passthrough_llama_cpp(json_data: dict, port: int) -> str:
+    json_data['stream'] = True
+    url = f"http://127.0.0.1:{port}/completion"
+    response = request('POST', url, json=json_data, stream=True)
+    if response.status_code != 200:
+        raise Exception(response.text)
+    full_content = ""
+    print(json_data['prompt'], end='\n', flush=True)
+    for line in response.iter_lines():
+        if not line:
+            continue
+        if line.startswith(b'data: '):
+            try:
+                event_data = loads(line[len('data: '):])
+                token = event_data.get('content', '')
+                full_content += token
+                if token:
+                    print(token, end='', flush=True)
+                if event_data.get('stop', False):
+                    break
+            except JSONDecodeError:
+                print(f"[ERROR] Invalid JSON: {line}", file=sys.stderr)
+    print('\n')
+    return full_content
+```
+This is my current code. Help me implement the function `generate_probabilites()`. It should give the probability for each of the next tokens. It may be limited to the most probable tokens.
+§a§
+To implement the `generate_probabilites` function (keeping your spelling from the snippet), we need to hit the `/completion` endpoint of the `llama.cpp` server with the `n_probs` parameter. This parameter instructs the server to return the top probabilities for the generated tokens.
+
+Since you are looking for the "next tokens" (prediction), we set `n_predict` to `1` to generate just the single next step and analyze its probability distribution.
+
+Here is the complete implementation for the method:
+
+```python
+    def generate_probabilites(self, prompt: t.Union[str, t.List[t.Dict[str, str]]], enable_thinking: bool = False, temperature: float = None, top_k: int = None, top_p: float = None, min_p: float = None, grammar: str = None, seed: int = None) -> dict:
+        """
+        Generate the probabilities for the next tokens based on the prompt
+        
+        :param prompt: The input prompt
+        :param enable_thinking: Enable thinking mode (if applicable)
+        :param temperature: sampling temperature
+        :param top_k: Limit to top k tokens
+        :param top_p: Nucleus sampling probability
+        :param min_p: Minimum probability threshold
+        :param grammar: BNF grammar string
+        :param seed: Random seed
+        :return: A dictionary mapping token strings to their probabilities (e.g., {' the': 0.15, ' a': 0.05})
+        """
+        if isinstance(prompt, list):
+            prompt = self.apply_chat_template(prompt, enable_thinking)
+
+        # Determine how many probabilities to return.
+        # If top_k is set, we use it to show all relevant candidates.
+        # Otherwise, default to 10 to show the most likely next tokens.
+        n_probs = 10
+        if top_k is not None and top_k > 0:
+            n_probs = top_k
+
+        json_data: t.Dict[str, t.Any] = {
+            'prompt': prompt,
+            'n_predict': 1,      # We only want to predict the immediate next token
+            'n_probs': n_probs,  # Request the top n probabilities for that token
+            'stream': False      # We need the full JSON response, not a stream
+        }
+
+        # BEGIN https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md
+        if temperature is not None:
+            json_data['temperature'] = temperature
+        if top_k is not None:
+            json_data['top_k'] = top_k
+        if top_p is not None:
+            json_data['top_p'] = top_p
+        if min_p is not None:
+            json_data['min_p'] = min_p
+        if grammar is not None:
+            json_data['grammar'] = grammar
+        if seed is not None:
+            json_data['seed'] = seed
+        
+        self._add_reader()
+        try:
+            url = f"http://127.0.0.1:{self._port}/completion"
+            req = request('POST', url, json=json_data)
+            
+            if req.status_code != 200:
+                raise Exception(f"Generation failed: {req.text}")
+            
+            json_return = req.json()
+            
+            # The server returns 'completion_probabilities' which is a list containing 
+            # probability data for each generated token.
+            result_dict = {}
+            if 'completion_probabilities' in json_return:
+                # We access [0] because we only asked for 1 token (n_predict=1)
+                # 'probs' is a list of dicts: [{'content': 'token', 'probs': 0.123}, ...]
+                token_data = json_return['completion_probabilities'][0]
+                for candidate in token_data.get('probs', []):
+                    result_dict[candidate['content']] = candidate['probs']
+                    
+            return result_dict
+        # END https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md
+        finally:
+            self._remove_reader()
+```

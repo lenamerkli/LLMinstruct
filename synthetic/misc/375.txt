@@ -1,0 +1,86 @@
+§u§
+```
+            \begin{equation*}
+                p * V = \text{konst.} \text{falls} T = \text{konst.}
+            \end{equation*}
+```
+Wie füge ich um das `falls` weisse Fläche ein?
+§a§
+Um um das Wort "falls" weiße Fläche (Leerzeichen) in der Gleichung einzufügen, gibt es mehrere Methoden. Hier sind die empfohlenen Lösungen:
+
+### 1. **Verwendung von `\quad` für deutlichen Abstand** (empfohlen)
+```latex
+\begin{equation*}
+    p * V = \text{konst.} \quad \text{falls} \quad T = \text{konst.}
+\end{equation*}
+```
+- **Erklärung:** `\quad` fügt horizontalen Leerraum (1 em) ein. Dies sorgt für klare Abstände um "falls".
+
+### 2. **Kürzere Abstände mit `\,`**
+```latex
+\begin{equation*}
+    p * V = \text{konst.}\, \text{falls}\, T = \text{konst.}
+\end{equation*}
+```
+- **Erklärung:** `\,` fügt einen schmalen Leerraum (3/18 em) ein. Ideal für kompaktere Darstellung.
+
+### 3. **Explizite Leerzeichen in `\text`**
+```latex
+\begin{equation*}
+    p * V = \text{konst. } \text{falls } T = \text{konst.}
+\end{equation*}
+```
+- **Erklärung:** Füge Leerzeichen **innerhalb** von `\text{...}` hinzu (z. B. `\text{konst.␣}`). Das Leerzeichen wird so direkt gerendert.
+
+### 4. **Kombination aus `\ ` und `\text`**
+```latex
+\begin{equation*}
+    p * V = \text{konst.}\ \text{falls}\ T = \text{konst.}
+\end{equation*}
+```
+- **Erklärung:** `\ ` (Backslash + Leerzeichen) erzwingt ein Leerzeichen im Mathe-Modus. Einfach, aber weniger lesbar im Code.
+
+---
+
+**Empfehlung:**  
+Verwende **`\quad`** für optimale Lesbarkeit:
+```latex
+\begin{equation*}
+    p * V = \text{konst.} \quad \text{falls} \quad T = \text{konst.}
+\end{equation*}
+```
+![Ausgabe: p * V = konst.    falls    T = konst.](https://i.imgur.com/5XJzF7l.png)  
+*(Die Abstände um "falls" sind klar erkennbar.)*
+§u§
+Was ist die Einheit von $p$, wenn das das Gasgesetz von Boyle-Mariotte ist?
+§a§
+Die Einheit des Drucks \( p \) im **Boyle-Mariotte-Gesetz** (\( p \cdot V = \text{konst.} \)) hängt vom verwendeten **Einheitensystem** ab. Übliche Einheiten sind:
+
+### 1. **SI-Einheitensystem (wissenschaftlicher Standard):**
+   - **Druck \( p \):** Pascal (Pa)  
+     \( 1  \text{Pa} = 1  \text{N/m}^2 \)  
+   - **Volumen \( V \):** Kubikmeter (m³)  
+   - **Konstante:** Pa·m³ (z. B. \( \text{Pa} \cdot \text{m}^3 \))
+
+### 2. **Praktische Einheiten (häufig in Chemie/Technik):**
+   - **Druck \( p \):** Bar (bar) oder Atmosphäre (atm)  
+     \( 1  \text{bar} = 10^5  \text{Pa} \), \( 1  \text{atm} \approx 1.013  \text{bar} \)  
+   - **Volumen \( V \):** Liter (L)  
+   - **Konstante:** Bar·Liter (z. B. \( \text{bar} \cdot \text{L} \))
+
+### 3. **Andere Einheiten:**
+   - Torr (mmHg), psi (pound per square inch) etc.,  
+     stets kombiniert mit einer passenden Volumeneinheit (z. B. mL, cm³).
+
+---
+
+### 🔍 **Wichtig:**
+- Die **Einheit der Konstante** muss konsistent zu \( p \cdot V \) sein.  
+  Beispiel:  
+  - Bei \( p \) in **Pa** und \( V \) in **m³** ist die Konstante in **Joule (J)** (da \( 1  \text{Pa} \cdot \text{m}^3 = 1  \text{J} \)).  
+  - Bei \( p \) in **bar** und \( V \) in **L** ist die Konstante in **bar·L**.
+
+### Zusammenfassung:
+> **\( p \) hat die Einheit eines Drucks**, z. B.:  
+> - **Pascal (Pa)** im SI-System,  
+> - **Bar (bar)** oder **Atmosphäre (atm)** in praktischen Anwendungen.

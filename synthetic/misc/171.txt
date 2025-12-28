@@ -1,0 +1,238 @@
+§u§
+```
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[hyphens]{url}
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage{pdfpages}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{pgffor}
+
+
+\pgfplotsset{compat=1.18}
+
+\hypersetup{
+    breaklinks=true,
+}
+
+\title{REDACTED}
+\author{REDACTED}
+
+\begin{document}
+    \maketitle
+
+\begin{tikzpicture}
+  \begin{axis}[
+    title={REDACTED},
+    xlabel={REDACTED},
+    ylabel={REDACTED},
+    legend pos=outer north east,
+    width=\textwidth,
+    height=8cm,
+    xtick={1,2,3,4,5,6,7,8},
+    xticklabels={1,2,3,3,4,4,5,5},
+    ymin=3, ymax=6.5,
+    unbounded coords=jump, % Skip missing values
+    no marks,
+  ]
+  
+  % DE line
+  \addplot[blue, thin, mark=*] coordinates {
+    (1,5.0) (2,5.0) (3,4.5) (4,4.5) (5,5.0) (6,5.0) (7,3.5) (8,4.0)
+  };
+  \addlegendentry{DE}
+  
+  % FR line
+  \addplot[red, thin, mark=square*] coordinates {
+    (1,4.5) (2,5.01) (3,4.51) (4,4.51) (5,4.5) (6,4.0) (7,4.5) (8,4.0)
+  };
+  \addlegendentry{FR}
+  
+  % MA line
+  \addplot[green!70!black, thin, mark=triangle*] coordinates {
+    (1,6.0) (2,5.5) (3,5.5) (4,5.5) (5,5.5) (6,5.5) (7,4.0) (8,4.0)
+  };
+  \addlegendentry{MA}
+  
+  % SF line (with missing values)
+  \addplot[orange, thin, mark=diamond*] coordinates {
+    (5,6.0) (6,5.51) (7,4.01) (8,4.0)
+  };
+  \addlegendentry{SF}
+  
+  % IN line
+  \addplot[cyan, thin, mark=otimes] coordinates {
+    (1,5.01) (2,5.51) (3,6.0) (4,6.0) (5,5.52) (6,5.52) (7,6.0) (8,6.0)
+  };
+  \addlegendentry{IN}
+  
+  % EN line
+  \addplot[magenta, thin, mark=+, dashed] coordinates {
+    (1,5.02) (2,5.02) (3,4.52) (4,4.52) (5,5.01) (6,5.01) (7,4.51) (8,5.0)
+  };
+  \addlegendentry{EN}
+  
+  % PS line (with missing values)
+  \addplot[brown, thin, mark=x, dashed] coordinates {
+    (5,6.01) (6,6.0) (7,5.0) (8,4.5)
+  };
+  \addlegendentry{PS}
+  
+  % CH line (with missing values)
+  \addplot[purple, thin, mark=|, dashed] coordinates {
+    (3,5.0) (4,5.0) (5,5.02) (6,5.02) (7,5.01) (8,4.0)
+  };
+  \addlegendentry{CH}
+  
+  % GS line
+  \addplot[gray, thin, mark=o, dashed] coordinates {
+    (1,5.03) (2,4.5) (3,4.53) (4,4.53) (5,4.51) (6,4.5) (7,3.51) (8,3.5)
+  };
+  \addlegendentry{GS}
+  
+  % WR line (with missing values)
+  \addplot[teal, thin, mark=*, dashed] coordinates {
+    (3,5.51) (4,5.51) (7,5.02) (8,5.0)
+  };
+  \addlegendentry{WR}
+  
+  % BG line
+  \addplot[violet, thin, mark=square, dashed] coordinates {
+    (1,5.04) (2,5.03) (3,5.01) (4,5.01) (5,4.52) (6,5.03) (7,4.52) (8,5.0)
+  };
+  \addlegendentry{BG}
+  
+  \end{axis}
+\end{tikzpicture}
+\end{document}
+```
+How can I make a vertical line in the plot at around x=6.1 to denote a change in methodology?
+§a§
+To add a **vertical line at approximately x = 6.1** in your `pgfplots` graph to indicate a change in methodology, you can use the `\draw` command inside the `axis` environment with the `axis cs:` coordinate system (or let PGFPlots handle it automatically in newer versions).
+
+Since you're using `compat=1.18`, the `axis cs:` is no longer required — coordinates in `\draw` are automatically interpreted in the axis coordinate system.
+
+Here’s how you can insert a vertical line at **x = 6.1**, extending from the bottom to the top of the plot:
+
+### ✅ Add this line **before** `\end{axis}` and **after** your `\addplot` commands:
+
+```latex
+% Vertical line at x = 6.1 to indicate change in methodology
+\draw [dashed, thick, black] (6.1,\pgfkeysvalueof{/pgfplots/ymin}) -- (6.1,\pgfkeysvalueof{/pgfplots/ymax});
+```
+
+Alternatively, if you want more control or a label, you can hardcode the y-limits (since you set `ymin=3, ymax=6.5`):
+
+```latex
+% Vertical line at x = 6.1
+\draw [dashed, thick, black] (6.1,3) -- (6.1,6.5);
+```
+
+Or make it even clearer by adding a node (label) on the line:
+
+```latex
+% Vertical line with label
+\draw [dashed, thick, black] (6.1,3) -- (6.1,6.5)
+    node [midway, above, sloped, font=\footnotesize] {Methodenwechsel};
+```
+
+This will place a labeled dashed vertical line indicating the methodological change.
+
+---
+
+### 🔧 Final suggestion: Full addition
+
+Insert this code just before `\end{axis}`:
+
+```latex
+% Vertical line at x = 6.1 to denote change in methodology
+\draw [dashed, thick, black] (6.1,3) -- (6.1,6.5)
+    node [midway, above, rotate=90, font=\footnotesize, inner sep=1pt] {Methodenwechsel};
+```
+
+> 💡 Tip: You can adjust `6.1` as needed. If you prefer it between ticks 6 and 7 (which both are labeled "4"), consider whether `x=6.5` might be visually better — but that depends on your data interpretation.
+
+Let me know if you'd like to shade an area instead, or add an annotation!
+§u§
+And how can I mark the point at (6,4.0) with a circle to denote an outlier? I would like to add some text to it.
+§a§
+To highlight the outlier at **(6, 4.0)** with a circle and annotation, we’ll use `pgfplots` built-in tools for drawing and node placement. Since the point already has a `square*` mark (from the `FR` plot), we’ll **circle the existing mark** (so it remains visible) and add a labeled text node nearby.
+
+
+### Step-by-Step Implementation
+Add the following code **inside the `axis` environment**, *after all your `\addplot` commands* (to ensure the outlier is drawn on top of plot lines) and *before `\end{axis}`*.
+
+
+---
+
+#### 1. Circle the Outlier Point
+We’ll draw a **hollow red circle** around the existing `FR` point (6, 4.0) so the original mark stays visible:
+```latex
+% Draw a red circle around the outlier (6, 4.0)
+\draw[
+  thick,           % Bold circle to stand out
+  red,             % Emphasis color
+  fill opacity=0   % No fill (keeps original mark visible)
+] (6, 4.0) circle (4pt);  % Radius = 4pt (adjust for size)
+```
+
+
+#### 2. Add Annotation Text
+Place a text node near the circle (use `above right` to avoid overlapping plot lines):
+```latex
+% Add labeled text next to the outlier
+\node[
+  above right,     % Position relative to the point
+  font=\footnotesize,  % Smaller text for readability
+  red!90!black,    % Slightly darker red (so text isn't too bright)
+  inner sep=2pt    % Reduce padding around text
+] at (6, 4.0) {Ausreißer};  % Use "Outlier" for English
+```
+
+
+---
+
+### Full Code Snippet (Integrated)
+Here’s how it fits with your existing plot (including the vertical methodology line from earlier):
+```latex
+% ... (all your existing \addplot commands) ...
+
+% --------------------------
+% 1. Highlight Outlier (6, 4.0)
+% --------------------------
+\draw[thick, red, fill opacity=0] (6, 4.0) circle (4pt);
+\node[above right, font=\footnotesize, red!90!black] at (6, 4.0) {Ausreißer};
+
+% --------------------------
+% 2. Vertical Methodology Line (from your previous question)
+% --------------------------
+\draw[dashed, thick, black] (6.1, 3) -- (6.1, 6.5)
+  node[midway, rotate=90, font=\footnotesize] {Methodenwechsel};
+
+\end{axis}
+\end{tikzpicture}
+```
+
+
+---
+
+### Customization Tips
+- **Adjust Circle Size**: Change `circle (4pt)` to `circle (3pt)` (smaller) or `circle (5pt)` (larger).
+- **Reposition Text**: If the text overlaps, tweak the node’s position:
+  ```latex
+  % Shift text slightly right/up
+  \node[above right] at (6.2, 4.1) {Ausreißer};
+  ```
+- **Change Colors**: Use `orange` instead of `red`, or `black!70` for the text.
+- **Replace the Mark (Instead of Circling)**: If you want to replace the `square*` with a circle for *only this point*, use:
+  ```latex
+  \addplot[only marks, mark=circle*, mark size=3pt, red] coordinates {(6, 4.0)};
+  ```
+
+
+Let me know if you need to fine-tune the style or position.

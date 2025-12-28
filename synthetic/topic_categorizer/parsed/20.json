@@ -1,0 +1,28 @@
+{
+    "topic": "Personenkilometer (Langsamverkehr & Anteil Autos)",
+    "original_statements": [
+        "Dreiviertel des Personenverkehrs wird über die Strasse abgewickelt.",
+        "Gemäss dem BFS wurden 2019 8 Millionen Personenkilometer vom Langsamverkehr geleistet.",
+        "Die SVP verbreitet im Parteiprogramm Unwahrheiten über die geleisteten Personenkilometer.",
+        "Gemäss dem Bundesamt für Statistik wurden 2023 7,8 Milliarden Personenkilometer vom Langsamverkehr geleistet.",
+        "Dass es nur 8 Millionen Personenkilometer im Langsamverkehr gab, ist ein Mythos.",
+        "Die Behauptung der SVP, wonach \"Fussgänger und Velofahrer praktisch keinen Beitrag zur Mobilität leisten\", ist eine bewusste Falschaussage.",
+        "Geleistete Personenkilometer in Millionen."
+    ],
+    "statements": [
+        "Dreiviertel des Personenverkehrs wird über die Strasse abgewickelt.",
+        "Gemäss dem BFS wurden 2019 8 Millionen Personenkilometer vom Langsamverkehr geleistet.",
+        "Die SVP verbreitet im Parteiprogramm Unwahrheiten über die geleisteten Personenkilometer.",
+        "Gemäss dem Bundesamt für Statistik wurden 2023 7,8 Milliarden Personenkilometer vom Langsamverkehr geleistet.",
+        "Dass es nur 8 Millionen Personenkilometer im Langsamverkehr gab, ist ein Mythos.",
+        "Die Behauptung der SVP, wonach \"Fussgänger und Velofahrer praktisch keinen Beitrag zur Mobilität leisten\", ist eine bewusste Falschaussage.",
+        "Geleistete Personenkilometer in Millionen."
+    ],
+    "fact": "Gemäss dem Bundesamt für Statistik wurden 2023 7,8 Milliarden Personenkilometer vom Langsamverkehr geleistet. In gewissen Parteiprogrammen wird jedoch behauptet, dass es nur 8 Millionen [sic!] sind.",
+    "sources": [
+        "https://www.bfs.admin.ch/bfs/de/home/statistiken/mobilitaet-verkehr/personenverkehr/leistungen.html",
+        "https://www.svp.ch/wp-content/uploads/Parteiprogramm_DE_19_23_190402.pdf"
+    ],
+    "prompt": "Ich forsche zu Falschmeldungen und Lügen zum Thema `Personenkilometer (Langsamverkehr & Anteil Autos)`. Dafür habe ich eine Liste an Aussagen zu diesem Thema zusammengestellt:\n```text\nDreiviertel des Personenverkehrs wird über die Strasse abgewickelt.\n$\nGemäss dem BFS wurden 2019 8 Millionen Personenkilometer vom Langsamverkehr geleistet.\n$\nDie SVP verbreitet im Parteiprogramm Unwahrheiten über die geleisteten Personenkilometer.\n$\nGemäss dem Bundesamt für Statistik wurden 2023 7,8 Milliarden Personenkilometer vom Langsamverkehr geleistet.\n$\nDass es nur 8 Millionen Personenkilometer im Langsamverkehr gab, ist ein Mythos.\n$\nDie Behauptung der SVP, wonach \"Fussgänger und Velofahrer praktisch keinen Beitrag zur Mobilität leisten\", ist eine bewusste Falschaussage.\n$\nGeleistete Personenkilometer in Millionen.\n```\nDeine Aufgabe ist es, mindestens 15 weitere Aussagen zu diesem Thema `Personenkilometer (Langsamverkehr & Anteil Autos)` zu schreiben. Reine Lügen, die Wahrheit und unklare Aussagen sollen vorkommen. Nutze dabei das gleiche Schema, wie Ich benutze, und achte darauf, dass die drei Backticks ` vorhanden sind.\n",
+    "response": ""
+}

@@ -1,0 +1,35 @@
+§u§
+Where does the /e/OS App Lounge get its privacy rating?
+§a§
+The /e/OS App Lounge derives its privacy rating from a combination of external data analysis and an internal scoring algorithm.
+
+Here is the breakdown of where the rating comes from and how it is calculated:
+
+### 1. The Data Source: **Exodus Privacy**
+The core data regarding the privacy of an app comes from **Exodus Privacy**, a non-profit organization that analyzes Android applications.
+*   **Trackers:** Exodus scans apps to detect embedded trackers (software meant to collect data about your usage, location, etc.).
+*   **Permissions:** Exodus reports which permissions the app requests (e.g., access to camera, contacts, or location).
+
+### 2. The Calculation: **Internal /e/OS Algorithm**
+While Exodus provides the raw data (e.g., "This app has 2 trackers and 5 permissions"), they do not assign the specific 0-10 "Privacy Score" you see in the App Lounge. That score is calculated by **App Lounge** itself using a specific open-source formula.
+
+The formula is generally structured as follows:
+*   **Privacy Score** = (Score based on Trackers) + (Score based on Permissions)
+
+**The Logic:**
+*   **Trackers (The biggest factor):**
+    *   If an app has **0 trackers**, it starts with a high score.
+    *   The score drops significantly for every tracker found.
+    *   If an app has **more than 5 trackers**, the tracker portion of the score usually drops to 0.
+*   **Permissions:**
+    *   Apps requesting few permissions get a small point bonus.
+    *   Apps requesting a high number of permissions (often defined as >9) receive 0 points for this section.
+
+### 3. Visual Indicators
+The numeric score is then translated into a color code for easy reading:
+*   **Green:** Few to no trackers/permissions (High privacy).
+*   **Orange:** Moderate amount of trackers/permissions.
+*   **Red:** High number of trackers/permissions (Low privacy).
+
+### Summary
+In short, **Exodus Privacy** does the detective work to find the trackers, and **/e/OS** applies its own math to that data to give you the final "Privacy Score" out of 10.

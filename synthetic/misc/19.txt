@@ -1,0 +1,77 @@
+§u§
+```
+{'class_name': 'U25a',
+  'day': 'Mo',
+  'end_time': '16:10',
+  'note_id': '5',
+  'room': 'T.T',
+  'start_time': '15:25',
+  'subject': 'KS',
+  'teacher': 'big'},
+ {'class_name': 'U25a',
+  'day': 'Mo',
+  'end_time': '17:00',
+  'note_id': None,
+  'room': 'P.1',
+  'start_time': '16:15',
+  'subject': 'IN',
+  'teacher': 'bir'}]
+
+--- Notes (for 'notes' table) ---
+[{'band': '',
+  'base_class': 'U25a',
+  'classes': 'U25a',
+  'details': 'blc, TG,  S0.2',
+  'group': '',
+  'note_id': '1',
+  'studt': '',
+  'text1': 'Halbklassen',
+  'text2': 'Technisches Gestalten',
+  'time': '',
+  'week': '1-46'},
+ {'band': '',
+  'base_class': 'U25a',
+  'classes': 'U25a, U25b',
+  'details': 'big, SD,  T.3',
+  'group': '',
+  'note_id': '3',
+  'studt': '',
+  'text1': 'SD-1A-big',
+  'text2': 'Sport',
+  'time': '',
+  'week': '1-46'},
+```
+Create a create table script for these two tables.
+§a§
+Based on the data structure provided, here are the SQL `CREATE TABLE` scripts. The notes table is created first since it's referenced by the schedule table.
+
+```sql
+-- Notes table (for 'notes' table)
+CREATE TABLE notes (
+    note_id INT PRIMARY KEY,
+    base_class VARCHAR(20),
+    classes VARCHAR(100), -- Can hold comma-separated lists like 'U25a, U25b'
+    text1 VARCHAR(100),
+    text2 VARCHAR(100),
+    details VARCHAR(100),
+    week VARCHAR(20), -- e.g., '1-46'
+    band VARCHAR(50),
+    group_name VARCHAR(50), -- Renamed from 'group' to avoid reserved keyword issues
+    studt VARCHAR(50),
+    time VARCHAR(20) -- Using VARCHAR due to empty values in sample; could be TIME if validated
+);
+
+-- Schedule/timetable entries table
+CREATE TABLE schedule (
+    class_name VARCHAR(20) NOT NULL,
+    day VARCHAR(10) NOT NULL, -- e.g., 'Mo', could also be full day names
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL,
+    subject VARCHAR(20) NOT NULL,
+    teacher VARCHAR(50),
+    room VARCHAR(20),
+    note_id INT, -- Foreign key to notes; NULL if no note is associated
+    PRIMARY KEY (class_name, day, start_time, subject), -- Composite key assumes this combo is unique per slot
+    CONSTRAINT fk_schedule_note FOREIGN KEY (note_id) REFERENCES notes(note_id)
+);
+```

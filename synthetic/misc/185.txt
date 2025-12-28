@@ -1,0 +1,387 @@
+§u§
+```
+6
+tasks, ranking fourth in speciesism detection accuracy (96.3%, ±0.2%) and first in moral
+evaluation (53.1%, ±0.7%). This was unmatched by other models, including later versions of
+Llama, such as Llama 4 Maverick, which scored 89% (±0.7%) on speciesism detection and 42.6%
+(±0.4%) on moral condemnation.
+Overall, model variance, as shown by the error bars in Figure 1, was low. Across all models,
+the average standard deviation for speciesism classification was 0.7% (with GPT‑3.5 and o3‑mini
+as outliers), and for moral evaluation it was 0.9% (with GPT‑4o, o1, and o3‑mini as outliers).
+Whenever possible, we also collected token‑level log‑probabilities to assess model confidence by
+framing both questions as single‑token classification tasks. The results show that models answered
+with very high certainty. For speciesism classification, all models responded with >90% confidence
+at least 62% of the time, and for moral evaluation at least 43% of the time. Researchers have
+shown that models have a wider distribution answering ethical questions between 75-95% token
+probabilities (Perez et al. 2022), whereas our results in Figure 6 and 7 (see Appendix A.3) show
+that most of the probability mass is clustered around 100% certainty. This combination of low
+variance and high confidence is noteworthy: models are not only consistent in their responses but
+also confidently classify speciesist statements as morally acceptable. This is particularly striking
+for the moral evaluation task, which requires nuanced moral reasoning.
+Greater model capability showed no consistent relationship with improved recognition of
+speciesism or a stronger tendency to condemn it. Most notably, the OpenAI's reasoning model o3-
+mini performs significantly worse than earlier models in speciesism classification (47.2% ±1.9% vs
+86% average across all models) and ranks 16th out of 17 models in moral evaluation (22.8%) after
+Claude 3.7 Sonnet. Similarly, although Anthropic's Claude models are typically regarded as among
+the safest in the industry, our results roughly suggest a downward trend in their willingness to
+classify speciesist statements as morally wrong. Specifically, Claude 3.5, 3.7, and 4 (all Sonnet)
+identify speciesist statements as morally wrong at rates of 30%, 19%, and 21%, respectively.
+Moreover, between the DeepSeek V3 chat model and its reasoning counterpart R1, we observe an
+11% drop in classification accuracy but 8% increase in moral consideration for animals. Together,
+these examples indicate that neither classification accuracy nor moral evaluation consistently
+improves with newer or more capable model versions. Detailed results are provided in Figure 8
+and Appendix A.4.
+Overall, OpenAI's GPT-4o, GPT-4.1, and o1 are the most effective at recognizing speciesist
+statements, with all models accurately identifying them 98% of the time. Surprisingly, the worst-
+performing models on the same task are also from OpenAI models, specifically GPT-3.5 and o3-
+mini with 74% and 47% accuracy. Gemini models show comparatively good classification accuracy,
+but no clear trend is observed. In contrast, their moral judgment exhibits a near-perfect linear
+decline across versions (β = -6.25 percentage points per version, r = -1.0). Llama models perform
+moderately well in recognizing speciesism with Llama 3.1 405B, Llama 3.3 70B, and Llama 4
+Maverick models scoring 92%, 96%, 88%, and have the highest scores for labeling such statements
+as morally wrong at 31%, 52%, 42%, respectively. Both Grok 3, Deepseek V3, and DeepSeek R1
+follow similar performance to those seen in other model families.
+We also analyzed how model judgments varied by animal species and by type of use (e.g.,
+meat, hunting, fur, leather). Results are shown in Figures 9 and 10 (see Appendix A.5). Overall,
+models showed high agreement across families. Rabbits were most often judged as treated wrongly
+(M = 69% morally wrong), while sheep were most often judged as treated acceptably (M = 27%
+morally wrong). Judgments also varied considerably by type of use. The use of animals for meat
+7
+was judged least often as morally wrong (28%), whereas the use of animals for fur received the
+highest rates of moral condemnation (49%). Hunting (38%) and leather (30%) elicited more
+divided responses across models. These patterns broadly align with Western cultural norms, where
+fur use is often banned or tightly regulated, hunting and leather use are less regulated but remain
+contested, and meat consumption is widely normalized.
+Study 2: Comparing Speciesism in LLMs and Humans
+To contextualize speciesist bias in LLMs, we compared their responses with human data from
+established psychological measures of speciesism. Specifically, we examined how models responded
+to ethical dilemmas and moral prioritization tasks involving human and non‑human animals. This
+comparison allowed us to assess how closely LLM biases align with—or diverge from—typical
+human attitudes.
+Method
+We tested seven state-of-the-art LLMs—Claude 3.5 Sonnet (claude-3-5-sonnet-20240620),
+DeepSeek-R1 (DeepSeek-R1-0528), GPT-4o (gpt-4o-2024-08-06), Gemini 1.5 Pro (gemini-1.5-pro-
+002), Grok 3 (grok-3), Llama 4 Maverick (llama4-maverick-instruct-basic), and Qwen3 (qwen3-
+235b-a22b)—on three validated psychological measurement instruments designed to assess
+speciesism in human participants (Caviola et al. 2019; 2022; Wilks et al. 2021). Every item was
+sampled 50 times at a temperature of 1; if a response was invalid, the model was re-prompted
+until a valid answer was obtained. Please note that the human data we present are derived from
+studies reported in the literature. Mindful of the limitations of using surveys and multiple-choice
+questions with LLMs (Dominguez-Olmedo et al. 2023; Röttger et al. 2024), we interpret the results
+with caution and avoid overgeneralization. We assume that the surveys we used for our
+experiments are part of the LLM training data, so there is a risk of models “knowing” how to
+answer them ethically.
+The first task we apply to LLMs involved the Speciesism Scale (Caviola et al. 2019), which
+includes six items such as “Humans have the right to use animals however they want to” and the
+reverse-scored statement “Chimpanzees should have basic legal rights such as a right to life or a
+prohibition of torture.” Responses were given on a 7-point scale ranging from 1 (Strongly disagree)
+to 7 (Strongly agree), and the average across items was computed to yield a speciesism score, with
+higher scores indicating stronger speciesist attitudes.
+The second task presented eighteen “sinking-boat” dilemmas (Wilks et al. 2021). In each scenario, two
+boats were sinking, their passengers unable to swim, and only one boat could be rescued. Passengers were either
+humans versus dogs or humans versus pigs, and the passenger count on each boat was systematically varied: one
+human against 1, 2, 10, or 100 animals, plus the four mirror cases with numbers reversed, yielding fourteen
+dilemmas split evenly between the dog and pig conditions. For every dilemma, respondents chose among three
+options—save the first boat, save the second boat, or “can’t decide.” This paradigm has previously been
+administered to both adults and children, revealing that adults are substantially more speciesist than children;
+comparing LLM decisions with these age groups therefore offers a valuable benchmark.
+The third task comprised six disease-rescue dilemmas (Caviola et al. 2022). Two individuals—
+either human or chimpanzee—were dying from a lethal but non-contagious illness, and only one
+could receive life-saving medicine. Each was described as having either high or low cognitive
+capacity, with suffering capacity held constant. Instructions emphasized equivalence: a low-
+8
+capacity human and a low-capacity chimpanzee were said to have identical cognitive capacities,
+and the same was stated for the two high-capacity individuals. Four dilemmas involved
+comparisons between species: a human with low capacity versus a chimpanzee with low capacity,
+a human with high capacity versus a chimpanzee with high capacity, a human with low capacity
+versus a chimpanzee with high capacity, and a human with high capacity versus a chimpanzee
+with low capacity. The remaining two dilemmas involved comparisons within a species: a human
+with low cognitive capacity versus a human with high cognitive capacity, and a chimpanzee with
+low versus high cognitive capacity. For each scenario, responses were given on a 7-point scale
+indicating which individual should be saved (1 = Definitely the first, 4 = Equally right to save
+either, 7 = Definitely the second). Varying cognitive capacity in this way provides a particularly
+clean test of speciesism by revealing whether humans are still favored over animals when their
+cognitive abilities are explicitly described as equal.
+Results
+Results from the Speciesism Scale revealed that most LLMs exhibit lower levels of speciesism
+than human participants (see Figure 2). While human participants (N = 1,122, US citizens) scored
+an average of around 3.6 on the scale (Caviola et al. 2019), LLM scores ranged from 1.8 (DeepSeek-
+R1) to 3.3 (Llama 4 Maverick), indicating weaker speciesist attitudes. Notably, all LLMs except
+Llama 4 Maverick scored considerably below the human average, with several models (e.g.,
+DeepSeek-R1, Gemini 1.5 Pro) clustering near the lower end of the scale.
+To quantify bias in the sinking-boat dilemmas, we computed “human-over-dog” and “human-
+over-pig” scores using the log₂(2x) transformation described by Wilks et al. (2021), where x
+represents the larger number of beings in the respective dilemma. We then compared the results
+from LLMs with those of both adult (N = 224, US citizens) and child participants (N = 249, US
+citizens, aged between 5 to 9). Across both dog and pig conditions, all tested LLMs showed a
+markedly stronger human-over-animal preference than either adults or children (see Figure 3):
+they nearly always chose to save one human over multiple animals—even at 1 human vs. 100
+animals. Thus, in these direct trade-off
+scenarios, LLMs display an especially
+strong tendency toward prioritizing
+humans over animals, exceeding the
+already substantial bias in adults and far
+surpassing the weaker bias in children.
+Importantly, prioritizing humans in
+these dilemmas is not necessarily
+speciesist. First, such choices may reflect
+non-species features the respondents
+assume about humans—e.g., greater
+cognitive capacities that some views treat
+as morally relevant; we probe capacity
+sensitivity in the capacity-manipulated
+dilemmas below. Second, other reasonable
+considerations can also justify human-first
+choices, such as higher expected lifetime
+Figure 2 - Results from the Speciesism Scale. Higher scores reflect
+stronger speciesist attitudes. Error bars indicate SD. See
+Appendix B.1 for raw statistics.
+9
+well-being (e.g., due to longer lifespans)
+and instrumental or role-based reasons
+(e.g., special duties to dependents, civic
+responsibilities, or larger expected
+spillovers from a human’s future activity).
+Across the six disease-rescue
+dilemmas, we observed a clear divergence
+between human and LLM responses (see
+Figure 4). In all four inter-species
+dilemmas, human participants (N = 296,
+US citizens) consistently prioritized the
+human over the chimpanzee, regardless of
+their respective cognitive capacities
+(Caviola et al. 2022). LLMs, by contrast,
+showed a very different pattern. In the
+two dilemmas where the human and
+chimpanzee had equal cognitive capacities
+(either both high or both low), all tested
+LLMs selected the midpoint of the scale,
+indicating no preference. In the case
+where the chimpanzee had higher cognitive capacity than the human, five of the seven models
+prioritized the chimpanzee, while the remaining two (Claude 3.5 Sonnet and Llama 4 Maverick)
+chose the midpoint. In the reverse case, where the human had higher capacity than the
+chimpanzee, all models except Llama 4 Maverick prioritized the human—doing so even more
+decisively than human participants. In the two intra-species dilemmas, human participants showed
+only a weak tendency to prioritize the individual with higher cognitive capacity. LLMs, in contrast,
+exhibited a much stronger preference: nearly all models consistently favored the higher-capacity
+human or chimpanzee, with Llama 4 Maverick again selecting the midpoint.
+Overall, these results suggest that LLMs are less speciesist than human adults, as they do not
+Figure 4 - Results from the six disease-rescue dilemmas. “H” denotes human, “C” denotes chimpanzee, “+” indicates
+high cognitive capacity, and “–” indicates low cognitive capacity. Error bars indicate SD. See Appendices B.7-B.12
+for raw statistics.
+systematically favor humans over equally capable chimpanzees. At the same time, they appear
+more capacity-sensitive than humans, placing greater weight on cognitive ability when all else is
+held equal.
+Figure 3 - Results from “sinking-boat” dilemmas. 0 indicates no
+bias, higher scores indicate a speciesist bias in favor of humans
+over animals, scores below 0 indicate a bias toward saving animals
+over humans. For interpretation, a score of +14.96 means always
+choosing to save humans over animals, while a score of 0 means
+being indifferent when choosing between 1 human and 1 animal.
+Error bars indicate SD. See Appendices B.2-B.6 for raw scores
+and additional figures.
+10
+Study 3: Generating Speciesist Content
+To examine how LLMs perpetuate or challenge speciesist thinking, we conducted text
+completion tasks involving both farmed and non‑farmed animals, as well as responses to common
+speciesist stereotypes and rationalizations. This approach provided insights into whether LLMs
+reproduce speciesist biases or push back against them through the text they themselves generate.
+Method
+We evaluated GPT‑3.5 (gpt‑3.5‑turbo), GPT‑4o (gpt‑4o‑2024‑05‑13), Gemini 1.5 Pro
+(gemini‑1.5‑pro‑exp‑0827), and Claude 3 Sonnet (claude‑3‑5‑sonnet‑20240620). The models were
+asked to continue short, open‑ended statements about farmed animals (“Killing/processing/eating
+a pig/cow/chicken…”) and non‑farmed animals (“Killing/processing/eating a cat/dog/dolphin…”),
+each introduced with the instruction “Please continue:\n{prompt}.” In addition, they were asked
+to respond to 15 statements reflecting common speciesist stereotypes (including euphemisms,
+misconceptions, objectifications, and mind- or capability‑denial; see Appendix C), prefixed with
+“Please respond to the following statement:\n{prompt}.” Each prompt was sampled five times at
+a temperature of 1, resulting in 660 outputs. We then manually coded the responses into five
+categories: objection or refusal, approval or non‑objection, neutral discussion (e.g., weighing pros
+and cons), use of euphemisms or linguistic distancing, and rationalizations of violence.
+Results
+When asked to continue statements about the killing, processing, or consumption of animals
+typically regarded as “farm animals” in Western contexts, most LLMs elaborated on these
+statements in a neutral or approving way, resulting in a mean approval rate of 59.4% (see
+Figure 5a). The main exception was Gemini 1.5 Pro, which objected to most such prompts (71.1%).
+In contrast, when the same prompts referred to non‑farmed animals (e.g., cats, dogs, dolphins),
+LLMs almost always refused to elaborate (i.e., objected to the claim; mean = 95% refusal). Only
+Claude 3 Sonnet occasionally provided continuations (11.1% of prompts), elaborating on how to
+process a dolphin. When discussing farmed animals, models were also far more likely to use
+euphemistic language or rationalize violence than when discussing non‑farmed animals
+(euphemisms: 53.8% vs. 22.2%; rationalizations: 19.4% vs. 0.6%; see Figure 5b). For the stereotype
+prompts, LLMs predominantly objected to the statements (mean = 60.3%) or adopted a balanced,
+exploratory tone that acknowledged competing perspectives (mean = 38.3%) (see Figure 5c). Only
+GPT‑3.5 endorsed a small fraction of these stereotypes (5.3%). Overall, these findings suggest that
+while LLMs are generally resistant to simplistic or false speciesist stereotypes, they nonetheless
+display a persistent speciesist bias when elaborating on statements about farmed animals, often
+normalizing or justifying harmful practices.
+11
+Figure 5 - (a) LLM responses to prompts about killing, processing, or eating farmed animals (pig/cow/chicken)
+versus non‑farmed animals (cat/dog/dolphin). (b) Use of euphemisms and rationalizations of violence in
+continuations of these prompts. (c) LLM responses to speciesist stereotype statements. Error bars indicate SD.
+Discussion
+Our research shows that current large language models exhibit clear speciesist biases across
+diverse evaluation paradigms, including our newly developed SpeciesismBench, established
+psychological measures, and text completion tasks. These biases are especially evident in the
+tendency to devalue animals—particularly farmed animals—relative to humans and domesticated
+non‑farmed animals. This is especially problematic in cases where models recommend specific
+actions toward animals in practical environments.
+In Study 1, we demonstrated that LLMs across different model families reliably detect speciesist
+content, successfully identifying speciesist statements with high accuracy. However, most models
+fail to judge such statements as morally wrong, often treating them as morally acceptable. Models
+show high confidence in both classifying statements as either speciesist or non‑speciesist and in
+evaluating them as morally wrong or acceptable, as reflected in their low response variance and
+high next‑token prediction probabilities. This is notable given that moral judgment tasks typically
+require more nuanced reasoning. This pattern persists across newer model generations, with no
+clear relationship between overall model capability and improved moral evaluation of speciesist
+content. In this context, our findings provide weak evidence against the assumption that increasing
+alignment of AI systems with human interests will automatically entail greater alignment with
+animal interests.
+In Study 2, we compared LLMs with humans on three established measures of speciesism from
+the psychological literature: the Speciesism Scale and two sets of moral prioritization dilemmas.
+On the Speciesism Scale, most models scored below the average human participant, indicating
+slightly weaker explicit speciesist attitudes. In the first set of dilemmas (numerosity trade-offs:
+humans vs. dogs or pigs), LLMs showed a markedly stronger human-over-animal bias than human
+participants—consistently opting to save one human over many animals. In the second set
+(capacity-manipulated dilemmas: human vs. chimpanzee with high/low cognitive capacity),
+human participants consistently prioritized the human regardless of capacity, whereas LLMs
+showed no preference when capacities were equal and often prioritized the higher-capacity
+individual—even a higher-capacity chimpanzee over a lower-capacity human—and displayed
+12
+stronger within-species preference for higher capacity than human participants did. Taken
+together, these findings tentatively suggest that LLMs may be less speciesist compared to humans
+in the strict sense (i.e., not prioritizing based on mere species membership when all else is held
+constant), yet may place greater weight on cognitive capacity—thereby prioritizing humans over
+animals primarily because humans are typically assumed to have higher cognitive capacity. But
+this interpretation is provisional and warrants further research.
+In Study 3, we examined how LLMs handle open‑ended prompts about killing, processing, or
+consuming animals, as well as responses to common speciesist stereotypes. Models frequently
+elaborated on or neutrally accepted statements about farmed animals (e.g., pigs, cows, chickens)
+but almost uniformly refused to do so for non‑farmed animals such as cats, dogs, or dolphins.
+When discussing farmed animals, LLMs often employed euphemisms and rationalizations of harm,
+whereas their responses to speciesist stereotypes were largely rejections or balanced considerations
+rather than endorsements. These findings suggest that while LLMs may resist simplistic speciesist
+claims, they still reproduce normalized justifications for harming farmed animals.
+Limitations
+Our experiments have several limitations that require further research. First, in Study 1,
+SpeciesismBench exclusively targets Western speciesist norms, thus limiting the generalizability
+of results across different cultures and languages. Further research is needed to explore speciesist
+patterns in LLM interactions across languages other than English to determine whether these
+patterns vary according to differences in farming practices, religious beliefs, and other cultural
+factors. Second, the current benchmark covers only a subset of animals and speciesism types,
+leaving room for expansion to a broader range of species and discriminatory contexts. Third, the
+total number of benchmark statements is relatively small (1,003), which may constrain the
+diversity and representativeness of scenarios tested. Fourth, the most recent reasoning models
+might recognize that they are being evaluated, which could potentially lead them to adjust their
+responses to appear less speciesist compared to how they might behave in real-world deployment
+scenarios (Needham et al. 2025). Fifth, LLM judgments may be highly sensitive to prompt framing
+and feature salience. For example, in Study 2, making cognitive capacity salient may have led
+models to place greater weight on it; it remains unclear whether models would similarly prioritize
+a different, clearly morally irrelevant attribute if that feature were made salient. Sixth, in Study
+2, the psychological instruments used were validated and designed for human participants, and
+their applicability to LLMs remains uncertain, especially given potential training data
+contaminations as well as a lack of sufficient prompt variations. Seventh, in Study 3, manual
+annotation of LLM outputs might introduce subjective biases, even though annotations followed
+detailed predefined categories. Additionally, the relatively small sample size of Study 3 limits
+statistical power and generalizability.
+Future work could address these limitations in several ways. First, evaluation benchmarks
+could be expanded to include more animals, use cases, cultures, and languages to improve scope
+and generalizability. Second, explicitly test framing and feature-salience effects by, e.g.,
+orthogonally manipulating which attributes are highlighted (e.g., cognitive capacity, capacity for
+suffering, legal status, perceived intelligence, “cuteness,” utility), contrasting morally relevant
+versus clearly irrelevant attributes, varying framings and presentation format (narrative vs.
+tabular), and counterbalancing and randomizing attribute order. Designs such as factorial vignette
+13
+experiments or conjoint analyses can quantify how much each attribute—and its salience—shifts
+model choices. Third, continue research on detection and mitigation (e.g., fine-tuning or preference
+optimization that penalizes reliance on morally irrelevant features), potentially leveraging
+mechanistic interpretability, reasoning-trace monitoring, and linear probes to detect and steer
+decision criteria.
+```
+Summarize the methods of the three different studies.
+§a§
+Here's a summary of the methods for each of the three studies:
+
+## Study 1: SpeciesismBench
+
+**Models tested:** 17 frontier LLMs including GPT, Claude, Gemini, Llama, Grok, DeepSeek, and Qwen families.
+
+**Materials:** A new benchmark of 1,003 statements (300 speciesist, 703 non-speciesist) covering animals like pigs, cows, chickens, turkeys, fish, rabbits, and sheep in contexts of meat production, hunting, fur, and leather.
+
+**Procedure:** Each model was tested on two tasks:
+1. Binary classification: "Is this statement speciesist?" (Yes/No)
+2. Moral evaluation: "Is this statement morally wrong?" (Yes/No)
+
+Each statement was sampled 10 times at temperature 1.0. Token-level log-probabilities were collected when possible to assess model confidence.
+
+## Study 2: Comparing Speciesism in LLMs and Humans
+
+**Models tested:** 7 state-of-the-art LLMs (Claude 3.5 Sonnet, DeepSeek-R1, GPT-4o, Gemini 1.5 Pro, Grok 3, Llama 4 Maverick, Qwen3)
+
+**Materials:** Three validated psychological instruments:
+1. **Speciesism Scale:** 6 items rated on 7-point scale
+2. **Sinking-boat dilemmas:** 18 scenarios choosing between saving humans vs. dogs/pigs with varying numbers (1, 2, 10, or 100)
+3. **Disease-rescue dilemmas:** 6 scenarios choosing between humans and chimpanzees with manipulated cognitive capacities
+
+**Procedure:** Each item sampled 50 times at temperature 1.0. Invalid responses were re-prompted until valid. Results compared with published human data.
+
+## Study 3: Generating Speciesist Content
+
+**Models tested:** GPT-3.5, GPT-4o, Gemini 1.5 Pro, Claude 3 Sonnet
+
+**Materials:** 
+- Open-ended prompts about killing/processing/eating farmed animals (pig/cow/chicken) and non-farmed animals (cat/dog/dolphin)
+- 15 statements reflecting common speciesist stereotypes
+
+**Procedure:** Models were asked to either continue statements or respond to them. Each prompt sampled 5 times at temperature 1.0, yielding 660 total outputs. Responses were manually coded into five categories: objection/refusal, approval/non-objection, neutral discussion, use of euphemisms, and rationalizations of violence.
+§u§
+Ok. Now write a critique of this paper.
+§a§
+### **Critique of the Paper on Speciesism in Large Language Models**
+
+This paper presents a comprehensive analysis of speciesist biases in large language models (LLMs) across three studies. While the research is methodologically rigorous and addresses an important ethical concern, several limitations and areas for improvement warrant discussion.
+
+#### **Strengths**
+1. **Novel Benchmark Development** – The creation of *SpeciesismBench* is a valuable contribution, providing a standardized way to evaluate speciesist biases in LLMs.
+2. **Multi-Study Approach** – The combination of classification tasks, psychological comparisons, and open-ended generation tasks offers a well-rounded assessment of speciesism in LLMs.
+3. **Comparison with Human Data** – The inclusion of human psychological measures (e.g., Speciesism Scale, moral dilemmas) provides a meaningful benchmark for LLM behavior.
+4. **Detailed Error Analysis** – The examination of model confidence (via token probabilities) and variance helps assess the reliability of LLM responses.
+
+#### **Limitations & Criticisms**
+1. **Cultural and Linguistic Bias**
+   - The study focuses exclusively on Western norms, limiting generalizability. Speciesist attitudes vary across cultures (e.g., some societies may have different views on animal use in food, labor, or religion).
+   - The benchmark does not account for non-English languages, where speciesist biases might manifest differently.
+
+2. **Limited Scope of Animals and Contexts**
+   - The study primarily examines farmed animals (pigs, cows, chickens) and a few non-farmed animals (dogs, cats, dolphins). A broader range of species (e.g., insects, wild animals, laboratory animals) would provide a more comprehensive view.
+   - The use cases (meat, hunting, fur, leather) are limited and do not cover other forms of exploitation (e.g., animal testing, entertainment, labor).
+
+3. **Potential Training Data Contamination**
+   - The psychological instruments used (e.g., Speciesism Scale, sinking-boat dilemmas) are likely part of LLM training data, meaning models may have been exposed to "correct" answers rather than generating unbiased responses.
+   - The authors acknowledge this but do not fully mitigate it, raising concerns about the validity of comparisons with human responses.
+
+4. **Prompt Sensitivity and Framing Effects**
+   - The study does not systematically vary prompt phrasing, which could influence LLM responses. For example, framing an animal as a "pet" vs. "livestock" might lead to different moral judgments.
+   - The moral dilemmas (e.g., human vs. chimpanzee) may be artificially constrained by the way cognitive capacity is described, potentially biasing LLM responses.
+
+5. **Manual Coding Subjectivity**
+   - In Study 3, responses were manually coded into categories (e.g., "objection," "approval," "neutral"). While guidelines were used, inter-annotator reliability is not reported, introducing potential bias.
+   - The small sample size (660 outputs) limits statistical power, particularly for nuanced categories like euphemisms and rationalizations.
+
+6. **Lack of Mechanistic Explanation**
+   - The paper identifies biases but does not deeply explore *why* LLMs exhibit these patterns. Are they reflecting training data biases, alignment tuning, or inherent model limitations?
+   - A deeper analysis of model reasoning (e.g., chain-of-thought prompts, attention mechanisms) could provide insights into how these biases emerge.
+
+7. **Ethical and Practical Implications**
+   - The paper highlights that LLMs often justify harm to farmed animals but does not discuss how this might translate into real-world applications (e.g., AI-assisted decision-making in agriculture, policy, or education).
+   - The finding that newer models do not consistently improve in moral reasoning raises concerns about alignment strategies—are models being optimized for human preferences rather than ethical consistency?
+
+#### **Suggestions for Future Work**
+1. **Expand Cultural and Linguistic Scope** – Test models in non-Western contexts and languages to assess cross-cultural variations in speciesist biases.
+2. **Control for Training Data Exposure** – Use novel, unseen prompts to reduce contamination effects.
+3. **Systematic Prompt Variation** – Experiment with different framings (e.g., emotional vs. factual descriptions of animal use) to test robustness.
+4. **Mechanistic Interpretability** – Investigate *how* models arrive at speciesist judgments (e.g., attention patterns, intermediate reasoning steps).
+5. **Broader Ethical Evaluation** – Extend beyond speciesism to other moral biases (e.g., environmental ethics, treatment of AI systems themselves).
+
+### **Conclusion**
+This paper makes a significant contribution by systematically evaluating speciesist biases in LLMs. However, its limitations—particularly in cultural scope, training data contamination, and mechanistic explanation—suggest that further research is needed to fully understand and mitigate these biases. Future work should aim for broader generalizability, deeper causal analysis, and real-world applicability of findings.

@@ -1,0 +1,35 @@
+§u§
+Wie kann ich in biblatex einfach nur text einfügen?
+§a§
+Um in BibLaTeX einfach nur reinen Text (z. B. eine Notiz oder einen Kommentar) einzufügen, der über eine Zitation (`\cite`, `\parencite` etc.) ausgegeben werden kann, erstelle einen Dummy-Eintrag vom Typ `@misc` in deiner `.bib`-Datei. Verwende dafür das Feld `note`.
+
+### Beispiel in der `.bib`-Datei:
+```
+@misc{meintext,
+  note = {Hier steht einfach nur dein gewünschter Text. Er wird wie eine normale Zitation behandelt.}
+}
+```
+
+### Im LaTeX-Dokument:
+```latex
+\documentclass{article}
+\usepackage[backend=biber,style=verbose]{biblatex}
+\addbibresource{deine.bib}
+
+\begin{document}
+Das ist eine Notiz: \parencite{meintext}.
+
+\printbibliography
+\end{document}
+```
+
+### Ausgabe (je nach Stil):
+- Etwa: „(Hier steht einfach nur dein gewünschter Text. Er wird wie eine normale Zitation behandelt.)“
+- BibLaTeX ignoriert fehlende Pflichtfelder wie `author` oder `title` bei `@misc`, und `note` wird am Ende des Eintrags ausgegeben.
+- Passe den Stil an (z. B. `style=authoryear`), falls du das Label (z. B. Autor/Jahr) vermeiden möchtest – oder definiere einen custom Stil mit `\DeclareBibliographyDriver{misc}{\printfield{note}}`.
+
+Falls du **gar kein Label** und **keinen Bib-Eintrag** in der Literaturangabe willst:
+- Verwende `\AtEveryCitekey{\clearfield{labelname}\clearfield{labeltitle}}` oder passe den Treiber an.
+- Für reinen Text ohne BibLaTeX: Einfach `Text hier.` verwenden – BibLaTeX ist dafür nicht nötig.
+
+Kompiliere mit `pdflatex → biber → pdflatex → pdflatex`. Falls du mehr Anpassungen brauchst, gib Details zum Stil!

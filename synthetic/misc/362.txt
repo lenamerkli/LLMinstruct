@@ -1,0 +1,421 @@
+§u§
+```
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath,amssymb}
+
+\begin{document}
+    
+    \section*{Kapitel 4}
+    
+    \subsection*{Übungsprüfung}
+    
+    \textbf{Aufgabe 4.1} \textbf{[Mit Lösung]}\\
+    \textit{Gegeben sei die affine Abbildung}
+    \[
+    f : \mathbb{R}^2 \to \mathbb{R}^2,
+    \quad
+    \vec{x} \mapsto \vec{x}' = 
+    \begin{pmatrix}
+        4 & -1 \\
+        2 & 2
+    \end{pmatrix} \vec{x} + 
+    \begin{pmatrix}
+        5 \\
+        1
+    \end{pmatrix}
+    \]
+    \textit{Bestimmen Sie den Fixpunkt von $f$.}
+    
+    \vspace{1em}
+    
+    \textbf{Aufgabe 4.2} \textbf{[Mit Lösung]}\\
+    \textit{Gegeben sei die Matrix}
+    \[
+    A = \begin{pmatrix}
+        4 & 1 \\
+        2 & 3
+    \end{pmatrix}
+    \]
+    \textit{Bestimmen Sie}
+    \begin{enumerate}
+        \item \textit{$\det(A)$;}
+        \item \textit{die Eigenwerte $\lambda_1, \lambda_2$ von $A$;}
+        \item \textit{zu jedem Eigenwert einen Eigenvektor.}
+    \end{enumerate}
+    
+    \vspace{1em}
+    
+    \textbf{Aufgabe 4.3} \textbf{[Mit Lösung]}\\
+    \textit{Gegeben ist die affine Abbildung}
+    \[
+    f : \mathbb{R}^2 \longrightarrow \mathbb{R}^2,
+    \quad
+    \vec{x} \mapsto \vec{x}' = 
+    \begin{pmatrix}
+        2 & 1 \\
+        3 & 4
+    \end{pmatrix} \vec{x} + 
+    \begin{pmatrix}
+        5 \\
+        2
+    \end{pmatrix}
+    \]
+    \textit{Bestimmen Sie die Fixgerade$(n)$ von $f$.}
+    
+    \newpage
+    
+    \textbf{Aufgabe 4.4} \textbf{[Mit Lösung]}\\
+    \textit{Gegeben ist die affine Abbildung}
+    \[
+    f : \mathbb{R}^2 \longrightarrow \mathbb{R}^2,
+    \quad
+    \vec{x} \mapsto \vec{x}' = 
+    \begin{pmatrix}
+        2 & 2 \\
+        4 & -5
+    \end{pmatrix} \vec{x} + 
+    \begin{pmatrix}
+        6 \\
+        10
+    \end{pmatrix}
+    \]
+    \textit{Bestimmen Sie die Fixgerade$(n)$ von $f$.}
+    
+    \vspace{1em}
+    
+    \textbf{Aufgabe 4.5} \textbf{[Mit Lösung]}\\
+    \textit{Gegeben seien}
+    \[
+    z_1 = 3 + 4i \quad z_2 = 1 - 2i
+    \]
+    \textit{Bestimmen Sie}
+    \begin{enumerate}
+        \item \textit{$z_1 \cdot z_2$,}
+        \item \textit{$\frac{z_1}{z_2}$.}
+    \end{enumerate}
+    
+    \vspace{1em}
+    
+    \textbf{Aufgabe 4.6} \textbf{[Mit Lösung]}\\
+    \textit{Gegeben seien}
+    \[
+    z = -1 + \sqrt{3} \, i \quad w = 3 e^{i \pi / 4}
+    \]
+    \textit{bestimmen Sie}
+    \begin{enumerate}
+        \item \textit{$z$ in der Polarform;}
+        \item \textit{$w$ in kartesischer Form.}
+        \item \textit{das Produkt in Polarform von $z \cdot w$}
+        \item \textit{$z^6$}
+    \end{enumerate}
+    
+\end{document}
+
+```
+```
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{array}
+\usepackage{xurl}
+\usepackage{enumitem}
+
+\title{[SAM] Zusammenfassung 2025-06-26}
+\author{REDACTED}
+
+\begin{document}
+    \maketitle
+    \tableofcontents
+    
+    \bigskip\bigskip
+    
+    \section{Lernziele}
+        \subsection{Affine Abbildungen}
+            \begin{itemize}
+                \item Determinante
+                \item Eigenwerte
+                \item Eigenvektoren
+                \item Fixpunkte
+                \item Fixgeraden
+            \end{itemize}
+        \subsection{Komplexe Zahlen}
+            \begin{itemize}
+                \item Konjugiert
+                \item Summe (Normalform)
+                \item Differenz (Normalform)
+                \item Produkt (Normalform und Polarform)
+                \item Division (Normalform und Polarform)
+                \item Potenz (Polarform)
+                \item Umwandlung zwischen Normal- und Polarform.
+            \end{itemize}
+            
+    
+    \section{Affine Abbildungen}
+        ...
+    
+        \subsection{Determinante}
+            ...
+        
+        \subsection{Eigenwerte}
+            ...
+        
+        \subsection{Eigenvektoren}
+            ...
+        
+        \subsection{Fixpunkte}
+            ...
+        
+        \subsection{Fixgeraden}
+            ...
+    
+    
+    \section{Komplexe Zahlen}
+        ...
+        
+        \subsection{Konjugiert}
+            ...
+        
+        \subsection{Summe (Normalform)}
+            ...
+        
+        \subsection{Differenz (Normalform)}
+            ...
+        
+        \subsection{Produkt (Normalform)}
+            ...
+        
+        \subsection{Produkt (Polarform)}
+            ...
+        
+        \subsection{Division (Normalform)}
+            ...
+        
+        \subsection{Division (Polarform)}
+            ...
+            
+        \subsection{Potenz (Polarform)}
+            ...
+        
+        \subsection{Umwandlung zwischen Normal- und Polarform}
+            ...
+            
+        
+\end{document}
+```
+Vervollständige die Zusammenfassung.
+§a§
+```latex
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{xurl}
+\usepackage{enumitem}
+
+\title{[SAM] Zusammenfassung 2025-06-26}
+\author{REDACTED}
+
+\begin{document}
+    \maketitle
+    \tableofcontents
+    
+    \bigskip\bigskip
+    
+    \section{Lernziele}
+        \subsection{Affine Abbildungen}
+            \begin{itemize}
+                \item Determinante
+                \item Eigenwerte
+                \item Eigenvektoren
+                \item Fixpunkte
+                \item Fixgeraden
+            \end{itemize}
+        \subsection{Komplexe Zahlen}
+            \begin{itemize}
+                \item Konjugiert
+                \item Summe (Normalform)
+                \item Differenz (Normalform)
+                \item Produkt (Normalform und Polarform)
+                \item Division (Normalform und Polarform)
+                \item Potenz (Polarform)
+                \item Umwandlung zwischen Normal- und Polarform.
+            \end{itemize}
+            
+    
+    \section{Affine Abbildungen}
+        Eine affine Abbildung ist eine Transformation der Form 
+        \[ f : \mathbb{R}^n \to \mathbb{R}^n, \quad \vec{x} \mapsto \vec{x}' = A\vec{x} + \vec{b} \]
+        wobei $A$ eine $n \times n$-Matrix (der lineare Teil) und $\vec{b}$ ein Vektor (die Translation) ist.
+    
+        \subsection{Determinante}
+            Die Determinante ist eine skalare Grösse, die einer quadratischen Matrix zugeordnet wird. Für eine 2x2-Matrix berechnet sie sich wie folgt:
+            \[ \det(A) = \det \begin{pmatrix} a & b \\ c & d \end{pmatrix} = ad - bc \]
+            \textbf{Beispiel (aus Aufgabe 4.2):} Gegeben sei die Matrix $A = \begin{pmatrix} 4 & 1 \\ 2 & 3 \end{pmatrix}$.
+            \[ \det(A) = 4 \cdot 3 - 1 \cdot 2 = 12 - 2 = 10 \]
+        
+        \subsection{Eigenwerte}
+            Ein Eigenwert $\lambda$ einer Matrix $A$ ist ein Skalar, für den es einen vom Nullvektor verschiedenen Vektor $\vec{v}$ (den Eigenvektor) gibt, so dass gilt:
+            \[ A\vec{v} = \lambda\vec{v} \]
+            Zur Bestimmung der Eigenwerte löst man die \textbf{charakteristische Gleichung}:
+            \[ \det(A - \lambda I) = 0 \]
+            wobei $I$ die Einheitsmatrix ist.
+            
+            \textbf{Beispiel (aus Aufgabe 4.2):} Für $A = \begin{pmatrix} 4 & 1 \\ 2 & 3 \end{pmatrix}$:
+            \begin{align*}
+                \det(A - \lambda I) = \det \begin{pmatrix} 4-\lambda & 1 \\ 2 & 3-\lambda \end{pmatrix} &= 0 \\
+                (4-\lambda)(3-\lambda) - 2 \cdot 1 &= 0 \\
+                12 - 7\lambda + \lambda^2 - 2 &= 0 \\
+                \lambda^2 - 7\lambda + 10 &= 0 \\
+                (\lambda-2)(\lambda-5) &= 0
+            \end{align*}
+            Die Eigenwerte sind also $\lambda_1 = 2$ und $\lambda_2 = 5$.
+        
+        \subsection{Eigenvektoren}
+            Ein Eigenvektor $\vec{v}$ zum Eigenwert $\lambda$ ist ein Vektor ($\vec{v} \neq \vec{0}$), der die Gleichung $A\vec{v} = \lambda\vec{v}$ erfüllt. Man findet ihn, indem man für jeden Eigenwert das homogene lineare Gleichungssystem
+            \[ (A - \lambda I)\vec{v} = \vec{0} \]
+            löst.
+            
+            \textbf{Beispiel (aus Aufgabe 4.2):}
+            \begin{itemize}
+                \item \textbf{Für $\lambda_1 = 5$:}
+                \[ (A - 5I)\vec{v} = \begin{pmatrix} 4-5 & 1 \\ 2 & 3-5 \end{pmatrix} \begin{pmatrix} v_1 \\ v_2 \end{pmatrix} = \begin{pmatrix} -1 & 1 \\ 2 & -2 \end{pmatrix} \begin{pmatrix} v_1 \\ v_2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} \]
+                Dies führt zur Gleichung $-v_1 + v_2 = 0$, also $v_1=v_2$. Ein möglicher Eigenvektor ist $\vec{v}_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+                \item \textbf{Für $\lambda_2 = 2$:}
+                \[ (A - 2I)\vec{v} = \begin{pmatrix} 4-2 & 1 \\ 2 & 3-2 \end{pmatrix} \begin{pmatrix} v_1 \\ v_2 \end{pmatrix} = \begin{pmatrix} 2 & 1 \\ 2 & 1 \end{pmatrix} \begin{pmatrix} v_1 \\ v_2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} \]
+                Dies führt zur Gleichung $2v_1 + v_2 = 0$, also $v_2=-2v_1$. Ein möglicher Eigenvektor ist $\vec{v}_2 = \begin{pmatrix} 1 \\ -2 \end{pmatrix}$.
+            \end{itemize}
+        
+        \subsection{Fixpunkte}
+            Ein Fixpunkt $\vec{p}$ einer affinen Abbildung $f$ ist ein Punkt, der auf sich selbst abgebildet wird:
+            \[ f(\vec{p}) = \vec{p} \quad \Longleftrightarrow \quad A\vec{p} + \vec{b} = \vec{p} \]
+            Um den Fixpunkt zu finden, löst man die Gleichung $(I-A)\vec{p} = \vec{b}$. Wenn $\det(I-A) \neq 0$, gibt es einen eindeutigen Fixpunkt.
+            
+            \textbf{Beispiel (aus Aufgabe 4.1):} Gegeben sei $f(\vec{x}) = \begin{pmatrix} 4 & -1 \\ 2 & 2 \end{pmatrix} \vec{x} + \begin{pmatrix} 5 \\ 1 \end{pmatrix}$.
+            \begin{gather*}
+                (I-A)\vec{p} = \left( \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} - \begin{pmatrix} 4 & -1 \\ 2 & 2 \end{pmatrix} \right) \vec{p} = \begin{pmatrix} -3 & 1 \\ -2 & -1 \end{pmatrix} \vec{p} = \begin{pmatrix} 5 \\ 1 \end{pmatrix}
+            \end{gather*}
+            Das lineare Gleichungssystem lautet:
+            \begin{align*}
+                -3p_1 + p_2 &= 5 \\
+                -2p_1 - p_2 &= 1
+            \end{align*}
+            Addition der beiden Gleichungen ergibt $-5p_1 = 6 \implies p_1 = -6/5$. Einsetzen in die erste Gleichung ergibt $p_2 = 5 + 3(-6/5) = 7/5$.
+            Der Fixpunkt ist $\vec{p} = \begin{pmatrix} -6/5 \\ 7/5 \end{pmatrix}$.
+        
+        \subsection{Fixgeraden}
+            Eine Fixgerade $g$ ist eine Gerade, die auf sich selbst abgebildet wird, d.h. $f(g) = g$.
+            \begin{itemize}
+                \item \textbf{Fall 1: $A$ hat den Eigenwert $\lambda=1$.}\\
+                Es gibt eine Schar von parallelen Fixgeraden. Ihre Richtung ist der Eigenvektor $\vec{u}$ zu $\lambda=1$. Die Geradengleichung für die Punkte $\vec{p}$ auf der Geraden wird durch die Bedingung bestimmt, dass der Vektor $(A-I)\vec{p}+\vec{b}$ kollinear zu $\vec{u}$ sein muss.
+                
+                \textbf{Beispiel (aus Aufgabe 4.3):} $A=\begin{pmatrix} 2 & 1 \\ 3 & 4 \end{pmatrix}, \vec{b}=\begin{pmatrix} 5 \\ 2 \end{pmatrix}$.
+                Die Matrix $A$ hat den Eigenwert $\lambda=1$ mit Eigenvektor $\vec{u}=\begin{pmatrix} 1 \\ -1 \end{pmatrix}$.
+                Die Bedingung $(A-I)\vec{p}+\vec{b}=k\vec{u}$ führt auf die Gleichung $4p_1+4p_2 = -7$. Dies ist die Gleichung der Fixgeraden in Koordinatenform.
+                
+                \item \textbf{Fall 2: $A$ hat keinen Eigenwert $\lambda=1$.}\\
+                Wenn ein eindeutiger Fixpunkt $\vec{p}$ existiert, dann sind die Fixgeraden genau die Geraden, die durch den Fixpunkt $\vec{p}$ gehen und als Richtungsvektor einen Eigenvektor von $A$ haben.
+                
+                \textbf{Beispiel (aus Aufgabe 4.4):} $A=\begin{pmatrix} 2 & 2 \\ 4 & -5 \end{pmatrix}, \vec{b}=\begin{pmatrix} 6 \\ 10 \end{pmatrix}$.
+                Die Eigenwerte sind $\lambda_1=-6, \lambda_2=3$. Es gibt keinen Eigenwert 1.
+                Der Fixpunkt ist $\vec{p}=\begin{pmatrix} -4 \\ -1 \end{pmatrix}$.
+                Die Eigenvektoren sind $\vec{u}_1=\begin{pmatrix} 1 \\ -4 \end{pmatrix}$ und $\vec{u}_2=\begin{pmatrix} 2 \\ 1 \end{pmatrix}$.
+                Die beiden Fixgeraden sind:
+                \begin{align*}
+                    g_1: \vec{x} &= \begin{pmatrix} -4 \\ -1 \end{pmatrix} + t \begin{pmatrix} 1 \\ -4 \end{pmatrix} \\
+                    g_2: \vec{x} &= \begin{pmatrix} -4 \\ -1 \end{pmatrix} + t \begin{pmatrix} 2 \\ 1 \end{pmatrix}
+                \end{align*}
+            \end{itemize}
+    
+    
+    \section{Komplexe Zahlen}
+        Komplexe Zahlen erweitern den Bereich der reellen Zahlen. Sie können in zwei Hauptformen dargestellt werden:
+        \begin{itemize}
+            \item \textbf{Normalform (kartesische Form):} $z = a + bi$, wobei $a$ der Realteil und $b$ der Imaginärteil ist.
+            \item \textbf{Polarform (exponentielle Form):} $z = r e^{i \phi} = r(\cos\phi + i\sin\phi)$, wobei $r$ der Betrag und $\phi$ das Argument (Winkel) ist.
+        \end{itemize}
+        
+        \subsection{Konjugiert}
+            Das Konjugierte einer komplexen Zahl $z = a+bi$ ist $\bar{z} = a-bi$.
+            
+            \textbf{Beispiel:} Für $z_1 = 3+4i$ ist das Konjugierte $\bar{z}_1 = 3-4i$.
+        
+        \subsection{Summe (Normalform)}
+            Real- und Imaginärteile werden separat addiert:
+            \[ (a+bi) + (c+di) = (a+c) + (b+d)i \]
+            \textbf{Beispiel:} $(3+4i) + (1-2i) = (3+1) + (4-2)i = 4+2i$.
+        
+        \subsection{Differenz (Normalform)}
+            Real- und Imaginärteile werden separat subtrahiert:
+             \[ (a+bi) - (c+di) = (a-c) + (b-d)i \]
+            \textbf{Beispiel:} $(3+4i) - (1-2i) = (3-1) + (4-(-2))i = 2+6i$.
+        
+        \subsection{Produkt (Normalform)}
+            Die Zahlen werden ausmultipliziert, wobei $i^2 = -1$ beachtet wird:
+            \[ (a+bi)(c+di) = ac + adi + bci + bdi^2 = (ac-bd) + (ad+bc)i \]
+            \textbf{Beispiel (aus Aufgabe 4.5):} $z_1 = 3 + 4i, z_2 = 1 - 2i$.
+            \[ z_1 \cdot z_2 = (3+4i)(1-2i) = 3 - 6i + 4i - 8i^2 = 3 - 2i + 8 = 11 - 2i \]
+        
+        \subsection{Produkt (Polarform)}
+            Die Beträge werden multipliziert und die Winkel addiert:
+            \[ (r_1 e^{i\phi_1}) \cdot (r_2 e^{i\phi_2}) = r_1 r_2 e^{i(\phi_1+\phi_2)} \]
+            \textbf{Beispiel (aus Aufgabe 4.6):} $z = 2e^{i 2\pi / 3}, w = 3 e^{i \pi / 4}$.
+            \[ z \cdot w = (2 \cdot 3) e^{i(2\pi/3 + \pi/4)} = 6 e^{i(8\pi/12 + 3\pi/12)} = 6 e^{i 11\pi/12} \]
+        
+        \subsection{Division (Normalform)}
+            Der Bruch wird mit dem Konjugierten des Nenners erweitert:
+            \[ \frac{a+bi}{c+di} = \frac{(a+bi)(c-di)}{(c+di)(c-di)} = \frac{(ac+bd) + (bc-ad)i}{c^2+d^2} \]
+            \textbf{Beispiel (aus Aufgabe 4.5):} $z_1 = 3+4i, z_2 = 1-2i$.
+            \[ \frac{z_1}{z_2} = \frac{3+4i}{1-2i} = \frac{(3+4i)(1+2i)}{(1-2i)(1+2i)} = \frac{3+6i+4i+8i^2}{1^2+2^2} = \frac{-5+10i}{5} = -1+2i \]
+            
+        \subsection{Division (Polarform)}
+            Die Beträge werden dividiert und die Winkel subtrahiert:
+            \[ \frac{r_1 e^{i\phi_1}}{r_2 e^{i\phi_2}} = \frac{r_1}{r_2} e^{i(\phi_1-\phi_2)} \]
+            \textbf{Beispiel:} Mit $z$ und $w$ von oben:
+            \[ \frac{z}{w} = \frac{2e^{i 2\pi / 3}}{3 e^{i \pi / 4}} = \frac{2}{3} e^{i(2\pi/3 - \pi/4)} = \frac{2}{3} e^{i 5\pi/12} \]
+            
+        \subsection{Potenz (Polarform)}
+            Gemäss der Formel von De Moivre wird der Betrag potenziert und der Winkel mit dem Exponenten multipliziert:
+            \[ (r e^{i\phi})^n = r^n e^{in\phi} \]
+            \textbf{Beispiel (aus Aufgabe 4.6):} $z = 2e^{i 2\pi/3}$.
+            \[ z^6 = (2e^{i 2\pi/3})^6 = 2^6 e^{i(6 \cdot 2\pi/3)} = 64 e^{i 4\pi} = 64(\cos(4\pi)+i\sin(4\pi)) = 64(1+0) = 64 \]
+        
+        \subsection{Umwandlung zwischen Normal- und Polarform}
+        \begin{itemize}
+            \item \textbf{Normalform $\to$ Polarform ($a+bi \to r e^{i\phi}$)}
+            \begin{enumerate}
+                \item Betrag berechnen: $r = |z| = \sqrt{a^2+b^2}$
+                \item Winkel berechnen: $\phi = \arg(z)$. Man findet $\phi$ mittels $\tan(\phi) = b/a$, wobei der Quadrant von $(a,b)$ beachtet werden muss.
+            \end{enumerate}
+            \textbf{Beispiel (aus Aufgabe 4.6):} $z = -1 + \sqrt{3}i$.
+            \begin{itemize}
+                \item $r = \sqrt{(-1)^2 + (\sqrt{3})^2} = \sqrt{1+3} = 2$.
+                \item $z$ liegt im 2. Quadranten. $\tan(\phi) = \sqrt{3}/(-1) = -\sqrt{3}$. Der Basiswinkel ist $\pi/3$. Im 2. Quadranten ist $\phi = \pi - \pi/3 = 2\pi/3$.
+                \item Ergebnis: $z = 2e^{i 2\pi/3}$.
+            \end{itemize}
+            
+            \item \textbf{Polarform $\to$ Normalform ($r e^{i\phi} \to a+bi$)}
+            \begin{enumerate}
+                \item Realteil berechnen: $a = r \cos(\phi)$
+                \item Imaginärteil berechnen: $b = r \sin(\phi)$
+            \end{enumerate}
+            \textbf{Beispiel (aus Aufgabe 4.6):} $w = 3 e^{i \pi / 4}$.
+            \begin{itemize}
+                \item $a = 3 \cos(\pi/4) = 3 \cdot \frac{\sqrt{2}}{2} = \frac{3\sqrt{2}}{2}$.
+                \item $b = 3 \sin(\pi/4) = 3 \cdot \frac{\sqrt{2}}{2} = \frac{3\sqrt{2}}{2}$.
+                \item Ergebnis: $w = \frac{3\sqrt{2}}{2} + i\frac{3\sqrt{2}}{2}$.
+            \end{itemize}
+        \end{itemize}    
+\end{document}
+```

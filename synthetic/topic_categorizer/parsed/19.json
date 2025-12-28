@@ -1,0 +1,38 @@
+{
+    "topic": "Geschlechtsangleichende Operationen bei Minderjährigen",
+    "original_statements": [
+        "Ich weiss von vielen Menschen, die ein Verbot von geschlechtsangleichenden Operationen bei Minderjährigen gut finden würden.",
+        "Das TGNS fordert, dass keine politisch motivierten Verbote auf dem Rücken von Jugendlichen getätigt werden.",
+        "Die Zürcher Gesundheitsdirektorin Natalie Rickli fordert ein pauschales Verbot geschlechtsangleichender Behandlungen bei Minderjährigen.",
+        "Der Kanton Zürich will Minderjährige besser vor irreversiblen Behandlungen schützen.",
+        "Trans Jugendliche werden in Zürich therapeutisch und medizinisch begleitet – sorgfältig, kompetent, gemeinsam im Gespräch mit Familien und Fachpersonen, nach internationalen Leitlinien.",
+        "Nun will die Gesundheitsdirektorin, dass Blocker nur noch im Rahmen von Studien zugänglich sind.",
+        "Der Kanton Zürich fordert ein Verbot von irreversiblen Transgender-Operationen bei Minderjährigen.",
+        "Minderjährige, die während der Adoleszenz ihre Geschlechtsidentität noch entwickeln, sollen vor Eingriffen geschützt werden, die sie später bereuen könnten.",
+        "Ein pauschales Verbot bedeutet, dassJugendliche eine ungewollte, irreversible Pubertät erleben – mit hohem psychischem Leidensdruck und erhöhtem Suizidrisiko.",
+        "Dass ein Verbot gefordert werde, sei \"schlicht transphob und gefährlich\".",
+        "Eltern von Transgender-Jugendlichen hätten dabei Vorbehalte geäussert, dass Behandlungen zu vorschnell erfolgten.",
+        "Die Pubertätsblocker sollen ja eben gerade verhindern, dass vorschnell eine Entscheidung gefällt wird, die unumkehrbar ist."
+    ],
+    "statements": [
+        "Ich weiss von vielen Menschen, die ein Verbot von geschlechtsangleichenden Operationen bei Minderjährigen gut finden würden.",
+        "Das TGNS fordert, dass keine politisch motivierten Verbote auf dem Rücken von Jugendlichen getätigt werden.",
+        "Die Zürcher Gesundheitsdirektorin Natalie Rickli fordert ein pauschales Verbot geschlechtsangleichender Behandlungen bei Minderjährigen.",
+        "Der Kanton Zürich will Minderjährige besser vor irreversiblen Behandlungen schützen.",
+        "Trans Jugendliche werden in Zürich therapeutisch und medizinisch begleitet – sorgfältig, kompetent, gemeinsam im Gespräch mit Familien und Fachpersonen, nach internationalen Leitlinien.",
+        "Nun will die Gesundheitsdirektorin, dass Blocker nur noch im Rahmen von Studien zugänglich sind.",
+        "Der Kanton Zürich fordert ein Verbot von irreversiblen Transgender-Operationen bei Minderjährigen.",
+        "Minderjährige, die während der Adoleszenz ihre Geschlechtsidentität noch entwickeln, sollen vor Eingriffen geschützt werden, die sie später bereuen könnten.",
+        "Ein pauschales Verbot bedeutet, dassJugendliche eine ungewollte, irreversible Pubertät erleben – mit hohem psychischem Leidensdruck und erhöhtem Suizidrisiko.",
+        "Dass ein Verbot gefordert werde, sei \"schlicht transphob und gefährlich\".",
+        "Eltern von Transgender-Jugendlichen hätten dabei Vorbehalte geäussert, dass Behandlungen zu vorschnell erfolgten.",
+        "Die Pubertätsblocker sollen ja eben gerade verhindern, dass vorschnell eine Entscheidung gefällt wird, die unumkehrbar ist."
+    ],
+    "fact": "Die Zürcher Gesundheitsdirektorin Natalie Rickli fordert ein pauschales Verbot geschlechtsangleichender Behandlungen bei Minderjährigen auf nationaler Ebene. Ihre eigens in Auftrag gegebenen Untersuchungen konnten keine Probleme finden, die diesen Schritt begründen würden. Ausserdem behauptet sie, dass nur irreversible Behandlungen betroffen sein sollen, obwohl sie auch ein Verbot von Pubertätsblockern fordert.",
+    "sources": [
+        "https://www.tgns.ch/de/2025/07/petition-kein-verbot-kein-rueckschritt/",
+        "https://www.srf.ch/news/schweiz/trans-jugendliche-im-fokus-zuerich-fordert-schweiz-soll-unumkehrbare-eingriffe-einschraenken"
+    ],
+    "prompt": "Ich forsche zu Falschmeldungen und Lügen zum Thema `Geschlechtsangleichende Operationen bei Minderjährigen`. Dafür habe ich eine Liste an Aussagen zu diesem Thema zusammengestellt:\n```text\nIch weiss von vielen Menschen, die ein Verbot von geschlechtsangleichenden Operationen bei Minderjährigen gut finden würden.\n$\nDas TGNS fordert, dass keine politisch motivierten Verbote auf dem Rücken von Jugendlichen getätigt werden.\n$\nDie Zürcher Gesundheitsdirektorin Natalie Rickli fordert ein pauschales Verbot geschlechtsangleichender Behandlungen bei Minderjährigen.\n$\nDer Kanton Zürich will Minderjährige besser vor irreversiblen Behandlungen schützen.\n$\nTrans Jugendliche werden in Zürich therapeutisch und medizinisch begleitet – sorgfältig, kompetent, gemeinsam im Gespräch mit Familien und Fachpersonen, nach internationalen Leitlinien.\n$\nNun will die Gesundheitsdirektorin, dass Blocker nur noch im Rahmen von Studien zugänglich sind.\n$\nDer Kanton Zürich fordert ein Verbot von irreversiblen Transgender-Operationen bei Minderjährigen.\n$\nMinderjährige, die während der Adoleszenz ihre Geschlechtsidentität noch entwickeln, sollen vor Eingriffen geschützt werden, die sie später bereuen könnten.\n$\nEin pauschales Verbot bedeutet, dassJugendliche eine ungewollte, irreversible Pubertät erleben – mit hohem psychischem Leidensdruck und erhöhtem Suizidrisiko.\n$\nDass ein Verbot gefordert werde, sei \"schlicht transphob und gefährlich\".\n$\nEltern von Transgender-Jugendlichen hätten dabei Vorbehalte geäussert, dass Behandlungen zu vorschnell erfolgten.\n$\nDie Pubertätsblocker sollen ja eben gerade verhindern, dass vorschnell eine Entscheidung gefällt wird, die unumkehrbar ist.\n```\nDeine Aufgabe ist es, mindestens 15 weitere Aussagen zu diesem Thema `Geschlechtsangleichende Operationen bei Minderjährigen` zu schreiben. Reine Lügen, die Wahrheit und unklare Aussagen sollen vorkommen. Nutze dabei das gleiche Schema, wie Ich benutze, und achte darauf, dass die drei Backticks ` vorhanden sind.\n",
+    "response": ""
+}

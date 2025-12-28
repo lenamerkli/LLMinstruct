@@ -1,0 +1,117 @@
+§u§
+Wie mache ich einen Brief in LaTeX gemäss der deutschen DIN Norm?
+§a§
+### Einen Geschäftsbrief nach DIN 5008 in LaTeX erstellen
+
+Die deutsche Norm für Geschäftsbriefe ist **DIN 5008**. Das LaTeX-Paket **`scrlttr2`** aus dem **KOMA-Script**-Bundle ist perfekt dafür geeignet. Es erzeugt automatisch ein normgerechtes Layout (z. B. mit festen Abständen, Seitenrändern und Positionen für Absender, Empfänger usw.).
+
+#### 1. Voraussetzungen
+- Installiere eine LaTeX-Distribution (z. B. TeX Live oder MiKTeX), die KOMA-Script enthält (`scrlttr2` ist standardmäßig dabei).
+- Kompiliere mit `pdflatex` oder `lualatex`.
+
+#### 2. Minimalbeispiel
+Hier ist ein vollständiges Beispiel für einen **DIN 5008 A4-Brief** (Variante "Standard"). Kopiere es in eine `.tex`-Datei und kompiliere.
+
+```latex
+\documentclass[%
+  DIN,           % DIN 5008-Layout
+  A4,            % Papierformat
+  fontsize=12pt, % Schriftgröße
+  parskip=half-, % Absatzabstand (halbzeilig)
+]{scrlttr2}
+
+\usepackage[utf8]{inputenc}      % Für Umlaute
+\usepackage[T1]{fontenc}         % Bessere Schriftunterstützung
+\usepackage[german]{babel}       % Deutsche Trennregeln und Sprache
+\usepackage{lmodern}             % Moderne Schrift (Latin Modern)
+
+% Deine persönlichen Briefdaten (global)
+\setkomavar{fromname}{Max Mustermann}
+\setkomavar{fromaddress}{Musterstraße 1\\12345 Musterstadt}
+\setkomavar{place}{Musterstadt}
+\setkomavar{phone}{(01234) 56789}
+\setkomavar{email}{max@example.com}
+
+% Unterschriftsposition
+\setkomavar{signature}{Max Mustermann\\Geschäftsführer}
+
+\begin{document}
+
+\begin{letter}{
+  Frau Anna Beispiel\\
+  Beispielweg 2\\
+  67890 Beispielstadt
+}
+
+\opening{Sehr geehrte Frau Beispiel,}
+
+hier steht der Haupttext Ihres Briefes. Er kann über mehrere Absätze gehen.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+Mit freundlichen Grüßen,
+
+\closing{}  % Leerer Gruß – wird automatisch platziert
+
+\end{letter}
+
+\end{document}
+```
+
+**Ausgabe**: Ein PDF mit perfektem DIN-5008-Layout:
+- Absender oben rechts.
+- Empfänger links (Platzhalter).
+- Datum automatisch rechtsbündig.
+- Betreff optional.
+- Feste Ränder (z. B. 2,5 cm links).
+
+#### 3. Wichtige Befehle und Anpassungen
+- **Briefklasse-Optionen**:
+  | Option       | Beschreibung                  |
+  |--------------|-------------------------------|
+  | `DIN`       | DIN 5008 (Standard)          |
+  | `NF`        | Normferndruck (ähnlich)      |
+  | `A4` / `A5` | Papierformat                 |
+  | `foldmarks=true` | Falzmarken für Umschläge  |
+  | `backaddress=true` | Rücksendeadresse auf Umschlag |
+
+- **Briefdaten mit `\setkomavar`** (global setzen):
+  - `fromname`, `fromaddress`: Deine Daten.
+  - `toaddress`: Empfänger (wird im `\begin{letter}` überschrieben).
+  - `subject`: Betreff (z. B. `\setkomavar{subject}{Betreffzeile}`).
+  - `date`: Datum (automatisch `\today`, oder manuell).
+
+- **Im Brief**:
+  - `\opening{Anrede}`: Start mit Abstand.
+  - `\closing{Grußformel}`: Ende mit Unterschrift.
+  - `\setkomavar{location}{Musterstadt, \today}`: Ort und Datum.
+
+- **Erweiterte Features**:
+  ```latex
+  % Betreff hinzufügen
+  \setkomavar{subject}{Angebot Nr. 123}
+
+  % Anhänge
+  \setkomavar{enclsep}{Anhänge:}
+  \Encl{Anlage 1}{Anlage 2}
+
+  % Kopie
+  \setkomavar{ccsep}{Kopie:}
+  \Cc{Kopie an: Herr Meier}
+  ```
+  Füge das vor `\begin{letter}` ein.
+
+- **Umschlag**: Mit `\pagestyle{empty}` und Option `env` für Briefumschläge.
+
+#### 4. Häufige Anpassungen
+- **Logo**: `\includegraphics{logo.png}` in `fromlogo`.
+- **Mehrere Briefe**: Mehrere `\begin{letter}...\end{letter}` in einem Dokument.
+- **Farben/Fenstermodus**: `window=fill` für Fensterumschläge.
+- **Vollständige Dokumentation**: Siehe KOMA-Script-Manual (`texdoc scrlttr2` oder CTAN).
+
+#### 5. Tipps
+- **Testen**: Kompiliere und überprüfe das Layout mit einem Lineal (Ränder: links 2,5 cm, oben 4,5 cm ca.).
+- **Alternativen**: `letter`-Klasse (weniger flexibel) oder `europecv` für Lebensläufe.
+- **Fehler?** Stelle sicher, dass `babel` mit `german` lädt und Umlaute funktionieren.
+
+Falls du ein spezifisches Layout (z. B. mit Logo oder Anhängen) brauchst, gib mehr Details! 😊

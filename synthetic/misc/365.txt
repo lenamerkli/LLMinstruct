@@ -1,0 +1,211 @@
+§u§
+```
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\textbf{Name, Vorname:} 
+\rule{5cm}{0.4pt}
+
+\textbf{Prüfung}
+
+\begin{itemize}
+    \item Zeit: 60'
+    \item Hilfsmittel: Taschenrechner erlaubt
+    \item Der Lösungsweg ist Bestandteil der Lösung. Zeigen Sie auch Zwischenschritte! Eine saubere Darstellung hilft Fehler verhindern.
+    \item Viel Erfolg!
+\end{itemize}
+
+\begin{tabular}{ | l | l | l | }
+    \hline
+    Aufgabe &  Mögliche Punkte & Erreichte Punkte \\ \hline
+    7.1 &  & \\
+    7.2 &  & \\
+    7.3 &  & \\
+    7.4 &  & \\ \hline
+    Total &  & \\ \hline
+\end{tabular}
+
+\textbf{Aufgabe 7.1}
+
+Bestimmen Sie die Anzahl
+
+1. (1 P) der Anagramme von \texttt{ABLEITUNG};
+2. (1 P) der Anagramme von \texttt{MATHELEHRER};
+3. (2 P) der Anagramme von \texttt{MATHELEHRER}, in denen das Wort \texttt{HERR} lesbar ist.
+4. (1 P) der aus 7 Buchstaben gebildeten Wörter, die nur aus den Vokalen A-E-I-O-U gebildet sind.
+
+\textbf{Aufgabe 7.2}
+
+Bestimmen - Vereinfachen Sie die folgenden Terme; zeigen Sie auch Zwischenschritte:
+
+1. (2 P) $\frac{333!}{335!+334!} \cdot 336! \cdot 334$
+2. (2 P) $\binom{400}{2} \cdot \binom{199}{3} \cdot \binom{200}{198} \cdot \binom{200}{199}$
+3. (3 P) $\frac{(3n-2)!}{(3n)!} + \frac{1}{(3n-1)!} \cdot 3n!$
+4. (2 P) $\binom{k+7}{2} - \binom{k+6}{k+4}$
+
+\textbf{Aufgabe 7.3} (4 P)
+
+Entwickeln Sie den folgenden Term mithilfe dem binomischen Lehrsatz: \texttt{(a^2 - 3a)^4}
+
+\textbf{Aufgabe 7.4}
+
+Die Klasse G20f (7 Mädchen und 10 Jungen) muss einmal die Mensa putzen. Zur Verfügung stehen 3 Schwämme, 6 Besen und 8 Tücher.
+
+1. (3 P) Auf wie vielen Arten können die Beschäftigungen innerhalb der Klasse verteilt werden?
+2. (1 P) Wie viele Arbeitsverteilungen gibt es so, dass kein Mädchen den Boden fegen muss?
+
+Der MATHELEHRER organisiert einen kleinen Kombinatorik- Wettbewerb: er stellt 4 Fragen und der/die am schnellsten korrekt eine Frage beantwortet, bekommt ein Giandujotto (eine leckere Nougat-Praline).
+
+3. (2.5 P) Auf wie vielen Arten können die 4 Giandujotti verteilt werden?
+4. (1.5 P) "Komischerweise" spielten Herr Peters und Herr Koch die ganze Zeit des Wettbewerbs mit Videospielen und schufen sie nicht, an die Fragen zu beantworten. Frau Hug war die schnellste der Klasse, die die erste Frage beantwortete. Auf wie vielen Arten können die 4 Giandujotti verteilt so, dass diese Bedingungen erfüllt werden?
+
+Am 17.06 war der Geburtstag von Frau von Dach und die Klasse möchte während der Mittagspause weiter feiern:
+
+5. (2 P) 5 unter den SuS und SuSinnen der Klasse sollen zum Migros gehen, um Getränke zu kaufen. Wie viele mögliche Einkaufsgruppen können hergestellt werden?
+6. (2 P) Wie viele mögliche fünfköpfige Einkaufsgruppen kann man bilden, die maximal ein Mädchen enthalten?
+7. (2 P) 5 Leute der Klasse bestellen vor der Prüfung mit PizzaExpress 3 Hawaiipizzas (BLEAHHHHH) und 2 Tuna-Zwiebeln-Pizzas. Sie werden direkt in B1.3 gebracht und von Herrn Sassone abgeholt. Auf wie vielen Arten kann Herr Sassone die ganzen Pizzas unter den SuS verteilen?
+
+Am Anfang der Prüfung hatte Herr Sassone die Klasse gut verteilt.
+
+8. (2 P) Auf wie vielen Arten konnte er die erste Reihe (4 Plätze) mit SuS füllen?
+
+Herr Wicki ist unsicher in Kombinatorik und löst entweder ganz richtig oder komplett falsch jede Frage jeder Aufgabe.
+
+9. (1 P) Beschreiben Sie die möglichen Resultate von Herrn Wicki bei Aufgabe 5.1 mithilfe eines Baumdiagramms.
+10. (1 P) Wie viele Möglichkeiten hat Herr Wicki bei Aufgabe 5.4 genau 4 der 10 Fragen korrekt zu beantworten?
+
+\end{document}
+```
+Schreibe ein gutes und detailliertes Dokument, welches die Kombinatorik erklärt, sodass man solche Aufgaben lösen kann.
+§a§
+### **Kombinatorik – Grundlagen und Lösungsstrategien**  
+Kombinatorik beschäftigt sich mit der **Anzahl von Möglichkeiten** bei Anordnungen (Permutationen) und Auswahlen (Kombinationen). Dieser Leitfaden erklärt die zentralen Konzepte anhand der Aufgaben aus der Prüfung.
+
+---
+
+#### **1. Permutationen (Anordnungen)**  
+- **Grundformel**: Für \(n\) **unterscheidbare** Elemente:  
+  \[
+  n! = n \times (n-1) \times \dots \times 1
+  \]
+- **Mit Wiederholungen**: Bei \(k\) Gruppen identischer Elemente (Häufigkeiten \(n_1, n_2, \dots, n_k\)):  
+  \[
+  \frac{n!}{n_1! \cdot n_2! \cdot \ldots \cdot n_k!}
+  \]
+
+**Beispiel (Aufgabe 7.1):**  
+- **"ABLEITUNG"**: Alle 9 Buchstaben verschieden → \(9! = 362\,880\).  
+- **"MATHELEHRER"**: Buchstaben mit Häufigkeiten (E:3, R:2, H:2, M:1, A:1, T:1, L:1):  
+  \[
+  \frac{11!}{3! \cdot 2! \cdot 2!} = 1\,663\,200.
+  \]
+- **"MATHELEHRER" mit "HERR" lesbar**:  
+  Behandle "HERR" als **ein** Objekt. Übrige Buchstaben: M, A, T, E, L, E, E → 7 Buchstaben (davon E:2).  
+  \[
+  \frac{8!}{2!} = 20\,160.
+  \]
+  *(Hinweis: "HERR" ersetzt H, E, R, R; übrig bleiben 7 Buchstaben + 1 Block = 8 Positionen.)*
+
+---
+
+#### **2. Kombinationen (Auswahlen)**  
+- **Ohne Wiederholung** (Auswahl von \(k\) aus \(n\) ohne Reihenfolge):  
+  \[
+  \binom{n}{k} = \frac{n!}{k! \cdot (n-k)!}
+  \]
+- **Mit Wiederholung** (Elemente dürfen mehrmals vorkommen):  
+  \[
+  \binom{n + k - 1}{k}
+  \]
+
+**Beispiel (Aufgabe 7.1.4):**  
+- Wörter aus 7 Buchstaben mit Vokalen **A, E, I, O, U** (Wiederholung erlaubt, Reihenfolge relevant):  
+  \[
+  5^7 = 78\,125.
+  \]
+  *(Hinweis: Jede Position hat 5 Wahlmöglichkeiten.)*
+
+---
+
+#### **3. Binomialkoeffizienten und binomischer Lehrsatz**  
+- **Binomialkoeffizient** \(\binom{n}{k}\) = Anzahl der \(k\)-elementigen Teilmengen aus \(n\) Elementen.  
+- **Binomischer Lehrsatz** für \((a + b)^n\):  
+  \[
+  (a + b)^n = \sum_{k=0}^{n} \binom{n}{k} a^{n-k} b^k
+  \]
+
+**Beispiel (Aufgabe 7.3):**  
+- Entwickle \((a^2 - 3a)^4\):  
+  \[
+  (a^2 - 3a)^4 = \sum_{k=0}^{4} \binom{4}{k} (a^2)^{4-k} (-3a)^k
+  \]
+  Ergebnis:  
+  \[
+  a^8 - 12a^7 + 54a^6 - 108a^5 + 81a^4.
+  \]
+
+---
+
+#### **4. Verteilungsprobleme**  
+- **Unterscheidbare Objekte auf unterscheidbare Gruppen** (z. B. Schüler auf Aufgaben):  
+  \[
+  \frac{\text{Gesamtanzahl!}}{\text{(Anzahl identischer Objekte)!}}
+  \]
+- **Einschränkungen**: Berücksichtige Bedingungen (z. B. "kein Mädchen macht Aufgabe X").
+
+**Beispiele (Aufgabe 7.4):**  
+1. **Verteilung der Putzutensilien** (3 Schwämme, 6 Besen, 8 Tücher an 17 Schüler):  
+   \[
+   \binom{17}{3, 6, 8} = \frac{17!}{3! \cdot 6! \cdot 8!} = 2\,042\,975.
+   \]
+2. **Kein Mädchen fegt** (Besen nur an Jungen):  
+   - Verteile 6 Besen an 10 Jungen: \(\binom{10}{6}\).  
+   - Verteile Rest (3 Schwämme, 8 Tücher) an 11 Schüler (7 Mädchen + 4 Jungen): \(\binom{11}{3}\).  
+   \[
+   \binom{10}{6} \times \binom{11}{3} = 210 \times 165 = 34\,650.
+   \]
+3. **Pizzaverteilung** (3 gleiche Hawaiipizzas, 2 gleiche Tuna-Pizzas an 5 Schüler):  
+   \[
+   \binom{5}{3} \text{ für Hawaii} \quad \text{oder} \quad \binom{5}{2} \text{ für Tuna} = 10.
+   \]
+
+---
+
+#### **5. Spezielle Techniken**  
+- **Blockbildung**: Für feste Teilsequenzen (wie "HERR" in Aufgabe 7.1.3).  
+- **Komplementäre Zählung**: Zähle das Gegenteil und subtrahiere vom Gesamtergebnis.  
+- **Fallunterscheidung**: Zerlege komplexe Bedingungen in Fälle (z. B. Aufgabe 7.4.6: "maximal ein Mädchen").  
+
+**Beispiel (Aufgabe 7.4.6):**  
+- **Maximal ein Mädchen** in der 5-köpfigen Einkaufsgruppe:  
+  - **0 Mädchen**: \(\binom{10}{5} = 252\).  
+  - **1 Mädchen**: \(\binom{7}{1} \times \binom{10}{4} = 7 \times 210 = 1\,470\).  
+  \[
+  \text{Gesamt} = 252 + 1\,470 = 1\,722.
+  \]
+
+---
+
+#### **6. Typische Fehler vermeiden**  
+- **Objektidentität**: Sind Elemente unterscheidbar (Schüler) oder nicht (Pizzas)?  
+- **Reihenfolge relevant?**: Wörter (ja), Gruppen (nein).  
+- **Wiederholung erlaubt?**: Vokale in Wörtern (ja), Schüler in Gruppen (nein).  
+
+---
+
+### **Zusammenfassung der Lösungen**  
+| Aufgabe | Lösung | Konzept |
+|---------|--------|---------|
+| **7.1.1** | \(9! = 362\,880\) | Permutation ohne Wiederholung |
+| **7.1.2** | \(\frac{11!}{3! \cdot 2! \cdot 2!} = 1\,663\,200\) | Permutation mit Wiederholung |
+| **7.1.3** | \(\frac{8!}{2!} = 20\,160\) | Blockbildung |
+| **7.1.4** | \(5^7 = 78\,125\) | Variation mit Wiederholung |
+| **7.2.4** | \(\binom{k+7}{2} - \binom{k+6}{2} = k+6\) | Binomialidentität |
+| **7.3** | \(a^8 - 12a^7 + 54a^6 - 108a^5 + 81a^4\) | Binomischer Lehrsatz |
+| **7.4.1** | \(\frac{17!}{3! \cdot 6! \cdot 8!} = 2\,042\,975\) | Multinomialkoeffizient |
+| **7.4.6** | \(\binom{10}{5} + \binom{7}{1} \binom{10}{4} = 1\,722\) | Kombination + Fallunterscheidung |
+
+Dieser Leitfaden deckt alle für die Prüfung relevanten Kombinatorik-Konzepte ab. Übe die Anwendung anhand der Aufgaben und achte auf die **exakte Interpretation der Bedingungen**!

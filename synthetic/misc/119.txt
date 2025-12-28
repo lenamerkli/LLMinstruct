@@ -1,0 +1,40 @@
+§u§
+Ersetze das `itemize` durch mehrere `\subsubsection{}`s.
+```latex
+\section{Reinforcement Learning (RL)}
+
+\subsection{Die Grundidee und Fachbegriffe}
+Im Reinforcement Learning geht es um das Lernen optimaler Entscheidungen durch Versuch und Irrtum. Die zentralen Komponenten sind:
+\begin{itemize}
+    \item \textbf{Agent:} Die lernende Entität, die Entscheidungen trifft (z.B. ein Roboter, ein Spielcharakter).
+    \item \textbf{Environment (Umgebung):} Die Welt, in der der Agent agiert (z.B. ein Labyrinth, ein Schachbrett).
+    \item \textbf{State (Zustand):} Die aktuelle Situation des Agenten in der Umgebung (z.B. die Position im Labyrinth).
+    \item \textbf{Actions (Aktionen):} Die möglichen Handlungen, die der Agent im aktuellen Zustand ausführen kann (z.B. nach links, rechts, oben, unten gehen).
+    \item \textbf{Reward (Belohnung):} Ein numerisches Feedback von der Umgebung, das angibt, wie gut die letzte Aktion des Agenten war. Positive Rewards (z.B. +10 für das Finden des Ziels) sind erstrebenswert, negative Rewards (z.B. -5 für das Stossen gegen eine Wand) werden vermieden.
+\end{itemize}
+Der Agent durchläuft einen Kreislauf: Er beobachtet den \textbf{State}, wählt eine \textbf{Action}, erhält einen \textbf{Reward} und gelangt in einen neuen State. Sein Ziel ist es, eine Strategie zu lernen, um die Summe der zukünftigen Rewards zu maximieren.
+```
+§a§
+```latex
+\section{Reinforcement Learning (RL)}
+
+\subsection{Die Grundidee und Fachbegriffe}
+Im Reinforcement Learning geht es um das Lernen optimaler Entscheidungen durch Versuch und Irrtum. Die zentralen Komponenten sind:
+
+\subsubsection{Agent}
+Die lernende Entität, die Entscheidungen trifft (z.B. ein Roboter, ein Spielcharakter).
+
+\subsubsection{Environment (Umgebung)}
+Die Welt, in der der Agent agiert (z.B. ein Labyrinth, ein Schachbrett).
+
+\subsubsection{State (Zustand)}
+Die aktuelle Situation des Agenten in der Umgebung (z.B. die Position im Labyrinth).
+
+\subsubsection{Actions (Aktionen)}
+Die möglichen Handlungen, die der Agent im aktuellen Zustand ausführen kann (z.B. nach links, rechts, oben, unten gehen).
+
+\subsubsection{Reward (Belohnung)}
+Ein numerisches Feedback von der Umgebung, das angibt, wie gut die letzte Aktion des Agenten war. Positive Rewards (z.B. +10 für das Finden des Ziels) sind erstrebenswert, negative Rewards (z.B. -5 für das Stossen gegen eine Wand) werden vermieden.
+
+Der Agent durchläuft einen Kreislauf: Er beobachtet den \textbf{State}, wählt eine \textbf{Action}, erhält einen \textbf{Reward} und gelangt in einen neuen State. Sein Ziel ist es, eine Strategie zu lernen, um die Summe der zukünftigen Rewards zu maximieren.
+```

@@ -1,0 +1,58 @@
+§u§
+```
+from sqlite3 import Connection
+from os import listdir
+from llm import LLaMaCPP, BaseLLM
+import typing as t
+import importlib
+
+
+MODULES: t.List[t.Callable[[Connection, LLaMaCPP, BaseLLM, t.Callable, t.Callable], float]] = []
+
+MODULE_NAMES = []
+
+for module_name in listdir():
+    if module_name.count('__') == 2 and module_name.endswith('.py'):
+        MODULE_NAMES.append(module_name.replace('.py', ''))
+
+
+for module_name in MODULE_NAMES:
+    module = importlib.import_module(f'.{module_name}', __package__)
+    MODULES.append(getattr(module, module_name))
+```
+This an `__init__.py` file. How can I make `listdir()` reference the directory this file is in instead of the location of the file I'm importing from?
+§a§
+To make `listdir()` reference the directory where the `__init__.py` file is located (rather than the directory from which you're importing), you should use `__file__` to get the path of the current module and then use `os.path.dirname()` to get its directory.
+
+Here's the corrected version of your code:
+
+```python
+from sqlite3 import Connection
+from os import listdir
+from os.path import dirname, abspath
+from llm import LLaMaCPP, BaseLLM
+import typing as t
+import importlib
+
+# Get the directory where this __init__.py file is located
+current_dir = dirname(abspath(__file__))
+
+MODULES: t.List[t.Callable[[Connection, LLaMaCPP, BaseLLM, t.Callable, t.Callable], float]] = []
+MODULE_NAMES = []
+
+for module_name in listdir(current_dir):  # Use current_dir instead of default
+    if module_name.count('__') == 2 and module_name.endswith('.py'):
+        MODULE_NAMES.append(module_name.replace('.py', ''))
+
+for module_name in MODULE_NAMES:
+    module = importlib.import_module(f'.{module_name}', __package__)
+    MODULES.append(getattr(module, module_name))
+```
+
+Key changes:
+1. Added `from os.path import dirname, abspath`
+2. Used `__file__` to get the path of the current module
+3. Used `dirname(abspath(__file__))` to get the directory containing the current module
+4. Passed `current_dir` to `listdir()` instead of using the default (current working directory)
+
+This ensures that `listdir()` will always look in the directory where the `__init__.py` file is located, regardless of where the code is being imported from.

@@ -1,0 +1,69 @@
+§u§
+Make a simple `\pgfplotsset{compat=1.18}` plot of score (lower is better) vs size.
+§a§
+Here's a simple LaTeX document using `pgfplots` with `compat=1.18` that plots **score (lower is better)** vs **size**:
+
+```latex
+\documentclass{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\begin{document}
+
+\begin{tikzpicture}
+\begin{axis}[
+    title={Score vs Size (Lower Score = Better)},
+    xlabel={Size},
+    ylabel={Score},
+    grid=both,
+    minor tick num=1,
+    legend pos=north east,
+    width=10cm,
+    height=6cm,
+    ymin=0, % Since lower is better, we start from 0 for clarity
+    xmax=100,
+]
+
+% Data points: size vs score
+\addplot[
+    only marks,
+    mark=*,
+    color=blue,
+    mark size=2pt
+] coordinates {
+    (10, 85)
+    (20, 72)
+    (30, 60)
+    (40, 55)
+    (50, 48)
+    (60, 40)
+    (70, 35)
+    (80, 30)
+    (90, 25)
+    (100, 20)
+};
+
+% Optional: line of best fit (if desired)
+\addplot[
+    thick,
+    red,
+    domain=10:100,
+    samples=2
+] {100 - 0.8*x}; % Linear trend approximating the data
+
+\legend{Observed Scores, Trend Line}
+
+\end{axis}
+\end{tikzpicture}
+
+\end{document}
+```
+
+### Explanation:
+- **`compat=1.18`**: Ensures modern pgfplots behavior.
+- **Score vs Size**: We assume higher size leads to lower score (better performance).
+- **Data**: Artificially created to show a clear inverse relationship.
+- **Plot Style**: Blue dots for data, red line for visual trend.
+- **Axes**: Labeled clearly; `ymin=0` helps emphasize that lower scores are better.
+
+You can compile this with `pdflatex` or any LaTeX editor supporting `pgfplots`. The plot will show that as size increases, score decreases — meaning larger systems perform better (lower score = better).

@@ -1,0 +1,10 @@
+§u§
+Bestimmen Sie die Stammfunktion der Funktion $f(x) = -6x^2 + 12x$, deren Graph durch den Punkt $(0; 7)$ läuft.
+§a§
+-2x^3 + 6x^2 + 7
+
+Die Stammfunktion von \(f(x) = -6x^2 + 12x\) wird durch gliedweise Integration bestimmt. Die Ableitung von \(x^3\) ist \(3x^2\), daher ist die Stammfunktion von \(-6x^2\) gleich \(-6 \cdot \frac{x^3}{3} = -2x^3\). Die Ableitung von \(x^2\) ist \(2x\), daher ist die Stammfunktion von \(12x\) gleich \(12 \cdot \frac{x^2}{2} = 6x^2\). Dies ergibt die allgemeine Stammfunktion \(F(x) = -2x^3 + 6x^2 + C\).
+
+Die Bedingung, dass der Graph durch den Punkt \((0; 7)\) läuft, bedeutet \(F(0) = 7\). Einsetzen von \(x = 0\) gibt \(F(0) = -2(0)^3 + 6(0)^2 + C = C = 7\). Somit ist \(C = 7\), und die gesuchte Stammfunktion lautet \(F(x) = -2x^3 + 6x^2 + 7\).
+
+Zur Überprüfung: Die Ableitung von \(F(x)\) ist \(F'(x) = -6x^2 + 12x = f(x)\), und \(F(0) = 7\) erfüllt die Punktbedingung. Dies bestätigt die Korrektheit der Integration und der Konstantenbestimmung.

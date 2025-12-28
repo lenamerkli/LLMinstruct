@@ -1,0 +1,127 @@
+§u§
+```sql
+SELECT * FROM train WHERE project not like '%biasbench%';
+```
+How can I randomly sort the output?
+§a§
+
+Of course! To randomly sort the output of your query, you can add an `ORDER BY` clause with a random function.
+
+The exact function name varies depending on the SQL database you are using (MySQL, PostgreSQL, SQL Server, etc.).
+
+### The General Idea
+
+You will add `ORDER BY` and a function that generates a random number for each row. The database then sorts the rows based on these random numbers.
+
+```sql
+SELECT *
+FROM train
+WHERE project NOT LIKE '%biasbench%'
+ORDER BY -- your random function goes here --
+```
+
+---
+
+### Solutions for Different SQL Databases
+
+Here is the specific syntax for the most common database systems.
+
+#### 1. MySQL, MariaDB, or SQLite
+
+Use the `RAND()` function (or `RANDOM()` in SQLite).
+
+```sql
+-- For MySQL / MariaDB
+SELECT *
+FROM train
+WHERE project NOT LIKE '%biasbench%'
+ORDER BY RAND();
+```
+
+```sql
+-- For SQLite
+SELECT *
+FROM train
+WHERE project NOT LIKE '%biasbench%'
+ORDER BY RANDOM();
+```
+
+**How it works:** `RAND()` generates a random floating-point value between 0.0 and 1.0 for each row. The `ORDER BY` clause then sorts the rows based on these values, resulting in a random order.
+
+#### 2. PostgreSQL
+
+Use the `RANDOM()` function.
+
+```sql
+SELECT *
+FROM train
+WHERE project NOT LIKE '%biasbench%'
+ORDER BY RANDOM();
+```
+**How it works:** Similar to MySQL, `RANDOM()` generates a random number (a double precision value) for each row, which is then used for sorting.
+
+#### 3. SQL Server
+
+The best practice in SQL Server is to use `NEWID()`. **Do not use `RAND()`**, as it is evaluated only once per query, giving every row the same random value and resulting in no random sorting.
+
+```sql
+SELECT *
+FROM train
+WHERE project NOT LIKE '%biasbench%'
+ORDER BY NEWID();
+```
+
+**How it works:** `NEWID()` creates a new Unique Identifier (GUID) for each row. Since GUIDs are designed to be unique, they are effectively random for sorting purposes.
+
+#### 4. Oracle
+
+Use the `DBMS_RANDOM.VALUE` function.
+
+```sql
+SELECT *
+FROM train
+WHERE project NOT LIKE '%biasbench%'
+ORDER BY DBMS_RANDOM.VALUE;
+```
+
+**How it works:** This function from the `DBMS_RANDOM` package generates a random number for each row, which is then used to sort the result set.
+
+---
+
+### Important Considerations
+
+#### ⚠️ Performance Warning
+
+Random sorting is **very slow on large tables**. The database must:
+1.  Generate a random value for **every single row** that matches your `WHERE` clause.
+2.  Perform a full sort on the entire result set.
+
+This operation cannot use standard indexes, so for tables with millions of rows, it can cause a significant performance hit.
+
+#### 🔄 Reproducible Random Order (for Testing)
+
+If you need to get the *same* random order every time you run the query (useful for testing or debugging), you can provide a "seed" to the random function. Using the same seed will produce the same sequence of random numbers.
+
+```sql
+-- Example for MySQL
+-- This query will always return the rows in the same "random" order.
+SELECT *
+FROM train
+WHERE project NOT LIKE '%biasbench%'
+ORDER BY RAND(12345); -- 12345 is the seed
+```
+Note: Not all database systems support a seed in their random function (e.g., PostgreSQL's `RANDOM()` does not).
+
+#### 🎲 Alternative: Getting a Random Sample
+
+If your goal isn't to see all rows in a random order, but rather to get a **random sample** of rows, there are more efficient methods.
+
+For example, in PostgreSQL you can use `TABLESAMPLE`:
+
+```sql
+-- Gets approximately 10% of the table's rows, efficiently
+SELECT *
+FROM train TABLESAMPLE SYSTEM(10)
+WHERE project NOT LIKE '%biasbench%';
+```
+This is much faster than `ORDER BY RANDOM()` because it reads random data pages from the disk instead of sorting the entire table. However, it's for sampling, not for ordering the full result set.

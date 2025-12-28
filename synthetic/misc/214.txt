@@ -1,0 +1,37 @@
+§u§
+```bash
+taskset -c 0-15 chrt -f 50
+```
+What does this do?
+§a§
+This command sets CPU affinity and real-time priority for a process. Let me break it down:
+
+## `taskset -c 0-15`
+- **Sets CPU affinity** - restricts the process to run only on specific CPU cores
+- `-c 0-15` means the process can only use CPU cores 0 through 15 (16 cores total)
+- This is useful for:
+  - Isolating workloads to specific cores
+  - Preventing process migration between cores (reducing cache misses)
+  - Dedicated cores for real-time/latency-sensitive tasks
+
+## `chrt -f 50`
+- **Sets real-time scheduling policy and priority**
+- `-f` uses the **FIFO (First-In-First-Out)** scheduling policy
+- `50` sets the priority level (0-99, where 99 is highest priority)
+- FIFO scheduling means:
+  - Process runs until it voluntarily yields or is preempted by higher priority task
+  - Higher priority than all normal (SCHED_OTHER) processes
+  - Can potentially starve other processes if not carefully managed
+
+## Combined Effect
+When you run a command after this (e.g., `taskset -c 0-15 chrt -f 50 ./my_program`), it:
+1. Runs your program only on CPU cores 0-15
+2. Gives it real-time FIFO scheduling with priority 50
+
+## Common Use Cases
+- **High-performance computing**
+- **Low-latency applications** (audio processing, trading systems)
+- **Real-time systems**
+- **Benchmarking** with consistent CPU allocation
+
+⚠️ **Warning**: Using real-time scheduling with high priority requires care, as it can make the system unresponsive if the process doesn't yield appropriately.

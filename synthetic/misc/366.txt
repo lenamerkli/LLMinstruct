@@ -1,0 +1,1313 @@
+§u§
+----BEGIN DOCUMENT----
+## Einführung
+
+- · Software Testing prüft, ob Software korrekt funktioniert.
+- · Testen bedeutet, Software mit verschiedenen Eingaben zu überprüfen.
+- Es hilft, Fehler frühzeitig zu finden und zu beheben.
+
+Die Korrektheit eines Programms kann durch Testen (ausser in trivialen Fällen) nicht bewiesen werden.
+
+Grund: alle Kombinationen aller möglichen Werte der Eingabedaten müssten getestet werden
+
+<!-- image -->
+
+## Testing im echten Leben
+
+<!-- image -->
+
+Wetter checken: Ist das Wetter gut genug zum Fliegen? Flugzeug prüfen: Alles heile? Genug Treibstoff und Öl da?
+
+## Vor dem Flug
+
+<!-- image -->
+
+Technik im Cockpit testen: Funktionieren Funk, Instrumente und Steuerung?
+
+Flug planen: Route, Ausweichflughäfen und genug Treibstoff?
+
+Während des Fluges
+
+Regelmäßig alles im Blick: Triebwerke, Treibstoff, Navigation, Funkkontakt Vor der Landung vorbereiten: Wetter am Ziel, Landeanflug durchgehen
+
+<!-- image -->
+
+Flugzeug sichern:
+
+Motor aus, Bremsen an, Strom aus
+
+Nach dem Flug
+
+Kurze Nachkontrolle: Ist noch alles in Ordnung am Flugzeug? Flug dokumentieren: Flugzeit und eventuelle Probleme aufschreiben
+
+<!-- image -->
+
+## Mini-Aufgabe
+
+„Ein Auto hat 5 Räder. Menschen Atmen CO3. Paris ist die Hauptstadt vom Italien."
+
+- · Wie viele Fehler haben Sie gefunden?
+- · Was wäre, wenn solche Fehler in wichtigen Dokumenten (z. B. Medikamentenbeipackzetteln oder Bankabrechnungen) wären?
+- Warum passieren Fehler?
+- · Wie könnte man sicherstellen, dass keine Fehler mehr vorkommen?
+
+<!-- image -->
+
+## Mini-Aufgabe
+
+„Ein Auto hat 5 Räder. Menschen Atmen CO3. Paris ist die Hauptstadt vom Italien."
+
+- · Wie viele Fehler haben Sie gefunden?
+- · Was wäre, wenn solche Fehler in wichtigen Dokumenten (z. B. Medikamentenbeipackzetteln oder Bankabrechnungen) wären?
+- Warum passieren Fehler?
+- · Wie könnte man sicherstellen, dass keine Fehler mehr vorkommen?
+
+## Motivation
+
+- -> Fehler passieren überall - auch in Programmen.
+
+Automatische Tests helfen, Fehler frühzeitig zu finden, bevor sie Schaden anrichten.
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+## Gruppenaufgabe - Testsystematik
+
+## Test ist nicht gleich Test!
+
+<!-- image -->
+
+- - per Hand durch
+
+## Manuelles Testen :
+
+- - Gut für UI-Tests & Exploratives Testen
+- - Langsam & fehleranfällig
+
+<!-- image -->
+
+- - Testfälle werden in Code geschrieben
+
+## Automatisiertes Testen :
+
+- - Gut für sich wiederholende Tests
+- - Spart langfristig Zeit
+- - Schnell & zuverlässig
+
+<!-- image -->
+
+## Teststufen
+
+- 1. Komponententest, Modultest ( Unit Test )
+- 2. Integrationstest ( Integration Test )
+- 3. Systemtest ( System Test )
+
+<!-- image -->
+
+- 4. Abnahmetest ( Acceptance Test )
+
+<!-- image -->
+
+- sondern zeigen, dass das System den Anforderungen erfüllt
+
+nicht Fehler finden
+
+## Your turn!
+
+Sie schreiben Tests zum erhaltenen Code
+
+Sie erstellen aus Ihrem Code ein Repository
+
+Sie teilen Ihren Code (Tests) mit einer random Person
+
+Tauschen Sie sich aus
+
+<!-- image -->
+
+## Your turn!
+
+Wie gut sind Ihre Tests?
+
+Haben Sie an alles gedacht?
+
+Gibt es Metriken, welche die Qualität Ihrer Tests beschreiben?
+
+<!-- image -->
+
+## Testsystematik
+
+## Test ist nicht gleich Test!
+
+- -Laufversuch
+- -Systematischer Test
+- Wegwerf-Test
+
+<!-- image -->
+
+- - per Hand durch
+
+## Manuelles Testen :
+
+- - Gut für UI-Tests & Exploratives Testen
+- - Langsam & fehleranfällig
+
+<!-- image -->
+
+- - Testfälle werden in Code geschrieben
+
+## Automatisiertes Testen :
+
+- - Gut für sich wiederholende Tests
+- - Spart langfristig Zeit
+- - Schnell & zuverlässig
+
+<!-- image -->
+
+## Teststufen
+
+- 1. Komponententest, Modultest ( Unit Test )
+- 2. Integrationstest ( Integration Test )
+- 3. Systemtest ( System Test )
+
+<!-- image -->
+
+- 4. Abnahmetest ( Acceptance Test )
+
+<!-- image -->
+
+- sondern zeigen, dass das System den Anforderungen erfüllt
+
+nicht Fehler finden
+
+<!-- image -->
+
+<!-- image -->
+
+## Leseauftrag
+
+- 'unittest' ist ein eingebautes Modul in Python für automatisiertes Testen.
+- Ziel: Mit möglichst wenig Testfällen möglichst viele Fehler finden
+
+Automatisierte Komponententest, oder Modultest ( Unit Test )
+
+## Testqualität mit Python unittest
+
+## Einführung
+
+## Wiederholung: Software Testing
+
+## Warum ist Testqualität wichtig?
+
+Systematische Überprüfung von Software
+
+- Schlechte Tests bieten falsche Sicherheit
+
+Identifikation von Fehlern und Defekten
+
+In Python mit unittest Framework
+
+- Qualitativ hochwertige Tests sparen Zeit
+- Sicherstellung der Funktionalität
+- Tests sind auch Code und brauchen Wartung
+
+## Ziele dieser Doppelstunde:
+
+- Qualitätskriterien für Tests verstehen
+
+Testqualität messen und bewerten
+
+Best Practices für hochwertige Tests
+
+89 Praktische Anwendung an einem Beispiel
+
+Gute Tests erleichtern Refactoring
+
+<!-- image -->
+
+<!-- image -->
+
+## Definition von Testqualität
+
+## Was macht einen guten Test aus?
+
+## Funktionierender vs. hochwertiger Test
+
+Zweckmässigkeit: Testet das Verhalten richtige 7
+
+Verständlichkeit: Klar und leicht nachvollziehbar
+
+Wartbarkeit: Einfach zu aktualisieren
+
+<!-- image -->
+
+- Zuverlässigkeit: Konsistente Ergebnisse
+
+<!-- image -->
+
+Effizienz: Schnelle Ausführung
+
+## Die Rolle von Testqualität im Entwicklungsprozess
+
+- Tests sind Dokumentation des erwarteten Verhaltens
+- 8 Hochwertige Tests ermöglichen sicheres Refactoring
+- Verbessern die Zusammenarbeit im Team
+- Beschleunigen den Entwicklungsprozess langfristig
+
+## Funktionierender Test:
+
+def test addicion (self) resulc add (2 , 3) self assertEqual (result,
+
+Prüft das Ergebnis; aber ohne Kontext oder Dokumentation
+
+## Hochwertiger Test:
+
+def test addition Of\_positive\_integers (self) Arrange 2 , expected
+
+Act
+
+resulc add (a,
+
+Asserc self assertEqual(resulc, expected "Addicion von und 3 sollte ergeben" )
+
+Klar strukturiert;, dokumentiert und aussagekräftiger Fehlermeldung mit
+
+<!-- image -->
+
+## Qualitätskriterien für Tests
+
+## Verständlichkeit und Lesbarkeit
+
+## Aussagekraft und Präzision
+
+Tests sollten selbsterklärend sein und ohne zusätzliche Dokumentation verstanden werden können:
+
+Tests sollten genau das prüfen; was sie prüfen sollen; mit Fehlermeldungen. klaren
+
+- Aussagekräftige Testfunktionsnamen
+- Spezifische Assertions statt allgemeiner
+- Klare Struktur (Arrange-Act-Assert)
+- Aussagekräftige Fehlermeldungen
+- Kommentare bei komplexer Logik
+- Fokus auf Verhalten statt Implementierung
+
+## Wartbarkeit
+
+## Isolation und Unabhängigkeit
+
+Tests sollten einfach zu aktualisieren sein; wenn sich die Anforderungen ändern.
+
+- DRY-Prinzip (Don't Repeat Yourself)
+- Verwendung von Hilfsfunktionen und Fixtures
+- Vermeidung von magischen Zahlen und Strings
+
+## Zuverlässigkeit und Robustheit
+
+Tests sollten konsistente Ergebnisse liefern und nicht von externen Faktoren abhängen:
+
+- Vermeidung von Zufallswerten ohne Seeds
+- Unabhängigkeit von Systemzeit oder -umgebung
+- Keine Abhängigkeiten zwischen Tests
+
+Jeder Test sollte unabhängig von anderen Tests ausführbar sein.
+
+- Eigene SetupTeardown-Routinen und
+- Verwendung von Mocks für externe Abhängigkeiten
+- Vermeidung von geteilten Zuständen
+
+## Wiederholbarkeit
+
+Tests sollten bei jeder Ausführung das gleiche Ergebnis liefern.
+
+- Deterministisches Verhalten
+- Kontrolle über externe Faktoren
+- Vermeidung von "Flaky Tests"
+
+## Geschwindigkeit der Ausführung
+
+Tests sollten schnell ausgeführt werden können; um schnelles Feedback Zu ermöglichen.
+
+- Minimierung von I/O-Operationen
+- Optimierung von rechenintensiven Tests
+- Verwendung von Mocks für langsame Komponenten
+
+<!-- image -->
+
+<!-- image -->
+
+## Testabdeckung als Qualitätsmetrik
+
+## Was ist Testabdeckung?
+
+## Arten der Testabdeckung
+
+Testabdeckung (Code Coverage) ist ein Mass dafür, wie viel des Quellcodes durch Tests ausgeführt wird.
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+Quantitative Metrik für Testqualität
+
+Hilft, nicht getestete Codebereiche zu identifizieren
+
+Hohe Abdeckung Hohe Testqualität
+
+## Tools zur Messung in Python
+
+Installacion
+
+pip install coverage
+
+- Genauer als Anweisungsabdeckung
+
+Ausfuhrung
+
+coverage run unittest discover
+
+Berichc generieren coverage report ~m coverage hcml
+
+- Komplexere Pfade werden nicht erfasst
+
+## 03 Pfadabdeckung (Path Coverage)
+
+Misst, ob alle möglichen Ausführungspfade durch den Code getestet werden.
+
+- Umfassendste Form der Abdeckung
+- Oft praktisch nicht vollständig erreichbar
+
+## Grenzen der Testabdeckung
+
+1009 Abdeckung garantiert nicht:
+
+- Fehlerfreiheit des Codes
+- Prüfung aller Randfälle
+- Korrekte Funktionalität
+- Berücksichtigung aller Anforderungen
+
+## </> Anweisungsabdeckung (Statement Coverage)
+
+Misst; welcher Anteil der Codezeilen durch Tests ausgeführt wird:
+
+- Einfach zu verstehen und zu messen
+- Berücksichtigt keine Verzweigungen
+
+## 83 Zweigabdeckung (Branch Coverage)
+
+Misst; ob jede Verzweigung (if/else) in beide Richtungen durchlaufen wird.
+
+<!-- image -->
+
+## Best Practices für hochwertige Tests
+
+## "82 Namenskonventionen für Testfunktionen
+
+Testfunktionsnamen sollten beschreiben; was getestet wird und unter welchen Bedingungen.
+
+Schlecht
+
+def test functionl (self)
+
+Gut
+
+def tesc addition with negative numbers (self)
+
+## AAA-Prinzip: Arrange; Act; Assert
+
+Strukturiere Tests in drei getrennte Phasen: klar
+
+def test user registration(self)
+
+Arrange user data
+
+"nane
+
+"Max
+
+email"
+
+"maxlexample con
+
+def setUp (self)
+
+Act
+
+result register user(user data)
+
+2 Assert
+
+self db .close ( )
+
+self.assertIrue(result success)
+
+renove test database ( )
+
+self.assertEqual (result user nane "Max
+
+self db create test database ( ) self user create test user(self.db)
+
+def tearDown (self)
+
+## Aussagekräftige Fehlermeldungen
+
+Fehlermeldungen sollten klar beschreiben, was fehlgeschlagen ist:
+
+Schlecht
+
+self.assertEqual(result, expected)
+
+Guc
+
+self.assertEqual (result, expecred,
+
+"Die Berechnung sollte 42 ergeben, ergab aber {0} format (result) )
+
+## Verwendung von Fixtures und Setup/Teardown
+
+Nutze Fixtures für die Vorbereitung der Testumgebung und gemeinsame Ressourcen.
+
+<!-- image -->
+
+## Code-Smells in Tests
+
+## Zu komplexe Tests & zu viele Assertions Test pro
+
+## # Überprüfung von Implementierungsdetails
+
+Tests sollten einfach und fokussiert sein; nicht komplexer als der getestete Code. Ausserdem sollte idealerweise nur ein Konzept oder eine Funktionalität getestet werden.
+
+Zu komplex def teat\_complex\_acenario(aelf) user crease user() produc: create producr ( ) order Czeace order (user, product) payment process\_payment(order) shipmnent create shipment (order) Viele Aagerciona
+
+## Problenacisch
+
+maxeexample con
+
+def Ge3t user\_registretion(aelf) result register user(user daca) self.assertIrue(result ucceb3) 3elf @asertEqual (reaul uber name, "Max" self.assertEqual (result Gser ena 21, self assertIrue(resulr ena11 sent) Belf @a3ertEqual (len(aelf.db uer3) ,
+
+- Gnd Me\_cere As3er52013
+
+## Abhängigkeiten zwischen Tests
+
+Tests sollten unabhängig voneinander ausführbar sein.
+
+Problemat\_ach def rest user crearion (gelf) : 3elf user Creere Gber  "Ce35 Gexampl asgertIsnotnone(self user) Jelf
+
+- def Gest uber login (self)
+
+Abhangig vom vorheriger Test result login (elf user email, self assertIrue(resulr Bucce33)
+
+"pasaword
+
+con
+
+Tests sollten das Verhalten prüfen; nicht wie es implementiert ist.
+
+Problematisch def Cesc calculare coral(3e12) cars Shoppingcart () cart add iten( Product Buch"
+
+10) )
+
+- Prufc interne Implementierung
+
+self.aasertEqual (Zen(cart
+
+25er3)
+
+## Besser
+
+def Ce35 calculare corel(ae12) cart Shoppingcart() Carc add iten( Product "Buch
+
+10) )
+
+- Prufr offercliches Verhalter
+
+self,asercEqual (cart get corel() , 10)
+
+## Fehlende Dokumentation
+
+Tests sollten selbsterklärend sein oder durch Kommentare dokumentiert werden:
+
+Problematisch
+
+- def Ce3c scenario 7b (self)
+- process (5, Irue, None)
+
+self.aagertEqual (x, 10)
+
+## Besaer
+
+def Cest process\_doubles value Mhen flag\_is true (self) Renn flag-True, sollce der Nerc verdoppelt werden result procesa (value=5, Elag=Irue, configsNone) self.aasertEqual (result, 10 , "Hert so1lte verdoppelt werden
+
+<!-- image -->
+
+## Refactoring von Tests
+
+## Erkennen von problematischen Tests
+
+2 Langsame Ausführung
+
+Inkonsistente Ergebnisse
+
+Hohe Komplexität
+
+Abhängigkeiten zu anderen Tests
+
+Unklarer Zweck
+
+Zu viele Assertions
+
+<!-- image -->
+
+<!-- image -->
+
+## Strategien zur Verbesserung bestehender Tests
+
+8
+
+<!-- image -->
+
+Aufteilen: Grosse Tests in kleinere; fokussierte Tests zerlegen
+
+Mocking: Externe Abhängigkeiten isolieren
+
+Extrahieren: Gemeinsamen Code in Hilfsfunktionen auslagern
+
+Umbenennen: Testfunktionen aussagekräftig benennen
+
+Vereinfachen: Komplexe Logik reduzieren
+
+Strukturieren: AAA-Prinzip konsequent anwenden
+
+## Beispiele für Vorher /Nachher-Vergleiche
+
+## Vorher: Komplexer Test
+
+## Nachher: Aufgeteilte Tests
+
+def cest uaer\_workflow(self) Benuczer erstellen uger Creere user cestlexanpl Con self assertlanotnone(user) aelf.aa3ercEqual (uaer ema\_l "res5 example Com
+
+password"
+
+Benurzer einloggen sesg1on login (user.ena1l, password" Jelf.aggertIrue(Je9310n.19 accive)
+
+Produkt zun Narenkorb hinzufugen cart add ro\_cart(ses31on, "productl aelf.aa3ertEqual (len(cart Cens)
+
+Bestellung abschlassen order checkout (carc) 3elf,a9sercEqual (order Btacus, "pending elf.e9getEquel (order cotel, 29.99)
+
+def setUp(aelf) 3elf Ces5 em1l "testeexample com self Ces5 pasaword sword
+
+def Cesc Gser crearion(3elf) user Creace uaer(3elf Ce35 ena11, Jelf.rest\_password) self,eggertEquel (user enaz1, self rest\_ena11)
+
+self test\_pessvord)
+
+login(aelf Zesr\_email, self Cear\_pasawcrd)
+
+def test user login(self) Arrenge creete user(ge1f test ene22 Act Be391on Aaaer5 elf aggerttrue(8088101,18\_active)
+
+def tesc\_add cart(self) Test-Serup Mic Mock-Ses310n
+
+def resc checrouc proces3(self) : Test-Setup Mic Mock-Carc
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+## Testqualität messen und verbessern
+
+## Qualitative Metriken
+
+## Quantitative Metriken
+
+<!-- image -->
+
+## Lesbarkeit und Verständlichkeit
+
+## Bewertung durch Code-Reviews und Peer-Feedback
+
+## Messung mit coverage py
+
+- Sind Testfunktionsnamen selbsterklärend?
+- Ist die Struktur klar und konsistent?
+- Sind Kommentare vorhanden; wo nötig?
+
+## Wartbarkeit
+
+## Bewertung der Änderungsfreundlichkeit
+
+- Wie viel Aufwand erfordert die Anpassung bei Codeänderungen?
+- Werden Hilfsfunktionen und Fixtures sinnvoll eingesetzt?
+- Gibt es Wiederholungen oder Redundanzen?
+
+## Ausführungszeit
+
+## Aussagekraft der Fehlermeldungen
+
+test\_feature a (tests.test\_module TestClass) ok (0.002s)
+
+## Bewertung der Fehlerdiagnose
+
+- Helfen die Fehlermeldungen bei der Fehlersuche?
+- Sind die Assertions spezifisch und präzise?
+- Werden benutzerdefinierte Fehlermeldungen verwendet?
+
+test\_feature\_b (tests.test\_module TestClass) ok (0.005s)
+
+test\_feature\_c (teststest\_module. TestClass) ok (1.234s)
+
+## Fehlerrate
+
+## Analyse der Testfehler über Zeit
+
+- Wie oft schlagen Tests fehl?
+- Gibt es "flaky tests" mit inkonsistenten Ergebnissen?
+- Korrelation zwischen Testfehlern und Produktionsfehlern
+
+$ coverage run ~m unittest discover
+
+$ coverage report -m
+
+Name Stmts Miss Cover Missing
+
+mymodule py 20 4 80% 24-27
+
+test\_mymodule py 15 0 100%
+
+<!-- image -->
+
+Messung der Testlaufzeit
+
+$ python -m unittest discover -v
+
+<!-- image -->
+
+## Testabdeckung
+
+<!-- image -->
+
+## Praktische Übung: Vorstellung
+
+## Überblick über das Arbeitsdokument
+
+## Vorstellung des Repositories
+
+"=
+
+Strukturierte Aufgaben zur Testqualität
+
+Ein einfaches Python-Projekt mit folgenden Komponenten:
+
+Analyse bestehender Tests
+
+Verbesserung und Refactoring
+
+Messung der Testqualität
+
+## Lernziele der praktischen Übung
+
+- Qualitätsprobleme in Tests erkennen
+- Best Practices anwenden
+- Testabdeckung messen und verbessern
+- Tests refactoren und optimieren
+- Testqualität bewerten
+
+## Aufgabenstellung und Ziele
+
+Analyse: Bestehende Tests auf Qualitätsprobleme untersuchen
+
+Verbesserung: Tests nach Best Practices refactoren
+
+Messung: Testabdeckung ermitteln und dokumentieren
+
+Erweiterung: Fehlende Tests ergänzen
+
+Projektstruktur
+
+simple shop/ init py models.pY Datenodelle cart.py Narenkorb-Funktionalitat inventory.pY Inventarverwa tung payment py Zahlungsabwicklung Cests/ init \_.Py test cart.py Cesc inventory.pY Cest\_payment.py
+
+## <l> Funktionalität
+
+Ein einfaches Shopsystem mit:
+
+- Produktverwaltung
+- Warenkorb-Funktionalität
+- Einfache Zahlungsabwicklung
+- Bestandsverwaltung
+
+Die Tests enthalten absichtlich verschiedene Qualitätsprobleme; die im Rahmen der Übung identifiziert und behoben werden sollen:
+----END DOCUMENT----
+----BEGIN DOCUMENT----
+## Automatisiertes Testen in Python
+
+## Einfuhrung in das automatisierte Testen
+
+Automatisiertes Testen bezieht sich auf die Ausfuhrung von Testplanen durch Skripte anstelle von manuellen Tests. In Python stehen verschiedene Tools und Bibliotheken zur Verfugung, um automatisierte Tests zu erstellen. In diesem Material werden Sie die Grundlagen des automatisierten Testens in Python kennenlernen.
+
+## Unterschied zwischen Unit Tests und Integrationstests
+
+Im Bereich des Softwaretestens gibt es verschiedene Arten von Tests. Zwei der wichtigsten sind Unit Tests und Integrationstests .
+
+- · Unit Tests uberprufen, ob eine einzelne Komponente (z. B. eine Funktion oder Methode) korrekt funktioniert.
+- · Integrationstests uberprufen, ob mehrere Komponenten zusammenarbeiten und wie sie sich gegenseitig beeinflussen.
+
+Ein Beispiel: Stellen Sie sich vor, Sie testen die Lichter eines Autos. Sie schalten die Lichter ein ( Testschritt ) und uberprufen, ob sie leuchten ( Testassertion ). Wenn Sie mehrere Komponenten wie Batterie, Lichtmaschine und Bordcomputer testen, handelt es sich um einen Integrationstest .
+
+## Unit Tests in Python
+
+Ein Unit Test uberpruft eine einzelne Komponente. In Python konnen Sie Unit Tests fur Funktionen wie die eingebaute Funktion sum() schreiben. Ein Beispiel:
+
+```
+1 >>> assert sum([1, 2, 3]) == 6, "Sollte 6 sein" Wenn die Funktion korrekt arbeitet, wird keine Ausgabe erzeugt. Bei einem Fehler wird ein AssertionError ausgelost: 1 >>> assert sum([1, 1, 1]) == 6, "Sollte 6 sein" 2 Traceback (most recent call last): 3 File "<stdin >", line 1, in <module > 4 AssertionError: Sollte 6 sein
+```
+
+## Praktische Ubung: Erstellen eines Unit Tests
+
+1. Erstellen Sie eine Python-Datei namens test sum.py mit folgendem Inhalt:
+
+```
+1 def test\_sum (): 2 assert sum([1, 2, 3]) == 6, "Sollte 6 sein" 3 4 if \_\_name\_\_ == "\_\_main\_\_": 5 test\_sum () 6 print("Alles bestanden")
+```
+
+2. Fuhren Sie die Datei aus und beobachten Sie die Ausgabe.
+
+## Integrationstests in Python
+
+Integrationstests uberprufen das Zusammenspiel mehrerer Komponenten. Ein gutes Beispiel ist eine einfache E-Commerce-Anwendung, in der ein Warenkorb verwaltet wird. Hier sind mehrere Funktionen beteiligt, wie das Hinzufugen von Artikeln, das Berechnen des Gesamtpreises und das Anwenden von Rabatten.
+
+## Beispiel: Integrationstest fur einen Warenkorb
+
+## Module und Funktionen
+
+Zuerst definieren wir einige Funktionen, die zusammenarbeiten, um den Warenkorb zu verwalten:
+
+```
+1 # modul\_warenkorb.py 2 3 def artikel\_hinzufuegen(warenkorb , artikel , preis , menge =1): 4 """ 5 F"ugt einen Artikel zum Warenkorb hinzu. 6 """ 7 if artikel in warenkorb: 8 warenkorb[artikel ]["menge"] += menge 9 else: 10 warenkorb[artikel] = {"preis": preis , "menge": menge} 11 12 def gesamtpreis\_berechnen(warenkorb): 13 """ 14 Berechnet den Gesamtpreis aller Artikel im Warenkorb. 15 """ 16 return sum(details["preis"] * details["menge"] for details in warenkorb.values ()) 17 18 def rabatt\_anwenden(warenkorb , rabatt\_prozent): 19 """ 20 Wendet einen Rabatt auf den Gesamtpreis des Warenkorbs an. 21 """ 22 gesamt = gesamtpreis\_berechnen(warenkorb) 23 return gesamt * (1 - rabatt\_prozent / 100)
+```
+
+## Integrationstest
+
+Nun schreiben wir einen Integrationstest, der uberpruft, ob die Funktionen korrekt zusammenarbeiten:
+
+```
+1 # test\_warenkorb.py 2 3 from modul\_warenkorb import artikel\_hinzufuegen , gesamtpreis\_berechnen , rabatt\_anwenden 4 5 def test\_warenkorb\_integration (): 6 # Initialisiere einen leeren Warenkorb 7 warenkorb = {} 8 9 # Fuege Artikel zum Warenkorb hinzu 10 artikel\_hinzufuegen(warenkorb , "Apfel", 1.00, 3) 11 artikel\_hinzufuegen(warenkorb , "Banane", 0.50, 2) 12 artikel\_hinzufuegen(warenkorb , "Orange", 0.75, 4) 13 14 # Ueberpruefe den Gesamtpreis ohne Rabatt 15 assert gesamtpreis\_berechnen(warenkorb) == 6.50, "Gesamtpreis ohne Rabatt sollte 6.50 sein" 16 17 # Wende einen Rabatt von 10% an und ueberpruefe den neuen Preis 18 preis\_nach\_rabatt = rabatt\_anwenden(warenkorb , 10) 19 assert preis\_nach\_rabatt == 5.85, "Preis nach 10% Rabatt sollte 5.85 sein" 20 21 # Fuege einen weiteren Artikel hinzu und ueberpruefe den aktualisierten Gesamtpreis 22 artikel\_hinzufuegen(warenkorb , "Kiwi", 1.20, 2) 23 assert gesamtpreis\_berechnen(warenkorb) == 8.90, "Gesamtpreis nach Hinzufuegen von Kiwis sollte 8.90 sein" 24 25 # Wende einen Rabatt von 20% an und ueberpruefe den neuen Preis 26 preis\_nach\_rabatt = rabatt\_anwenden(warenkorb , 20) 27 assert preis\_nach\_rabatt == 7.12, "Preis nach 20% Rabatt sollte 7.12 sein" 28
+```
+
+```
+29 if \_\_name\_\_ == "\_\_main\_\_": 30 test\_warenkorb\_integration () 31 print("Alle Integrationstests bestanden!")
+```
+
+## Erklarung des Integrationstests
+
+- Schritt 1: Ein leerer Warenkorb wird initialisiert. - Schritt 2: Artikel werden zum Warenkorb hinzugefugt, und der Gesamtpreis wird berechnet. - Schritt 3: Ein Rabatt wird auf den Gesamtpreis angewendet, und der neue Preis wird uberpruft. - Schritt 4: Ein weiterer Artikel wird hinzugefugt, und der Gesamtpreis wird erneut uberpruft. - Schritt 5: Ein hoherer Rabatt wird angewendet, und der finale Preis wird uberpruft.
+
+## Ausfuhren des Tests
+
+Fuhren Sie den Test aus, indem Sie die Datei test warenkorb.py ausfuhren:
+
+```
+1 $ python test\_warenkorb.py 2 Alle Integrationstests bestanden!
+```
+
+## Test Runner in Python
+
+Um Tests effizient auszufuhren und zu verwalten, werden Test Runner verwendet. Die drei bekanntesten Test Runner fur Python sind:
+
+- · unittest (in der Python-Standardbibliothek enthalten)
+- · nose oder nose2
+- · pytest
+
+## Fazit
+
+Automatisiertes Testen ist ein wesentlicher Bestandteil der Softwareentwicklung. Durch Unit Tests und Integrationstests konnen Sie sicherstellen, dass Ihr Code korrekt funktioniert und Fehler fruhzeitig erkannt werden. Nutzen Sie die bereitgestellten Beispiele und Aufgaben, um Ihr Verstandnis fur das Testen in Python zu vertiefen.
+----END DOCUMENT----
+----BEGIN DOCUMENT----
+## Arbeitsdokument: Testqualität mit Python unittest
+
+## Einführung
+
+Dieses Arbeitsdokument enthält praktische Übungen, die auf dem beigefügten Python-Repository "Simple Shop" basieren. Ziel ist es, die theoretischen Konzepte aus dem theoretischen Block in der Praxis anzuwenden und die Qualität von Tests zu verbessern.
+
+## Lernziele
+
+Nach Abschluss der praktischen Übungen sollten Sie in der Lage sein:
+
+- Qualitätsprobleme in Tests zu erkennen
+- Testabdeckung zu messen und zu interpretieren
+- Tests nach Best Practices zu refactoren
+- Fehlende Tests zu ergänzen
+- Die Qualität von Tests zu bewerten
+
+## Das Repository: Simple Shop
+
+Das Repository enthält ein einfaches Shopsystem mit folgenden Komponenten:
+
+- Produktverwaltung ( models.py , inventory.py )
+- Warenkorb-Funktionalität ( cart.py )
+- Zahlungsabwicklung ( payment.py )
+
+Die Struktur des Repositories sieht wie folgt aus:
+
+```
+simple\_shop/ ├-- \_\_init\_\_.py ├-- models.py # Datenmodelle ├-- cart.py # Warenkorb-Funktionalität ├-- inventory.py # Inventarverwaltung ├-- payment.py # Zahlungsabwicklung └-- tests/ ├-- \_\_init\_\_.py ├-- test\_cart.py ├-- test\_inventory.py └-- test\_payment.py
+```
+
+## Vorbereitung
+
+- 1. Klonen Sie das Repository simple-shop über GitHub Classroom unter folgendem Link: Link zum Repository
+
+```
+git clone https://github.com/IHR\_USERNAME/simple-shop.git cd simple-shop
+```
+
+- 2. Virtuelle Umgebung erstellen & aktivieren
+
+```
+python -m venv venv venv\Scripts\activate
+```
+
+- 3. Installieren Sie die benötigten Abhängigkeiten:
+
+```
+pip install coverage
+```
+
+- 4. Führen Sie die Tests aus, um sicherzustellen, dass die Umgebung korrekt eingerichtet ist:
+
+```
+python -m unittest discover
+```
+
+## Aufgaben
+
+Teil 1: Analyse der bestehenden Tests
+
+## Aufgabe 1.1: Überblick verschaffen
+
+- 1. Führen Sie die Tests aus und dokumentieren Sie die Ergebnisse:
+
+```
+cd simple\_shop python -m unittest discover -v
+```
+
+- 2. Notieren Sie, welche Tests erfolgreich sind und welche fehlschlagen
+- 3. Untersuchen Sie die Struktur der Testdateien und identifizieren Sie die getesteten Funktionalitäten
+
+## Aufgabe 1.2: Testabdeckung messen
+
+- 1. Führen Sie die Tests mit Coverage-Messung aus:
+
+```
+cd simple\_shop coverage run -m unittest discover
+```
+
+- 2. Generieren Sie einen Coverage-Bericht:
+
+```
+coverage report -m
+```
+
+## 3. Erstellen Sie optional einen HTML-Bericht für eine detailliertere Ansicht:
+
+coverage html
+
+## 4. Analysieren Sie die Ergebnisse:
+
+- Welche Module haben die höchste/niedrigste Abdeckung?
+- Welche spezifischen Codebereiche werden nicht getestet?
+- Gibt es kritische Funktionalitäten ohne ausreichende Tests?
+
+## Aufgabe 1.3: Qualitätsprobleme identifizieren
+
+Analysieren Sie die Tests auf folgende Probleme und dokumentieren Sie Ihre Erkenntnisse mit konkreten Beispielen (Datei und Zeilennummer):
+
+## 1. In test\_cart.py:
+
+- Suchen Sie nach zu komplexen Tests
+- Identifizieren Sie Abhängigkeiten zwischen Tests
+- Finden Sie nicht-deterministische Tests (Flaky Tests)
+- Suchen Sie nach Tests, die Implementierungsdetails prüfen
+
+## 2. In test\_inventory.py:
+
+- Suchen Sie nach dupliziertem Testcode
+- Identifizieren Sie fehlende Setup/Teardown-Methoden
+- Finden Sie Tests mit zu vielen Assertions
+- Suchen Sie nach Tests mit unklarer Struktur
+
+## 3. In test\_payment.py:
+
+- Suchen Sie nach Tests mit unklaren Namen
+- Identifizieren Sie Tests mit Abhängigkeiten von externen Faktoren
+- Finden Sie Tests mit magischen Zahlen oder Strings
+- Suchen Sie nach fehlender Dokumentation
+
+Erstellen Sie eine Tabelle mit mindestens 5 identifizierten Problemen, ihrer Lokalisierung und einer kurzen Erklärung, warum es sich um ein Problem handelt.
+
+## Teil 2: Refactoring der Tests
+
+## Aufgabe 2.1: Teststruktur verbessern
+
+- 1. Wählen Sie mindestens 3 Tests aus, die keine klare AAA-Struktur (Arrange, Act, Assert) aufweisen
+- 2. Refactoren Sie diese Tests, um die drei Phasen klar zu trennen
+- 3. Verbessern Sie die Namensgebung der Testfunktionen, um ihren Zweck klarer zu machen
+
+- 4. Fügen Sie aussagekräftige Fehlermeldungen zu den Assertions hinzu
+
+Beispiel für einen verbesserten Test:
+
+```
+# Vorher def test\_add(self): cart = ShoppingCart() p = Product("1", "Test Produkt", 10.0, 5) cart.add\_item(p) self.assertEqual(len(cart.get\_items()), 1) self.assertEqual(cart.get\_total(), 10.0) # Nachher def test\_add\_item\_should\_increase\_cart\_size\_and\_total(self): # Arrange cart = ShoppingCart() product = Product("1", "Test Produkt", 10.0, 5) # Act cart.add\_item(product) # Assert self.assertEqual(len(cart.get\_items()), 1, "Warenkorb sollte genau ein Produkt enthalten") self.assertEqual(cart.get\_total(), 10.0, "Gesamtpreis sollte dem Produktpreis entsprechen")
+```
+
+## Aufgabe 2.2: Testabhängigkeiten auflösen
+
+```
+1. Identifizieren Sie Tests, die voneinander abhängig sind (besonders in test\_cart.py ) 2. Refactoren Sie diese Tests, um sie unabhängig zu machen 3. Implementieren Sie setUp und tearDown Methoden, wo sinnvoll 4. Stellen Sie sicher, dass jeder Test in Isolation ausgeführt werden kann
+```
+
+## Aufgabe 2.3: Komplexität reduzieren
+
+1.
+
+Wählen Sie mindestens einen komplexen Test aus (z.B. test\_cart\_operations in test\_cart.py )
+
+- 2. Teilen Sie diesen Test in mehrere fokussierte Tests auf
+- 3. Extrahieren Sie wiederholten Code in Hilfsfunktionen
+- 4. Implementieren Sie parametrisierte Tests für ähnliche Testfälle
+
+Beispiel für einen parametrisierten Test:
+
+```
+# Vorher: Mehrere ähnliche Tests def test\_add\_one\_item(self): cart = ShoppingCart() p = Product("1", "Produkt 1", 10.0, 5) cart.add\_item(p, 1) self.assertEqual(cart.get\_total(), 10.0)
+```
+
+```
+def test\_add\_two\_items(self): cart = ShoppingCart() p = Product("1", "Produkt 1", 10.0, 5) cart.add\_item(p, 2) self.assertEqual(cart.get\_total(), 20.0) # Nachher: Parametrisierter Test @parameterized.expand([ (1, 10.0), (2, 20.0), (3, 30.0), ]) def test\_add\_items\_calculates\_correct\_total(self, quantity, expected\_total): # Arrange cart = ShoppingCart() product = Product("1", "Produkt 1", 10.0, 5) # Act cart.add\_item(product, quantity) # Assert self.assertEqual(cart.get\_total(), expected\_total, f"Gesamtpreis für {quantity} Artikel sollte {expected\_total} sein")
+```
+
+Teil 3: Erweiterung der Tests
+
+## Aufgabe 3.1: Testabdeckung erhöhen
+
+- 1. Identifizieren Sie basierend auf dem Coverage-Bericht mindestens 3 nicht getestete Funktionalitäten
+- 2. Schreiben Sie neue Tests für diese Funktionalitäten
+- 3. Messen Sie die Testabdeckung erneut und vergleichen Sie die Ergebnisse
+
+## Aufgabe 3.2: Edge Cases testen
+
+- 1. Identifizieren Sie mindestens 3 Edge Cases, die nicht getestet werden:
+- Grenzwerte (z.B. leere Listen, Nullwerte)
+- Fehlerbehandlung (z.B. ungültige Eingaben)
+- Sonderfälle (z.B. sehr große Werte)
+- 2. Schreiben Sie Tests für diese Edge Cases
+- 3. Dokumentieren Sie eventuelle gefundene Fehler
+
+## Aufgabe 3.3: Mocking einsetzen
+
+- 1. Identifizieren Sie in payment.py externe Abhängigkeiten (z.B. zufällige Werte, Zeitabhängigkeiten)
+- 2. Verwenden Sie unittest.mock , um diese Abhängigkeiten zu isolieren
+- 3. Schreiben Sie Tests, die verschiedene Szenarien abdecken:
+- Erfolgreiche Zahlung
+- Fehlgeschlagene Zahlung
+
+- Verbindungsprobleme
+
+## Beispiel für einen Test mit Mock:
+
+```
+@patch('simple\_shop.payment.PaymentProcessor.\_call\_payment\_api') def test\_successful\_payment\_updates\_order\_status(self, mock\_api): # Arrange processor = PaymentProcessor() user = User("user1", "Test User", "test@example.com") order = Order("order1", user) product = Product("1", "Test Produkt", 10.0, 5) order.add\_item(product, 2) mock\_api.return\_value = { "status": PaymentProcessor.PAYMENT\_SUCCESSFUL, "transaction\_id": "tx\_12345", "order\_id": "order1", "amount": 20.0, "payment\_method": "credit\_card", "timestamp": time.time() } # Act result = processor.process\_payment(order) # Assert self.assertEqual(order.status, Order.STATUS\_PAID, "Bestellstatus sollte nach erfolgreicher Zahlung auf PAID gesetzt werden")
+```
+
+Teil 4: Bewertung und Dokumentation
+
+## Aufgabe 4.1: Testqualität bewerten
+
+- 1. Messen Sie die Testabdeckung nach Ihren Änderungen
+- 2. Bewerten Sie die Verbesserung der Testqualität anhand der gelernten Kriterien:
+- Verständlichkeit und Lesbarkeit
+- Wartbarkeit
+- Zuverlässigkeit und Robustheit
+- Aussagekraft und Präzision
+- Isolation und Unabhängigkeit
+- Wiederholbarkeit
+- Geschwindigkeit der Ausführung
+- 3. Erstellen Sie eine Tabelle mit "Vorher" und "Nachher" Bewertungen für jedes Kriterium
+
+## Aufgabe 4.2: Lessons Learned
+
+Reflektieren Sie über die praktische Übung und beantworten Sie folgende Fragen:
+
+- 1. Welche Qualitätsprobleme waren am häufigsten?
+- 2. Welche Probleme waren am schwierigsten zu beheben?
+- 3. Welche Best Practices erscheinen Ihnen am wichtigsten?
+- 4. Wie würden Sie in Zukunft Tests schreiben, um von Anfang an eine hohe Qualität zu gewährleisten?
+
+## Hinweise
+
+- Achten Sie auf die Qualität Ihrer eigenen Tests
+- Dokumentieren Sie Ihre Änderungen mit Kommentaren
+- Stellen Sie sicher, dass alle Tests nach Ihren Änderungen erfolgreich durchlaufen
+- Verwenden Sie die in der Theorie vorgestellten Best Practices
+----END DOCUMENT----
+Hier folgt die unvollständige Zusammenfassung:
+```
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{xurl}
+
+
+\title{[EIN] Zusammenfassung 2025-06-25}
+\author{REDACTED}
+
+\begin{document}
+    \maketitle
+    \tableofcontents
+    
+    \bigskip\bigskip
+    
+    \section{Lernziele}
+        Sie sollten in der Lage sein, Konzepte des Software-Testings mit Fokus auf automatisierten Tests in
+        Python zu verstehen, anzuwenden und kritisch zu bewerten. Dies umfasst insbesondere:
+        \begin{itemize}
+            \item Verständnis der Grundlagen und Wichtigkeit von Software Testing
+            \item Die systematische Erstellung von automatisierten Testfällen
+            \item Die Bewertung von Testqualität
+        \end{itemize}
+        Konkreter:
+        \begin{itemize}
+            \item Definition und Bedeutung von Software Testing erklären können
+            \item Unterschiede zwischen manuellem und automatisiertem Testing beschreiben
+            \item Die vier Teststufen (Unit, Integration, System, Acceptance) unterscheiden
+            \item Grundlegende Syntax der Testfälle mit dem unittest-Framework
+            \item Assert-Methoden (assertEqual, assertTrue etc.) korrekt anwenden
+            \item Test-Fixtures (setUp/tearDown) verstehen und einsetzen können
+            \item Kriterien für gute Tests (Verständlichkeit, Wartbarkeit, Zuverlässigkeit) benennen und auf eigene Tests anwenden.
+            \item Testabdeckung (Code Coverage) als Metrik verstehen und interpretieren.
+            \item AAA-Prinzip (Arrange-Act-Assert) in Testfällen verstehen und anwenden können.
+            \item Code-Smells in Tests erkennen (z. B. zu viele Assertions, Abhängigkeiten zwischen Tests).
+            \item Ein bestehendes Test-Set refaktorieren, um Lesbarkeit und Wartbarkeit zu erhöhen.
+        \end{itemize}
+    
+    \section{Definition und Bedeutung}
+    
+    \section{Unterschiede manuellem und automatisiertem Testing}
+    
+    \section{Teststufen}
+        
+        \subsection{Unit}
+        
+        \subsection{Integration}
+        
+        \subsection{System}
+        
+        \subsection{Acceptance}
+        
+    \section{Python unittest-Framework}
+    
+        \subsection{assert-Methoden}
+        
+        \subsection{setUp und tearDown}
+    
+    \section{``gute'' Tests}
+    
+    \section{Testabdeckung (Code Coverage)}
+    
+    \section{Arrange-Act-Assert Prinzip}
+    
+    \section{``Code-Smells''}
+    
+    \section{Lesbarkeit und Wartbarkeit erhöhen}
+    
+\end{document}
+```
+Verfolständige diese Zusammenfassung.
+§a§
+```latex
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{array}
+\usepackage{xurl}
+\usepackage{enumitem}
+
+\title{[EIN] Zusammenfassung 2025-06-25}
+\author{REDACTED}
+
+\begin{document}
+    \maketitle
+    \tableofcontents
+    
+    \bigskip\bigskip
+    
+    \section{Lernziele}
+        Sie sollten in der Lage sein, Konzepte des Software-Testings mit Fokus auf automatisierten Tests in
+        Python zu verstehen, anzuwenden und kritisch zu bewerten. Dies umfasst insbesondere:
+        \begin{itemize}
+            \item Verständnis der Grundlagen und Wichtigkeit von Software Testing
+            \item Die systematische Erstellung von automatisierten Testfällen
+            \item Die Bewertung von Testqualität
+        \end{itemize}
+        Konkreter:
+        \begin{itemize}
+            \item Definition und Bedeutung von Software Testing erklären können
+            \item Unterschiede zwischen manuellem und automatisiertem Testing beschreiben
+            \item Die vier Teststufen (Unit, Integration, System, Acceptance) unterscheiden
+            \item Grundlegende Syntax der Testfälle mit dem \texttt{unittest}-Framework
+            \item Assert-Methoden (\texttt{assertEqual}, \texttt{assertTrue} etc.) korrekt anwenden
+            \item Test-Fixtures (\texttt{setUp}/\texttt{tearDown}) verstehen und einsetzen können
+            \item Kriterien für gute Tests (Verständlichkeit, Wartbarkeit, Zuverlässigkeit) benennen und auf eigene Tests anwenden
+            \item Testabdeckung (\texttt{Code Coverage}) als Metrik verstehen und interpretieren
+            \item AAA-Prinzip (\texttt{Arrange-Act-Assert}) in Testfällen verstehen und anwenden können
+            \item Code-Smells in Tests erkennen (z. B. zu viele Assertions, Abhängigkeiten zwischen Tests)
+            \item Ein bestehendes Test-Set refaktorieren, um Lesbarkeit und Wartbarkeit zu erhöhen
+        \end{itemize}
+    
+    \section{Definition und Bedeutung}
+        Software Testing überprüft, ob Software korrekt funktioniert, indem sie mit verschiedenen Eingaben getestet wird. 
+        \begin{itemize}
+            \item Frühe Fehlererkennung und -behebung
+            \item Sicherstellung der Funktionalität unter realen Bedingungen
+            \item Vermeidung von Schäden in kritischen Systemen (z. B. Medikamentenbeipackzettel, Bankabrechnungen)
+        \end{itemize}
+        \textbf{Grundgrenzen}: 
+        \begin{itemize}
+            \item Nicht alle Kombinationen möglicher Eingaben können getestet werden
+            \item 100\% Abdeckung garantiert keine Fehlerfreiheit
+        \end{itemize}
+    
+    \section{Unterschiede manuellem und automatisiertem Testing}
+        \begin{tabularx}{\linewidth}{|X|X|}
+            \hline
+            \textbf{Manuelles Testen} & \textbf{Automatisiertes Testen} \\
+            \hline
+            Gut für UI-Tests und exploratives Testen & Gut für sich wiederholende Tests \\
+            Langsam und fehleranfällig & Schnell, zuverlässig und langfristig zeitsparend \\
+            Keine Code-Struktur erforderlich & Tests werden als Code geschrieben \\
+            \hline
+        \end{tabularx}
+    
+    \section{Teststufen}
+        \begin{description}
+            \item[Unit Test] Testet einzelne Komponenten (z. B. Funktionen, Klassen) isoliert.
+            \item[Integration Test] Überprüft das Zusammenspiel mehrerer Komponenten.
+            \item[System Test] Testet das gesamte System als Ganzes.
+            \item[Acceptance Test] Validiert, ob das System die Anforderungen erfüllt.
+        \end{description}
+    
+    \section{Python unittest-Framework}
+        \subsection{assert-Methoden}
+        \begin{itemize}
+            \item \texttt{assertEqual(a, b)}: Prüft auf Gleichheit
+            \item \texttt{assertTrue(x)}: Prüft, ob \texttt{x} wahr ist
+            \item \texttt{assertIsNone(x)}: Prüft, ob \texttt{x} \texttt{None} ist
+            \item \texttt{assertRaises(exception)}: Prüft, ob eine Exception ausgelöst wird
+        \end{itemize}
+        
+        \subsection{setUp und tearDown}
+        \begin{itemize}
+            \item \texttt{setUp()}: Vorbereitung gemeinsamer Testressourcen
+            \item \texttt{tearDown()}: Aufräumen nach jedem Test (z. B. Datenbankverbindungen)
+            \item Vermeidung von Code-Duplizierung durch Wiederverwendung
+        \end{itemize}
+    
+    \section{"gute" Tests}
+        Qualitätskriterien:
+        \begin{itemize}
+            \item \textbf{Zweckmäßigkeit}: Testet relevante Verhaltensweisen, nicht Implementierungsdetails
+            \item \textbf{Verständlichkeit}: Klare Struktur, aussagekräftige Namen (\texttt{test\_add\_item\_with\_negative\_quantity\_fails})
+            \item \texttt{Wartbarkeit}: DRY-Prinzip, Hilfsfunktionen für wiederholte Setup-Schritte
+            \item \texttt{Zuverlässigkeit}: Keine Abhängigkeiten von Systemzeit, externen APIs oder anderen Tests
+            \item \texttt{Effizienz}: Schnelle Ausführung durch Minimierung von I/O-Operationen
+        \end{itemize}
+    
+    \section{Testabdeckung (Code Coverage)}
+        \begin{itemize}
+            \item \textbf{Statement Coverage}: Anteil ausgeführter Codezeilen
+            \item \textbf{Branch Coverage}: Testet alle if/else-Pfade
+            \item \textbf{Path Coverage}: Testet alle möglichen Ausführungspfade (praktisch oft nicht vollständig erreichbar)
+            \item \textbf{Werkzeug}: \texttt{coverage.py} zur Messung
+            \item \textbf{Grenzen}: Hohe Abdeckung bedeutet nicht automatisch hohe Qualität (z. B. fehlende Randfälle)
+        \end{itemize}
+    
+    \section{Arrange-Act-Assert Prinzip}
+        \begin{description}
+            \item[Arrange] Vorbereitung des Testkontexts (Objekte, Eingabedaten)
+            \item[Act] Ausführung der zu testenden Funktionalität
+            \item[Assert] Überprüfung des erwarteten Ergebnisses
+        \end{description}
+        Beispiel:
+        \begin{verbatim}
+def test_add_item_updates_total():
+    # Arrange
+    cart = ShoppingCart()
+    product = Product("1", "Buch", 10.0, 5)
+    
+    # Act
+    cart.add_item(product)
+    
+    # Assert
+    self.assertEqual(cart.get_total(), 10.0)
+        \end{verbatim}
+    
+    \section{"Code-Smells"}
+        \begin{itemize}
+            \item \textbf{Zu komplexe Tests}: Testen mehrere Szenarien in einer Funktion
+            \item \textbf{Abhängigkeiten zwischen Tests}: Ein Test benötigt das Ergebnis eines anderen
+            \item \textbf{Magische Zahlen}: Unklare Werte wie \texttt{self.assertEqual(result, 42)}
+            \item \textbf{Flaky Tests}: Nicht deterministische Tests (z. B. mit \texttt{random} ohne Seed)
+            \item \textbf{Zu viele Assertions}: Mehrere Prüfungen in einem Test
+            \item \textbf{Implementierungsdetails prüfen}: Tests, die interne Zustände statt Verhalten testen
+        \end{itemize}
+    
+    \section{Lesbarkeit und Wartbarkeit erhöhen}
+        \begin{itemize}
+            \item \textbf{Parametrisierte Tests}: Wiederholte Tests mit unterschiedlichen Eingaben
+            \item \textbf{Mocking}: Externe Abhängigkeiten durch \texttt{unittest.mock} ersetzen
+            \item \textbf{Extrahieren von Hilfsfunktionen}: Wiederholte Setup-Schritte in \texttt{setUp()} oder eigene Methoden auslagern
+            \item \textbf{Klare Namensgebung}: \texttt{test\_checkout\_with\_empty\_cart\_fails()} statt \texttt{test\_function1()}
+            \item \textbf{Strukturierung}: Trennung von Arrange/Act/Assert, Kommentare bei komplexer Logik
+        \end{itemize}
+        
+        \subsection{Beispiel für Mocking}
+        \begin{verbatim}
+@patch('simple_shop.payment.PaymentProcessor._call_payment_api')
+def test_successful_payment_updates_order_status(self, mock_api):
+    # Arrange
+    mock_api.return_value = {"status": "success"}
+    processor = PaymentProcessor()
+    order = Order(...)
+    
+    # Act
+    result = processor.process_payment(order)
+    
+    # Assert
+    self.assertEqual(order.status, Order.STATUS_PAID)
+\end{verbatim}
+\end{document}
+```
+
+### Wichtige Ergänzungen:
+1. **Struktur**: Klare Trennung von Theorie (Code-Beispiele, Metriken) und Praxis (Mocking, Refactoring)
+2. **Code-Beispiele**: Einbinden von konkreten unittest-Beispielen aus dem Repository
+3. **Metriken**: Erwähnung von Lesbarkeit, Wiederholbarkeit und Ausführungszeit als qualitative Kriterien
+4. **Praktische Anwendung**: Fokus auf die im Repository geübten Szenarien (z. B. Warenkorb-Tests)
+5. **Visualisierung**: Tabellen für Vergleiche (manuell/automatisch) und Beispiele für Mocking/AAA-Prinzip
+
+Das Dokument ist nun vollständig und deckt alle im Unterricht behandelten Aspekte ab.

@@ -1,0 +1,16 @@
+§u§
+Is CAT7 Ethernet copper, fibre optic, or something else?
+§a§
+**CAT7 Ethernet is a copper cable standard**, not fiber optic.
+
+It uses twisted pairs of copper wires, similar to CAT5e, CAT6, and CAT6a, but with more stringent shielding and performance specifications.
+
+**Key points about CAT7:**
+
+1. **Copper construction** – It has 4 twisted pairs of copper wires, but each pair is individually shielded (S/FTP or F/FTP shielding), and there’s often an overall shield.
+2. **Performance** – Rated for 10 Gbps up to 100 meters, and bandwidth up to 600 MHz (compared to CAT6a’s 500 MHz).
+3. **Connectors** – Officially, CAT7 was designed to use the **GG45** or **TERA** connectors, which are backward-compatible with RJ45 but not widely adopted. In practice, many CAT7 cables sold online come with standard RJ45 connectors, but then they may not meet full CAT7 certification.
+4. **Not an official TIA/EIA standard** – CAT7 is defined by ISO/IEC 11801 (international standards) rather than the common U.S. telecom standards (TIA/EIA). The more widely recognized standard in the U.S. for 10G Ethernet is **CAT6a**.
+5. **Different from fiber** – Fiber optic cables use glass/plastic strands to transmit light, offering higher speeds and longer distances, but CAT7 is still copper-based electrical signaling.
+
+**In short:** CAT7 is a shielded twisted-pair copper cable, not fiber.

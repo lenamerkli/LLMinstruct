@@ -1,0 +1,145 @@
+§u§
+```
+export async function pbkdf2HmacUrlSafe(
+    password: string,
+    salt: string,
+    iterations: number,
+    keyLength: number, // In bits (e.g., 256 for 32 bytes)
+    digest: 'SHA-1' | 'SHA-256' | 'SHA-384' | 'SHA-512' = 'SHA-256'
+): Promise<string> {
+    // Decode salt from URL-safe base64 to Uint8Array
+    const saltBytes = base64urlToUint8Array(salt);
+
+    // Encode password to Uint8Array (UTF-8)
+    const encoder = new TextEncoder();
+    const passwordBytes = encoder.encode(password);
+
+    // Import password as CryptoKey for PBKDF2
+    const passwordKey = await crypto.subtle.importKey(
+        'raw',
+        passwordBytes.slice(0),
+        { name: 'PBKDF2' },
+        false,
+        ['deriveBits']
+    );
+
+    // Derive bits using PBKDF2
+    const keyBuffer = await crypto.subtle.deriveBits(
+        {
+            name: 'PBKDF2',
+            salt: saltBytes.slice(0),
+            iterations: iterations,
+            hash: digest
+        },
+        passwordKey,
+        keyLength,
+    );
+
+    // Convert ArrayBuffer to Uint8Array and encode to URL-safe base64
+    const keyBytes = new Uint8Array(keyBuffer);
+    return uint8ArrayToBase64url(keyBytes);
+}
+```
+Turn this typescript function into python.
+§a§
+Here's the Python equivalent of your TypeScript function:
+
+```python
+import base64
+import hashlib
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.backends import default_backend
+
+def base64url_to_bytes(data: str) -> bytes:
+    """Convert URL-safe base64 string to bytes"""
+    # Add padding if needed
+    padding = 4 - (len(data) % 4)
+    if padding != 4:
+        data += '=' * padding
+    return base64.urlsafe_b64decode(data)
+
+def bytes_to_base64url(data: bytes) -> str:
+    """Convert bytes to URL-safe base64 string"""
+    return base64.urlsafe_b64encode(data).decode('utf-8').rstrip('=')
+
+def pbkdf2_hmac_urlsafe(
+    password: str,
+    salt: str,
+    iterations: int,
+    key_length: int,  # In bits (e.g., 256 for 32 bytes)
+    digest: str = 'SHA-256'
+) -> str:
+    """
+    Derive a key using PBKDF2 HMAC and return it as URL-safe base64 string
+
+    Args:
+        password: The password string
+        salt: URL-safe base64 encoded salt
+        iterations: Number of iterations
+        key_length: Key length in bits
+        digest: Hash algorithm ('SHA-1', 'SHA-256', 'SHA-384', 'SHA-512')
+
+    Returns:
+        URL-safe base64 encoded derived key
+    """
+
+    # Map digest strings to cryptography library hash objects
+    digest_map = {
+        'SHA-1': hashes.SHA1(),
+        'SHA-256': hashes.SHA256(),
+        'SHA-384': hashes.SHA384(),
+        'SHA-512': hashes.SHA512()
+    }
+
+    if digest not in digest_map:
+        raise ValueError(f"Unsupported digest algorithm: {digest}")
+
+    # Decode salt from URL-safe base64 to bytes
+    salt_bytes = base64url_to_bytes(salt)
+
+    # Encode password to bytes (UTF-8)
+    password_bytes = password.encode('utf-8')
+
+    # Create PBKDF2 hasher
+    kdf = PBKDF2HMAC(
+        algorithm=digest_map[digest],
+        length=key_length // 8,  # Convert bits to bytes
+        salt=salt_bytes,
+        iterations=iterations,
+        backend=default_backend()
+    )
+
+    # Derive the key
+    key_bytes = kdf.derive(password_bytes)
+
+    # Convert to URL-safe base64
+    return bytes_to_base64url(key_bytes)
+
+# Example usage:
+# result = pbkdf2_hmac_urlsafe(
+#     password="my_password",
+#     salt="some_salt_in_base64_url_safe",
+#     iterations=100000,
+#     key_length=256,
+#     digest='SHA-256'
+# )
+```
+
+**Installation requirements:**
+
+You'll need to install the `cryptography` package:
+
+```bash
+pip install cryptography
+```
+
+**Key differences from TypeScript version:**
+
+1. **No async/await**: Python version is synchronous since the cryptography library operations are blocking
+2. **Helper functions**: Added `base64url_to_bytes` and `bytes_to_base64url` for base64 URL-safe encoding/decoding
+3. **Hash mapping**: Created a dictionary to map string digest names to cryptography library hash objects
+4. **Bit conversion**: Convert key_length from bits to bytes when passing to the KDF (`key_length // 8`)
+5. **Error handling**: Added validation for unsupported digest algorithms
+
+The functionality should be equivalent to your TypeScript version, producing the same output for the same inputs.

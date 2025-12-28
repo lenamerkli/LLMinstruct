@@ -1,0 +1,116 @@
+§u§
+```latex
+    \section{Vektor}
+        \begin{equation*}
+            \overrightarrow{AB} = \begin{pmatrix} x_b - x_a \\ y_b - y_a \\ z_b - z_a \end{pmatrix}
+        \end{equation*}
+        \subsection{Addition}
+            \begin{equation*}
+                \vec{a} + \vec{b} = \begin{pmatrix} a_x \\ a_y \\ a_z \end{pmatrix} + \begin{pmatrix} b_x \\ b_y \\ b_z \end{pmatrix} = \begin{pmatrix} a_x + b_x \\ a_y + b_y \\ a_z + b_z \end{pmatrix}
+            \end{equation*}
+        \subsection{Multiplikation mit Skalar}
+            \begin{equation*}
+                a * \vec{b} = \begin{pmatrix} a * x_b \\ a * y_b \\ a * z_b \end{pmatrix}
+            \end{equation*}
+        \subsection{Skalarprodukt}
+            \begin{equation*}
+                \vec{a} \cdot \vec{b} = 
+            \end{equation*}
+```
+Schreibe die Gleichung von `Skalarprodukt` fertig.
+§a§
+Um die Gleichung für das Skalarprodukt zu vervollständigen, wird die Definition des Skalarprodukts zweier Vektoren in drei Dimensionen benötigt. Die korrekte mathematische Darstellung lautet:
+
+```latex
+        \subsection{Skalarprodukt}
+            \begin{equation*}
+                \vec{a} \cdot \vec{b} = a_x \cdot b_x + a_y \cdot b_y + a_z \cdot b_z
+            \end{equation*}
+```
+
+**Erklärung:**
+- Das Skalarprodukt \(\vec{a} \cdot \vec{b}\) zweier Vektoren \(\vec{a} = \begin{pmatrix} a_x \\ a_y \\ a_z \end{pmatrix}\) und \(\vec{b} = \begin{pmatrix} b_x \\ b_y \\ b_z \end{pmatrix}\) ist definiert als die **Summe der Produkte ihrer entsprechenden Komponenten**.
+- In der Gleichung werden die \(x\)-, \(y\)- und \(z\)-Komponenten der Vektoren multipliziert und addiert:  
+  \(a_x \cdot b_x\) (Produkt der \(x\)-Komponenten),  
+  \(a_y \cdot b_y\) (Produkt der \(y\)-Komponenten),  
+  \(a_z \cdot b_z\) (Produkt der \(z\)-Komponenten).
+
+**Vollständiger Code-Abschnitt:**
+```latex
+    \section{Vektor}
+        \begin{equation*}
+            \overrightarrow{AB} = \begin{pmatrix} x_b - x_a \\ y_b - y_a \\ z_b - z_a \end{pmatrix}
+        \end{equation*}
+        \subsection{Addition}
+            \begin{equation*}
+                \vec{a} + \vec{b} = \begin{pmatrix} a_x \\ a_y \\ a_z \end{pmatrix} + \begin{pmatrix} b_x \\ b_y \\ b_z \end{pmatrix} = \begin{pmatrix} a_x + b_x \\ a_y + b_y \\ a_z + b_z \end{pmatrix}
+            \end{equation*}
+        \subsection{Multiplikation mit Skalar}
+            \begin{equation*}
+                a * \vec{b} = \begin{pmatrix} a * x_b \\ a * y_b \\ a * z_b \end{pmatrix}
+            \end{equation*}
+        \subsection{Skalarprodukt}
+            \begin{equation*}
+                \vec{a} \cdot \vec{b} = a_x \cdot b_x + a_y \cdot b_y + a_z \cdot b_z
+            \end{equation*}
+```
+§u§
+```
+\subsection{Kreuzprodukt}
+            \begin{equation*}
+                \vec{a} \times \vec{b} = 
+            \end{equation*}
+```
+§a§
+Um die Gleichung für das Kreuzprodukt (Vektorprodukt) zu vervollständigen, verwenden wir die Standarddefinition für dreidimensionale Vektoren:
+
+```latex
+\subsection{Kreuzprodukt}
+    \begin{equation*}
+        \vec{a} \times \vec{b} = \begin{pmatrix} 
+            a_y b_z - a_z b_y \\ 
+            a_z b_x - a_x b_z \\ 
+            a_x b_y - a_y b_x 
+        \end{pmatrix}
+    \end{equation*}
+```
+
+**Erklärung:**
+- Das Kreuzprodukt \(\vec{a} \times \vec{b}\) zweier Vektoren \(\vec{a} = \begin{pmatrix} a_x \\ a_y \\ a_z \end{pmatrix}\) und \(\vec{b} = \begin{pmatrix} b_x \\ b_y \\ b_z \end{pmatrix}\) ist ein neuer Vektor, der senkrecht auf \(\vec{a}\) und \(\vec{b}\) steht.
+- Die Komponenten ergeben sich aus:
+  - **x-Komponente:** \(a_y b_z - a_z b_y\)
+  - **y-Komponente:** \(a_z b_x - a_x b_z\) (Beachte das negative Vorzeichen)
+  - **z-Komponente:** \(a_x b_y - a_y b_x\)
+
+**Merkhilfe:** Die Formel folgt einem zyklischen Muster:
+1. Beginne mit \(y\) und \(z\) für die erste Zeile
+2. Rotiere die Indizes (\(y \to z\), \(z \to x\), \(x \to y\)) für die nächsten Zeilen
+3. Das Vorzeichen der mittleren Zeile ist immer negativ
+
+**Vollständiger Abschnitt im Kontext:**
+```latex
+    \section{Vektor}
+        \begin{equation*}
+            \overrightarrow{AB} = \begin{pmatrix} x_b - x_a \\ y_b - y_a \\ z_b - z_a \end{pmatrix}
+        \end{equation*}
+        \subsection{Addition}
+            \begin{equation*}
+                \vec{a} + \vec{b} = \begin{pmatrix} a_x \\ a_y \\ a_z \end{pmatrix} + \begin{pmatrix} b_x \\ b_y \\ b_z \end{pmatrix} = \begin{pmatrix} a_x + b_x \\ a_y + b_y \\ a_z + b_z \end{pmatrix}
+            \end{equation*}
+        \subsection{Multiplikation mit Skalar}
+            \begin{equation*}
+                a * \vec{b} = \begin{pmatrix} a \cdot b_x \\ a \cdot b_y \\ a \cdot b_z \end{pmatrix}
+            \end{equation*}
+        \subsection{Skalarprodukt}
+            \begin{equation*}
+                \vec{a} \cdot \vec{b} = a_x b_x + a_y b_y + a_z b_z
+            \end{equation*}
+        \subsection{Kreuzprodukt}
+            \begin{equation*}
+                \vec{a} \times \vec{b} = \begin{pmatrix} 
+                    a_y b_z - a_z b_y \\ 
+                    a_z b_x - a_x b_z \\ 
+                    a_x b_y - a_y b_x 
+                \end{pmatrix}
+            \end{equation*}
+```

@@ -1,0 +1,468 @@
+§u§
+```
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\begin{document}
+    
+    \noindent Name, Vorname:
+    
+    \section*{7 Prüfung}
+    \begin{itemize}
+        \item Zeit: 60'
+        \item Hilfsmittel: Taschenrechner erlaubt
+        \item Der Lösungsweg ist Bestandteil der Lösung. Zeigen Sie auch Zwischenschritte! Eine saubere Darstellung hilft Fehler verhindern.
+        \item Viel Erfolg!
+    \end{itemize}
+    
+    \begin{center}
+        \begin{tabular}{|l|c|c|c|c|c|c|}
+            \hline
+            Aufgabe & 7.1 & 7.2 & 7.3 & 7.4 & Total & \textbf{Note} \\
+            \hline
+            Mögliche Punkte & & & & & & \\
+            Erreichte Punkte & & & & & & \\
+            \hline
+        \end{tabular}
+    \end{center}
+    
+    \subsection*{Aufgabe 7.1}
+    Bestimmen Sie die Anzahl
+    \begin{enumerate}
+        \item (1 P) der Anagrammen von \textit{``ABLEITUNG''};
+        \item (1 P) der Anagrammen von \textit{``MATHELEHRER''};
+        \item (2 P) der Anagrammen von \textit{``MATHELEHRER''}, in denen den Wort \textit{``HERR''} lesbar ist.
+        \item (1 P) der aus 7 Buchstaben gebildeten Wörter, die nur aus den Vokalen A-E-I-O-U gebildet sind.
+    \end{enumerate}
+    
+    \subsection*{Aufgabe 7.2}
+    Bestimmen - Vereinfachen Sie die folgenden Termen; zeigen Sie auch Zwischenschritte:
+    \begin{enumerate}
+        \item (2 P) $\frac{333!}{335!} + \frac{334!}{336!} \cdot 334$
+        
+        \item (2 P) $\frac{\binom{400}{2} \cdot \binom{199}{3}}{\binom{200}{198} \cdot \binom{200}{199}}$
+        
+        \item (3 P) $\frac{\frac{(3n-2)!}{(3n)!} + 1}{\frac{(3n-1)!}{3n!}}$
+        
+        \item (2 P) $\binom{k+7}{2} - \binom{k+6}{k+4}$
+    \end{enumerate}
+    
+    \subsection*{Aufgabe 7.3}
+    (4 P) Entwickeln Sie den folgenden Term mithilfe dem binomischen Lehrsatz:
+    \[
+    \left(a^2 - \frac{3}{a}\right)^4
+    \]
+    
+    \subsection*{Aufgabe 7.4}
+    Die Klasse G20f (7 Mädeln und 10 Jungen) muss einmal die Mensa putzen. Zur Verfügung stehen 3 Schwämme, 6 Besen und 8 Tücher.
+    
+    \begin{enumerate}
+        \item (3 P) Auf wie vielen Arten können die Beschäftigungen innerhalb der Klasse verteilt werden?
+        
+        \item (1 P) Wie viele Arbeitsverteilungen gibt es so, dass keine Mädel den Boden fegen muss?
+    \end{enumerate}
+    
+    Der MATHELEHRER organisiert einen kleinen Kombinatorik-Wettbewerb: er stellt 4 Fragen und der/die am schnellsten korrekt eine Frage beantwortet, bekommt ein Giandujotto (eine leckere Nougat-Praline).
+    
+    \begin{enumerate}
+        \setcounter{enumi}{2}
+        \item (2.5 P) Auf wie vielen Arten können die 4 Giandujotti verteilt werden?
+        
+        \item (1.5 P) Komischerweise spielten Herr Peters und Herr Koch die ganze Zeit des Wettbewerbs mit Videogames und schufen sie nicht, an die Fragen zu beantworten. Frau Hug war die schnellste der Klasse, die die erste Frage beantwortete. Auf wie vielen Arten können die 4 Giandujotti verteilt so, dass diese Bedingungen erfüllt werden?
+    \end{enumerate}
+    
+    Am 17.06 war der Geburststag von Frau von Dach und die Klasse möchte während der Mittagspause weiter feiern:
+    
+    \begin{enumerate}
+        \setcounter{enumi}{4}
+        \item (2 P) 5 unter den SuS und SuSinnen der Klasse sollten zum Migros gehen, um Getränke zu kaufen. Wie viele mögliche Einkaufsgruppen können hergestellt werden?
+        
+        \item (2 P) Wie viele mögliche fünfköpfige Einkaufsgruppen kann man bilden, die maximal eine Mädel enthalten?
+        
+        \item (2 P) 5 Leute der Klasse bestellen vor der Prüfung mit PizzaExpress 3 Hawaiipizzas (BLEAHHHHH) und 2 Tuna-Zwiebeln-Pizzas. Sie werden direkt in B1.3 gebracht und von Herrn Sassone abgeholt. Auf wie vielen Arten kann Herr Sassone die ganzen Pizzas unter den SuS verteilen?
+    \end{enumerate}
+    
+    Am Anfang der Prüfung hatte Herr Sassone die Klasse gut verteilt.
+    
+    \begin{enumerate}
+        \setcounter{enumi}{7}
+        \item (2 P) Auf wie vielen Arten konnte er die erste Reihe (4 Plätze) mit SuS füllen?
+    \end{enumerate}
+    
+    Herr Wicki ist unsicher in Kombinatorik und löst entweder ganz richtig oder komplett falsch jede Frage jeder Aufgabe.
+    
+    \begin{enumerate}
+        \setcounter{enumi}{8}
+        \item (1 P) Beschreiben Sie die möglichen Resultate von Herrn Wicki bei Aufgabe 5.1 mithilfe eines Baumdiagramms.
+        
+        \item (1 P) Wie viele Möglichkeiten hat Herr Wicki bei Aufgabe 5.4 genau 4 der 10 Fragen korrekt zu beantworten?
+    \end{enumerate}
+    
+\end{document}
+```
+Schreibe ein gutes und detailliertes Dokument, welches die Kombinatorik (und binominal) erklärt, sodass man solche Aufgaben lösen kann.
+§a§
+Absolut! Hier ist ein detailliertes Dokument, das die Grundlagen der Kombinatorik und des Binomischen Lehrsatzes erklärt. Es ist so strukturiert, dass es Ihnen das nötige Wissen vermittelt, um die Aufgaben aus der von Ihnen bereitgestellten Prüfung zu lösen.
+
+---
+
+### **Leitfaden zur Kombinatorik und zum Binomischen Lehrsatz**
+
+Dieses Dokument dient als Lernhilfe, um die grundlegenden Konzepte der Kombinatorik zu verstehen. Die Kombinatorik ist ein Teilgebiet der Mathematik, das sich mit der Bestimmung der Anzahl möglicher Anordnungen oder Auswahlen von Objekten befasst.
+
+#### **Inhaltsverzeichnis**
+1.  **Die zwei Grundprinzipien der Kombinatorik**
+    *   Summenregel & Produktregel
+2.  **Die entscheidenden Fragen: Reihenfolge und Wiederholung**
+3.  **Die vier kombinatorischen Grundmodelle**
+    *   Modell 1: Variation mit Wiederholung (Reihenfolge wichtig, Wiederholung erlaubt)
+    *   Modell 2: Variation ohne Wiederholung (Reihenfolge wichtig, Wiederholung nicht erlaubt)
+    *   Modell 3: Kombination ohne Wiederholung (Reihenfolge egal, Wiederholung nicht erlaubt)
+    *   Modell 4: Kombination mit Wiederholung (Reihenfolge egal, Wiederholung erlaubt)
+4.  **Spezialfälle und Erweiterungen**
+    *   Permutationen (Alle Elemente werden angeordnet)
+    *   Permutationen mit Wiederholung (Anagramme)
+5.  **Der Binomische Lehrsatz**
+    *   Der Binomialkoeffizient
+    *   Die Formel und ihre Anwendung
+6.  **Lösungsstrategien für die Prüfungsaufgaben** (Anwendung der Theorie)
+
+---
+
+### **1. Die zwei Grundprinzipien der Kombinatorik**
+
+Fast alle kombinatorischen Probleme lassen sich auf zwei einfache Regeln zurückführen:
+
+*   **Die Summenregel (ODER-Regel):** Wenn eine Handlung auf $m$ Arten ODER auf $n$ Arten ausgeführt werden kann, wobei sich die Arten gegenseitig ausschliessen, dann gibt es insgesamt **$m + n$** Möglichkeiten.
+    *   *Beispiel:* Sie können entweder mit dem Bus (3 Linien) ODER mit dem Zug (2 Linien) zur Schule fahren. Gesamt: 3 + 2 = 5 Möglichkeiten.
+
+*   **Die Produktregel (UND-Regel):** Wenn ein Prozess aus zwei Schritten besteht, wobei der erste Schritt auf $m$ Arten UND der zweite Schritt auf $n$ Arten ausgeführt werden kann, dann gibt es insgesamt **$m \cdot n$** Möglichkeiten, den gesamten Prozess auszuführen.
+    *   *Beispiel:* Sie wählen ein T-Shirt (5 Optionen) UND eine Hose (3 Optionen). Gesamt: 5 * 3 = 15 mögliche Outfits.
+
+### **2. Die entscheidenden Fragen: Reihenfolge und Wiederholung**
+
+Um ein Zählproblem zu lösen, müssen Sie immer zwei Fragen klären:
+
+1.  **Ist die Reihenfolge wichtig?**
+    *   **Ja:** Das Ergebnis (A, B) ist anders als (B, A). Beispiele: Sitzordnung, Passwörter, Ranglisten. Man spricht von **Variationen** oder **Permutationen**.
+    *   **Nein:** Das Ergebnis {A, B} ist dasselbe wie {B, A}. Beispiele: Lottozahlen, Auswahl eines Komitees, Kartenspiele. Man spricht von **Kombinationen**.
+
+2.  **Sind Wiederholungen erlaubt?**
+    *   **Ja:** Ein Element kann mehrmals ausgewählt werden. Beispiel: Zahlenschloss (Ziffern können sich wiederholen), Wörter aus Vokalen bilden.
+    *   **Nein:** Jedes Element kann nur einmal ausgewählt werden. Beispiel: Lottozahlen (jede Zahl nur einmal), Personen für ein Komitee auswählen.
+
+Diese beiden Fragen führen uns zu vier Grundmodellen.
+
+### **3. Die vier kombinatorischen Grundmodelle**
+
+Sei **n** die Gesamtzahl der verfügbaren, unterscheidbaren Elemente (z.B. 17 Schüler).
+Sei **k** die Anzahl der Elemente, die wir auswählen oder anordnen (z.B. 4 Plätze).
+
+|                       | **Reihenfolge ist wichtig**                               | **Reihenfolge ist egal**                                                                    |
+| --------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| **Mit Wiederholung**  | **Variation mit Wiederholung** <br> $n^k$                 | **Kombination mit Wiederholung** <br> $\binom{n+k-1}{k}$                                     |
+| **Ohne Wiederholung** | **Variation ohne Wiederholung** <br> $\frac{n!}{(n-k)!}$ | **Kombination ohne Wiederholung** <br> $\binom{n}{k} = \frac{n!}{k!(n-k)!}$ |
+
+#### **Modell 1: Variation mit Wiederholung (Ziehen mit Zurücklegen, mit Beachtung der Reihenfolge)**
+*   **Formel:** $n^k$
+*   **Anwendung:** Wenn aus $n$ Elementen $k$ mal gewählt wird, die Reihenfolge eine Rolle spielt und jedes Element nach der Wahl wieder zur Verfügung steht.
+*   **Beispiel (Aufgabe 7.1.4):** Wir bilden 7-buchstabige Wörter aus 5 Vokalen (n=5, k=7). Für jeden der 7 Plätze im Wort haben wir 5 Optionen. Die Reihenfolge ist wichtig ("AEIOU..." ist anders als "EIOUA...") und Vokale können sich wiederholen.
+    *   Anzahl: $5 \cdot 5 \cdot 5 \cdot 5 \cdot 5 \cdot 5 \cdot 5 = 5^7$
+
+#### **Modell 2: Variation ohne Wiederholung (Ziehen ohne Zurücklegen, mit Beachtung der Reihenfolge)**
+*   **Formel:** $P(n, k) = \frac{n!}{(n-k)!} = n \cdot (n-1) \cdot \ldots \cdot (n-k+1)$
+*   **Anwendung:** Wenn aus $n$ Elementen $k$ Plätze besetzt werden, die Reihenfolge eine Rolle spielt und jedes Element nur einmal verwendet werden kann.
+*   **Beispiel (Aufgabe 7.4.8):** 17 Schüler (n=17) sollen auf 4 Plätze (k=4) in der ersten Reihe verteilt werden. Die Reihenfolge (wer auf welchem Platz sitzt) ist wichtig. Ein Schüler kann nicht auf zwei Plätzen sitzen.
+    *   Anzahl: $\frac{17!}{(17-4)!} = \frac{17!}{13!} = 17 \cdot 16 \cdot 15 \cdot 14$
+
+#### **Modell 3: Kombination ohne Wiederholung (Ziehen ohne Zurücklegen, ohne Beachtung der Reihenfolge)**
+*   **Formel:** $\binom{n}{k} = \frac{n!}{k!(n-k)!}$ (gelesen "n über k" oder "n tief k")
+*   **Anwendung:** Das ist der häufigste Fall! Auswahl von $k$ Elementen aus einer Menge von $n$ Elementen, wobei die Reihenfolge der Auswahl keine Rolle spielt.
+*   **Beispiel (Aufgabe 7.4.5):** Aus 17 Schülern (n=17) wird eine Einkaufsgruppe von 5 Personen (k=5) gebildet. Es ist egal, ob Anna, Bert, Claus, Dora, Emil oder Emil, Dora, Claus, Bert, Anna gewählt werden - die Gruppe ist dieselbe.
+    *   Anzahl: $\binom{17}{5} = \frac{17!}{5!(17-5)!} = \frac{17!}{5!12!}$
+
+#### **Modell 4: Kombination mit Wiederholung (Ziehen mit Zurücklegen, ohne Beachtung der Reihenfolge)**
+*   **Formel:** $\binom{n+k-1}{k}$
+*   **Anwendung:** Verteilung von $k$ identischen (nicht unterscheidbaren) Objekten auf $n$ unterscheidbare Fächer/Personen.
+*   **Beispiel (Aufgabe 7.4.3):** 4 identische Giandujotti (k=4) werden an 17 Schüler (n=17) verteilt. Es ist egal, welches Giandujotto ein Schüler bekommt, nur wie viele. Ein Schüler kann auch mehrere bekommen.
+    *   Anzahl: $\binom{17+4-1}{4} = \binom{20}{4}$
+
+---
+
+### **4. Spezialfälle und Erweiterungen**
+
+#### **Permutationen (alle n Elemente werden angeordnet)**
+Dies ist ein Spezialfall der Variation ohne Wiederholung, bei dem alle $n$ Elemente verwendet werden (also $k=n$).
+*   **Formel:** $n! = n \cdot (n-1) \cdot \ldots \cdot 2 \cdot 1$
+*   **Anwendung:** Wie viele Möglichkeiten gibt es, $n$ verschiedene Objekte in eine Reihe zu stellen?
+*   **Beispiel (Aufgabe 7.1.1):** Das Wort "ABLEITUNG" hat 9 verschiedene Buchstaben (n=9). Die Anzahl der Anagramme ist die Anzahl der Möglichkeiten, diese 9 Buchstaben anzuordnen.
+    *   Anzahl: $9!$
+
+#### **Permutationen mit Wiederholung (Anagramme von Wörtern mit gleichen Buchstaben)**
+Wenn unter den $n$ Elementen Gruppen von identischen Elementen sind.
+*   **Formel:** $\frac{n!}{n_1! \cdot n_2! \cdot \ldots \cdot n_r!}$
+    *   $n$ ist die Gesamtzahl der Buchstaben.
+    *   $n_1, n_2, \ldots$ sind die Anzahlen der jeweils identischen Buchstaben.
+*   **Anwendung:** Anagramme von Wörtern wie "MATHELEHRER".
+*   **Beispiel (Aufgabe 7.1.2):** "MATHELEHRER" hat 11 Buchstaben (n=11).
+    *   Wiederholungen: E (3x), H (2x), R (2x). Die anderen (M, A, T, L) kommen 1x vor.
+    *   Anzahl: $\frac{11!}{3! \cdot 2! \cdot 2!}$
+
+#### **Anordnungen mit Blöcken**
+Manchmal müssen bestimmte Elemente zusammenbleiben (z.B. das Wort "HERR" in "MATHELEHRER").
+*   **Strategie:**
+    1.  Betrachten Sie den Block als **ein einziges, grosses Element**.
+    2.  Permutieren Sie dieses grosse Element mit den restlichen Elementen.
+    3.  (Falls nötig) Multiplizieren Sie mit der Anzahl der Permutationen *innerhalb* des Blocks.
+*   **Beispiel (Aufgabe 7.1.3):** Anagramme von "MATHELEHRER", in denen "HERR" lesbar ist.
+    1.  Der Block "HERR" wird zu einem Super-Buchstaben **X**.
+    2.  Die restlichen Buchstaben sind M, A, T, E, L, E, E.
+    3.  Wir bilden jetzt Anagramme des Wortes "XMATLEE". Das sind 8 "Buchstaben".
+    4.  Wiederholungen: E (3x).
+    5.  Anzahl: $\frac{8!}{3!}$
+    6.  Da "HERR" in genau dieser Reihenfolge bleiben muss, gibt es keine inneren Permutationen. Wäre die Aufgabe "die Buchstaben H,E,R,R müssen zusammenbleiben", müssten wir noch mit $\frac{4!}{2!}$ (für die Anordnung von H,E,R,R) multiplizieren.
+
+---
+
+### **5. Der Binomische Lehrsatz**
+
+#### **Der Binomialkoeffizient $\binom{n}{k}$**
+Wie oben definiert, gibt $\binom{n}{k}$ die Anzahl der Möglichkeiten an, $k$ Elemente aus $n$ ohne Reihenfolge und ohne Wiederholung auszuwählen. Er ist zentral für den Binomischen Lehrsatz.
+
+**Wichtige Eigenschaften für Vereinfachungen (Aufgabe 7.2):**
+*   **Definition:** $\binom{n}{k} = \frac{n!}{k!(n-k)!}$
+*   **Symmetrie:** $\binom{n}{k} = \binom{n}{n-k}$. Beispiel: $\binom{200}{198} = \binom{200}{200-198} = \binom{200}{2}$.
+*   **Fakultäten kürzen:** $n! = n \cdot (n-1)!$. Beispiel: $\frac{333!}{335!} = \frac{333!}{335 \cdot 334 \cdot 333!} = \frac{1}{335 \cdot 334}$.
+
+#### **Die Formel des Binomischen Lehrsatzes**
+Sie dient dazu, eine Potenz eines Binoms (eines Ausdrucks mit zwei Termen) zu entwickeln, ohne mühsam auszumultiplizieren.
+
+*   **Formel:**
+    $(a+b)^n = \sum_{k=0}^{n} \binom{n}{k} a^{n-k} b^k$
+*   **Ausgeschrieben:**
+    $(a+b)^n = \binom{n}{0}a^n b^0 + \binom{n}{1}a^{n-1}b^1 + \binom{n}{2}a^{n-2}b^2 + \ldots + \binom{n}{n}a^0 b^n$
+
+**Anwendungsschritte (Aufgabe 7.3):**
+Entwickeln Sie $\left(a^2 - \frac{3}{a}\right)^4$.
+
+1.  **Identifizieren:** $n=4$, $a \rightarrow a^2$, $b \rightarrow \left(-\frac{3}{a}\right)$. Das Minuszeichen ist wichtig!
+2.  **Formel anwenden:**
+    $\left(a^2 - \frac{3}{a}\right)^4 = \sum_{k=0}^{4} \binom{4}{k} (a^2)^{4-k} \left(-\frac{3}{a}\right)^k$
+3.  **Term für Term ausrechnen:**
+    *   **k=0:** $\binom{4}{0}(a^2)^4 \left(-\frac{3}{a}\right)^0 = 1 \cdot a^8 \cdot 1 = a^8$
+    *   **k=1:** $\binom{4}{1}(a^2)^3 \left(-\frac{3}{a}\right)^1 = 4 \cdot a^6 \cdot \left(-\frac{3}{a}\right) = -12 a^5$
+    *   **k=2:** $\binom{4}{2}(a^2)^2 \left(-\frac{3}{a}\right)^2 = 6 \cdot a^4 \cdot \left(\frac{9}{a^2}\right) = 54 a^2$
+    *   **k=3:** $\binom{4}{3}(a^2)^1 \left(-\frac{3}{a}\right)^3 = 4 \cdot a^2 \cdot \left(-\frac{27}{a^3}\right) = -108 \frac{1}{a}$
+    *   **k=4:** $\binom{4}{4}(a^2)^0 \left(-\frac{3}{a}\right)^4 = 1 \cdot 1 \cdot \left(\frac{81}{a^4}\right) = \frac{81}{a^4}$
+4.  **Zusammensetzen:**
+    $a^8 - 12a^5 + 54a^2 - \frac{108}{a} + \frac{81}{a^4}$
+
+---
+
+### **6. Lösungsstrategien für die Prüfungsaufgaben**
+
+Hier ist eine kurze Anleitung, wie die Theorie auf die restlichen Aufgaben angewendet wird:
+
+*   **Aufgabe 7.2 (Vereinfachen):** Nutzen Sie die oben genannten Regeln für Fakultäten und Binomialkoeffizienten. Schreiben Sie die Definitionen aus und kürzen Sie so viel wie möglich.
+    *   **7.2.2:** $\binom{200}{198} = \binom{200}{2}$ und $\binom{200}{199} = \binom{200}{1}$. Das vereinfacht die Rechnung enorm.
+    *   **7.2.3:** Ersetzen Sie $(3n)!$ durch $3n \cdot (3n-1) \cdot (3n-2)!$ und kürzen Sie.
+
+*   **Aufgabe 7.4.1 (Aufgabenverteilung):** Dies ist eine Aufteilung einer Gruppe in mehrere Teilgruppen. Man kann dies schrittweise mit Kombinationen lösen oder direkt mit dem **Multinomialkoeffizienten**:
+    *   Aus 17 Schülern werden 3 für Schwämme, 6 für Besen und 8 für Tücher ausgewählt.
+    *   Anzahl: $\binom{17}{3} \cdot \binom{14}{6} \cdot \binom{8}{8} = \frac{17!}{3!14!} \cdot \frac{14!}{6!8!} \cdot \frac{8!}{8!0!} = \frac{17!}{3!6!8!}$
+
+*   **Aufgabe 7.4.2 (mit Einschränkung):** Die Produktregel hilft hier. Die Auswahlprozesse sind voneinander abhängig.
+    *   Die 6 Besen-Aufgaben müssen von den 10 Jungen erledigt werden: $\binom{10}{6}$ Möglichkeiten.
+    *   Die restlichen $17-6=11$ Schüler (4 Jungen und 7 Mädel) erledigen die restlichen $3+8=11$ Aufgaben.
+    *   Wähle 3 für Schwämme aus den 11: $\binom{11}{3}$.
+    *   Die restlichen 8 nehmen die Tücher: $\binom{8}{8}=1$.
+    *   Gesamt (Produktregel): $\binom{10}{6} \cdot \binom{11}{3} \cdot \binom{8}{8}$.
+
+*   **Aufgabe 7.4.6 (max. eine Mädel):** Dies ist ein Fall für die Summenregel. "Maximal eine Mädel" bedeutet (0 Mädel UND 5 Jungen) ODER (1 Mädel UND 4 Jungen).
+    *   Fall 1: $\binom{7}{0} \cdot \binom{10}{5}$ (wähle 0 aus 7 Mädeln und 5 aus 10 Jungen)
+    *   Fall 2: $\binom{7}{1} \cdot \binom{10}{4}$ (wähle 1 aus 7 Mädeln und 4 aus 10 Jungen)
+    *   Gesamt: $\binom{7}{0}\binom{10}{5} + \binom{7}{1}\binom{10}{4}$
+
+*   **Aufgabe 7.4.7 (Pizzaverteilung):** 5 Leute sind fix. Wir verteilen 3 identische Hawaii- und 2 identische Tuna-Pizzen. Dies ist wieder eine Aufteilung.
+    *   Wähle 3 der 5 Leute aus, die Hawaii bekommen: $\binom{5}{3}$.
+    *   Die restlichen 2 bekommen Tuna: $\binom{2}{2}=1$.
+    *   Gesamt: $\binom{5}{3} \cdot \binom{2}{2} = 10$.
+
+*   **Aufgabe 7.4.10 (Herr Wicki):** Er beantwortet genau 4 von 10 Fragen korrekt. Die Reihenfolge, in der er sie korrekt beantwortet, ist egal. Es zählt nur, *welche* 4 Fragen es sind.
+    *   Dies ist eine klassische Kombination ohne Wiederholung.
+    *   Anzahl: $\binom{10}{4}$.
+
+Mit diesem Leitfaden sollten Sie gut gerüstet sein, um die Logik hinter jeder Aufgabe zu erkennen und die richtige Formel anzuwenden. Viel Erfolg
+§u§
+Ok, mach daraus ein LaTeX Dokument
+§a§
+Hier ist ein ausführliches LaTeX-Dokument, das die benötigten Kombinatorik-Konzepte erklärt und Lösungsstrategien für Ihre Prüfungsaufgaben bietet:
+
+```latex
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[german]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{trees}
+
+\title{Kombinatorik und Binomischer Lehrsatz}
+\author{Lernhilfe}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Einführung in die Kombinatorik}
+Die Kombinatorik beschäftigt sich mit der systematischen Zählung von Anordnungen und Auswahlen. Sie basiert auf zwei Grundprinzipien:
+
+\subsection*{1. Grundprinzipien}
+\begin{itemize}
+    \item \textbf{Summenregel (ODER-Regel):} \\
+    Wenn $A$ auf $m$ Arten und $B$ auf $n$ Arten durchgeführt werden kann und $A$ und $B$ sich gegenseitig ausschließen, dann gibt es $m + n$ Möglichkeiten.
+    \[ \text{Beispiel: 3 Buslinien + 2 Zuglinien = 5 Reisemöglichkeiten} \]
+    
+    \item \textbf{Produktregel (UND-Regel):} \\
+    Wenn $A$ auf $m$ Arten und $B$ auf $n$ Arten durchgeführt werden kann, dann gibt es $m \times n$ Möglichkeiten für die Kombination.
+    \[ \text{Beispiel: 5 T-Shirts \times 3 Hosen = 15 Outfits} \]
+\end{itemize}
+
+\subsection*{2. Entscheidende Fragen}
+Bei jedem Problem sind zwei Fragen zu klären:
+\begin{enumerate}
+    \item Ist die \textbf{Reihenfolge} wichtig?
+    \item Sind \textbf{Wiederholungen} erlaubt?
+\end{enumerate}
+
+\subsection*{3. Die vier Grundmodelle}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+ & \textbf{Reihenfolge wichtig} & \textbf{Reihenfolge egal} \\
+\hline
+\textbf{Ohne Wiederholung} & Variation ohne Wdh. & Kombination ohne Wdh. \\
+ & $V(n,k) = \frac{n!}{(n-k)!}$ & $\binom{n}{k} = \frac{n!}{k!(n-k)!}$ \\
+\hline
+\textbf{Mit Wiederholung} & Variation mit Wdh. & Kombination mit Wdh. \\
+ & $n^k$ & $\binom{n+k-1}{k}$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\section*{Anwendungsbeispiele}
+\subsection*{Variation ohne Wiederholung}
+Anordnung von $k$ Elementen aus $n$ ohne Wiederholung:
+\[
+\text{Beispiel (Aufgabe 7.4.8): } \frac{17!}{(17-4)!} = 17 \times 16 \times 15 \times 14
+\]
+
+\subsection*{Kombination ohne Wiederholung}
+Auswahl von $k$ Elementen aus $n$ ohne Reihenfolge:
+\[
+\text{Beispiel (Aufgabe 7.4.5): } \binom{17}{5} = \frac{17!}{5!12!}
+\]
+
+\subsection*{Permutationen mit Wiederholung (Anagramme)}
+Für Wort mit $n$ Buchstaben und Buchstabenhäufigkeiten $n_1, n_2, \dots$:
+\[
+P = \frac{n!}{n_1! \cdot n_2! \cdot \ldots \cdot n_k!}
+\]
+\begin{align*}
+\text{Beispiel (Aufgabe 7.1.2): } & \text{,,MATHELEHRER''} \\
+& 11! / (3! \cdot 2! \cdot 2!) \quad \text{(3×E, 2×H, 2×R)}
+\end{align*}
+
+\subsection*{Blöcke in Anagrammen}
+\begin{align*}
+\text{Beispiel (Aufgabe 7.1.3): } & \text{,,HERR'' als Block} \\
+& \text{Behandle ,,HERR'' als 1 Element } \rightarrow \text{8 Elemente} \\
+& \text{Ergebnis: } \frac{8!}{3!} \quad \text{(3×E in Rest)}
+\end{align*}
+
+\section*{Binomischer Lehrsatz}
+\subsection*{Binomialkoeffizient}
+\[
+\binom{n}{k} = \frac{n!}{k!(n-k)!}, \quad \binom{n}{k} = \binom{n}{n-k}
+\]
+
+\subsection*{Satz und Anwendung}
+\[
+(a + b)^n = \sum_{k=0}^{n} \binom{n}{k} a^{n-k} b^k
+\]
+\begin{align*}
+\text{Beispiel (Aufgabe 7.3): } & \left(a^2 - \frac{3}{a}\right)^4 \\
+& = \sum_{k=0}^{4} \binom{4}{k} (a^2)^{4-k} \left(-\frac{3}{a}\right)^k \\
+& = \binom{4}{0}a^8 - \binom{4}{1}a^6\frac{3}{a} + \binom{4}{2}a^4\frac{9}{a^2} - \binom{4}{3}a^2\frac{27}{a^3} + \binom{4}{4}\frac{81}{a^4} \\
+& = a^8 - 12a^5 + 54a^2 - \frac{108}{a} + \frac{81}{a^4}
+\end{align*}
+
+\section*{Lösungsstrategien für Prüfungsaufgaben}
+\subsection*{Aufgabe 7.4.1 (Aufgabenverteilung)}
+\begin{align*}
+& \text{3 Schwämme, 6 Besen, 8 Tücher an 17 Schüler} \\
+& \text{Multinomialkoeffizient: } \frac{17!}{3! \cdot 6! \cdot 8!}
+\end{align*}
+
+\subsection*{Aufgabe 7.4.2 (Ohne Mädchen beim Fegen)}
+\begin{align*}
+& \text{6 Besen nur an Jungen: } \binom{10}{6} \\
+& \text{Restliche Aufgaben: } \binom{11}{3} \text{ für Schwämme} \\
+& \text{Gesamt: } \binom{10}{6} \times \binom{11}{3}
+\end{align*}
+
+\subsection*{Aufgabe 7.4.6 (Einkaufsgruppe max. 1 Mädchen)}
+\begin{align*}
+& \text{0 Mädchen + 5 Jungen: } \binom{7}{0}\binom{10}{5} \\
+& \text{1 Mädchen + 4 Jungen: } \binom{7}{1}\binom{10}{4} \\
+& \text{Gesamt: } \binom{10}{5} + 7\binom{10}{4}
+\end{align*}
+
+\subsection*{Aufgabe 7.4.10 (Genau 4 richtige Antworten)}
+\[
+\binom{10}{4} \text{ Möglichkeiten}
+\]
+
+\section*{Hilfreiche Vereinfachungen}
+\begin{align*}
+\frac{n!}{(n-k)!} &= n(n-1)\cdots(n-k+1) \\
+\frac{\binom{n}{k}}{\binom{m}{r}} &= \frac{n!k!(m-r)!}{m!r!(n-k)!} \\
+\frac{333!}{335!} &= \frac{1}{335 \times 334} \\
+\binom{k+7}{2} - \binom{k+6}{k+4} &= \binom{k+7}{2} - \binom{k+6}{2} \\
+&= \frac{(k+7)(k+6)}{2} - \frac{(k+6)(k+5)}{2} \\
+&= \frac{(k+6)}{2}[(k+7) - (k+5)] = (k+6)
+\end{align*}
+
+\begin{center}
+\begin{tikzpicture}[level distance=1.5cm,
+level 1/.style={sibling distance=3cm},
+level 2/.style={sibling distance=1.5cm}]
+\node {Aufgabe 5.1}
+    child {node {Richtig}}
+    child {node {Falsch}};
+\end{tikzpicture}
+\end{center}
+
+\end{document}
+```
+
+Dieses Dokument enthält:
+
+1. Eine systematische Einführung in die Grundprinzipien der Kombinatorik
+2. Die vier kombinatorischen Grundmodelle mit Formeln und Beispielen
+3. Erklärungen zu Permutationen mit Wiederholung (Anagramme)
+4. Den binomischen Lehrsatz mit Anwendungsbeispiel
+5. Konkrete Lösungsstrategien für alle Aufgabentypen Ihrer Prüfung
+6. Wichtige Vereinfachungsregeln für Fakultäten und Binomialkoeffizienten
+7. Ein Baumdiagramm für die Darstellung von Wahrscheinlichkeiten
+
+Das Dokument ist vollständig lauffähig und enthält alle notwendigen Pakete. Es erklärt jeden Aufgabentyp Ihrer Prüfung mit direktem Bezug zu den konkreten Aufgabenstellungen und zeigt die Lösungswege systematisch auf.

@@ -1,0 +1,84 @@
+§u§
+```
+
+\begin{tikzpicture}
+\begin{axis}[
+    axis x line=middle,
+    axis y line=left,
+    xlabel={parameter count},
+    ylabel={BiasBench score},
+    enlargelimits=0.1,
+    legend style={
+        at={(0.5,-0.18)}, anchor=north,
+        legend columns=2, column sep=1em,
+        draw=none, font=\small
+    },
+    xmode=log,
+    log ticks with fixed point,
+    width=\textwidth,
+    height=0.25\textheight,
+]
+
+    \addplot[only marks, mark=*, mark size=3pt, black] coordinates {
+        (9,35.903)
+        (8,37.278)
+        (70,38.106)
+        (405,38.681)
+        (14,39.06)
+        (8,40.348)
+        (108,40.348)
+        (3,41.964)
+        (671,42.52)
+        (4,43.277)
+        };
+    \end{axis}
+\end{tikzpicture}
+
+```
+How can I change the y axis so that the smaller values are on top?
+§a§
+To invert the y-axis so that smaller values appear at the top (reverse the usual direction), you can add the following option to the `axis` environment in your TikZ code:
+
+```latex
+y dir=reverse,
+```
+
+Here’s the modified code:
+
+```latex
+\begin{tikzpicture}
+\begin{axis}[
+    axis x line=middle,
+    axis y line=left,
+    xlabel={parameter count},
+    ylabel={BiasBench score},
+    enlargelimits=0.1,
+    legend style={
+        at={(0.5,-0.18)}, anchor=north,
+        legend columns=2, column sep=1em,
+        draw=none, font=\small
+    },
+    xmode=log,
+    log ticks with fixed point,
+    width=\textwidth,
+    height=0.25\textheight,
+    y dir=reverse, % <-- Add this line to invert the y-axis
+]
+
+    \addplot[only marks, mark=*, mark size=3pt, black] coordinates {
+        (9,35.903)
+        (8,37.278)
+        (70,38.106)
+        (405,38.681)
+        (14,39.06)
+        (8,40.348)
+        (108,40.348)
+        (3,41.964)
+        (671,42.52)
+        (4,43.277)
+        };
+\end{axis}
+\end{tikzpicture}
+```
+
+This will make the y-axis start from the highest value at the bottom and the lowest value at the top. Adjust other settings (like `ymin`/`ymax` if needed) to fine-tune the appearance.

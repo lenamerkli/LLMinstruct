@@ -1,0 +1,343 @@
+§u§
+I run a minecraft server on 1.20.1 Fabric around the Create mod. In the last day, with few player activity, the MSPT rose from about 38 to 56. Can you help me find out why? Carpet mod is installed.
+§a§
+56 MSPT means your server is now *consistently* missing the 50 ms/tick budget (20 TPS), so it’s not just tiny spikes anymore. With Carpet installed you already have the right tools to see **exactly** what’s eating those extra ~18 ms.
+
+Below is a quick, practical way to track it down; if you can paste back the outputs I can help you interpret them.
+
+---
+
+## 1. Get a baseline with Carpet
+
+Run these from console or as OP when the server is in its “idle but laggy” state (few / no players, but MSPT ~56):
+
+```mcfunction
+/tick health 200
+```
+
+- This profiles 200 ticks (~10 seconds) and prints a breakdown of **where time is spent per tick**:
+  `Network, Autosave, Off-Tick Tasks, Mob Spawning, Chunk Loading, Block Updates, Entity Ticks, Block Entity Ticks, Environment, ...`
+- Note which line has the **largest ms** (especially `Entity Ticks`, `Block Entity Ticks`, `Block Updates`, `Chunk Loading`, `Mob Spawning`).
+
+Then:
+
+```mcfunction
+/tick entities 200
+```
+
+- This shows the **top 10 entity types** by CPU time and count (e.g. items, mobs, create:contraption, minecarts, etc.).
+
+If for some reason `/tick health` and `/tick entities` don’t work, use:
+
+```mcfunction
+/profile health 200
+/profile entities 200
+```
+
+**If you paste the output of those commands, I can point at the likely culprit almost immediately.**
+
+---
+
+## 2. Interpreting the results (what to look for)
+
+While you’re waiting to post results, here’s how to read them:
+
+### A. If **Entity Ticks** is high
+
+Likely causes:
+
+- Large mob farms (hostile or passive).
+- Tons of item entities (drops, Create belts spitting items, etc.).
+- Trains or minecarts constantly moving.
+- Broken farms where mobs accumulate and never die.
+
+Use `/tick entities 200`:
+
+- Look for a line where time is big, like:
+  - `minecraft:item`
+  - `minecraft:zombie` / `minecraft:sheep` / etc.
+  - `create:contraption`, `create:stationary_contraption`, or similar Create entities.
+
+Then you know what kind of thing to go hunt down.
+
+### B. If **Block Entity Ticks** is high
+
+This is where Create often bites.
+
+Typical Create-heavy culprits:
+
+- Huge kinetic networks (tons of shafts, gears, cogs all rotating).
+- Many moving mechanical crafters, deployers, sequenced gearshifts, etc.
+- Mass item movement on belts and depots.
+- Large fluid / item networks constantly moving stuff.
+
+Action ideas:
+
+- Temporarily **turn off big Create machines** (cut power, stop water wheels, etc.) and see if MSPT drops.
+- If you have any **chunk loaders or fake players** keeping Create bases loaded 24/7 (Carpet `/player`, Create chunk loaders, etc.), disable those and watch MSPT.
+
+### C. If **Block Updates** is high
+
+This usually means redstone or environmental updates:
+
+- Constant-clock redstone contraptions.
+- Observer spam.
+- Farms using fast clocks or huge flying machines constantly moving.
+
+Try disabling known redstone-heavy areas and watch MSPT.
+
+### D. If **Chunk Loading / Unloading** is high
+
+Likely:
+
+- Players (or fake players / chunk loaders) exploring / keeping many chunks loaded.
+- Mods that keep dimensions loaded (portals, chunk loaders from other mods, etc.).
+
+Checks:
+
+- Run `/forceload query` and clear unnecessary forced chunks.
+- If you use Carpet fake players (`/player`) for chunkloading, despawn them and re-test.
+
+### E. If **Mob Spawning** is high
+
+- Big spawnable areas (caves, ocean, perimeter around a farm) where the game keeps trying (and failing) to spawn mobs efficiently.
+- Massive, not-fully-optimized mob farms.
+
+You can use Carpet’s `/spawn` tools (if enabled) to see spawn attempts and mobcaps, but let’s first see the `/tick health` output.
+
+---
+
+## 3. Quick Create‑mod specific checks
+
+Since your server is “around the Create mod” and MSPT drifted up over a day with little player activity, my first guesses are:
+
+1. **An always-on Create factory** somewhere is chunk-loaded:
+   - Big kinetic network that never stops spinning.
+   - Large deployer/crafter assembly line.
+   - A train line that keeps running back and forth.
+2. **Chunk loading that stayed on**:
+   - Create chunk loaders.
+   - Carpet fake players.
+   - Spawn chunks being near your main Create base.
+
+Practical tests:
+
+- With no-one online except you, **teleport far away** to a fresh area (e.g. `/tp @s 0 200 0` in a new dimension) and watch MSPT for 30–60 seconds.
+  - If MSPT **drops back toward 38 or lower**, then some player base is still ticking via chunk loading.
+- Systematically turn off:
+  - Create power sources (stop water wheels, windmills, steam engines).
+  - Train schedules (pause stations).
+  - Known chunk loaders or fake players.
+
+Watch how MSPT responds each time.
+
+---
+
+## 4. Optional: deeper profiling (if needed)
+
+If the Carpet output is inconclusive, one more tool can help:
+
+- Install **spark** (Fabric) and run:
+  ```mcfunction
+  /spark profiler --timeout 60 --only-ticks
+  ```
+- Let it run during the laggy state, then open the web report and look for:
+  - Heavy methods from Create classes.
+  - Mods doing expensive world scans or tasks.
+
+But in many cases, `/tick health` + `/tick entities` already shows the main cause.
+
+---
+
+## 5. What I need from you
+
+If you’re up for a more interactive debug:
+
+1. Run:
+   ```mcfunction
+   /tick health 200
+   /tick entities 200
+   ```
+2. Copy the outputs (or screenshots) into your next message.
+3. Also mention:
+   - Any **new Create builds** or farms finished in the last day or two.
+   - Whether you’re using:
+     - Carpet fake players for chunkloading,
+     - Any chunk loader blocks,
+     - Other major mods (Lithium, FerriteCore, etc.).
+
+From that, we can usually say: “This specific factory / area / mob farm is the problem” and talk concrete fixes.
+§u§
+```
+<div style="font-family: monospace; background-color: #1e1e1e; color: #ffffff; padding: 15px; border-radius: 5px; line-height: 1.4;">
+    <div>
+        <strong>Average tick time:</strong> <span style="color: #ffff55;">55.104ms</span>
+    </div>
+    <div>
+        Network: <span style="color: #ffff55;">0.200ms</span>
+    </div>
+    <div>
+        Async Tasks: <span style="color: #ffff55;">1.183ms</span>
+    </div>
+    <div>
+        <strong>overworld:</strong>
+    </div>
+    <div>
+        - Entities: <span style="color: #ffff55;">3.300ms</span>
+    </div>
+    <div>
+        - Environment: <span style="color: #ffff55;">0.026ms</span>
+    </div>
+    <div>
+        - Spawning: <span style="color: #ffff55;">34.382ms</span>
+    </div>
+    <div>
+        - Block Entities: <span style="color: #ffff55;">10.730ms</span>
+    </div>
+    <div>
+        - Schedule Ticks: <span style="color: #ffff55;">0.150ms</span>
+    </div>
+    <div>
+        - Random Ticks: <span style="color: #ffff55;">0.145ms</span>
+    </div>
+    <div>
+        - Unloading: <span style="color: #ffff55;">0.028ms</span>
+    </div>
+    <div>
+        <strong>the_nether:</strong>
+    </div>
+    <div>
+        - Entities: <span style="color: #ffff55;">1.149ms</span>
+    </div>
+    <div>
+        - Spawning: <span style="color: #ffff55;">0.134ms</span>
+    </div>
+    <div>
+        - Block Entities: <span style="color: #ffff55;">0.529ms</span>
+    </div>
+    <div>
+        - Random Ticks: <span style="color: #ffff55;">0.015ms</span>
+    </div>
+    <div>
+        - Unloading: <span style="color: #ffff55;">0.019ms</span>
+    </div>
+    <div style="color: #aaaaaa; font-style: italic;">
+        The Rest, whatever that might be: 3.114ms
+    </div>
+</div>
+```
+and
+```
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Minecraft Debug Information</title>
+    <style>
+        body {
+            background-color: #5a4f3c; /* A color sampled from the image background */
+            font-family: 'Minecraftia', 'Courier New', Courier, monospace;
+            font-size: 16px;
+            line-height: 1.2;
+        }
+        .debug-container {
+            color: white;
+            text-shadow: 2px 2px #333; /* Mimics the Minecraft text shadow */
+            padding: 1em;
+            display: inline-block;
+        }
+        .value {
+            color: #FFFF55; /* Yellow color for values */
+        }
+        h2, h3 {
+            margin-top: 0.5em;
+            margin-bottom: 0.2em;
+        }
+        ul {
+            list-style: none;
+            padding-left: 1.5em;
+            margin: 0;
+        }
+        li {
+           position: relative;
+        }
+        li::before {
+            content: "-";
+            position: absolute;
+            left: -1em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="debug-container">
+        <h2>Average tick time: <span class="value">57.090ms</span></h2>
+
+        <h3>Top 10 counts:</h3>
+        <ul>
+            <li>create:belt in overworld: <span class="value">6580.0</span></li>
+            <li>create:fluid_tank in overworld: <span class="value">4942.0</span></li>
+            <li>create:simple_kinetic in overworld: <span class="value">4763.0</span></li>
+            <li>create:item_vault in overworld: <span class="value">3699.0</span></li>
+            <li>create:chute in overworld: <span class="value">3082.0</span></li>
+            <li>create:fluid_pipe in overworld: <span class="value">2900.0</span></li>
+            <li>create:funnel in overworld: <span class="value">1722.0</span></li>
+            <li>create:encased_shaft in overworld: <span class="value">1660.0</span></li>
+            <li>create:gearbox in overworld: <span class="value">1004.0</span></li>
+            <li>create:mechanical_pump in overworld: <span class="value">881.0</span></li>
+        </ul>
+
+        <h3>Top 10 CPU hogs:</h3>
+        <ul>
+            <li>create:mechanical_pump in overworld: <span class="value">2.87ms</span></li>
+            <li>create:fluid_pipe in overworld: <span class="value">1.52ms</span></li>
+            <li>item in the_nether: <span class="value">1.10ms</span></li>
+            <li>create:belt in overworld: <span class="value">0.96ms</span></li>
+            <li>sheep in overworld: <span class="value">0.74ms</span></li>
+            <li>villager in overworld: <span class="value">0.58ms</span></li>
+        </ul>
+    </div>
+
+</body>
+</html>
+```
+§a§
+Your **Spawning is the culprit**: 34.382 ms out of 55.104 ms total—that's **62% of your tick time**. This is almost certainly a mob farm or spawning area that's broken or misconfigured.
+
+## The smoking gun: Spawning overhead
+
+Mob spawning at 34 ms means the server is constantly trying to spawn mobs in loaded chunks but failing or getting stuck in a loop. This typically happens when:
+
+- A mob farm has **no kill mechanism** (mobs pile up alive, blocking new spawns, so the game keeps trying).
+- A farm is **chunk-loaded but not fully built** (hoppers missing, kill chamber broken, etc.).
+- **Spawning pads are active** but mobs aren't being removed fast enough.
+- A farm is **in a state where it can't function** (power off, water flow stopped, etc.) but chunks stay loaded.
+
+## Secondary issue: Block Entities
+
+Your Create block entities are taking 10.730 ms, which is reasonable for a large factory, but combined with the spawning lag it's worth noting. The top CPU hogs show:
+
+- **create:mechanical_pump**: 2.87 ms (likely a large fluid network or many pumps running).
+- **create:fluid_pipe**: 1.52 ms (fluid flowing through many pipes).
+- **create:belt**: 0.96 ms (item movement, but not terrible).
+
+These are normal for an active Create base, so the Create mod itself isn't the main problem.
+
+## What to do right now
+
+1. **Find your mob farm(s)**. Look for:
+   - Spawning pads with no kill mechanism.
+   - Hoppers or collection systems that are broken or full.
+   - Farms that are chunk-loaded but inactive (no power, no water, etc.).
+
+2. **Disable or fix the farm**:
+   - If it's not in use, **unload it** (remove chunk loaders, move it outside spawn chunks).
+   - If it should be working, **repair it** (fix hoppers, restore power, etc.).
+   - If you want to keep it loaded but idle, **add a kill mechanism** or **turn off spawning pads** so the server stops trying to spawn mobs.
+
+3. **Re-test**: Once the farm is fixed or unloaded, run `/tick health 200` again. You should see Spawning drop to <1 ms and overall MSPT fall back to ~38–40 ms.
+
+If you can tell me which farm(s) you have or where they're located, I can give more specific advice on fixing them.
+§u§
+Are there any carpet commands that can help me find problematic mob farms?
+§a§
+

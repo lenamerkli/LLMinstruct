@@ -1,0 +1,145 @@
+§u§
+Erkläre mir, wie ich die Stammfunktion von einer Funktion erhalten kann.
+§a§
+Gerne erkläre ich dir, wie du die **Stammfunktion** (auch *unbestimmtes Integral* genannt) einer Funktion finden kannst. Die Stammfunktion ist eine zentrale Technik der **Integration** und bildet das Gegenstück zur Differenziation. Hier ist eine Schritt-für-Schritt-Anleitung:
+
+---
+
+### 1. **Grundlagen verstehen**
+- Eine Stammfunktion \( F(x) \) einer Funktion \( f(x) \) erfüllt:  
+  \( F'(x) = f(x) \).  
+  Das bedeutet: Die Ableitung von \( F(x) \) gibt genau \( f(x) \) zurück.
+- Notation:  
+  \( \int f(x)  dx = F(x) + C \)  
+  (wobei \( C \) eine Konstante ist – dazu später mehr).
+
+---
+
+### 2. **Wichtige Regeln und Formeln**
+Du kannst diese Grundregeln immer anwenden:
+- **Konstante Regel**:  
+  \( \int c \cdot f(x)  dx = c \cdot \int f(x)  dx \)  
+  *(z. B. \( \int 3x^2  dx = 3 \cdot \int x^2  dx \))*
+- **Summen-/Differenzenregel**:  
+  \( \int [f(x) + g(x)]  dx = \int f(x)  dx + \int g(x)  dx \)  
+  \( \int [f(x) - g(x)]  dx = \int f(x)  dx - \int g(x)  dx \)
+- **Potenzregel** (wichtig für Polynome!):  
+  \( \int x^n  dx = \frac{x^{n+1}}{n+1} + C \) für \( n \neq -1 \)  
+  *(z. B. \( \int x^3  dx = \frac{x^4}{4} + C \))*
+- **Spezialfälle**:
+  - \( \int 1  dx = x + C \)
+  - \( \int e^x  dx = e^x + C \)
+  - \( \int \sin(x)  dx = -\cos(x) + C \)
+  - \( \int \cos(x)  dx = \sin(x) + C \)
+  - \( \int \frac{1}{x}  dx = \ln|x| + C \)
+
+---
+
+### 3. **Schritt-für-Schritt-Methode**
+Gehe so vor, um \( \int f(x)  dx \) zu finden:
+1. **Analysiere die Funktion**:  
+   Ist \( f(x) \) eine Kombination aus Grundformen (z. B. Polynome, Exponential-, Trigonometrie- oder Logarithmusfunktionen)?
+2. **Wende Regeln an**:  
+   - Löse die Integration in Teile auf (z. B. mittels Summenregel).  
+   - Wende die Potenzregel auf jedes Polynom-Glied an.  
+   - Nutze Spezialformeln für \( e^x \), \( \sin \), \( \cos \), \( \ln \) usw.
+3. **Füge die Konstante \( C \) hinzu**:  
+   Vergiss niemals \( + C \) am Ende – sie repräsentiert die Familie aller möglichen Stammfunktionen (da die Ableitung einer Konstanten null ist).
+
+**Beispiel**:  
+Finde \( \int (2x^3 + 4e^x - \sin(x))  dx \)  
+- Löse auf: \( = \int 2x^3  dx + \int 4e^x  dx + \int (-\sin(x))  dx \)  
+- Wende Regeln an:  
+  \( = 2 \cdot \frac{x^4}{4} + 4 \cdot e^x - (-\cos(x)) + C \)  
+  \( = \frac{2}{4} x^4 + 4e^x + \cos(x) + C \)  
+  \( = \frac{1}{2} x^4 + 4e^x + \cos(x) + C \)
+
+---
+
+### 4. **Fortgeschrittene Methoden (wenn nötig)**
+Manche Funktionen erfordern spezielle Techniken:
+- **Substitution (Ersetzung)**:  
+  Setze \( u = g(x) \), um komplexe Ausdrücke zu vereinfachen.  
+  *(z. B. für \( \int 2x \cos(x^2)  dx \) setze \( u = x^2 \), dann \( du = 2x  dx \) → wird zu \( \int \cos(u)  du \))*
+- **Integration durch Teile**:  
+  \( \int u  dv = uv - \int v  du \)  
+  (nützlich für Produkte wie \( x \cdot e^x \) oder \( x \cdot \sin(x) \)).
+- **Partielle Integration**:  
+  Für Brüche (z. B. \( \int \frac{2x}{x^2+1}  dx \)).
+
+---
+
+### 5. **Wichtige Hinweise**
+- **Die Konstante \( C \) ist essenziell!**  
+  Ohne sie ist die Stammfunktion unvollständig (z. B. \( \int x  dx = \frac{x^2}{2} + C \), nicht nur \( \frac{x^2}{2} \)).
+- **Nicht alle Funktionen haben eine elementare Stammfunktion**:  
+  Einige (z. B. \( e^{-x^2} \)) können nicht mit einfachen Regeln integriert werden – hier nutzt man dann Näherungen oder Spezialfunktionen.
+- **Übung macht den Meister**:  
+  Beginne mit einfachen Funktionen und steigere dich langsam. Tabellenwerke (wie [Standardintegrale](https://de.wikipedia.org/wiki/Tabelle_der_Standardintegrale)) helfen als Nachschlagewerk.
+
+---
+
+### 6. **Hilfsmittel und Tipps**
+- **Software nutzen**: Tools wie Wolfram Alpha, Symbolab oder GeoGebra können Stammfunktionen berechnen – ideal zum Überprüfen.
+- **Ableitung prüfen**: Wenn du unsicher bist, leite deine gefundene \( F(x) \) ab. Ergibt sich \( f(x) \)? Dann liegst du richtig!
+- **Kontext beachten**:  
+  - **Definites Integral** (mit Grenzen) vs. **Indefinites Integral** (Stammfunktion): Hier geht es um Letzteres.
+
+Möchtest du ein bestimmtes Beispiel durchgehen oder eine bestimmte Funktion integrieren? Ich helfe dir gerne! 😊
+§u§
+Was ist die Stammfunktion von $\frac{1}{x^2}$?
+§a§
+Die Funktion lautet:  
+\[
+f(x) = \frac{1}{x^2}
+\]
+
+Um die **Stammfunktion** davon zu finden, beachten wir:
+
+---
+
+### **1. Funktion umschreiben**
+
+Zuerst schreibst du den Ausdruck in Potenzform um:
+
+\[
+\frac{1}{x^2} = x^{-2}
+\]
+
+---
+
+### **2. Potenzregel anwenden**
+
+Für \( x^n \) mit \( n \ne -1 \) gilt:
+
+\[
+\int x^n \, dx = \frac{x^{n+1}}{n+1} + C
+\]
+
+In unserem Fall ist:
+- \( n = -2 \), also:
+\[
+\int x^{-2} \, dx = \frac{x^{-1}}{-1} + C = -x^{-1} + C
+\]
+
+---
+
+### **3. Ergebnis zurückschreiben**
+
+Da \( x^{-1} = \frac{1}{x} \), ergibt sich:
+
+\[
+\int \frac{1}{x^2} \, dx = -\frac{1}{x} + C
+\]
+
+---
+
+### ✅ **Antwort:**
+
+Die Stammfunktion von \( \frac{1}{x^2} \) ist:
+
+\[
+\boxed{-\frac{1}{x} + C}
+\]
+
+wobei \( C \) eine Konstante ist.

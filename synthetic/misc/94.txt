@@ -1,0 +1,177 @@
+§u§
+```
+
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines=middle,
+    xlabel={price in USD},
+    ylabel={lmarena.ai score},
+    enlargelimits=0.1,
+    legend style={
+        at={(0.5,-0.18)}, anchor=north,
+        legend columns=2, column sep=1em,
+        draw=none, font=\small
+    },
+    width=\textwidth,
+    height=0.3\textheight,
+]
+        \addplot[black, thick, const plot, forget plot] coordinates {
+        (0.01,1287.0) (0.04,1287.0) (0.04,1319.0) (0.072,1319.0) (0.072,1346.0) (0.1,1346.0) (0.1,1355.0) (0.207,1355.0) (0.207,1379.0) (0.312,1379.0) (0.312,1419.0) (0.8,1419.0) (0.8,1420.0) (10.0,1420.0) (10.0,1456.0)
+    };
+
+    \addplot[only marks, mark=*, mark size=3pt, blue, forget plot] coordinates {(0.01,1287.0)};
+    \addplot[only marks, mark=*, mark size=3pt, green!70!black, forget plot] coordinates {(0.04,1319.0)};
+    \addplot[only marks, mark=*, mark size=3pt, yellow!80!black, forget plot] coordinates {(0.072,1346.0)};
+    \addplot[only marks, mark=*, mark size=3pt, orange, forget plot] coordinates {(0.1,1355.0)};
+    \addplot[only marks, mark=*, mark size=3pt, red, forget plot] coordinates {(0.207,1379.0)};
+    \addplot[only marks, mark=*, mark size=3pt, purple, forget plot] coordinates {(0.312,1419.0)};
+    \addplot[only marks, mark=*, mark size=3pt, cyan, forget plot] coordinates {(0.8,1420.0)};
+    \addplot[only marks, mark=*, mark size=3pt, magenta, forget plot] coordinates {(10.0,1456.0)};
+
+    \addlegendimage{only marks, mark=*, mark size=3pt, blue}
+    \addlegendentry{\textcolor{blue}{Gemma 2 9B it}}
+    \addlegendimage{only marks, mark=*, mark size=3pt, green!70!black}
+    \addlegendentry{\textcolor{green!70!black}{Gemma 3n 4B}}
+    \addlegendimage{only marks, mark=*, mark size=3pt, yellow!80!black}
+    \addlegendentry{\textcolor{yellow!80!black}{Qwen3 32B}}
+    \addlegendimage{only marks, mark=*, mark size=3pt, orange}
+    \addlegendentry{\textcolor{orange}{Mistral Small 3.2}}
+    \addlegendimage{only marks, mark=*, mark size=3pt, red}
+    \addlegendentry{\textcolor{red}{Qwen3 30B A3B Instruct 2507}}
+    \addlegendimage{only marks, mark=*, mark size=3pt, purple}
+    \addlegendentry{\textcolor{purple}{Qwen3 235B A22B Instruct 2507}}
+    \addlegendimage{only marks, mark=*, mark size=3pt, cyan}
+    \addlegendentry{\textcolor{cyan}{DeepSeek V3.1}}
+    \addlegendimage{only marks, mark=*, mark size=3pt, magenta}
+    \addlegendentry{\textcolor{magenta}{Gemini 2.5 Pro}}
+    \end{axis}
+\end{tikzpicture}
+
+```
+How can I make the price axis logarithmic?
+§a§
+To make the price axis (x-axis) logarithmic in your TikZ/pgfplots visualization, add the following key to your `axis` options:
+
+```latex
+xmode=log,          % Set logarithmic scale for x-axis
+log ticks with fixed point,  % Ensure readable fixed-point notation for tick labels
+```
+
+### Updated Code:
+```latex
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines=middle,
+    xlabel={price in USD},
+    ylabel={lmarena.ai score},
+    enlargelimits=0.1,
+    legend style={
+        at={(0.5,-0.18)}, anchor=north,
+        legend columns=2, column sep=1em,
+        draw=none, font=\small
+    },
+    width=\textwidth,
+    height=0.3\textheight,
+    xmode=log,          % <-- ADDED: Logarithmic x-axis
+    log ticks with fixed point,  % <-- ADDED: Fixed-point tick labels
+]
+    \addplot[black, thick, const plot, forget plot] coordinates {
+        (0.01,1287.0) (0.04,1287.0) (0.04,1319.0) (0.072,1319.0) (0.072,1346.0) (0.1,1346.0) (0.1,1355.0) (0.207,1355.0) (0.207,1379.0) (0.312,1379.0) (0.312,1419.0) (0.8,1419.0) (0.8,1420.0) (10.0,1420.0) (10.0,1456.0)
+    };
+
+    \addplot[only marks, mark=*, mark size=3pt, blue, forget plot] coordinates {(0.01,1287.0)};
+    \addplot[only marks, mark=*, mark size=3pt, green!70!black, forget plot] coordinates {(0.04,1319.0)};
+    \addplot[only marks, mark=*, mark size=3pt, yellow!80!black, forget plot] coordinates {(0.072,1346.0)};
+    \addplot[only marks, mark=*, mark size=3pt, orange, forget plot] coordinates {(0.1,1355.0)};
+    \addplot[only marks, mark=*, mark size=3pt, red, forget plot] coordinates {(0.207,1379.0)};
+    \addplot[only marks, mark=*, mark size=3pt, purple, forget plot] coordinates {(0.312,1419.0)};
+    \addplot[only marks, mark=*, mark size=3pt, cyan, forget plot] coordinates {(0.8,1420.0)};
+    \addplot[only marks, mark=*, mark size=3pt, magenta, forget plot] coordinates {(10.0,1456.0)};
+
+    \addlegendimage{only marks, mark=*, mark size=3pt, blue}
+    \addlegendentry{\textcolor{blue}{Gemma 2 9B it}}
+    \addlegendimage{only marks, mark=*, mark size=3pt, green!70!black}
+    \addlegendentry{\textcolor{green!70!black}{Gemma 3n 4B}}
+    \addlegendimage{only marks, mark=*, mark size=3pt, yellow!80!black}
+    \addlegendentry{\textcolor{yellow!80!black}{Qwen3 32B}}
+    \addlegendimage{only marks, mark=*, mark size=3pt, orange}
+    \addlegendentry{\textcolor{orange}{Mistral Small 3.2}}
+    \addlegendimage{only marks, mark=*, mark size=3pt, red}
+    \addlegendentry{\textcolor{red}{Qwen3 30B A3B Instruct 2507}}
+    \addlegendimage{only marks, mark=*, mark size=3pt, purple}
+    \addlegendentry{\textcolor{purple}{Qwen3 235B A22B Instruct 2507}}
+    \addlegendimage{only marks, mark=*, mark size=3pt, cyan}
+    \addlegendentry{\textcolor{cyan}{DeepSeek V3.1}}
+    \addlegendimage{only marks, mark=*, mark size=3pt, magenta}
+    \addlegendentry{\textcolor{magenta}{Gemini 2.5 Pro}}
+\end{axis}
+\end{tikzpicture}
+```
+
+### Key Changes:
+1. **`xmode=log`**: Transforms the x-axis to a logarithmic scale.
+2. **`log ticks with fixed point`**: Ensures tick labels use fixed-point notation (e.g., `0.01` instead of `10^{-2}`) for better readability.
+
+### Before vs. After:
+- **Before**: Linear x-axis compresses smaller values (e.g., `0.01` to `0.8`), making differences hard to distinguish.
+- **After**: Logarithmic spacing spreads out smaller values, revealing patterns in the lower price range while accommodating the jump to `10.0`.
+
+### Optional Enhancement:
+To explicitly set the logarithmic base (default is 10), add:
+```latex
+log basis x=10  % Optional: Explicitly use base-10 logarithm
+```
+
+Let me know if you need further refinements!
+§u§
+Ok that worked. But now the line for the y axis is in the middle at x=1 and not at x=0.
+§a§
+Here’s the reason and the cure:
+
+1. Why it moved to “x = 1”
+   On a log-x axis you cannot have x=0, so pgfplots defaults the “middle” y-axis to the place where the other axis (the x-axis) crosses – and that crossing is at x=1.
+
+2. How to force the y-axis to the left edge
+   Simply switch from
+       axis lines=middle
+   to either
+       axis lines=left
+   or the more verbose
+      axis x line=bottom,
+      axis y line=left
+
+Here’s your updated snippet:
+
+```latex
+\begin{tikzpicture}
+  \begin{axis}[
+    % → use left/bottom lines instead of “middle”
+    axis x line=bottom,
+    axis y line=left,
+
+    % your labels, legend, size…
+    xlabel={price in USD},
+    ylabel={lmarena.ai score},
+    enlargelimits=0.1,
+    width=\textwidth,
+    height=0.3\textheight,
+    legend style={
+      at={(0.5,-0.18)}, anchor=north,
+      legend columns=2, column sep=1em,
+      draw=none, font=\small
+    },
+
+    % logarithmic x
+    xmode=log,
+    log ticks with fixed point,
+  ]
+
+    % … your \addplot’s, \addlegendentry’s, etc …
+
+  \end{axis}
+\end{tikzpicture}
+```
+
+Now the y-axis will sit flush at the left border of the plot.
+
+If you ever really needed an “axis at x=0” in log‐space, you’d have to fake it (e.g. draw a manual line at the frame edge), but in 99 % of cases switching to `axis y line=left` is all you want. 😊

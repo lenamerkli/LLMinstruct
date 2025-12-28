@@ -1,0 +1,126 @@
+§u§
+In html there exist form checkers like `minlength`. How would that work in python for a dict?
+§a§
+# Python Dict Validation (like HTML form validators)
+
+## 1. **Manual Validation**
+
+```python
+def validate_dict(data, rules):
+    errors = {}
+
+    for field, field_rules in rules.items():
+        value = data.get(field)
+
+        # Required check
+        if field_rules.get('required') and not value:
+            errors[field] = 'This field is required'
+            continue
+
+        if value:  # Only validate if value exists
+            # Min length
+            if 'minlength' in field_rules and len(str(value)) < field_rules['minlength']:
+                errors[field] = f'Minimum length is {field_rules["minlength"]}'
+
+            # Max length
+            if 'maxlength' in field_rules and len(str(value)) > field_rules['maxlength']:
+                errors[field] = f'Maximum length is {field_rules["maxlength"]}'
+
+            # Pattern/Type
+            if 'type' in field_rules and not isinstance(value, field_rules['type']):
+                errors[field] = f'Must be {field_rules["type"].__name__}'
+
+    return errors
+
+# Usage
+data = {'username': 'ab', 'email': 'test@example.com'}
+rules = {
+    'username': {'required': True, 'minlength': 3, 'maxlength': 20},
+    'email': {'required': True, 'minlength': 5}
+}
+
+errors = validate_dict(data, rules)
+print(errors)  # {'username': 'Minimum length is 3'}
+```
+
+## 2. **Pydantic** (Recommended ⭐)
+
+```python
+from pydantic import BaseModel, Field, validator, ValidationError
+
+class UserForm(BaseModel):
+    username: str = Field(..., min_length=3, max_length=20)
+    email: str = Field(..., min_length=5)
+    age: int = Field(..., ge=0, le=120)  # greater/less than or equal
+
+    @validator('email')
+    def email_must_contain_at(cls, v):
+        if '@' not in v:
+            raise ValueError('must contain @')
+        return v
+
+# Usage
+try:
+    user = UserForm(**{
+        'username': 'ab',  # Too short!
+        'email': 'test@example.com',
+        'age': 25
+    })
+except ValidationError as e:
+    print(e.json())
+```
+
+**Output:**
+```json
+[
+  {
+    "loc": ["username"],
+    "msg": "ensure this value has at least 3 characters",
+    "type": "value_error.any_str.min_length"
+  }
+]
+```
+
+## 3. **Cerberus** (Simple & Readable)
+
+```python
+from cerberus import Validator
+
+schema = {
+    'username': {
+        'type': 'string',
+        'minlength': 3,
+        'maxlength': 20,
+        'required': True
+    },
+    'email': {
+        'type': 'string',
+        'minlength': 5,
+        'regex': r'.*@.*',
+        'required': True
+    },
+    'age': {
+        'type': 'integer',
+        'min': 0,
+        'max': 120
+    }
+}
+
+v = Validator(schema)
+data = {'username': 'ab', 'email': 'test@example.com', 'age': 25}
+
+if not v.validate(data):
+    print(v.errors)
+    # {'username': ['min length is 3']}
+```
+
+## 4. **Quick Comparison**
+
+| Library | Best For | Pros |
+|---------|----------|------|
+| **Pydantic** | Modern APIs, FastAPI | Type hints, auto-completion, great errors |
+| **Cerberus** | Simple validation | Easy syntax, lightweight |
+| **Marshmallow** | Serialization + validation | Mature, flexible |
+| **Manual** | Learning/simple cases | No dependencies |
+
+**I'd recommend Pydantic** for most modern Python projects - it's the most popular and integrates beautifully with type hints and IDEs.

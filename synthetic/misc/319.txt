@@ -1,0 +1,126 @@
+§u§
+```
+Alief in Action (and Reaction)
+TAMAR SZABÓ GENDLER
+First published: 13 October 2008
+https://doi.org/10.1111/j.1468-0017.2008.00352.x
+Citations: 148
+Mind & Language
+Volume23, Issue5
+November 2008
+Pages 552-585
+```
+Cite this in biblatex
+§a§
+Here's the BibLaTeX entry for the article:
+
+```latex
+@article{gendler2008alief,
+  author  = {Gendler, Tamar Szab\'{o}},
+  title   = {Alief in Action (and Reaction)},
+  journal = {Mind \& Language},
+  year    = {2008},
+  volume  = {23},
+  number  = {5},
+  pages   = {552-585},
+  doi     = {10.1111/j.1468-0017.2008.00352.x},
+  urldate = {2023-08-24},  % Optional retrieval date
+  note    = {First published: 13 October 2008}
+}
+```
+
+Key elements:
+- Accent handled with `\'{o}` in author's name
+- `&` escaped as `\&` in journal title
+- DOI included as persistent identifier
+- Optional `urldate` for retrieval reference (customize date as needed)
+- Original publication date in `note` field
+
+For most academic papers, the core required fields are: author, title, journal, year, volume, pages, and doi. The `urldate` and `note` fields provide supplementary information.
+§u§
+```
+Article
+A Propositional Model of Implicit Evaluation
+Jan De Houwer
+First published: 02 July 2014
+https://doi.org/10.1111/spc3.12111
+Citations: 180
+Social and Personality Psychology Compass
+Volume8, Issue7
+July 2014
+Pages 342-353
+```
+§a§
+Here is the BibLaTeX entry for the article:
+
+```latex
+@article{dehouwer2014propositional,
+  author   = {De Houwer, Jan},
+  title    = {A Propositional Model of Implicit Evaluation},
+  journal  = {Social and Personality Psychology Compass},
+  year     = {2014},
+  volume   = {8},
+  number   = {7},
+  pages    = {342-353},
+  doi      = {10.1111/spc3.12111},
+  urldate  = {2023-08-24},  % Customize retrieval date as needed
+  note     = {First published: 02 July 2014}
+}
+```
+
+Key details:
+- Author field preserves capitalization in "De Houwer"
+- Journal title formatted without abbreviation
+- Includes both volume and issue number (8/7)
+- Pages formatted with en-dash (342-353)
+- DOI provided as persistent identifier
+- Includes first publication date in "note" field
+- urldate remains customizable
+
+The required fields for most academic purposes are: author, title, journal, year, volume, pages, and doi. The entry follows BibLaTeX's best practice of keeping name capitalization intact ("De" rather than "de").
+§u§
+```
+ACTING CONTRARY TO OUR PROFESSED BELIEFS OR THE GULF BETWEEN OCCURRENT JUDGMENT AND DISPOSITIONAL BELIEF
+ERIC SCHWITZGEBEL
+First published: 01 December 2010
+https://doi.org/10.1111/j.1468-0114.2010.01381.x
+Citations: 166
+Read the full text
+PDF
+Tools
+Share
+Pacific Philosophical Quarterly
+Volume91, Issue4
+
+December 2010
+
+Pages 531-553
+```
+§a§
+Here's the BibLaTeX entry for the requested article:
+
+```latex
+@article{schwitzgebel2010acting,
+  author  = {Schwitzgebel, Eric},
+  title   = {Acting Contrary to Our Professed Beliefs or the Gulf Between Occurrent Judgment and Dispositional Belief},
+  journal = {Pacific Philosophical Quarterly},
+  year    = {2010},
+  volume  = {91},
+  number  = {4},
+  pages   = {531-553},
+  doi     = {10.1111/j.1468-0114.2010.01381.x},
+  note    = {First published: 01 December 2010},
+  month   = {12},
+}
+```
+
+Key formatting notes:
+1. Author name formatted with surname first: `Schwitzgebel, Eric`
+2. Title converted to standard title case (first letter of major words capitalized)
+3. Journal name maintained as given in the source
+4. Added `month = {12}` to specify December publication
+5. DOI formatted as persistent link
+6. Original publication date preserved in "note" field
+7. Citation key follows standard format: `surnameYearKeywordsicant`
+
+The entry includes both volume (91) and issue number (4), with page range using an en-dash (531-553). The title maintains the original structure with "or" connecting the two key phrases.

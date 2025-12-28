@@ -1,0 +1,48 @@
+§u§
+```
+https://www.srf.ch/news/macht-und-wahrheit-luegen-in-der-politik-am-ende-sogar-nuetzlich
+
+ Macht und Wahrheit - Lügen in der Politik – am Ende sogar nützlich?
+
+Wieso lügen Menschen – vor allem in der Politik – und weshalb machen sie damit weiter, auch wenn sie überführt sind? Sozialpsychologe Philipp Gerlach hat sich damit beschäftigt.
+
+Freitag, 08.07.2022, 15:32 Uhr
+```
+Zitiere diesen Artikel in biblatex. Aufgerufen am 2025-07-27
+§a§
+```biblatex
+@online{SRF2022MachtWahrheit,
+  author  = {{Schweizer Radio und Fernsehen (SRF)}},
+  title   = {Macht und Wahrheit -- Lügen in der Politik –- am Ende sogar nützlich?},
+  date    = {2022-07-08},
+  url     = {https://www.srf.ch/news/macht-und-wahrheit-luegen-in-der-politik-am-ende-sogar-nuetzlich},
+  urldate = {2025-07-27}
+}
+```
+§u§
+```
+https://www.nzz.ch/gesellschaft/luegende-politiker-heucheln-lohnt-sich-fast-immer-ld.1815316
+
+
+Warum sich Heucheln fast immer lohnt
+Jim Bourg / Reuters
+
+Die meisten Menschen lügen täglich, und jeder weiss das. Trotzdem halten Politiker an einem absoluten Wahrheitsanspruch fest. Warum eigentlich?
+Andreas Hirstein 17.06.2023, 14.23 Uhr
+4 min
+Drucken
+Teilen
+
+```
+§a§
+```biblatex
+@article{Hirstein2023,
+  author  = {Andreas Hirstein},
+  title   = {Warum sich Heucheln fast immer lohnt},
+  journal = {Neue Zürcher Zeitung (NZZ)},
+  year    = {2023},
+  date    = {2023-06-17},
+  url     = {https://www.nzz.ch/gesellschaft/luegende-politiker-heucheln-lohnt-sich-fast-immer-ld.1815316},
+  urldate = {2025-07-27}
+}
+```

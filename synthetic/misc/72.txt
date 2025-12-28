@@ -1,0 +1,784 @@
+§u§
+How can I use openssl in python?
+§a§
+You can use OpenSSL in Python through the **`cryptography`** library, which is the most popular and recommended way to interact with OpenSSL functionality. The `cryptography` library provides a high-level, secure, and easy-to-use interface to cryptographic operations that are backed by OpenSSL under the hood.
+
+Here’s how you can use it:
+
+---
+
+### ✅ Step 1: Install `cryptography`
+
+```bash
+pip install cryptography
+```
+
+> Note: `cryptography` uses OpenSSL internally, so you don’t need to install OpenSSL separately on most systems (it's usually included).
+
+---
+
+### 🔐 Common Examples Using `cryptography` (which uses OpenSSL)
+
+#### 1. **Generate RSA Key Pair**
+
+```python
+from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.hazmat.primitives import serialization
+
+# Generate private key
+private_key = rsa.generate_private_key(
+    public_exponent=65537,
+    key_size=2048
+)
+
+# Serialize private key to PEM format
+pem = private_key.private_bytes(
+    encoding=serialization.Encoding.PEM,
+    format=serialization.PrivateFormat.PKCS8,
+    encryption_algorithm=serialization.NoEncryption()
+)
+
+print(pem.decode())
+```
+
+#### 2. **Load Public Key from Private Key**
+
+```python
+public_key = private_key.public_key()
+
+pem_public = public_key.public_bytes(
+    encoding=serialization.Encoding.PEM,
+    format=serialization.PublicFormat.SubjectPublicKeyInfo
+)
+
+print(pem_public.decode())
+```
+
+#### 3. **Encrypt Data with RSA Public Key**
+
+```python
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.asymmetric import padding
+
+message = b"Hello, this is a secret message!"
+
+# Encrypt using public key
+ciphertext = public_key.encrypt(
+    message,
+    padding.OAEP(
+        mgf=padding.MGF1(algorithm=hashes.SHA1()),
+        algorithm=hashes.SHA1(),
+        label=None
+    )
+)
+
+print("Encrypted:", ciphertext.hex())
+```
+
+#### 4. **Decrypt Data with RSA Private Key**
+
+```python
+# Decrypt using private key
+plaintext = private_key.decrypt(
+    ciphertext,
+    padding.OAEP(
+        mgf=padding.MGF1(algorithm=hashes.SHA1()),
+        algorithm=hashes.SHA1(),
+        label=None
+    )
+)
+
+print("Decrypted:", plaintext.decode())
+```
+
+#### 5. **Sign and Verify Data with RSA**
+
+```python
+# Sign data
+signature = private_key.sign(
+    message,
+    padding.PSS(
+        mgf=padding.MGF1(hashes.SHA256()),
+        salt_length=padding.PSS.MAX_LENGTH
+    ),
+    hashes.SHA256()
+)
+
+print("Signature:", signature.hex())
+
+# Verify signature
+try:
+    public_key.verify(
+        signature,
+        message,
+        padding.PSS(
+            mgf=padding.MGF1(hashes.SHA256()),
+            salt_length=padding.PSS.MAX_LENGTH
+        ),
+        hashes.SHA256()
+    )
+    print("Signature is valid!")
+except Exception as e:
+    print("Invalid signature:", e)
+```
+
+---
+
+### 📌 Alternative: Use `subprocess` to call `openssl` CLI
+
+If you want to use actual `openssl` commands (e.g., for certificates, SSL/TLS tools), you can run them via `subprocess`:
+
+```python
+import subprocess
+
+# Example: Generate a self-signed certificate
+result = subprocess.run([
+    'openssl', 'req', '-x509', '-newkey', 'rsa:2048',
+    '-keyout', 'key.pem', '-out', 'cert.pem',
+    '-days', '365', '-nodes', '-subj', '/CN=localhost'
+], capture_output=True, text=True)
+
+if result.returncode == 0:
+    print("Certificate generated successfully.")
+else:
+    print("Error:", result.stderr)
+```
+
+> ⚠️ This method requires `openssl` to be installed on your system.
+
+---
+
+### 📚 Summary
+
+| Use Case                        | Recommended Tool               |
+|-------------------------------|--------------------------------|
+| RSA, AES, hashing, signing    | `cryptography` (best)         |
+| Complex OpenSSL CLI tasks     | `subprocess` + `openssl`      |
+
+---
+
+### 📖 References
+
+- Official `cryptography` docs: https://cryptography.io/en/latest/
+- OpenSSL CLI: https://www.openssl.org/docs/
+
+Let me know if you'd like examples for **TLS**, **certificate parsing**, or **PKCS#12 files**!
+§u§
+Create an example of two client communicating securely. Just use print and input for i/o
+§a§
+Here’s a **complete example of two clients (Client A and Client B)** communicating securely using **RSA encryption** and **symmetric encryption (AES)** in Python, simulating secure communication over an insecure channel.
+
+> ✅ Uses only `print()` and `input()` for I/O
+> ✅ No external libraries beyond `cryptography` (which uses OpenSSL under the hood)
+> ✅ Simulates real-world secure messaging: key exchange + encrypted messages
+
+---
+
+### 🔐 Secure Client-to-Client Communication (Simulated)
+
+```python
+from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+import os
+import base64
+
+# --- Helper Functions ---
+
+def generate_rsa_keypair():
+    """Generate RSA private/public key pair."""
+    private_key = rsa.generate_private_key(
+        public_exponent=65537,
+        key_size=2048
+    )
+    return private_key
+
+def encrypt_message_aes(message, key):
+    """Encrypt message with AES-GCM (authenticated encryption)."""
+    iv = os.urandom(12)  # GCM IV length
+    cipher = Cipher(algorithms.AES(key), modes.GCM(iv))
+    encryptor = cipher.encryptor()
+    ciphertext = encryptor.update(message) + encryptor.finalize()
+    tag = encryptor.tag
+    return iv + tag + ciphertext
+
+def decrypt_message_aes(ciphertext, key):
+    """Decrypt AES-GCM ciphertext."""
+    iv = ciphertext[:12]
+    tag = ciphertext[12:28]
+    actual_ciphertext = ciphertext[28:]
+    cipher = Cipher(algorithms.AES(key), modes.GCM(iv, tag))
+    decryptor = cipher.decryptor()
+    plaintext = decryptor.update(actual_ciphertext) + decryptor.finalize()
+    return plaintext
+
+def encrypt_with_public_key(message, public_key_pem):
+    """Encrypt message with public key (RSA-OAEP)."""
+    public_key = serialization.load_pem_public_key(public_key_pem)
+    encrypted = public_key.encrypt(
+        message,
+        padding.OAEP(
+            mgf=padding.MGF1(algorithm=hashes.SHA1()),
+            algorithm=hashes.SHA1(),
+            label=None
+        )
+    )
+    return base64.b64encode(encrypted).decode()
+
+def decrypt_with_private_key(encrypted_b64, private_key):
+    """Decrypt RSA-OAEP encrypted message."""
+    encrypted = base64.b64decode(encrypted_b64)
+    decrypted = private_key.decrypt(
+        encrypted,
+        padding.OAEP(
+            mgf=padding.MGF1(algorithm=hashes.SHA1()),
+            algorithm=hashes.SHA1(),
+            label=None
+        )
+    )
+    return decrypted
+
+# --- Main Simulation ---
+
+def client_a():
+    print("\n" + "="*60)
+    print("CLIENT A: Starting secure communication...")
+    print("="*60)
+
+    # Step 1: Generate keys
+    private_key_a = generate_rsa_keypair()
+    public_key_a = private_key_a.public_key()
+
+    # Serialize public key to PEM format (for sharing)
+    public_pem_a = public_key_a.public_bytes(
+        encoding=serialization.Encoding.PEM,
+        format=serialization.PublicFormat.SubjectPublicKeyInfo
+    )
+
+    # Step 2: Share public key with Client B (simulate via input)
+    print("\n[Client A] Sending public key to Client B...")
+    print("Public Key (PEM):")
+    print(public_pem_a.decode())
+
+    # Wait for Client B to send their public key
+    print("\n[Client A] Waiting for Client B's public key...")
+    public_pem_b_input = input("Enter Client B's public key (PEM format):\n").strip()
+
+    try:
+        public_key_b = serialization.load_pem_public_key(public_pem_b_input.encode())
+    except Exception as e:
+        print("❌ Invalid public key from Client B.")
+        return
+
+    # Step 3: Generate random symmetric key (AES)
+    aes_key = os.urandom(32)  # 256-bit key
+    print(f"\n[Client A] Generated AES key: {base64.b64encode(aes_key).decode()[:32]}...")
+
+    # Step 4: Encrypt AES key with Client B's public key
+    encrypted_aes_key = encrypt_with_public_key(aes_key, public_pem_b_input)
+    print(f"[Client A] Encrypted AES key sent to Client B: {encrypted_aes_key[:60]}...")
+
+    # Step 5: Simulate sending encrypted AES key to Client B (via "network")
+    print("\n[Client A] Sending encrypted AES key to Client B...")
+
+    # Step 6: Now send encrypted messages
+    while True:
+        message = input("\nEnter message to send to Client B (or 'quit' to exit): ")
+        if message.lower() == 'quit':
+            break
+
+        # Encrypt message with AES
+        encrypted_msg = encrypt_message_aes(message.encode(), aes_key)
+        encrypted_msg_b64 = base64.b64encode(encrypted_msg).decode()
+
+        print(f"[Client A] Sent encrypted message: {encrypted_msg_b64[:60]}...")
+
+        # Simulate receiving response
+        response_b64 = input("Enter encrypted message from Client B (Base64): ")
+        try:
+            response_bytes = base64.b64decode(response_b64)
+            decrypted_response = decrypt_message_aes(response_bytes, aes_key)
+            print(f"[Client A] Decrypted message: {decrypted_response.decode()}")
+        except Exception as e:
+            print("❌ Failed to decrypt received message:", e)
+
+    print("\n[Client A] Connection ended.")
+
+def client_b():
+    print("\n" + "="*60)
+    print("CLIENT B: Starting secure communication...")
+    print("="*60)
+
+    # Step 1: Generate keys
+    private_key_b = generate_rsa_keypair()
+    public_key_b = private_key_b.public_key()
+
+    # Serialize public key to PEM format
+    public_pem_b = public_key_b.public_bytes(
+        encoding=serialization.Encoding.PEM,
+        format=serialization.PublicFormat.SubjectPublicKeyInfo
+    )
+
+    # Step 2: Share public key with Client A
+    print("\n[Client B] Sending public key to Client A...")
+    print("Public Key (PEM):")
+    print(public_pem_b.decode())
+
+    # Wait for Client A to send encrypted AES key
+    print("\n[Client B] Waiting for encrypted AES key from Client A...")
+    encrypted_aes_b64 = input("Enter encrypted AES key from Client A (Base64): ")
+
+    try:
+        # Decrypt AES key using private key
+        aes_key = decrypt_with_private_key(encrypted_aes_b64, private_key_b)
+        print(f"\n[Client B] Decrypted AES key: {base64.b64encode(aes_key).decode()[:32]}...")
+    except Exception as e:
+        print("❌ Failed to decrypt AES key:", e)
+        return
+
+    # Step 3: Start exchanging messages
+    while True:
+        # Receive encrypted message from Client A
+        encrypted_msg_b64 = input("\nEnter encrypted message from Client A (Base64): ")
+        try:
+            encrypted_msg_bytes = base64.b64decode(encrypted_msg_b64)
+            decrypted_msg = decrypt_message_aes(encrypted_msg_bytes, aes_key)
+            print(f"[Client B] Decrypted message: {decrypted_msg.decode()}")
+
+            # Send reply
+            reply = input("Enter your reply to Client A: ")
+            encrypted_reply = encrypt_message_aes(reply.encode(), aes_key)
+            encrypted_reply_b64 = base64.b64encode(encrypted_reply).decode()
+            print(f"[Client B] Sent encrypted reply: {encrypted_reply_b64[:60]}...")
+        except Exception as e:
+            print("❌ Failed to process message:", e)
+
+        if reply.lower() == 'quit':
+            break
+
+    print("\n[Client B] Connection ended.")
+
+# --- Run the simulation ---
+if __name__ == "__main__":
+    print("Secure Two-Client Communication Simulation")
+    print("Use this script twice: once as Client A, once as Client B.")
+
+    role = input("Are you Client A or Client B? (A/B): ").strip().upper()
+
+    if role == 'A':
+        client_a()
+    elif role == 'B':
+        client_b()
+    else:
+        print("Invalid choice. Please choose A or B.")
+```
+
+---
+
+### 🧪 How to Run It
+
+1. Install the required library:
+
+```bash
+pip install cryptography
+```
+
+2. Run the script **twice**:
+
+- First run → choose **A**
+- Second run → choose **B**
+
+3. Follow prompts to simulate secure exchange:
+
+   - Each client shares their **public key**.
+   - Client A sends an **encrypted AES key** (using Client B’s public key).
+   - Both use the shared AES key to encrypt/decrypt messages.
+   - All messages are authenticated and confidential.
+
+---
+
+### 🔒 Security Features Used
+
+| Feature                  | Implemented |
+|--------------------------|-------------|
+| Asymmetric Encryption (RSA) | ✅ (key exchange) |
+| Symmetric Encryption (AES-GCM) | ✅ (message encryption) |
+| Authentication (GCM tag) | ✅ |
+| Forward Secrecy (ephemeral key) | ✅ (new AES key per session) |
+
+> Note: This is a **simulation** — real systems would use TLS, proper key management, and nonces.
+
+---
+
+Let me know if you'd like to add **digital signatures**, **certificate validation**, or **TLS-like handshake**!
+§u§
+I would also like to have digital signatures
+§a§
+Here's an enhanced version of the secure client communication example with **digital signatures** added for message authentication, integrity, and non-repudiation. This implementation uses RSA signatures to verify sender identity and prevent tampering.
+
+```python
+from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.exceptions import InvalidSignature
+import os
+import base64
+
+# --- Helper Functions ---
+
+def generate_rsa_keypair():
+    """Generate RSA private/public key pair for both encryption AND signing"""
+    private_key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+    return private_key
+
+def sign_message(private_key, message):
+    """Sign message with private key (RSA-PSS with SHA256)"""
+    return private_key.sign(
+        message,
+        padding.PSS(
+            mgf=padding.MGF1(hashes.SHA256()),
+            salt_length=padding.PSS.MAX_LENGTH
+        ),
+        hashes.SHA256()
+    )
+
+def verify_signature(public_key, message, signature):
+    """Verify signature with public key"""
+    try:
+        public_key.verify(
+            signature,
+            message,
+            padding.PSS(
+                mgf=padding.MGF1(hashes.SHA256()),
+                salt_length=padding.PSS.MAX_LENGTH
+            ),
+            hashes.SHA256()
+        )
+        return True
+    except InvalidSignature:
+        return False
+
+def encrypt_message_aes(message, key):
+    """Encrypt message with AES-GCM (authenticated encryption)"""
+    iv = os.urandom(12)
+    cipher = Cipher(algorithms.AES(key), modes.GCM(iv))
+    encryptor = cipher.encryptor()
+    ciphertext = encryptor.update(message) + encryptor.finalize()
+    return iv + encryptor.tag + ciphertext
+
+def decrypt_message_aes(ciphertext, key):
+    """Decrypt AES-GCM ciphertext"""
+    iv = ciphertext[:12]
+    tag = ciphertext[12:28]
+    actual_ciphertext = ciphertext[28:]
+    cipher = Cipher(
+        algorithms.AES(key),
+        modes.GCM(iv, tag)
+    )
+    decryptor = cipher.decryptor()
+    return decryptor.update(actual_ciphertext) + decryptor.finalize()
+
+def encrypt_with_public_key(message, public_key_pem):
+    """Encrypt message with public key (RSA-OAEP)"""
+    public_key = serialization.load_pem_public_key(public_key_pem)
+    return base64.b64encode(public_key.encrypt(
+        message,
+        padding.OAEP(
+            mgf=padding.MGF1(algorithm=hashes.SHA256()),
+            algorithm=hashes.SHA256(),
+            label=None
+        )
+    )).decode()
+
+def decrypt_with_private_key(encrypted_b64, private_key):
+    """Decrypt RSA-OAEP encrypted message"""
+    encrypted = base64.b64decode(encrypted_b64)
+    return private_key.decrypt(
+        encrypted,
+        padding.OAEP(
+            mgf=padding.MGF1(algorithm=hashes.SHA256()),
+            algorithm=hashes.SHA256(),
+            label=None
+        )
+    )
+
+# --- Main Simulation ---
+
+def client_a():
+    print("\n" + "="*60)
+    print("CLIENT A: Starting secure communication...")
+    print("="*60)
+
+    # Generate keys (same key used for encryption AND signing)
+    private_key_a = generate_rsa_keypair()
+    public_key_a = private_key_a.public_key()
+    public_pem_a = public_key_a.public_bytes(
+        encoding=serialization.Encoding.PEM,
+        format=serialization.PublicFormat.SubjectPublicKeyInfo
+    )
+
+    # Share public key with Client B
+    print("\n[Client A] Sending public key to Client B...")
+    print("Public Key (PEM):")
+    print(public_pem_a.decode())
+
+    # Get Client B's public key
+    print("\n[Client A] Waiting for Client B's public key...")
+    public_pem_b = input("Enter Client B's public key (PEM format):\n").strip().encode()
+    public_key_b = serialization.load_pem_public_key(public_pem_b)
+
+    # Generate and encrypt AES key
+    aes_key = os.urandom(32)
+    encrypted_aes_key = encrypt_with_public_key(aes_key, public_pem_b)
+    print(f"\n[Client A] Encrypted AES key: {encrypted_aes_key[:60]}...")
+
+    # Chat loop
+    while True:
+        message = input("\nEnter message to send to Client B (or 'quit'): ").strip()
+        if message.lower() == 'quit':
+            break
+
+        # Sign and encrypt message
+        message_bytes = message.encode()
+        signature = sign_message(private_key_a, message_bytes)
+
+        # Format: [message][signature]
+        signed_message = message_bytes + signature
+
+        # Encrypt with AES
+        encrypted_msg = encrypt_message_aes(signed_message, aes_key)
+        encrypted_msg_b64 = base64.b64encode(encrypted_msg).decode()
+        print(f"[Client A] Sent: {encrypted_msg_b64[:60]}...")
+
+        # Wait for response
+        response_b64 = input("Enter encrypted message from Client B (Base64): ").strip()
+        try:
+            encrypted_response = base64.b64decode(response_b64)
+            decrypted_response = decrypt_message_aes(encrypted_response, aes_key)
+
+            # Verify signature in response
+            msg_len = len(decrypted_response) - 256  # RSA-2048 sig is 256 bytes
+            response_msg = decrypted_response[:msg_len]
+            response_sig = decrypted_response[msg_len:]
+
+            if verify_signature(public_key_b, response_msg, response_sig):
+                print(f"[Client A] ✅ VALID SIGNATURE from Client B")
+                print(f"[Client A] Received: {response_msg.decode()}")
+            else:
+                print("[Client A] ❌ INVALID SIGNATURE - Message tampered!")
+        except Exception as e:
+            print(f"[Client A] ❌ Decryption error: {str(e)}")
+
+    print("\n[Client A] Connection ended.")
+
+def client_b():
+    print("\n" + "="*60)
+    print("CLIENT B: Starting secure communication...")
+    print("="*60)
+
+    # Generate keys
+    private_key_b = generate_rsa_keypair()
+    public_key_b = private_key_b.public_key()
+    public_pem_b = public_key_b.public_bytes(
+        encoding=serialization.Encoding.PEM,
+        format=serialization.PublicFormat.SubjectPublicKeyInfo
+    )
+
+    # Share public key with Client A
+    print("\n[Client B] Sending public key to Client A...")
+    print("Public Key (PEM):")
+    print(public_pem_b.decode())
+
+    # Get Client A's public key
+    print("\n[Client B] Waiting for Client A's public key...")
+    public_pem_a = input("Enter Client A's public key (PEM format):\n").strip().encode()
+    public_key_a = serialization.load_pem_public_key(public_pem_a)
+
+    # Decrypt AES key
+    print("\n[Client B] Waiting for encrypted AES key from Client A...")
+    encrypted_aes_b64 = input("Enter encrypted AES key (Base64): ").strip()
+    aes_key = decrypt_with_private_key(encrypted_aes_b64, private_key_b)
+    print(f"[Client B] ✅ AES key decrypted: {base64.b64encode(aes_key).decode()[:16]}...")
+
+    # Chat loop
+    while True:
+        # Receive message from Client A
+        encrypted_msg_b64 = input("\nEnter encrypted message from Client A (Base64): ").strip()
+        try:
+            encrypted_msg = base64.b64decode(encrypted_msg_b64)
+            decrypted_msg = decrypt_message_aes(encrypted_msg, aes_key)
+
+            # Verify signature
+            msg_len = len(decrypted_msg) - 256  # RSA-2048 sig is 256 bytes
+            message = decrypted_msg[:msg_len]
+            signature = decrypted_msg[msg_len:]
+
+            if verify_signature(public_key_a, message, signature):
+                print(f"[Client B] ✅ VALID SIGNATURE from Client A")
+                print(f"[Client B] Received: {message.decode()}")
+
+                # Prepare response
+                reply = input("Your reply to Client A: ").strip()
+                if reply.lower() == 'quit':
+                    break
+
+                reply_bytes = reply.encode()
+                reply_sig = sign_message(private_key_b, reply_bytes)
+                signed_reply = reply_bytes + reply_sig
+                encrypted_reply = encrypt_message_aes(signed_reply, aes_key)
+                print(f"[Client B] Sent: {base64.b64encode(encrypted_reply).decode()[:60]}...")
+            else:
+                print("[Client B] ❌ INVALID SIGNATURE - Message tampered!")
+        except Exception as e:
+            print(f"[Client B] ❌ Decryption error: {str(e)}")
+
+    print("\n[Client B] Connection ended.")
+
+# --- Run Simulation ---
+if __name__ == "__main__":
+    print("🔐 SECURE COMMUNICATION WITH DIGITAL SIGNATURES 🔐")
+    print("This simulation demonstrates:")
+    print("- RSA key exchange")
+    print("- AES-GCM encrypted messaging")
+    print("- Digital signatures for authentication & integrity\n")
+
+    role = input("Are you Client A or Client B? (A/B): ").strip().upper()
+    if role == 'A':
+        client_a()
+    elif role == 'B':
+        client_b()
+    else:
+        print("Invalid choice. Please enter A or B.")
+```
+
+---
+
+### 🔑 Key Security Features Added
+
+1. **Digital Signatures**:
+   - Every message is signed with sender's private key
+   - Recipient verifies with sender's public key
+   - Uses RSA-PSS with SHA256 (industry standard)
+   - Provides:
+     - **Authentication**: Confirms sender identity
+     - **Integrity**: Detects message tampering
+     - **Non-repudiation**: Sender cannot deny sending
+
+2. **Signature Verification Workflow**:
+   ```mermaid
+   sequenceDiagram
+       Sender->>Recipient: [Encrypted(Message + Signature)]
+       Recipient->>Recipient: Decrypt with AES
+       Recipient->>Recipient: Split into Message + Signature
+       Recipient->>Recipient: Verify with Sender's Public Key
+       alt Valid
+           Recipient->>User: "✅ VALID SIGNATURE"
+       else Invalid
+           Recipient->>User: "❌ INVALID SIGNATURE"
+       end
+   ```
+
+3. **Message Format**:
+   ```
+   [Encrypted Payload] = AES-GCM( [Message][Signature] )
+   ```
+   - Message: Actual text (variable length)
+   - Signature: 256 bytes (fixed for RSA-2048 + SHA256)
+
+---
+
+### 🧪 How to Test Signature Verification
+
+1. **Valid Signature Test**:
+   - Client A sends "Hello" → Client B verifies ✅
+   - Client B replies "Hi there" → Client A verifies ✅
+
+2. **Tampered Message Test**:
+   - When Client A sends message, **modify 1 character** in the Base64 string
+   - Client B will show: `❌ INVALID SIGNATURE - Message tampered!`
+
+3. **Impersonation Test**:
+   - Try sending a message signed with your own private key but claiming to be the other client
+   - Verification will fail because public keys don't match
+
+---
+
+### 📜 Signature Workflow Explained
+
+1. **Sender (Client A)**:
+   ```python
+   message = "Secret message".encode()
+   signature = private_key_a.sign(message)  # Create signature
+   payload = message + signature            # Combine
+   encrypted = encrypt_aes(payload, aes_key) # Encrypt
+   ```
+
+2. **Recipient (Client B)**:
+   ```python
+   decrypted = decrypt_aes(encrypted, aes_key) # Decrypt
+   message = decrypted[:-256]                  # Extract message
+   signature = decrypted[-256:]                # Extract signature
+   is_valid = public_key_a.verify(message, signature)  # Verify
+   ```
+
+---
+
+### ⚠️ Important Security Notes
+
+1. **Signature Length**:
+   - For RSA-2048 with SHA256, signatures are **always 256 bytes**
+   - This allows safe splitting of message/signature
+
+2. **Real-World Considerations**:
+   - In production systems, use separate keys for encryption and signing
+   - Add message sequencing to prevent replay attacks
+   - Implement proper key rotation policies
+   - Use TLS for actual network communication
+
+3. **This Simulation**:
+   - Demonstrates core concepts only
+   - Not suitable for production use
+   - Manual copy/paste of Base64 mimics network transmission
+
+---
+
+### 💡 Example Test Run
+
+```
+🔐 SECURE COMMUNICATION WITH DIGITAL SIGNATURES 🔐
+...
+
+Are you Client A or Client B? (A/B): A
+
+============================================================
+CLIENT A: Starting secure communication...
+============================================================
+
+[Client A] Sending public key to Client B...
+Public Key (PEM):
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAu8...
+
+[Client A] Waiting for Client B's public key...
+Enter Client B's public key (PEM format):
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA...
+
+[Client A] Encrypted AES key: U2FsdGVkX1+...
+
+Enter message to send to Client B (or 'quit'): Hello World
+
+[Client A] Sent: U2FsdGVkX19...
+
+Enter encrypted message from Client B (Base64): U2FsdGVkX19...
+
+[Client A] ✅ VALID SIGNATURE from Client B
+[Client A] Received: Hi there!
+```
+
+This implementation gives you a complete secure communication channel with all three pillars of security:
+1. **Confidentiality** (AES encryption)
+2. **Integrity** (Digital signatures)
+3. **Authentication** (Public key verification)
+
+Try modifying messages during transmission to see the signature verification fail!

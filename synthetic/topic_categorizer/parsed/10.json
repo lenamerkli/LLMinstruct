@@ -1,0 +1,39 @@
+{
+    "topic": "Gewässerverschmutzung",
+    "original_statements": [
+        "Die ganze Gewässerverschmutzung haben wir unter Kontrolle.",
+        "Wir haben eher sogar zu sauberes Wasser, wie mir die Fischer sagen.",
+        "Christoph Blocher bezieht sich wohl hauptsächlich auf den Phosphat- und Nitrat-Eintrag; dieser ist plus-minus eingedämmt.",
+        "Offizielle Messungen zeigen, dass viel zu viele Rückstände von Medikamenten, Reinigungsmitteln, Pestiziden und Pflegeprodukten in die Gewässer gelangen.",
+        "Fischer klagen sehr wohl über zu wenig Nährstoffe (lies: Phosphat) in den Seen.",
+        "Der Fischerei-Verband unterstützt sowohl die Trinkwasser-Initiative als auch die Pestizid-Initiative.",
+        "Gewässerverschmutzung ist ein Schweiz-weites Problem.",
+        "Die Wasserqualität in der Schweiz ist die beste der Welt.",
+        "Es gibt keine Beweise dafür, dass Medikamente in Gewässern schädlich sind.",
+        "Die Gewässerverschmutzung ist in der Schweiz ein überwiegendes Problem, das durch Industrieabwässer verursacht wird.",
+        "Die Phosphat- und Nitrat-Verschmutzung konnte eingedämmt werden.",
+        "Die Verschmutzung durch Pestizide ist in der Schweiz stark rückgängig gegangen."
+    ],
+    "statements": [
+        "Die ganze Gewässerverschmutzung haben wir unter Kontrolle.",
+        "Wir haben eher sogar zu sauberes Wasser, wie mir die Fischer sagen.",
+        "Christoph Blocher bezieht sich wohl hauptsächlich auf den Phosphat- und Nitrat-Eintrag; dieser ist plus-minus eingedämmt.",
+        "Offizielle Messungen zeigen, dass viel zu viele Rückstände von Medikamenten, Reinigungsmitteln, Pestiziden und Pflegeprodukten in die Gewässer gelangen.",
+        "Fischer klagen sehr wohl über zu wenig Nährstoffe (lies: Phosphat) in den Seen.",
+        "Der Fischerei-Verband unterstützt sowohl die Trinkwasser-Initiative als auch die Pestizid-Initiative.",
+        "Gewässerverschmutzung ist ein Schweiz-weites Problem.",
+        "Die Wasserqualität in der Schweiz ist die beste der Welt.",
+        "Es gibt keine Beweise dafür, dass Medikamente in Gewässern schädlich sind.",
+        "Die Gewässerverschmutzung ist in der Schweiz ein überwiegendes Problem, das durch Industrieabwässer verursacht wird.",
+        "Die Phosphat- und Nitrat-Verschmutzung konnte eingedämmt werden.",
+        "Die Verschmutzung durch Pestizide ist in der Schweiz stark rückgängig gegangen."
+    ],
+    "fact": "Die Verschmutzung der Gewässer durch Phosphat- und Nitrat konnte eingedämmt werden. Jedoch gibt es zu viele Rückstände von anderen Chemikalien, wie Pestizide, Medikamente und weitere in Schweizer Gewässern.",
+    "sources": [
+        "https://www.nau.ch/politik/bundeshaus/fragestunde-mit-christoph-blocher-der-faktencheck-65510586",
+        "https://www.bafu.admin.ch/bafu/de/home/themen/wasser/publikationen-studien/publikationen-wasser/gewaesserbericht.html",
+        "https://www.aquaviva.ch/de/themen/wasserverschmutzung"
+    ],
+    "prompt": "",
+    "response": ""
+}

@@ -1,0 +1,66 @@
+§u§
+```
+<table class="w-full table-fixed"><thead class="text-left text-xs"><tr><th class="w-2/12 font-medium">Model Name &amp; ID</th><th class="w-2/12 font-medium text-center">Input ($/1M tokens)</th><th class="w-2/12 font-medium text-center">Output ($/1M tokens)</th><th class="w-2/12 font-medium text-center">Context (tokens)</th></tr></thead><tbody class="divide-y"><tr class="text-sm" title="Qwen: Qwen3 30B A3B Thinking 2507"><td class="break-words py-2"><a class="block text-slate-11 underline" href="/qwen/qwen3-30b-a3b-thinking-2507">Qwen: Qwen3 30B A3B Thinking 2507</a><code class="text-xs">qwen/qwen3-30b-a3b-thinking-2507</code></td><td class="text-center"><div>$0.071</div></td><td class="text-center"><div>$0.285</div></td><td><span class="flex justify-center gap-1">262,144</span></td></tr><tr class="text-sm" title="xAI: Grok Code Fast 1"><td class="break-words py-2"><a class="block text-slate-11 underline" href="/x-ai/grok-code-fast-1">xAI: Grok Code Fast 1</a><code class="text-xs">x-ai/grok-code-fast-1</code></td><td class="text-center"><div>$0.20</div>
+{ ... }
+```
+Write a python program to extract the table contents.
+§a§
+To solve this problem, we need to extract the contents of a table from a given HTML snippet using Python. The table contains information about different models, including their names, IDs, input and output costs, and context tokens. We will use the BeautifulSoup library to parse the HTML and extract the required data.
+
+### Approach
+1. **Parse the HTML**: Use BeautifulSoup to parse the provided HTML string.
+2. **Locate the Table**: Identify the table using its class attributes.
+3. **Extract Table Body**: Find the tbody section of the table which contains the data rows.
+4. **Iterate Over Rows**: For each row in the tbody, extract the data from the respective table cells (td elements).
+5. **Extract Model Information**: From the first td element of each row, extract the model name and ID using the anchor and code tags respectively.
+6. **Extract Costs and Context**: Extract the input cost, output cost, and context tokens from the subsequent td elements.
+7. **Output the Data**: Print the extracted data in a structured format.
+
+### Solution Code
+```python
+from bs4 import BeautifulSoup
+
+html = """<table class="w-full table-fixed"><thead class="text-left text-xs"><tr><th class="w-2/12 font-medium">Model Name &amp; ID</th><th class="w-2/12 font-medium text-center">Input ($/1M tokens)</th><th class="w-2/12 font-medium text-center">Output ($/1M tokens)</th><th class="w-2/12 font-medium text-center">Context (tokens)</th></tr></thead><tbody class="divide-y"><tr class="text-sm" title="Qwen: Qwen3 30B A3B Thinking 2507"><td class="break-words py-2"><a class="block text-slate-11 underline" href="/qwen/qwen3-30b-a3b-thinking-2507">Qwen: Qwen3 30B A3B Thinking 2507</a><code class="text-xs">qwen/qwen3-30b-a3b-thinking-2507</code></td><td class="text-center"><div>$0.071</div></td><td class="text-center"><div>$0.285</div></td><td><span class="flex justify-center gap-1">262,144</span></td></tr><tr class="text-sm" title="xAI: Grok Code Fast 1"><td class="break-words py-2"><a class="block text-slate-11 underline" href="/x-ai/grok-code-fast-1">xAI: Grok Code Fast 1</a><code class="text-xs">x-ai/grok-code-fast-1</code></td><td class="text-center"><div>$0.20</div></td></tr></tbody></table>"""
+
+soup = BeautifulSoup(html, 'html.parser')
+
+table = soup.find('table', {'class': 'w-full table-fixed'})
+if not table:
+    print("Table not found")
+    exit()
+
+tbody = table.find('tbody', {'class': 'divide-y'})
+if not tbody:
+    print("Tbody not found")
+    exit()
+
+rows = tbody.find_all('tr')
+
+for row in rows:
+    tds = row.find_all('td')
+    if len(tds) < 4:
+        continue  # Skip rows that don't have enough columns
+
+    # Extract model name and ID from the first td
+    model_td = tds[0]
+    model_link = model_td.find('a')
+    model_name = model_link.get_text(strip=True) if model_link else ''
+    model_code = model_td.find('code')
+    model_id = model_code.get_text(strip=True) if model_code else ''
+
+    # Extract input, output, and context from the next tds
+    input_cost = tds[1].get_text(strip=True)
+    output_cost = tds[2].get_text(strip=True)
+    context = tds[3].get_text(strip=True)
+
+    print(f"Model Name: {model_name}, Model ID: {model_id}, Input Cost: {input_cost}, Output Cost: {output_cost}, Context: {context}")
+```
+
+### Explanation
+- **HTML Parsing**: The HTML is parsed using BeautifulSoup to create a navigable tree structure.
+- **Table Location**: The table is identified using its class attributes to ensure we are working with the correct table.
+- **Row Processing**: Each row in the tbody is processed to extract the model details and costs. The first td element is handled separately to extract the model name and ID from nested tags.
+- **Data Extraction**: The input, output, and context values are extracted from their respective td elements using simple text extraction methods.
+- **Output**: The extracted data is printed in a readable format, showing each model's details and costs.
+
+This approach efficiently parses and extracts the required data from the HTML table, handling multiple rows and ensuring all necessary information is retrieved.

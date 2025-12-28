@@ -1,0 +1,42 @@
+§u§
+```
+import random
+import copy
+import numpy as np
+from collections import defaultdict
+from Game import Game
+
+class QLearningAgent:
+    def __init__(self, game, alpha=0.5, gamma=0.9, epsilon=0.1):
+        self.game = game
+        self.q_table = defaultdict(lambda: np.zeros(9))
+```
+What does the last line do?
+§a§
+# Explanation of `self.q_table = defaultdict(lambda: np.zeros(9))`
+
+This line creates a **Q-table** for the Q-learning algorithm. Here's what each part does:
+
+## Breaking it down:
+
+1. **`defaultdict`** - A special dictionary that automatically creates entries for keys that don't exist yet
+
+2. **`lambda: np.zeros(9)`** - An anonymous function that returns a numpy array of 9 zeros: `[0. 0. 0. 0. 0. 0. 0. 0. 0.]`
+
+3. **Combined effect**: When you access `self.q_table[some_state]` for a state that hasn't been seen before, instead of getting a `KeyError`, it automatically creates that entry with a fresh array of 9 zeros.
+
+## Practical example:
+
+```python
+# First time accessing a new state
+state = "X..O....."
+q_values = self.q_table[state]
+# Automatically creates: state -> [0. 0. 0. 0. 0. 0. 0. 0. 0.]
+
+# Now you can update individual actions
+self.q_table[state][3] = 0.5  # Update Q-value for action 3
+```
+
+## Why 9 zeros?
+
+The 9 corresponds to the **9 possible actions** (board positions 0-8 in a Tic-Tac-Toe game), where each value represents the expected reward (Q-value) for taking that action from the given state.

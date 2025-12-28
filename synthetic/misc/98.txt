@@ -1,0 +1,20 @@
+§u§
+```\begin{figure}[htbp]```
+What does `htbp` mean?
+§a§
+`htbp` is an optional placement specifier for LaTeX floating environments (like `\begin{figure}` or `\begin{table}`). It tells LaTeX the preferred positions to place the float relative to the surrounding text, in order of preference. LaTeX will try these options sequentially until it finds a suitable spot, or it may adjust based on page layout constraints.
+
+### Breakdown of `htbp`
+| Letter | Meaning          | Description |
+|--------|------------------|-------------|
+| `h`    | **here**         | Place the float approximately "here" in the text (at or near the insertion point). |
+| `t`    | **top**          | Place at the top of the current page. |
+| `b`    | **bottom**       | Place at the bottom of the current page. |
+| `p`    | **page** (of floats) | Place on a dedicated "float page" (a full page reserved for floats, if needed). |
+
+### Notes
+- This is the most common specifier—it's permissive and usually works well.
+- You can use subsets (e.g., `[ht]` for "here or top only") or add `!` (e.g., `[!htbp]`) to override LaTeX's penalties and force more aggressive placement.
+- If omitted, LaTeX defaults to `[tbp]`.
+
+For more control, consider packages like `float` (for `[H]` to force "exactly here") or `placeins` (to restrict floats to sections).

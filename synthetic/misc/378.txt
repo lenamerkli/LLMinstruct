@@ -1,0 +1,419 @@
+§u§
+```
+\begin{document}
+    \maketitle
+    \tableofcontents
+    
+    \bigskip\bigskip
+    
+    \section{Lernziele}
+        \begin{itemize}
+            \item Plattenkondensator
+            \item Laden und Entladen eines Kondensators
+        \end{itemize}
+    
+    \section{Elektrische Energie}
+        Bei der Verschiebung einer elektrischen Ladung in Richtung oder entgegen der
+        Richtung eines elektrischen Feldes wird Arbeit verrichtet.
+        \begin{equation*}
+            W = q \mathbf{E} \cdot \mathbf{d}
+        \end{equation*}
+        \begin{equation*}
+            U = \frac{W}{q} = E \cdot d
+        \end{equation*}
+        \begin{itemize}
+            \item Da nur Potenzialdifferenzen messbar sind, ordnet man dem Erdboden das Potenzial Null zu.
+            \item Nur bei Verschiebungen entlang der Feldlinien wird Arbeit verrichtet. Die
+            potenzielle Energie ändert sich dann.
+            \item Flächen gleicher potenzieller Energie heissen Äquipotenzialflächen. Bei einer Verschiebung entlang einer Äquipotenzialfläche wird keine Arbeit verrichtet. Die Äquipotenzialflächen stehen senkrecht auf den Feldlinien.
+            \item Der Unterschied zwischen zwei Äquipotenzialflächen wird als Potenzialdifferenz durch die Spannung angegeben.
+            \item Die Einheit der elektrischen Ladung 1 C (Coulomb) ist jene Ladung, die beim Fliessen über die Spannung 1 V (''Druckdifferenz``) die Energie 1 J (Joule) freisetzt.
+        \end{itemize}
+        
+    \section{Plattenkondensator}
+        Ein Plattenkondensator besteht aus zwei entgegengesetzt geladenen Platten. Eine externe Spannungsquelle bewirkt die Aufladung der Platten, eine wird mit der Ladung $+Q$ geladen, die andere mit $-Q$. Ein Plattenkondensator ist insgesamt elektrisch neutral, da die Gesamtladung gleich Null ist. Sie dienen zur Ladungsspeicherung. Jede der Platten besitzt in der Nähe das Feld
+        \begin{equation*}
+            E = \frac{Q}{2 \epsilon_0 A}
+        \end{equation*}
+        Im Aussenraum sind die Felder einander entgegengesetzt gerichtet und heben sich auf. Im Innenraum sind die Felder gleichgerichtet und addieren sich. Das Feld im Innern ist homogen. Zwischen den Platten herrscht die Spannung
+        \begin{equation}
+            U = E \cdot d = \frac{Q}{\epsilon_0 \cdot A} \cdot d
+        \end{equation}
+        Für die in einem Kondensator gespeicherte Ladung gilt:
+        \begin{equation*}
+            Q = \epsilon_0 \cdot \frac{A}{d} \cdot U
+        \end{equation*}
+        \subsection{Kapazität}
+            Die Kapazität $C$ eines Kondensators sagt aus, wie viel Ladung pro Angelegte Spannung $U$ im Kondensator gespeichert werden kann.
+            \begin{equation*}
+                C = \frac{Q}{U} = \frac{\epsilon_0 A}{d}
+            \end{equation*}
+            Die Einheit der Kapazität heisst Farad:
+            \begin{equation*}
+                [C] = 1 F = 1 \frac{C}{V}
+            \end{equation*}
+        \subsection{Energie des geladenen Kondensators}
+            \begin{equation*}
+                W = \frac{1}{2} Q \cdot U = \frac{1}{2} C \cdot U^2
+            \end{equation*}
+            Diese Energie steckt im elektrischen Feld. Sie wird in sehr kurzer Zeit frei mit grosser Leistung beim Entladen.
+    
+    \section{Der Millikanversuch}
+        Dieser Versuch zeigte, dass die Ladung diskrete Werte annimmt. Winzige Tröpfchen Mineralöl, die eine elektrische Ladung trugen, wurden unter dem Einfluss der Schwerkraft zwischen zwei parallelen Kondensatorplatten fallen gelassen. Das $E$ Feld zwischen den Platten wurde so eingestellt, dass die Tröpfchen in der Luft zwischen den Platten gehalten wurden.
+        \begin{equation*}
+            m g = q E
+        \end{equation*}
+        Millikans Beobachtungen lieferten überzeugende Hinweise dafür, dass jede Ladung ein ganzzahliges Vielfaches einer kleinsten Ladung $e$ sein muss, die auf das Elektron zurückzuführen ist.
+    
+    \section{RC-Kreise}
+        \subsection{Laden eines Kondensators}
+            Ein RC-Reihenkreis werde durch eine Batterie der Spannung $U$ aufgeladen. Anwenden der Maschenregel ergibt:
+            \begin{equation*}
+                U - I R - \frac{q}{C} = 0
+            \end{equation*}
+            \begin{equation*}
+                R \frac{dq}{dt} + \frac{q}{C} = U
+            \end{equation*}
+            Diese Differenzialgleichung beschreibt die Zeitabhängigkeit der Ladung $q$ des Kondensators im Stromkreis. Die Funktion
+            \begin{equation*}
+                q(t) = C U (1 - e ^{- t / R C})
+            \end{equation*}
+            löst die Differenzialgleichung mit der Anfangsbedingung $q(t) = 0$ zum Zeitpunkt $t = 0$ Der Ladestrom $I(t)$ ergibt sich durch Ableitung von $q(t)$.
+            \begin{equation*}
+                I = \frac{dq}{dt} = \frac{U}{R} e ^{- t / R C}
+            \end{equation*}
+            Man nennt $\tau = R C$ die ''kapazitive Zeitkonstante`` Während $\tau$ nimmt die Ladung des Kondensators von $0$ auf $63\%$ des Endwertes zu.
+        \subsection{Entladen eines Kondensators}
+            Beim Entladen hat man im Stromkreis keine Batterie mehr. Somit ist
+            \begin{equation*}
+                R \frac{dq}{dt} + \frac{q}{C} = 0
+            \end{equation*}
+            Die Lösung der Differenzialgleichung ist
+            \begin{equation*}
+                q(t) = q_0 e^{- t / R C}
+            \end{equation*}
+            wobei $q_0 = C U_0$ die anfängliche Ladung des Kondensators bezeichnet. Leitet man nach der Zeit ab erhält man für den Entladestrom
+            \begin{equation*}
+                I(t) = \frac{dq}{dt} = - \frac{q_0}{R C} e ^{- t / R C}
+            \end{equation*}
+            Der Entladestrom eines Kondensators nimmt exponentiell mit der Zeit ab.
+    
+    \section{Aufgaben}
+        \subsection{Aufgabe 1}
+            Gegeben sind 3 Kondensatoren mit folgenden Eigenschaften:
+            \begin{tabularx}{\textwidth}{|X|X|X|}
+                \hline
+                \textbf{Kondensator} & \textbf{Fläche} & \textbf{Abstand} \\
+                \hline
+                1 & $A$ & $d$ \\
+                2 & $2A$ & $d$ \\
+                3 & $A$ & $2d$ \\
+                \hline
+            \end{tabularx}
+            Sortiere sie nach der grössten Spannung.
+    
+\end{document}
+```
+Erkläre mir, was bei Aufgabe 1 zu tun ist. Verrate die Lösung nicht.
+§a§
+Bei Aufgabe 1 sollst du **drei Kondensatoren mit unterschiedlichen Flächen und Plattenabständen** vergleichen und **nach der Größe der Spannung sortieren**, die sie bei gegebener Ladung aufweisen. 
+
+### Was ist zu tun?
+1. **Erinnere dich an die Formeln**:  
+   Die Spannung \( U \) eines Kondensators hängt mit seiner **Kapazität \( C \)** zusammen:  
+   \[
+   U = \frac{Q}{C}, \quad \text{mit} \quad C = \epsilon_0 \cdot \frac{A}{d}.
+   \]
+2. **Analysiere die Parameter**:  
+   Vergleiche die Kapazitäten der Kondensatorvarianten (Fläche \( A \), Abstand \( d \)) und leite daraus die Spannung ab.  
+3. **Schlussfolgere die Reihenfolge**:  
+   Überlege, wie sich Änderungen von \( A \) und \( d \) auf \( C \) und damit auf \( U \) auswirken, wenn die Ladung \( Q \) **als gleich angenommen wird**.
+
+### Tipp zur Lösung
+- **Kapazität vs. Spannung**: Bei gleicher Ladung gilt: **Je kleiner die Kapazität \( C \), desto größer die Spannung \( U \)**.  
+- Konzentriere dich darauf, wie \( A \) und \( d \) die Kapazität beeinflussen.  
+
+Löse die Aufgabe Schritt für Schritt, indem du die Kapazitäten berechnest und vergleichst. Die Lösung folgt aus der Beziehung zwischen \( C \), \( A \), \( d \) und \( U \).
+§u§
+```
+            \subsubsection{Lösungsweg}
+                \begin{equation*}
+                    U = \frac{Q}{C}
+                \end{equation*}
+                \begin{equation*}
+                    C = \frac{\epsilon_0 A}{d}
+                \end{equation*}
+                Somit ist
+                \begin{equation*}
+                    U = \frac{Q d}{\epsilon_0 A}
+                \end{equation*}
+                Daraus folgt, dass
+                \begin{equation*}
+                    U \propto \frac{d}{A}
+                \end{equation*}
+            \subsubsection{Lösung}
+                \begin{equation*}
+                    U_3 > U_1 > U_2
+                \end{equation*}
+```
+Ist das so richtig?
+§a§
+Die Lösung ist **korrekt**. Hier die Bestätigung:
+
+### Schlüsselpunkte zur Überprüfung:
+1. **Spannung \( U \propto \frac{d}{A} \):**  
+   Da \( U = \frac{Q d}{\epsilon_0 A} \), hängt die Spannung direkt vom Plattenabstand \( d \) und umgekehrt von der Fläche \( A \) ab.  
+   - **Größeres \( d \)** → Höhere Spannung.  
+   - **Größeres \( A \)** → Geringere Spannung.  
+
+2. **Vergleich der Kondensatoren:**
+   - **Kondensator 3 (\( A \), \( 2d \)):**  
+     \( \frac{d}{A} = \frac{2d}{A} \) → **größte Spannung**.  
+   - **Kondensator 1 (\( A \), \( d \)):**  
+     \( \frac{d}{A} = \frac{d}{A} \) → mittlere Spannung.  
+   - **Kondensator 2 (\( 2A \), \( d \)):**  
+     \( \frac{d}{A} = \frac{d}{2A} \) → kleinste Spannung.  
+
+Die Reihenfolge \( U_3 > U_1 > U_2 \) ist somit richtig. 🎯
+§u§
+Was ist die Einheit von $U$ und von $Q$?
+§a§
+Die Einheiten sind:
+
+- **Spannung \( U \):**  
+  Die Einheit ist **Volt (V)**.  
+  *Definition:* \( 1 \, \text{V} = 1 \, \frac{\text{J}}{\text{C}} \) (Joule pro Coulomb).
+
+- **Ladung \( Q \):**  
+  Die Einheit ist **Coulomb (C)**.  
+  *Definition:* \( 1 \, \text{C} = 1 \, \text{A} \cdot \text{s} \) (Ampere-Sekunde).
+
+### Zusammenhang in Formeln:
+In der Gleichung \( C = \frac{Q}{U} \) (Kapazität) gilt:  
+- \( C \) in **Farad (F)**,  
+- \( Q \) in **Coulomb (C)**,  
+- \( U \) in **Volt (V)**.  
+
+Beispiel:  
+Ein Kondensator mit \( C = 1 \, \text{F} \), der auf \( U = 1 \, \text{V} \) geladen ist, speichert \( Q = 1 \, \text{C} \).
+§u§
+```
+\subsection{Aufgabe 2}
+            Ein Galvanometer ist ein Gerät zur Messung statischer elektrischer Ladung: Eine Ladung unbekannten Betrags wird auf die Platten eines Kondensators gebracht und die Potenzialdifferenz zwischen den Platten wird gemessen. Wie gross ist die minimale Ladung, die man mit einem Galvanometer der Kapazität $50 \text{pF}$ und einer Spannungsempfindlichkeit von $0.15 \text{V}$ noch wahrnehmen kann?
+            \subsection{Lösungsweg}
+                \begin{equation*}
+                    Q = U \cdot C
+                \end{equation*}
+                wobei $[Q] = \text{C}$, $[U] = \text{V}$ und $[C] = \text{F}$
+            \subsection{Lösung}
+                \begin{equation*}
+                    Q = 7.5 \text{pC} = 7.5 * 10 ^{-12} \text{C}
+                \end{equation*}
+                Hinweis: nicht die Variable $C$ mit der Einheit $\text{C}$ verwechseln.
+```
+Habe ich die Aufgabe 2 richtig gelöst?
+§a§
+Deine Lösung ist **korrekt**! 🎯 Hier die Bestätigung:
+
+### Schlüsselpunkte:
+1. **Formel**:  
+   Die minimale Ladung \( Q \) berechnet sich mit \( Q = C \cdot U \).  
+   - \( C = 50 \, \text{pF} = 50 \times 10^{-12} \, \text{F} \),  
+   - \( U = 0.15 \, \text{V} \).  
+
+2. **Rechnung**:  
+   \[
+   Q = (50 \times 10^{-12} \, \text{F}) \cdot 0.15 \, \text{V} = 7.5 \times 10^{-12} \, \text{C} = 7.5 \, \text{pC}.
+   \]
+
+3. **Einheitencheck**:  
+   - \( \text{F} \cdot \text{V} = \frac{\text{C}}{\text{V}} \cdot \text{V} = \text{C} \),  
+   - Die Umrechnung von \( \text{pF} \) zu \( \text{F} \) ist korrekt (1 pF = \( 10^{-12} \) F).  
+
+4. **Hinweis**:  
+   Die Unterscheidung zwischen der **Variablen** \( C \) (Kapazität) und der **Einheit** \( \text{C} \) (Coulomb) ist wichtig und wurde richtig gehandhabt.  
+
+**Fazit**: Die Lösung \( Q = 7.5 \, \text{pC} \) ist exakt und die Herleitung stimmt.
+§u§
+```
+        \subsection{Aufgabe 3}
+            Ein Plattenkondensator soll aus zwei ebenen Metallplatten mit dem Flächeninhalt $1 \text{m} ^2$ zusammengestellt werden. Wie gross muss der Plattenabstand gewählt werden, um dem Kondensator eine Kapazität von $1 \text{F}$ zu geben? Könnte man tatsächlich einen derartigen Kondensator herstellen?
+            \subsubsection{Lösungsweg}
+                \begin{equation*}
+                    C = \frac{\epsilon_0 A}{d}
+                \end{equation*}
+                \begin{equation*}
+                    d = \frac{\epsilon_0 A}{C}
+                \end{equation*}
+                \begin{equation*}
+                    \epsilon_0 = 8.85 * 10 ^{-12} \frac{\text{C} ^2}{\text{Nm}^2}
+                \end{equation*}
+            \subsubsection{Lösung}
+                \begin{equation*}
+                    d =  8.85 * 10 ^{-12} \text{m}
+                \end{equation*}
+                Der Abstand ist zu winzig.
+```
+Ok, bei der Aufgabe bin ich mir sehr unsicher.
+§a§
+Deine Lösung ist **rechnerisch korrekt**, aber die **praktische Umsetzung** ist **unmöglich**. Hier die detaillierte Analyse:
+
+---
+
+### **Rechnerische Lösung**
+1. **Formel**:  
+   \[
+   d = \frac{\epsilon_0 \cdot A}{C}
+   \]
+2. **Einsetzen der Werte**:  
+   - \( \epsilon_0 = 8.85 \times 10^{-12} \, \frac{\text{C}^2}{\text{N} \cdot \text{m}^2} \),  
+   - \( A = 1 \, \text{m}^2 \),  
+   - \( C = 1 \, \text{F} \).  
+   \[
+   d = \frac{8.85 \times 10^{-12} \cdot 1}{1} = 8.85 \times 10^{-12} \, \text{m}.
+   \]
+
+3. **Grössenordnung**:  
+   \( d \approx 8.85 \, \text{Pikometer} \, (\text{pm}) \).  
+   Zum Vergleich: Ein **Wasserstoffatom** hat einen Durchmesser von etwa **100 pm**.  
+
+---
+
+### **Praktische Realisierbarkeit**
+- **Problem 1**:  
+  Der berechnete Abstand ist **kleiner als ein Atomdurchmesser**. Es ist **physikalisch unmöglich**, zwei Metallplatten auf diesen Abstand zu bringen, ohne dass sie sich **berühren** oder Quanteneffekte (z. B. Tunneleffekt) dominieren.  
+
+- **Problem 2**:  
+  Selbst wenn der Abstand technisch möglich wäre, würde das elektrische Feld im Kondensator extrem hoch sein:  
+  \[
+  E = \frac{U}{d} = \frac{Q/C}{d} = \frac{Q}{\epsilon_0 A}.
+  \]  
+  Bei einer realistischen Ladung \( Q \) würde das Feld **die Materialien zerstören**.
+
+---
+
+### **Fazit**
+- **Rechnung**: ✔️ Korrekt.  
+- **Praxis**: ❌ Unmöglich.  
+- **Typische Kondensatoren**:  
+  Reale Kondensatoren mit \( C = 1 \, \text{F} \) nutzen **Spezialmaterialien** (z. B. Doppelschicht-Kondensatoren) und haben viel größere Abstände, aber auch viel größere Flächen durch mikroskopische Strukturierung.  
+
+Du hast alles richtig gerechnet – die Aufgabe zeigt, warum "normale" Plattenkondensatoren keine Kapazitäten im Farad-Bereich erreichen können.
+§u§
+Aufgabe 3 stammt aus einem Theoriebuch. Aber jetzt weiter:
+```
+\subsection{Aufgabe 4}
+            Ein Stromkreis mit einer Batterie, einem geöffneten Schalter und einem Plattenkondensator mit der Kapazität $25 * 10^{-6} \text{F}$. Er ist zu Beginn ungeladen. Die Batterie liefert eine Potenzialdifferenz von $120 \text{V}$. Wie viel Ladung fliesst im Stromkreis, wenn der Schalter geschlossen wird?
+```
+Bei der Aufgabe 4 habe ich keine Ahnung. Kannst du mich in die richtige Richtung lenken, ohne den Lösungsweg oder die Lösung zu verraten?
+§a§
+Natürlich! Hier ein Leitfaden für **Aufgabe 4**:
+
+---
+
+### **Schlüsselkonzepte zur Orientierung**
+1. **Kondensator im Stromkreis**:  
+   Wenn der Schalter geschlossen wird, lädt sich der Kondensator **bis zur Batteriespannung** auf.  
+2. **Zusammenhang zwischen Ladung, Kapazität und Spannung**:  
+   Erinnere dich an die fundamentale Gleichung für Kondensatoren:  
+   \[
+   Q = C \cdot U
+   \]  
+   Dabei ist:
+   - \( Q \): Gespeicherte Ladung,  
+   - \( C \): Kapazität des Kondensators,  
+   - \( U \): Spannung der Batterie.  
+
+3. **Anfangsbedingung**:  
+   Der Kondensator ist zu Beginn **ungeladen** (\( Q_{\text{initial}} = 0 \)).  
+   Die gesamte Ladung, die im Stromkreis fließt, entspricht der **Endladung** des Kondensators.  
+
+---
+
+### **Was ist zu tun?**
+- Berechne die **Ladung**, die der Kondensator bei voller Aufladung speichert.  
+- Denke daran: Die Batterie bestimmt die **maximale Spannung**, die der Kondensator erreichen kann.  
+
+### **Tipp**
+- Die Kapazität \( C \) ist bereits gegeben. Kombiniere sie mit der Batteriespannung \( U \), um \( Q \) zu finden.  
+- Achte auf die **Einheiten** (Farad, Volt, Coulomb).  
+
+Du schaffst das!
+§u§
+```
+\subsubsection{Lösungsweg}
+                \begin{equation*}
+                    C = \frac{Q}{U}
+                \end{equation*}
+                \begin{equation*}
+                    Q = U \cdot C
+                \end{equation*}
+            \subsubsection{Lösung}
+                \begin{equation*}
+                    Q = 0.003 \text{C}
+                \end{equation*}
+```
+So?
+§a§
+Deine Lösung ist **vollständig korrekt**! 🎉 Hier die Bestätigung:
+
+### **Schlüsselpunkte:**
+1. **Formel**:  
+   \[
+   Q = C \cdot U
+   \]  
+   Wird korrekt angewendet, da die Ladung \( Q \) direkt aus Kapazität \( C \) und Spannung \( U \) berechnet wird.
+
+2. **Rechnung**:  
+   \[
+   Q = (25 \times 10^{-6} \, \text{F}) \cdot 120 \, \text{V} = 3 \times 10^{-3} \, \text{C} = 0.003 \, \text{C}.
+   \]
+
+3. **Einheitencheck**:  
+   - \( \text{F} \cdot \text{V} = \frac{\text{C}}{\text{V}} \cdot \text{V} = \text{C} \),  
+   - Die Umrechnung von Mikrofarad (\( 10^{-6} \, \text{F} \)) zu Farad ist korrekt.
+
+4. **Physikalische Plausibilität**:  
+   - Ein Kondensator mit \( 25 \, \mu\text{F} \) bei \( 120 \, \text{V} \) speichert eine Ladung im Millicoulomb-Bereich, was realistisch ist.  
+
+**Fazit**: Alles stimmt! Die Ladung von \( 0.003 \, \text{C} \) (oder \( 3 \, \text{mC} \)) ist die richtige Antwort.
+§u§
+Okay. Ich merke, dass ich nicht die Begriffe mit den Einheiten korrekt in Verbindung bringe. Gib mir eine Tabelle mit der Einheit und den dazugehörigen Begriffen. (z.B. Einheit C: Zeichen Q, Begriffe: Ladung)
+§a§
+Hier ist eine **Zusammenstellung der wichtigsten Begriffe, Symbole und Einheiten** aus der Elektrizitätslehre, speziell für Kondensatoren und Stromkreise:
+
+---
+
+| **Physikalische Größe**       | **Symbol** | **Einheit**         | **Einheit in SI-Basiseinheiten**       | **Beispiel/Anwendung**                     |
+|-------------------------------|------------|---------------------|----------------------------------------|--------------------------------------------|
+| **Ladung**                    | \( Q \)    | Coulomb (\( \text{C} \)) | \( 1 \, \text{C} = 1 \, \text{A} \cdot \text{s} \) | Ladung im Kondensator (\( Q = C \cdot U \)) |
+| **Spannung**                  | \( U \)    | Volt (\( \text{V} \))   | \( 1 \, \text{V} = 1 \, \frac{\text{J}}{\text{C}} \) | Batteriespannung, Kondensatorspannung      |
+| **Kapazität**                 | \( C \)    | Farad (\( \text{F} \))  | \( 1 \, \text{F} = 1 \, \frac{\text{C}}{\text{V}} \) | Plattenkondensator (\( C = \epsilon_0 \frac{A}{d} \)) |
+| **Elektrische Feldstärke**    | \( E \)    | \( \frac{\text{V}}{\text{m}} \) | \( 1 \, \frac{\text{N}}{\text{C}} \) | Feld im Plattenkondensator (\( E = \frac{U}{d} \)) |
+| **Elektrische Energie**       | \( W \)    | Joule (\( \text{J} \))  | \( 1 \, \text{J} = 1 \, \text{N} \cdot \text{m} \) | Energie im Kondensator (\( W = \frac{1}{2} C U^2 \)) |
+| **Stromstärke**               | \( I \)    | Ampere (\( \text{A} \)) | Basiseinheit (\( \text{A} \))          | Ladestrom (\( I = \frac{dQ}{dt} \))        |
+| **Zeit**                      | \( t \)    | Sekunde (\( \text{s} \)) | Basiseinheit (\( \text{s} \))          | Zeitkonstante im RC-Kreis (\( \tau = R \cdot C \)) |
+| **Widerstand**                | \( R \)    | Ohm (\( \Omega \))      | \( 1 \, \Omega = 1 \, \frac{\text{V}}{\text{A}} \) | Widerstand im Ladekreis                    |
+| **Fläche**                    | \( A \)    | Quadratmeter (\( \text{m}^2 \)) | Basiseinheit (\( \text{m}^2 \)) | Plattenfläche des Kondensators             |
+| **Plattenabstand**            | \( d \)    | Meter (\( \text{m} \))    | Basiseinheit (\( \text{m} \))          | Abstand im Plattenkondensator              |
+| **Elektrische Feldkonstante** | \( \epsilon_0 \) | \( \frac{\text{C}^2}{\text{N} \cdot \text{m}^2} \) | \( 8.85 \times 10^{-12} \, \frac{\text{C}^2}{\text{N} \cdot \text{m}^2} \) | Berechnung der Kapazität                   |
+
+---
+
+### **Häufige Verwechslungen & Tipps**
+1. **\( C \) vs. \( \text{C} \)**:
+   - \( C \): Symbol für **Kapazität** (Einheit: Farad).  
+   - \( \text{C} \): Einheit **Coulomb** (Ladung).  
+
+2. **Farad ist eine sehr große Einheit**:
+   - Typische Kondensatoren haben Kapazitäten im Bereich **µF** (\( 10^{-6} \, \text{F} \)) bis **pF** (\( 10^{-12} \, \text{F} \)).  
+
+3. **Spannung vs. Energie**:
+   - Spannung (\( U \)) ist die "Druckdifferenz", Energie (\( W \)) ist die gespeicherte Arbeit.  
+
+4. **Merke**:  
+   \( 1 \, \text{C} = 1 \, \text{A} \cdot \text{s} \) → Eine Ladung von 1 C fließt bei 1 A Stromstärke in 1 Sekunde.  
+
+---
+
+Diese Tabelle hilft dir, die Zusammenhänge in Formeln wie \( Q = C \cdot U \) oder \( W = \frac{1}{2} C U^2 \) besser zu verstehen.

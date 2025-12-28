@@ -1,0 +1,74 @@
+§u§
+How can I add a pdf to Latex
+§a§
+There are (at least) **three** different things people usually mean by “adding a PDF to LaTeX”.
+Pick the one that matches what you are trying to do and follow the short recipe.
+
+──────────────────────────────────────────
+1. Include **an external PDF as a whole page**
+   (i.e. merging another document into the final PDF)
+
+```latex
+\documentclass{article}
+\usepackage{pdfpages}            % ← master package for this job
+\begin{document}
+
+% some normal pages …
+
+\includepdf[pages=-]{myfile.pdf} % pages=-  → all pages
+% or
+\includepdf[pages=3-5,landscape=true]{myfile.pdf}
+
+% continue your own document …
+
+\end{document}
+```
+
+Compile with `pdflatex` (or `lualatex`/`xelatex`); nothing else is required.
+
+──────────────────────────────────────────
+2. Include **one page (or a region) of a PDF as a picture**
+   (i.e. treating it like an image in a figure)
+
+```latex
+\documentclass{article}
+\usepackage{graphicx}            % built-in tool
+\usepackage{adjustbox}           % optional, just for trim/clip helpers
+\begin{document}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.8\linewidth,page=3,trim=1cm 2cm 1cm 2cm,clip]{myfile.pdf}
+  \caption{A cropped page rendered as a graphic}
+\end{figure}
+
+\end{document}
+```
+
+The key is the **optional argument**
+`page=<number>`: which PDF page to pull
+`trim=l b r t`: how much to crop (left bottom right top) in **big points (bp)**
+`clip`: actually hide the trimmed material
+
+──────────────────────────────────────────
+3. Attach the PDF file **as a reproducible attachment**
+   (so the reader can click and open it in Acrobat/Okular etc.)
+
+```latex
+\documentclass{article}
+\usepackage{embedfile}           % works in pdfLaTeX / LuaLaTeX
+\begin{document}
+
+Some text.
+\embedfile{myfile.pdf}          % appears in the /EmbeddedFiles tree of the PDF
+
+Alternatively with icon:
+\textattachfile{color=blue,icon=Paperclip}{myfile.pdf}{Click here to open the PDF}
+
+\end{document}
+```
+
+The resulting file contains a *copy* of `myfile.pdf` inside it; viewers that support attachments will list it.
+
+──────────────────────────────────────────
+Pick the snippet above that matches your intention and drop it into your document—that’s all you need to “add a PDF to LaTeX”.

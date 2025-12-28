@@ -1,0 +1,342 @@
+§u§
+```
+\section{Lernziele}
+
+\begin{enumerate}
+    \item Unbestimmte Integrale -- Stammfunktionen
+    \item Anwendung des Hauptsatzes
+    \item Integrationsregeln
+    \item Uneigentliche Integrale
+\end{enumerate}
+```
+Schreibe ein LaTeX Dokument, welches den Stoff erklärt, der für das Erfüllen der Lernziele gebraucht wird.
+§a§
+Hier ist ein umfassendes LaTeX-Dokument, das die genannten Lernziele behandelt:
+
+```latex
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\geometry{margin=2.5cm}
+
+% Theorem-Umgebungen
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{beispiel}{Beispiel}[section]
+\theoremstyle{plain}
+\newtheorem{satz}{Satz}[section]
+\newtheorem{lemma}[satz]{Lemma}
+\theoremstyle{remark}
+\newtheorem{bemerkung}{Bemerkung}[section]
+
+% Befehle
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\dx}{\,dx}
+
+\title{Integralrechnung: Von Stammfunktionen zu uneigentlichen Integralen}
+\author{}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Einleitung}
+
+Die Integralrechnung ist neben der Differentialrechnung einer der zwei Hauptzweige der Analysis. Während die Differentialrechnung sich mit Änderungsraten beschäftigt, behandelt die Integralrechnung die Umkehrung dieses Prozesses und die Berechnung von Flächeninhalten.
+
+\section{Unbestimmte Integrale -- Stammfunktionen}
+
+\begin{definition}[Stammfunktion]
+Eine Funktion $F: I \to \R$ heißt \textbf{Stammfunktion} (oder \textbf{Antiderivative}) einer Funktion $f: I \to \R$ auf einem Intervall $I \subseteq \R$, wenn gilt:
+\[
+F'(x) = f(x) \quad \text{für alle } x \in I
+\]
+\end{definition}
+
+\begin{bemerkung}
+Ist $F$ eine Stammfunktion von $f$, dann ist auch $F + C$ für jede Konstante $C \in \R$ eine Stammfunktion von $f$. Die Menge aller Stammfunktionen von $f$ wird als \textbf{unbestimmtes Integral} bezeichnet und mit
+\[
+\int f(x)\dx = F(x) + C
+\]
+notiert, wobei $C$ die Integrationskonstante ist.
+\end{bemerkung}
+
+\subsection{Grundlegende Stammfunktionen}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+$f(x)$ & $\int f(x)\dx$ \\
+\hline
+$x^n$ $(n \neq -1)$ & $\frac{x^{n+1}}{n+1} + C$ \\
+$\frac{1}{x}$ & $\ln|x| + C$ \\
+$e^x$ & $e^x + C$ \\
+$a^x$ $(a > 0, a \neq 1)$ & $\frac{a^x}{\ln a} + C$ \\
+$\sin x$ & $-\cos x + C$ \\
+$\cos x$ & $\sin x + C$ \\
+$\sec^2 x$ & $\tan x + C$ \\
+$\frac{1}{\sqrt{1-x^2}}$ & $\arcsin x + C$ \\
+$\frac{1}{1+x^2}$ & $\arctan x + C$ \\
+\hline
+\end{tabular}
+\caption{Tabelle wichtiger Stammfunktionen}
+\end{table}
+
+\begin{beispiel}
+Bestimmen Sie das unbestimmte Integral von $f(x) = 3x^2 + 2x - 5$.
+
+\textbf{Lösung:}
+\begin{align*}
+\int (3x^2 + 2x - 5)\dx &= 3 \cdot \frac{x^3}{3} + 2 \cdot \frac{x^2}{2} - 5x + C \\
+&= x^3 + x^2 - 5x + C
+\end{align*}
+\end{beispiel}
+
+\section{Anwendung des Hauptsatzes}
+
+\begin{satz}[Hauptsatz der Differential- und Integralrechnung]
+Der Hauptsatz besteht aus zwei Teilen:
+
+\textbf{Teil 1:} Sei $f: [a,b] \to \R$ stetig. Dann ist die Funktion
+\[
+F(x) = \int_a^x f(t)\,dt
+\]
+differenzierbar auf $(a,b)$ und es gilt $F'(x) = f(x)$.
+
+\textbf{Teil 2:} Sei $f: [a,b] \to \R$ stetig und $F$ eine Stammfunktion von $f$. Dann gilt:
+\[
+\int_a^b f(x)\dx = F(b) - F(a) = [F(x)]_a^b
+\]
+\end{satz}
+
+\subsection{Bedeutung und Anwendung}
+
+Der Hauptsatz stellt die fundamentale Verbindung zwischen Differentiation und Integration her. Er ermöglicht es uns:
+\begin{enumerate}
+    \item Bestimmte Integrale durch Stammfunktionen zu berechnen
+    \item Flächeninhalte unter Kurven zu bestimmen
+    \item Viele physikalische Probleme zu lösen
+\end{enumerate}
+
+\begin{beispiel}[Flächenberechnung]
+Berechnen Sie die Fläche unter der Kurve $f(x) = x^2$ zwischen $x = 0$ und $x = 2$.
+
+\textbf{Lösung:}
+\begin{align*}
+A &= \int_0^2 x^2\dx \\
+&= \left[\frac{x^3}{3}\right]_0^2 \\
+&= \frac{2^3}{3} - \frac{0^3}{3} \\
+&= \frac{8}{3}
+\end{align*}
+\end{beispiel}
+
+\section{Integrationsregeln}
+
+\subsection{Linearität des Integrals}
+
+\begin{satz}[Linearitätsregel]
+Für integrierbare Funktionen $f$ und $g$ und Konstanten $\alpha, \beta \in \R$ gilt:
+\[
+\int (\alpha f(x) + \beta g(x))\dx = \alpha \int f(x)\dx + \beta \int g(x)\dx
+\]
+\end{satz}
+
+\subsection{Substitutionsregel}
+
+\begin{satz}[Substitutionsregel]
+Sei $g: [a,b] \to \R$ stetig differenzierbar und $f$ stetig auf dem Bild von $g$. Dann gilt:
+\[
+\int f(g(x)) \cdot g'(x)\dx = \int f(u)\,du \bigg|_{u=g(x)}
+\]
+Für bestimmte Integrale:
+\[
+\int_a^b f(g(x)) \cdot g'(x)\dx = \int_{g(a)}^{g(b)} f(u)\,du
+\]
+\end{satz}
+
+\begin{beispiel}
+Berechnen Sie $\int 2x \cdot e^{x^2}\dx$.
+
+\textbf{Lösung:} Substitution $u = x^2$, also $du = 2x\dx$:
+\[
+\int 2x \cdot e^{x^2}\dx = \int e^u\,du = e^u + C = e^{x^2} + C
+\]
+\end{beispiel}
+
+\subsection{Partielle Integration}
+
+\begin{satz}[Partielle Integration]
+Für differenzierbare Funktionen $u$ und $v$ gilt:
+\[
+\int u(x) \cdot v'(x)\dx = u(x) \cdot v(x) - \int u'(x) \cdot v(x)\dx
+\]
+In Kurzform: $\int u\,dv = uv - \int v\,du$
+\end{satz}
+
+\begin{beispiel}
+Berechnen Sie $\int x \cdot e^x\dx$.
+
+\textbf{Lösung:} Wähle $u = x$ und $dv = e^x\dx$. Dann ist $du = dx$ und $v = e^x$.
+\begin{align*}
+\int x \cdot e^x\dx &= x \cdot e^x - \int e^x\dx \\
+&= x \cdot e^x - e^x + C \\
+&= e^x(x - 1) + C
+\end{align*}
+\end{beispiel}
+
+\subsection{Partialbruchzerlegung}
+
+Für rationale Funktionen $\frac{P(x)}{Q(x)}$, wobei $\deg(P) < \deg(Q)$, kann die Partialbruchzerlegung verwendet werden.
+
+\begin{beispiel}
+Berechnen Sie $\int \frac{1}{x^2-1}\dx$.
+
+\textbf{Lösung:} Partialbruchzerlegung:
+\[
+\frac{1}{x^2-1} = \frac{1}{(x-1)(x+1)} = \frac{A}{x-1} + \frac{B}{x+1}
+\]
+Durch Koeffizientenvergleich: $A = \frac{1}{2}$, $B = -\frac{1}{2}$
+
+\begin{align*}
+\int \frac{1}{x^2-1}\dx &= \frac{1}{2}\int \frac{1}{x-1}\dx - \frac{1}{2}\int \frac{1}{x+1}\dx \\
+&= \frac{1}{2}\ln|x-1| - \frac{1}{2}\ln|x+1| + C \\
+&= \frac{1}{2}\ln\left|\frac{x-1}{x+1}\right| + C
+\end{align*}
+\end{beispiel}
+
+\section{Uneigentliche Integrale}
+
+\begin{definition}[Uneigentliche Integrale]
+Ein Integral heißt \textbf{uneigentlich}, wenn:
+\begin{enumerate}
+    \item Eine oder beide Integrationsgrenzen unendlich sind (Typ I)
+    \item Der Integrand an mindestens einer Stelle im Integrationsbereich unbeschränkt ist (Typ II)
+\end{enumerate}
+\end{definition}
+
+\subsection{Uneigentliche Integrale vom Typ I}
+
+\begin{definition}
+Für eine auf $[a, \infty)$ stetige Funktion $f$ definieren wir:
+\[
+\int_a^\infty f(x)\dx = \lim_{b \to \infty} \int_a^b f(x)\dx
+\]
+falls dieser Grenzwert existiert. Analog für $\int_{-\infty}^b f(x)\dx$.
+\end{definition}
+
+\begin{beispiel}
+Untersuchen Sie die Konvergenz von $\int_1^\infty \frac{1}{x^p}\dx$ für $p > 0$.
+
+\textbf{Lösung:}
+\begin{itemize}
+    \item Für $p \neq 1$:
+    \[
+    \int_1^b \frac{1}{x^p}\dx = \left[\frac{x^{-p+1}}{-p+1}\right]_1^b = \frac{1}{1-p}(b^{1-p} - 1)
+    \]
+    Für $b \to \infty$: konvergent falls $p > 1$, divergent falls $p < 1$.
+
+    \item Für $p = 1$:
+    \[
+    \int_1^b \frac{1}{x}\dx = [\ln x]_1^b = \ln b \to \infty
+    \]
+    Also divergent.
+\end{itemize}
+\textbf{Ergebnis:} Das Integral konvergiert für $p > 1$ und divergiert für $p \leq 1$.
+\end{beispiel}
+
+\subsection{Uneigentliche Integrale vom Typ II}
+
+\begin{definition}
+Sei $f$ auf $(a, b]$ stetig und unbeschränkt bei $x = a$. Dann:
+\[
+\int_a^b f(x)\dx = \lim_{\varepsilon \to 0^+} \int_{a+\varepsilon}^b f(x)\dx
+\]
+falls dieser Grenzwert existiert.
+\end{definition}
+
+\begin{beispiel}
+Berechnen Sie $\int_0^1 \frac{1}{\sqrt{x}}\dx$.
+
+\textbf{Lösung:} Der Integrand ist unbeschränkt bei $x = 0$.
+\begin{align*}
+\int_0^1 \frac{1}{\sqrt{x}}\dx &= \lim_{\varepsilon \to 0^+} \int_\varepsilon^1 x^{-1/2}\dx \\
+&= \lim_{\varepsilon \to 0^+} \left[2\sqrt{x}\right]_\varepsilon^1 \\
+&= \lim_{\varepsilon \to 0^+} (2 - 2\sqrt{\varepsilon}) \\
+&= 2
+\end{align*}
+Das Integral konvergiert und hat den Wert 2.
+\end{beispiel}
+
+\subsection{Vergleichskriterien}
+
+\begin{satz}[Majorantenkriterium]
+Seien $f, g: [a, \infty) \to \R$ stetig mit $0 \leq f(x) \leq g(x)$ für alle $x \geq a$.
+\begin{itemize}
+    \item Wenn $\int_a^\infty g(x)\dx$ konvergiert, dann konvergiert auch $\int_a^\infty f(x)\dx$
+    \item Wenn $\int_a^\infty f(x)\dx$ divergiert, dann divergiert auch $\int_a^\infty g(x)\dx$
+\end{itemize}
+\end{satz}
+
+\section{Zusammenfassung}
+
+Die Integralrechnung bietet mächtige Werkzeuge zur Lösung verschiedenster mathematischer und praktischer Probleme:
+
+\begin{enumerate}
+    \item \textbf{Stammfunktionen} ermöglichen die Umkehrung der Differentiation
+    \item Der \textbf{Hauptsatz} verbindet Differentiation und Integration
+    \item \textbf{Integrationsregeln} (Substitution, partielle Integration, Partialbruchzerlegung) erweitern unsere Berechnungsmöglichkeiten
+    \item \textbf{Uneigentliche Integrale} erlauben die Integration über unbeschränkte Bereiche oder von unbeschränkten Funktionen
+\end{enumerate}
+
+Die Beherrschung dieser Konzepte ist fundamental für weiterführende Themen in Analysis, Physik und vielen anderen Wissenschaften.
+
+\section{Übungsaufgaben}
+
+\begin{enumerate}
+    \item Berechnen Sie die folgenden unbestimmten Integrale:
+    \begin{enumerate}
+        \item $\int (3x^2 - 2\sin x + e^x)\dx$
+        \item $\int \frac{x^3 + 1}{x^2}\dx$
+        \item $\int x \cos(x^2)\dx$
+    \end{enumerate}
+
+    \item Verwenden Sie den Hauptsatz zur Berechnung:
+    \[
+    \int_0^\pi \sin x\dx
+    \]
+
+    \item Berechnen Sie mittels partieller Integration:
+    \[
+    \int x^2 e^x\dx
+    \]
+
+    \item Untersuchen Sie die Konvergenz der folgenden uneigentlichen Integrale:
+    \begin{enumerate}
+        \item $\int_0^\infty e^{-x}\dx$
+        \item $\int_0^1 \frac{\ln x}{x}\dx$
+        \item $\int_1^\infty \frac{1}{x(\ln x)^p}\dx$ für $p > 0$
+    \end{enumerate}
+\end{enumerate}
+
+\end{document}
+```
+
+Dieses Dokument deckt alle vier Lernziele systematisch ab:
+1. **Stammfunktionen**: Definition, Grundlagen und wichtige Beispiele
+2. **Hauptsatz**: Beide Teile mit Anwendungen zur Flächenberechnung
+3. **Integrationsregeln**: Substitution, partielle Integration und Partialbruchzerlegung mit Beispielen
+4. **Uneigentliche Integrale**: Typ I und II mit Konvergenzkriterien
+
+Das Dokument enthält Definitionen, Sätze, praktische Beispiele und Übungsaufgaben zur Vertiefung des Stoffes.

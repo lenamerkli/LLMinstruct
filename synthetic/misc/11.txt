@@ -1,0 +1,115 @@
+§u§
+```
+\begin{document}
+\maketitle
+\tableofcontents
+
+\bigskip\bigskip
+
+\section{Lernziele}
+Sie sollten in der Lage sein, Fragen wie die nachfolgenden begründet zu beantworten und ihre Einsichten auf Beispiele anzuwenden:
+\subsection{Was ist Wissen?}
+\begin{itemize}
+    \item Wie lautet die Standarddefinition von Wissen und wie lässt sie sich kritisieren?
+    \item Was besagt der Reliabilismus? Welches Problem mit der Standarddefinition soll er lösen?
+    \item Wodurch unterscheiden sich erkenntnistheoretische Externalisten und Internalisten?
+    \item Wogegen richtet sich das Gettier-Beispiel (Smith und Jones) und wie könnte man die Standarddefinition modifizieren, um auf das Gegenbeispiel zu reagieren?
+\end{itemize}
+\subsection{Was können wir wissen?}
+\begin{itemize}
+    \item Wie lautet das Trilemma von Agrippa und was sind mögliche Auswege aus dem Trilemma?
+    \item Worin besteht jewils die Grundidee des Fundamentalismus, des Kohärentismus und des Kontextualismus, und mit welchen Problemen sind die drei Ansätze konfrontiert?
+\end{itemize}
+```
+Erkläre den Stoff, der benötigt wird, um diese Lernziele zu erfüllen.
+§a§
+Hier ist eine Zusammenfassung des erkenntnistheoretischen Stoffes, den du benötigst, um die aufgeführten Lernziele zu erreichen.
+
+---
+
+# Teil 1: Was ist Wissen?
+
+In diesem Abschnitt geht es um die **Analyse des Wissensbegriffs** (die Frage nach der Definition).
+
+## 1. Die Standarddefinition von Wissen (JTB-Analyse)
+Die klassische Definition, die bis auf Platon (*Theaitetos*) zurückgeht, besagt, dass Wissen **wahre, gerechtfertigte Meinung** ist (im Englischen: *Justified True Belief* - JTB).
+
+Ein Subjekt $S$ weiß, dass $p$ (eine Aussage), wenn drei Bedingungen erfüllt sind:
+1.  **Wahrheitsbedingung:** $p$ ist wahr. (Man kann nichts wissen, was falsch ist).
+2.  **Überzeugungsbedingung:** $S$ glaubt, dass $p$.
+3.  **Rechtfertigungsbedingung:** $S$ ist gerechtfertigt darin, $p$ zu glauben (hat gute Gründe/Beweise).
+
+**Kritik:** Diese Definition schien lange ausreichend, bis Edmund Gettier 1963 zeigte, dass man alle drei Bedingungen erfüllen kann und es sich dennoch nur um **Zufall** handelt, nicht um Wissen.
+
+## 2. Das Gettier-Beispiel (Smith und Jones)
+Edmund Gettier veröffentlichte Gegenbeispiele, um zu zeigen, dass die JTB-Definition unzureichend ist. Das bekannteste ist der Fall von **Smith und Jones**:
+
+*   **Szenario:** Smith und Jones bewerben sich um denselben Job. Der Chef sagt Smith, dass Jones den Job bekommen wird. Zudem hat Smith gesehen, dass Jones 10 Münzen in der Tasche hat.
+*   Smith bildet die Meinung: *"Derjenige, der den Job bekommt, hat 10 Münzen in der Tasche."*
+*   **Wendung:** Überraschenderweise bekommt doch Smith den Job (nicht Jones). Und zufälligerweise hat Smith (ohne es zu wissen) ebenfalls 10 Münzen in seiner eigenen Tasche.
+*   **Analyse:**
+    1.  Die Aussage "Derjenige, der den Job bekommt, hat 10 Münzen" ist **wahr** (auf Smith bezogen).
+    2.  Smith **glaubt** sie.
+    3.  Smith war **gerechtfertigt** (durch die Aussage des Chefs und das Zählen der Münzen bei Jones).
+*   **Fazit:** Smith hat eine wahre, gerechtfertigte Meinung, aber wir würden nicht sagen, dass er *wusste*, dass er den Job bekommt. Er hatte einfach Glück ("epistemisches Glück").
+
+**Reaktion / Modifikation der Definition:**
+Um auf Gettier zu reagieren, muss eine vierte Bedingung her oder die Rechtfertigung muss verschärft werden. Beispiele für Modifikationen:
+*   **Keine falschen Annahmen:** Wissen darf nicht auf einer falschen Schlussfolgerung basieren (hier: dass Jones den Job kriegt).
+*   **Kausale Theorien:** Es muss eine kausale Verbindung zwischen dem Fakt und dem Glauben geben.
+
+## 3. Der Reliabilismus
+Der Reliabilismus ist eine Antwort auf das Problem der Rechtfertigung. Er besagt:
+
+*   **Kernaussage:** Eine wahre Meinung ist dann Wissen, wenn sie durch einen **verlässlichen Prozess** (reliable process) zustande gekommen ist.
+*   Rechtfertigung wird hier oft durch *Verlässlichkeit* ersetzt oder erklärt.
+*   **Beispiele für verlässliche Prozesse:** Visuelle Wahrnehmung unter normalen Bedingungen, logisches Schließen, Erinnerung.
+*   **Beispiele für unverlässliche Prozesse:** Raten, Wunschdenken, Halluzination.
+
+**Lösung des Problems:** Der Reliabilismus löst das Problem der "zufälligen Wahrheit" (Gettier). Wenn Smith nur rät oder falsche Schlüsse zieht, ist der Prozess nicht verlässlich. Wissen wird also an die *Qualität des Entstehungsprozesses* der Überzeugung gebunden.
+
+## 4. Internalismus vs. Externalismus
+Hier geht es um den Ort der Rechtfertigung.
+
+*   **Internalismus:**
+    *   Die Faktoren, die eine Meinung rechtfertigen, müssen dem Subjekt **kognitiv zugänglich** sein (also "intern" im Bewusstsein liegen).
+    *   Ich muss Gründe angeben können, warum ich etwas glaube. Wenn ich nicht weiß, warum ich recht habe, habe ich kein Wissen.
+*   **Externalismus:**
+    *   Faktoren, die Wissen begründen, können außerhalb des Bewusstseins des Subjekts liegen ("extern").
+    *   Entscheidend ist oft nur, ob der Mechanismus der Meinungsbildung objektiv funktioniert (z.B. meine Augen funktionieren gut), selbst wenn ich nicht weiß, *wie* oder *dass* sie gut funktionieren.
+    *   Der **Reliabilismus** ist typischerweise eine externalistische Position (der Prozess muss verlässlich sein, egal ob das Subjekt weiß, dass er verlässlich ist).
+
+---
+
+# Teil 2: Was können wir wissen?
+
+In diesem Abschnitt geht es um die **Struktur der Rechtfertigung** und das Problem des Skeptizismus.
+
+## 1. Das Agrippa-Trilemma (Münchhausen-Trilemma)
+Wenn wir versuchen, eine Aussage zu begründen ($p_1$), brauchen wir eine Begründung ($p_2$). Für $p_2$ brauchen wir $p_3$ usw. Das führt laut dem antiken Skeptiker Agrippa (und später Hans Albert) in eine ausweglose Situation mit drei fatalen Optionen:
+
+1.  **Unendlicher Regress:** Die Begründungskette bricht nie ab ($p_1 \leftarrow p_2 \leftarrow p_3 \dots$). Man kommt nie zu einem festen Grund.
+2.  **Zirkelschluss:** Die Begründung dreht sich im Kreis ($p_1$ wird durch $p_2$ begründet, und $p_2$ wieder durch $p_1$). Logisch fehlerhaft.
+3.  **Dogmatischer Abbruch:** Man bricht an einem Punkt willkürlich ab und sagt: "Das ist einfach so" (Dogma). Das ist keine rationale Begründung.
+
+**Skeptische Schlussfolgerung:** Da alle drei Wege inakzeptabel sind, ist sicheres Wissen bzw. letzte Begründung unmöglich.
+
+## 2. Die drei Auswege (Erkenntnistheoretische Positionen)
+
+Diese Theorien versuchen, jeweils einen der "Hörner" des Trilemmas akzeptabel zu machen, um Wissen zu retten.
+
+### A. Fundamentalismus (Foundationalism)
+*   **Grundidee:** Akzeptiert den Abbruch der Begründungskette, behauptet aber, dieser sei **nicht willkürlich**.
+*   Es gibt **Basisüberzeugungen** (Fundament), die keiner weiteren Begründung bedürfen, weil sie evident (offensichtlich) oder unbezweifelbar sind (z.B. "Ich habe jetzt Schmerzen" oder "Ich denke"). Darauf baut das restliche Wissen auf.
+*   **Problem:** Gibt es wirklich unfehlbare Basisüberzeugungen? ("Myth of the Given"). Oft sind unsere Sinnesdaten schon theoriebeladen und fehlbar.
+
+### B. Kohärentismus (Coherentism)
+*   **Grundidee:** Akzeptiert die Zirkularität, deutet sie aber positiv als **ganzheitliches Netz**.
+*   Wissen ist kein Gebäude mit Fundament, sondern ein Netz oder Floß. Eine Meinung ist gerechtfertigt, wenn sie zum **gesamten System** der anderen Meinungen passt (kohärent ist), also widerspruchsfrei ist und sich gegenseitig stützt.
+*   **Problem:** Das **Isolations-Argument**. Ein Märchen kann in sich perfekt logisch und kohärent sein, hat aber nichts mit der Realität zu tun. Kohärenz allein garantiert keine Wahrheit (fehlender Realitätsbezug).
+
+### C. Kontextualismus
+*   **Grundidee:** Eine pragmatische Lösung des Regresses.
+*   Ob jemand "weiß" oder gerechtfertigt ist, hängt vom **Kontext** ab. Im Alltag ("Ist Milch im Kühlschrank?") sind die Ansprüche an Begründung niedrig. Vor Gericht oder in der Wissenschaft sind sie hoch.
+*   Das Wort "Wissen" hat je nach Situation eine andere Bedeutung. Der Regress bricht ab, wenn die Standards des aktuellen Kontextes erfüllt sind.
+*   **Problem:** Es löst das skeptische Problem nicht prinzipiell, sondern weicht auf sprachliche Nutzung aus. Zudem führt es zu einer Art Relativismus (Wissen ist situationsabhängig).

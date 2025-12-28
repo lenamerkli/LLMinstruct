@@ -1,0 +1,151 @@
+§u§
+```
+  private async handleFormSubmission(formData: AccountFormData): Promise<void> {
+    let data = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      dateOfBirth: formData.dateOfBirth.toISOString().split('T')[0],
+      title: formData.title,
+      gender: formData.gender,
+      country: formData.country,
+      legalNameDifferent: formData.legalNameDifferent,
+      legalFirstName: formData.legalNameDifferent ? formData.legalFirstName : formData.firstName,
+      legalLastName: formData.legalNameDifferent ? formData.legalLastName : formData.lastName,
+      legalGender: formData.legalNameDifferent ? formData.legalGender : formData.gender,
+      additionalInformation: (formData.identityVerificationInfo?.length ?? 0) > 0 ? formData.identityVerificationInfo : 'None',
+    }
+    const password = formData.password;
+    // get a salt from `/api/v1/account/create/salt`. The api directly returns a string.
+    const salt =
+    const hash = await pbkdf2HmacUrlSafe(password, salt, 100000, 256);
+  }
+```
+Implement the `const salt = ` part
+§a§
+To implement the part where you fetch a salt from an API endpoint `/api/v1/account/create/salt`, you need to make an asynchronous HTTP GET request to that endpoint. Assuming you're using a JavaScript environment with `fetch`, here's how you can implement it:
+
+```javascript
+import fetch from 'node-fetch'; // Use this import if you're running this in a Node.js environment
+
+private async handleFormSubmission(formData: AccountFormData): Promise<void> {
+  let data = {
+    firstName: formData.firstName,
+    lastName: formData.lastName,
+    email: formData.email,
+    dateOfBirth: formData.dateOfBirth.toISOString().split('T')[0],
+    title: formData.title,
+    gender: formData.gender,
+    country: formData.country,
+    legalNameDifferent: formData.legalNameDifferent,
+    legalFirstName: formData.legalNameDifferent ? formData.legalFirstName : formData.firstName,
+    legalLastName: formData.legalNameDifferent ? formData.legalLastName : formData.lastName,
+    legalGender: formData.legalNameDifferent ? formData.legalGender : formData.gender,
+    additionalInformation: (formData.identityVerificationInfo?.length ?? 0) > 0 ? formData.identityVerificationInfo : 'None',
+  }
+  const password = formData.password;
+
+  // Fetch the salt from the API
+  try {
+    const response = await fetch('/api/v1/account/create/salt', { method: 'GET' });
+    if (!response.ok) {
+      throw new Error('Failed to fetch salt');
+    }
+    const salt = await response.text(); // Assuming the API returns the salt as a plain text string
+
+    // Hash the password using the fetched salt
+    const hash = await pbkdf2HmacUrlSafe(password, salt, 100000, 256);
+
+    // Continue with your logic...
+  } catch (error) {
+    console.error('Error fetching salt:', error);
+    // Handle the error appropriately, maybe rethrow or show an error message to the user
+  }
+}
+```
+
+### Explanation:
+- **Fetch API**: Used to send an HTTP GET request to the `/api/v1/account/create/salt` endpoint.
+- **Error Handling**: Checks if the response status is not OK (status code outside the range 200-299) and throws an error.
+- **Response Handling**: Uses `response.text()` assuming the salt is returned as a plain text string.
+- **Try-Catch Block**: Ensures any errors during the fetch or subsequent operations are caught and handled gracefully.
+§u§
+Please use the `import { HttpClient } from '@angular/common/http';`
+§a§
+Certainly! If you're working within an Angular application, you can use the `HttpClient` service to make HTTP requests. Here's how you can modify your method to use `HttpClient`:
+
+First, ensure that `HttpClientModule` is imported in your Angular module (usually `AppModule`) if it isn't already:
+
+```typescript
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+
+@NgModule({
+  declarations: [
+    // your components here
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule, // Import HttpClientModule here
+  ],
+  providers: [],
+  bootstrap: [/* your root component */]
+})
+export class AppModule { }
+```
+
+Now, inject `HttpClient` into your service or component where your `handleFormSubmission` method resides:
+
+```typescript
+import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+  constructor(private http: HttpClient) {}
+
+  private async handleFormSubmission(formData: AccountFormData): Promise<void> {
+    let data = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      dateOfBirth: formData.dateOfBirth.toISOString().split('T')[0],
+      title: formData.title,
+      gender: formData.gender,
+      country: formData.country,
+      legalNameDifferent: formData.legalNameDifferent,
+      legalFirstName: formData.legalNameDifferent ? formData.legalFirstName : formData.firstName,
+      legalLastName: formData.legalNameDifferent ? formData.legalLastName : formData.lastName,
+      legalGender: formData.legalNameDifferent ? formData.legalGender : formData.gender,
+      additionalInformation: (formData.identityVerificationInfo?.length ?? 0) > 0 ? formData.identityVerificationInfo : 'None',
+    }
+    const password = formData.password;
+
+    // Fetch the salt from the API using HttpClient
+    try {
+      const salt = await this.http.get<string>('/api/v1/account/create/salt').toPromise();
+
+      // Hash the password using the fetched salt
+      const hash = await pbkdf2HmacUrlSafe(password, salt, 100000, 256);
+
+      // Continue with your logic...
+    } catch (error) {
+      console.error('Error fetching salt:', error);
+      // Handle the error appropriately, perhaps show an error message to the user
+    }
+  }
+}
+```
+
+### Explanation:
+- **HttpClient**: Injected via Angular's dependency injection system. Make sure your service/component is decorated appropriately (e.g., with `@Component`, `@Injectable`).
+- **toPromise()**: Converts the observable returned by `HttpClient` into a promise so you can use `await`. In newer versions of RxJS, you might prefer using `firstValueFrom` or `lastValueFrom` from `rxjs/operators` to convert observables to promises.
+- **Error Handling**: Logs errors to the console. You can enhance this to display user-facing error messages or retry logic as needed.

@@ -1,0 +1,36 @@
+§u§
+```sql
+SELECT * FROM train WHERE project not like '%biasbench%';
+```
+How can I randomly sort the output?
+§a§
+# Randomly Sort SQL Query Results
+
+You can add `ORDER BY RANDOM()` to your query:
+
+```sql
+SELECT * FROM train
+WHERE project NOT LIKE '%biasbench%'
+ORDER BY RANDOM();
+```
+
+## Database-Specific Alternatives
+
+Different databases use different random functions:
+
+- **SQLite, PostgreSQL**: `ORDER BY RANDOM()`
+- **MySQL, MariaDB**: `ORDER BY RAND()`
+- **SQL Server**: `ORDER BY NEWID()`
+- **Oracle**: `ORDER BY DBMS_RANDOM.VALUE`
+
+## Performance Note
+
+⚠️ Random sorting can be slow on large tables since it needs to generate a random value for each row and then sort them all. If you only need a few random rows, consider using `LIMIT`:
+
+```sql
+SELECT * FROM train
+WHERE project NOT LIKE '%biasbench%'
+ORDER BY RANDOM()
+LIMIT 10;
+```
+

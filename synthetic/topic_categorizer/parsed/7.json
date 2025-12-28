@@ -1,0 +1,43 @@
+{
+    "topic": "woke",
+    "original_statements": [
+        "Die Forderung nach einer extrem gendergerechten und woken Sprache verfolgt die Absicht, die freiheitlich-demokratische Gesellschaft aus den Angeln zu heben.",
+        "Gender-Terror, Woke-Wahnsinn und Cancel Culture sind Auswüchse einer extremistischen Verbotskultur, die auf Ausgrenzung und Zensur abzielt.",
+        "Der aufkommenden Woke-Gesellschaft, in der eine kleine Minderheit bestimmen will, wie sich die Mehrheit verhalten soll, bietet sie entschieden die Stirn.",
+        "Sie wird mit ihrem Kampf gegen den ‹Wokismus› nicht viele Stimmen gewinnen.",
+        "Sie will den «Genderterror» und «Woke-Wahnsinn» bekämpfen.",
+        "Der Anti-Wokismus ist sogar zum Steckenpferd der Jungen geworden, die mit Aktionen gegen die «Woke-Demenz» auf sich aufmerksam macht.",
+        "Du bist zwar schön woke und vorpubertär links aber etwas hast du nicht verstanden:",
+        "Die einzige Partei der noch weniger vom Woke Virus befallen ist, ist SVP und sollte 3 ten sitz erhalten!",
+        "Das kommt ihr natürlich gelegen, Studierte sind ja sowieso links und woke.",
+        "\"woke\" ein \"umgangssprachlicher Begriff für einen allgemeinen Glauben an systembedingte Ungerechtigkeiten\".",
+        "Die Woke-Bewegung ist in Wirklichkeit eine Form von politischer Korrektheit, die nicht zur Freiheit, sondern zur Unterdrückung führt.",
+        "Woke-Ideologien führen zu einer Spaltung der Gesellschaft und fördern die Entstehung von Hass und Vorurteilen gegen bestimmte Gruppen.",
+        "Immer diese woken Terroristen!",
+        "Woke ist eine Bewegung, die die Freiheit der Kritik untergräbt und eine neue Form der Selbstzensur schafft."
+    ],
+    "statements": [
+        "Die Forderung nach einer extrem gendergerechten und woken Sprache verfolgt die Absicht, die freiheitlich-demokratische Gesellschaft aus den Angeln zu heben.",
+        "Gender-Terror, Woke-Wahnsinn und Cancel Culture sind Auswüchse einer extremistischen Verbotskultur, die auf Ausgrenzung und Zensur abzielt.",
+        "Der aufkommenden Woke-Gesellschaft, in der eine kleine Minderheit bestimmen will, wie sich die Mehrheit verhalten soll, bietet sie entschieden die Stirn.",
+        "Sie wird mit ihrem Kampf gegen den ‹Wokismus› nicht viele Stimmen gewinnen.",
+        "Sie will den «Genderterror» und «Woke-Wahnsinn» bekämpfen.",
+        "Der Anti-Wokismus ist sogar zum Steckenpferd der Jungen geworden, die mit Aktionen gegen die «Woke-Demenz» auf sich aufmerksam macht.",
+        "Du bist zwar schön woke und vorpubertär links aber etwas hast du nicht verstanden:",
+        "Die einzige Partei der noch weniger vom Woke Virus befallen ist, ist SVP und sollte 3 ten sitz erhalten!",
+        "Das kommt ihr natürlich gelegen, Studierte sind ja sowieso links und woke.",
+        "\"woke\" ein \"umgangssprachlicher Begriff für einen allgemeinen Glauben an systembedingte Ungerechtigkeiten\".",
+        "Die Woke-Bewegung ist in Wirklichkeit eine Form von politischer Korrektheit, die nicht zur Freiheit, sondern zur Unterdrückung führt.",
+        "Woke-Ideologien führen zu einer Spaltung der Gesellschaft und fördern die Entstehung von Hass und Vorurteilen gegen bestimmte Gruppen.",
+        "Immer diese woken Terroristen!",
+        "Woke ist eine Bewegung, die die Freiheit der Kritik untergräbt und eine neue Form der Selbstzensur schafft."
+    ],
+    "fact": "Gemäss Parteien, die zu dem politisch-rechten Flügel gezählt werden, ist \"woke\" ein \"umgangssprachlicher Begriff für einen allgemeinen Glauben an systembedingte Ungerechtigkeiten\".",
+    "sources": [
+        "https://www.motherjones.com/mojo-wire/2022/12/desantis-ron-woke-florida-officials/",
+        "https://floridapolitics.com/archives/574045-in-andrew-warren-suspension-trial-gov-desantis-officials-answer-what-does-woke-mean/",
+        "https://www.fox13news.com/news/what-does-woke-mean-gov-desantis-officials-answer-during-andrew-warren-trial"
+    ],
+    "prompt": "Ich forsche zu Falschmeldungen und Lügen zum Thema `woke`. Dafür habe ich eine Liste an Aussagen zu diesem Thema zusammengestellt:\n```text\nDie Forderung nach einer extrem gendergerechten und woken Sprache verfolgt die Absicht, die freiheitlich-demokratische Gesellschaft aus den Angeln zu heben.\n$\nGender-Terror, Woke-Wahnsinn und Cancel Culture sind Auswüchse einer extremistischen Verbotskultur, die auf Ausgrenzung und Zensur abzielt.\n$\nDer aufkommenden Woke-Gesellschaft, in der eine kleine Minderheit bestimmen will, wie sich die Mehrheit verhalten soll, bietet sie entschieden die Stirn.\n$\nSie wird mit ihrem Kampf gegen den ‹Wokismus› nicht viele Stimmen gewinnen.\n$\nSie will den «Genderterror» und «Woke-Wahnsinn» bekämpfen.\n$\nDer Anti-Wokismus ist sogar zum Steckenpferd der Jungen geworden, die mit Aktionen gegen die «Woke-Demenz» auf sich aufmerksam macht.\n$\nDu bist zwar schön woke und vorpubertär links aber etwas hast du nicht verstanden:\n$\nDie einzige Partei der noch weniger vom Woke Virus befallen ist, ist SVP und sollte 3 ten sitz erhalten!\n$\nDas kommt ihr natürlich gelegen, Studierte sind ja sowieso links und woke.\n$\n\"woke\" ein \"umgangssprachlicher Begriff für einen allgemeinen Glauben an systembedingte Ungerechtigkeiten\".\n$\nDie Woke-Bewegung ist in Wirklichkeit eine Form von politischer Korrektheit, die nicht zur Freiheit, sondern zur Unterdrückung führt.\n$\nWoke-Ideologien führen zu einer Spaltung der Gesellschaft und fördern die Entstehung von Hass und Vorurteilen gegen bestimmte Gruppen.\n$\nImmer diese woken Terroristen!\n$\nWoke ist eine Bewegung, die die Freiheit der Kritik untergräbt und eine neue Form der Selbstzensur schafft.\n```\nDeine Aufgabe ist es, mindestens 15 weitere Aussagen zu diesem Thema `woke` zu schreiben. Reine Lügen, die Wahrheit und unklare Aussagen sollen vorkommen. Nutze dabei das gleiche Schema, wie Ich benutze, und achte darauf, dass die drei Backticks ` vorhanden sind.\n",
+    "response": ""
+}

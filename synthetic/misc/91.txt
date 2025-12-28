@@ -1,0 +1,48 @@
+§u§
+I'm installing Windows using USB. What do I have to do at the `Install driver to show hardware` section? The default list is empty and I can't click install.
+§a§
+Based on your description, it sounds like the Windows installer isn't automatically detecting the necessary drivers for your computer's storage device (like an NVMe SSD). This is a common issue on newer PCs. Here's what you need to do to fix it:
+
+**The Problem:**
+
+The "Install driver to show hardware" message appears because the Windows installer doesn't have the built-in drivers to "see" your computer's hard drive or SSD. Without these drivers, it can't find anywhere to install Windows.
+
+**The Solution: Download and Load the Storage Controller Driver**
+
+You need to manually provide the correct storage controller driver. Here's a step-by-step guide:
+
+### Step 1: Identify Your Motherboard/PC Model
+
+*   **For a pre-built PC (Dell, HP, Lenovo, etc.):** Look for a sticker on the case with the model number.
+*   **For a custom-built PC:** Find the model number on your motherboard's box or on the board itself. It'll usually be something like "ASUS Z790," "Gigabyte B650," or "MSI B760."
+
+### Step 2: Download the Driver
+
+1.  **Use another computer:** You'll need access to a different working computer with internet access.
+2.  **Go to the manufacturer's website:**
+    *   **Motherboard brand:** Go to the support page for your specific motherboard model (e.g., `www.asus.com/support`, `www.gigabyte.com/support`).
+    *   **PC brand:** Go to the support/drivers page for your PC model (e.g., `support.dell.com`, `support.hp.com`).
+3.  **Find the "Drivers & Utilities" or "Downloads" section.**
+4.  **Look for the Storage, Chipset, or VMD/RAID driver:**
+    *   The driver you need is often called "Intel Rapid Storage Technology (IRST) Driver," "AMD RAID Driver," or "Storage Driver."
+    *   Look for a file with a `.zip` or `.exe` extension. You want the one for Windows 10 or Windows 11.
+5.  **Download the driver file.**
+
+### Step 3: Extract and Copy the Driver to Your USB Drive
+
+*   **Extract the files:** The downloaded driver is likely a compressed `.zip` file. You need to extract its contents. Right-click the file and choose "Extract All" to a new folder.
+*   **Copy the extracted folder:** Copy the *entire extracted folder* onto the Windows installation USB drive you are using. Do not put it inside any other folder on the USB; just place it in the root directory.
+
+### Step 4: Load the Driver during Windows Installation
+
+1.  **Plug your Windows installation USB and the driver-loaded USB (or the single USB with both) into your computer.**
+2.  **Restart the installation process.**
+3.  **When you get to the "Install driver to show hardware" screen:**
+    *   Click the **"Load driver"** button.
+    *   Click **"Browse"**.
+    *   Navigate to your USB drive and find the folder you copied the driver into.
+    *   Select the correct folder and click **"OK"**.
+4.  **Select the driver:** A list of drivers should now appear. Select the correct storage controller driver from the list. It will likely be named something like "Intel(R) VMD Controller" or "AMD-RAID Bottom Device."
+5.  **Click "Next" to install the driver.**
+
+Once the driver is installed, the list of available drives will populate, and you'll be able to select your hard drive or SSD and proceed with the Windows installation.

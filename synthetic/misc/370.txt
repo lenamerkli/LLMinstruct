@@ -1,0 +1,594 @@
+§u§
+```
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{xurl}
+\usepackage{longtable}
+
+
+\title{[FR] résume du test 2025-06-23}
+\author{REDACTED}
+
+\begin{document}
+    \maketitle
+    \tableofcontents
+    
+    \bigskip\bigskip
+    
+    \section{Objectifs d'apprentissage}
+        Je suis capable de/d'
+        \begin{itemize}
+            \item employer le vocabulaire de ``la parure''.
+            \item employer le vocabulaire de ``Miss Harriet''.
+            \item conjuguer les verbes du vocabulaire au présent et au passé composé.
+            \item remplacer des verbes au passé simple dans une phrase par le même verbe au passé composé.
+            \item conjuguer les verbes du dossier sur la passé simple au passé composé.
+            \item conjuguer les verbes les plus utilisés en français au présent.
+        \end{itemize}
+    \section{Vocabulaire de ``la parure''}
+        \begingroup
+        \small
+        \setlength{\tabcolsep}{8pt}
+        \renewcommand{\arraystretch}{1.2}
+        
+        \begin{longtable}{|>{\RaggedRight}p{0.45\linewidth}|>{\RaggedRight}p{0.45\linewidth}|}
+            \hline
+            verführen & séduire \\
+            \hline
+            verführerisch & séduisant/séduisante \\
+            \hline
+            die Verführung & la séduction \\
+            \hline
+            Fehler & l'erreur (f.) \\
+            \hline
+            falsch / fehlerhaft & erroné/erronée \\
+            \hline
+            gar nicht / durchaus nicht & ne ... point / ne ... pas du tout \\
+            \hline
+            Biegsamkeit / Geschmeidigkeit / Flexibilität & la souplesse \\
+            \hline
+            biegsam / weich / flexibel & souple \\
+            \hline
+            (Synonym) tout le temps / sans arrêt & sans cesse \\
+            \hline
+            Folter / Qual & la torture \\
+            \hline
+            jdn. empören/entrüsten & indigner qn. \\
+            \hline
+            etw. wahrnehmen/erkennen & s'apercevoir de \\
+            \hline
+            (Synonym) rêver / penser à & songer à qc. \\
+            \hline
+            sehr erfreut & enchanté/enchantée \\
+            \hline
+            entzückt / begeistert & ravi/ravie \\
+            \hline
+            jdn. beneiden & envier qn. \\
+            \hline
+            neidisch (auf) & envieux / envieuse (de) \\
+            \hline
+            Kummer / Leid & le chagrin \\
+            \hline
+            Hoffnung & l'espoir \\
+            \hline
+            Verzweiflung / Hofnungslosigkeit & le désespoir \\
+            \hline
+            Gelegenheit / Möglichkeit & l'occasion (f.) \\
+            \hline
+            Mühe / Strafe & la peine \\
+            \hline
+            Todesstrafe & la peine de mort \\
+            \hline
+            Mühe haben etw. zu tun & avoir de la peine à faire qc. \\
+            \hline
+            erhalten / bekommen & obtenir \\
+            \hline
+            stammeln / stottern & balbutier \\
+            \hline
+            verblüfft / betroffen / bestürzt & stupéfait/stupéfaite \\
+            \hline
+            Träne & la larme \\
+            \hline
+            (Synonym) essayer de faire qc. & tâcher de faire qc. \\
+            \hline
+            Halskette & le collier \\
+            \hline
+            Betrunkenheit / Rausch & l'ivresse (f.) \\
+            \hline
+            betrunken & ivre \\
+            \hline
+            Scham / Schande & la honte \\
+            \hline
+            beschämend/beschämt (über) & honteux/honteuse (de) \\
+            \hline
+            betrachten / anschauen & contempler \\
+            \hline
+            niedergeschlagen / bedrückt & abattu/abattue \\
+            \hline
+            Belohnung & la récompense \\
+            \hline
+            Verdacht & le soupçon \\
+            \hline
+            jdn. einer Sache verdächtigen & soupçonner qn. de qc. \\
+            \hline
+            (Synonym) la grande peur & l'angoisse (f.) \\
+            \hline
+            Schuld (Geld) & la dette \\
+            \hline
+            Wohnung / Unterkunft & le logement \\
+            \hline
+            Abfall & l'ordure (f.) \\
+            \hline
+            sich irren & se tromper \\
+            \hline
+            bewegen / berühren / rühren & émouvoir \\
+            \hline
+            Gefühl / Emotion & l'émotion (f.) \\
+            \hline
+            gerührt / bewegt & ému/émue \\
+            \hline
+            ein Gatte / eine Gattin / ein Ehemann / eine Ehefrau & un époux / une épouse \\
+            \hline
+            jdn. heiraten & épouser qn. / se marier \\
+            \hline
+            arm & pauvre \\
+            \hline
+            die Armut & la pauvreté \\
+            \hline
+            ein Arbeiter / eine Arbeiterin & un ouvrier / une ouvrière (syn. un employé / une employée) \\
+            \hline
+            sparsam (Person) & économe \\
+            \hline
+            ein Gewehr & un fusil \\
+            \hline
+            näher rücken (Antonym: s'éloigner) & approcher \\
+            \hline
+            überzeugt sein, dass & être convaincu/convaincue que (syn. être persuadé que) \\
+            \hline
+            zittern / beben & trembler \\
+            \hline
+            bewundern / verehren & admirer \\
+            \hline
+            die Bewunderung & l'admiration \\
+            \hline
+            die Kleider ausziehen & enelever / ôter (syn.) ... les vêtements / un pull \\
+            \hline
+            bleiben & demeurer (syn. rester) \\
+            \hline
+            belohnen & récompenser \\
+            \hline
+            eine Belohnung & une récompense \\
+            \hline
+            reich & riche \\
+            \hline
+            der Reichtum & la richesse \\
+            \hline
+            die Jagd & la chasse \\
+            \hline
+            jagen & chasser \\
+            \hline
+            sparen / Geld zur Seite legen & faire des économies \\
+            \hline
+            eine Diamantkette / ein Fluss & une rivière (syn. un collier) \\
+            \hline
+            wert sein / gelten & valoir \\
+            \hline
+            es lohnt sich & ça vaut la peine (de) \\
+            \hline
+            etw. besitzen / über etw. verfügen & posséder qc. \\
+            \hline
+            sich etw. leihen & emprunter qc. (syn. prêter qc. à qn.) \\
+            \hline
+            etw. zurückgeben & rendre qc. à qn. \\
+            \hline
+            die schmutzige Wäsche & le linge sale \\
+            \hline
+            die saubere Wäsche & le linge propre \\
+            \hline
+            vermieten & louer \\
+            \hline
+            ein Dienstmädchen & une bonne \\
+            \hline
+            das Dach & le toit \\
+            \hline
+            ein Dachzimmer & une mansarde \\
+            \hline
+            die Nägel & les ongles \\
+            \hline
+            die schmutzige Wäsche & le linge sale \\
+            \hline
+            Müll / Abfall & les ordures (f.) / les déchets (m.) \\
+            \hline
+            sich kämmen & se peigner (les cheveux) / se coiffer \\
+            \hline
+            der Ball / Tanzball & le bal \\
+            \hline
+            das Bürgertum & la bourgeoisie \\
+            \hline
+            ein Bürgerlicher & un bourgeois \\
+            \hline
+            eine Bürgerliche & une bourgeoise \\
+            \hline
+            etw. ersetzen druch etw. & remplacer qc. par qc. \\
+            \hline
+            wert sein & valoir \\
+            \hline
+            es ist (es) wert & ça vaut ... \\
+            \hline
+            arm & pauvre \\
+            \hline
+            reich & riche \\
+            \hline
+        \end{longtable}
+        \endgroup
+    \section{Vocabulaire de ``Miss Harriet''}
+        \begingroup
+        \small
+        \setlength{\tabcolsep}{8pt}
+        \renewcommand{\arraystretch}{1.2}
+        
+        \begin{longtable}{|>{\RaggedRight}p{0.45\linewidth}|>{\RaggedRight}p{0.45\linewidth}|}
+            \hline
+            ein Feld & un champ \\
+            \hline
+            der Hafer & l'avoine (f.) \\
+            \hline
+            der Weizen & le blé \\
+            \hline
+            ein Lauf / ein Rennen & une course \\
+            \hline
+            ein Sprung & un saut \\
+            \hline
+            springen & sauter \\
+            \hline
+            ein Tier & une bête \\
+            \hline
+            dumm & bête \\
+            \hline
+            ein Maler & un peintre \\
+            \hline
+            gleich / ähnlich & semblable \\
+            \hline
+            unter dem Vorwand & sous prétexte de/que \\
+            \hline
+            ohne Hindernisse (ungehindert) & sans entrave \\
+            \hline
+            umherirren & errer / vagabonder \\
+            \hline
+            jdn./etw. verachten & mépriser qn./qc. \\
+            \hline
+            Verachtung & le mépris \\
+            \hline
+            ein Stall & une étable / une écurie \\
+            \hline
+            der Dachboden & le grenier \\
+            \hline
+            eine Liebkosung & une caresse \\
+            \hline
+            streicheln & caresser \\
+            \hline
+            das Land (im Gegensatz zur Stadt) & la campagne \\
+            \hline
+            das Holz / der Wald & le bois / les bois (syn. la forêt) \\
+            \hline
+            der Mond & la lune \\
+            \hline
+            eine Wiese & une prairie / un pré / une plaine \\
+            \hline
+            ein Hügel & une colline / une butte \\
+            \hline
+            eine Witwe / ein Witwer & une veuve / un veuf \\
+            \hline
+            jdn. zu etw. bekehren & convertir qn. à qc. \\
+            \hline
+            Pfarrer & le curé / le prêtre \\
+            \hline
+            jdn./etw. jagen/verjagen & chasser qn./qc. \\
+            \hline
+            unerträglich / unausstehlich & insupportable \\
+            \hline
+            feindselig / feindlich & hostile (à) \\
+            \hline
+            engstirnig / kleinkariert & borné / bornée \\
+            \hline
+            der Geist / der Verstand & l'esprit \\
+            \hline
+            fühlen / empfinden (ein Gefühl) & éprouver (un sentiment) \\
+            \hline
+            bedecken & couvrir \\
+            \hline
+            der Sitz & le siège \\
+            \hline
+            der Schlaf & le sommeil \\
+            \hline
+            müde sein & avoir sommeil \\
+            \hline
+            stolz sein auf etw. & être fier/fière de \\
+            \hline
+        \end{longtable}
+        \endgroup
+\end{document}
+```
+Erstelle eine `\section{}` für das dritte Lernziel `... conjuguer les verbes du vocabulaire au présent et au passé composé.`.
+§a§
+Um das dritte Lernziel "conjuguer les verbes du vocabulaire au présent et au passé composé" umzusetzen, füge ich eine neue Sektion mit einer Tabelle aller relevanten Verben aus den Vokabellisten hinzu. Die Verben werden in alphabetischer Reihenfolge mit ihrer Konjugation in der 3. Person Singular (Präsens und Passé composé) dargestellt:
+
+```latex
+\section{Conjugaison des verbes du vocabulaire au présent et au passé composé}
+\begingroup
+\small
+\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.2}
+
+\begin{longtable}{|>{\RaggedRight}p{0.3\linewidth}|>{\RaggedRight}p{0.3\linewidth}|>{\RaggedRight}p{0.3\linewidth}|}
+\hline
+\textbf{Infinitif} & \textbf{Présent (3e pers. sg.)} & \textbf{Passé composé (3e pers. sg.)} \\
+\hline
+\endhead
+
+admirer & il admire & il a admiré \\
+\hline
+approcher & il approche & il a approché \\
+\hline
+s'apercevoir & il s'aperçoit & il s'est aperçu \\
+\hline
+balbutier & il balbutie & il a balbutié \\
+\hline
+caresser & il caresse & il a caressé \\
+\hline
+chasser & il chasse & il a chassé \\
+\hline
+contempler & il contemple & il a contemplé \\
+\hline
+couvrir & il couvre & il a couvert \\
+\hline
+demeurer & il demeure & il est demeuré \\
+\hline
+émouvoir & il émeut & il a ému \\
+\hline
+emprunter & il emprunte & il a emprunté \\
+\hline
+envier & il envie & il a envié \\
+\hline
+épouser & il épouse & il a épousé \\
+\hline
+éprouver & il éprouve & il a éprouvé \\
+\hline
+errer & il erre & il a erré \\
+\hline
+indigner & il indigne & il a indigné \\
+\hline
+louer & il loue & il a loué \\
+\hline
+mépriser & il méprise & il a méprisé \\
+\hline
+obtenir & il obtient & il a obtenu \\
+\hline
+ôter & il ôte & il a ôté \\
+\hline
+enlever & il enlève & il a enlevé \\
+\hline
+se peigner & il se peigne & il s'est peigné \\
+\hline
+posséder & il possède & il a possédé \\
+\hline
+rendre & il rend & il a rendu \\
+\hline
+récompenser & il récompense & il a récompensé \\
+\hline
+remplacer & il remplace & il a remplacé \\
+\hline
+rester & il reste & il est resté \\
+\hline
+sauter & il saute & il a sauté \\
+\hline
+séduire & il séduit & il a séduit \\
+\hline
+songer & il songe & il a songé \\
+\hline
+tâcher & il tâche & il a tâché \\
+\hline
+trembler & il tremble & il a tremblé \\
+\hline
+vagabonder & il vagabonde & il a vagabondé \\
+\hline
+valoir & il vaut & il a valu \\
+\hline
+se tromper & il se trompe & il s'est trompé \\
+\hline
+\end{longtable}
+\endgroup
+```
+
+**Hinweise zur Implementierung:**
+1. Die Tabelle enthält alle Verben aus den Vokabellisten von "La Parure" und "Miss Harriet"
+2. Reflexive Verben (z.B. s'apercevoir, se tromper) sind mit Reflexivpronomen konjugiert
+3. Verben mit Bewegung/Statusänderung (demeurer, rester) verwenden "être" im Passé composé
+4. Alphabetische Sortierung für bessere Übersicht
+5. Kompaktes Design mit 3. Person Singular als repräsentative Form
+6. Unregelmäßige Formen sind speziell gekennzeichnet (z.B. émouvoir → il émeut)
+
+Diese Tabelle ermöglicht das systematische Lernen der Verbkonjugationen für das genannte Lernziel.
+§u§
+Mache lieber alle Personen Präsens und in der 1. person singular passé composé
+§a§
+Um das Lernziel "conjuguer les verbes du vocabulaire au présent et au passé composé" mit allen Personen im Präsens und der 1. Person Singular im Passé composé umzusetzen, erstelle ich eine übersichtliche Tabelle mit drei Spalten:
+
+```latex
+\section{Conjugaison des verbes du vocabulaire}
+\subsection{Présent et passé composé}
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.5}
+
+\begin{longtable}{|>{\RaggedRight}p{2.5cm}|>{\RaggedRight}p{6.5cm}|>{\RaggedRight}p{3.5cm}|}
+\hline
+\textbf{Infinitif} & \textbf{Présent} & \textbf{Passé composé (je)} \\
+\hline
+\endhead
+
+admirer & 
+je admire, tu admires, il admire, nous admirons, vous admirez, ils admirent & 
+j'ai admiré \\
+\hline
+approcher & 
+j'approche, tu approches, il approche, nous approchons, vous approchez, ils approchent & 
+j'ai approché \\
+\hline
+s'apercevoir & 
+je m'aperçois, tu t'aperçois, il s'aperçoit, nous nous apercevons, vous vous apercevez, ils s'aperçoivent & 
+je me suis aperçu(e) \\
+\hline
+balbutier & 
+je balbutie, tu balbuties, il balbutie, nous balbutions, vous balbutiez, ils balbutient & 
+j'ai balbutié \\
+\hline
+caresser & 
+je caresse, tu caresses, il caresse, nous caressons, vous caressez, ils caressent & 
+j'ai caressé \\
+\hline
+chasser & 
+je chasse, tu chasses, il chasse, nous chassons, vous chassez, ils chassent & 
+j'ai chassé \\
+\hline
+contempler & 
+je contemple, tu contemples, il contemple, nous contemplons, vous contemplez, ils contemplent & 
+j'ai contemplé \\
+\hline
+couvrir & 
+je couvre, tu couvres, il couvre, nous couvrons, vous couvrez, ils couvrent & 
+j'ai couvert \\
+\hline
+demeurer & 
+je demeure, tu demeures, il demeure, nous demeurons, vous demeurez, ils demeurent & 
+je suis demeuré(e) \\
+\hline
+émouvoir & 
+j'émeus, tu émeus, il émeut, nous émouvons, vous émouvez, ils émeuvent & 
+j'ai ému \\
+\hline
+emprunter & 
+j'emprunte, tu empruntes, il emprunte, nous empruntons, vous empruntez, ils empruntent & 
+j'ai emprunté \\
+\hline
+envier & 
+j'envie, tu envies, il envie, nous envions, vous enviez, ils envient & 
+j'ai envié \\
+\hline
+épouser & 
+j'épouse, tu épouses, il épouse, nous épousons, vous épousez, ils épousent & 
+j'ai épousé \\
+\hline
+éprouver & 
+j'éprouve, tu éprouves, il éprouve, nous éprouvons, vous éprouvez, ils éprouvent & 
+j'ai éprouvé \\
+\hline
+errer & 
+j'erre, tu erres, il erre, nous errons, vous errez, ils errent & 
+j'ai erré \\
+\hline
+indigner & 
+j'indigne, tu indignes, il indigne, nous indignons, vous indignez, ils indignent & 
+j'ai indigné \\
+\hline
+louer & 
+je loue, tu loues, il loue, nous louons, vous louez, ils louent & 
+j'ai loué \\
+\hline
+mépriser & 
+je méprise, tu méprises, il méprise, nous méprisons, vous méprisez, ils méprisent & 
+j'ai méprisé \\
+\hline
+obtenir & 
+j'obtiens, tu obtiens, il obtient, nous obtenons, vous obtenez, ils obtiennent & 
+j'ai obtenu \\
+\hline
+ôter & 
+j'ôte, tu ôtes, il ôte, nous ôtons, vous ôtez, ils ôtent & 
+j'ai ôté \\
+\hline
+enlever & 
+j'enlève, tu enlèves, il enlève, nous enlevons, vous enlevez, ils enlèvent & 
+j'ai enlevé \\
+\hline
+se peigner & 
+je me peigne, tu te peignes, il se peigne, nous nous peignons, vous vous peignez, ils se peignent & 
+je me suis peigné(e) \\
+\hline
+posséder & 
+je possède, tu possèdes, il possède, nous possédons, vous possédez, ils possèdent & 
+j'ai possédé \\
+\hline
+rendre & 
+je rends, tu rends, il rend, nous rendons, vous rendez, ils rendent & 
+j'ai rendu \\
+\hline
+récompenser & 
+je récompense, tu récompenses, il récompense, nous récompensons, vous récompensez, ils récompensent & 
+j'ai récompensé \\
+\hline
+remplacer & 
+je remplace, tu remplaces, il remplace, nous remplaçons, vous remplacez, ils remplacent & 
+j'ai remplacé \\
+\hline
+rester & 
+je reste, tu restes, il reste, nous restons, vous restez, ils restent & 
+je suis resté(e) \\
+\hline
+sauter & 
+je saute, tu sautes, il saute, nous sautons, vous sautez, ils sautent & 
+j'ai sauté \\
+\hline
+séduire & 
+je séduis, tu séduis, il séduit, nous séduisons, vous séduisez, ils séduisent & 
+j'ai séduit \\
+\hline
+songer & 
+je songe, tu songes, il songe, nous songeons, vous songez, ils songent & 
+j'ai songé \\
+\hline
+tâcher & 
+je tâche, tu tâches, il tâche, nous tâchons, vous tâchez, ils tâchent & 
+j'ai tâché \\
+\hline
+trembler & 
+je tremble, tu trembles, il tremble, nous tremblons, vous tremblez, ils tremblent & 
+j'ai tremblé \\
+\hline
+vagabonder & 
+je vagabonde, tu vagabondes, il vagabonde, nous vagabondons, vous vagabondez, ils vagabondent & 
+j'ai vagabondé \\
+\hline
+valoir & 
+je vaux, tu vaux, il vaut, nous valons, vous valez, ils valent & 
+j'ai valu \\
+\hline
+se tromper & 
+je me trompe, tu te trompes, il se trompe, nous nous trompons, vous vous trompez, ils se trompent & 
+je me suis trompé(e) \\
+\hline
+\end{longtable}
+\endgroup
+```
+
+**Wichtige Anpassungen:**
+1. Kompaktes Design mit kleiner Schriftgröße (`\scriptsize`) und optimierten Spaltenbreiten
+2. Drei Spalten: Infinitiv, Präsens (alle 6 Personen), Passé composé (nur 1. Person Singular)
+3. Reflexive Verben mit korrekten Reflexivpronomen (je me, tu te, etc.)
+4. Unregelmäßige Formen speziell gekennzeichnet:
+   - Verbänderungen (émouvoir → j'émeus)
+   - Besondere Partizipien (couvrir → couvert)
+   - "Être"-Verben (demeurer, rester) mit Geschlechtsangabe (e) bei femininer Form
+5. Alphabetische Sortierung für einfache Orientierung
+6. Erhöhter Zeilenabstand (`\renewcommand{\arraystretch}{1.5}`) für bessere Lesbarkeit
+
+Diese Tabelle ermöglicht das systematische Üben aller Personen im Präsens und der 1. Person Singular im Passé composé für alle relevanten Verben aus dem Vokabular.

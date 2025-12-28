@@ -1,0 +1,142 @@
+§u§
+Give me tips on how I what I should include in the user database for my file hosting.
+§a§
+
+
+Here are practical, security-first tips for what to include in your user database for a file hosting service, plus how to structure and operate it safely.
+
+## Core user account data
+- Use immutable identifiers
+  - id: UUID (primary key), not auto-increment.
+  - username: unique, normalized to lowercase, immutable if you allow changes (optional).
+  - email: canonicalized (e.g., lowercase, trimmed), unique, immutable or versioned.
+- Authentication
+  - password_hash: Argon2id or bcrypt. Never store plaintext or reversible hashes.
+  - password_algorithm: e.g., argon2id-v19.
+  - password_updated_at.
+  - Password reset token (hashed; expiry).
+  - Email verification token (hashed; expiry).
+  - MFA/2FA: TOTP secret (encrypted), backup codes (hashed), U2F/WebAuthn keys.
+  - For SSO/OIDC: provider, provider_user_id (stable), latest_id_token_hash.
+- Lifecycle and status
+  - created_at, updated_at.
+  - email_verified_at.
+  - last_login_at, last_login_ip (or a hash/minimized log).
+  - failed_login_count, locked_until, lock_reason.
+  - tos_version_accepted_at.
+  - status: active/suspended/banned/pending_verification. Include reason and actor_id.
+- Roles and access
+  - role: user/admin/mod.
+  - is_admin (boolean), admin_notes.
+  - country/currency (for billing), time_zone (for UI).
+- Limits and quotas
+  - plan_id (FK to plans).
+  - max_storage_bytes (derived via plan or stored for speed).
+  - max_file_size_bytes.
+  - max_uploads_per_day.
+  - rate limit bucket key (e.g., per IP, per user).
+- Compliance and privacy
+  - consent_marketing_at, consent_analytics_at.
+  - data_processing_consent_version.
+  - dsar_requested_at, deletion_requested_at, deletion_due_at, deletion_completed_at.
+  - gdpr_retain_until, ccpa_opt_out (boolean), do_not_sell (boolean).
+  - retention_delete_after_days (per policy).
+  - data_minimized_fields: JSON of what you anonymized or omitted.
+  - pii_flags (boolean or enum: email, IP, country).
+- Notifications
+  - email_notifications_enabled, marketing_emails_enabled.
+  - communication_id: hashed email for dedupe.
+- API/Programmatic access
+  - api_key_hash + api_key_scopes (JSON: read, write, admin), api_key_last_used_at.
+
+Optional but often helpful
+- Searchable display_name (normalized for FTS).
+- Email bounces/suppressed due to bounces.
+
+## Derived or linked data (don’t duplicate)
+- Per-user disk_usage_bytes: maintained by triggers or job; shown to user.
+- Counters: total_uploads, total_downloads, files_count.
+- Last activity at: from audit logs.
+
+## File/object metadata (distinct from “users”)
+- files table
+  - owner_user_id (FK), visibility (private/shared/link), bucket/container, path.
+  - version (int), mime_type, size_bytes, checksum_sha256, storage_class.
+  - created_by_admin (bool).
+  - expires_at (optional), legal_hold (bool), is_deleted (soft delete).
+- uploads
+  - upload_id (UUID), upload_state (init/committed/aborted), checksum_sha256.
+- shares/links
+  - link_id (UUID), token (random, high entropy), permissions (read/write), password_hash (optional), expires_at.
+- folders (optional)
+  - parent_folder_id, name, path (materialized or virtual path via CTEs).
+
+## Session and device data
+- sessions (JWT session store if needed)
+  - session_id (opaque), user_agent_hash, ip_hash, created_at, expires_at, revoked_at.
+- devices (for MFA + anomaly detection)
+  - device_id, last_seen_at, trust_level (trusted/untrusted), risk_score.
+- login attempts
+  - Minimal details: user_id (nullable), ip_hash, success, at, user_agent_hash. Protect this table.
+
+## Payments/subscriptions (if you charge)
+- customers
+  - customer_id, provider (Stripe/etc.), provider_customer_id.
+- subscriptions/plan_history
+  - start_at, end_at, plan_id, cancel_at, cancel_reason.
+- invoices/payments
+  - invoice_id, amount_cents, currency, paid_at, provider_charge_id.
+- taxes
+  - country/state, tax_id, tax_exempt_at.
+- dispute records
+  - dispute_id, reason, status, opened_at.
+
+## Security and audit (append-only and immutable)
+- audit_logs
+  - actor_user_id (or “system”), target_type, target_id, action, context_hash (digiests), at.
+- api_key_usage (optional)
+  - api_key_id (partial), route, bytes_in, bytes_out, at.
+
+## Indexing and constraints
+- users: unique(email), unique(username), indexes on (email_verified_at), (status), (created_at).
+- password_reset_token: unique hash with expiry; index on expires_at.
+- sessions/devices: indexes on (user_id, created_at).
+- audit_logs: partition by month, index on (created_at).
+- files: indexes on (owner_user_id), (created_at), (visibility, path), (expires_at).
+- storage or object metadata: ideally in the storage provider’s metadata; avoid duplicating at database level.
+
+## Data minimization and security practices
+- Hash PII where not required in queries: ip_hash, email_hash for dedupe, user_agent_hash.
+- Encrypt secrets at rest: TOTP secrets, API keys, payment provider tokens.
+- Log IP addresses minimally; prefer hashed IP + event type.
+- Use strict uniqueness and case-insensitive normalization for email and username.
+- Avoid storing plaintext passwords, session tokens, or internal secrets.
+- Use immutable identifiers; no auto-increment IDs.
+- Add RLS/ACLs at DB level where supported (e.g., per-row access enforcement).
+- Design consistent audit trails; never mutate audit rows.
+- Enforce data retention/deletion policies in DB (delete_after_days and scheduled jobs).
+- Sensitive tokens (reset/verify/magic link): hashed + short TTL + single-use.
+
+## Sample high-level schema snapshot (Postgres-flavored)
+- users(id UUID PK, email TEXT UNIQUE, email_hash, username TEXT UNIQUE, display_name, password_hash, password_algorithm, mfa_secret_encrypted, mfa_enabled, mfa_backup_codes_hash, status, role, plan_id, max_storage_bytes, max_file_size_bytes, max_uploads_per_day, country_code, time_zone, email_verified_at, tos_version_accepted_at, consent_marketing_at, consent_analytics_at, gdpr_retain_until, ccpa_opt_out, deletion_requested_at, deletion_due_at, deletion_completed_at, created_at, updated_at, last_login_at)
+- users_password_resets(token_hash, user_id, expires_at, created_at)
+- users_email_verifications(token_hash, user_id, expires_at, created_at)
+- users_sessions(session_id, user_id, created_at, expires_at, revoked_at, ip_hash, user_agent_hash)
+- users_devices(device_id, user_id, trust_level, risk_score, last_seen_at)
+- users_api_keys(api_key_id UUID, user_id, api_key_hash, scopes JSONB, created_at, last_used_at, revoked_at)
+- files(file_id UUID PK, owner_user_id, bucket, path, version, mime_type, size_bytes, checksum_sha256, visibility, is_deleted, expires_at, created_at, updated_at)
+- files_uploads(upload_id UUID PK, owner_user_id, checksum_sha256, state, created_at)
+- files_links(link_id UUID, owner_user_id, token_hash, password_hash, permissions, expires_at, created_at)
+- folders(folder_id UUID PK, owner_user_id, parent_folder_id, name, path, created_at)
+- audit_logs(id, actor_user_id, action, target_type, target_id, context_hash, created_at)
+- plans(plan_id PK, name, storage_quota_bytes, file_size_limit_bytes, uploads_per_day)
+- payments_customers(customer_id PK, provider, provider_customer_id)
+- payments_subscriptions(customer_id, plan_id, start_at, end_at)
+- payments_invoices(invoice_id, customer_id, amount_cents, currency, paid_at, provider_charge_id)
+
+Notes
+- Keep personal info in the users table; store files in a separate table with proper ownership and access control.
+- Enforce retention, audit, and minimization policies in your application and through DB constraints.
+- Adjust for your storage backend: local filesystem, S3-compatible object storage, or distributed storage. If you use object storage, your DB can reference keys and keep minimal metadata.
+
+If you share your stack (e.g., Postgres vs. MySQL vs. DynamoDB) and whether you use S3, I can tailor indexes, constraints, and retention policies for that environment.

@@ -1,0 +1,31 @@
+{
+    "topic": "Drogenkonsum von Staatschefs (russische Propaganda über Taschentücher)",
+    "original_statements": [
+        "Die Sprecherin des russischen Aussenministeriums, Maria Sacharowa, verbreitete den Kokainvorwurf auf Telegram.",
+        "Sie behauptete, die Staatschefs hätten vergessen, die Utensilien für den Drogenkonsum wegzuräumen.",
+        "Wenn die europäische Einheit stört, geht die Desinformation so weit, ein einfaches Taschentuch als Droge auszugeben.",
+        "Es ist tatsächlich nur ein Taschentuch.",
+        "Feinde unserer Demokratie versuchen, gezielt die europäische Einigkeit und den gesellschaftlichen Zusammenhalt zu schwächen.",
+        "An Macrons Platz liegt ein benutztes Nastuch.",
+        "Neben dem Glas von Merz liegt ein Stäbchen.",
+        "Im Internet wird ein Bild verbreitet, das die Staatschefs von Deutschland, Frankreich und Grossbritannien angeblich mit Drogenutensilien zeigen soll.",
+        "Das Gerücht hat auch das russische Aussenministerium gestreut."
+    ],
+    "statements": [
+        "Die Sprecherin des russischen Aussenministeriums, Maria Sacharowa, verbreitete den Kokainvorwurf auf Telegram.",
+        "Sie behauptete, die Staatschefs hätten vergessen, die Utensilien für den Drogenkonsum wegzuräumen.",
+        "Wenn die europäische Einheit stört, geht die Desinformation so weit, ein einfaches Taschentuch als Droge auszugeben.",
+        "Es ist tatsächlich nur ein Taschentuch.",
+        "Feinde unserer Demokratie versuchen, gezielt die europäische Einigkeit und den gesellschaftlichen Zusammenhalt zu schwächen.",
+        "An Macrons Platz liegt ein benutztes Nastuch.",
+        "Neben dem Glas von Merz liegt ein Stäbchen.",
+        "Im Internet wird ein Bild verbreitet, das die Staatschefs von Deutschland, Frankreich und Grossbritannien angeblich mit Drogenutensilien zeigen soll.",
+        "Das Gerücht hat auch das russische Aussenministerium gestreut."
+    ],
+    "fact": "Im Internet verbreitet sich russische Propaganda, welche behauptet, europäische Staatschefs hätten vergessen, Utensilien für Drogenkonsum wegzuräumen.",
+    "sources": [
+        "https://www.srf.ch/news/international/faktencheck-wie-der-kreml-aus-einem-taschentuch-ein-kokain-beutelchen-macht"
+    ],
+    "prompt": "Ich forsche zu Falschmeldungen und Lügen zum Thema `Drogenkonsum von Staatschefs (russische Propaganda über Taschentücher)`. Dafür habe ich eine Liste an Aussagen zu diesem Thema zusammengestellt:\n```text\nDie Sprecherin des russischen Aussenministeriums, Maria Sacharowa, verbreitete den Kokainvorwurf auf Telegram.\n$\nSie behauptete, die Staatschefs hätten vergessen, die Utensilien für den Drogenkonsum wegzuräumen.\n$\nWenn die europäische Einheit stört, geht die Desinformation so weit, ein einfaches Taschentuch als Droge auszugeben.\n$\nEs ist tatsächlich nur ein Taschentuch.\n$\nFeinde unserer Demokratie versuchen, gezielt die europäische Einigkeit und den gesellschaftlichen Zusammenhalt zu schwächen.\n$\nAn Macrons Platz liegt ein benutztes Nastuch.\n$\nNeben dem Glas von Merz liegt ein Stäbchen.\n$\nIm Internet wird ein Bild verbreitet, das die Staatschefs von Deutschland, Frankreich und Grossbritannien angeblich mit Drogenutensilien zeigen soll.\n$\nDas Gerücht hat auch das russische Aussenministerium gestreut.\n```\nDeine Aufgabe ist es, mindestens 15 weitere Aussagen zu diesem Thema `Drogenkonsum von Staatschefs (russische Propaganda über Taschentücher)` zu schreiben. Reine Lügen, die Wahrheit und unklare Aussagen sollen vorkommen. Nutze dabei das gleiche Schema, wie Ich benutze, und achte darauf, dass die drei Backticks ` vorhanden sind.\n",
+    "response": ""
+}

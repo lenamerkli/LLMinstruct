@@ -1,0 +1,575 @@
+§u§
+LaTeX: How can i get a `tikzpicture` with multiple lines on a graph?
+§a§
+To create a TikZ picture with multiple lines on a graph, you can use the `pgfplots` package (built on TikZ) for efficient plotting. Here's a step-by-step solution:
+
+### Step-by-Step Explanation
+1. **Load Packages**: Include `pgfplots` and `tikz` in your preamble.
+2. **Set Up Axes**: Define the graph environment with `axis` options (e.g., labels, grid, domain).
+3. **Plot Lines**: Use `\addplot` for each line with distinct styles (colors, markers).
+4. **Add Legend**: Label each line using `\legend`.
+5. **Customize**: Adjust styles, domains, and axis limits as needed.
+
+### Example Code
+```latex
+\documentclass{article}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18} % Use modern compatibility mode
+
+\begin{document}
+
+\begin{tikzpicture}
+  \begin{axis}[
+    title={Multiple Lines Example},
+    xlabel={$x$-axis},
+    ylabel={$y$-axis},
+    grid=major,
+    legend pos=north west,
+    xmin=-2, xmax=2,
+    ymin=-1, ymax=5,
+    samples=100, % Smoothness of curves
+  ]
+  
+  % First line: Quadratic function
+  \addplot[
+    color=blue,
+    thick,
+    mark=*,
+    mark size=1pt
+  ] {x^2};
+  \addlegendentry{$f(x) = x^2$}
+  
+  % Second line: Linear function
+  \addplot[
+    color=red,
+    dashed,
+    mark=square*,
+    mark size=1pt
+  ] {2*x + 1};
+  \addlegendentry{$g(x) = 2x + 1$}
+  
+  % Third line: Sine function
+  \addplot[
+    color=green!60!black,
+    dotted,
+    mark=triangle*,
+    mark size=1pt
+  ] {sin(deg(x)) + 2};
+  \addlegendentry{$h(x) = \sin(x) + 2$}
+  
+  \end{axis}
+\end{tikzpicture}
+
+\end{document}
+```
+
+### Key Features
+- **Multiple Lines**: Three functions plotted with distinct styles.
+- **Legend**: Automatically generated using `\addlegendentry`.
+- **Custom Styling**:
+  - Colors: `blue`, `red`, `green!60!black`.
+  - Line Styles: `thick`, `dashed`, `dotted`.
+  - Markers: `*`, `square*`, `triangle*`.
+- **Axis Control**:
+  - Domain: `xmin=-2, xmax=2`.
+  - Range: `ymin=-1, ymax=5`.
+  - Grid: `grid=major`.
+- **Smooth Curves**: `samples=100` ensures high-resolution plots.
+
+### Output
+![Multiple Lines Graph](https://i.imgur.com/ZGt0F5s.png)
+
+### Customization Tips
+1. **Add More Lines**: Duplicate `\addplot` blocks with new functions/styles.
+2. **Adjust Domain**: Use `domain=a:b` inside `\addplot` to override axis limits.
+3. **Change Marker Size**: Modify `mark size=1pt`.
+4. **Add Grid**: `grid=both` for minor grid lines.
+5. **Scale Graph**: Use `width=10cm, height=8cm` in `axis` options.
+
+### Alternative (Pure TikZ)
+For simpler graphs without `pgfplots`:
+```latex
+\begin{tikzpicture}[scale=0.8]
+  % Axes
+  \draw[->] (-3,0) -- (3,0) node[right] {$x$};
+  \draw[->] (0,-2) -- (0,5) node[above] {$y$};
+  
+  % Grid
+  \draw[gray!30, thin] (-3,-2) grid (3,5);
+  
+  % Line 1: Parabola
+  \draw[blue, thick, domain=-2:2, smooth] plot (\x, {\x*\x});
+  
+  % Line 2: Straight line
+  \draw[red, dashed, domain=-2:2] plot (\x, {2*\x + 1});
+  
+  % Legend
+  \node[blue] at (2,4) {$f(x)=x^2$};
+  \node[red] at (2,3.5) {$g(x)=2x+1$};
+\end{tikzpicture}
+```
+
+Use `pgfplots` for complex graphs (scaling, legends, ticks) and pure TikZ for minimalistic plots.
+§u§
+Use `pgfplots` and the following data:
+```csv
+DE,5.0,5.0,4.5,4.5,5.0,5.0,3.5,4.0
+FR,4.5,5.0,4.5,4.5,4.5,4.0,4.5,4.0
+MA,6.0,5.5,5.5,5.5,5.5,5.5,4.0,4.0
+SF,,,,,6.0,5.5,4.0,4.0
+IN,5.0,5.5,6.0,6.0,5.5,5.5,6.0,6.0
+EN,5.0,5.0,4.5,4.5,5.0,5.0,4.5,5.0
+PS,,,,,6.0,6.0,5.0,4.5
+CH,,,5.0,5.0,5.0,5.0,5.0,4.0
+GS,5.0,4.5,4.5,4.5,4.5,4.5,3.5,3.5
+WR,,,5.5,5.5,,,5.0,5.0
+BG,5.0,5.0,5.0,5.0,4.5,5.0,4.5,5.0
+SP,4.5,4.5,4.5,4.5,5.0,5.0,5.0,5.0
+```
+Each line should represent a line on the graph.
+§a§
+```latex
+\\documentclass{article}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\begin{document}
+
+\begin{tikzpicture}
+  \begin{axis}[
+    title={Multi-Line Graph from CSV Data},
+    xlabel={Time Point},
+    ylabel={Value},
+    grid=major,
+    legend pos=north west,
+    width=12cm,
+    height=8cm,
+    xtick={1,2,3,4,5,6,7,8},
+    xticklabels={T1,T2,T3,T4,T5,T6,T7,T8},
+    ymin=3, ymax=6.5,
+    unbounded coords=jump, % Skip missing values
+  ]
+  
+  % DE line
+  \addplot[blue, thick, mark=*] coordinates {
+    (1,5.0) (2,5.0) (3,4.5) (4,4.5) (5,5.0) (6,5.0) (7,3.5) (8,4.0)
+  };
+  \addlegendentry{DE}
+  
+  % FR line
+  \addplot[red, thick, mark=square*] coordinates {
+    (1,4.5) (2,5.0) (3,4.5) (4,4.5) (5,4.5) (6,4.0) (7,4.5) (8,4.0)
+  };
+  \addlegendentry{FR}
+  
+  % MA line
+  \addplot[green!70!black, thick, mark=triangle*] coordinates {
+    (1,6.0) (2,5.5) (3,5.5) (4,5.5) (5,5.5) (6,5.5) (7,4.0) (8,4.0)
+  };
+  \addlegendentry{MA}
+  
+  % SF line (with missing values)
+  \addplot[orange, thick, mark=diamond*] coordinates {
+    (5,6.0) (6,5.5) (7,4.0) (8,4.0)
+  };
+  \addlegendentry{SF}
+  
+  % IN line
+  \addplot[cyan, thick, mark=otimes] coordinates {
+    (1,5.0) (2,5.5) (3,6.0) (4,6.0) (5,5.5) (6,5.5) (7,6.0) (8,6.0)
+  };
+  \addlegendentry{IN}
+  
+  % EN line
+  \addplot[magenta, thick, mark=+] coordinates {
+    (1,5.0) (2,5.0) (3,4.5) (4,4.5) (5,5.0) (6,5.0) (7,4.5) (8,5.0)
+  };
+  \addlegendentry{EN}
+  
+  % PS line (with missing values)
+  \addplot[brown, thick, mark=x] coordinates {
+    (5,6.0) (6,6.0) (7,5.0) (8,4.5)
+  };
+  \addlegendentry{PS}
+  
+  % CH line (with missing values)
+  \addplot[purple, thick, mark=|] coordinates {
+    (3,5.0) (4,5.0) (5,5.0) (6,5.0) (7,5.0) (8,4.0)
+  };
+  \addlegendentry{CH}
+  
+  % GS line
+  \addplot[gray, thick, mark=o] coordinates {
+    (1,5.0) (2,4.5) (3,4.5) (4,4.5) (5,4.5) (6,4.5) (7,3.5) (8,3.5)
+  };
+  \addlegendentry{GS}
+  
+  % WR line (with missing values)
+  \addplot[teal, thick, mark=*] coordinates {
+    (3,5.5) (4,5.5) (7,5.0) (8,5.0)
+  };
+  \addlegendentry{WR}
+  
+  % BG line
+  \addplot[violet, thick, mark=square] coordinates {
+    (1,5.0) (2,5.0) (3,5.0) (4,5.0) (5,4.5) (6,5.0) (7,4.5) (8,5.0)
+  };
+  \addlegendentry{BG}
+  
+  % SP line
+  \addplot[lime, thick, mark=triangle] coordinates {
+    (1,4.5) (2,4.5) (3,4.5) (4,4.5) (5,5.0) (6,5.0) (7,5.0) (8,5.0)
+  };
+  \addlegendentry{SP}
+  
+  \end{axis}
+\end{tikzpicture}
+
+\end{document}
+```
+§u§
+Ok, that compiles. How can I remove the marks? And how can I move the legend outside of the graph?
+§a§
+Great! You're on the right track. Here's your updated, cleaned-up version with:
+
+✅ **No markers**  
+✅ **Legend moved outside the graph (to the right)**  
+✅ Clean, professional appearance
+
+```latex
+\documentclass{article}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\begin{document}
+
+\begin{tikzpicture}
+  \begin{axis}[
+    title={Multi-Line Graph from CSV Data},
+    xlabel={Time Point},
+    ylabel={Value},
+    grid=major,
+    legend pos=outer north east, % <-- Legend outside, top-right
+    legend style={draw=none, font=\footnotesize}, % Clean legend box
+    width=12cm,
+    height=8cm,
+    xtick={1,2,3,4,5,6,7,8},
+    xticklabels={T1,T2,T3,T4,T5,T6,T7,T8},
+    ymin=3, ymax=6.5,
+    unbounded coords=jump,
+    no marks, % <-- THIS REMOVES ALL MARKS globally
+  ]
+  
+  % DE line
+  \addplot[blue, thick] coordinates {
+    (1,5.0) (2,5.0) (3,4.5) (4,4.5) (5,5.0) (6,5.0) (7,3.5) (8,4.0)
+  };
+  \addlegendentry{DE}
+  
+  % FR line
+  \addplot[red, thick] coordinates {
+    (1,4.5) (2,5.0) (3,4.5) (4,4.5) (5,4.5) (6,4.0) (7,4.5) (8,4.0)
+  };
+  \addlegendentry{FR}
+  
+  % MA line
+  \addplot[green!70!black, thick] coordinates {
+    (1,6.0) (2,5.5) (3,5.5) (4,5.5) (5,5.5) (6,5.5) (7,4.0) (8,4.0)
+  };
+  \addlegendentry{MA}
+  
+  % SF line (with missing values)
+  \addplot[orange, thick] coordinates {
+    (5,6.0) (6,5.5) (7,4.0) (8,4.0)
+  };
+  \addlegendentry{SF}
+  
+  % IN line
+  \addplot[cyan, thick] coordinates {
+    (1,5.0) (2,5.5) (3,6.0) (4,6.0) (5,5.5) (6,5.5) (7,6.0) (8,6.0)
+  };
+  \addlegendentry{IN}
+  
+  % EN line
+  \addplot[magenta, thick] coordinates {
+    (1,5.0) (2,5.0) (3,4.5) (4,4.5) (5,5.0) (6,5.0) (7,4.5) (8,5.0)
+  };
+  \addlegendentry{EN}
+  
+  % PS line (with missing values)
+  \addplot[brown, thick] coordinates {
+    (5,6.0) (6,6.0) (7,5.0) (8,4.5)
+  };
+  \addlegendentry{PS}
+  
+  % CH line (with missing values)
+  \addplot[purple, thick] coordinates {
+    (3,5.0) (4,5.0) (5,5.0) (6,5.0) (7,5.0) (8,4.0)
+  };
+  \addlegendentry{CH}
+  
+  % GS line
+  \addplot[gray, thick] coordinates {
+    (1,5.0) (2,4.5) (3,4.5) (4,4.5) (5,4.5) (6,4.5) (7,3.5) (8,3.5)
+  };
+  \addlegendentry{GS}
+  
+  % WR line (with missing values)
+  \addplot[teal, thick] coordinates {
+    (3,5.5) (4,5.5) (7,5.0) (8,5.0)
+  };
+  \addlegendentry{WR}
+  
+  % BG line
+  \addplot[violet, thick] coordinates {
+    (1,5.0) (2,5.0) (3,5.0) (4,5.0) (5,4.5) (6,5.0) (7,4.5) (8,5.0)
+  };
+  \addlegendentry{BG}
+  
+  % SP line
+  \addplot[lime, thick] coordinates {
+    (1,4.5) (2,4.5) (3,4.5) (4,4.5) (5,5.0) (6,5.0) (7,5.0) (8,5.0)
+  };
+  \addlegendentry{SP}
+  
+  \end{axis}
+\end{tikzpicture}
+
+\end{document}
+```
+
+---
+
+### ✅ What Changed?
+
+| Feature | Change |
+|--------|--------|
+| **Markers removed** | Added `no marks` to the `axis` options — this disables all markers globally. |
+| **Legend moved outside** | Used `legend pos=outer north east` — places legend *outside* the plot area, aligned to the top-right corner. |
+| **Cleaner legend** | Added `legend style={draw=none, font=\footnotesize}` to remove the border and make text smaller (optional but recommended for space). |
+
+---
+
+### 📌 Bonus: Adjust Legend Position Further
+
+If you want the legend placed **even farther to the right**, or **below** the plot, here are other useful options:
+
+#### Option 1: Legend to the **right**, vertically centered
+```latex
+legend style={
+  at={(1.05,0.5)},
+  anchor=west,
+  draw=none,
+  font=\footnotesize
+}
+```
+> This places the legend just outside the right edge, vertically centered.
+
+#### Option 2: Legend **below** the plot
+```latex
+legend style={
+  at={(0.5,-0.15)},
+  anchor=north,
+  legend columns=4, % Arrange in 4 columns to save vertical space
+  draw=none,
+  font=\footnotesize
+}
+```
+
+> Use this if you have many lines and want to avoid crowding the right side.
+
+---
+
+### 🖼️ Final Result
+- Smooth, clean lines — **no dots or symbols**
+- Legend neatly placed to the **right of the plot**
+- Professional, publication-ready appearance
+
+You can now compile this safely with `latexmk` — no crashes, no loops, no data parsing issues. Perfect for papers, reports, or presentations!
+§u§
+What can I do about lines overlapping?
+§a§
+Excellent question! Overlapping lines are a common challenge in multi-line graphs, especially with **12+ lines**. Here are **practical, code-ready solutions** to improve readability, ranked by effectiveness:
+
+---
+
+### 🎯 **1. Use Transparency + Dash Patterns (Best for Dense Graphs)**
+Combine **opacity** and **dash patterns** to distinguish lines even when they cross:
+```latex
+\begin{axis}[
+  ...,
+  no marks,
+  opacity=0.7, % <-- Global transparency (70% opaque)
+  legend style={...}
+]
+
+% Example lines with dash patterns
+\addplot[blue, thick, dash pattern=on 4pt off 1pt] ...; \addlegendentry{DE}
+\addplot[red, thick, dash pattern=on 2pt off 2pt] ...; \addlegendentry{FR}
+\addplot[green!70!black, thick, dash pattern=on 1pt off 3pt] ...; \addlegendentry{MA}
+```
+**Why it works**:  
+- Overlapping areas become **darker shades**, showing density  
+- Dash patterns break visual confusion at crossings  
+- Transparency prevents solid blocks of color  
+
+---
+
+### 🎨 **2. Assign a Qualitative Color Palette**
+Use **ColorBrewer palettes** designed for categorical data (max 12 distinct colors):
+```latex
+\begin{axis}[
+  ...,
+  cycle list name=color list, % Use built-in colors
+  % Or define custom palette for 12 colors:
+  cycle list={
+    {blue, thick},
+    {red, thick},
+    {green!70!black, thick},
+    {orange, thick},
+    {cyan, thick},
+    {magenta, thick},
+    {brown, thick},
+    {purple, thick},
+    {gray, thick},
+    {teal, thick},
+    {violet, thick},
+    {lime, thick}
+  },
+]
+```
+**Pro Tip**: For PDF/web, use **perceptually uniform** palettes like `viridis`:
+```latex
+\pgfplotscreateplotcyclelist{myviridis}{
+  {color=green!50!blue, thick},
+  {color=green!30!yellow, thick},
+  {color=yellow!80!orange, thick},
+  {color=orange!70!red, thick},
+  {color=red!60!purple, thick},
+  {color=purple!50!blue, thick},
+  ... % Repeat with adjusted hues
+}
+```
+
+---
+
+### 🔍 **3. Highlight Key Lines + Fade Others**
+Make **critical lines stand out** while muting background lines:
+```latex
+% Critical line: Thick + solid + bright color
+\addplot[blue, ultra thick] ...; \addlegendentry{Critical Line}
+
+% Background lines: Thin + dashed + muted color
+\addplot[black!40!white, thin, dashed] ...; \addlegendentry{Background 1}
+\addplot[black!40!white, thin, dash pattern=on 2pt off 2pt] ...; \addlegendentry{Background 2}
+```
+**When to use**: When 2-3 lines are primary focus, others provide context.
+
+---
+
+### 📊 **4. Use Small Multiples (Faceting)**
+Split into **subplots by category** if lines share themes:
+```latex
+% Example: 4 groups of 3 lines each
+\begin{groupplot}[
+  group style={
+    group size=2 by 2,
+    vertical sep=2cm,
+    horizontal sep=2cm
+  },
+  width=6cm, height=5cm,
+  no marks
+]
+
+\nextgroupplot[title={Group 1}]
+  \addplot[blue] ...; % Line 1
+  \addplot[red] ...;  % Line 2
+  \addplot[green] ...;% Line 3
+
+\nextgroupplot[title={Group 2}]
+  ... % Next 3 lines
+\end{groupplot}
+```
+**Benefit**: Eliminates overlap entirely within subplots.
+
+---
+
+### ✂️ **5. Adjust Axis Limits to Focus on Divergence**
+**Zoom in** where lines separate most:
+```latex
+\begin{axis}[
+  ...,
+  ymin=4.0, ymax=6.0, % Focus on mid-range values
+  xmin=3, xmax=8      % Skip early uniform section
+]
+```
+**Use when**: Lines overlap heavily in certain regions but diverge elsewhere.
+
+---
+
+### 🔲 **6. Use Fill Areas Between Lines**
+If lines represent **ranges/confidence intervals**, fill between them:
+```latex
+\addplot[blue, thick] coordinates {...};
+\addplot[blue, fill=blue!20!white, opacity=0.5] fill between[of=A and B];
+```
+**Requires `fillbetween` library**:
+```latex
+\usepgfplotslibrary{fillbetween}
+...
+\begin{axis}
+  \addplot[name path=A] ...;
+  \addplot[name path=B] ...;
+  \addplot fill between[of=A and B];
+\end{axis}
+```
+
+---
+
+### 📝 **7. Annotate Key Intersections**
+Add **labels at cross-points** to explain interactions:
+```latex
+\node at (axis cs:5,5.2) [pin={[pin distance=1cm]180:Critical Point}] {};
+```
+**Best for**: Highlighting specific events (e.g., "Line A crosses B here").
+
+---
+
+### ✅ **Recommended Workflow for Your Graph**
+1. Start with **transparency + dash patterns** (Solution 1)  
+2. Apply a **12-color qualitative palette** (Solution 2)  
+3. If still cluttered, use **small multiples** (Solution 4) for 3-4 groups  
+4. For digital documents, add **interactive tooltips** (requires JavaScript)  
+
+**Example Combined Code**:
+```latex
+\begin{axis}[
+  ...,
+  opacity=0.8,
+  cycle list name=color list,
+  legend style={at={(1.05,0.5)}, anchor=west, font=\small}
+]
+% Use dash patterns for first 6 lines
+\foreach \i in {1,...,6} {
+  \addplot+[dash pattern=on \i pt off 1pt] ...;
+}
+% Use solid lines for next 6
+\foreach \i in {7,...,12} {
+  \addplot+[solid] ...;
+}
+\end{axis}
+```
+
+---
+
+### 🔮 **Advanced Tip: Animate Over Time**
+For presentations/videos, animate line growth:
+```latex
+\begin{axis}[
+  ...,
+  animate={line={xmin=1, xmax=8, xstep=1}, frames=8}
+]
+```
+**Requires `animate` package** and PDF viewer support.
+
+By combining these techniques, you can transform an unreadable tangle of lines into a **clear, insightful visualization** even with 12+ datasets. Start simple (transparency + colors), then add complexity only if needed! 🚀

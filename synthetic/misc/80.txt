@@ -1,0 +1,106 @@
+§u§
+Wie erhöhe ich den Zeilenabstand in LaTeX?
+§a§
+Ah, eine sehr praktische Frage – der Zeilenabstand (englisch *line spacing* oder genauer *leading*) beeinflusst oft sehr stark, wie angenehm ein Text lesbar ist. In LaTeX gibt es dafür gleich mehrere elegante Möglichkeiten.
+
+---
+
+### 1. Mit dem `setspace`-Paket (empfohlen)
+Das ist die sauberste und gängigste Lösung:
+
+```latex
+\usepackage{setspace}
+```
+
+Danach hast du verschiedene Befehle zur Wahl:
+- `\singlespacing` : einfacher Zeilenabstand
+- `\onehalfspacing` : anderthalbfacher Zeilenabstand
+- `\doublespacing` : doppelter Zeilenabstand
+
+Beispiel:
+
+```latex
+\documentclass{article}
+\usepackage{setspace}
+
+\begin{document}
+\onehalfspacing
+Das hier ist ein Text mit anderthalbfachem Zeilenabstand.
+
+\doublespacing
+Und jetzt wurde auf doppelten Zeilenabstand gewechselt.
+\end{document}
+```
+
+Man kann auch lokal in einer Umgebung den Abstand setzen:
+```latex
+\begin{spacing}{1.2}
+   Dieser Absatz hat 1.2-fachen Zeilenabstand.
+\end{spacing}
+```
+
+---
+
+### 2. Manuell über `\linespread`
+Etwas „grober Schraubenschlüssel“:
+
+```latex
+\linespread{1.3} % ca. 1.5-fach
+```
+
+Dabei gilt:
+- `1.0` = normal
+- `1.3` ≈ 1,5-fach
+- `1.6` = doppelt
+
+Das wirkt aber global und betrifft das ganze Dokument. Feintuning ist hier schwerer.
+
+---
+
+### 3. Fein abgestimmte Kontrolle mit KOMA-Script
+Falls du eine KOMA-Script-Klasse wie `scrartcl`, `scrbook` oder `scrreprt` verwendest, kannst du den Zeilenabstand (genannt *Zeilenabstandsfaktor*) direkt per Option justieren:
+
+```latex
+\documentclass[fontsize=12pt,oneside]{scrartcl}
+\usepackage{setspace}
+\setstretch{1.25}
+```
+
+oder
+```latex
+\renewcommand{\baselinestretch}{1.25}
+```
+
+---
+
+### Faustregel
+- Wenn du etwas Wissenschaftliches oder eine Haus-/Abschlussarbeit schreibst: **`setspace`** nehmen, das ist der Standard.
+- `\linespread` höchstens für schnelle globale Anpassungen.
+- Für punktgenaue Kontrolle: `setspace` plus Zahlenwert wie `\setstretch{1.15}` statt nur einfache/anderthalbe/doppelte Abstände.
+
+---
+
+Kleiner Tipp am Rande: Wenn dein Prüfer oder Verlag eine bestimmte Vorgabe wie „1,5-facher Zeilenabstand“ verlangt, erfüllst du das mit `\usepackage{setspace}` und `\onehalfspacing` absolut normgerecht. Damit musst du nicht tricksen – LaTeX macht’s offiziell hübsch.
+
+Möchtest du, dass ich dir direkt ein minimales vollständiges Beispiel zusammensetze, das du sofort kompilieren könntest?
+§u§
+Und wie kann ich bei `\documentclass[12pt, a4paper]{report}` dafür sorgen, dass auch `\subsubsection{}` im Inhaltsverzeichnis vorhanden sind?
+§a§
+Dafür brauchst du das Paket `tocbibind`. Hier ist die Lösung:
+
+```latex
+\documentclass[12pt, a4paper]{report}
+\usepackage{tocbibind}
+
+\setcounter{tocdepth}{3}  % Wichtig: Steuert die Tiefe der Einträge im Inhaltsverzeichnis
+```
+
+Die `\setcounter{tocdepth}{3}`-Anweisung bewirkt:
+- `0` = nur Kapitel
+- `1` = Kapitel und Sections
+- `2` = Kapitel, Sections und Subsections
+- `3` = Kapitel, Sections, Subsections und Subsubsections
+
+Mit `tocbibind` werden zusätzlich standardmäßig auch Verzeichnisse wie Literatur- und Abbildungsverzeichnis automatisch ins Inhaltsverzeichnis aufgenommen.
+
+Wenn du nur die Subsubsections sehen möchtest, reicht diese eine Zeile völlig aus.

@@ -1,0 +1,86 @@
+§u§
+%%% BEGIN FILE %%%
+# Flash_Attention_V100
+
+flash attention只支持Ampere架构以上的显卡，对于V100这个Volta架构的显卡并不支持，所以出于兴趣，我按照cutlass教程以及flash attention2的论文，写了这个适用于V100的版本，不过由于工作繁忙以及硬件条件限制，不能细致地进行性能调试，本Repo的性能并不能比得上pytorch的attention计算。当前forward的耗时相比于pytorch大约降低了40%，但是backward的耗时大约比pytorch多20%，两者相消。另外，该实现没有考虑边界条件，因此句子的长度要用right padding的方式，pad到32的倍数。这对正常训练并不会有影响，只需在计算loss时，将padding的地方忽略即可。
+
+## 安装
+在安装前，你需要确保：
+
+- PyTorch >= 2.0.1
+- CUDA >= 11.6
+- Linux OS
+- Cutlass源码
+
+修改setup.py的146行，将这一行改为你下载的cutlass源码的位置
+
+```py
+include_dirs=[
+    Path(this_dir) / "include",
+    "/home/user/cutlass/include",
+],
+```
+
+修改完毕后，执行命令进行源码安装
+```bash
+python setup.py install --user
+```
+
+## 用法
+
+```python
+from flash_attn_v100 import flash_attn_func
+q = torch.empty((Z, N_CTX, H, D_HEAD), dtype=dtype, device="cuda").normal_(mean=0., std=1).requires_grad_()
+k = torch.empty((Z, N_CTX, H, D_HEAD), dtype=dtype, device="cuda").normal_(mean=0., std=1).requires_grad_()
+v = torch.empty((Z, N_CTX, H, D_HEAD), dtype=dtype, device="cuda").normal_(mean=0., std=1).requires_grad_()
+cuda_out = flash_attn_func(q, k, v, sm_scale, causal)
+```
+
+## 参考
+- [Flash-Attention](https://github.com/Dao-AILab/flash-attention)
+- [CUTLASS](https://github.com/NVIDIA/cutlass)
+
+%%% END FILE %%%
+Translate this readme.
+§a§
+
+
+# Flash_Attention_V100
+
+Flash Attention only supports GPUs with Ampere architecture or newer. For the V100, which uses the Volta architecture, it is not supported. Therefore, out of personal interest, following the CUTLASS tutorials and the Flash Attention 2 paper, I created this version adapted for V100. However, due to busy work schedule and limited hardware resources, detailed performance tuning was not possible. The performance of this repository does not match PyTorch's attention computation. Currently, the forward pass takes approximately 40% less time compared to PyTorch, but the backward pass takes about 20% more time than PyTorch, so they offset each other. Additionally, this implementation does not account for boundary conditions, so sequence lengths must be padded to multiples of 32 using right padding. This will not affect normal training; simply ignore the padded positions when computing the loss.
+
+## Installation
+Before installation, you need to ensure:
+
+- PyTorch >= 2.0.1
+- CUDA >= 11.6
+- Linux OS
+- CUTLASS source code
+
+Modify line 146 of setup.py, change this line to the location where you downloaded the CUTLASS source code
+
+```py
+include_dirs=[
+    Path(this_dir) / "include",
+    "/home/user/cutlass/include",
+],
+```
+
+After modification, execute the following command to install from source
+```bash
+python setup.py install --user
+```
+
+## Usage
+
+```python
+from flash_attn_v100 import flash_attn_func
+q = torch.empty((Z, N_CTX, H, D_HEAD), dtype=dtype, device="cuda").normal_(mean=0., std=1).requires_grad_()
+k = torch.empty((Z, N_CTX, H, D_HEAD), dtype=dtype, device="cuda").normal_(mean=0., std=1).requires_grad_()
+v = torch.empty((Z, N_CTX, H, D_HEAD), dtype=dtype, device="cuda").normal_(mean=0., std=1).requires_grad_()
+cuda_out = flash_attn_func(q, k, v, sm_scale, causal)
+```
+
+## References
+- [Flash-Attention](https://github.com/Dao-AILab/flash-attention)
+- [CUTLASS](https://github.com/NVIDIA/cutlass)

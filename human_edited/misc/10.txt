@@ -1,0 +1,216 @@
+§u§
+```latex
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{array}
+\usepackage{xurl}
+\usepackage{enumitem}
+
+\title{Zusammenfassung 2026-01-23}
+\author{Eric Goethe}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\bigskip\bigskip
+
+\section{Lernziele}
+Sie sollten in der Lage sein, Konzepte des Software-Testings mit Fokus auf automatisierten Tests in
+Python zu verstehen, anzuwenden und kritisch zu bewerten. Dies umfasst insbesondere:
+\begin{itemize}
+    \item Verständnis der Grundlagen und Wichtigkeit von Software Testing
+    \item Die systematische Erstellung von automatisierten Testfällen
+    \item Die Bewertung von Testqualität
+\end{itemize}
+Konkreter:
+\begin{itemize}
+    \item Definition und Bedeutung von Software Testing erklären können
+    \item Unterschiede zwischen manuellem und automatisiertem Testing beschreiben
+    \item Die vier Teststufen (Unit, Integration, System, Acceptance) unterscheiden
+    \item Grundlegende Syntax der Testfälle mit dem \texttt{unittest}-Framework
+    \item Assert-Methoden (\texttt{assertEqual}, \texttt{assertTrue} etc.) korrekt anwenden
+    \item Test-Fixtures (\texttt{setUp}/\texttt{tearDown}) verstehen und einsetzen können
+    \item Kriterien für gute Tests (Verständlichkeit, Wartbarkeit, Zuverlässigkeit) benennen und auf eigene Tests anwenden
+    \item Testabdeckung (\texttt{Code Coverage}) als Metrik verstehen und interpretieren
+    \item AAA-Prinzip (\texttt{Arrange-Act-Assert}) in Testfällen verstehen und anwenden können
+    \item Code-Smells in Tests erkennen (z. B. zu viele Assertions, Abhängigkeiten zwischen Tests)
+    \item Ein bestehendes Test-Set refaktorieren, um Lesbarkeit und Wartbarkeit zu erhöhen
+\end{itemize}
+```
+Schriib zu dänne Lärnziel en Zämmefassig.
+§a§
+```latex
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{array}
+\usepackage{xurl}
+\usepackage{enumitem}
+
+\title{Zusammenfassung 2026-01-23}
+\author{Eric Goethe}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\bigskip\bigskip
+
+\section{Lernziele}
+Sie sollten in der Lage sein, Konzepte des Software-Testings mit Fokus auf automatisierten Tests in
+Python zu verstehen, anzuwenden und kritisch zu bewerten. Dies umfasst insbesondere:
+\begin{itemize}
+    \item Verständnis der Grundlagen und Wichtigkeit von Software Testing
+    \item Die systematische Erstellung von automatisierten Testfällen
+    \item Die Bewertung von Testqualität
+\end{itemize}
+Konkreter:
+\begin{itemize}
+    \item Definition und Bedeutung von Software Testing erklären können
+    \item Unterschiede zwischen manuellem und automatisiertem Testing beschreiben
+    \item Die vier Teststufen (Unit, Integration, System, Acceptance) unterscheiden
+    \item Grundlegende Syntax der Testfälle mit dem \texttt{unittest}-Framework
+    \item Assert-Methoden (\texttt{assertEqual}, \texttt{assertTrue} etc.) korrekt anwenden
+    \item Test-Fixtures (\texttt{setUp}/\texttt{tearDown}) verstehen und einsetzen können
+    \item Kriterien für gute Tests (Verständlichkeit, Wartbarkeit, Zuverlässigkeit) benennen und auf eigene Tests anwenden
+    \item Testabdeckung (\texttt{Code Coverage}) als Metrik verstehen und interpretieren
+    \item AAA-Prinzip (\texttt{Arrange-Act-Assert}) in Testfällen verstehen und anwenden können
+    \item Code-Smells in Tests erkennen (z. B. zu viele Assertions, Abhängigkeiten zwischen Tests)
+    \item Ein bestehendes Test-Set refaktorieren, um Lesbarkeit und Wartbarkeit zu erhöhen
+\end{itemize}
+
+\section{Definition und Bedeutung}
+Software Testing überprüft, ob Software korrekt funktioniert, indem sie mit verschiedenen Eingaben getestet wird.
+\begin{itemize}
+    \item Frühe Fehlererkennung und -behebung
+    \item Sicherstellung der Funktionalität unter realen Bedingungen
+    \item Vermeidung von Schäden in kritischen Systemen (z. B. Medikamentenbeipackzettel, Bankabrechnungen)
+\end{itemize}
+\textbf{Grundgrenzen}:
+\begin{itemize}
+    \item Nicht alle Kombinationen möglicher Eingaben können getestet werden
+    \item 100\% Abdeckung garantiert keine Fehlerfreiheit
+\end{itemize}
+
+\section{Unterschiede manuellem und automatisiertem Testing}
+\begin{tabularx}{\linewidth}{|X|X|}
+    \hline
+    \textbf{Manuelles Testen} & \textbf{Automatisiertes Testen} \\
+    \hline
+    Gut für UI-Tests und exploratives Testen & Gut für sich wiederholende Tests \\
+    \hline
+    Langsam und fehleranfällig & Schnell, zuverlässig und langfristig zeitsparend \\
+    \hline
+    Keine Code-Struktur erforderlich & Tests werden als Code geschrieben \\
+    \hline
+\end{tabularx}
+
+\section{Teststufen}
+\subsection{Unit Test}
+    Testet einzelne Komponenten (z. B. Funktionen, Klassen) isoliert.
+\subsection{Integration Test}
+    Überprüft das Zusammenspiel mehrerer Komponenten.
+\subsection{System Test}
+    Testet das System als Ganzes.
+\subsection{Acceptance Test}
+    Validiert, ob das System die Anforderungen erfüllt.
+
+\section{Python unittest-Framework}
+\subsection{assert-Methoden}
+\begin{itemize}
+    \item \texttt{assertEqual(a, b)}: Prüft auf Gleichheit
+    \item \texttt{assertTrue(x)}: Prüft, ob \texttt{x} wahr ist
+    \item \texttt{assertIsNone(x)}: Prüft, ob \texttt{x} \texttt{None} ist
+    \item \texttt{assertRaises(exception)}: Prüft, ob eine Exception ausgelöst wird
+\end{itemize}
+
+\subsection{setUp und tearDown}
+\begin{itemize}
+    \item \texttt{setUp()}: Vorbereitung gemeinsamer Testressourcen
+    \item \texttt{tearDown()}: Aufräumen nach jedem Test (z. B. Datenbankverbindungen)
+    \item Vermeidung von Code-Duplizierung durch Wiederverwendung
+\end{itemize}
+
+\section{``gute'' Tests}
+Qualitätskriterien:
+\begin{itemize}
+    \item \textbf{Zweckmässigkeit}: Testet relevante Verhaltensweisen, nicht Implementierungsdetails
+    \item \textbf{Verständlichkeit}: Klare Struktur, aussagekräftige Namen\\ ( z.B.\texttt{test\_add\_item\_with\_negative\_quantity\_fails})
+    \item \texttt{Wartbarkeit}: DRY-Prinzip, Hilfsfunktionen für wiederholte Setup-Schritte
+    \item \texttt{Zuverlässigkeit}: Keine Abhängigkeiten von Systemzeit, externen APIs oder anderen Tests
+    \item \texttt{Effizienz}: Schnelle Ausführung durch Minimierung von I/O-Operationen
+\end{itemize}
+
+\section{Testabdeckung (Code Coverage)}
+\begin{itemize}
+    \item \textbf{Statement Coverage}: Anteil ausgeführter Codezeilen
+    \item \textbf{Branch Coverage}: Testet alle if/else-Pfade
+    \item \textbf{Path Coverage}: Testet alle möglichen Ausführungspfade (praktisch oft nicht vollständig erreichbar)
+    \item \textbf{Werkzeug}: \texttt{coverage.py} zur Messung
+    \item \textbf{Grenzen}: Hohe Abdeckung bedeutet nicht automatisch hohe Qualität (z. B. fehlende Randfälle)
+\end{itemize}
+
+\section{Arrange-Act-Assert Prinzip}
+\begin{description}
+    \item[Arrange] Vorbereitung des Testkontexts (Objekte, Eingabedaten)
+    \item[Act] Ausführung der zu testenden Funktionalität
+    \item[Assert] Überprüfung des erwarteten Ergebnisses
+\end{description}
+Beispiel:
+\begin{verbatim}
+def test_add_item_updates_total():
+    # Arrange
+    cart = ShoppingCart()
+    product = Product("1", "Buch", 10.0, 5)
+
+    # Act
+    cart.add_item(product)
+
+    # Assert
+    self.assertEqual(cart.get_total(), 10.0)
+\end{verbatim}
+
+\section{``Code-Smells''}
+\begin{itemize}
+    \item \textbf{Zu komplexe Tests}: Testen mehrere Szenarien in einer Funktion
+    \item \textbf{Abhängigkeiten zwischen Tests}: Ein Test benötigt das Ergebnis eines anderen
+    \item \textbf{Magische Zahlen}: Unklare Werte wie \texttt{self.assertEqual(result, 42)}
+    \item \textbf{Flaky Tests}: Nicht deterministische Tests (z. B. mit \texttt{random} ohne Seed)
+    \item \textbf{Zu viele Assertions}: Mehrere Prüfungen in einem Test
+    \item \textbf{Implementierungsdetails prüfen}: Tests, die interne Zustände statt Verhalten testen
+\end{itemize}
+
+\section{Lesbarkeit und Wartbarkeit erhöhen}
+\begin{itemize}
+    \item \textbf{Parametrisierte Tests}: Wiederholte Tests mit unterschiedlichen Eingaben
+    \item \textbf{Mocking}: Externe Abhängigkeiten durch \texttt{unittest.mock} ersetzen
+    \item \textbf{Extrahieren von Hilfsfunktionen}: Wiederholte Setup-Schritte in \texttt{setUp()} oder eigene Methoden auslagern
+    \item \textbf{Klare Namensgebung}: \texttt{test\_checkout\_with\_empty\_cart\_fails()} statt \texttt{test\_function1()}
+    \item \textbf{Strukturierung}: Trennung von Arrange/Act/Assert, Kommentare bei komplexer Logik
+\end{itemize}
+
+\subsection{Beispiel für Mocking}
+\begin{verbatim}
+@patch('simple_shop.payment.PaymentProcessor._call_payment_api')
+def test_successful_payment_updates_order_status(self, mock_api):
+    # Arrange
+    mock_api.return_value = {"status": "success"}
+    processor = PaymentProcessor()
+    order = Order(...)
+
+    # Act
+    result = processor.process_payment(order)
+
+    # Assert
+    self.assertEqual(order.status, Order.STATUS_PAID)
+\end{verbatim}
+\end{document}
+```

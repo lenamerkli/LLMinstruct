@@ -1,0 +1,37 @@
+§u§
+Use `chemfig` in LaTeX to represent a chain of `(C_2 F_4)_n`.
+§a§
+To represent the polymer chain \((C_2F_4)_n\) using `chemfig` in LaTeX, follow these steps:
+
+1. **Define the Repeating Unit**: The repeating unit is \(-CF_2-CF_2-\), where each carbon atom is bonded to two fluorine atoms.
+2. **Use Polymer Delimiters**: Employ `\polymerdelim` to place square brackets at the ends of the repeating unit, indicating polymerization.
+3. **Adjust Angles and Bond Lengths**: Position the fluorine atoms at 90° and 270° relative to the carbon chain to avoid overlap, and reduce bond lengths for clarity.
+4. **Add Subscript `n`**: Use the `indice=n` option to place the subscript `n` outside the closing bracket.
+
+**LaTeX Code:**
+
+```latex
+\documentclass{article}
+\usepackage{chemfig}
+
+\begin{document}
+
+% Polymer representation of (C2F4)n
+\chemfig{
+  \polymerdelim[height=5pt, depth=25pt, delimiters={[]}, indice=n]{left}{right}
+  @{left} -C(-[90,0.8]F)(-[270,0.8]F)-C(-[90,0.8]F)(-[270,0.8]F)- @{right}
+}
+
+\end{document}
+```
+
+**Explanation:**
+- **`\polymerdelim`**: Places square brackets (`[]`) at bonds marked `left` and `right`. The `height` and `depth` adjust bracket size.
+- **`indice=n`**: Adds the subscript `n` to the closing bracket.
+- **Angles and Bond Lengths**:
+  - Fluorines are placed at **90°** (above) and **270°** (below) the carbon atoms.
+  - Bond lengths for C-F are reduced to **80%** (`0.8`) to prevent overlap.
+- **Marking Bonds**: `@{left}` and `@{right}` mark the bonds where delimiters are placed.
+
+**Result:**
+The output displays the repeating unit \(-CF_2-CF_2-\) enclosed in square brackets with subscript \(n\), accurately representing \((C_2F_4)_n\). Adjust the bond angles or lengths if needed for visual clarity.

@@ -1,0 +1,193 @@
+§u§
+```
+\section{Variation der Konstanten}
+Die allgemeine Lösung der Differentialgleichung
+\begin{equation}
+    y'(x) = f(x) * y(x) + s(x)
+\end{equation}
+lässt sich mit den folgenden Schritten ermitteln:
+
+\subsection{Schritt 1}
+Löse die homogene Differentialgleichung (ohne den Störfaktor $s(x)$) $y'(x) = f(x) * y(x)$ mithilfe der Methode `Separation der Variablen'.
+Die allgemeine Lösung $y_h$ der homogenen Differentialgleichung wird auch `homogene Lösung' genannt.
+
+\subsection{Schritt 2}
+Die Konstante $c$ wird als Funktion $c(x)$ betrachtet in $y_h$ und $y_h$ wird zu $y_p$.
+
+\subsection{Schritt 3}
+Ableiten von $y_p$ und Gleichsetzung mit der ursprünglichen Gleichung, in welcher $y_p$ eingesetzt wird.
+
+\subsection{Schritt 4}
+Nach $c(x)$ auflösen durch das Lösen der Differentialgleichung mit $c'(x)$.
+
+\subsection{Schritt 5}
+$c(x)$ in $y_p$ einsetzen.
+
+\subsection{Schritt 6}
+\begin{equation}
+    y_h + y_p = y
+\end{equation}
+
+\subsection{Beispiel}
+Gegeben ist die Differentialgleichung
+\begin{align*}
+    y'(x) &= \frac{1}{x} * y(x) + 2 * x^3
+\end{align*}
+Sie hat die zugehörige homogene Differentialgleichung
+\begin{align*}
+    y'(x) &= \frac{1}{x} * y(x)
+\end{align*}
+Mithilfe der Methode `Separation der Variablen' kann $y_h$ ermittelt werden.
+\begin{align*}
+    y'(x) &= \frac{1}{x} * y(x) \\
+    \frac{1}{y(x)} y'(x) &= \frac{1}{x} \\
+    \int \frac{1}{y(x)} y'(x) dx &= \int \frac{1}{x} dx \\
+    \ln{(|y(x)|)} + c_1 &= \ln{(|x|)} + c_2 \\
+    \ln{(|y(x)|)} &= \ln{(|x|)} + c_2 - c_1 \\
+    e^{\ln{(|y(x)|)}} &= e^{\ln{(|x|)} + c_2 - c_1} \\
+    e^{\ln{(|y(x)|)}} &= e^{\ln{(|x|)}} * e^{c_2 - c_1} \\
+    |y(x)| &= |x| * e^{c_2 - c_1}
+\end{align*}
+Zum schluss wird die Konstante $e^{c_2 - c_1}$ durch $c$ ersetzt, was die Lösung der homogenen Differentialgleichung ergibt.
+\begin{align*}
+    y(x) &= c * x
+\end{align*}
+```
+Hilf mir, die Beispielsaufgabe zu vervollständigen.
+§a§
+### Vervollständigung des Beispiels
+
+Nachdem die homogene Lösung \( y_h(x) = c \cdot x \) ermittelt wurde, wenden wir die **Methode der Variation der Konstanten** an, um die **partielle Lösung** \( y_p(x) \) zu finden.
+
+---
+
+#### Schritt 2: Variation der Konstanten  
+Die Konstante \( c \) wird zu einer Funktion \( c(x) \).  
+\[
+y_p(x) = c(x) \cdot x
+\]
+
+#### Schritt 3: Ableiten von \( y_p \) und Einsetzen in die Originalgleichung  
+Ableitung von \( y_p \):
+\[
+y_p'(x) = \frac{d}{dx}\bigl[c(x) \cdot x\bigr] = c'(x) \cdot x + c(x) \cdot 1 = x \, c'(x) + c(x)
+\]
+
+Einsetzen in die Ausgangsgleichung \( y'(x) = \frac{1}{x} y(x) + 2x^3 \):
+\[
+x \, c'(x) + c(x) = \frac{1}{x} \bigl[c(x) \cdot x\bigr] + 2x^3
+\]
+
+#### Schritt 4: Differentialgleichung für \( c(x) \) lösen  
+Vereinfache die Gleichung:
+\[
+\begin{align*}
+x \, c'(x) + c(x) &= c(x) + 2x^3 \\
+x \, c'(x) &= 2x^3 \\
+c'(x) &= 2x^2
+\end{align*}
+\]
+
+Integriere, um \( c(x) \) zu erhalten:
+\[
+\begin{align*}
+c(x) &= \int 2x^2 \, dx \\
+     &= \frac{2}{3}x^3 + C
+\end{align*}
+\]
+
+> **Hinweis:** Die Konstante \( C \) wird in die homogene Lösung \( y_h \) absorbiert. Für die partielle Lösung verwenden wir daher \( c(x) = \frac{2}{3}x^3 \).
+
+#### Schritt 5: Partielle Lösung \( y_p(x) \)  
+Einsetzen von \( c(x) \) in \( y_p \):
+\[
+\begin{align*}
+y_p(x) &= c(x) \cdot x \\
+       &= \left(\frac{2}{3}x^3\right) \cdot x \\
+       &= \frac{2}{3}x^4
+\end{align*}
+\]
+
+#### Schritt 6: Allgemeine Lösung  
+Kombiniere homogene und partielle Lösung:
+\[
+\begin{equation}
+    y(x) = y_h(x) + y_p(x) = C \cdot x + \frac{2}{3}x^4
+\end{equation}
+\]
+
+---
+
+### Vollständiges Beispiel im LaTeX-Code
+
+Füge dem bestehenden LaTeX-Dokument den folgenden Abschnitt hinzu:
+
+```latex
+\subsection{Beispiel}
+Gegeben ist die Differentialgleichung
+\begin{align*}
+    y'(x) &= \frac{1}{x} * y(x) + 2 * x^3
+\end{align*}
+Sie hat die zugehörige homogene Differentialgleichung
+\begin{align*}
+    y'(x) &= \frac{1}{x} * y(x)
+\end{align*}
+Mithilfe der Methode `Separation der Variablen' kann $y_h$ ermittelt werden.
+\begin{align*}
+    y'(x) &= \frac{1}{x} * y(x) \\
+    \frac{1}{y(x)} y'(x) &= \frac{1}{x} \\
+    \int \frac{1}{y(x)} y'(x) dx &= \int \frac{1}{x} dx \\
+    \ln{(|y(x)|)} + c_1 &= \ln{(|x|)} + c_2 \\
+    \ln{(|y(x)|)} &= \ln{(|x|)} + c_2 - c_1 \\
+    e^{\ln{(|y(x)|)}} &= e^{\ln{(|x|)} + c_2 - c_1} \\
+    e^{\ln{(|y(x)|)}} &= e^{\ln{(|x|)}} * e^{c_2 - c_1} \\
+    |y(x)| &= |x| * e^{c_2 - c_1}
+\end{align*}
+Zum schluss wird die Konstante $e^{c_2 - c_1}$ durch $c$ ersetzt, was die Lösung der homogenen Differentialgleichung ergibt.
+\begin{align*}
+    y(x) &= c * x
+\end{align*}
+
+% --- Hier kommt die Vervollständigung ---
+
+\subsubsection{Lösung durch Variation der Konstanten}
+\begin{itemize}
+    \item Schritt 2: Ersetze $c$ durch $c(x)$: 
+    \[
+        y_p(x) = c(x) \cdot x
+    \]
+    \item Schritt 3: Ableiten und in die Originalgleichung einsetzen:
+    \[
+        \begin{align*}
+            y_p'(x) &= c'(x) \cdot x + c(x) \\
+            x c'(x) + c(x) &= \frac{1}{x} (c(x) x) + 2x^3 \\
+            x c'(x) + c(x) &= c(x) + 2x^3
+        \end{align*}
+    \]
+    \item Schritt 4: Löse nach $c'(x)$:
+    \[
+        \begin{align*}
+            x c'(x) &= 2x^3 \\
+            c'(x) &= 2x^2 \\
+            c(x) &= \int 2x^2 \, dx = \frac{2}{3}x^3 + C
+        \end{align*}
+    \]
+    (Die Konstante $C$ wird in $y_h$ absorbiert, also $c(x)=\frac{2}{3}x^3$.)
+    \item Schritt 5: Partielle Lösung:
+    \[
+        y_p(x) = c(x) \cdot x = \frac{2}{3}x^3 \cdot x = \frac{2}{3}x^4
+    \]
+    \item Schritt 6: Allgemeine Lösung:
+    \[
+        y(x) = y_h(x) + y_p(x) = C \cdot x + \frac{2}{3}x^4
+    \]
+\end{itemize}
+```
+
+---
+
+**Ergebnis:**  
+Die allgemeine Lösung der gegebenen Differentialgleichung lautet  
+\[
+\boxed{y(x) = C x + \frac{2}{3}x^4}
+\]

@@ -1,0 +1,43 @@
+§u§
+I'm in Minecraft and want to make a 45° turn to the right with a radius of 100 blocks. Where will I end up when I am at -4412,Y,-96 and facing east?
+§a§
+Let me solve this step by step.
+
+1. Starting position: (-4412, Y, -96)
+2. Facing: East (positive X direction)
+3. Turn: 45° right (so final direction will be southeast)
+4. Radius: 100 blocks
+
+For a 45° turn, we need to:
+- Move forward (east) by radius × sin(45°)
+- Move sideways (south) by radius × (1 - cos(45°))
+
+Since sin(45°) = cos(45°) = √2/2 ≈ 0.707:
+- X distance = 100 × 0.707 ≈ 71 blocks
+- Z distance = 100 × 0.707 ≈ 71 blocks
+
+Starting from (-4412, Y, -96):
+- New X = -4412 + 71 = -4341
+- New Z = -96 + 71 = -25
+
+Final position: (-4341, Y, -25)
+Final direction: Southeast
+§u§
+First of all, east is positive X (and south positive Z). Second of all: The final location you are describing is for a 90° turn with a radius of 71.
+§a§
+I apologize for my confusion. You're absolutely right - let me solve this correctly.
+
+For a 45° turn with radius 100 blocks, starting at (-4412, Y, -96) facing east (positive X):
+
+1. The turn will be part of a circle. For a 45° turn:
+- The distance along X will be: R × sin(45°) = 100 × 0.707 ≈ 71 blocks
+- The distance along Z will be: R × (1 - cos(45°)) = 100 × (1 - 0.707) ≈ 29 blocks
+
+Therefore:
+- New X = -4412 + 71 = -4341
+- New Z = -96 + 29 = -67
+
+Final position: (-4341, Y, -67)
+Final direction: Southeast (45° from east)
+
+This time the math correctly reflects a 45° turn with a 100-block radius. Thank you for the correction!

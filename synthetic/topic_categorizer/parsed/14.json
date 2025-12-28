@@ -1,0 +1,37 @@
+{
+    "topic": "Barrierefrei: oft nur rollstuhlgeeignet",
+    "original_statements": [
+        "Barrierefrei heisst oft nur rollstuhlgeeignet.",
+        "Die reiche Schweiz hat in puncto Barrierefreiheit noch viel aufzuholen.",
+        "In der Schweiz stehen Menschen mit Beeinträchtigungen täglich vor erheblichen Barrieren, z.B. beim Besuch von Ämtern.",
+        "Betroffene dokumentierten alarmierende Defizite in der Zugänglichkeit öffentlicher Einrichtungen.",
+        "Von 75 Poststellen nur ein Angebot für Sehbeeinträchtigung.",
+        "Wir setzen uns mit allen Möglichkeiten für eine umfassende hindernisfrei gebaute Umwelt ein.",
+        "Barrierefrei, das bedeutet oft nur rollstuhlgeeignet und andere Beeinträchtigungen werden kaum oder gar nicht berücksichtigt.",
+        "Die vorliegenden Daten zeigen, wie stark die Bedürfnisse von hunderttausenden Menschen mit Beeinträchtigung in der Schweiz in der Planung und Gestaltung öffentlicher Räume bisher vernachlässigt wurden.",
+        "Es steht gut um die barrierefreie Schweiz.",
+        "Barrierefreiheit ist in der Schweiz ein absolutes Tabuthema.",
+        "Alle öffentlichen Gebäude in der Schweiz sind vollständig barrierefrei ausgestattet.",
+        "Barrierefreiheit in der Schweiz ist bereits perfekt und benötigt keine Verbesserungen."
+    ],
+    "statements": [
+        "Barrierefrei heisst oft nur rollstuhlgeeignet.",
+        "Die reiche Schweiz hat in puncto Barrierefreiheit noch viel aufzuholen.",
+        "In der Schweiz stehen Menschen mit Beeinträchtigungen täglich vor erheblichen Barrieren, z.B. beim Besuch von Ämtern.",
+        "Betroffene dokumentierten alarmierende Defizite in der Zugänglichkeit öffentlicher Einrichtungen.",
+        "Von 75 Poststellen nur ein Angebot für Sehbeeinträchtigung.",
+        "Wir setzen uns mit allen Möglichkeiten für eine umfassende hindernisfrei gebaute Umwelt ein.",
+        "Barrierefrei, das bedeutet oft nur rollstuhlgeeignet und andere Beeinträchtigungen werden kaum oder gar nicht berücksichtigt.",
+        "Die vorliegenden Daten zeigen, wie stark die Bedürfnisse von hunderttausenden Menschen mit Beeinträchtigung in der Schweiz in der Planung und Gestaltung öffentlicher Räume bisher vernachlässigt wurden.",
+        "Es steht gut um die barrierefreie Schweiz.",
+        "Barrierefreiheit ist in der Schweiz ein absolutes Tabuthema.",
+        "Alle öffentlichen Gebäude in der Schweiz sind vollständig barrierefrei ausgestattet.",
+        "Barrierefreiheit in der Schweiz ist bereits perfekt und benötigt keine Verbesserungen."
+    ],
+    "fact": "In der Schweiz heisst Barrierefreiheit oft nur rollstuhlgeeignet. Es gibt grosse Defizite in der Zugänglichkeit von Dienststellen und öffentlichen Einrichtungen.",
+    "sources": [
+        "https://correctiv.org/barrierefreiheit/2024/11/29/barrierefrei-heisst-oft-nur-rollstuhlgeeignet/"
+    ],
+    "prompt": "Ich forsche zu Falschmeldungen und Lügen zum Thema `Barrierefrei: oft nur rollstuhlgeeignet`. Dafür habe ich eine Liste an Aussagen zu diesem Thema zusammengestellt:\n```text\nBarrierefrei heisst oft nur rollstuhlgeeignet.\n$\nDie reiche Schweiz hat in puncto Barrierefreiheit noch viel aufzuholen.\n$\nIn der Schweiz stehen Menschen mit Beeinträchtigungen täglich vor erheblichen Barrieren, z.B. beim Besuch von Ämtern.\n$\nBetroffene dokumentierten alarmierende Defizite in der Zugänglichkeit öffentlicher Einrichtungen.\n$\nVon 75 Poststellen nur ein Angebot für Sehbeeinträchtigung.\n$\nWir setzen uns mit allen Möglichkeiten für eine umfassende hindernisfrei gebaute Umwelt ein.\n$\nBarrierefrei, das bedeutet oft nur rollstuhlgeeignet und andere Beeinträchtigungen werden kaum oder gar nicht berücksichtigt.\n$\nDie vorliegenden Daten zeigen, wie stark die Bedürfnisse von hunderttausenden Menschen mit Beeinträchtigung in der Schweiz in der Planung und Gestaltung öffentlicher Räume bisher vernachlässigt wurden.\n$\nEs steht gut um die barrierefreie Schweiz.\n$\nBarrierefreiheit ist in der Schweiz ein absolutes Tabuthema.\n$\nAlle öffentlichen Gebäude in der Schweiz sind vollständig barrierefrei ausgestattet.\n$\nBarrierefreiheit in der Schweiz ist bereits perfekt und benötigt keine Verbesserungen.\n```\nDeine Aufgabe ist es, mindestens 15 weitere Aussagen zu diesem Thema `Barrierefrei: oft nur rollstuhlgeeignet` zu schreiben. Reine Lügen, die Wahrheit und unklare Aussagen sollen vorkommen. Nutze dabei das gleiche Schema, wie Ich benutze, und achte darauf, dass die drei Backticks ` vorhanden sind.\n",
+    "response": ""
+}

@@ -1,0 +1,144 @@
+§u§
+```
+\begin{document}
+\maketitle
+\tableofcontents
+
+\bigskip\bigskip
+
+\section{Lernziele}
+Sie sollten in der Lage sein, Fragen wie die nachfolgenden begründet zu beantworten und ihre Einsichten auf Beispiele anzuwenden:
+\subsection{Was ist Wissen?}
+\begin{itemize}
+    \item Wie lautet die Standarddefinition von Wissen und wie lässt sie sich kritisieren?
+    \item Was besagt der Reliabilismus? Welches Problem mit der Standarddefinition soll er lösen?
+    \item Wodurch unterscheiden sich erkenntnistheoretische Externalisten und Internalisten?
+    \item Wogegen richtet sich das Gettier-Beispiel (Smith und Jones) und wie könnte man die Standarddefinition modifizieren, um auf das Gegenbeispiel zu reagieren?
+\end{itemize}
+```
+Erkläre den Stoff, der benötigt wird, um diese Lernziele zu erfüllen.
+§a§
+## Überblick
+
+Um die fünf Lernziele zu erreichen, brauchst du ein solides Fundament in der klassischen Erkenntnistheorie sowie in einigen ihrer neueren Weiterentwicklungen. Im Folgenden findest du eine kompakte, systematische Einführung mit Beispielen und Kernbegriffen, sodass du anschließend jede der Fragen argumentativ beantworten kannst.
+
+---
+
+### 1. Die Standarddefinition von Wissen (JTB)
+
+| Komponente | Bedeutung | Beispiel („Anna weiß, dass…“) |
+|------------|-----------|--------------------------------|
+| **Wahrheit** (Truth)   | Die behauptete Proposition muss faktisch zutreffen. | … der Eiffelturm in Paris steht – der Turm steht tatsächlich dort. |
+| **Glauben** (Belief)   | Die Person muss die Proposition für wahr halten. | Anna glaubt, der Eiffelturm steht in Paris. |
+| **Rechtfertigung** (Justification) | Annas Überzeugung muss auf guten Gründen basieren (Belege, Argumente, Wahrnehmung u. a.). | Sie hat Paris besucht und den Turm gesehen. |
+
+→ Traditionell fasst man Wissen daher als ***Justified True Belief (JTB)*** zusammen:
+Eine Person **S** weiß, dass **p**, genau dann, wenn
+(i) **p** ist wahr,
+(ii) **S** glaubt **p**, und
+(iii) **S** ist in ihrer Überzeugung gerechtfertigt.
+
+---
+
+### 2. Kritik an JTB – Gettier-Probleme
+
+1963 veröffentlichte Edmund Gettier zwei kurze Gegenbeispiele, die zeigen, dass JTB nicht ausreicht. Das berühmteste ist „Smith und Jones“:
+
+1. Smith hat gute Gründe zu glauben:
+   (a) *„Jones wird den Job bekommen und Jones hat zehn Münzen in der Tasche.“*
+2. Daraus leitet Smith logisch ab:
+   (b) *„Die Person, die den Job bekommt, hat zehn Münzen in der Tasche.“*
+3. Tatsächlich bekommt **Smith** überraschend den Job; zufällig hat auch er zehn Münzen dabei.
+   ⇒ (b) ist wahr, Smith glaubt (b) und ist (scheinbar) gerechtfertigt – doch intuitiv scheint er **kein Wissen** zu haben.
+
+Gettier zeigt, dass es möglich ist, alle drei JTB-Bedingungen zu erfüllen und trotzdem kein Wissen zu besitzen, weil die Rechtfertigung „auf glückliche Weise“ (luck) zum wahren Glauben führt.
+
+---
+
+### 3. Ansätze, JTB zu reparieren
+
+1. **No-False-Lemma / Keine-Falsche-Hilfsannahmen**
+   Ergänze: Die Rechtfertigung darf sich nicht auf irgendeinen falschen Glaubenssatz stützen.
+   • Smiths Beweis nutzte „Jones bekommt den Job“, was falsch war → Keine Wissenszuschreibung.
+
+2. **Kausale Theorie (Goldman, 1967)**
+   Wissen verlangt, dass ein *angemessener Kausalzusammenhang* zwischen Tatsache p und dem Glauben an p besteht.
+
+3. **Reliabilismus (s. u.)**
+   Ersetze „Rechtfertigung“ durch „reliablen Prozess“.
+
+4. **Defeasibility-Klauseln**
+   Es darf keinen wahren, bislang unbekannten Einwand geben, der die Rechtfertigung entkräften würde.
+
+Bis heute gibt es keinen vollkommen unumstrittenen Zusatz; Gettier-Probleme haben eine Landschaft verschiedener Theorien hervorgebracht.
+
+---
+
+### 4. Reliabilismus
+
+Grundidee (Alvin Goldman, 1970er):
+Eine Person weiß, dass **p**, wenn
+
+1. **p** wahr ist,
+2. **S** glaubt **p**, und
+3. **S**’s Glauben wurde **durch einen reliablen kognitiven Prozess** hervorgebracht (z. B. normales Sehen, zuverlässige Messinstrumente usw.).
+
+• „Reliabel“ heißt: Der Prozess liefert in der relevanten Umgebung in einem hohen Prozentsatz wahrheitskonforme Überzeugungen.
+• Vorteil: Er erklärt, warum Gettier-Fälle scheitern – denn *Glück* ist kein zuverlässiger Prozess.
+• Kritikpunkte
+  – Wie bestimmt man den angemessenen Referenzbereich („relevante Umgebung“)?
+  – Benötigt der*die Wissenssubjekt*in intern Zugriff auf die Zuverlässigkeit? (→ führt zur Debatte Externalismus vs. Internalismus)
+
+---
+
+### 5. Internalismus vs. Externalismus
+
+| Merkmal | Internalismus | Externalismus |
+|---------|---------------|---------------|
+| Zugänglichkeitsforderung | Rechtfertigende Faktoren müssen dem Subjekt *intern zugänglich* sein (durch Introspektion, Reflektion). | Rechtfertigung/Wissens-Bedingungen können *extern* sein (zuverlässige Prozesse, Kausalbeziehungen), ohne dass das Subjekt sie kennt. |
+| Paradigma | „Classical Evidentialism“ (BonJour) | „Reliabilismus“, „Tracking Theories“ (Nozick), u. a. |
+| Stärken | Schützt intuitives Gefühl epistemischer Verantwortung; erklärt differenzierte Rechtfertigungsgrade. | Umgeht Skepsis gegen fehlendes internes Bewusstsein über Faktoren wie Lichtverhältnisse, Hirnzustände etc.; leicht anwendbar auf Tiere, Kinder, KI. |
+| Schwächen | Gefahr regressiver Forderungen („Wie rechtfertige ich meine Rechtfertigung?“). | Erlaubt scheinbar Wissen ohne Bewusstsein der Gründe („epistemic luck“?). |
+
+---
+
+### 6. Das Gettier-Beispiel im Detail & Strategien
+
+Smith und Jones (vereinfacht):
+
+1. Chef sagt Smith: „Jones kriegt den Job“ → Smith glaubt es.
+2. Smith zählt Jones’ Münzen (10).
+3. Ableitung: „Wer den Job bekommt, hat 10 Münzen.“
+4. Zufall: Smith selbst bekommt Job und hat 10 Münzen.
+
+Warum ist das ein Gegenbeispiel?
+• **Wahr**: Aussage (4) trifft zu.
+• **Glaube**: Smith glaubt (4).
+• **Rechtfertigung**: Er hat Aussagen (1) & (2) plus logische Deduktion.
+• Dennoch scheint sein Glauben **glücksbasiert**: Zufall, kein Wissen.
+
+Mögliche Modifikationen:
+
+1. **Keine-Falsche-Prämisse**: Eliminiere Prämisse (1) → Wissen fällt weg.
+2. **Kausal/Reliabel**: Kein direkter kausaler/reliabler Bezug zwischen Wahrheit (Smiths Münzen) und seinem Glauben.
+3. **Safety-Bedingung** („S könnte nicht leicht falsch liegen“): In nahen möglichen Welten liegt Smith meistens falsch → Kein Wissen.
+
+---
+
+## Zusammenfassung – Lernziele abhaken ✅
+
+1. Standarddefinition (JTB) beherrschen, inklusive Beispiele.
+2. Gettier-Probleme verstanden und erklären können, **Smith & Jones** spezifizieren.
+3. Reliabilismus definieren, Ziel: Lösung von Gettier/Glück-Problemen.
+4. Internalismus vs. Externalismus klar abgrenzen: Zugänglichkeit, Stärken/Schwächen.
+5. Mindestens eine plausible Modifikation von JTB diskutieren (z. B. No-False-Lemma, Safety, Reliabilismus).
+
+---
+
+### Reflexionsfragen zur Vertiefung
+
+1. Könnte es Gettier-Fälle geben, die auch den Reliabilismus treffen? (Stichwort: „Fake Barn County“).
+2. Wie entscheidend ist *epistemic luck* wirklich – können wir Wissen jemals völlig glücksunabhängig machen?
+3. Könnten Tiere Wissen im reliabilistischen Sinne besitzen, aber nicht im internalistischen?
+
+Viel Erfolg beim Durcharbeiten!

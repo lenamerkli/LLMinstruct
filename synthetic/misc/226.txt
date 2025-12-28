@@ -1,0 +1,59 @@
+§u§
+worldedit move the selectors down a certain number of blocks, while keeping everything as is.
+§a§
+To move your WorldEdit selection boundaries down while keeping the selection contents in the same place, you can use the **`//shift`** command.
+
+## Syntax:
+```
+//shift <amount> [direction]
+```
+
+## To move selection down:
+```
+//shift <number> down
+```
+or simply:
+```
+//shift <number> d
+```
+
+## Examples:
+- `//shift 5 down` - Moves the selection boundaries 5 blocks down
+- `//shift 10 d` - Moves the selection boundaries 10 blocks down
+- `//shift 3` - Moves the selection boundaries 3 blocks in the direction you're facing
+
+## Important Notes:
+- This command only moves the **selection boundaries** (the positions of pos1 and pos2)
+- The actual blocks inside the selection remain in their original location
+- This is useful when you want to paste something at a different height or reuse the same selection area at a different position
+- You can also use other directions: `up`, `north`, `south`, `east`, `west`
+
+If you want to move the actual blocks along with the selection, you would use `//move` instead of `//shift`.
+§u§
+And how can I get the coordinates of the current selection?
+§a§
+To get the coordinates of your current WorldEdit selection, use the **//size** command.
+
+When you run `//size`, it will display:
+- The coordinates of **Position 1** (first corner)
+- The coordinates of **Position 2** (second corner)
+- The **dimensions** of the selection (length × width × height)
+- The **total number of blocks** in the selection
+- The **diagonal distance** between the two positions
+
+Example output:
+```
+Position 1: (100, 64, 200)
+Position 2: (120, 80, 220)
+Size: 21 x 17 x 21
+Distance: 34.7
+Blocks: 7497
+```
+
+**Additional useful commands:**
+
+- **//pos1** and **//pos2** - Shows just the individual position coordinates when typed without parameters
+- **//sel** - Shows information about your current selection mode (cuboid, sphere, etc.)
+- **//chunk** - Shows information about the chunk(s) your selection is in
+
+If you haven't set both positions yet, the //size command will tell you which position(s) still need to be set. This is particularly helpful when working with large builds where you might lose track of where your selection corners are located.

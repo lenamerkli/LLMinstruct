@@ -1,0 +1,6 @@
+§u§
+Geben Sie die Stammfunktion von $f(x) = \sqrt{5x}$ an.
+§a§
+Die Stammfunktion von \( f(x) = \sqrt{5x} \) ist  
+\[ \int \sqrt{5x} \, dx = \frac{2 \sqrt{5}}{3} x^{3/2} + C, \]  
+wobei \( C \) die Integrationskonstante ist.

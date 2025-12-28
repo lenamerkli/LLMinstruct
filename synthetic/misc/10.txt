@@ -1,0 +1,268 @@
+§u§
+```
+\begin{document}
+\maketitle
+\tableofcontents
+
+\bigskip\bigskip
+
+\section{Lernziele}
+Sie sollten in der Lage sein, Fragen wie die nachfolgenden begründet zu beantworten und ihre Einsichten auf Beispiele anzuwenden:
+\subsection{Was ist Wissen?}
+\begin{itemize}
+    \item Wie lautet die Standarddefinition von Wissen und wie lässt sie sich kritisieren?
+    \item Was besagt der Reliabilismus? Welches Problem mit der Standarddefinition soll er lösen?
+    \item Wodurch unterscheiden sich erkenntnistheoretische Externalisten und Internalisten?
+    \item Wogegen richtet sich das Gettier-Beispiel (Smith und Jones) und wie könnte man die Standarddefinition modifizieren, um auf das Gegenbeispiel zu reagieren?
+\end{itemize}
+\subsection{Was können wir wissen?}
+\begin{itemize}
+    \item Wie lautet das Trilemma von Agrippa und was sind mögliche Auswege aus dem Trilemma?
+    \item Worin besteht jeweils die Grundidee des Fundamentalismus, des Kohärentismus und des Kontextualismus, und mit welchen Problemen sind die drei Ansätze konfrontiert?
+\end{itemize}
+```
+Erkläre den Stoff, der benötigt wird, um diese Lernziele zu erfüllen.
+§a§
+### Erklärung des Stoffes zu den Lernzielen
+
+Im Folgenden wird der gesamte Stoff erklärt, der benötigt wird, um die in deiner Lernzieldarstellung genannten Fragen **begründet zu beantworten** und die Einsichten auf Beispiele anzuwenden. Die Inhalte sind in zwei große Bereiche unterteilt: **„Was ist Wissen?“** und **„Was können wir wissen?““**.
+
+---
+
+## 1. Was ist Wissen?
+
+### 1.1 Wie lautet die Standarddefinition von Wissen und wie lässt sie sich kritisieren?
+
+#### **Standarddefinition von Wissen (JTB-Theorie)**
+Die **Standarddefinition von Wissen** stammt ursprünglich von Platon und wird heute als **„Justified True Belief“ (JTB)** – *gerechtfertigter wahrer Glaube* – bezeichnet. Sie besagt:
+
+> **Wissen = ein gerechtfertigter, wahrer Glaube.**
+
+D.h. damit du etwas *weißt*, müssen drei Bedingungen erfüllt sein:
+1. **Glaube (Belief)**: Du musst die Proposition (Aussage) für wahr halten.
+2. **Wahrheit (Truth)**: Die Proposition muss tatsächlich wahr sein.
+3. **Rechtfertigung (Justification)**: Du musst gute Gründe oder Evidenz für die Wahrheit der Proposition haben.
+
+**Beispiel:**
+*Anna glaubt, dass es draußen regnet, weil sie die Regenradar-App sieht, und es regnet tatsächlich. Für Anna ist dies Wissen, da sie einen wahren Glauben mit Rechtfertigung hat.*
+
+#### **Kritik an der JTB-Theorie – Das Gettier-Problem**
+Die JTB-Theorie wurde durch **Gettier-Beispiele** (benannt nach Edmund Gettier, 1963) widerlegt. Diese zeigen, dass es Fälle gibt, in denen alle drei JTB-Bedingungen erfüllt sind, die betroffene Person aber **kein Wissen** hat, weil die Rechtfertigung auf einem **falschen Lemma** (falsche Annahme) beruht.
+
+**Klassisches Gettier-Beispiel (Smith und Jones):**
+
+1. **Situation:**
+   - Smith und Jones bewerben sich für denselben Job.
+   - Smith hat starke Indizien, dass Jones den Job bekommen wird (z. B. Jones hat einen Absichtserklärungsschreiben erhalten).
+   - Smith hat auch einen Brief von seiner Freundin, die ihm sagt: *„Wenn Jones den Job nicht bekommt, dann bekomme ich ihn.“*
+
+2. **Glauben von Smith:**
+   - Smith glaubt daher: *„Jones wird den Job bekommen.“* (auf Basis des Absichtserklärungsschreibens)
+   - Smith schließt daraus logisch: *„Entweder Jones bekommt den Job, oder ich bekomme den Job.“*
+   - Smith glaubt daher auch: *„Ich werde den Job bekommen.“*
+
+3. **Ereignis:**
+   - Der Job wird weder an Jones noch an Smith vergeben (z. B., weil ein dritter Kandidat eingestellt wird).
+   - **Tatsache:** Jones bekommt den Job **nicht**, und Smith bekommt den Job **auch nicht**.
+
+4. **Analyse nach JTB:**
+   - **Glaube:** Smith glaubt, dass *„Ich werde den Job bekommen.“* → **erfüllt**
+   - **Wahrheit:** Tatsächlich **falsch**! → **nicht erfüllt**
+
+   *Um ein Gettier-Beispiel zu konstruieren, muss die Schlussfolgerung wahr sein, obwohl die Prämissen falsch sind. Hier eine korrigierte Version:*
+
+   **Korrektes Gettier-Beispiel (modifiziert):**
+
+   - Smith hat einen Brief, in dem steht: *„Wenn Jones den Job nicht bekommt, dann bekomme ich ihn.“*
+   - Jones wird **tatsächlich nicht** eingestellt.
+   - **Zufall:** Smith wird **tatsächlich** eingestellt (weil der Chef seine Freundin bestochen hat).
+
+   Nun:
+   - **Glaube:** Smith glaubt, dass *„Ich werde den Job bekommen.“* → **erfüllt**
+   - **Wahrheit:** Es ist **wahr**, dass Smith den Job bekommt. → **erfüllt**
+   - **Rechtfertigung:** Smith hat den Brief und die Aussage *„Wenn Jones nicht, dann ich“*. Er hält dies für einen guten Grund. → **erfüllt**
+
+   **Aber:** Die Rechtfertigung basiert auf einem **falschen Lemma**: Der Brief ist nicht verlässlich (die Freundin hat gelogen). Smith hat den Job **zufällig** richtig erraten.
+   → **Es ist kein Wissen**, da die Rechtfertigung nicht zuverlässig ist.
+
+**Kritik zusammenfassend:**
+Die JTB-Theorie ist **unzureichend**, weil sie nicht zwischen *zufälligen wahren Überzeugungen* und *wirklichem Wissen* unterscheidet.
+
+---
+
+### 1.2 Was besagt der Reliabilismus? Welches Problem mit der Standarddefinition soll er lösen?
+
+#### **Reliabilismus (Verlässlichkeits-Theorie)**
+
+Der **Reliabilismus** ist eine moderne Theorie des Wissens, die die Bedingung der *Rechtfertigung* neu definiert. Er wurde vor allem von **Alvin Goldman** entwickelt.
+
+**Kernaussage:**
+> Eine Überzeugung ist Wissen, **wenn sie durch einen verlässlichen (reliablen) Prozess** erzeugt wurde.
+
+D.h., es geht nicht darum, ob du *gute Gründe* bewusst kontrollieren kannst, sondern ob das **Verfahren**, das zu deiner Überzeugung geführt hat, **generell dazu neigt, wahre Überzeugungen zu produzieren**.
+
+**Beispiel:**
+- Ein Thermometer misst die Temperatur. Wenn das Thermometer ein zuverlässiges Gerät ist (reliabler Prozess), dann ist die dadurch generierte Überzeugung („Es sind 20 °C“) Wissen – auch wenn du nicht weißt, wie das Thermometer funktioniert.
+
+#### **Welches Problem löst der Reliabilismus?**
+Der Reliabilismus soll **das Gettier-Problem** lösen:
+
+- In Gettier-Fällen basiert die Rechtfertigung auf einem **unzuverlässigen Prozess** (z. B. ein falsches Lemma oder Zufall).
+- Der Reliabilismus fügt daher eine **vierte Bedingung** hinzu:
+  > **Die Überzeugung muss durch einen verlässlichen Prozess erzeugt worden sein.**
+
+Damit werden Gettier-Fälle ausgeschlossen: In dem oben genannten Beispiel ist Smiths Überzeugung zwar wahr und gerechtfertigt (nach JTB), aber der Prozess (Verlassen auf den falschen Brief) ist **nicht verlässlich** → daher kein Wissen.
+
+**Vorteile des Reliabilismus:**
+- Einfachheit und Natürlichkeit (orientiert sich an wie Wissen in der Wissenschaft und im Alltag erzeugt wird).
+
+**Kritik:**
+- Wie definiert man „verlässlich“?
+- Kann zu **Externalismus** führen (s. u.), was für Internalisten problematisch ist.
+
+---
+
+### 1.3 Wodurch unterscheiden sich erkenntnistheoretische Externalisten und Internalisten?
+
+#### **Internalismus vs. Externalismus**
+
+Dies ist ein grundlegender Streit in der Erkenntnistheorie über **was zur Rechtfertigung einer Überzeugung zählt**.
+
+|                     | **Internalismus**                                                                 | **Externalismus**                                                                 |
+|---------------------|-----------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| **Kriterium**       | Rechtfertigung muss **dem Subjekt zugänglich** sein (durch Introspektion, Reflexion). | Rechtfertigung kann **externale Faktoren** umfassen, die dem Subjekt nicht bewusst sind. |
+| **Beispiel**        | Wenn du glaubst, dass es regnet, weil du die Regenradar-App siehst und sie zuverlässig ist **und du dies weißt**, ist die Überzeugung gerechtfertigt. | Wenn du glaubst, dass es regnet, weil die App zuverlässig ist, **du aber nicht weißt, wie die App funktioniert**, ist die Überzeugung dennoch gerechtfertigt (für Externalisten). |
+| **Vertreter**       | Traditionelle Epistemologie (z. B. Descartes), Reliabilismus in interner Variante. | Alvin Goldman, Tyler Burge.                                                      |
+| **Vorteile**        | Entspricht unserer intuitiven Vorstellung von „guter Begründung“.                 | Erklärt, warum wir oft Wissen haben, ohne alle Details zu kennen (z. B. wissenschaftliche Instrumente). |
+| **Probleme**        | Schier unendlich viele mögliche Gründe – wo endet die Rechtfertigung?               | Kann zu **„Verantwortungslosigkeit“** führen: Man hat Wissen, obwohl man nichts dafür kann. |
+
+**Zusammenfassung:**
+- **Internalist:** *„Ich weiß, weil ich die Gründe kontrollieren kann.“*
+- **Externalist:** *„Ich weiß, weil der Prozess zuverlässig ist – auch wenn ich das nicht beurteilen kann.“*
+
+---
+
+### 1.4 Wogegen richtet sich das Gettier-Beispiel (Smith und Jones) und wie könnte man die Standarddefinition modifizieren, um auf das Gegenbeispiel zu reagieren?
+
+#### **Gegen wen richtet sich das Gettier-Beispiel?**
+Das Gettier-Beispiel richtet sich **gegen die JTB-Theorie** (Standarddefinition des Wissens). Es zeigt, dass es **wahre, gerechtfertigte Überzeugungen gibt, die kein Wissen sind**, weil die Rechtfertigung auf einem falschen oder zufälligen Umstand beruht.
+
+#### **Mögliche Modifikationen der Standarddefinition**
+
+Um Gettier-Fälle auszuschließen, wurden verschiedene **Modifikationen** der JTB-Theorie vorgeschlagen. Die wichtigsten sind:
+
+1. **Zusatzbedingung: „Kein falsches Lemma“ (No False Lemma)**
+   - *„Eine Überzeugung ist Wissen, wenn sie ein wahrer, gerechtfertigter Glaube ist und die Rechtfertigung auf keiner falschen Aussage beruht.“*
+   - **Problem:** Wie definiert man „Lemma“? Kann zu einem **unendlichen Regress** führen.
+
+2. **Reliabilismus (s. o.)**
+   - Ersetzt die Rechtfertigungsbedingung durch die **Verlässlichkeit des Prozesses**.
+   - **Vorteil:** Gettier-Fälle werden automatisch ausgeschlossen, weil der Prozess in Gettier-Fällen unzuverlässig ist.
+
+3. **Safety-Theorie (Sicherheit)**
+   - *„Eine Überzeugung ist Wissen, wenn sie in den meisten möglichen Welten, die den aktuellen Umgebungen ähnlich sind, wahr ist.“*
+   - **Begründung:** In Gettier-Fällen wäre die Überzeugung in ähnlichen Welten **falsch** → daher kein Wissen.
+
+4. **Sensitivity-Theorie (Sensitivität)**
+   - *„Eine Überzeugung ist Wissen, wenn sie nur dann gebildet wird, wenn sie wahr ist, und anders entschieden würde, wenn sie falsch wäre.“*
+   - **Beispiel:** Wenn Smith den Job nur dann geglaubt hätte, wenn er tatsächlich wahr gewesen wäre.
+
+5. **Virtue-Epistemologie (Tugend-Epistemologie)**
+   - Betont die **Fähigkeiten des Subjekts** (z. B. Urteilsvermögen). Wissen entsteht durch intellektuelle Tugenden.
+
+**Welche Modifikation ist plausibel?**
+In der aktuellen Forschung gibt es keinen Konsens. Reliabilismus und Safety/Sensitivity sind besonders populär.
+
+---
+
+## 2. Was können wir wissen?
+
+### 2.1 Wie lautet das Trilemma von Agrippa und was sind mögliche Auswege aus dem Trilemma?
+
+#### **Das Trilemma von Agrippa**
+
+Das **Trilemma von Agrippa** (benannt nach dem römischen Philosophen Gaisus Julius Agrippa) ist ein klassisches Argument, das zeigt, dass **jede Rechtfertigung von Überzeugungen auf ein Problem stößt**. Es besagt:
+
+Um eine Überzeugung zu rechtfertigen, muss man auf eine andere Überzeugung verweisen. Dies führt aber zwangsläufig zu einem der drei **unhaltbaren Ausgänge** (Horn des Trilemmas):
+
+1. **Unendlicher Regress:**
+   - Jede Rechtfertigung benötigt eine weitere Rechtfertigung, und so weiter **ad infinitum**.
+   - **Problem:** Man kommt nie zu einem Abschluss. Wie kann man dann überhaupt etwas wissen?
+
+2. **Zirkularität:**
+   - Die Rechtfertigung kehrt irgendwann zu der zu rechtfertigenden Überzeugung selbst zurück.
+   - **Beispiel:** Ich rechtfertige Überzeugung A mit Überzeugung B, und B wieder mit A.
+   - **Problem:** Die Rechtfertigung ist leer, da sie nichts Neues hinzufügt.
+
+3. **Dogmatismus:**
+   - Man bricht den Regress an einer bestimmten Stelle ab, **ohne weitere Rechtfertigung**.
+   - **Problem:** Das ist willkürlich und widerspricht dem Streben nach rationaler Begründung.
+
+#### **Mögliche Auswege aus dem Trilemma**
+
+Philosophen haben verschiedene Strategien entwickelt, um dem Trilemma zu entkommen:
+
+1. **Fundamentalismus (Fundamentalismus / Fundationalismus)**
+   - **Grundidee:** Es gibt **grundlegende (fundamentale) Überzeugungen**, die **nicht weiter gerechtfertigt werden müssen**. Auf ihnen aufbauend werden alle anderen Überzeugungen gerechtfertigt.
+   - **Beispiele für fundamentale Überzeugungen:**
+     - **Sinneswahrnehmungen** („Ich sehe rot.“)
+     - **Logische Axiome** („Wenn A, dann A.“)
+     - **Selbst-evidentes Wissen**
+   - **Vorteile:** Bietet einen klaren Abschluss des Rechtfertigungsprozesses.
+   - **Probleme:**
+     - *Welche Überzeugungen sind fundamental?* (Problem des Kriteriums)
+     - *Sind fundamentale Überzeugungen wirklich gerechtfertigt?* (Sie könnten falsch sein, z. B. Halluzinationen).
+
+2. **Kohärentismus (Koherentismus)**
+   - **Grundidee:** Eine Überzeugung ist gerechtfertigt, **wenn sie zu einem kohärenten System von Überzeugungen passt**. Rechtfertigung entsteht also nicht durch grundlegende Sätze, sondern durch **Wechselbeziehungen** zwischen Überzeugungen.
+   - **Koherenzkriterien:**
+     - *Logische Konsistenz* (keine Widersprüche)
+     - *Erklärung* (eine Überzeugung erklärt andere)
+     - *Symmetrie* (Überzeugungen stützen sich gegenseitig)
+   - **Vorteile:** Vermeidet den need für grundlegende Überzeugungen.
+   - **Probleme:**
+     - *Kann ein kohärentes System aus falschen Überzeugungen bestehen?* (z. B. ein geschlossenes System von Irrtümern).
+     - *Wie misst man Kohärenz?* (Es fehlt ein objektives Maß).
+
+3. **Kontextualismus (Kontextualismus)**
+   - **Grundidee:** Die Bedeutung von *„wissen“* ist **kontextabhängig**. In manchen Kontexten (z. B. alltägliche Gespräche) sind niedrige Standards für Wissen ausreichend, in anderen (z. B. wissenschaftliche Debatten) sind hohe Standards nötig.
+   - **Beispiel:**
+     - *Alltag:* „Ich weiß, dass es regnet.“ (basierend auf dem Blick aus dem Fenster)
+     - *Wissenschaft:* „Wir wissen, dass das Medikament wirksam ist.“ (benötigt statistische Signifikanz, Doppelblindstudien usw.)
+   - **Vorteile:** Erklärt, warum *„wissen“* in verschiedenen Situationen unterschiedlich verwendet wird.
+   - **Probleme:**
+     - *Wie genau sind die Kontexte definiert?* (Es fehlt eine klare Theorie der Kontextverschiebung).
+     - *Kann zu Relativismus führen:* Wissen ist dann nur kontextuell gültig.
+
+4. **Reliabilismus (s. o.)**
+   - Kann ebenfalls als Ausweg gesehen werden, da er Rechtfertigung durch verlässliche Prozesse definiert – unabhängig von Regress, Zirkularität oder Dogmatismus.
+
+5. **Infinitismus** *(weniger verbreitet)*
+   - **Grundidee:** Der Regress ist **keine Probleme**, weil wir potenziell unendliche Rechtfertigungsketten akzeptieren können.
+   - **Problem:** Wie können wir praktisch mit einer unendlichen Kette umgehen?
+
+---
+
+### 2.2 Worin besteht jeweils die Grundidee des Fundamentalismus, des Kohärentismus und des Kontextualismus, und mit welchen Problemen sind die drei Ansätze konfrontiert?
+
+#### **Zusammenfassung der drei Ansätze (wie oben bereits erklärt)**
+
+| Ansatz              | Grundidee                                                                                          | Probleme                                                                                                |
+|---------------------|----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
+| **Fundamentalismus**| Es gibt grundlegende Überzeugungen, die nicht weiter gerechtfertigt werden müssen. Alle anderen Überzeugungen werden durch sie gerechtfertigt. | - **Problem des Kriteriums:** Wie wählt man die fundamentalen Überzeugungen?<br>- **Zweifelsproblem:** Wie kann man sicher sein, dass fundamentale Überzeugungen wahr sind?<br>- **Dogmatismus-Vorwurf:** Warum sollen fundamentale Überzeugungen akzeptiert werden? |
+| **Kohärentismus**   | Rechtfertigung entsteht durch Kohärenz innerhalb eines Überzeugungssystems. Keine grundlegenden Überzeugungen nötig. | - **Zirkularitätsproblem:** Kohärenz selbst muss gerechtfertigt sein.<br>- **Falsches System:** Ein kohärentes System kann vollständig falsch sein.<br>- **Messproblem:** Wie misst man Kohärenz? |
+| **Kontextualismus**  | Die Bedeutung von *„wissen“* hängt vom Kontext ab. Hohe oder niedrige Standards gelten je nach Situation. | - **Definierungsproblem:** Wie genau sind Kontexte definiert?<br>- **Relativismus:** Wissen ist dann nur kontextuell gültig – kein absolutes Wissen.<br>- **Pragmatische Probleme:** Wie ändern sich die Standards in dynamischen Gesprächen? |
+
+---
+
+### **Zusammenfassung der Lernziele**
+
+Um die Lernziele zu erfüllen, musst du:
+
+1. **Die Standarddefinition des Wissens (JTB) verstehen** und die **Kritik durch Gettier-Beispiele** nachvollziehen.
+2. Den **Reliabilismus** als Antwort auf das Gettier-Problem erklären.
+3. Den Unterschied zwischen **Internalismus und Externalismus** klären und an Beispielen zeigen.
+4. Das **Gettier-Beispiel (Smith und Jones)** analysieren und **Modifikationen der JTB-Theorie** (z. B. Reliabilismus, Safety) diskutieren.
+5. Das **Trilemma von Agrippa** beschreiben und die **Auswege** (Fundamentalismus, Kohärentismus, Kontextualismus) erklären – jeweils mit ihrer Grundidee und ihren Problemen.
+
+Durch das Beherrschen dieser Inhalte kannst du die genannten Fragen begründet beantworten und deine Einsichten auf konkrete Beispiele anwenden.

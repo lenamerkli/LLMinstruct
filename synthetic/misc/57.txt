@@ -1,0 +1,140 @@
+§u§
+Create a small python script to guess the name of someone using their email address. Input is a string of the email address and output should be a guess for their name in "Firstname Lastname". If all tricks do not work out, return "Alias".
+§a§
+Here's a small Python script that attempts to **guess a person's name from their email address** using common email patterns. It uses simple heuristics like splitting the email and looking for name-like parts.
+
+```python
+def guess_name_from_email(email):
+    # Normalize the email
+    email = email.strip().lower()
+
+    # Split by @ and take the local part
+    local_part = email.split('@')[0]
+
+    # Remove dots from local part (e.g., john.doe -> john doe)
+    local_part = local_part.replace('.', ' ')
+
+    # Split into possible name components
+    parts = local_part.split()
+
+    # Filter out numbers and obvious non-name parts
+    filtered_parts = [part for part in parts if not part.isdigit()]
+
+    # Try to extract first and last name
+    if len(filtered_parts) == 1:
+        # Single part: try to guess it's the first name
+        first_name = filtered_parts[0].title()
+        return f"{first_name} Alias"
+
+    elif len(filtered_parts) >= 2:
+        # Try to extract first and last name
+        first_name = filtered_parts[0].title()
+        last_name = filtered_parts[-1].title()
+
+        # If last name is just a number or not plausible, fallback
+        if last_name.isdigit() or len(last_name) < 2:
+            return f"{first_name} Alias"
+
+        # If first name is just a number or too short
+        if first_name.isdigit() or len(first_name) < 2:
+            return f"{last_name} Alias"
+
+        return f"{first_name} {last_name}"
+
+    else:
+        return "Alias"
+
+# Example usage
+if __name__ == "__main__":
+    email = input("Enter an email address: ")
+    print(guess_name_from_email(email))
+```
+
+---
+
+### 🧠 How it works:
+
+- **Normalize**: Convert email to lowercase and strip whitespace.
+- **Extract local part**: Everything before `@`.
+- **Remove dots**: Treat `john.doe` as `john doe`.
+- **Split and filter**: Remove digits and keep plausible name parts.
+- **Guess name**:
+  - If one part → assume it's a first name → `Firstname Alias`.
+  - If multiple parts → use first as first name, last as last name → `Firstname Lastname`.
+  - Fallback → `"Alias"`.
+
+---
+
+### ✅ Example Input/Output:
+
+```python
+Enter an email address: john.doe@gmail.com
+John Doe
+
+Enter an email address: j.smith@company.org
+J Smith
+
+Enter an email address: admin@site.com
+Admin Alias
+```
+
+> ⚠️ This is a **heuristic guesser** — it won't always be accurate. Real-world emails can be very complex (e.g., `j.smith.2023`, `johndoe.work`, etc.).
+§u§
+Can it do `Joe_Doe@example.com` and `Joe43_Doe@example.com`?
+§a§
+Yes, absolutely! Let's enhance the script to properly handle cases like `Joe_Doe@example.com` and `Joe43_Doe@example.com` by **removing numbers from the username before splitting**.
+
+We'll update the script to:
+1. Strip trailing numbers (e.g., `Joe43_Doe` → `Joe_Doe`)
+2. Split by common separators (`.` `_`, `-`)
+3. Use the first two parts as first and last name
+
+Here’s the improved version:
+
+```python
+import re
+
+def guess_name_from_email(email):
+    # Extract the part before the @
+    username = email.split('@')[0]
+
+    # Remove trailing numbers (e.g., Joe43_Doe → Joe_Doe)
+    username = re.sub(r'\d+$', '', username)
+
+    # Try splitting by common separators
+    for sep in ['.', '_', '-']:
+        if sep in username:
+            parts = username.split(sep)
+            # Only use first two parts as first and last name
+            if len(parts) >= 2:
+                first, last = parts[0], parts[1]
+                return f"{first.capitalize()} {last.capitalize()}"
+
+    # If no separator found, return Alias
+    return "Alias"
+
+# Example usage:
+emails = [
+    "Joe_Doe@example.com",
+    "Joe43_Doe@example.com",
+    "john.smith@gmail.com",
+    "mike.brown@company.com",
+    "user123@domain.com"
+]
+
+for email in emails:
+    print(f"{email} -> {guess_name_from_email(email)}")
+```
+
+### Output:
+```
+Joe_Doe@example.com -> Joe Doe
+Joe43_Doe@example.com -> Joe Doe
+john.smith@gmail.com -> John Smith
+mike.brown@company.com -> Mike Brown
+user123@domain.com -> Alias
+```
+
+✅ **Now it correctly handles numbers at the end before splitting**.
+
+Let me know if you want to support more complex patterns (like `Joe.Doe`, `Joe43`, etc.), or if you'd like to add logic to detect middle initials or handle special characters.

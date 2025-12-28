@@ -1,0 +1,137 @@
+§u§
+```
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+    <meta charset="UTF-8">
+    <title>IP-Adresse gesperrt | IP-address blocked |</title>
+</head>
+<body>
+<div class="main">
+    <div class="deutsch" lang="de-CH">
+        <h3>Deutsch</h3>
+        <p>
+            Der Zugriff auf diese Webseite von Ihrer IP-Adresse wurde gesperrt.
+            Dies kann mehrere Gründe haben, unter anderem eine Einschätzung unserer automatisierten Überwachungssysteme oder eine manuelle Überprüfung der Log-Dateien.
+            Falls Sie der Meinung sind, dass es sich bei dieser Sperrung um einen Fehler handelt, kontaktieren Sie bitte den*die Betreiber*in.
+        </p>
+        <p>Ihre IP-Adresse lautet: {{ ip }}</p>
+    </div>
+    <div class="english" lang="en">
+        <h3>English</h3>
+        <p>
+            Access to this website from your IP address has been blocked.
+            This may be due to several reasons, including an assessment of our automated monitoring systems or a manual review of the log files.
+            If you think that this blocking is a mistake, please contact the operator.
+        </p>
+        <p>Your IP-address is: {{ ip }}</p>
+    </div>
+    <div class="français" lang="fr-CH">
+        <h3>Français</h3>
+        <p>
+
+        </p>
+        <p></p>
+    </div>
+</div>
+</body>
+</html>
+```
+Add the french translation
+§a§
+```html
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+    <meta charset="UTF-8">
+    <title>IP-Adresse gesperrt | IP-address blocked | Adresse IP bloquée</title>
+</head>
+<body>
+<div class="main">
+    <div class="deutsch" lang="de-CH">
+        <h3>Deutsch</h3>
+        <p>
+            Der Zugriff auf diese Webseite von Ihrer IP-Adresse wurde gesperrt.
+            Dies kann mehrere Gründe haben, unter anderem eine Einschätzung unserer automatisierten Überwachungssysteme oder eine manuelle Überprüfung der Log-Dateien.
+            Falls Sie der Meinung sind, dass es sich bei dieser Sperrung um einen Fehler handelt, kontaktieren Sie bitte den*die Betreiber*in.
+        </p>
+        <p>Ihre IP-Adresse lautet: {{ ip }}</p>
+    </div>
+    <div class="english" lang="en">
+        <h3>English</h3>
+        <p>
+            Access to this website from your IP address has been blocked.
+            This may be due to several reasons, including an assessment of our automated monitoring systems or a manual review of the log files.
+            If you think that this blocking is a mistake, please contact the operator.
+        </p>
+        <p>Your IP-address is: {{ ip }}</p>
+    </div>
+    <div class="français" lang="fr-CH">
+        <h3>Français</h3>
+        <p>
+            L'accès à ce site web depuis votre adresse IP a été bloqué.
+            Cela peut être dû à plusieurs raisons, notamment une évaluation de nos systèmes de surveillance automatisés ou un examen manuel des fichiers journaux.
+            Si vous pensez que ce blocage est une erreur, veuillez contacter l'opérateur.
+        </p>
+        <p>Votre adresse IP est : {{ ip }}</p>
+    </div>
+</div>
+</body>
+</html>
+```
+
+J'ai ajouté la traduction française complète du message, qui correspond aux versions allemande et anglaise. J'ai également mis à jour la balise `<title>` pour inclure "Adresse IP bloquée" en français.
+§u§
+Also add `it-CH`
+§a§
+```html
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+    <meta charset="UTF-8">
+    <title>IP-Adresse gesperrt | IP-address blocked | Adresse IP bloquée | Indirizzo IP bloccato</title>
+</head>
+<body>
+<div class="main">
+    <div class="deutsch" lang="de-CH">
+        <h3>Deutsch</h3>
+        <p>
+            Der Zugriff auf diese Webseite von Ihrer IP-Adresse wurde gesperrt.
+            Dies kann mehrere Gründe haben, unter anderem eine Einschätzung unserer automatisierten Überwachungssysteme oder eine manuelle Überprüfung der Log-Dateien.
+            Falls Sie der Meinung sind, dass es sich bei dieser Sperrung um einen Fehler handelt, kontaktieren Sie bitte den*die Betreiber*in.
+        </p>
+        <p>Ihre IP-Adresse lautet: {{ ip }}</p>
+    </div>
+    <div class="english" lang="en">
+        <h3>English</h3>
+        <p>
+            Access to this website from your IP address has been blocked.
+            This may be due to several reasons, including an assessment of our automated monitoring systems or a manual review of the log files.
+            If you think that this blocking is a mistake, please contact the operator.
+        </p>
+        <p>Your IP-address is: {{ ip }}</p>
+    </div>
+    <div class="français" lang="fr-CH">
+        <h3>Français</h3>
+        <p>
+            L'accès à ce site web depuis votre adresse IP a été bloqué.
+            Cela peut être dû à plusieurs raisons, notamment une évaluation de nos systèmes de surveillance automatisés ou un examen manuel des fichiers journaux.
+            Si vous pensez que ce blocage est une erreur, veuillez contacter l'opérateur.
+        </p>
+        <p>Votre adresse IP est : {{ ip }}</p>
+    </div>
+    <div class="italiano" lang="it-CH">
+        <h3>Italiano</h3>
+        <p>
+            L'accesso a questo sito web dal vostro indirizzo IP è stato bloccato.
+            Ciò può essere dovuto a diversi motivi, tra cui una valutazione dei nostri sistemi automatizzati di monitoraggio o un controllo manuale dei file di registro.
+            Se ritenete che questo blocco sia un errore, vi preghiamo di contattare il gestore.
+        </p>
+        <p>Il vostro indirizzo IP è: {{ ip }}</p>
+    </div>
+</div>
+</body>
+</html>
+```
+
+J'ai ajouté la section en italien (Suisse) avec la traduction fidèle aux autres langues, et mis à jour le `<title>` pour inclure "Indirizzo IP bloccato" afin de refléter tous les quatre langues officielles de Suisse (allemand, français, italien, anglais).

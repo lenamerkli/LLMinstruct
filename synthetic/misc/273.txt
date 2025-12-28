@@ -1,0 +1,30 @@
+§u§
+minecraft command that replaces water in a 3 block radius (sphere or cube) with air
+§a§
+### Cube (simple, one command)
+Replaces **water blocks** in a 3-block radius *cube* (7×7×7) around where you run it:
+
+```mcfunction
+/execute at @s run fill ~-3 ~-3 ~-3 ~3 ~3 ~3 air replace water
+```
+
+(Use `@p` instead of `@s` if you want it centered on the nearest player.)
+
+---
+
+### Sphere-ish (closer to a radius-3 sphere)
+Minecraft doesn’t have a true `/fill sphere` built-in, but you can approximate a radius-3 sphere with a few fills (run all of these):
+
+```mcfunction
+/execute at @s run fill ~-3 ~  ~-3 ~3 ~  ~3 air replace water
+/execute at @s run fill ~-2 ~1 ~-2 ~2 ~1 ~2 air replace water
+/execute at @s run fill ~-2 ~-1 ~-2 ~2 ~-1 ~2 air replace water
+/execute at @s run fill ~-2 ~2 ~-2 ~2 ~2 ~2 air replace water
+/execute at @s run fill ~-2 ~-2 ~-2 ~2 ~-2 ~2 air replace water
+/execute at @s run fill ~ ~3 ~ ~ ~3 ~ air replace water
+/execute at @s run fill ~ ~-3 ~ ~ ~-3 ~ air replace water
+```
+
+Notes:
+- This replaces only **water** (the fluid block). It won’t “un-waterlog” blocks (stairs, slabs, etc.); that’s a different mechanic.
+- If you also want to clear **bubble columns**, add another pass with `replace bubble_column`.

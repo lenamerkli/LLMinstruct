@@ -1,0 +1,89 @@
+§u§
+```
+{'class_name': 'U25a',
+  'day': 'Mo',
+  'end_time': '16:10',
+  'note_id': '5',
+  'room': 'T.T',
+  'start_time': '15:25',
+  'subject': 'KS',
+  'teacher': 'big'},
+ {'class_name': 'U25a',
+  'day': 'Mo',
+  'end_time': '17:00',
+  'note_id': None,
+  'room': 'P.1',
+  'start_time': '16:15',
+  'subject': 'IN',
+  'teacher': 'bir'}]
+
+--- Notes (for 'notes' table) ---
+[{'band': '',
+  'base_class': 'U25a',
+  'classes': 'U25a',
+  'details': 'blc, TG,  S0.2',
+  'group': '',
+  'note_id': '1',
+  'studt': '',
+  'text1': 'Halbklassen',
+  'text2': 'Technisches Gestalten',
+  'time': '',
+  'week': '1-46'},
+ {'band': '',
+  'base_class': 'U25a',
+  'classes': 'U25a, U25b',
+  'details': 'big, SD,  T.3',
+  'group': '',
+  'note_id': '3',
+  'studt': '',
+  'text1': 'SD-1A-big',
+  'text2': 'Sport',
+  'time': '',
+  'week': '1-46'},
+```
+Create a create table script for these two tables.
+§a§
+# SQL Create Table Scripts
+
+Here are the CREATE TABLE scripts for both tables based on the provided data:
+
+```sql
+-- Table for class schedule
+CREATE TABLE class_schedule (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    class_name VARCHAR(20) NOT NULL,
+    day VARCHAR(2) NOT NULL,
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL,
+    subject VARCHAR(10) NOT NULL,
+    teacher VARCHAR(50) NOT NULL,
+    room VARCHAR(10) NOT NULL,
+    note_id INT NULL,
+    FOREIGN KEY (note_id) REFERENCES notes(note_id)
+);
+
+-- Table for notes
+CREATE TABLE notes (
+    note_id INT PRIMARY KEY,
+    base_class VARCHAR(20) NOT NULL,
+    classes VARCHAR(100) NOT NULL,
+    text1 VARCHAR(100),
+    text2 VARCHAR(100),
+    details VARCHAR(100),
+    week VARCHAR(20),
+    band VARCHAR(20),
+    group_name VARCHAR(20),
+    studt VARCHAR(20),
+    time VARCHAR(20)
+);
+```
+
+Notes about the design:
+1. I've added an auto-incrementing primary key to the class_schedule table
+2. The note_id in class_schedule is a foreign key referencing notes(note_id)
+3. I've renamed 'group' to 'group_name' as 'group' is a reserved keyword in SQL
+4. Data types are chosen based on the sample data provided
+5. The week field is kept as VARCHAR to accommodate ranges like '1-46'
+6. All fields that appear to be required are marked as NOT NULL
+
+You may need to adjust the VARCHAR lengths based on your actual data requirements.

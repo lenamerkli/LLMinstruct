@@ -1,0 +1,112 @@
+§u§
+latex figure with tikzpicture use entire width
+§a§
+Creating a `tikzpicture` that uses the entire width of the page in a LaTeX document can be achieved in a few ways. The most common and recommended method is to use the `\resizebox` command, which is simple and works well within a standard `figure` environment. A more "pure TikZ" approach involves using a coordinate system based on the `\textwidth`.
+
+Here are the two primary methods, each with a complete, copy-and-pasteable example.
+
+### Method 1: The Recommended Approach with `\resizebox`
+
+This is the easiest and most versatile method. It places the `tikzpicture` inside a `\resizebox` command, which scales the entire picture to the width of the text (`\textwidth`) while maintaining its aspect ratio.
+
+You will need the `graphicx` package for `\resizebox`.
+
+**Advantages:**
+*   Very simple to implement.
+*   Maintains the aspect ratio of your drawing.
+*   Works seamlessly within a `figure` environment.
+
+**Complete LaTeX Example:**
+
+```latex
+\documentclass{article}
+\usepackage{tikz}
+\usepackage{graphicx} % Required for \resizebox
+
+\begin{document}
+
+\section{A figure spanning the full text width}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+\begin{figure}[h!]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tikzpicture}
+        % The drawing will be scaled to the width of the page text
+        \draw[fill=gray!20] (0,0) rectangle (10,5);
+        \draw[thick, red] (0,0) -- (10,5);
+        \node[font=\Huge] at (5,2.5) {Full Width TikZ};
+        \foreach \i in {1,2,...,9} {
+            \draw[thin] (\i, 0) -- (\i, 5);
+        }
+    \end{tikzpicture}
+    }
+    \caption{A TikZ figure that is resized to fit the full width of the text block.}
+    \label{fig:resizebox}
+\end{figure}
+
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+\end{document}
+```
+
+*   The `\resizebox{\textwidth}{!}` command scales the content within the curly braces.
+*   `\textwidth` is the target width.
+*   `!` tells LaTeX to automatically calculate the height to preserve the aspect ratio.
+*   `\centering` is used to center the box, which is good practice.
+
+---
+
+### Method 2: The TikZ "Pure" Approach with `\textwidth`
+
+This method involves creating a hidden path that forces the `tikzpicture`'s bounding box to be the desired width. This gives you more control over the internal sizing relative to the text width.
+
+**Advantages:**
+*   No additional packages required beyond `tikz`.
+*   Allows for precise control over coordinates based on `\textwidth`.
+*   Can be useful for more complex, programmatically generated graphics.
+
+**Complete LaTeX Example:**
+
+```latex
+\documentclass{article}
+\usepackage{tikz}
+
+\begin{document}
+
+\section{Using \textbackslash textwidth as a coordinate}
+
+This method uses an invisible path to define the bounding box of the TikZ picture, making it exactly the width of the page's text area.
+
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}
+        % This invisible path sets the width of the tikzpicture to \textwidth.
+        % The height is automatically adjusted to contain the drawing.
+        \path (0,0) -- (\textwidth, 0);
+
+        % The rest of the drawing
+        \draw[fill=blue!10] (0,0) rectangle (\textwidth, 3cm);
+        \draw[thick, green!50!black] (0,0) -- (\textwidth, 3cm);
+        \node[font=\Large, text=white] at (0.5*\textwidth, 1.5cm) {TikZ with \textbackslash textwidth};
+    \end{tikzpicture}
+    \caption{A TikZ figure whose width is explicitly set using a coordinate based on \texttt{\textbackslash textwidth}.}
+    \label{fig:textwidth}
+\end{figure}
+
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+\end{document}
+```
+*   The key line is `\path (0,0) -- (\textwidth, 0);`. This creates a path from `(0,0)` to `(\textwidth, 0)`, forcing the `tikzpicture`'s width to be exactly `\textwidth`. Since it's a `\path` without a `draw` option, it is invisible.
+*   Subsequent drawing commands can then use `\textwidth` as a coordinate to ensure they fill the entire space.
+
+### Summary of Methods
+
+| Method | Packages Required | Ease of Use | Control over Aspect Ratio | Best For... |
+| :--- | :--- | :--- | :--- | :--- |
+| **`\resizebox`** | `graphicx` | Easy | Automatically preserved | Standard figures and simple diagrams. |
+| **`\textwidth` in coordinates** | `tikz` | Intermediate | Manual; you define it | Complex diagrams where you need to scale elements relative to the page width. |
+
+For most use cases, **Method 1 using `\resizebox` is the simplest and most robust solution**.

@@ -1,0 +1,35 @@
+§u§
+Ersetze die Anführungszeichen mit den LaTeX Anführungszeichen. Also " wird zu `` oder ''
+```latex
+\subsection{Machine Learning (ML)}
+Machine Learning (ML) ist ein Teilbereich der KI. Anstatt ein Programm explizit mit festen Regeln zu programmieren, um eine Aufgabe zu lösen, werden beim ML Algorithmen verwendet, die aus Daten lernen. Das System erkennt Muster in den Trainingsdaten und erstellt daraus ein mathematisches Modell, um Vorhersagen oder Entscheidungen zu treffen.
+
+\subsection{Die wichtigsten Arten des Machine Learning}
+ML-Modelle werden hauptsächlich in drei Kategorien unterteilt, basierend auf der Art und Weise, wie sie lernen:
+
+\subsubsection{Supervised Learning (Überwachtes Lernen)}
+Das Modell lernt von einem Datensatz, der bereits mit korrekten "Antworten" (Labels) versehen ist. Das Ziel ist, eine Funktion zu lernen, die neue, ungesehene Eingabedaten korrekt zuordnen kann. Ein Beispiel aus dem Alltag ist ein Spam-Filter, der anhand von tausenden E-Mails, die bereits als "Spam" oder "Kein Spam" markiert wurden, neue E-Mails zu klassifizieren lernt. Ein Beispiel aus der Wirtschaft ist eine Bank, die historische Kreditdaten (Einkommen, Schulden, Zahlungshistorie und ob der Kredit zurückgezahlt wurde) nutzt, um die Kreditwürdigkeit neuer Antragsteller vorherzusagen.
+
+\subsubsection{Unsupervised Learning (Unüberwachtes Lernen)}
+Das Modell erhält Daten ohne jegliche Labels und muss selbstständig Strukturen oder Muster darin finden. Ein Beispiel aus dem Alltag ist ein Streaming-Dienst wie Netflix, der das Sehverhalten von Millionen Nutzern analysiert und sie in Cluster mit ähnlichen Vorlieben gruppiert, um Filmempfehlungen zu geben (Clustering). Ein Beispiel aus der Wirtschaft ist ein Online-Händler, der das Kaufverhalten seiner Kunden analysiert, um Kundensegmente zu identifizieren (z.B. "preisbewusste Käufer", "Markenliebhaber"), um gezielte Marketingkampagnen zu starten.
+
+\subsubsection{Reinforcement Learning (RL) (Bestärkendes Lernen)}
+Hier lernt ein Agent durch Interaktion mit einer Umgebung. Für seine Aktionen erhält er Belohnungen (Rewards) oder Bestrafungen. Das Ziel des Agenten ist es, seine Strategie (Policy) so anzupassen, dass er die Summe der erhaltenen Belohnungen maximiert. Ein Beispiel aus dem Alltag ist ein KI-Gegner in einem Computerspiel, der durch Ausprobieren (Trial-and-Error) immer besser spielt, um den menschlichen Spieler zu besiegen. Ein Beispiel aus der Wirtschaft ist in der Robotik ein Roboterarm, der durch wiederholte Versuche lernt, ein Objekt optimal zu greifen; in der Logistik kann RL zur Optimierung von Lieferrouten in Echtzeit eingesetzt werden.
+```
+§a§
+```latex
+\subsection{Machine Learning (ML)}
+Machine Learning (ML) ist ein Teilbereich der KI. Anstatt ein Programm explizit mit festen Regeln zu programmieren, um eine Aufgabe zu lösen, werden beim ML Algorithmen verwendet, die aus Daten lernen. Das System erkennt Muster in den Trainingsdaten und erstellt daraus ein mathematisches Modell, um Vorhersagen oder Entscheidungen zu treffen.
+
+\subsection{Die wichtigsten Arten des Machine Learning}
+ML-Modelle werden hauptsächlich in drei Kategorien unterteilt, basierend auf der Art und Weise, wie sie lernen:
+
+\subsubsection{Supervised Learning (Überwachtes Lernen)}
+Das Modell lernt von einem Datensatz, der bereits mit korrekten ``Antworten'' (Labels) versehen ist. Das Ziel ist, eine Funktion zu lernen, die neue, ungesehene Eingabedaten korrekt zuordnen kann. Ein Beispiel aus dem Alltag ist ein Spam-Filter, der anhand von tausenden E-Mails, die bereits als ``Spam'' oder ``Kein Spam'' markiert wurden, neue E-Mails zu klassifizieren lernt. Ein Beispiel aus der Wirtschaft ist eine Bank, die historische Kreditdaten (Einkommen, Schulden, Zahlungshistorie und ob der Kredit zurückgezahlt wurde) nutzt, um die Kreditwürdigkeit neuer Antragsteller vorherzusagen.
+
+\subsubsection{Unsupervised Learning (Unüberwachtes Lernen)}
+Das Modell erhält Daten ohne jegliche Labels und muss selbstständig Strukturen oder Muster darin finden. Ein Beispiel aus dem Alltag ist ein Streaming-Dienst wie Netflix, der das Sehverhalten von Millionen Nutzern analysiert und sie in Cluster mit ähnlichen Vorlieben gruppiert, um Filmempfehlungen zu geben (Clustering). Ein Beispiel aus der Wirtschaft ist ein Online-Händler, der das Kaufverhalten seiner Kunden analysiert, um Kundensegmente zu identifizieren (z.B. ``preisbewusste Käufer'', ``Markenliebhaber''), um gezielte Marketingkampagnen zu starten.
+
+\subsubsection{Reinforcement Learning (RL) (Bestärkendes Lernen)}
+Hier lernt ein Agent durch Interaktion mit einer Umgebung. Für seine Aktionen erhält er Belohnungen (Rewards) oder Bestrafungen. Das Ziel des Agenten ist es, seine Strategie (Policy) so anzupassen, dass er die Summe der erhaltenen Belohnungen maximiert. Ein Beispiel aus dem Alltag ist ein KI-Gegner in einem Computerspiel, der durch Ausprobieren (Trial-and-Error) immer besser spielt, um den menschlichen Spieler zu besiegen. Ein Beispiel aus der Wirtschaft ist in der Robotik ein Roboterarm, der durch wiederholte Versuche lernt, ein Objekt optimal zu greifen; in der Logistik kann RL zur Optimierung von Lieferrouten in Echtzeit eingesetzt werden.
+```

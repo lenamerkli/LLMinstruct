@@ -1,0 +1,233 @@
+§u§
+Du bist eine Lehrperson. Bringe mir den Stoff für die folgenden Lernziele bei:
+```
+Differentialgleichungen:
+ - Separation der Variablen, 
+ - Variation der Konstanten, 
+ - Richtungsfeldern zeichnen und verwenden
+```
+§a§
+Natürlich! Ich bin deine Lehrperson und werde dir Schritt für Schritt die wichtigsten Konzepte zu **Differentialgleichungen** vermitteln, wie du sie angefragt hast. Wir behandeln die drei Lernziele:
+
+1. **Trennung der Variablen (Separation der Variablen)**  
+2. **Variation der Konstanten**  
+3. **Richtungsfelder zeichnen und verwenden**
+
+---
+
+## 📘 1. Trennung der Variablen (Separation der Variablen)
+
+### 🔹 Wann verwendet man das?
+Diese Methode funktioniert bei **gewöhnlichen Differentialgleichungen 1. Ordnung**, die sich in der Form  
+\[
+\frac{dy}{dx} = f(x) \cdot g(y)
+\]
+schreiben lassen. Das bedeutet: Die rechte Seite lässt sich in einen **Teil nur mit x** und einen **Teil nur mit y** zerlegen.
+
+### 🔹 Vorgehen (Schritt für Schritt)
+1. **Trenne die Variablen**: Bringe alles mit \( y \) auf eine Seite, alles mit \( x \) auf die andere.
+   \[
+   \frac{dy}{dx} = f(x) \cdot g(y) \quad \Rightarrow \quad \frac{1}{g(y)}\, dy = f(x)\, dx
+   \]
+2. **Integriere beide Seiten**:
+   \[
+   \int \frac{1}{g(y)}\, dy = \int f(x)\, dx
+   \]
+3. **Löse nach \( y \)** auf (wenn möglich).
+4. **Bestimme die Konstante** mit einer Anfangsbedingung (falls gegeben).
+
+---
+
+### 🔹 Beispiel
+Löse: \(\frac{dy}{dx} = 2x \cdot y\) mit \( y(0) = 3 \)
+
+**Schritt 1: Trennen**
+\[
+\frac{dy}{dx} = 2x y \quad \Rightarrow \quad \frac{1}{y}\, dy = 2x\, dx
+\]
+
+**Schritt 2: Integrieren**
+\[
+\int \frac{1}{y}\, dy = \int 2x\, dx \quad \Rightarrow \quad \ln|y| = x^2 + C_1
+\]
+
+**Schritt 3: Auflösen nach \( y \)**
+\[
+|y| = e^{x^2 + C_1} = e^{C_1} \cdot e^{x^2} \quad \Rightarrow \quad y = C \cdot e^{x^2}
+\]
+(Dabei ist \( C = \pm e^{C_1} \), aber da Konstante beliebig, schreiben wir einfach \( C \in \mathbb{R} \))
+
+**Schritt 4: Anfangsbedingung einsetzen**
+\( y(0) = 3 \Rightarrow C \cdot e^0 = 3 \Rightarrow C = 3 \)
+
+**Lösung:**
+\[
+\boxed{y(x) = 3e^{x^2}}
+\]
+
+---
+
+## 📘 2. Variation der Konstanten
+
+### 🔹 Wann verwendet man das?
+Diese Methode dient zur Lösung **linearer Differentialgleichungen 1. Ordnung** der Form:
+\[
+\frac{dy}{dx} + P(x) \cdot y = Q(x)
+\]
+Das ist die **Standardform einer linearen DGL 1. Ordnung**.
+
+### 🔹 Vorgehen
+
+1. **Löse die homogene Gleichung** (d.h. setze \( Q(x) = 0 \)):
+   \[
+   \frac{dy}{dx} + P(x) y = 0
+   \]
+   → Diese löst man meist durch Trennung der Variablen. Die Lösung hat die Form:
+   \[
+   y_h(x) = C \cdot e^{-\int P(x)\, dx}
+   \]
+
+2. **Variiere die Konstante**: Ersetze die Konstante \( C \) durch eine Funktion \( C(x) \), also:
+   \[
+   y(x) = C(x) \cdot e^{-\int P(x)\, dx}
+   \]
+
+3. **Setze \( y(x) \) in die ursprüngliche DGL ein** → Du erhältst eine Gleichung für \( C'(x) \)
+
+4. **Integriere \( C'(x) \)**, um \( C(x) \) zu finden
+
+5. **Setze in \( y(x) \) ein** → Fertig!
+
+---
+
+### 🔹 Beispiel
+Löse: \(\frac{dy}{dx} + 2y = 4x\)
+
+**Schritt 1: Homogene Lösung**
+\[
+\frac{dy}{dx} + 2y = 0 \quad \Rightarrow \quad \frac{dy}{y} = -2\, dx \quad \Rightarrow \quad \ln|y| = -2x + C
+\]
+\[
+\Rightarrow y_h = C \cdot e^{-2x}
+\]
+
+**Schritt 2: Variation der Konstanten**
+Setze \( y(x) = C(x) \cdot e^{-2x} \)
+
+**Schritt 3: Ableiten und einsetzen**
+\[
+y' = C'(x) e^{-2x} + C(x) \cdot (-2e^{-2x}) = C'(x) e^{-2x} - 2C(x) e^{-2x}
+\]
+Einsetzen in DGL:
+\[
+\left( C'(x) e^{-2x} - 2C(x) e^{-2x} \right) + 2 \left( C(x) e^{-2x} \right) = 4x
+\]
+\[
+C'(x) e^{-2x} = 4x
+\quad \Rightarrow \quad C'(x) = 4x \cdot e^{2x}
+\]
+
+**Schritt 4: Integriere \( C'(x) \)**
+\[
+C(x) = \int 4x e^{2x}\, dx
+\]
+Partielle Integration:  
+\( u = 4x \Rightarrow u' = 4 \), \( v' = e^{2x} \Rightarrow v = \frac{1}{2}e^{2x} \)
+\[
+\int 4x e^{2x}\, dx = 4x \cdot \frac{1}{2}e^{2x} - \int 4 \cdot \frac{1}{2}e^{2x}\, dx = 2x e^{2x} - 2 \int e^{2x}\, dx = 2x e^{2x} - e^{2x} + C
+\]
+
+**Schritt 5: Gesamtlösung**
+\[
+y(x) = C(x) e^{-2x} = \left(2x e^{2x} - e^{2x} + C\right) e^{-2x} = 2x - 1 + C e^{-2x}
+\]
+
+**Endgültige Lösung:**
+\[
+\boxed{y(x) = 2x - 1 + C e^{-2x}}
+\]
+
+---
+
+## 📘 3. Richtungsfeld (auch: Richtungsfeld, Steigungsfeld)
+
+### 🔹 Was ist ein Richtungsfeld?
+Ein **Richtungsfeld** ist eine grafische Darstellung einer Differentialgleichung erster Ordnung.  
+Es zeigt an verschiedenen Punkten \((x, y)\) kleine **Liniensegmente**, die die **Steigung** \( \frac{dy}{dx} \) an dieser Stelle anzeigen.
+
+→ Die Lösungskurven verlaufen **tangential** zu diesen Segmenten.
+
+### 🔹 Warum ist es nützlich?
+- Man kann **ohne Rechnung** das qualitative Verhalten der Lösungen sehen (z. B. Gleichgewichte, Wachstum, Zerfall).
+- Hilft beim **Verständnis** von DGLs.
+- Kann verwendet werden, um **Lösungskurven zu skizzieren**.
+
+---
+
+### 🔹 Wie zeichnet man ein Richtungsfeld?
+
+**Beispiel:** \(\frac{dy}{dx} = x - y\)
+
+1. Wähle ein Gitter von Punkten, z. B. \( x = -2, -1, 0, 1, 2 \), \( y = -2, -1, 0, 1, 2 \)
+2. Berechne an jedem Punkt \((x, y)\) den Wert von \( \frac{dy}{dx} = x - y \)
+3. Zeichne an jedem Punkt ein kleines Liniensegment mit dieser Steigung
+
+**Beispielhafte Werte:**
+
+| \( x \) | \( y \) | \( dy/dx = x - y \) |
+|--------|--------|---------------------|
+| 0      | 0      | 0                   |
+| 1      | 0      | 1                   |
+| 1      | 1      | 0                   |
+| 0      | 1      | -1                  |
+| 2      | 0      | 2                   |
+
+→ Bei (0,0): horizontales Segment (Steigung 0)  
+→ Bei (1,0): Segment mit Steigung 1 (45°)  
+→ Bei (0,1): Segment mit Steigung -1 (abfallend)
+
+---
+
+### 🔹 Lösungskurven skizzieren
+- Wähle einen **Anfangspunkt**, z. B. \( y(0) = 1 \)
+- Folge den kleinen Pfeilen/Segmenten wie eine "Spur"
+- Die Kurve soll **tangential** zu den Segmenten verlaufen
+
+→ So entsteht eine Näherung der Lösungskurve **ohne Rechnung**!
+
+---
+
+### 🔹 Interpretation
+Im Beispiel \( y' = x - y \):
+- Wenn \( x > y \): Steigung positiv → \( y \) wächst
+- Wenn \( x < y \): Steigung negativ → \( y \) fällt
+- Wenn \( x = y \): Steigung 0 → horizontale Tangente
+- Es gibt eine **Gleichgewichtslösung**, wenn \( x - y = 0 \), also \( y = x \) → die Lösung nähert sich der Winkelhalbierenden an.
+
+---
+
+## 🧠 Zusammenfassung
+
+| Methode | Anwendung | Form der DGL |
+|--------|----------|-------------|
+| **Trennung der Variablen** | Wenn \( \frac{dy}{dx} = f(x)g(y) \) | Nichtlinear möglich |
+| **Variation der Konstanten** | Lineare DGL: \( y' + P(x)y = Q(x) \) | Muss linear sein |
+| **Richtungsfeld** | Qualitative Analyse | Jede 1. Ordnung |
+
+---
+
+## ✅ Übungsvorschläge (zum Selbsttest)
+
+1. Löse mit **Trennung der Variablen**:  
+   \( \frac{dy}{dx} = \frac{x}{y} \), \( y(0) = 2 \)
+
+2. Löse mit **Variation der Konstanten**:  
+   \( \frac{dy}{dx} - y = e^{2x} \)
+
+3. Skizziere das **Richtungsfeld** von \( \frac{dy}{dx} = -y \) und beschreibe das Verhalten der Lösungen.
+
+*(Wenn du möchtest, kannst du mir deine Lösungen schicken – ich korrigiere sie!)*
+
+---
+
+Wenn du willst, können wir jetzt mit einer Übung oder einem Beispiel weitermachen. Sag einfach Bescheid! 😊

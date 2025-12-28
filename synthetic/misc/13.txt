@@ -1,0 +1,104 @@
+§u§
+Simple inline table in latex
+§a§
+Creating a simple inline table in LaTeX is most commonly done using the `tabular` environment. The term "inline" can mean two things, so I'll cover both:
+
+1.  A table that appears *within a paragraph* of text.
+2.  A small table that is placed *in the middle of the page* but does not "float" to another location (the more common interpretation).
+
+### 1. The Basic `tabular` Environment
+
+This is the fundamental building block for any table. You define the columns and then fill them with data.
+
+**Syntax:**
+`\begin{tabular}{<column specifiers>} ... \end{tabular}`
+
+*   **Column Specifiers:**
+    *   `l` for a left-aligned column
+    *   `c` for a center-aligned column
+    *   `r` for a right-aligned column
+    *   `|` to draw a vertical line between columns.
+*   **Rows:**
+    *   `&` separates columns within a row.
+    *   `\\` ends a row.
+    *   `\hline` draws a horizontal line across the full width of the table.
+
+**Minimal Example:**
+
+```latex
+A simple table with three columns:
+\begin{tabular}{lcr}
+\hline
+Header 1 & Header 2 & Header 3 \\
+\hline
+Item A   & 100      & True     \\
+Item B   & 250      & False    \\
+Item C   & 1,234    & True     \\
+\hline
+\end{tabular}
+This text continues on the same line after the table.
+```
+
+**Result:**
+
+<img src="https://i.imgur.com/gKj3l6r.png" alt="Simple tabular example" width="400">
+
+---
+
+### 2. A Table That Doesn't Float (Placed "Inline")
+
+By default, if you put a `tabular` environment by itself, LaTeX will treat it as a "float" and may move it to a more suitable location (like the top of the next page). To prevent this and force the table to appear exactly where you put it in the code, you should wrap it in a `minipage` or use the `table` environment with the `[H]` specifier from the `float` package.
+
+The `minipage` approach is often more flexible.
+
+**Example using `minipage` (Recommended):**
+
+This creates an invisible box of a specific width, and your table lives inside it. This also makes it easy to add a caption.
+
+```latex
+\documentclass{article}
+\usepackage{lipsum} % For dummy text
+
+\begin{document}
+
+\lipsum[1] % Some text before the table
+
+% We create a minipage to hold the table and its caption
+\noindent % Prevents the minipage from being indented
+\begin{minipage}{\linewidth}
+  \centering % Center the table within the minipage
+  \captionof{table}{A non-floating table with a caption} % Caption for the table
+  \begin{tabular}{|l|c|r|}
+    \hline
+    \textbf{Name} & \textbf{Score} & \textbf{Status} \\
+    \hline
+    Alpha Team    & 95             & Approved        \\
+    Beta Team     & 82             & Approved        \\
+    Gamma Team    & 71             & Pending         \\
+    \hline
+  \end{tabular}
+\end{minipage}
+
+\lipsum[2] % Some text after the table
+
+\end{document}
+```
+
+**Explanation:**
+
+*   `\begin{minipage}{\linewidth}`: Creates a box the width of the current text line.
+*   `\noindent`: This is important! It prevents the paragraph indentation from pushing the whole box to the right.
+*   `\centering`: Centers the content (the `tabular`) inside the `minipage`.
+*   `\captionof{table}{...}`: The `caption` package provides this command to add a caption to things that aren't floats. If you don't want to load another package, you can just type `\textbf{Table 1:} My caption.` manually.
+*   The `tabular` environment is the same as before.
+
+**Result:**
+
+<img src="https://i.imgur.com/k2j402T.png" alt="Non-floating table with caption" width="600">
+
+---
+
+### Summary: Which to Use?
+
+*   **For a tiny table inside a sentence:** Use the basic `\begin{tabular}{...} ... \end{tabular}` directly in your text.
+*   **For a small-to-medium table that you want to stay in one place (not float) and have a caption:** Use the **`minipage`** method. It's robust and gives you full control.

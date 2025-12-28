@@ -1,0 +1,121 @@
+§u§
+```
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{xurl}
+\usepackage{longtable}
+
+
+\title{[EN] Exam Summary 2025-09-10}
+\author{REDACTED}
+
+\begin{document}
+    \maketitle
+    \tableofcontents
+
+    \bigskip\bigskip
+
+    \section{Learning Objectives}
+    \begin{itemize}
+        \item You know the basic timeline of the history of English.
+        \item You can distinguish between internal and external language change with regards to English.
+        \item You are familiar with the Old English, Middle English and Early Modern English stages of the language.
+        \item You know which other languages influences English throughought its history, and you knwo how they did so.
+        \item You understand how religion, political change and important cultural shifts influenced the English language in each of its stages.
+        \item You can name the most important texts or cultural figures (writers, rulers, scientists) of the language's history.
+        \item You are able to distinguish Old English, Middle English and Early Modern English text samples.
+        \item You are able to read and understand an authentic text on this topic and answer questions about it.
+    \end{itemize}
+
+    \section{Timeline}
+    \begin{itemize}
+        \item Old English: c. 450 -- 1066
+        \item Middle English: c. 1066 -- 1500
+        \item Early Modern English: c. 1500 -- 1700
+        \item Modern English: c. 1700 -- present
+    \end{itemize}
+
+    \section{Internal and External Language Change}
+    \subsection{Old English}
+    \subsection{Middle English}
+    \subsection{Early Modern English}
+    \subsection{Modern English}
+
+\end{document}
+```
+Write a summary about the objective `\item You can distinguish between internal and external language change with regards to English.` into the four prepared subsections.
+§a§
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{xurl}
+\usepackage{longtable}
+
+
+\title{[EN] Exam Summary 2025-09-10}
+\author{REDACTED}
+
+\begin{document}
+    \maketitle
+    \tableofcontents
+
+    \bigskip\bigskip
+
+    \section{Learning Objectives}
+    \begin{itemize}
+        \item You know the basic timeline of the history of English.
+        \item You can distinguish between internal and external language change with regards to English.
+        \item You are familiar with the Old English, Middle English and Early Modern English stages of the language.
+        \item You know which other languages influences English throughought its history, and you knwo how they did so.
+        \item You understand how religion, political change and important cultural shifts influenced the English language in each of its stages.
+        \item You can name the most important texts or cultural figures (writers, rulers, scientists) of the language's history.
+        \item You are able to distinguish Old English, Middle English and Early Modern English text samples.
+        \item You are able to read and understand an authentic text on this topic and answer questions about it.
+    \end{itemize}
+
+    \section{Timeline}
+    \begin{itemize}
+        \item Old English: c. 450 -- 1066
+        \item Middle English: c. 1066 -- 1500
+        \item Early Modern English: c. 1500 -- 1700
+        \item Modern English: c. 1700 -- present
+    \end{itemize}
+
+    \section{Internal and External Language Change}
+    \subsection{Old English}
+    \textbf{External Change:} The most significant external influence was the introduction of Latin through Christian missionaries (e.g., St. Augustine, 597 AD), which added religious and scholarly vocabulary (e.g., \textit{priest}, \textit{school}, \textit{mass}). Later, Old Norse was introduced by Viking settlers, leading to the adoption of everyday words (e.g., \textit{sky}, \textit{skin}, \textit{they}, \textit{them}) and potentially simplifying the inflectional system through language contact.
+    \textbf{Internal Change:} Old English was a highly synthetic language, and its primary internal developments were morphological. Key changes included the simplification of the complex Germanic case system and the reduction of grammatical gender distinctions. Sound changes, such as i-mutation (umlaut), which affected vowel pronunciation in certain contexts (e.g., \textit{*mūsiz > mȳs} > \textit{mice}), were also internal, systematic processes.
+
+    \subsection{Middle English}
+    \textbf{External Change:} The Norman Conquest of 1066 was the defining external event. The new ruling class spoke Anglo-Norman French, which became the language of law, government, and high culture for centuries. This resulted in a massive influx of French vocabulary, especially in domains like law (\textit{justice}, \textit jury}), religion (\textit{sermon}, \textit{parish}), arts (\textit{art}, \textit{poetry}), and fashion (\textit{dress}, \textit{button}). This fundamentally reshaped the lexicon, often creating synonym pairs (e.g., \textit{ask} (OE) / \textit{question} (Fr)).
+    \textbf{Internal Change:} The most profound internal change was the continued and accelerated \textbf{loss of inflections}. The complex case endings of Old English eroded, largely due to the reduction of final syllables to a schwa /ə/ sound. This morphological simplification made word order (SVO) the primary way to signal grammatical relationships, moving English from a synthetic to a more analytic language.
+
+    \subsection{Early Modern English}
+    \textbf{External Change:} The Renaissance (c. 1500-1650) was a major external driver. A renewed interest in classical learning led to the deliberate borrowing of thousands of words directly from Latin and Greek to express new concepts in science, medicine, and the arts (e.g., \textit{philosophy}, \textit{anatomy}, \textit{encyclopedia}). The invention of the printing press (ca. 1476) by William Caxton helped standardize spelling and disseminate this new vocabulary, freezing many spellings that no longer reflected pronunciation.
+    \textbf{Internal Change:} The most famous internal change was the \textbf{Great Vowel Shift} (c. 1400-1700), a series of changes in the pronunciation of long vowels (e.g., OE \textit{hūs} /uː/ > ModE \textit{house} /aʊ/; OE \textit{bān} /aː/ > ModE \textit{bone} /oʊ/). This was a systemic, phonemic change not triggered by language contact. The grammar continued to regularize, with the loss of the thou/you distinction and further stabilization of verb conjugations.
+
+    \subsection{Modern English}
+    \textbf{External Change:} The expansion of the British Empire and subsequent globalization are the primary sources of external change. English has absorbed countless \textbf{loanwords} from languages all over the world (e.g., \textit{bungalow} from Hindi, \textit{zombie} from Kikongo, \textit{kindergarten} from German). In the modern era, global communication and the internet facilitate continuous and rapid lexical borrowing and the creation of new slang and jargon.
+    \textbf{Internal Change:} Internal changes in Modern English are ongoing but often slower and less dramatic. They include:
+    \begin{itemize}
+        \item \textbf{Morphological:} The continued rise of new phrasal verbs and the progression of irregular verbs becoming regular (e.g., \textit{burned} vs. \textit{burnt}).
+        \item \textbf{Syntactic:} Subtle shifts in grammar, such as the increasing acceptance of "they" as a singular pronoun.
+        \item \textbf{Phonological:} Changes in accent and pronunciation, like the spread of glottal stops in British English or various vowel mergers in different dialects.
+    \end{itemize}
+
+\end{document}

@@ -1,0 +1,53 @@
+§u§
+Wie stelle ich `dx` (teil eines integrals) am besten in LaTeX dar?
+§a§
+Es gibt im Wesentlichen zwei Ansätze: Der **manuelle Weg** (Standard, ohne Zusatzpakete) und der **automatische Weg** (mit dem `physics`-Paket).
+
+Hier ist die Übersicht, was man **nicht** tun sollte und was der Standard ist:
+
+### 1. Der Standard (ohne Pakete) – *Empfohlen*
+
+Nach DIN-Norm und internationalem mathematischen Standard ist das $d$ für das Differential **nicht kursiv** (da es kein Variable ist) und wird durch einen kleinen Abstand vom Funktionswert getrennt.
+
+**Falsch:** `dx` $\rightarrow dx$ (sieht aus wie Variable $d$ mal Variable $x$)
+
+**Richtig:**
+```latex
+\int f(x) \, \mathrm{d}x
+```
+*   `\,` fügt einen kleinen Abstand (thin space) ein.
+*   `\mathrm{d}` macht das $d$ aufrecht (roman).
+
+### 2. Die Profi-Lösung (mit `physics`-Paket) – *Am bequemsten*
+
+Wenn du viele Integrale schreibst, ist das `physics`-Paket der Goldstandard. Es kümmert sich automatisch um den richtigen Abstand und die Formatierung.
+
+Im Preamble:
+```latex
+\usepackage{physics}
+```
+
+Im Dokument:
+```latex
+\int f(x) \dd{x}
+```
+Der Befehl `\dd` erzeugt automatisch ein aufrechtes $d$ mit dem korrekten mathematischen Abstand zum nächsten Zeichen.
+
+### 3. Alternative: Das `commath`-Paket
+
+Es gibt noch ein älteres Paket namens `commath`, das den Befehl `\d` bereitstellt.
+
+```latex
+\usepackage{commath}
+...
+\int f(x) \d x
+```
+*Hinweis:* Von diesem Paket wird teilweise abgeraten, da es in manchen Fällen zu unschönen Abständen führt (es erzwingt immer ein Leerzeichen nach dem `\d`).
+
+### Zusammenfassung
+
+Wenn du nur **ein paar Integrale** hast:
+> Benutze `\int f(x) \, \mathrm{d}x`.
+
+Wenn du eine **Hausarbeit oder Thesis** schreibst mit vielen Formeln:
+> Lade `\usepackage{physics}` und benutze `\int f(x) \dd{x}`.

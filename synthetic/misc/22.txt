@@ -1,0 +1,251 @@
+§u§
+Change this code to be used outside a flask environment. Database is stored at `database.sqlite`.
+```
+from dotenv import load_dotenv
+from flask import g
+from os.path import join
+from sqlite3 import connect as sqlite_connect, Connection as SQLite_Connection
+
+
+__all__ = [
+    'database_init',
+    'get_db',
+    'query_db',
+]
+
+
+load_dotenv()
+
+
+def get_db() -> SQLite_Connection:
+    """
+    Gets the database instance
+    :return: a pointer to the database
+    """
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite_connect('database.sqlite')
+    return db
+
+
+def query_db(query, args=(), one=False) -> list | tuple:
+    """
+    Runs a SQL query
+    :param query: the query as a SQL statement
+    :param args: arguments to be inserted into the query
+    :param one: if this function should only return one result
+    :return: the data from the database
+    """
+    conn = get_db()
+    cur = conn.execute(query, args)
+    result = cur.fetchall()
+    conn.commit()
+    cur.close()
+    return (result[0] if result else None) if one else result
+
+
+def database_init(app) -> None:
+    @app.teardown_appcontext
+    def close_connection(exception=None) -> None:  # noqa
+        """
+        destroys the database point
+        :param exception: unused
+        :return:
+        """
+        db = getattr(g, '_database', None)
+        if db is not None:
+            db.close()
+    with app.app_context():
+        with open(join(app.root_path, 'resources/create.sql'), 'r') as f:
+            _create = f.read()
+        _conn = get_db()
+        _conn.executescript(_create)
+        _conn.commit()
+        _conn.close()
+```
+§a§
+### Changed code for use **outside a Flask environment**
+
+Below you will find the original code adapted so it can be used without Flask.
+All Flask specific parts (`g`, `app`, …) were removed.
+The database file is still **`database.sqlite`**.
+
+```python
+import sqlite3
+from sqlite3 import Connection as SQLite_Connection
+from os.path import join, abspath, dirname
+import os
+
+
+__all__ = [
+    'database_init',
+    'get_db',
+    'query_db',
+    'close_db',
+]
+
+
+# -------------------------------------------------------------------------
+#  A module level variable that holds the connection.
+#  When `get_db()` is called for the first time the connection is opened.
+#  After you call `close_db()` the variable becomes `None` again.
+# -------------------------------------------------------------------------
+_db_conn: SQLite_Connection | None = None
+
+
+def get_db() -> SQLite_Connection:
+    """
+    Returns a connection to the SQLite database.
+
+    If a connection does **not** already exist a new one will be created.
+    The database file is 'database.sqlite' in the current working directory.
+
+    :return:    a sqlite3 Connection object
+    """
+    global _db_conn
+
+    if _db_conn is None:
+        _db_conn = sqlite3.connect('database.sqlite')
+        # Optional: enable foreign key support
+        _db_conn.execute("PRAGMA foreign_keys = ON;")
+
+    return _db_conn
+
+
+def close_db() -> None:
+    """
+    Closes the database connection.
+    After this call `get_db()` will open a **new** connection the next time it is used.
+    It is recommended to call this function at the end of your script or
+    whenever you do not need the connection any more.
+    """
+    global _db_conn
+    if _db_conn is not None:
+        _db_conn.close()
+        _db_conn = None
+
+
+def query_db(query: str, args: tuple = (), one: bool = False) -> list | tuple | None:
+    """
+    Executes a SQL query and returns the result.
+
+    :param query: the SQL query as a string
+    :param args:   a tuple of parameters that will be inserted into the query.
+                   This avoids SQL injection.
+    :param one:    if True the function returns only the first row.
+                   If there are no rows it returns None.
+    :return:       • a list of tuples when ``one=False``
+                   • a single tuple when ``one=True``
+                   • None if no result and ``one=True``
+    """
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute(query, args)
+
+    result = cur.fetchall()
+
+    # Commit the transaction. Required for INSERT, UPDATE, DELETE, …
+    conn.commit()
+    cur.close()
+
+    if one:
+        return result[0] if result else None
+    return result
+
+
+def database_init(create_script_path: str = 'create.sql') -> None:
+    """
+    Initialises the database by executing the SQL script that you specify.
+
+    The script file typically contains `CREATE TABLE` statements (and optional
+    INSERT statements).
+    By default the function looks for a file named **create.sql** in the current
+    working directory.
+    You can pass an absolute or relative path if your script has a different name
+    or is located elsewhere.
+
+    :param create_script_path:  Path to the .sql file that contains the schema.
+    """
+    # Close a possible existing connection before we create the schema.
+    close_db()
+
+    conn = get_db()
+
+    # Read the whole script
+    try:
+        with open(create_script_path, 'r', encoding='utf-8') as f:
+            sql_script = f.read()
+    except FileNotFoundError:
+        raise FileNotFoundError(
+            f"The file '{create_script_path}' could not be found. "
+            f"Provide the correct path to your .sql script."
+        )
+
+    # `executescript` allows to execute multiple statements that are inside the file
+    conn.executescript(sql_script)
+    conn.commit()
+    # You do **not** have to close the connection here – the normal `get_db`/
+    # `close_db` mechanism will handle it.  However you may call close_db()
+    # if you want the connection to be closed right now.
+
+
+# -------------------------------------------------------------------------
+#   Example usage
+# -------------------------------------------------------------------------
+if __name__ == '__main__':
+    # -------------------------------------------------
+    #  Initialise the database (creates tables, …)
+    #  The script 'create.sql' has to exist in the same folder
+    # -------------------------------------------------
+    database_init()   # uses the default 'create.sql'
+
+    # -------------------------------------------------
+    #  Some example queries
+    # -------------------------------------------------
+    # INSERT
+    query_db(
+        "INSERT INTO users (name, email) VALUES (?, ?)",
+        ('John Doe', 'john@example.com')
+    )
+
+    # SELECT – return all rows
+    users = query_db("SELECT id, name, email FROM users", one=False)
+    print("All users:")
+    for user in users:
+        print(user)
+
+    # SELECT – return only the first row
+    first_user = query_db("SELECT id, name FROM users ORDER BY id LIMIT 1", one=True)
+    print("\nFirst user:", first_user)
+
+    # -------------------------------------------------
+    #  Close the connection when you are finished.
+    #  This is optional – if you exit the script the connection will be closed
+    #  automatically.  However it is good practice to do it explicitly.
+    # -------------------------------------------------
+    close_db()
+```
+
+#### What changed?
+
+| Original Flask version                     | New version (no Flask)                         |
+|-------------------------------------------|------------------------------------------------|
+| Used Flask's `g` object to store the connection. | Connection is stored in a **module level variable** `_db_conn`. |
+| `database_init` received a Flask `app` and used `app.root_path` to locate the script. | `database_init` now receives **only the path of the SQL file**. By default it looks for `create.sql` in the current working directory. |
+| Teardown was done with `@app.teardown_appcontext`. | A new function **`close_db()`** was added. Call it when you no longer need the connection. |
+| No need for an application context.       | All functions work independently of any context. |
+
+**How to use it**
+
+1. Create a file named **`create.sql`** in the same folder.
+   Example content of `create.sql`:
+
+   ```sql
+   CREATE TABLE IF NOT EXISTS users (
+       id    INTEGER PRIMARY KEY AUTOINCREMENT,
+       name  TEXT    NOT NULL,
+       email TEXT    UNIQUE NOT NULL
+   );
+   ```
+
+2. Import the functions you need and use them as shown in the `if __name__ == '__main__':` block above.   🎯

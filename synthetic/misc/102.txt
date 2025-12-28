@@ -1,0 +1,63 @@
+§u§
+```
+from pathlib import Path
+import re
+
+
+with open(Path(__file__).parent.absolute().__str__() + '/main.tex') as _f:
+    CONTENT = _f.read()
+with open(Path(__file__).parent.absolute().__str__() + '/references.bib') as _f:
+    BIBLIOGRAPHY = _f.read()
+
+
+def main() -> int:
+    content = CONTENT.split('\\tableofcontents')[-1].split('\\printbibliography')[0]
+    # remove optional line breakers
+    content = content.replace('\\-', '')
+    # replace all em-dashes
+    content = content.replace('--', '')
+    # remove `\addcontentsline`
+    content = re.sub(r'\\addcontentsline[{[a-zA.Z]*}]{3}', '', content)
+    # remove all latex commands
+    content = re.sub(r'\\[a-zA-Z]+', '', content)
+    # remove all comments
+    content = re.sub(r'%.*', '', content)
+    # replace all stars before curly brackets
+    content = content.replace('*{', '{').replace('*}', '}')
+    # remove all curly brackets
+    content = content.replace('{', '').replace('}', '')
+    # remove all whitespace
+    content = content.replace(' ', '').replace('\n', '').replace('\t', '')
+    print(content)
+    return len(content)
+
+
+if __name__ == '__main__':
+    print(main())
+```
+Why does this function not correctly remove `\addcontentsline{toc}{chapter}{Preface}`?
+§a§
+Because the regex is wrong. Specifically:
+
+- You used a character class and then repeated it 3 times: [{[a-zA.Z]*}] is a single character class, and {3} repeats that single character class three times. That matches exactly three characters (like "{to"), not three braced arguments.
+- The range in [a-zA.Z] is a typo; the dot is literal. It only matches A, ., or Z (not all uppercase letters), so it can’t match things like "toc".
+- You’re not actually matching “a brace-enclosed argument”; you need to match the whole {...} block, not single characters.
+
+Use a pattern that matches three brace-delimited arguments after \addcontentsline, e.g.:
+
+```python
+# matches \addcontentsline{...}{...}{...} with optional spaces/newlines
+content = re.sub(
+    r'\\addcontentsline(?:\s*\{[^{}]*\}){3}',
+    '',
+    content,
+    flags=re.S
+)
+```
+
+Notes:
+- \{[^{}]*\} matches one brace-delimited argument without nested braces.
+- (?:…){3} repeats that whole argument three times.
+- flags=re.S lets it match across newlines if any arguments break lines.
+
+If your arguments can contain nested braces, regex gets tricky; you’d want a parser (e.g., pylatexenc) or a small brace-balancing routine.

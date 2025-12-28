@@ -1,0 +1,34 @@
+§u§
+Make a simple `\pgfplotsset{compat=1.18}` plot of score (lower is better) vs size.
+§a§
+Here's a minimal example using pgfplots (compat=1.18). It inverts the y axis so that smaller scores appear higher on the plot (because "lower is better") — remove `y dir=reverse` if you prefer the usual orientation.
+
+```latex
+\documentclass{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+  xlabel={Size},
+  ylabel={Score (lower is better)},
+  y dir=reverse,            % invert y so smaller scores appear higher
+  grid=both,
+  width=10cm, height=6cm,
+  xmin=0, xmax=70,
+]
+\addplot[blue, thick, mark=*] coordinates {
+  (10,50)
+  (20,42)
+  (30,36)
+  (40,32)
+  (50,29)
+  (60,27)
+};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+```
+
+Let me know if you want labels on the points, error bars, multiple series, or a non-inverted y-axis.

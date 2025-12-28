@@ -1,0 +1,73 @@
+§u§
+SQLite: How can i test if a sequence of characters is not part of a string?
+§a§
+In SQLite, you can test if a sequence of characters is **not** part of a string using several approaches:
+
+## 1. Using `NOT LIKE` (Most Common)
+
+```sql
+SELECT * FROM table_name 
+WHERE column_name NOT LIKE '%sequence%';
+```
+
+**Example:**
+```sql
+-- Find all users whose names don't contain "john"
+SELECT * FROM users 
+WHERE name NOT LIKE '%john%';
+
+-- Case-insensitive version
+SELECT * FROM users 
+WHERE name NOT LIKE '%john%' COLLATE NOCASE;
+```
+
+## 2. Using `NOT INSTR()` 
+
+```sql
+SELECT * FROM table_name 
+WHERE INSTR(column_name, 'sequence') = 0;
+```
+
+**Example:**
+```sql
+-- Find products that don't contain "premium" in their description
+SELECT * FROM products 
+WHERE INSTR(description, 'premium') = 0;
+```
+
+## 3. Using `NOT EXISTS` with a subquery
+
+```sql
+SELECT * FROM table_name 
+WHERE NOT EXISTS (
+    SELECT 1 FROM table_name t2 
+    WHERE t2.id = table_name.id 
+    AND t2.column_name LIKE '%sequence%'
+);
+```
+
+## 4. Practical Examples
+
+```sql
+-- Emails that don't contain "spam"
+SELECT email FROM users 
+WHERE email NOT LIKE '%spam%';
+
+-- Product names without "discontinued"
+SELECT product_name FROM products 
+WHERE INSTR(product_name, 'discontinued') = 0;
+
+-- Posts without specific keywords
+SELECT * FROM posts 
+WHERE content NOT LIKE '%offensive%' 
+  AND content NOT LIKE '%inappropriate%';
+```
+
+## Key Points:
+
+- **`NOT LIKE`** is the most readable and commonly used approach
+- **`INSTR()`** returns 0 when the substring is not found (1-based indexing)
+- Use `%` wildcards with `LIKE` to match any characters before/after
+- Add `COLLATE NOCASE` for case-insensitive matching
+
+The `NOT LIKE` approach is generally preferred for its clarity and performance.

@@ -1,0 +1,162 @@
+§u§
+```
+<table class="w-full table-fixed"><thead class="text-left text-xs"><tr><th class="w-2/12 font-medium">Model Name &amp; ID</th><th class="w-2/12 font-medium text-center">Input ($/1M tokens)</th><th class="w-2/12 font-medium text-center">Output ($/1M tokens)</th><th class="w-2/12 font-medium text-center">Context (tokens)</th></tr></thead><tbody class="divide-y"><tr class="text-sm" title="Qwen: Qwen3 30B A3B Thinking 2507"><td class="break-words py-2"><a class="block text-slate-11 underline" href="/qwen/qwen3-30b-a3b-thinking-2507">Qwen: Qwen3 30B A3B Thinking 2507</a><code class="text-xs">qwen/qwen3-30b-a3b-thinking-2507</code></td><td class="text-center"><div>$0.071</div></td><td class="text-center"><div>$0.285</div></td><td><span class="flex justify-center gap-1">262,144</span></td></tr><tr class="text-sm" title="xAI: Grok Code Fast 1"><td class="break-words py-2"><a class="block text-slate-11 underline" href="/x-ai/grok-code-fast-1">xAI: Grok Code Fast 1</a><code class="text-xs">x-ai/grok-code-fast-1</code></td><td class="text-center"><div>$0.20</div>
+{ ... }
+```
+Write a python program to extract the table contents.
+§a§
+Here's a Python program to extract the table contents using BeautifulSoup:
+
+```python
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
+def extract_table_contents(url=None, html_content=None):
+    """
+    Extract table contents from HTML
+
+    Args:
+        url: URL to fetch HTML from (optional if html_content is provided)
+        html_content: Raw HTML content as string (optional if url is provided)
+
+    Returns:
+        pandas DataFrame with extracted table data
+    """
+
+    # Get HTML content
+    if html_content:
+        soup = BeautifulSoup(html_content, 'html.parser')
+    elif url:
+        response = requests.get(url)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, 'html.parser')
+    else:
+        raise ValueError("Either url or html_content must be provided")
+
+    # Find the table
+    table = soup.find('table', {'class': 'w-full table-fixed'})
+    if not table:
+        raise ValueError("Table not found")
+
+    # Extract headers
+    headers = []
+    header_row = table.find('thead').find('tr')
+    for th in header_row.find_all('th'):
+        headers.append(th.get_text(strip=True))
+
+    # Extract rows
+    rows = []
+    for tr in table.find('tbody').find_all('tr'):
+        row_data = []
+
+        # Extract model name and ID
+        first_td = tr.find('td')
+        model_link = first_td.find('a')
+        model_name = model_link.get_text(strip=True) if model_link else ""
+        model_code = first_td.find('code').get_text(strip=True) if first_td.find('code') else ""
+
+        row_data.extend([model_name, model_code])
+
+        # Extract other columns
+        other_tds = tr.find_all('td')[1:]  # Skip first td since we already processed it
+        for td in other_tds:
+            # Handle price columns
+            price_div = td.find('div')
+            if price_div:
+                row_data.append(price_div.get_text(strip=True))
+            # Handle context tokens
+            else:
+                span = td.find('span')
+                row_data.append(span.get_text(strip=True) if span else td.get_text(strip=True))
+
+        rows.append(row_data)
+
+    # Create DataFrame
+    # Adjust headers to match our extracted data structure
+    df_headers = ['Model Name', 'Model ID', 'Input ($/1M tokens)',
+                  'Output ($/1M tokens)', 'Context (tokens)']
+
+    df = pd.DataFrame(rows, columns=df_headers)
+    return df
+
+# Example usage:
+if __name__ == "__main__":
+    # Method 1: Use with HTML content string
+    html_content = """
+    <table class="w-full table-fixed"><thead class="text-left text-xs"><tr><th class="w-2/12 font-medium">Model Name &amp; ID</th><th class="w-2/12 font-medium text-center">Input ($/1M tokens)</th><th class="w-2/12 font-medium text-center">Output ($/1M tokens)</th><th class="w-2/12 font-medium text-center">Context (tokens)</th></tr></thead><tbody class="divide-y"><tr class="text-sm" title="Qwen: Qwen3 30B A3B Thinking 2507"><td class="break-words py-2"><a class="block text-slate-11 underline" href="/qwen/qwen3-30b-a3b-thinking-2507">Qwen: Qwen3 30B A3B Thinking 2507</a><code class="text-xs">qwen/qwen3-30b-a3b-thinking-2507</code></td><td class="text-center"><div>$0.071</div></td><td class="text-center"><div>$0.285</div></td><td><span class="flex justify-center gap-1">262,144</span></td></tr><tr class="text-sm" title="xAI: Grok Code Fast 1"><td class="break-words py-2"><a class="block text-slate-11 underline" href="/x-ai/grok-code-fast-1">xAI: Grok Code Fast 1</a><code class="text-xs">x-ai/grok-code-fast-1</code></td><td class="text-center"><div>$0.20</div></td><td class="text-center"><div>$0.80</div></td><td><span class="flex justify-center gap-1">131,072</span></td></tr></tbody></table>
+    """
+
+    df = extract_table_contents(html_content=html_content)
+    print("Extracted Table Data:")
+    print(df)
+    print("\n" + "="*50 + "\n")
+
+    # Save to CSV
+    df.to_csv('model_pricing.csv', index=False)
+    print("Data saved to 'model_pricing.csv'")
+
+    # Method 2: Use with URL (uncomment and replace with actual URL)
+    # url = "https://example.com/pricing-table"
+    # df = extract_table_contents(url=url)
+    # print(df)
+```
+
+Here's also a simpler version if you just want the data as a list of dictionaries:
+
+```python
+import requests
+from bs4 import BeautifulSoup
+
+def extract_table_data_simple(html_content):
+    """Extract table data as list of dictionaries"""
+    soup = BeautifulSoup(html_content, 'html.parser')
+    table = soup.find('table', {'class': 'w-full table-fixed'})
+
+    data = []
+    for tr in table.find('tbody').find_all('tr'):
+        tds = tr.find_all('td')
+
+        model_data = {
+            'model_name': tds[0].find('a').get_text(strip=True),
+            'model_id': tds[0].find('code').get_text(strip=True),
+            'input_price': tds[1].find('div').get_text(strip=True),
+            'output_price': tds[2].find('div').get_text(strip=True),
+            'context_tokens': tds[3].find('span').get_text(strip=True)
+        }
+        data.append(model_data)
+
+    return data
+
+# Usage
+html_content = """your html content here"""
+table_data = extract_table_data_simple(html_content)
+
+for item in table_data:
+    print(f"Model: {item['model_name']}")
+    print(f"ID: {item['model_id']}")
+    print(f"Input: {item['input_price']}")
+    print(f"Output: {item['output_price']}")
+    print(f"Context: {item['context_tokens']}")
+    print("-" * 40)
+```
+
+**To use this program:**
+
+1. **Install required packages:**
+   ```bash
+   pip install beautifulsoup4 requests pandas
+   ```
+
+2. **Choose your method:**
+   - Use `html_content` parameter if you have the HTML as a string
+   - Use `url` parameter if you want to fetch from a URL
+
+3. **The program will extract:**
+   - Model name (from the `<a>` tag)
+   - Model ID (from the `<code>` tag)
+   - Input price (from the first `<div>`)
+   - Output price (from the second `<div>`)
+   - Context tokens (from the `<span>`)
+
+The data will be returned as a pandas DataFrame that you can easily analyze, filter, or export to CSV/Excel.

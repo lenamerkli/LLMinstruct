@@ -1,0 +1,177 @@
+§u§
+```
+  private async handleFormSubmission(formData: AccountFormData): Promise<void> {
+    let data = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      dateOfBirth: formData.dateOfBirth.toISOString().split('T')[0],
+      title: formData.title,
+      gender: formData.gender,
+      country: formData.country,
+      legalNameDifferent: formData.legalNameDifferent,
+      legalFirstName: formData.legalNameDifferent ? formData.legalFirstName : formData.firstName,
+      legalLastName: formData.legalNameDifferent ? formData.legalLastName : formData.lastName,
+      legalGender: formData.legalNameDifferent ? formData.legalGender : formData.gender,
+      additionalInformation: (formData.identityVerificationInfo?.length ?? 0) > 0 ? formData.identityVerificationInfo : 'None',
+    }
+    const password = formData.password;
+    // get a salt from `/api/v1/account/create/salt`. The api directly returns a string.
+    const salt =
+    const hash = await pbkdf2HmacUrlSafe(password, salt, 100000, 256);
+  }
+```
+Implement the `const salt = ` part
+§a§
+### Implementing the Salt Retrieval
+
+To implement the `const salt = ` part, you need to make an HTTP request to the `/api/v1/account/create/salt` endpoint. You can use the `fetch` API or a library like Axios to achieve this.
+
+Here's an example using `fetch`:
+
+```typescript
+const saltResponse = await fetch('/api/v1/account/create/salt');
+if (!saltResponse.ok) {
+  throw new Error(`Failed to retrieve salt: ${saltResponse.statusText}`);
+}
+const salt = await saltResponse.text();
+```
+
+Alternatively, if you're using Axios:
+
+```typescript
+import axios from 'axios';
+
+const response = await axios.get('/api/v1/account/create/salt');
+const salt = response.data;
+```
+
+### Error Handling and Type Safety
+
+To improve the code, consider adding proper error handling and type safety. For example, you can add a try-catch block to handle any potential errors during the fetch operation.
+
+```typescript
+try {
+  const saltResponse = await fetch('/api/v1/account/create/salt');
+  if (!saltResponse.ok) {
+    throw new Error(`Failed to retrieve salt: ${saltResponse.statusText}`);
+  }
+  const salt = await saltResponse.text();
+  // Use the salt value
+} catch (error) {
+  console.error('Error retrieving salt:', error);
+  // Handle the error accordingly
+}
+```
+
+### Complete Code
+
+Here's the complete `handleFormSubmission` function with the implemented salt retrieval:
+
+```typescript
+private async handleFormSubmission(formData: AccountFormData): Promise<void> {
+  let data = {
+    firstName: formData.firstName,
+    lastName: formData.lastName,
+    email: formData.email,
+    dateOfBirth: formData.dateOfBirth.toISOString().split('T')[0],
+    title: formData.title,
+    gender: formData.gender,
+    country: formData.country,
+    legalNameDifferent: formData.legalNameDifferent,
+    legalFirstName: formData.legalNameDifferent ? formData.legalFirstName : formData.firstName,
+    legalLastName: formData.legalNameDifferent ? formData.legalLastName : formData.lastName,
+    legalGender: formData.legalNameDifferent ? formData.legalGender : formData.gender,
+    additionalInformation: (formData.identityVerificationInfo?.length ?? 0) > 0 ? formData.identityVerificationInfo : 'None',
+  }
+  const password = formData.password;
+
+  try {
+    const saltResponse = await fetch('/api/v1/account/create/salt');
+    if (!saltResponse.ok) {
+      throw new Error(`Failed to retrieve salt: ${saltResponse.statusText}`);
+    }
+    const salt = await saltResponse.text();
+    const hash = await pbkdf2HmacUrlSafe(password, salt, 100000, 256);
+    // Use the hash value
+  } catch (error) {
+    console.error('Error retrieving salt or generating hash:', error);
+    // Handle the error accordingly
+  }
+}
+```
+§u§
+Please use the `import { HttpClient } from '@angular/common/http';`
+§a§
+### Implementing the Salt Retrieval using Angular's HttpClient
+
+To implement the `const salt = ` part using Angular's `HttpClient`, you can inject the `HttpClient` into your service or component and make a GET request to the `/api/v1/account/create/salt` endpoint.
+
+Here's an example:
+
+```typescript
+import { HttpClient } from '@angular/common/http';
+
+// ...
+
+constructor(private http: HttpClient) {}
+
+// ...
+
+private async handleFormSubmission(formData: AccountFormData): Promise<void> {
+  let data = {
+    firstName: formData.firstName,
+    lastName: formData.lastName,
+    email: formData.email,
+    dateOfBirth: formData.dateOfBirth.toISOString().split('T')[0],
+    title: formData.title,
+    gender: formData.gender,
+    country: formData.country,
+    legalNameDifferent: formData.legalNameDifferent,
+    legalFirstName: formData.legalNameDifferent ? formData.legalFirstName : formData.firstName,
+    legalLastName: formData.legalNameDifferent ? formData.legalLastName : formData.lastName,
+    legalGender: formData.legalNameDifferent ? formData.legalGender : formData.gender,
+    additionalInformation: (formData.identityVerificationInfo?.length ?? 0) > 0 ? formData.identityVerificationInfo : 'None',
+  }
+  const password = formData.password;
+
+  try {
+    const salt = await this.http.get('/api/v1/account/create/salt', { responseType: 'text' }).toPromise();
+    const hash = await pbkdf2HmacUrlSafe(password, salt, 100000, 256);
+    // Use the hash value
+  } catch (error) {
+    console.error('Error retrieving salt or generating hash:', error);
+    // Handle the error accordingly
+  }
+}
+```
+
+### Notes
+
+* The `responseType: 'text'` option is used to specify that the response should be treated as plain text.
+* The `toPromise()` method is used to convert the `Observable` returned by `http.get()` to a `Promise`, allowing you to use `await` with it.
+* Make sure to handle any potential errors that may occur during the HTTP request or hash generation.
+
+### Using Observables instead of Promises
+
+If you prefer to use Observables instead of Promises, you can modify the code as follows:
+
+```typescript
+private handleFormSubmission(formData: AccountFormData): void {
+  let data = {
+    // ...
+  }
+  const password = formData.password;
+
+  this.http.get('/api/v1/account/create/salt', { responseType: 'text' }).subscribe({
+    next: async (salt) => {
+      const hash = await pbkdf2HmacUrlSafe(password, salt, 100000, 256);
+      // Use the hash value
+    },
+    error: (error) => {
+      console.error('Error retrieving salt:', error);
+      // Handle the error accordingly
+    }
+  });
+}
+```

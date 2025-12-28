@@ -1,0 +1,76 @@
+§u§
+Können wir nach Hume aufgrund induktiven Schlüssen Wissen erwerben? Wenn wir Internalisten sind? Wenn wir Externalisten sind?
+§a§
+ # Humes Problem der Induktion und die Möglichkeit von Wissen unter Internalismus und Externalismus
+
+Die Frage verbindet eine der tiefsten skeptischen Herausforderungen der Erkenntnistheorie mit der zentralen Debatte über die Natur der Rechtfertigung. Die Analyse erfordert eine differenzierte Betrachtung sowohl von Humes Argument als auch von dessen Interaktion mit internalistischen und externalistischen Wurstheorien.
+
+## 1. Humes skeptische Herausforderung
+
+Humes Problem der Induktion lässt sich in drei Schritten rekonstruieren:
+
+1. **Unterscheidung der Schlussarten**: Alle Vernunftschlüsse sind entweder *demonstrativ* (deduktiv, Gewissheit erzeugend) oder *moralisch* (induktiv, nur wahrscheinlichkeitserzeugend).
+
+2. **Problem der Rechtfertigung**: Der induktive Schluss von beobachteten Fällen auf unbeobachtete Fälle setzt das **Prinzip der Uniformität der Natur** (UN) voraus: "Die Zukunft wird der Vergangenheit ähneln."
+
+3. **Skeptische Konklusion**: UN kann weder deduktiv (es ist nicht logisch widerspruchsvoll, es zu negieren) noch induktiv gerechtfertigt werden – denn das wäre zirkulär. Die induktive Praxis ist daher nicht rational begründet, sondern nur eine *Gewohnheit* (custom) oder psychologische Disposition.
+
+Für Wissen im klassischen Sinne ($W = p$ ist wahr, $S$ glaubt $p$, $S$ ist gerechtfertigt in $p$ zu glauben) bedeutet dies: **Induktive Überzeugungen scheinen keine echte Rechtfertigung zu besitzen**.
+
+## 2. Internalistische Perspektiven
+
+### 2.1 Kern des Internalismus
+
+Der **mentale Internalismus** verlangt, dass Wissens-Rechtfertigung durch für das Subjekt *zugängliche* Gründe erfolgt – typischerweise durch introspektiv erfassbare mentale Zustände, Erfahrungen oder Inferenzen. Die klassische Formulierung lautet: $S$ weiß $p$ nur wenn $S$ einen intern zugänglichen Grund $g$ hat, der $p$ rechtfertigt.
+
+### 2.2 Internalistische Antworten auf Hume
+
+#### **(a) Skeptische Konsequenz**
+Der radikale Internalist muss konsequenterweise zugeben: **Wir haben kein induktiv erworbenes Wissen**. Da wir keinen intern zugänglichen Grund für UN haben, sind alle induktiven Überzeugungen schlechterdings nicht gerechtfertigt. Dies ist etwa die Position eines durch Hume inspirierten **akademischen Skeptizismus**.
+
+#### **(b) Apriorische Lösungen**
+Kant und Strawson argumentieren, UN sei eine *apriorische Bedingung der Möglichkeit von Erfahrung*. Für Strawson (1952) ist die Frage nach der Rechtfertigung von Induktion *sinnlos*, da wir dieses Prinzip nicht aufgeben können. Dies ist jedoch problematisch:
+- Der Internalist verlangt einen *intern zugänglichen* apriorischen Grund, aber viele Philosophen bezweifeln, dass wir solchen Zugang haben.
+- Es bleibt unklar, wie ein apriorischer Grund die spezifische empirische Anwendung von Induktion rechtfertigen soll.
+
+#### **(c) Pragmatische oder naturalistische Internalismen**
+Wittgenstein-inspirierte Positionen (Wright, 2004) sehen UN als *methodologische Grundlage* unserer epistemischen Praxis. Der Internalist könnte argumentieren, interne Gründe seien nicht *inferentiell*, sondern *praktisch*. Doch dies verwischt die Grenze zwischen echter Rechtfertigung und bloßer psychologischer Notwendigkeit.
+
+#### **(d) Coherentismus**
+Ein internalistischer Coherentist (BonJour) könnte Induktion als Teil eines kohärenten Glaubenssystems rechtfertigen. Das Problem: **Kohärenz garantiert nicht Wahrheit**, und die Kohärenz mit einem Prinzip (UN), das selbst nicht gerechtfertigt ist, scheint epistemisch wertlos.
+
+#### **Fazit für Internalisten:**
+Hume schwächt den Internalismus erheblich. Die meisten internalistischen Rettungsversuche erfordern entweder:
+- Den Verzicht auf echte induktive Wissensansprüche, oder
+- Den Import nicht-empirischer (apriorischer) Rechtfertigungen, die ihrerseits internalistisch problematisch sind.
+
+## 3. Externalistische Perspektiven
+
+### 3.1 Kern des Externalismus
+
+Der Externalismus löst die Rechtfertigungsbedingung vom internen Zugang. Der **Reliabilismus** (Goldman, 1979) definiert:
+$S$ weiß $p$ gdw.:
+1. $p$ ist wahr,
+2. $S$ glaubt $p$,
+3. $S$'s Überzeugungsbildung durch einen *zuverlässigen* Prozess erfolgt ist.
+
+Zuverlässigkeit ist eine *externe* Eigenschaft: Ein Prozess ist zuverlässig, wenn er im Normalfall wahre Überzeugungen erzeugt, unabhängig davon, ob $S$ dies weiß.
+
+### 3.2 Externalistische Antworten auf Hume
+
+#### **(a) Reliabilistische Induktion**
+Wenn Induktion tatsächlich ein **zuverlässiger Prozess** ist (d.h. wenn die Welt tatsächlich uniform ist), dann können wir durch Induktion Wissen erwerben – **ohne dass wir UN gerechtfertigt wissen müssen**. Die Rechtfertigung ist extern: Sie liegt in der Zuverlässigkeit, nicht in unserem epistemischen Zugang dazu.
+
+Das Problem: **Der New Riddle of Induction** (Goodman, 1955) zeigt, dass Zuverlässigkeit nicht einfach zu definieren ist. Projizieren wir "grün" oder "grue"? Die Zuverlässigkeit hängt von semantischen/ontologischen Faktoren ab, die selbst wieder induktiv bestimmt werden.
+
+#### **(b) Proper Functionalism**
+Plantinga (1993) argumentiert: Wissen entsteht, wenn kognitive Funktionen *properly functioning* gemäß ihres Designplans operieren. Wenn unser induktiver Mechanismus von Gott oder der Evolution so designt wurde, dass er Wahrheit anstrebt, dann ist induktives Wissen möglich. Dies ist stark externalistisch, da die Design-Funktion extern ist.
+
+#### **(c) Naturalisierte Epistemologie**
+Quine (1969) schlägt vor, die Erkenntnistheorie in die empirische Psychologie zu transformieren. Die Frage ist nicht *ob* Induktion gerechtfertigt ist, sondern *wie* sie funktioniert. Dies eliminiert die normative Frage, die Hume stellt – ein Vorteil für Externalisten, aber ein Verlust des traditionellen Wissensbegriffs.
+
+### 3.3 Kritik am Externalismus
+
+- **Generality Problem**: Welcher Prozess genau ist zuverlässig? Die Klassifikation ist extern und problematisch.
+- **Meta-Ebene**: Können wir wissen, dass wir induktives Wissen haben? Der Externalist kann keine *interne* Gewissheit bieten.
+- **New Riddle**: Die Welt könnte "grue"-artig sein, und wir wüssten es nicht. Zuverlässigkeit

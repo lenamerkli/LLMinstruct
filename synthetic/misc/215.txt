@@ -1,0 +1,38 @@
+§u§
+```python
+r'\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+\b'
+```
+What is this regex for?
+§a§
+This regex:
+
+```regex
+\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+\b
+```
+
+is designed to match **multi-word capitalized phrases**, typically things like personal names or proper nouns made of two or more words.
+
+Breakdown:
+
+- `\b` – word boundary (start of a word).
+- `[A-Z][a-z]+` – a capital letter followed by one or more lowercase letters
+  → matches a single “Capitalized” word (e.g., `John`, `London`).
+- `(?:\s+[A-Z][a-z]+)+` – a non-capturing group, repeated one or more times:
+  - `\s+` – one or more whitespace characters (space, tab, etc.).
+  - `[A-Z][a-z]+` – another capitalized word.
+  → means **at least one more** capitalized word separated by whitespace.
+- `\b` – word boundary (end of the last word).
+
+So overall, it matches **two or more consecutive capitalized words**, such as:
+
+- `John Smith`
+- `New York`
+- `San Francisco Bay`
+- `The Beatles` (only if “The” is capitalized and the next word is too)
+
+It does **not** match:
+
+- Single words like `John`
+- All-caps words like `NASA`
+- Words with internal punctuation like `O'Neill` or `Smith-Jones`
+- Names with lowercase interior words like `University of Texas` (because `of` is lowercase)

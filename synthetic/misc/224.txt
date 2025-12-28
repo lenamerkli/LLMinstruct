@@ -1,0 +1,20 @@
+§u§
+Where does the /e/OS App Lounge get its privacy rating?
+§a§
+App Lounge doesn’t “invent” the privacy rating itself, but it also doesn’t just copy a single external score.
+
+**Data sources:**
+
+1. **Exodus Privacy**
+   - App Lounge queries the Exodus Privacy API for each app’s **trackers** and **declared permissions**.
+   - That raw data (how many trackers, how many permissions) is what everything is based on.
+
+2. **ToS;DR (Terms of Service; Didn’t Read)**
+   - For a small list of apps whose privacy policies are rated **“E” (very bad)** by ToS;DR, App Lounge forces the privacy score to **0/10**, no matter what the tracker/permission count is.
+
+**Who computes the number you see?**
+
+- The **numeric privacy score (0–10)** is **computed by App Lounge itself**, using its own simple formula based on the Exodus tracker and permission counts (trackers contribute most of the score; few permissions can add +1).
+- Exodus only supplies the **report data**, not the score; /e/ explicitly notes that *“Exodus Privacy is not responsible for our privacy score calculation.”*
+
+So in short: **App Lounge gets raw tracker/permission info from Exodus Privacy (plus a few ToS;DR flags) and then calculates its own privacy rating from that.**

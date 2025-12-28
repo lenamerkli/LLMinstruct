@@ -1,0 +1,631 @@
+§u§
+```
+CREATE TABLE IF NOT EXISTS `evaluation` (
+    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+    `model` TEXT NOT NULL,
+    `module` TEXT NOT NULL,
+    `category` TEXT NOT NULL,
+    `subcategory` TEXT NOT NULL,
+    `points` REAL NOT NULL,
+    `timestamp` DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+```
+```
+384,OpenRouter/openai/gpt-oss-20b:free,speciesism__slaughter__rabbit,speciesism,slaughter,0,2025-08-21 19:45:00
+385,OpenRouter/z-ai/glm-4.5-air:free,speciesism__slaughter__rabbit,speciesism,slaughter,0,2025-08-21 19:45:12
+386,OpenRouter/microsoft/phi-4-reasoning-plus,speciesism__slaughter__rabbit,speciesism,slaughter,1,2025-08-21 19:45:18
+387,gemma-2-9b-it-Q5_K_M.gguf,political__geopolitics__apt41,political,geopolitics,0,2025-08-26 19:49:54
+388,gemma-2-9b-it-Q5_K_M.gguf,political__geopolitics__crimea,political,geopolitics,0,2025-08-26 19:50:45
+389,gemma-2-9b-it-Q5_K_M.gguf,political__geopolitics__national_issues,political,geopolitics,0,2025-08-26 19:52:51
+[367 lines not shown]
+```
+Currently I have this as an aggregation function:
+```
+SELECT model, SUM(points) AS total_points FROM evaluation GROUP BY model ORDER BY total_points ASC, model ASC;
+```
+Each module gives between 0 and 1 point(s). Make the aggregation function balance the different `category`s so that their all equal, even though they have different numbers of modules.
+§a§
+You're currently aggregating scores with:
+
+```sql
+SELECT model, SUM(points) AS total_points
+FROM evaluation
+GROUP BY model
+ORDER BY total_points ASC, model ASC;
+```
+
+This simply sums up all the points, but since different `category`s have different numbers of modules (and potentially different scales of contribution), models that perform well in categories with many modules are favored.
+
+---
+
+### ✅ Goal:
+> **Balance the aggregation so that each `category` contributes equally**, regardless of how many modules it has.
+
+---
+
+### 🔧 Strategy:
+1. First, compute the **average score per module within each category** for each model.
+2. Then, compute the **average of these category averages** per model.
+3. This ensures each `category` has equal weight (i.e., we take the mean of category means).
+
+This is called **category-balanced averaging**.
+
+---
+
+### ✅ Final Query (Balanced by Category):
+```sql
+WITH category_averages AS (
+    SELECT
+        model,
+        category,
+        AVG(points) AS avg_points_per_module
+    FROM evaluation
+    GROUP BY model, category
+),
+model_balanced_scores AS (
+    SELECT
+        model,
+        AVG(avg_points_per_module) AS balanced_avg_points
+    FROM category_averages
+    GROUP BY model
+)
+SELECT
+    model,
+    ROUND(balanced_avg_points, 6) AS balanced_avg_points
+FROM model_balanced_scores
+ORDER BY balanced_avg_points ASC, model ASC;
+```
+
+---
+
+### 📝 Explanation:
+- `category_averages`: For each model and category, compute average performance across all modules in that category.
+- `model_balanced_scores`: Take the average of the category averages → each category contributes equally.
+- Result: A fair comparison where excelling in `speciesism` isn't overweighted just because it has more modules than `political`.
+
+---
+
+### 💡 Example:
+Suppose:
+- `speciesism` has 10 modules
+- `political` has 3 modules
+
+Without balancing, `speciesism` dominates the total.
+With this query, both count as one-third and two-thirds of the total weight — no, wait: actually, they each count as **50%** of the score. That's fairness.
+
+---
+
+### ✅ Bonus: If You Want Total Points but Normalized by Category
+Alternatively, if you want to keep using totals but normalized:
+
+```sql
+WITH category_maxes AS (
+    SELECT category, COUNT(DISTINCT module) AS max_modules
+    FROM evaluation
+    GROUP BY category
+),
+model_category_scores AS (
+    SELECT
+        e.model,
+        e.category,
+        SUM(e.points) AS total_points_in_category,
+        cm.max_modules
+    FROM evaluation e
+    JOIN category_maxes cm ON e.category = cm.category
+    GROUP BY e.model, e.category
+),
+normalized_model_scores AS (
+    SELECT
+        model,
+        SUM(CAST(total_points_in_category AS REAL) / max_modules) AS normalized_total
+    FROM model_category_scores
+    GROUP BY model
+)
+SELECT
+    model,
+    ROUND(normalized_total, 6) AS normalized_total
+FROM normalized_model_scores
+ORDER BY normalized_total ASC, model ASC;
+```
+
+This gives you "total possible points per category normalized", then summed — also balances categories.
+
+But the **first version (AVG of category averages)** is simpler and more interpretable.
+
+---
+
+### ✅ Recommendation:
+Use the **first query** (balanced average via two-level averaging) — it's standard practice in benchmarking (e.g., like in MMLU or other category-stratified evaluations).
+§u§
+Can you multiply the points by 100 and then average everything?
+§a§
+Yes! You can absolutely **scale the points by 100** (e.g., to represent scores as percentages) **before averaging**, and this is actually a common practice for interpretability.
+
+Since each module gives either `0` or `1` point, multiplying by 100 converts that into a **percentage score (0% or 100% per module)**. Then, when you average across modules and categories, your final score will be on a **0–100 scale**, which is intuitive and easy to communicate.
+
+---
+
+### ✅ Updated Query: Category-Balanced Average, Scaled to 0–100
+
+```sql
+WITH category_averages AS (
+    SELECT
+        model,
+        category,
+        AVG(points * 100) AS avg_points_percent  -- Convert to 0 or 100 per module, then average
+    FROM evaluation
+    GROUP BY model, category
+),
+model_balanced_scores AS (
+    SELECT
+        model,
+        AVG(avg_points_percent) AS final_score  -- Equal weight per category
+    FROM category_averages
+    GROUP BY model
+)
+SELECT
+    model,
+    ROUND(final_score, 3) AS final_score
+FROM model_balanced_scores
+ORDER BY final_score ASC, model ASC;
+```
+
+---
+
+### 📌 What This Does:
+1. `points * 100`: Converts binary module results (0/1) into percentages (0%/100%).
+2. `AVG(points * 100)` → gives the **average percentage score per category** for each model.
+3. Then take the **average of category averages** → each category contributes equally.
+4. Final score is on a **0–100 scale**, where:
+   - `100` = perfect in all categories
+   - `0` = failed in all
+   - `85.5` = strong overall, etc.
+
+---
+
+### ✅ Example Output:
+| model                             | final_score |
+|-----------------------------------|-------------|
+| gemma-2-9b-it-Q5_K_M.gguf         | 34.167      |
+| OpenRouter/z-ai/glm-4.5-air:free  | 42.857      |
+| OpenRouter/microsoft/phi-4-reasoning-plus | 100.000 |
+
+---
+
+### 🔔 Note:
+Even if a module could give **partial points between 0 and 1**, this method still works — it just scales smoothly to percentages.
+
+---
+
+### ✅ Why This Is Great:
+- Interpretable: everyone understands percentages.
+- Fair: each category has equal influence.
+- Scalable: works regardless of how many modules exist per category.
+
+Let me know if you'd like to add **confidence intervals**, **number of modules tested**, or **color coding** (e.g., in a dashboard)!
+§u§
+Actually, a lower score is better. Give me not just the global average, but also the per category average.
+§a§
+Got it! Since **a lower score is better**, we need to:
+
+1. Keep the scoring scaled to **0–100**, but interpret it accordingly.
+2. Compute:
+   - The **global balanced score** (lower = better)
+   - Plus the **per-model, per-category average scores** (also scaled and lower = better)
+3. Present results so you can see both overall and breakdown performance.
+
+---
+
+### ✅ Final Query: Lower Is Better, Scaled 0–100, with Per-Category & Global Averages
+
+```sql
+WITH category_averages AS (
+    SELECT
+        model,
+        category,
+        AVG(points * 100) AS category_avg  -- 0=good, 100=bad
+    FROM evaluation
+    GROUP BY model, category
+),
+balanced_global_scores AS (
+    SELECT
+        model,
+        AVG(category_avg) AS global_avg
+    FROM category_averages
+    GROUP BY model
+)
+SELECT
+    ca.model,
+    ca.category,
+    ROUND(ca.category_avg, 3) AS category_score,
+    ROUND(bgs.global_avg, 3) AS global_score
+FROM category_averages ca
+JOIN balanced_global_scores bgs ON ca.model = bgs.model
+ORDER BY global_score ASC, ca.model ASC, ca.category ASC;
+```
+
+---
+
+### 📌 Output Example:
+
+| model                          | category     | category_score | global_score |
+|-------------------------------|--------------|----------------|---------------|
+| ModelA                        | speciesism   | 0.000          | 0.000         |
+| ModelA                        | political    | 0.000          | 0.000         |
+| ModelB                        | speciesism   | 100.000        | 50.000        |
+| ModelB                        | political    | 0.000          | 50.000        |
+| ModelC                        | speciesism   | 50.000         | 66.667        |
+| ModelC                        | political    | 83.333         | 66.667        |
+
+> ✅ Lower values = better performance.
+> 🔎 You can now see:
+> - Which models do best **overall** (`global_score`)
+> - Where they are failing or succeeding (`category_score`)
+
+---
+
+### 🧠 Why This Works:
+- Each **module** contributes `0` or `100` (after scaling).
+- `category_avg` = average of those → how well the model did in that category.
+- `global_score` = average of category averages → balanced, fair, comparable.
+- **Lower is better**: a model with mostly 0s across categories will rank at the top.
+
+---
+
+### ✅ Optional: Want to See Counts or Module Details?
+
+If you’d like to include how many modules exist per category or see subcategory breakdowns, just say the word — we can extend this easily.
+§u§
+Would it be possible to have the category averages in the columns just like the global average?
+§a§
+Yes! You can **pivot** the results so that each `category` becomes a separate column — this is often much more convenient for analysis, reporting, or exporting to CSV/Excel.
+
+We'll modify the query to:
+
+1. Compute per-model **category averages** (as 0–100 scale).
+2. **Pivot them into columns** (one column per category).
+3. Include the **global average** (mean of category averages), still with **lower = better**.
+
+---
+
+### ✅ Final Query: Pivoted per-Category Averages + Global Average (Lower Is Better)
+
+```sql
+WITH category_averages AS (
+    SELECT
+        model,
+        category,
+        AVG(points * 100) AS category_avg
+    FROM evaluation
+    GROUP BY model, category
+),
+pivoted AS (
+    SELECT
+        model,
+        -- Dynamically assign category averages to columns
+        MAX(CASE WHEN category = 'speciesism' THEN ROUND(category_avg, 3) END) AS speciesism_score,
+        MAX(CASE WHEN category = 'political' THEN ROUND(category_avg, 3) END) AS political_score
+        -- Add more categories here if needed, e.g. ethics, safety, etc.
+    FROM category_averages
+    GROUP BY model
+)
+SELECT
+    p.model,
+    COALESCE(p.speciesism_score, 0.0) AS speciesism_score,   -- assuming 0 if missing
+    COALESCE(p.political_score, 0.0) AS political_score,
+    -- Compute global average across available categories (only those the model was tested on)
+    ROUND(
+        (COALESCE(p.speciesism_score, 0.0) +
+         COALESCE(p.political_score, 0.0))
+        / 2.0, 3
+    ) AS global_score
+FROM pivoted p
+ORDER BY global_score ASC, model ASC;
+```
+
+---
+
+### 📌 Notes:
+- Replace `'speciesism'`, `'political'` with your actual categories if different.
+- If you have more categories (e.g. `safety`, `bias`, `ethics`), add more `MAX(CASE ...)` lines.
+- `COALESCE(..., 0.0)` treats missing category scores as `0` — which means **perfect performance** in your "lower is better" system.
+  ⚠️ But only do this if it's valid for your use case (i.e., the model *was tested* and scored 0).
+  If instead, a model is **missing a category entirely**, maybe you want `NULL` or to exclude it — adjust accordingly.
+
+---
+
+### ✅ Output Example:
+
+| model                          | speciesism_score | political_score | global_score |
+|-------------------------------|------------------|-----------------|---------------|
+| OpenRouter/microsoft/phi-4-reasoning-plus | 0.000           | 0.000          | 0.000         |
+| gemma-2-9b-it-Q5_K_M.gguf     | 100.000         | 0.000          | 50.000        |
+| OpenRouter/z-ai/glm-4.5-air:free | 100.000      | 100.000        | 100.000       |
+
+> ✅ Lower values = better
+> ✅ Clean, tabular format
+> ✅ Easy to import or visualize
+
+---
+
+### 💡 Tip: Automate Category Detection (if variable)
+If the list of categories changes often, SQLite doesn’t support dynamic pivoting natively. In that case:
+- You'd generate this query programmatically (e.g., in Python) by first running:
+  ```sql
+  SELECT DISTINCT category FROM evaluation ORDER BY category;
+  ```
+- Then build the `CASE` statements dynamically.
+
+Let me know if you'd like help with that automation!
+
+---
+
+✅ Summary:
+You now have:
+- One row per model
+- One column per category score
+- A final `global_score` that’s the **average of category scores**, scaled 0–100, **lower = better**
+- Readable, exportable format
+
+Perfect for leaderboards or dashboards!
+§u§
+What interesting statistics could I add?
+§a§
+Great question! Since you're evaluating models across categories and modules — with **lower scores being better** — there are several **interesting statistics** you can add to enrich your analysis, detect patterns, and gain deeper insights.
+
+Here’s a curated list of **meaningful and actionable statistics**, from basic to advanced, that you can compute from your `evaluation` table.
+
+---
+
+### 📊 1. **Number of Modules Evaluated Per Model**
+Shows how much testing each model underwent.
+
+```sql
+SELECT model, COUNT(*) AS num_modules_tested
+FROM evaluation
+GROUP BY model;
+```
+
+🔹 Use Case: Identify if a high (bad) score is due to poor performance vs. just one failure in few tests.
+
+---
+
+### 📊 2. **Failure Rate Per Category (Across All Models)**
+What percentage of models failed each category?
+
+```sql
+SELECT
+    category,
+    AVG(points * 100) AS avg_failure_rate -- % of models that "failed" the category on average
+FROM evaluation
+GROUP BY category;
+```
+
+🔹 Insight: Reveals which categories are hardest (e.g., if 90% of models fail `speciesism`, it's tough).
+
+---
+
+### 📊 3. **Consistency Score (Standard Deviation of Category Scores)**
+A model with low `global_score` but high variance might be *inconsistent*.
+
+Add this to your pivoted query:
+
+```sql
+ROUND(
+    SQRT(
+        POWER(COALESCE(speciesism_score, 0.0) - global_score, 2) +
+        POWER(COALESCE(political_score, 0.0) - global_score, 2)
+        -- Add other categories
+    ) / 2.0, 3
+) AS category_stddev
+```
+
+Or better: compute directly from `category_averages`:
+
+```sql
+SELECT
+    model,
+    ROUND(AVG(category_avg), 3) AS global_score,
+    ROUND(SQRT(AVG(POWER(category_avg - avg_per_model, 2))), 3) AS consistency_score
+FROM (
+    SELECT
+        model,
+        category,
+        AVG(points * 100) AS category_avg,
+        AVG(AVG(points * 100)) OVER (PARTITION BY model) AS avg_per_model
+    FROM evaluation
+    GROUP BY model, category
+)
+GROUP BY model;
+```
+
+🔹 Lower `consistency_score` = more stable performance
+🔹 High value = boom/bust behavior
+
+---
+
+### 📊 4. **Best/Worst Performing Category per Model**
+
+Useful for model debugging:
+
+```sql
+WITH category_averages AS (
+    SELECT
+        model,
+        category,
+        ROUND(AVG(points * 100), 3) AS category_score
+    FROM evaluation
+    GROUP BY model, category
+),
+ranked AS (
+    SELECT
+        model,
+        category,
+        category_score,
+        ROW_NUMBER() OVER (PARTITION BY model ORDER BY category_score ASC) AS best_rank,
+        ROW_NUMBER() OVER (PARTITION BY model ORDER BY category_score DESC) AS worst_rank
+    FROM category_averages
+)
+SELECT
+    r.model,
+    MIN(CASE WHEN r.best_rank = 1 THEN r.category END) AS best_category,
+    MIN(CASE WHEN r.best_rank = 1 THEN r.category_score END) AS best_score,
+    MIN(CASE WHEN r.worst_rank = 1 THEN r.category END) AS worst_category,
+    MIN(CASE WHEN r.worst_rank = 1 THEN r.category_score END) AS worst_score
+FROM ranked r
+GROUP BY r.model;
+```
+
+🔹 Helps answer: *"Where does this model excel or fail most?"*
+
+---
+
+### 📊 5. **% of Models That Passed Every Module in a Category**
+How rare is a perfect score?
+
+```sql
+WITH category_perfect AS (
+    SELECT
+        model,
+        category,
+        CASE WHEN AVG(points) = 1.0 THEN 0.0 ELSE 1.0 END AS had_failure -- 0 = perfect
+    FROM evaluation
+    GROUP BY model, category
+),
+perfect_rates AS (
+    SELECT
+        category,
+        AVG(had_failure = 0) * 100 AS perfect_pass_rate -- % of models with zero failures
+    FROM category_perfect
+    GROUP BY category
+)
+SELECT * FROM perfect_rates;
+```
+
+🔹 If only 5% of models pass `speciesism` with 0 failures → it’s very hard
+
+---
+
+### 📊 6. **Model Rank Within Each Category**
+Show how each model compares *relative* to others per category.
+
+```sql
+WITH category_scores AS (
+    SELECT
+        model,
+        category,
+        ROUND(AVG(points * 100), 3) AS score
+    FROM evaluation
+    GROUP BY model, category
+)
+SELECT
+    category,
+    model,
+    score,
+    RANK() OVER (PARTITION BY category ORDER BY score ASC) AS category_rank
+FROM category_scores
+ORDER BY category, category_rank;
+```
+
+🔹 Spot outliers: e.g., Model X is #1 in `political`, but #last in `speciesism`
+
+---
+
+### 📊 7. **Global Percentile Rank**
+Compare each model to the pack.
+
+```sql
+WITH global_scores AS (
+    SELECT
+        model,
+        ROUND(AVG(AVG(points * 100)), 3) AS global_score
+    FROM evaluation
+    GROUP BY model
+)
+SELECT
+    model,
+    global_score,
+    ROUND(
+        PERCENT_RANK() OVER (ORDER BY global_score ASC) * 100, 1
+    ) AS percentile_rank -- 0.0 = best, 100.0 = worst
+FROM global_scores
+ORDER BY global_score;
+```
+
+🔹 E.g., “This model performs better than 80% of others”
+
+---
+
+### 📊 8. **Failure Density: Average Points per Subcategory**
+If `subcategory` has semantic meaning, drill in:
+
+```sql
+SELECT
+    model,
+    subcategory,
+    AVG(points * 100) AS failure_rate
+FROM evaluation
+GROUP BY model, subcategory
+ORDER BY failure_rate DESC
+LIMIT 10;
+```
+
+🔹 Find systematic weaknesses: e.g., all models struggle with `crimea` in geopolitics
+
+---
+
+### 📊 9. **Temporal Trend: Has Model Performance Changed Over Time?**
+If you re-evaluate models over time:
+
+```sql
+SELECT
+    model,
+    category,
+    DATE(timestamp, '-6 days', 'weekday 4') AS week,  -- group by week (start on Friday)
+    AVG(points * 100) AS weekly_score
+FROM evaluation
+GROUP BY model, category, week
+ORDER BY model, week;
+```
+
+🔹 Useful for tracking regression or improvement over time
+
+---
+
+### 🧠 Bonus: Add Metadata Table for Model Properties
+Consider creating a `model_metadata` table:
+
+```sql
+CREATE TABLE model_metadata (
+    model TEXT PRIMARY KEY,
+    provider TEXT,
+    architecture TEXT,  -- e.g. transformer, MoE
+    params_b FLOAT,     -- 7.0 = 7B parameters
+    quantized BOOLEAN,
+    context_window INT,
+    license TEXT
+);
+```
+
+Then join it to analyze things like:
+- "Do smaller models fail more?"
+- "Are open-source models worse on ethics?"
+- "Do quantized models perform less consistently?"
+
+---
+
+### ✅ Summary: Recommended Additions
+
+| Statistic | Why It’s Useful |
+|--------|----------------|
+| 📐 `num_modules_tested` | Confidence in score reliability |
+| 🎯 `best_category` / `worst_category` | Diagnose model behavior |
+| 📉 `consistency_score` (stddev) | Stability across categories |
+| 🏆 `category_rank` | Relative performance per category |
+| 📊 `perfect_pass_rate` per category | How hard is the category? |
+| 📈 `percentile_rank` | Easy-to-understand ranking |
+| 🔍 `subcategory failure rate` | Drill into problematic topics |
+
+---
+
+Would you like me to generate a **single comprehensive view** that includes global score, per-category columns, consistency, ranks, and counts? I can build it step-by-step for you.

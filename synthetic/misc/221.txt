@@ -1,0 +1,75 @@
+§u§
+```text
+Testing LLM reasoning abilities with lineage relationship quizzes.
+
+The project is a successor of the farel-bench benchmark.
+
+Note: This benchmark seems to be already saturated even for lineage graphs with 192 nodes. I'm very happy with this progress!
+```
+What is lineage?
+§a§
+## What is "Lineage" in This Context?
+
+Within the context of the benchmark described in your text snippet, **lineage** refers specifically to **family or ancestral relationships represented as structured graphs**. It's the core subject of the "lineage relationship quizzes" used to test LLM reasoning.
+
+Here's a detailed breakdown:
+
+---
+
+### 1. **General Meaning of Lineage**
+*   **Lineage** traditionally means *"descent or ancestry"* — the line of ancestors and descendants in a family.
+*   Think **family trees**: parent, child, grandparent, sibling, cousin, ancestor, descendant, etc.
+
+---
+
+### 2. **Lineage in the Benchmark ("Lineage Relationship Quizzes")**
+
+The benchmark uses **artificial family trees** (called *lineage graphs*) to probe an LLM's ability to reason about logical relationships. Here’s how it works:
+
+#### 🔹 Structure: Lineage Graphs
+*   **Nodes** = Individuals (e.g., Person A, Person B, Person C).
+*   **Edges** = Relationship types connecting individuals, such as:
+    *   `ParentOf(A, B)` → A is the parent of B.
+    *   `SiblingOf(A, B)` → A and B are siblings.
+    *   `AncestorOf(A, B)` → A is an ancestor of B (direct or indirect).
+    *   `DescendantOf(A, B)` → A is a descendant of B.
+*   These graphs can be large (up to 192+ nodes as mentioned).
+
+#### 🔹 The Quiz: Reasoning Tasks
+The benchmark presents the LLM with:
+1.  **A set of explicit relationships** (e.g., "A is the parent of B", "B is the parent of C", "C is the sibling of D").
+2.  **A question** asking it to infer an *implicit* relationship based on logic, such as:
+    > *"Is A an ancestor of D?"*
+    > *"What is the relationship between A and D?"*
+    > *"Is it possible for X to be the grandparent of Y given these facts?"*
+
+#### 🔹 Why It's Hard (and Tests Reasoning)
+*   **Transitive Reasoning:** If `A → Parent → B → Parent → C`, then `A` is the *grandparent* of `C` (and an ancestor). The LLM must infer this indirect relationship.
+*   **Complex Hierarchies:** Graphs can involve multiple branches, cousins, in-laws, and multi-generational depth.
+*   **Logical Deduction:** Requires applying rules of kinship logic (e.g., "parent of parent = grandparent", "siblings share parents").
+*   **Scalability:** As graphs grow (towards 192 nodes), the chain of reasoning becomes longer and more complex.
+
+---
+
+### 3. **Connection to `farel-bench`**
+
+*   **`farel-bench`** likely stands for **F**amily **R**elationship **L**ogic **B**enchmark (or similar). It was an earlier benchmark designed to test the *same* family-relationship reasoning.
+*   This new project is its **successor**, meaning it builds upon `farel-bench` with larger, more complex lineage graphs and potentially improved question designs.
+
+---
+
+### 4. **Why is this Benchmark "Saturated" at 192 Nodes?**
+
+The note says the benchmark is **"already saturated even for lineage graphs with 192 nodes"**. This means:
+
+✅ **Current state-of-the-art LLMs can solve virtually all questions** within lineage graphs of size ~192 nodes.
+✅ This indicates that **reasoning about kinship/family relationships is no longer a challenging frontier** for LLMs.
+✅ To continue progress, researchers would need to create *even larger/more complex* graphs or shift to other types of logical reasoning benchmarks.
+
+---
+
+### ✅ In Simple Terms
+
+> **In this project, "lineage" means the web of family relationships (parent, child, ancestor, descendant, etc.) structured as a graph. The benchmark tests if an AI can logically deduce relationships within these artificial family trees — and it turns out modern LLMs are already very good at this up to about 192 people.**
+
+This is a significant milestone because it shows LLMs have mastered a classic test of logical inference (kinship reasoning), pushing researchers to develop harder challenges.

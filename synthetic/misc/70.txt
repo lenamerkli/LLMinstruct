@@ -1,0 +1,157 @@
+§u§
+How can I set up a new angular project?
+§a§
+# Setting Up a New Angular Project
+
+Setting up a new Angular project is straightforward with the Angular CLI (Command Line Interface). Here's a comprehensive guide to get you started with your Angular development.
+
+## Prerequisites
+
+Before creating an Angular project, ensure you have the following installed on your system:
+
+- **Node.js** - Version 20.19.0 or newer
+- **npm** (Node Package Manager) - Included with Node.js
+- **Text Editor** - Visual Studio Code is recommended
+- **Terminal** - Required for running Angular CLI commands
+
+You can verify your Node.js and npm installation by running:
+```bash
+node --version
+npm --version
+```
+
+## Installing Angular CLI
+
+The Angular CLI is a powerful tool that simplifies creating and managing Angular projects. Install it globally using your preferred package manager:
+
+### Using npm:
+```bash
+npm install -g @angular/cli
+```
+
+### Alternative package managers:
+- **pnpm**: `pnpm install -g @angular/cli`
+- **yarn**: `yarn global add @angular/cli`
+- **bun**: `bun install -g @angular/cli`
+
+After installation, verify the Angular CLI is properly installed:
+```bash
+ng version
+```
+
+## Creating a New Angular Project
+
+Once the CLI is installed, creating a new project is simple:
+
+1. **Navigate to your desired directory** where you want to create the project
+
+2. **Run the new project command**:
+```bash
+ng new my-angular-app
+```
+Replace `my-angular-app` with your desired project name.
+
+3. **Configure your project preferences**. The CLI will prompt you with several configuration options:
+   - **Stylesheet format** (CSS, SCSS, Sass, Less)
+   - **Server-Side Rendering (SSR)** and Static Site Generation options
+   - Other routing and testing preferences
+
+   If you don't have specific preferences, press Enter to accept the defaults.
+
+4. **Wait for installation**. The CLI will create the project structure and install all necessary dependencies. You'll see a success message:
+```
+✔ Packages installed successfully.
+Successfully initialized git.
+```
+
+
+
+## Running Your Angular Application
+
+After project creation, you can start the development server:
+
+1. **Navigate to your project folder**:
+```bash
+cd my-angular-app
+```
+
+2. **Start the development server** using one of these commands:
+```bash
+ng serve
+```
+or
+```bash
+npm start
+```
+
+3. **Access your application**. Once the build completes, you'll see:
+```
+➜ Local: http://localhost:4200/
+➜ press h + enter to show help
+```
+
+Open your browser and navigate to `http://localhost:4200/` to see your running Angular application.
+
+## Project Structure Overview
+
+Your new Angular project will have the following key directories and files:
+
+### Main Directories:
+- **src/** - Contains all application source code
+- **src/app/** - Main application components and logic
+  - `app.component.ts` - Main component controlling the display
+  - `app.component.html` - HTML template for the main component
+  - `app.component.css/scss` - Styles for the main component
+  - `app.routes.ts` - Application routing configuration
+
+### Configuration Files:
+- **package.json** - Lists all project dependencies and scripts
+- **angular.json** - Angular CLI configuration for build, test, and serve commands
+- **src/index.html** - Main HTML file that loads the application
+- **src/main.ts** - Application entry point that bootstraps the Angular app
+
+## Useful Angular CLI Commands
+
+Once your project is set up, these commands will help you develop your application:
+
+### Generate new components:
+```bash
+ng generate component component-name
+```
+
+### Generate services:
+```bash
+ng generate service service-name
+```
+
+### Generate directives:
+```bash
+ng generate directive directive-name
+```
+
+### Build for production:
+```bash
+ng build
+```
+
+## Alternative Setup Methods
+
+### Visual Studio Integration
+If you're using Visual Studio 2022 or later, you can create an Angular project directly from the IDE:
+1. Select **Create a new project** from the Start window
+2. Search for "Angular" and select **Angular App**
+3. Name your project and click **Create**
+
+### Online Development
+For quick experimentation without local setup, Angular provides online sandboxes where you can code directly in your browser.
+
+## Next Steps
+
+After successfully setting up your Angular project, you can:
+- Start building components for your application features
+- Configure routing for multi-page navigation
+- Add Angular Material for UI components
+- Integrate with backend APIs
+- Set up testing frameworks
+
+Your Angular development environment is now ready, and you can begin building your web application with all the powerful features Angular provides.

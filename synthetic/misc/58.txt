@@ -1,0 +1,293 @@
+§u§
+I have the business edition HP ProBook. I installed linux (fedora to be exactly) alongside of windows. In the boot menu, fedora does not show up (windows does), but I can still boot to it using the `boot from file` functionality. How can I fix it so that I can normally select it?
+§a§
+To resolve the issue where Fedora doesn't appear in your HP ProBook's boot menu (likely the UEFI firmware boot options accessed via F9 or the main BIOS/UEFI settings via F10) during dual-boot with Windows, but you can still access it via "Boot from File" (which points to the EFI bootloader file), follow these steps. This is a common UEFI dual-boot problem on HP laptops, often caused by the Windows Boot Manager having priority in the boot order, missing EFI boot entries for Fedora/GRUB, Secure Boot interference, or Windows Fast Startup overriding changes. The fixes involve adjusting UEFI settings, reinstalling/configuring GRUB from within Fedora, and potentially tweaking Windows if needed.
+
+**Important Precautions:**
+- Back up important data before making changes, as boot modifications can sometimes lead to issues.
+- You'll need to boot into Fedora temporarily using "Boot from File" (select the EFI partition, then navigate to `\EFI\fedora\shimx64.efi` or `\EFI\fedora\grubx64.efi` depending on your setup).
+- If Secure Boot is enabled, it may block unsigned bootloaders—consider disabling it first (see Step 1).
+- These steps assume a standard UEFI/GPT setup (common on modern HP ProBooks). If your setup differs (e.g., legacy BIOS/CSM mode), verify in UEFI settings.
+
+### Step 1: Access UEFI/BIOS Settings and Make Basic Adjustments
+1. Restart your laptop and repeatedly press **F10** (HP's key for BIOS/UEFI setup) during the HP logo to enter the setup utility.
+2. Navigate to the **Boot** or **System Configuration** tab (exact labels may vary by ProBook model and firmware version).
+3. **Disable Secure Boot** (if enabled): Look under **Security** or **Boot Options** for "Secure Boot" and set it to **Disabled**. This prevents it from blocking Fedora's GRUB bootloader. Save and exit (F10 to save, then Enter).
+4. **Disable Fast Boot** (HP-specific) and **Fast Startup** (Windows-specific):
+   - In UEFI: Under **Boot Options**, disable "Fast Boot" if present.
+   - Boot into Windows, search for "Power Options" in the Start menu, click "Choose what the power buttons do," then "Change settings that are currently unavailable" (requires admin). Uncheck "Turn on fast startup" under Shutdown settings, then save.
+5. **Check and adjust boot order**: In the **Boot** tab, look for boot entries like "Windows Boot Manager" (usually first). If "Fedora" or "GRUB" appears, move it to the top using the +/− keys or F5/F6. If it doesn't appear, proceed to Step 2 to add it.
+6. Save changes (F10) and exit. Restart and test the boot menu (press **F9** repeatedly during startup for HP's one-time boot menu). If Fedora still doesn't show, continue.
+
+If changes don't persist after rebooting into Windows (common on HP due to firmware syncing with Windows), proceed to add the entry manually.
+
+### Step 2: Boot into Fedora and Reinstall/Configure GRUB
+Since you can access Fedora via "Boot from File," use this to fix the bootloader installation. This ensures GRUB is properly registered in the EFI System Partition (ESP, usually a ~500MB FAT32 partition).
+
+1. Boot into Fedora using "Boot from File" as you described.
+2. Open a terminal (search for "Terminal" in the menu or press Ctrl+Alt+T).
+3. Update your system and ensure EFI tools are available:
+   ```
+   sudo dnf update
+   sudo dnf install efibootmgr grub2-efi
+   ```
+4. Identify your disk and EFI partition (replace `/dev/sda` if your drive is different, e.g., `/dev/nvme0n1` for NVMe SSDs common in ProBooks):
+   ```
+   sudo fdisk -l
+   ```
+   - Look for the EFI partition (e.g., `/dev/sda1`, type "EFI System").
+5. Mount the EFI partition if not already mounted (Fedora usually auto-mounts it at `/boot/efi`):
+   ```
+   sudo mkdir -p /boot/efi  # If needed
+   sudo mount /dev/sda1 /boot/efi  # Replace /dev/sda1 with your EFI partition
+   ```
+6. Reinstall GRUB for UEFI:
+   ```
+   sudo grub2-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=Fedora --recheck
+   ```
+   - This installs GRUB to the EFI partition and creates a boot entry named "Fedora."
+7. Regenerate the GRUB config to detect Windows:
+   ```
+   sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+   ```
+8. Verify and manage boot entries with `efibootmgr`:
+   ```
+   sudo efibootmgr -v
+   ```
+   - This lists entries (e.g., Boot0000* Windows Boot Manager, Boot0001* Fedora). Note the hex IDs (e.g., 0000 for Windows, 0001 for Fedora).
+   - If Fedora is missing, add it manually:
+     ```
+     sudo efibootmgr -c -d /dev/sda -p 1 -l "\\EFI\\fedora\\shimx64.efi" -L "Fedora"  # Use shimx64.efi for Secure Boot compatibility; replace /dev/sda and partition 1 as needed. For non-Secure Boot, use grubx64.efi.
+     ```
+   - Set boot order to prioritize Fedora (replace XXXX with Fedora's ID, YYYY with Windows'):
+     ```
+     sudo efibootmgr -o XXXX,YYYY
+     ```
+9. Unmount the EFI partition:
+   ```
+   sudo umount /boot/efi
+   ```
+10. Reboot:
+    ```
+    sudo reboot
+    ```
+11. Test the boot menu (F9). Fedora/GRUB should now appear. If you want the GRUB timeout (menu display time) adjusted, edit `/etc/default/grub` (e.g., set `GRUB_TIMEOUT=5`), then run `sudo grub2-mkconfig -o /boot/grub2/grub.cfg` and reboot.
+
+### Step 3: If Still Not Working—Add Boot Entry Manually in UEFI or from Windows
+If the above doesn't stick (e.g., HP firmware resets it after Windows boots):
+
+- **From UEFI (Manual Add)**:
+  1. Enter UEFI setup (F10).
+  2. Go to **Boot** > **Add Boot Option** (or similar; on some HP models, it's under "Boot Options" or "Advanced").
+  3. Select the EFI file: Navigate to your hard drive > EFI partition > `\EFI\fedora\` > select `shimx64.efi` (or `grubx64.efi`).
+  4. Name it "Fedora" or "GRUB." Save and set it as first in boot order.
+  5. Save/exit and test.
+
+- **From Windows (Using bcdedit—Last Resort)**:
+  1. Boot into Windows.
+  2. Open Command Prompt as Administrator (search "cmd," right-click > Run as admin).
+  3. Set the boot path to Fedora's GRUB (this overrides Windows Boot Manager temporarily):
+     ```
+     bcdedit /set {bootmgr} path \EFI\fedora\shimx64.efi
+     ```
+     - If using `grubx64.efi`, adjust accordingly.
+  4. Restart. GRUB should now load. To revert if issues arise:
+     ```
+     bcdedit /deletevalue {bootmgr} path
+     bcdedit /set {bootmgr} path \EFI\Microsoft\Boot\bootmgfw.efi
+     ```
+  5. Note: This may need reapplying after Windows updates.
+
+### Additional Tips
+- **If GRUB Menu Doesn't Show Options for Windows**: Once GRUB loads, if it only shows Fedora, boot into Fedora and run `sudo grub2-mkconfig -o /boot/grub2/grub.cfg` again (ensures os-prober detects Windows). Also, enable os-prober in `/etc/default/grub` by uncommenting `GRUB_DISABLE_OS_PROBER=false`, then regenerate.
+- **HP-Specific Quirks**: Some ProBook models (e.g., 4xxx/6xxx series) have firmware that prioritizes Windows. If changes reset, consider updating your BIOS/UEFI firmware from HP's support site (search for your exact model, e.g., "HP ProBook 450 G8 BIOS update").
+- **If Nothing Works**: Boot from a Fedora live USB, mount your root and EFI partitions, chroot into your Fedora install, and reinstall GRUB as in Step 2. Or use Boot-Repair tool: Install it on the live USB (`sudo add-apt-repository ppa:yannubuntu/boot-repair && sudo apt update && sudo apt install boot-repair`), run `boot-repair`, and select "Recommended repair."
+- Test after each step. If you encounter errors (e.g., with efibootmgr), share the output for further troubleshooting.
+
+This should get Fedora selectable in the normal boot menu.
+§u§
+```
+In some cases, you may need to use HP's UEFI firmware settings to manually add a boot entry pointing to the Fedora EFI file
+```
+How would that work?
+§a§
+Here's how to manually add a boot entry for Fedora in HP ProBook's UEFI firmware settings:
+
+### Step-by-Step Guide to Add Boot Entry in HP UEFI
+
+1. **Enter UEFI Setup**:
+   - Restart your HP ProBook
+   - Press **F10** repeatedly during the HP logo screen to enter BIOS/UEFI Setup
+
+2. **Navigate to Boot Options**:
+   - Use arrow keys to go to the **Boot Options** menu (might be under "System Configuration" on some models)
+   - Look for an option called:
+     - **"Add Boot Option"**
+     - **"UEFI Boot Order"**
+     - **"Customize Boot"**
+     - **"Boot From File"** (sometimes has an "Add" option)
+
+3. **Add New Boot Entry**:
+   - Select **"Add Boot Option"** or similar option
+   - You'll see a file browser interface showing your drives
+
+4. **Navigate to the Fedora EFI File**:
+   - Select your hard drive (usually shows as "HDD" or the drive model)
+   - Navigate through this path:
+     ```
+     EFI/
+     └── fedora/
+         ├── shimx64.efi  (select this for Secure Boot)
+         └── grubx64.efi  (select this if Secure Boot is disabled)
+     ```
+   - Select **shimx64.efi** (recommended) or **grubx64.efi**
+
+5. **Name the Boot Entry**:
+   - When prompted, enter a name like "Fedora" or "Fedora Linux"
+   - Press Enter to confirm
+
+6. **Set Boot Priority**:
+   - Go back to the main Boot Options menu
+   - Find **"UEFI Boot Order"** or similar
+   - Use F5/F6 or +/- keys to move your new "Fedora" entry to the top
+   - The order should look something like:
+     ```
+     1. Fedora
+     2. Windows Boot Manager
+     3. USB Device
+     4. Network Boot
+     ```
+
+7. **Save and Exit**:
+   - Press **F10** to save changes
+   - Confirm by selecting "Yes"
+   - System will reboot
+
+### Alternative Method (If "Add Boot Option" is Missing)
+
+Some HP ProBook models hide the "Add Boot Option" feature. In this case:
+
+1. **Use Boot Override**:
+   - In UEFI setup, look for **"Boot Override"** section
+   - Select **"Boot From File"**
+   - Navigate to `EFI/fedora/shimx64.efi`
+   - Some models allow you to "Save as Boot Option" from here
+
+2. **Custom Boot Path** (on newer models):
+   - Look for **"Customized Boot"** under Advanced settings
+   - Enable it
+   - Add path: `\EFI\fedora\shimx64.efi`
+   - Set description: "Fedora"
+
+### HP-Specific UEFI Locations by Model
+
+Different HP ProBook models may have slightly different menu structures:
+
+- **ProBook 4xx/6xx G6-G8**: Boot Options → UEFI Boot Order → Add Boot Option
+- **ProBook 4xx/6xx G4-G5**: System Configuration → Boot Options → Define Customized Boot
+- **EliteBook models**: Advanced → Boot Options → Add Boot Option
+
+### Troubleshooting Tips
+
+1. **If the option disappears after reboot**:
+   - Disable **"Fast Boot"** in UEFI
+   - Disable **"Secure Boot"** temporarily
+   - Update BIOS/UEFI firmware from HP support site
+
+2. **If file browser doesn't show EFI partition**:
+   - The EFI partition might be hidden
+   - Try selecting "File System" or "FS0:" (usually the EFI partition)
+   - Look for numbered file systems (FS0:, FS1:, etc.)
+
+3. **Path format matters**:
+   - Use backslashes: `\EFI\fedora\shimx64.efi`
+   - Some HP models are case-sensitive
+
+4. **If still not working**:
+   - Boot into Fedora using "Boot from File"
+   - Run this command to force HP to recognize it:
+     ```
+     sudo efibootmgr -c -d /dev/sda -p 1 -l "\\EFI\\fedora\\shimx64.efi" -L "Fedora" -b 0000
+     ```
+   - The `-b 0000` creates it as Boot0000, which HP firmware often respects better
+
+After following these steps, pressing F9 during boot should show "Fedora" in the boot menu alongside Windows Boot Manager.
+§u§
+`Cannot create Boot0000: already exists.`
+§a§
+
+
+
+When you see the error "Cannot create Boot0000: already exists" with **efibootmgr**, it means the UEFI firmware already has a boot entry with that identifier. You can't create a new entry with a number that's already in use, but you can modify the existing one or create a new entry with a different number.
+
+#### Understanding the Error
+
+The **efibootmgr** utility communicates with the UEFI firmware to manage boot entries, each identified by a unique hexadecimal number like Boot0000, Boot0001, etc. When you try to create a new entry with a number that already exists, you get this error. This is common when:
+- You've previously installed an OS that created a boot entry
+- The system has multiple OS installations
+- You're trying to recreate a boot entry after deleting it
+
+#### Solutions
+
+You have several options to resolve this:
+
+1. **Modify the existing Boot0000 entry** using the `-b` option followed by the boot number:
+   ```bash
+   sudo efibootmgr -b 0000 -L "Fedora" -l "\\EFI\\fedora\\shimx64.efi"
+   ```
+
+2. **Create a new boot entry with a different number**:
+   ```bash
+   sudo efibootmgr -c -d /dev/sda -p 1 -L "Fedora" -l "\\EFI\\fedora\\shimx64.efi"
+   ```
+
+3. **Delete the existing entry first, then create a new one**:
+   ```bash
+   sudo efibootmgr -b 0000 -B
+   sudo efibootmgr -c -d /dev/sda -p 1 -L "Fedora" -l "\\EFI\\fedora\\shimx64.efi"
+   ```
+
+4. **Reorder the existing entries** to prioritize Fedora:
+   ```bash
+   sudo efibootmgr -o 0000,0001,0002
+   ```
+
+#### Using HP's UEFI Firmware Settings
+
+Since you're using an **HP ProBook**, you can also add the boot entry directly in the UEFI firmware:
+
+1. Enter UEFI setup by pressing **F10** during boot
+2. Go to **Boot Options** → **Add Boot Option**
+3. Navigate to your EFI partition and select `EFI/fedora/shimx64.efi`
+4. Name it "Fedora" or similar
+5. Save and exit
+
+#### Recommended Commands
+
+To properly set up Fedora in the UEFI boot menu, use these commands:
+
+```bash
+# Check current boot order
+sudo efibootmgr -v
+
+# Install or reinstall GRUB for UEFI
+sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=Fedora --recheck
+
+# Regenerate GRUB configuration
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+
+# Add a new boot entry if needed
+sudo efibootmgr -c -d /dev/sda -p 1 -L "Fedora" -l "\\EFI\\fedora\\shimx64.efi"
+```
+
+#### Troubleshooting Tips
+
+If you continue to have issues:
+
+1. **Disable Secure Boot** temporarily in UEFI settings
+2. **Disable Fast Boot** in UEFI
+3. **Update your BIOS/UEFI firmware** from HP's support site
+4. **Check if Fedora is already showing up** with a different name in the boot menu
+5. **Use the F9 key during boot** to access the one-time boot menu
+
+The error you're seeing is common and easily resolved by using one of the above methods. The key is understanding that you can't overwrite an existing boot entry number, but you can modify it or create a new one with a different number.

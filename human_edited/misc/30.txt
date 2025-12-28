@@ -1,0 +1,208 @@
+§u§
+Write a SHA3 implementation in pure python.
+§a§
+```python
+import typing as t
+
+
+WIDTH = 1600
+LANE_SIZE = 64
+MASK_64 = (1 << LANE_SIZE) - 1
+RC = [
+    0x0000000000000001, 0x0000000000008082, 0x800000000000808a,
+    0x8000000080008000, 0x000000000000808b, 0x0000000080000001,
+    0x8000000080008081, 0x8000000000008009, 0x000000000000008a,
+    0x0000000000000088, 0x0000000080008009, 0x000000008000000a,
+    0x000000008000808b, 0x800000000000008b, 0x8000000000008089,
+    0x8000000000008003, 0x8000000000008002, 0x8000000000000080,
+    0x000000000000800a, 0x800000008000000a, 0x8000000080008081,
+    0x8000000000008080, 0x0000000080000001, 0x8000000080008008
+]
+ROTATION_OFFSETS = [
+    [0, 36, 3, 41, 18],
+    [1, 44, 10, 45, 2],
+    [62, 6, 43, 15, 61],
+    [28, 55, 25, 21, 56],
+    [27, 20, 39, 8, 14]
+]
+
+
+def rotl64(x: int, n: int) -> int:
+    """Performs a 64-bit left circular rotation."""
+    n %= LANE_SIZE
+    if n == 0:
+        return x
+    return ((x << n) & MASK_64) | (x >> (LANE_SIZE - n))
+
+
+class SHA3:
+    """
+    A class for calculating SHA-3 hashes.
+
+    This class implements the Keccak sponge construction and the Keccak-f[1600]
+    permutation function required for SHA-3.
+    """
+
+    def __init__(self, digest_size: int):
+        """
+        Initializes the SHA-3 hasher.
+
+        Args:
+            digest_size: The desired digest size in bits (256, 384, or 512).
+
+        Raises:
+            ValueError: If the digest_size is not one of the supported values.
+        """
+        if digest_size not in [256, 384, 512]:
+            raise ValueError("digest_size must be 256, 384, or 512.")
+        self.output_bits = digest_size
+        self.rate_bits = WIDTH - 2 * digest_size
+        self.rate_bytes = self.rate_bits // 8
+        self.state: t.List[int] = [0] * 25
+        self.buffer: bytes = b''
+        self.finalized: bool = False
+
+    def _keccak_f(self) -> None:
+        """
+        The core Keccak-f[1600] permutation function.
+        It operates on self.state in-place over 24 rounds.
+        """
+        for round_index in range(24):
+            self._theta()
+            self._rho_pi()
+            self._chi()
+            self._iota(round_index)
+
+    def _theta(self) -> None:
+        """The θ step of the Keccak-f permutation."""
+        c = [0] * 5
+        d = [0] * 5
+        for x in range(5):
+            c[x] = self.state[x] ^ self.state[x + 5] ^ self.state[x + 10] ^ \
+                   self.state[x + 15] ^ self.state[x + 20]
+        for x in range(5):
+            d[x] = c[(x - 1) % 5] ^ rotl64(c[(x + 1) % 5], 1)
+        for x in range(5):
+            for y in range(5):
+                self.state[x + 5 * y] ^= d[x]
+
+    def _rho_pi(self) -> None:
+        """
+        The combined ρ (rho) and π (pi) steps of the Keccak-f permutation.
+        This version uses an efficient in-place chained permutation.
+        """
+        x, y = 1, 0
+        current = self.state[x + 5 * y]
+        for _ in range(24):
+            new_x, new_y = y, (2 * x + 3 * y) % 5
+            rotated = rotl64(current, ROTATION_OFFSETS[x][y])
+            x, y = new_x, new_y
+            current, self.state[x + 5 * y] = self.state[x + 5 * y], rotated
+
+    def _chi(self) -> None:
+        """The χ (chi) step, the non-linear layer."""
+        for y in range(5):
+            row = [self.state[x + 5 * y] for x in range(5)]
+            for x in range(5):
+                val = (MASK_64 ^ row[(x + 1) % 5]) & row[(x + 2) % 5]
+                self.state[x + 5 * y] = row[x] ^ val
+
+    def _iota(self, round_index: int) -> None:
+        """The ι (iota) step, which breaks symmetry by adding a round constant."""
+        self.state[0] ^= RC[round_index]
+
+    @staticmethod
+    def _bytes_to_lanes(data: bytes) -> t.List[int]:
+        """Converts a byte string into a list of 64-bit integer lanes (little-endian)."""
+        if len(data) % 8 != 0:
+            raise ValueError("Data length must be a multiple of 8 for lane conversion.")
+        lanes = []
+        for i in range(0, len(data), 8):
+            chunk = data[i:i + 8]
+            val = 0
+            for j in range(8):
+                val |= chunk[j] << (8 * j)
+            lanes.append(val)
+        return lanes
+
+    @staticmethod
+    def _lanes_to_bytes(lanes: t.List[int]) -> bytes:
+        """Converts a list of 64-bit lanes back to a byte string (little-endian)."""
+        byte_list = []
+        for lane in lanes:
+            for i in range(8):
+                byte_list.append((lane >> (8 * i)) & 0xFF)
+        return bytes(byte_list)
+
+    def _absorb_chunk(self, chunk: bytes) -> None:
+        """Absorbs a single rate-sized chunk of data into the state."""
+        if len(chunk) != self.rate_bytes:
+            raise ValueError(f"Chunk must be {self.rate_bytes} bytes long.")
+        lanes_to_xor = self._bytes_to_lanes(chunk)
+        num_lanes_to_xor = len(lanes_to_xor)
+        for i in range(num_lanes_to_xor):
+            self.state[i] ^= lanes_to_xor[i]
+        self._keccak_f()
+
+    def update(self, data: bytes) -> None:
+        """
+        Updates the hash object with a chunk of data.
+
+        Args:
+            data: The bytes to be hashed.
+
+        Raises:
+            ValueError: If update() is called after the hash has been finalized.
+        """
+        if self.finalized:
+            raise ValueError("Hash object has already been finalized.")
+        self.buffer += data
+        while len(self.buffer) >= self.rate_bytes:
+            chunk = self.buffer[:self.rate_bytes]
+            self.buffer = self.buffer[self.rate_bytes:]
+            self._absorb_chunk(chunk)
+
+    def _finalize(self) -> None:
+        """
+        Finalizes the hash calculation by applying padding and the final absorption.
+        """
+        self.finalized = True
+        self.buffer += b'\x06'
+        zeros_to_add = self.rate_bytes - (len(self.buffer) % self.rate_bytes)
+        if zeros_to_add == 0:
+            zeros_to_add = self.rate_bytes
+        self.buffer += b'\x00' * (zeros_to_add - 1)
+        self.buffer += b'\x80'
+        while len(self.buffer) >= self.rate_bytes:
+            chunk = self.buffer[:self.rate_bytes]
+            self.buffer = self.buffer[self.rate_bytes:]
+            self._absorb_chunk(chunk)
+
+    def digest(self) -> bytes:
+        """
+        Returns the final hash digest as a byte string.
+        """
+        if not self.finalized:
+            self._finalize()
+        output = b''
+        output_bytes_needed = self.output_bits // 8
+        while len(output) < output_bytes_needed:
+            lanes_in_rate = self.rate_bits // LANE_SIZE
+            squeezed_lanes = self.state[:lanes_in_rate]
+            output += self._lanes_to_bytes(squeezed_lanes)
+            if len(output) < output_bytes_needed:
+                self._keccak_f()
+        return output[:output_bytes_needed]
+
+    def hexdigest(self) -> str:
+        """
+        Returns the final hash digest as a hexadecimal string.
+        """
+        digest_bytes = self.digest()
+        hex_chars = "0123456789abcdef"
+        hex_string = ""
+        for byte in digest_bytes:
+            hex_string += hex_chars[byte >> 4]
+            hex_string += hex_chars[byte & 0x0F]
+        return hex_string
+```

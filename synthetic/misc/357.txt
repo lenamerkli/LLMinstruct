@@ -1,0 +1,291 @@
+§u§
+\documentclass[12pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[german]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{mathtools}
+\geometry{a4paper, margin=1in}
+
+\title{Mathematik 6. Schuljahr}
+\author{REDACTED}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\chapter{Integralrechnung}
+\section{Lokale Änderungsrate und die Gesamtänderung}
+In der Differenzialrechnung haben wir die Ableitung eingeführt.
+Sie erlaubte uns, die momentane Änderungsrate zu bestimmen.
+Im Folgenden soll erarbeitet werden, wie man umgekehrt von der momentanten Änderungsrate einer Grösse auf die Gesamtänderung der Grösse schliessen kann.
+
+\subsection{Beispiel}
+\begin{wrapfigure}{r}{0.5\textwidth}
+    \centering
+    \includegraphics[width=0.48\textwidth]{image1.png}
+    \caption{Beispiel 1}
+    \label{fig:beispiel_1}
+\end{wrapfigure}
+Unsere Aufgabe ist es, die Fläche $A_2$ zu berechnen.
+Als erstes berechnen wir die Änderungsrate $a$:
+\begin{align*}
+    a = \frac{v_1 - v_0}{t}
+\end{align*}
+Mit einsetzen:
+\begin{align*}
+    a = \frac{10 \frac{\text{m}}{\text{s}} - 30 \frac{\text{m}}{\text{s}}}{10 \text{s}} = -2 \frac{\text{m}}{\text{s}^2}
+\end{align*}
+Es gilt:
+\begin{align*}
+    \Delta x = \frac{1}{2} a t^2 + v_0 t
+\end{align*}
+Wir setzen $\Delta x$ gleich $A_2$, setzen die anderen Werte ein und erhalten:
+\begin{align*}
+    A_2 &= \frac{1}{2} * (-2 \frac{\text{m}}{\text{s}^2}) * {10 \text{s}}^2 + 30 \frac{\text{m}}{\text{s}} * 10 \text{s} \\
+    A_2 &= - 100 \text{m} + 300 \text{m} \\
+    A_2 &= 200 \text{m}
+\end{align*}
+
+\section{Definition des Integrals Grenzwert einer Summe}
+Wenn ein Graph aus geradlinigigen Stücken zusammengesetzt ist, kann man die exakte Fläche zwischen dem Graphen und der $x$-Achse mithilfe von Rechtecks- und Dreiecksflächen bestimmen.
+Es stellt sich die Frage, wie bei krummlinigen Graphen vorgegangen werden kann.
+
+\subsection{Beispiel}
+\begin{wrapfigure}{r}{0.6\textwidth}
+    \centering
+    \includegraphics[width=0.58\textwidth]{image2.png}
+    \caption{Graph mit Rechtecken von $f(x) = x^2$}
+    \label{fig:graph_mit_rechtecken}
+\end{wrapfigure}
+Um den Inhalt der Fläche unter dem Graphen von $f(x) = x^2$ über dem Intervall $[0,1]$ näherungsweise zu bestimmen, werden Rechteck gleicher Breite einbeschrieben; ihre Höhen ergeben sich jeweils als Funktionswert an der linken Intervallgrenze.
+Zeichnen wir zuerst $4$ Rechtecke, dann verfeinern wir die Abschätzung mithilfe von $8$ Rechtecken.
+Da alle Rechtecke unter dem Graphen liegen, liegen sie innerhalb der betrachteten Fläche und sie schätzen (von unten) den gesuchten Flächeninhalt.
+Die Summe der 4 (bzw. 8) Flächeninhalte wird als Untersumme $U_4$ bzw. $U_8$ bezeichnet.
+\begin{align*}
+    U_4 &= 0^2 * \frac{1}{4} + \left(\frac{1}{4}\right)^2 * \frac{1}{4} + \left(\frac{2}{4}\right)^2 * \frac{1}{4} + \left(\frac{3}{4}\right)^2 * \frac{1}{4} \\
+    U_8 &= 0^2 * \frac{1}{8} + \left(\frac{1}{8}\right)^2 * \frac{1}{8} + \left(\frac{2}{8}\right)^2 * \frac{1}{8} + ... + \left(\frac{7}{8}\right)^2 * \frac{1}{8}
+\end{align*}
+Es ist zu vermuten, dass eine solche Untersumme $U_n$ sich dem gesuchten Flächeninhalt umso besser annähert, je grösser die Anzahl $n$ der Teilintervalle ist.
+Es liegt also nahe, die sich ergebenden Untersummen $U_n$ auf einem Grenzwert für $n \to \infty$ zu untersuchen.
+
+\begin{align*}
+    U_n &= 0^2 * \frac{1}{n} + \left(\frac{1}{n}\right)^2 * \frac{1}{n} + \left(\frac{2}{n}\right)^2 * \frac{1}{n} + ... + \left(\frac{n - 1}{n}\right)^2 * \frac{1}{n} \\
+    U_n &= \frac{1}{n} * \left(0^2 + \left(\frac{1}{n}\right)^2 + \left(\frac{2}{n}\right)^2 + ... + \left(\frac{n - 1}{n}\right)^2\right) \\
+    U_n &= \frac{1}{n^3} * \left(0^2 + 1^2 + 2^2 + ... + \left(n - 1\right)^2\right)
+\end{align*}
+
+Es ist bekannt, dass:
+\begin{align*}
+    1 + 2 + ... + k &= \frac{k(k + 1)}{2} \\
+    1^2 + 2^2 + ... + k^2 &= \frac{k(k + 1)(2k + 1)}{6}
+\end{align*}
+
+So erhält man:
+\begin{align*}
+    U_n &= \frac{1}{n^3} * \frac{n * (n - 1) * (2 * (n - 1) + 1)}{6} \\
+    U_n &= \frac{n * (n - 1) * (2 * (n - 1) + 1)}{6n^3} \\
+    U_n &= \frac{(n - 1) * (2n - 1)}{6n^2} \\
+    U_n &= frac{2n^2 - 3n + 1}{6n^2} \\
+    \lim_{n\to\infty} U_n &= \frac{2}{6} \\
+    \lim_{n\to\infty} U_n &= \frac{1}{3}
+\end{align*}
+Eine andere Möglichkeit, den gesuchten Flächeninhalt anzunähern ist mithilfe von Obersummen.
+
+\subsection{Definition Untersumme}
+\begin{wrapfigure}{r}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.38\textwidth]{image3.png}
+    \caption{Untersumme}
+    \label{fig:untersumme}
+\end{wrapfigure}
+Betrachtet man eine auf dem Intervall $[a; b]$ definierte Funktion $f$. Man definiert die auf $[a; b]$ Untersumme $U_n$ von $f$ wie folgt:
+\begin{equation}
+    U_n = \sum_{k=1}^{n} \left(\min_{x \in I_k} f(x)\right) * \Delta x
+\end{equation}
+wobei
+\begin{equation}
+    \Delta x = \frac{b - a}{n}
+\end{equation}
+und
+\begin{equation}
+    I_k = [a + (k - 1) * \Delta x; a + k * \Delta x]
+\end{equation}
+
+\subsection{Definition Obersumme}
+\begin{wrapfigure}{r}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.38\textwidth]{image4.png}
+    \caption{Obersumme}
+    \label{fig:obersumme}
+\end{wrapfigure}
+Betrachtet man eine auf dem Intervall $[a; b]$ definierte Funktion $f$. Man definiert die auf $[a; b]$ Untersumme $U_n$ von $f$ wie folgt:
+\begin{equation}
+    O_n = \sum_{k=1}^{n} \left(\max_{x \in I_k} f(x)\right) * \Delta x
+\end{equation}
+wobei
+\begin{equation}
+    \Delta x = \frac{b - a}{n}
+\end{equation}
+und
+\begin{equation}
+    I_k = [a + (k - 1) * \Delta x; a + k * \Delta x]
+\end{equation}
+
+\subsection{Definition Integral einer Funktion}
+Man betrachte eine auf dem Intervall $[a; b]$ stetige Funktion $f$.
+Wenn folgendes auf $[a; b]$ gilt
+\begin{align*}
+    \lim_{n \to \infty} U_n = \lim_{n \to \infty} O_n
+\end{align*}
+dann nennt man das Integral der Funktion $f$ im Intervall $[a; b]$ der gemeinsame Grenzwert.
+Dafür schreibt man
+\begin{equation}
+    \int_{a}^{b} f(x) \,dx 
+\end{equation}
+Man liest: \textit{Integral von $f(x) dx$ von $a$ bis $b$}.
+
+
+
+\section{Beispielsaufgaben}
+\subsection{Aufgabe 1} 
+Betrachten wir die Funktion $f(x) = -x^2 + 16$. Bestimmen Sie auf dem Intervall $[-4; 4]$ \dots
+\begin{enumerate}
+    \item $U_2$
+    \item $U_4$
+    \item $O_2$
+    \item $O_4$
+\end{enumerate}
+
+\subsubsection{Lösungsweg Teilaufgabe 1}
+\begin{align*}
+    U_2 &= 
+\end{align*}
+```
+Schreibe den Lösungsweg für die Teilaufgabe 1 der Aufgabe 1.
+§a§
+```latex
+\subsubsection{Lösungsweg Teilaufgabe 2: Berechnung von $U_4$}
+Gegeben:
+- Funktion $f(x) = -x^2 + 16$
+- Intervall $[a, b] = [-4, 4]$
+- Anzahl Teilintervalle $n = 4$
+
+\paragraph{Schritt 1: $\mathbf{\Delta x}$ bestimmen}
+\[
+\Delta x = \frac{b - a}{n} = \frac{4 - (-4)}{4} = \frac{8}{4} = 2
+\]
+
+\paragraph{Schritt 2: Teilintervalle $\mathbf{I_k}$ definieren}
+\begin{align*}
+I_1 &= [-4, -2] \\
+I_2 &= [-2, 0] \\
+I_3 &= [0, 2] \\
+I_4 &= [2, 4]
+\end{align*}
+
+\paragraph{Schritt 3: Minimum in jedem Teilintervall}
+\begin{itemize}
+\item \textbf{Für $I_1 = [-4, -2]$}:\\
+  $f$ ist monoton steigend $\Rightarrow$ Minimum am linken Rand:\\
+  \(\min\limits_{x \in I_1} f(x) = f(-4) = -(-4)^2 + 16 = 0\)
+  
+\item \textbf{Für $I_2 = [-2, 0]$}:\\
+  $f$ ist monoton steigend $\Rightarrow$ Minimum am linken Rand:\\
+  \(\min\limits_{x \in I_2} f(x) = f(-2) = -(-2)^2 + 16 = 12\)
+
+\item \textbf{Für $I_3 = [0, 2]$}:\\
+  $f$ ist monoton fallend $\Rightarrow$ Minimum am rechten Rand:\\
+  \(\min\limits_{x \in I_3} f(x) = f(2) = -(2)^2 + 16 = 12\)
+
+\item \textbf{Für $I_4 = [2, 4]$}:\\
+  $f$ ist monoton fallend $\Rightarrow$ Minimum am rechten Rand:\\
+  \(\min\limits_{x \in I_4} f(x) = f(4) = -(4)^2 + 16 = 0\)
+\end{itemize}
+
+\paragraph{Schritt 4: Untersumme \(\mathbf{U_4}\) berechnen}
+\[
+U_4 = \sum_{k=1}^{4} \left( \min_{x \in I_k} f(x) \right) \cdot \Delta x = (0 \cdot 2) + (12 \cdot 2) + (12 \cdot 2) + (0 \cdot 2) = 0 + 24 + 24 + 0 = 48
+\]
+
+\[
+\boxed{U_4 = 48}
+\]
+
+% Obersummen berechnen
+\subsubsection{Lösungsweg Teilaufgabe 3: Berechnung von $O_2$}
+Gegeben: 
+- $n = 2$, $\Delta x = 4$ (wie in Teilaufgabe 1)
+- Intervall $I_1 = [-4, 0]$, $I_2 = [0, 4]$
+
+\paragraph{Maximum in jedem Teilintervall}
+\begin{itemize}
+\item \textbf{Für $I_1 = [-4, 0]$}:\\
+  $f$ ist monoton steigend $\Rightarrow$ Maximum am rechten Rand:\\
+  \(\max\limits_{x \in I_1} f(x) = f(0) = -0^2 + 16 = 16\)
+
+\item \textbf{Für $I_2 = [0, 4]$}:\\
+  $f$ ist monoton fallend $\Rightarrow$ Maximum am linken Rand:\\
+  \(\max\limits_{x \in I_2} f(x) = f(0) = 16\)
+\end{itemize}
+
+\paragraph{Obersumme \(\mathbf{O_2}\) berechnen}
+\[
+O_2 = \sum_{k=1}^{2} \left( \max_{x \in I_k} f(x) \right) \cdot \Delta x = (16 \cdot 4) + (16 \cdot 4) = 64 + 64 = 128
+\]
+
+\[
+\boxed{O_2 = 128}
+\]
+
+\subsubsection{Lösungsweg Teilaufgabe 4: Berechnung von $O_4$}
+Gegeben: $n = 4$, $\Delta x = 2$ (wie in $U_4$)
+
+\paragraph{Maximum in jedem Teilintervall}
+\begin{itemize}
+\item \textbf{Für $I_1 = [-4, -2]$}:\\
+  Monoton steigend $\Rightarrow$ Maximum am rechten Rand:\\
+  \(\max\limits_{x \in I_1} f(x) = f(-2) = 12\)
+
+\item \textbf{Für $I_2 = [-2, 0]$}:\\
+  Monoton steigend $\Rightarrow$ Maximum am rechten Rand:\\
+  \(\max\limits_{x \in I_2} f(x) = f(0) = 16\)
+
+\item \textbf{Für $I_3 = [0, 2]$}:\\
+  Monoton fallend $\Rightarrow$ Maximum am linken Rand:\\
+  \(\max\limits_{x \in I_3} f(x) = f(0) = 16\)
+
+\item \textbf{Für $I_4 = [2, 4]$}:\\
+  Monoton fallend $\Rightarrow$ Maximum am linken Rand:\\
+  \(\max\limits_{x \in I_4} f(x) = f(2) = 12\)
+\end{itemize}
+
+\paragraph{Obersumme \(\mathbf{O_4}\) berechnen}
+\[
+O_4 = \sum_{k=1}^{4} \left( \max_{x \in I_k} f(x) \right) \cdot \Delta x = (12 \cdot 2) + (16 \cdot 2) + (16 \cdot 2) + (12 \cdot 2) = 24 + 32 + 32 + 24 = 112
+\]
+
+\[
+\boxed{O_4 = 112}
+\]
+
+\subsection{Bemerkung zu den Ergebnissen}
+Die exakte Fläche unter $f(x) = -x^2 + 16$ im Intervall $[-4, 4]$ beträgt:
+\[
+\int_{-4}^{4} (-x^2 + 16)  dx = \left[ -\frac{1}{3}x^3 + 16x \right]_{-4}^4 = \left( -\frac{64}{3} + 64 \right) - \left( \frac{64}{3} - 64 \right) = \frac{128}{3} \approx 42.\overline{6}
+\]
+Die Approximationen nähern sich diesem Wert an:
+\begin{itemize}
+\item $U_2 = 0$ (unterschätzt stark)
+\item $U_4 = 48$ (näher am exakten Wert)
+\item $O_2 = 128$ (überschätzt stark)
+\item $O_4 = 112$ (näher am exakten Wert)
+\end{itemize}
+Je größer $n$, desto besser die Annäherung durch $U_n$ und $O_n$.
+```

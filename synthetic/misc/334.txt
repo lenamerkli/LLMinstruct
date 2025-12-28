@@ -1,0 +1,66 @@
+§u§
+```
+[21:20:54] [main/INFO] [minecraft/RecipeManager]: Loaded 34 recipes
+[21:20:54] [main/INFO] [minecraft/AdvancementList]: Loaded 5168 advancements
+[21:20:54] [main/INFO] [to.th.cu.Curios/]: Loaded 10 curio slots
+[21:20:54] [main/INFO] [to.th.cu.Curios/]: Loaded 1 curio entities
+[21:20:54] [main/INFO] [da.co.im.UpgradeManager/]: Loaded 9 turtle upgrades
+[21:20:54] [main/INFO] [da.co.im.UpgradeManager/]: Loaded 3 pocket computer upgrades
+[21:20:54] [main/WARN] [or.va.mo.co.co.MassDatapackResolver/]: No specified tag 'minecraft:carpets' doesn't exist!
+[21:20:54] [Server thread/INFO] [minecraft/DedicatedServer]: Starting minecraft server version 1.20.1
+[21:20:54] [Server thread/INFO] [minecraft/DedicatedServer]: Loading properties
+[21:20:54] [Server thread/INFO] [minecraft/DedicatedServer]: Default game type: SPECTATOR
+[21:20:54] [Server thread/INFO] [minecraft/MinecraftServer]: Generating keypair
+[21:20:54] [Server thread/INFO] [minecraft/DedicatedServer]: Starting Minecraft server on *:25565
+[21:20:54] [Server thread/INFO] [minecraft/ServerConnectionListener]: Using epoll channel type
+[21:20:54] [Server thread/WARN] [minecraft/DedicatedServer]: **** FAILED TO BIND TO PORT!
+[21:20:54] [Server thread/WARN] [minecraft/DedicatedServer]: The exception was: io.netty.channel.unix.Errors$NativeIoException: bind(..) failed: Address already in use
+[21:20:54] [Server thread/WARN] [minecraft/DedicatedServer]: Perhaps a server is already running on that port?
+[21:20:54] [Server thread/ERROR] [minecraft/MinecraftServer]: Encountered an unexpected exception
+java.lang.IllegalStateException: Failed to initialize server
+	at net.minecraft.server.MinecraftServer.m_130011_(MinecraftServer.java:635) ~[server-1.20.1-20230612.114412-srg.jar%23207!/:?] {re:mixin,pl:accesstransformer:B,xf:fml:xaeroworldmap:xaero_wm_minecraftserver,xf:fml:xaerominimap:xaero_minecraftserver,re:classloading,pl:accesstransformer:B,xf:fml:xaeroworldmap:xaero_wm_minecraftserver,xf:fml:xaerominimap:xaero_minecraftserver,pl:mixin:A}
+	at net.minecraft.server.MinecraftServer.m_206580_(MinecraftServer.java:251) ~[server-1.20.1-20230612.114412-srg.jar%23207!/:?] {re:mixin,pl:accesstransformer:B,xf:fml:xaeroworldmap:xaero_wm_minecraftserver,xf:fml:xaerominimap:xaero_minecraftserver,re:classloading,pl:accesstransformer:B,xf:fml:xaeroworldmap:xaero_wm_minecraftserver,xf:fml:xaerominimap:xaero_minecraftserver,pl:mixin:A}
+	at java.lang.Thread.run(Thread.java:840) ~[?:?] {re:mixin}
+[21:20:54] [Server thread/FATAL] [ne.mi.co.ForgeMod/]: Preparing crash report with UUID e8dc0ac2-dff4-4264-8e40-2069dd284a6b
+[21:20:54] [Server thread/ERROR] [minecraft/MinecraftServer]: This crash report has been saved to: /home/server/tank_tussle/./crash-reports/crash-2025-04-18_21.20.54-server.txt
+[21:20:54] [Server thread/ERROR] [minecraft/MinecraftServer]: Exception stopping the server
+java.lang.NullPointerException: Cannot invoke "org.valkyrienskies.core.apigame.world.ServerShipWorldCore.setGameServer(org.valkyrienskies.core.apigame.GameServer)" because "this.shipWorld" is null
+	at net.minecraft.server.MinecraftServer.handler$bpc000$preStopServer(MinecraftServer.java:5188) ~[server-1.20.1-20230612.114412-srg.jar%23207!/:?] {re:mixin,pl:accesstransformer:B,xf:fml:xaeroworldmap:xaero_wm_minecraftserver,xf:fml:xaerominimap:xaero_minecraftserver,re:classloading,pl:accesstransformer:B,xf:fml:xaeroworldmap:xaero_wm_minecraftserver,xf:fml:xaerominimap:xaero_minecraftserver,pl:mixin:A}
+	at net.minecraft.server.MinecraftServer.m_7041_(MinecraftServer.java) ~[server-1.20.1-20230612.114412-srg.jar%23207!/:?] {re:mixin,pl:accesstransformer:B,xf:fml:xaeroworldmap:xaero_wm_minecraftserver,xf:fml:xaerominimap:xaero_minecraftserver,re:classloading,pl:accesstransformer:B,xf:fml:xaeroworldmap:xaero_wm_minecraftserver,xf:fml:xaerominimap:xaero_minecraftserver,pl:mixin:A}
+	at net.minecraft.server.dedicated.DedicatedServer.m_7041_(DedicatedServer.java:510) ~[server-1.20.1-20230612.114412-srg.jar%23207!/:?] {re:mixin,pl:accesstransformer:B,re:computing_frames,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:mixins/common/nochatreports.mixins.json:server.MixinDedicatedServer,pl:mixin:A}
+	at net.minecraft.server.MinecraftServer.m_130011_(MinecraftServer.java:689) ~[server-1.20.1-20230612.114412-srg.jar%23207!/:?] {re:mixin,pl:accesstransformer:B,xf:fml:xaeroworldmap:xaero_wm_minecraftserver,xf:fml:xaerominimap:xaero_minecraftserver,re:classloading,pl:accesstransformer:B,xf:fml:xaeroworldmap:xaero_wm_minecraftserver,xf:fml:xaerominimap:xaero_minecraftserver,pl:mixin:A}
+	at net.minecraft.server.MinecraftServer.m_206580_(MinecraftServer.java:251) ~[server-1.20.1-20230612.114412-srg.jar%23207!/:?] {re:mixin,pl:accesstransformer:B,xf:fml:xaeroworldmap:xaero_wm_minecraftserver,xf:fml:xaerominimap:xaero_minecraftserver,re:classloading,pl:accesstransformer:B,xf:fml:xaeroworldmap:xaero_wm_minecraftserver,xf:fml:xaerominimap:xaero_minecraftserver,pl:mixin:A}
+	at java.lang.Thread.run(Thread.java:840) ~[?:?] {re:mixin}
+[21:20:54] [Server thread/INFO] [Framework/]: Unloading server configs...
+```
+What is the issue?
+§a§
+The issue is that your Minecraft server failed to start because the port it's trying to use (25565) is already in use by another application. This is indicated by the error:
+
+```
+[21:20:54] [Server thread/WARN] [minecraft/DedicatedServer]: **** FAILED TO BIND TO PORT!
+[21:20:54] [Server thread/WARN] [minecraft/DedicatedServer]: The exception was: io.netty.channel.unix.Errors$NativeIoException: bind(..) failed: Address already in use
+[21:20:54] [Server thread/WARN] [minecraft/DedicatedServer]: Perhaps a server is already running on that port?
+```
+
+### Solutions:
+
+1. **Check for another running Minecraft server**:
+   - You might already have another Minecraft server instance running on the same port.
+   - Use commands like `netstat -tulnp | grep 25565` (Linux) or `netstat -ano | findstr 25565` (Windows) to check which process is using the port.
+
+2. **Change the server port**:
+   - Edit your `server.properties` file and change `server-port=25565` to another unused port (e.g., `25566`).
+
+3. **Kill the existing process** (if safe to do so):
+   - If another Minecraft server is running, stop it properly.
+   - If it's an orphaned process, kill it manually (e.g., `kill -9 <PID>` on Linux or via Task Manager on Windows).
+
+4. **Wait a few minutes**:
+   - Sometimes, the port remains locked briefly after a server crash. Wait a minute and try again.
+
+### Additional Notes:
+- The `NullPointerException` during shutdown is a secondary issue caused by the server failing to start properly.
+- The warning `No specified tag 'minecraft:carpets' doesn't exist!` is unrelated and can be ignored for now.
+
+Try one of the solutions above, and your server should start normally. Let me know if you need further help!

@@ -1,0 +1,277 @@
+§u§
+```
+    \section{Conjugaison des verbes}
+            \begingroup
+            \scriptsize
+            \setlength{\tabcolsep}{4pt}
+            \renewcommand{\arraystretch}{1.5}
+
+            \begin{longtable}{|>{\RaggedRight}p{2.5cm}|>{\RaggedRight}p{6.5cm}|>{\RaggedRight}p{3.5cm}|}
+                \hline
+                \textbf{Infinitif} & \textbf{Présent} & \textbf{Passé composé (je)} \\
+                \hline
+                \endhead
+                admirer & je admire, tu admires, il admire, nous admirons, vous admirez, ils admirent & j'ai admiré \\
+                \hline
+                approcher & j'approche, tu approches, il approche, nous approchons, vous approchez, ils approchent & j'ai approché \\
+                \hline
+                s'apercevoir & je m'aperçois, tu t'aperçois, il s'aperçoit, nous nous apercevons, vous vous apercevez, ils s'aperçoivent & je me suis aperçu(e) \\
+                \hline
+                balbutier & je balbutie, tu balbuties, il balbutie, nous balbutions, vous balbutiez, ils balbutient & j'ai balbutié \\
+                \hline
+                caresser & je caresse, tu caresses, il caresse, nous caressons, vous caressez, ils caressent & j'ai caressé \\
+                \hline
+                chasser & je chasse, tu chasses, il chasse, nous chassons, vous chassez, ils chassent & j'ai chassé \\
+                \hline
+                contempler & je contemple, tu contemples, il contemple, nous contemplons, vous contemplez, ils contemplent & j'ai contemplé \\
+                \hline
+                couvrir & je couvre, tu couvres, il couvre, nous couvrons, vous couvrez, ils couvrent & j'ai couvert \\
+                \hline
+                demeurer & je demeure, tu demeures, il demeure, nous demeurons, vous demeurez, ils demeurent & je suis demeuré(e) \\
+                \hline
+                émouvoir & j'émeus, tu émeus, il émeut, nous émouvons, vous émouvez, ils émeuvent & j'ai ému \\
+                \hline
+                emprunter & j'emprunte, tu empruntes, il emprunte, nous empruntons, vous empruntez, ils empruntent & j'ai emprunté \\
+                \hline
+                envier & j'envie, tu envies, il envie, nous envions, vous enviez, ils envient & j'ai envié \\
+                \hline
+                épouser & j'épouse, tu épouses, il épouse, nous épousons, vous épousez, ils épousent & j'ai épousé \\
+                \hline
+                éprouver & j'éprouve, tu éprouves, il éprouve, nous éprouvons, vous éprouvez, ils éprouvent & j'ai éprouvé \\
+                \hline
+                errer & j'erre, tu erres, il erre, nous errons, vous errez, ils errent & j'ai erré \\
+                \hline
+                indigner & j'indigne, tu indignes, il indigne, nous indignons, vous indignez, ils indignent & j'ai indigné \\
+                \hline
+                louer & je loue, tu loues, il loue, nous louons, vous louez, ils louent & j'ai loué \\
+                \hline
+                mépriser & je méprise, tu méprises, il méprise, nous méprisons, vous méprisez, ils méprisent & j'ai méprisé \\
+                \hline
+                obtenir & j'obtiens, tu obtiens, il obtient, nous obtenons, vous obtenez, ils obtiennent & j'ai obtenu \\
+                \hline
+                ôter & j'ôte, tu ôtes, il ôte, nous ôtons, vous ôtez, ils ôtent & j'ai ôté \\
+                \hline
+                enlever & j'enlève, tu enlèves, il enlève, nous enlevons, vous enlevez, ils enlèvent & j'ai enlevé \\
+                \hline
+                se peigner & je me peigne, tu te peignes, il se peigne, nous nous peignons, vous vous peignez, ils se peignent & je me suis peigné(e) \\
+                \hline
+                posséder & je possède, tu possèdes, il possède, nous possédons, vous possédez, ils possèdent & j'ai possédé \\
+                \hline
+                rendre & je rends, tu rends, il rend, nous rendons, vous rendez, ils rendent & j'ai rendu \\
+                \hline
+                récompenser & je récompense, tu récompenses, il récompense, nous récompensons, vous récompensez, ils récompensent & j'ai récompensé \\
+                \hline
+                remplacer & je remplace, tu remplaces, il remplace, nous remplaçons, vous remplacez, ils remplacent & j'ai remplacé \\
+                \hline
+                rester & je reste, tu restes, il reste, nous restons, vous restez, ils restent & je suis resté(e) \\
+                \hline
+                sauter & je saute, tu sautes, il saute, nous sautons, vous sautez, ils sautent & j'ai sauté \\
+                \hline
+                séduire & je séduis, tu séduis, il séduit, nous séduisons, vous séduisez, ils séduisent & j'ai séduit \\
+                \hline
+                songer & je songe, tu songes, il songe, nous songeons, vous songez, ils songent & j'ai songé \\
+                \hline
+                tâcher & je tâche, tu tâches, il tâche, nous tâchons, vous tâchez, ils tâchent & j'ai tâché \\
+                \hline
+                trembler & je tremble, tu trembles, il tremble, nous tremblons, vous tremblez, ils tremblent & j'ai tremblé \\
+                \hline
+                vagabonder & je vagabonde, tu vagabondes, il vagabonde, nous vagabondons, vous vagabondez, ils vagabondent & j'ai vagabondé \\
+                \hline
+                valoir & je vaux, tu vaux, il vaut, nous valons, vous valez, ils valent & j'ai valu \\
+                \hline
+                se tromper & je me trompe, tu te trompes, il se trompe, nous nous trompons, vous vous trompez, ils se trompent & je me suis trompé(e) \\
+                \hline
+            \end{longtable}
+            \endgroup
+```
+Füge zu dieser Tabelle noch folgende Verben hinzu:
+```
+ être
+	• avoir
+	• aller
+	• faire
+	• dire
+	• pouvoir
+	• vouloir
+	• savoir
+	• voir
+	• devoir
+	• prendre
+	• donner
+	• venir
+	• falloir
+	• mettre
+	• comprendre
+	• rendre (visite à qn)
+	• partir
+	• (se) sentir
+	• lire
+	• écrire
+	• tenir
+	• vivre
+	• suivre
+	• ouvrir
+	• offrir
+	• courir
+	• boire
+	• recevoir
+	· connaître
+```
+§a§
+Um die Tabelle um die angeforderten Verben zu erweitern, werden die Konjugationen für Präsens und Passé composé (1. Person Singular) gemäß den französischen Grammatikregeln ergänzt. Besonderheiten wie reflexive Verben und unpersönliche Verben werden berücksichtigt. Hier ist der aktualisierte LaTeX-Code:
+
+```latex
+\section{Conjugaison des verbes}
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.5}
+
+\begin{longtable}{|>{\RaggedRight}p{2.5cm}|>{\RaggedRight}p{6.5cm}|>{\RaggedRight}p{3.5cm}|}
+    \hline
+    \textbf{Infinitif} & \textbf{Présent} & \textbf{Passé composé (je)} \\
+    \hline
+    \endhead
+    admirer & je admire, tu admires, il admire, nous admirons, vous admirez, ils admirent & j'ai admiré \\
+    \hline
+    approcher & j'approche, tu approches, il approche, nous approchons, vous approchez, ils approchent & j'ai approché \\
+    \hline
+    s'apercevoir & je m'aperçois, tu t'aperçois, il s'aperçoit, nous nous apercevons, vous vous apercevez, ils s'aperçoivent & je me suis aperçu(e) \\
+    \hline
+    balbutier & je balbutie, tu balbuties, il balbutie, nous balbutions, vous balbutiez, ils balbutient & j'ai balbutié \\
+    \hline
+    caresser & je caresse, tu caresses, il caresse, nous caressons, vous caressez, ils caressent & j'ai caressé \\
+    \hline
+    chasser & je chasse, tu chasses, il chasse, nous chassons, vous chassez, ils chassent & j'ai chassé \\
+    \hline
+    contempler & je contemple, tu contemples, il contemple, nous contemplons, vous contemplez, ils contemplent & j'ai contemplé \\
+    \hline
+    couvrir & je couvre, tu couvres, il couvre, nous couvrons, vous couvrez, ils couvrent & j'ai couvert \\
+    \hline
+    demeurer & je demeure, tu demeures, il demeure, nous demeurons, vous demeurez, ils demeurent & je suis demeuré(e) \\
+    \hline
+    émouvoir & j'émeus, tu émeus, il émeut, nous émouvons, vous émouvez, ils émeuvent & j'ai ému \\
+    \hline
+    emprunter & j'emprunte, tu empruntes, il emprunte, nous empruntons, vous empruntez, ils empruntent & j'ai emprunté \\
+    \hline
+    envier & j'envie, tu envies, il envie, nous envions, vous enviez, ils envient & j'ai envié \\
+    \hline
+    épouser & j'épouse, tu épouses, il épouse, nous épousons, vous épousez, ils épousent & j'ai épousé \\
+    \hline
+    éprouver & j'éprouve, tu éprouves, il éprouve, nous éprouvons, vous éprouvez, ils éprouvent & j'ai éprouvé \\
+    \hline
+    errer & j'erre, tu erres, il erre, nous errons, vous errez, ils errent & j'ai erré \\
+    \hline
+    indigner & j'indigne, tu indignes, il indigne, nous indignons, vous indignez, ils indignent & j'ai indigné \\
+    \hline
+    louer & je loue, tu loues, il loue, nous louons, vous louez, ils louent & j'ai loué \\
+    \hline
+    mépriser & je méprise, tu méprises, il méprise, nous méprisons, vous méprisez, ils méprisent & j'ai méprisé \\
+    \hline
+    obtenir & j'obtiens, tu obtiens, il obtient, nous obtenons, vous obtenez, ils obtiennent & j'ai obtenu \\
+    \hline
+    ôter & j'ôte, tu ôtes, il ôte, nous ôtons, vous ôtez, ils ôtent & j'ai ôté \\
+    \hline
+    enlever & j'enlève, tu enlèves, il enlève, nous enlevons, vous enlevez, ils enlèvent & j'ai enlevé \\
+    \hline
+    se peigner & je me peigne, tu te peignes, il se peigne, nous nous peignons, vous vous peignez, ils se peignent & je me suis peigné(e) \\
+    \hline
+    posséder & je possède, tu possèdes, il possède, nous possédons, vous possédez, ils possèdent & j'ai possédé \\
+    \hline
+    rendre & je rends, tu rends, il rend, nous rendons, vous rendez, ils rendent & j'ai rendu \\
+    \hline
+    récompenser & je récompense, tu récompenses, il récompense, nous récompensons, vous récompensez, ils récompensent & j'ai récompensé \\
+    \hline
+    remplacer & je remplace, tu remplaces, il remplace, nous remplaçons, vous remplacez, ils remplacent & j'ai remplacé \\
+    \hline
+    rester & je reste, tu restes, il reste, nous restons, vous restez, ils restent & je suis resté(e) \\
+    \hline
+    sauter & je saute, tu sautes, il saute, nous sautons, vous sautez, ils sautent & j'ai sauté \\
+    \hline
+    séduire & je séduis, tu séduis, il séduit, nous séduisons, vous séduisez, ils séduisent & j'ai séduit \\
+    \hline
+    songer & je songe, tu songes, il songe, nous songeons, vous songez, ils songent & j'ai songé \\
+    \hline
+    tâcher & je tâche, tu tâches, il tâche, nous tâchons, vous tâchez, ils tâchent & j'ai tâché \\
+    \hline
+    trembler & je tremble, tu trembles, il tremble, nous tremblons, vous tremblez, ils tremblent & j'ai tremblé \\
+    \hline
+    vagabonder & je vagabonde, tu vagabondes, il vagabonde, nous vagabondons, vous vagabondez, ils vagabondent & j'ai vagabondé \\
+    \hline
+    valoir & je vaux, tu vaux, il vaut, nous valons, vous valez, ils valent & j'ai valu \\
+    \hline
+    se tromper & je me trompe, tu te trompes, il se trompe, nous nous trompons, vous vous trompez, ils se trompent & je me suis trompé(e) \\
+    \hline
+    % Neue Verben ab hier
+    être & je suis, tu es, il est, nous sommes, vous êtes, ils sont & j'ai été \\
+    \hline
+    avoir & j'ai, tu as, il a, nous avons, vous avez, ils ont & j'ai eu \\
+    \hline
+    aller & je vais, tu vas, il va, nous allons, vous allez, ils vont & je suis allé(e) \\
+    \hline
+    faire & je fais, tu fais, il fait, nous faisons, vous faites, ils font & j'ai fait \\
+    \hline
+    dire & je dis, tu dis, il dit, nous disons, vous dites, ils disent & j'ai dit \\
+    \hline
+    pouvoir & je peux, tu peux, il peut, nous pouvons, vous pouvez, ils peuvent & j'ai pu \\
+    \hline
+    vouloir & je veux, tu veux, il veut, nous voulons, vous voulez, ils veulent & j'ai voulu \\
+    \hline
+    savoir & je sais, tu sais, il sait, nous savons, vous savez, ils savent & j'ai su \\
+    \hline
+    voir & je vois, tu vois, il voit, nous voyons, vous voyez, ils voient & j'ai vu \\
+    \hline
+    devoir & je dois, tu dois, il doit, nous devons, vous devez, ils doivent & j'ai dû \\
+    \hline
+    prendre & je prends, tu prends, il prend, nous prenons, vous prenez, ils prennent & j'ai pris \\
+    \hline
+    donner & je donne, tu donnes, il donne, nous donnons, vous donnez, ils donnent & j'ai donné \\
+    \hline
+    venir & je viens, tu viens, il vient, nous venons, vous venez, ils viennent & je suis venu(e) \\
+    \hline
+    falloir & \multicolumn{1}{l|}{il faut} & il a fallu \\
+    \hline
+    mettre & je mets, tu mets, il met, nous mettons, vous mettez, ils mettent & j'ai mis \\
+    \hline
+    comprendre & je comprends, tu comprends, il comprend, nous comprenons, vous comprenez, ils comprennent & j'ai compris \\
+    \hline
+    rendre (visite) & je rends, tu rends, il rend, nous rendons, vous rendez, ils rendent & j'ai rendu \\
+    \hline
+    partir & je pars, tu pars, il part, nous partons, vous partez, ils partent & je suis parti(e) \\
+    \hline
+    sentir & je sens, tu sens, il sent, nous sentons, vous sentez, ils sentent & j'ai senti \\
+    \hline
+    se sentir & je me sens, tu te sens, il se sent, nous nous sentons, vous vous sentez, ils se sentent & je me suis senti(e) \\
+    \hline
+    lire & je lis, tu lis, il lit, nous lisons, vous lisez, ils lisent & j'ai lu \\
+    \hline
+    écrire & j'écris, tu écris, il écrit, nous écrivons, vous écrivez, ils écrivent & j'ai écrit \\
+    \hline
+    tenir & je tiens, tu tiens, il tient, nous tenons, vous tenez, ils tiennent & j'ai tenu \\
+    \hline
+    vivre & je vis, tu vis, il vit, nous vivons, vous vivez, ils vivent & j'ai vécu \\
+    \hline
+    suivre & je suis, tu suis, il suit, nous suivons, vous suivez, ils suivent & j'ai suivi \\
+    \hline
+    ouvrir & j'ouvre, tu ouvres, il ouvre, nous ouvrons, vous ouvrez, ils ouvrent & j'ai ouvert \\
+    \hline
+    offrir & j'offre, tu offres, il offre, nous offrons, vous offrez, ils offrent & j'ai offert \\
+    \hline
+    courir & je cours, tu cours, il court, nous courons, vous courez, ils courent & j'ai couru \\
+    \hline
+    boire & je bois, tu bois, il boit, nous buvons, vous buvez, ils boivent & j'ai bu \\
+    \hline
+    recevoir & je reçois, tu reçois, il reçoit, nous recevons, vous recevez, ils reçoivent & j'ai reçu \\
+    \hline
+    connaître & je connais, tu connais, il connaît, nous connaissons, vous connaissez, ils connaissent & j'ai connu \\
+    \hline
+\end{longtable}
+\endgroup
+```
+
+**Hinweise zu den Ergänzungen:**
+1. **Falloir:** Unpersönliches Verb, nur 3. Person Singular vorhanden. Die Passé composé-Form folgt ebenfalls der unpersönlichen Konstruktion (`il a fallu`).
+2. **Reflexive Verben:** Bei `se sentir` wird die reflexive Konjugation in beiden Zeitformen angegeben.
+3. **Besondere Konjugationen:** Unregelmäßige Formen (z. B. `être`, `avoir`, `aller`) wurden korrekt implementiert.
+4. **Rendre (visite):** Zusätzlicher Eintrag zur Unterscheidung von der Grundbedeutung des Verbs `rendre`.
+5. **Akzente und Sonderzeichen:** Alle diakritischen Zeichen (z. B. `é`, `è`, `û`) wurden korrekt gesetzt.

@@ -1,0 +1,169 @@
+§u§
+```
+Assessing Political Bias
+in Large Language Models
+Luca Rettenberger∗, Markus Reischl, and Mark Schutera
+Abstract—The assessment of bias within Large Language
+Models (LLMs) has emerged as a critical concern in the
+contemporary discourse surrounding Artificial Intelligence
+(AI) in the context of their potential impact on societal
+dynamics. Recognizing and considering political bias within
+LLM applications is especially important when closing in on
+the tipping point toward performative prediction. Then, being
+educated about potential effects and the societal behavior
+LLMs can drive at scale due to their interplay with human
+operators. In this way, the upcoming elections of the European
+Parliament will not remain unaffected by LLMs. We evaluate
+the political bias of the currently most popular open-source
+LLMs (instruct or assistant models) concerning political issues
+within the European Union (EU) from a German voter’s
+perspective. To do so, we use the ”Wahl-O-Mat,” a voting
+advice application used in Germany. From the voting advice
+of the ”Wahl-O-Mat” we quantize the degree of alignment
+of LLMs with German political parties. We show that larger
+models, such as Llama3-70B, tend to align more closely with
+left-leaning political parties, while smaller models often remain
+neutral, particularly when prompted in English. The central
+finding is that LLMs are similarly biased, with low variances
+in the alignment concerning a specific party. Our findings
+underline the importance of rigorously assessing and making
+bias transparent in LLMs to safeguard the integrity and
+trustworthiness of applications that employ the capabilities
+of performative prediction and the invisible hand of machine
+learning prediction and language generation.
+I. INTRODUCTION
+The popularity of Large Language Models (LLMs) has
+surged in recent years due to their remarkable capabilities
+in understanding and generating human language; hence,
+they are widely used and significantly impact technology
+and daily interactions [4]–[6]. This paper explores the inter-
+section between LLMs and the European Elections of 2024,
+situated within the broader context of algorithmic prediction
+and its societal implications. Grounded in the theoretical
+framework of performative prediction [7], [8], which under-
+lines the active role of predictive mechanisms in shaping
+societal dynamics, our study employs a questionnaire-based
+(”Wahl-O-Mat” [9]) methodology to examine the alignment
+of LLMs with the views and positions of various German
+∗Corresponding author: Luca Rettenberger, Institute for Automation
+and Applied Informatics, Karlsruhe Institute of Technology, Hermann-von-
+Helmholtz-Platz 1, 76344 Eggenstein-Leopoldshafen, Germany, e-mail:
+luca.rettenberger@kit.edu
+Markus Reischl, Mark Schutera, Institute for Automation and Applied
+Informatics, Karlsruhe Institute of Technology, Hermannvon-Helmholtz-
+Platz 1, 76344 Eggenstein-Leopoldshafen, Germany
+political parties in the context of the European Parliament
+Elections in 2024.
+Not to be neglected is the importance and growth in the
+use of LLMs. In recent years, the significance of LLMs
+has grown, with projections indicating a market value of
+approximately 29.19 billion by 2024 and a potential volume
+of 63.37 billion by 2030, reflecting a forecasted compound
+annual growth rate of 13.79% from 2024 to 2030 [10].
+Several factors contribute to this growth: the availability of
+extensive datasets has driven advancements in LLM tech-
+nology, increased business interest in AI applications, and
+ongoing AI research efforts. The continuous enhancement
+of AI capabilities, such as the development of more robust
+language models and a reduction in parameters, also drives
+market expansion. In response to the rising demand for
+LLM solutions, approximately 60% of business leaders have
+increased their budgets by at least 10%, with nearly one-
+fifth doubling their allocation [10]. Hugging Face [11] is
+the leading platform for the LLM community and is known
+for its comprehensive support for machine learning models.
+Their open-source framework, Transformers, has gained
+widespread popularity with over 1 million installations, 126k
+stars, and 24.9k forks on GitHub.
+Acknowledging the performative nature of prediction, this
+research highlights the potential influence of LLMs as they
+move beyond passive observation of and learning from
+political discourse to actively shaping public opinion and
+electoral outcomes. By summarizing empirical findings of
+political bias and leanings in a benchmark set of LLMs, this
+paper aims to foster informed discourse and critical engage-
+ment with the evolving role of technology in contemporary
+society. LLMs provide scalable interfaces and inference
+capabilities, shifting the position of LLMs and AI Systems
+in our society from learning from a population to steering
+a population through the invisible hand of prediction and
+generative artificial intelligence at scale.
+By assessing where LLMs position themselves within
+the spectrum of German political parties, intra-LLM bias
+and inter-LLM bias or political leanings can be shown.
+We do not intend to judge the quality of these biases
+concerning political opinion - However, this work em-
+phasizes the need for ongoing scrutiny and responsible
+development in the field of artificial intelligence, especially
+when deployed at scale with low-key accessible inter-
+faces. Our evaluations are open-source and available at:
+https://github.com/lrettenberger/LLM Political Orientation
+```
+Write a critique about this paper.
+§a§
+**Critique of “Assessing Political Bias in Large Language Models”**
+
+Luca Rettenberger, Markus Reischl, and Mark Schutera’s paper *“Assessing Political Bias in Large Language Models”* offers a timely and relevant investigation into the political alignment of popular open-source LLMs within the context of the 2024 European Parliament elections. Grounded in the theoretical framework of *performative prediction*, the study explores how LLMs may not merely reflect societal opinions but actively shape them—especially in high-stakes democratic processes such as elections. While the paper makes important contributions, several methodological, interpretive, and contextual limitations merit discussion.
+
+---
+
+### **Strengths of the Paper**
+
+1. **Relevance and Timeliness**:  
+   The paper addresses a pressing concern in AI ethics: the potential for LLMs to influence public opinion and electoral outcomes. With the 2024 European elections approaching, the authors situate their research in a highly relevant political context.
+
+2. **Use of Established Tools**:  
+   The use of the *Wahl-O-Mat*—a well-known and widely used voting advice application in Germany—lends credibility and comparability to the study. It provides a quantifiable and standardized framework for assessing political alignment.
+
+3. **Focus on Open-Source Models**:  
+   By focusing on open-source LLMs, the paper contributes to transparency in AI research. Open models are more accessible for scrutiny, making such evaluations more reproducible and impactful.
+
+4. **Theoretical Foundation**:  
+   The grounding in *performative prediction* theory is a strong point. It emphasizes that predictive models (including LLMs) can shape the very phenomena they aim to predict, offering a compelling lens through which to analyze the societal impact of LLMs.
+
+---
+
+### **Methodological Concerns**
+
+1. **Limited Scope of Evaluation**:  
+   The study focuses on a single national context—Germany—and uses a single evaluation tool, the *Wahl-O-Mat*. While this allows for depth, it limits the generalizability of the findings. Political orientations and party platforms vary significantly across EU member states, and a broader cross-national analysis would strengthen the paper’s claims.
+
+2. **Prompting Language and Bias**:  
+   The authors note that smaller models tend to remain neutral when prompted in English. This raises important questions about language-specific bias and model behavior. However, the paper does not thoroughly explore the implications of prompting in different languages or the potential for translation-induced bias. A more systematic analysis of multilingual prompting could enhance the robustness of the results.
+
+3. **Quantification of Alignment**:  
+   The method for quantifying alignment with political parties is not fully detailed. How exactly are the LLMs’ responses mapped onto party positions? What weighting or normalization is applied? A clearer explanation of the quantification process would improve the reproducibility and validity of the findings.
+
+4. **Sample Size and Model Selection**:  
+   While the paper evaluates popular open-source models, it is unclear whether the selection is representative of the full spectrum of available LLMs. Additionally, the paper does not specify the number of queries or prompts used per model, which affects the statistical reliability of the reported alignments.
+
+---
+
+### **Interpretive and Conceptual Issues**
+
+1. **Attribution of Political Leanings**:  
+   The paper suggests that LLMs exhibit political leanings, but it is unclear whether these reflect the training data, fine-tuning processes, or emergent behaviors. The authors acknowledge that they do not judge the *quality* of these biases, but they do not sufficiently disentangle the sources of political alignment. This ambiguity weakens the paper’s conclusions about the origins of bias.
+
+2. **Overreliance on Performative Prediction**:  
+   While the concept of performative prediction is useful, the paper sometimes leans too heavily on it without adequately distinguishing it from related concepts such as *algorithmic bias* or *media framing*. A more nuanced discussion of how performative prediction differs from or complements these ideas would improve the theoretical contribution.
+
+3. **Implications for Democracy**:  
+   The paper rightly warns about the potential for LLMs to influence electoral outcomes, but it does not offer concrete recommendations for mitigating such risks. What safeguards should be implemented? Should there be regulatory oversight of LLM deployment during election periods? Addressing these questions would make the paper more actionable.
+
+---
+
+### **Ethical and Societal Considerations**
+
+1. **Potential for Misuse**:  
+   The paper acknowledges that LLMs can be used to manipulate public opinion at scale. However, it does not engage deeply with the ethical responsibilities of developers, deployers, and platforms in preventing such misuse. A stronger ethical framework would enhance the paper’s societal relevance.
+
+2. **Transparency and Reproducibility**:  
+   The authors commendably make their evaluation code publicly available. However, the paper would benefit from a more detailed discussion of how others can reproduce and extend the study, including information about prompt templates, data preprocessing, and scoring mechanisms.
+
+---
+
+### **Conclusion**
+
+Overall, *“Assessing Political Bias in Large Language Models”* is a valuable contribution to the growing discourse on AI ethics and the societal impact of LLMs. It raises important questions about the role of AI in democratic processes and provides empirical insights into the political alignment of open-source models. However, the study’s narrow scope, methodological ambiguities, and limited engagement with broader ethical and regulatory issues prevent it from fully realizing its potential. Future work should expand the analysis to more diverse contexts, clarify the mechanisms behind political alignment, and propose concrete measures for ensuring responsible AI deployment in political domains.
+
+---

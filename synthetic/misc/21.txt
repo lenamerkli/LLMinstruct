@@ -1,0 +1,186 @@
+§u§
+Change this code to be used outside a flask environment. Database is stored at `database.sqlite`.
+```
+from dotenv import load_dotenv
+from flask import g
+from os.path import join
+from sqlite3 import connect as sqlite_connect, Connection as SQLite_Connection
+
+
+__all__ = [
+    'database_init',
+    'get_db',
+    'query_db',
+]
+
+
+load_dotenv()
+
+
+def get_db() -> SQLite_Connection:
+    """
+    Gets the database instance
+    :return: a pointer to the database
+    """
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite_connect('database.sqlite')
+    return db
+
+
+def query_db(query, args=(), one=False) -> list | tuple:
+    """
+    Runs a SQL query
+    :param query: the query as a SQL statement
+    :param args: arguments to be inserted into the query
+    :param one: if this function should only return one result
+    :return: the data from the database
+    """
+    conn = get_db()
+    cur = conn.execute(query, args)
+    result = cur.fetchall()
+    conn.commit()
+    cur.close()
+    return (result[0] if result else None) if one else result
+
+
+def database_init(app) -> None:
+    @app.teardown_appcontext
+    def close_connection(exception=None) -> None:  # noqa
+        """
+        destroys the database point
+        :param exception: unused
+        :return:
+        """
+        db = getattr(g, '_database', None)
+        if db is not None:
+            db.close()
+    with app.app_context():
+        with open(join(app.root_path, 'resources/create.sql'), 'r') as f:
+            _create = f.read()
+        _conn = get_db()
+        _conn.executescript(_create)
+        _conn.commit()
+        _conn.close()
+```
+§a§
+Here's the modified code to work outside Flask:
+
+```python
+from dotenv import load_dotenv
+from os import getenv
+from os.path import join, dirname, abspath
+from sqlite3 import connect as sqlite_connect, Connection as SQLite_Connection
+from typing import Optional, Union, List, Tuple, Any
+
+__all__ = [
+    'database_init',
+    'get_db',
+    'query_db',
+    'close_db',
+]
+
+load_dotenv()
+
+# Configuration - can be overridden with DATABASE_PATH environment variable
+DATABASE_PATH = getenv('DATABASE_PATH', 'database.sqlite')
+
+# Module-level database connection
+# Note: This simple approach is not thread-safe. For multi-threaded applications,
+# consider using a connection pool or creating a new connection per thread.
+_db_connection: Optional[SQLite_Connection] = None
+
+def get_db() -> SQLite_Connection:
+    """
+    Gets the database instance. Creates a new connection if one doesn't exist.
+    The connection persists until close_db() is called. This is efficient for
+    multiple operations but note that it's not thread-safe.
+
+    :return: a pointer to the database
+    """
+    global _db_connection
+    if _db_connection is None:
+        _db_connection = sqlite_connect(DATABASE_PATH)
+    return _db_connection
+
+def close_db() -> None:
+    """
+    Closes the database connection if it exists.
+    Call this when you're done with the database to free resources.
+    """
+    global _db_connection
+    if _db_connection is not None:
+        _db_connection.close()
+        _db_connection = None
+
+def query_db(query: str, args: tuple = (), one: bool = False) -> Union[List[Tuple], Optional[Tuple]]:
+    """
+    Runs a SQL query and commits the transaction.
+    Note: This commits after every query, which is suitable for this use case.
+    For read-heavy workloads, consider modifying to commit only on writes.
+
+    :param query: the query as a SQL statement
+    :param args: arguments to be inserted into the query
+    :param one: if this function should only return one result
+    :return: the data from the database
+    """
+    conn = get_db()
+    cur = conn.execute(query, args)
+    result = cur.fetchall()
+    conn.commit()
+    cur.close()
+    return (result[0] if result else None) if one else result
+
+def database_init(schema_path: Optional[str] = None) -> None:
+    """
+    Initializes the database with the schema from the SQL file.
+    :param schema_path: Path to the SQL schema file. If None, uses default location
+                       relative to this module: resources/create.sql
+    """
+    if schema_path is None:
+        # Default: look for resources/create.sql in the same directory as this file
+        schema_path = join(dirname(abspath(__file__)), 'resources', 'create.sql')
+
+    # Close any existing connection to ensure clean initialization
+    close_db()
+
+    conn = get_db()
+    try:
+        with open(schema_path, 'r', encoding='utf-8') as f:
+            _create = f.read()
+        conn.executescript(_create)
+        conn.commit()
+    except FileNotFoundError:
+        raise FileNotFoundError(f"Schema file not found at: {schema_path}")
+    finally:
+        # Close connection after initialization
+        close_db()
+
+
+# Example usage:
+#
+# # Initialize database (run once)
+# database_init()
+#
+# # Use the database
+# results = query_db("SELECT * FROM users")
+# user = query_db("SELECT * FROM users WHERE id = ?", (1,), one=True)
+#
+# # Insert data
+# query_db("INSERT INTO users (name) VALUES (?)", ("Alice",))
+#
+# # Close when done (optional, but recommended)
+# close_db()
+```
+
+### Key Changes:
+
+1. **Removed Flask dependencies**: No more `flask.g` or app context
+2. **Module-level connection**: Replaced Flask's `g._database` with a module variable `_db_connection`
+3. **Explicit close function**: Added `close_db()` for manual resource management since there's no automatic teardown
+4. **Path handling**: Uses `__file__` to locate the schema file relative to this module instead of Flask's `app.root_path`
+5. **Environment variable support**: Database path can be set via `DATABASE_PATH` env var
+6. **Type hints**: Improved with proper `typing` imports for compatibility
+7. **Error handling**: Added explicit `FileNotFoundError` for missing schema file
+
+The API remains nearly identical—just call `database_init()` once at startup and use `query_db()` as before. Call `close_db()` when your application shuts down to free resources.

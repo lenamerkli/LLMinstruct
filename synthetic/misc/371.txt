@@ -1,0 +1,219 @@
+§u§
+```latex
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{xurl}
+\usepackage[version=4]{mhchem}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage[T1]{fontenc}
+
+
+\title{[CH] Zusammenfassung 2025-06-12}
+\author{REDACTED}
+
+
+\begin{document}
+    \maketitle
+    \tableofcontents
+    
+    \bigskip\bigskip
+    
+    \section{Lernziele}
+        \subsection{Allgemeines Chemieverständnis}
+            \begin{itemize}
+                \item Sie können Reaktionsgleichungen aufstellen.
+                \item Sie können aus einer Skelettformel eine Lewisformel und umgekehrt ableiten.
+                \item Sie können Isomere Moleküle erkennen.
+                \item Sie können aus Molekülformel verschiedene Isomere Verbindungen zeichnen.
+                \item Sie können funktionelle Gruppen erkennen und zuordnen: Alkohol, Keton, Carbonsäure, Carbonsäureester und Carbonsäureamid.
+                \item Sie können polare Bindungen zuordnen.
+                \item Sie können Dipol-Moleküle erkennen.
+                \item Sie können die Voraussetzung für die Orientierung und das Einzeichnen von Wasserstoffbrücken anwenden.
+            \end{itemize}
+        \subsection{Grundbegriffe}
+            \begin{itemize}
+                \item Sie können Begriffe beschreiben und zuordnen: Oxidation, Reduktion, Oxidationsmittel, Reduktionsmittel.
+                \item Sie können Vorgänge bei einer Redox-Reaktion auf der Teilchenebene erklären.
+                \item Sie können Unterschiede und Gemeinsamkeiten zur Säure-Base-Reaktionen angeben.
+            \end{itemize}
+        \subsection{Redox-Reihe}
+            \begin{itemize}
+                \item Sie können Stärken von Reduktions- und Oxidationsmittel vergleichen und auf der Ebene der Teilchenebene interpretieren.
+                \item Sie können spontane Redox-Reaktion (S-Stellung) mit der Reihe erkennen.
+                \item Sie können Reaktionen von Metallen gegenüber Wasser und sauren Lösungen interpretieren.
+                \item Sie können Wasser-Moleküle und Hydroxonium-Ionen als Oxidationsmittel erklären und anwenden.
+            \end{itemize}
+        \subsection{Redox-Reaktion}
+            \begin{itemize}
+                \item Sie können Redox-Reaktion als Schema mit Hilfe der Redox-Reihe aufstellen: Oxidation, Reduktion, Teilchen-Gleichung.
+            \end{itemize}
+        \subsection{Oxidationszahlen}
+            \begin{itemize}
+                \item Sie können Oxidationszahlen aus chemischen Formeln bestimmen: Verhältnisformel, Lewisformel oder Skelettformel.
+                \item Sie können chemischer Vorgang mit Hilfe des Konzeptes als Redox-Reaktion identifizieren.
+                \item Sie können Reduktionsmittel und Oxidationsmittel zuordnen.
+            \end{itemize}
+        \subsection{Galvanische Zelle}
+            \begin{itemize}
+                \item Sie können allgemeines Funktionsprinzip einer Batterie erklären	
+                \item Sie können Aufbau und Funktion eines Daniell-Elements zeichnen und erklären.
+                \item Sie können Stromfluss in einer Batterie einzeichnen.
+                \item Sie können Reduktions- und Oxidations-Vorgänge in einer Halbzellen mit Reaktions-Gleichungen erklären.
+                \item Sie können maximale Spannung $\Delta E$ einer Batterie mit der Redox-Reihe angeben.
+                \item Sie können Konstruktion einer eigenen Batterie	
+                \item Sie können eine Batterie auf die drei Grundprinzipien einer galvanischen Zelle hin untersuchen.
+            \end{itemize}
+            
+    \section{Allgemeines Chemieverständnis}
+
+        \subsection{Reaktionsgleichungen}
+            Eine Reaktionsgleichung beschreibt eine chemische Reaktion qualitativ und quantitativ. Sie zeigt die Edukte (Ausgangsstoffe) auf der linken Seite und die Produkte (Endstoffe) auf der rechten. Eine korrekte Reaktionsgleichung muss stöchiometrisch ausgeglichen sein, d.h., die Anzahl der Atome jedes Elements muss auf beiden Seiten identisch sein.
+
+        \subsection{Skelett- und Lewisformeln}
+            \begin{itemize}
+                \item \textbf{Lewisformel:} Zeigt alle Atome eines Moleküls sowie alle Valenzelektronen als Punkte (freie Elektronenpaare) oder Striche (bindende Elektronenpaare).
+                \item \textbf{Skelettformel:} Eine vereinfachte Darstellung, bei der Kohlenstoffatome an Ecken und Enden von Linien liegen. Wasserstoffatome, die an Kohlenstoff gebunden sind, werden aus Gründen der Übersichtlichkeit weggelassen. Man kann von einer Skelettformel auf eine Lewisformel schliessen, indem man die Oktettregel für jedes Kohlenstoffatom mit H-Atomen vervollständigt.
+            \end{itemize}
+            
+        \subsection{Isomerie}
+            Isomere sind Verbindungen, die die gleiche Summenformel, aber eine unterschiedliche Anordnung der Atome (Strukturformel) aufweisen. Aus einer gegebenen Molekülformel wie \ce{C4H10} lassen sich verschiedene Isomere wie n-Butan und Isobutan (2-Methylpropan) zeichnen.
+
+        \subsection{Funktionelle Gruppen}
+            Wichtige funktionelle Gruppen sind:
+            \begin{itemize}
+                \item \textbf{Alkohol:} Enthält eine Hydroxylgruppe (\ce{-OH}).
+                % --- KORRIGIERT --- Verwendung des Mathemodus für generische Formeln
+                \item \textbf{Keton:} Besitzt eine Carbonylgruppe (\ce{C=O}), die von zwei Kohlenstoffatomen flankiert wird ($R\text{-}CO\text{-}R'$).
+                \item \textbf{Carbonsäure:} Enthält eine Carboxylgruppe (\ce{-COOH}).
+                % --- KORRIGIERT --- Verwendung des Mathemodus für generische Formeln
+                \item \textbf{Carbonsäureester:} Entsteht aus einer Reaktion von Carbonsäure und Alkohol ($R\text{-}COO\text{-}R'$).
+                % --- KORRIGIERT --- Verwendung des Mathemodus und korrekte Tiefstellung
+                \item \textbf{Carbonsäureamid:} Enthält eine Amidgruppe ($R\text{-}CO\text{-}NR_2$).
+            \end{itemize}
+
+        \subsection{Polarität und Dipole}
+            \begin{itemize}
+                \item \textbf{Polare Bindung:} Entsteht zwischen zwei Atomen mit einer signifikanten Elektronegativitätsdifferenz. Das Atom mit der höheren Elektronegativität zieht die Bindungselektronen stärker an und erhält eine negative Partialladung ($\delta^-$), das andere eine positive ($\delta^+$).
+                \item \textbf{Dipol-Molekül:} Liegt vor, wenn ein Molekül polare Bindungen aufweist und die räumliche Anordnung der Atome asymmetrisch ist, sodass die Ladungsschwerpunkte nicht zusammenfallen. Ein klassisches Beispiel ist Wasser (\ce{H2O}).
+            \end{itemize}
+
+        \subsection{Wasserstoffbrücken}
+            Wasserstoffbrücken sind starke zwischenmolekulare Kräfte. Die Voraussetzung ist ein Wasserstoffatom, das kovalent an ein stark elektronegatives Atom (N, O oder F) gebunden ist. Dieses positiv polarisierte H-Atom kann eine anziehende Wechselwirkung mit einem freien Elektronenpaar eines benachbarten N-, O- oder F-Atoms eingehen.
+
+    \section{Grundbegriffe der Redox-Chemie}
+
+        \subsection{Definitionen}
+            \begin{itemize}
+                \item \textbf{Oxidation:} Die Abgabe von Elektronen. Die Oxidationszahl des Atoms erhöht sich.
+                \item \textbf{Reduktion:} Die Aufnahme von Elektronen. Die Oxidationszahl des Atoms verringert sich.
+                \item \textbf{Oxidationsmittel (Oxidans):} Ein Stoff, der Elektronen aufnimmt und dabei selbst reduziert wird.
+                \item \textbf{Reduktionsmittel (Reduktans):} Ein Stoff, der Elektronen abgibt und dabei selbst oxidiert wird.
+            \end{itemize}
+
+        \subsection{Vergleich mit Säure-Base-Reaktionen}
+            \textbf{Gemeinsamkeit:} Beides sind Partnerkonzepte. Eine Oxidation findet nie ohne eine Reduktion statt, genauso wie eine Säure nie ohne eine Base reagiert.
+            \textbf{Unterschied:} Bei Redox-Reaktionen werden Elektronen (\ce{e-}) übertragen, bei Säure-Base-Reaktionen werden Protonen (\ce{H+}) übertragen.
+
+    \section{Redox-Reihe}
+
+        \subsection{Stärke von Reduktions- und Oxidationsmitteln}
+            Die Redox-Reihe ordnet Redox-Paare nach ihrem Standardpotential ($E^0$).
+            \begin{itemize}
+                \item Je \textbf{niedriger} (negativer) das Potential, desto stärker ist die reduzierte Form als \textbf{Reduktionsmittel}.
+                \item Je \textbf{höher} (positiver) das Potential, desto stärker ist die oxidierte Form als \textbf{Oxidationsmittel}.
+            \end{itemize}
+
+        \subsection{Spontane Reaktionen (S-Stellung)}
+            Eine Redox-Reaktion läuft spontan ab, wenn das Oxidationsmittel in der Redox-Reihe über dem Reduktionsmittel steht. Grafisch ergibt sich eine "S"-Form, wenn man die Reaktanten und Produkte in der Reihe verbindet.
+
+        \subsection{Reaktionen von Metallen mit Wasser und Säuren}
+            \begin{itemize}
+                \item Unedle Metalle (negatives $E^0$) können mit sauren Lösungen (\ce{H3O+}) reagieren und dabei Wasserstoffgas (\ce{H2}) entwickeln. \ce{H3O+} agiert hier als Oxidationsmittel.
+                \item Sehr unedle Metalle (z.B. Natrium) können sogar direkt mit Wasser (\ce{H2O}) reagieren, welches dann als Oxidationsmittel fungiert.
+            \end{itemize}
+            
+    \section{Redox-Reaktionen aufstellen}
+        Redox-Reaktionen werden durch das Aufstellen von Teilgleichungen für Oxidation und Reduktion formuliert.
+        \begin{enumerate}
+            \item \textbf{Teilgleichungen:} Die Gesamtreaktion in Oxidations- und Reduktions-Halbreaktion aufteilen.
+            \item \textbf{Atome ausgleichen:} Zuerst alle Atome ausser H und O ausgleichen.
+            \item \textbf{Sauerstoff ausgleichen:} Fehlende O-Atome mit \ce{H2O}-Molekülen ergänzen.
+            \item \textbf{Wasserstoff ausgleichen:} Fehlende H-Atome mit \ce{H+}-Ionen (in saurer Lösung) ergänzen.
+            \item \textbf{Ladung ausgleichen:} Die Ladungsbilanz auf beiden Seiten durch Hinzufügen von Elektronen (\ce{e-}) herstellen.
+            \item \textbf{Elektronen anpassen:} Beide Teilgleichungen so multiplizieren, dass die Anzahl der abgegebenen und aufgenommenen Elektronen identisch ist.
+            \item \textbf{Gesamtgleichung bilden:} Die beiden Teilgleichungen addieren und kürzen.
+        \end{enumerate}
+
+    \section{Oxidationszahlen (OZ)}
+
+        \subsection{Bestimmung und Anwendung}
+            Die Oxidationszahl ist eine formale Ladung eines Atoms in einer Verbindung. Eine Reaktion ist eine Redox-Reaktion, wenn sich die Oxidationszahlen ändern.
+            \begin{itemize}
+                \item Der Stoff, dessen OZ \textbf{steigt}, wird oxidiert und ist das \textbf{Reduktionsmittel}.
+                \item Der Stoff, dessen OZ \textbf{sinkt}, wird reduziert und ist das \textbf{Oxidationsmittel}.
+            \end{itemize}
+
+    \section{Galvanische Zelle (Batterie)}
+
+        \subsection{Allgemeines Funktionsprinzip}
+            Eine galvanische Zelle wandelt die chemische Energie einer spontanen Redox-Reaktion in elektrische Energie um. Sie besteht aus zwei räumlich getrennten Halbzellen, die durch einen äusseren Stromkreis und eine Salzbrücke verbunden sind.
+
+        \subsection{Das Daniell-Element}
+            Dies ist ein klassisches Beispiel einer galvanischen Zelle, bestehend aus einer Zink- und einer Kupfer-Halbzelle.
+            \begin{itemize}
+                \item \textbf{Anode (Minuspol):} Die Zink-Elektrode. Hier findet die Oxidation statt.
+                \[ \ce{Zn -> Zn^2+ + 2 e-} \]
+                \item \textbf{Kathode (Pluspol):} Die Kupfer-Elektrode. Hier findet die Reduktion statt.
+                \[ \ce{Cu^2+ + 2 e- -> Cu} \]
+            \end{itemize}
+            Die Elektronen fliessen im äusseren Leiter von der Anode zur Kathode. Die Salzbrücke sorgt für den Ladungsausgleich zwischen den Halbzellen.
+            
+        \subsection{Spannung einer Batterie}
+            Die maximale Spannung ($\Delta E$), die eine Batterie liefern kann, wird aus der Differenz der Standardpotentiale der beiden Halbzellen berechnet:
+            \[ \Delta E = E^0(\text{Kathode}) - E^0(\text{Anode}) \]
+    
+            
+\end{document}
+```
+Was ist $E^{0}$?
+§a§
+$E^{0}$ bezeichnet das **Standardelektrodenpotential** (auch *Standardreduktionspotential* genannt). Es ist eine **messbare Größe** (Einheit: Volt, V), die die **Tendenz einer chemischen Spezies angibt, Elektronen aufzunehmen** (reduziert zu werden). 
+
+### Wichtige Eigenschaften:
+1. **Referenzpunkt**:  
+   Gemessen unter Standardbedingungen (25°C, 1 mol/L Konzentration, 1 bar Druck) relativ zur **Standardwasserstoffelektrode** (SHE, definiert als 0 V).
+
+2. **Aussagekraft**:  
+   - Ein **positives** $E^{0}$ bedeutet:  
+     Die Spezies hat eine **hohe Tendenz, reduziert zu werden** (starkes Oxidationsmittel).  
+     *Beispiel:* $\ce{Cu^{2+} + 2e^- -> Cu}$ mit $E^{0} = +0.34\,\text{V}$.
+   - Ein **negatives** $E^{0}$ bedeutet:  
+     Die Spezies hat eine **geringe Tendenz, reduziert zu werden** (starkes Reduktionsmittel in reduzierter Form).  
+     *Beispiel:* $\ce{Zn^{2+} + 2e^- -> Zn}$ mit $E^{0} = -0.76\,\text{V}$.
+
+3. **Berechnung der Batteriespannung**:  
+   Die maximale Spannung $\Delta E$ einer galvanischen Zelle (z. B. Daniell-Element) ergibt sich aus:  
+   \[
+   \Delta E = E^{0}(\text{Kathode}) - E^{0}(\text{Anode})
+   \]
+   - **Kathode**: Reduktion (höheres $E^{0}$)  
+   - **Anode**: Oxidation (niedrigeres $E^{0}$)  
+   *Beispiel Daniell-Element:*  
+   $\Delta E = E^{0}(\ce{Cu^{2+}/Cu}) - E^{0}(\ce{Zn^{2+}/Zn}) = +0.34\,\text{V} - (-0.76\,\text{V}) = \bf{1.10\,\text{V}}$.
+
+### Warum ist $E^{0}$ wichtig?
+- **Vorhersage von Redox-Reaktionen**:  
+  Spontane Reaktionen laufen ab, wenn $\Delta E > 0$ (Oxidationsmittel mit höherem $E^{0}$ reagiert mit Reduktionsmittel mit niedrigerem $E^{0}$).
+- **Stärkevergleich**:  
+  Je **größer** $E^{0}$, desto stärker ist das **Oxidationsmittel** (oxidierte Form).  
+  Je **kleiner** $E^{0}$, desto stärker ist das **Reduktionsmittel** (reduzierte Form).
+
+> **Zusammenfassung**: $E^{0}$ quantifiziert die "Elektronenaffinität" eines Redox-Paares unter Standardbedingungen und ist fundamental für das Verständnis von Batterien, Korrosion und elektrochemischen Prozessen.

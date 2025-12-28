@@ -1,0 +1,198 @@
+§u§
+```latex
+\subsection{Gentechnik: Forensik, PCR}
+\begin{itemize}
+    \item Sie können erklären, welche DNA-Bereiche für einen genetischen Fingerabdruck grundsätzlich geeignet sind.
+    \item Sie können erläutern, inwiefern die Analyse repetitiver Sequenzen bei der Identifizierung von Individuen helfen kann.
+    \item Sie können in eigenen Worten beschreiben was `STR' bedeutet.
+    \item Sie können begründen, weshalb STR-Regionen für die eindeutige Identifizierung besonders aussagekräftig sind.
+    \item Sie können erläutern, weshalb DNA vor der Analyse vervielfältigt werden muss (PCR).
+    \item Sie können den genauen Ablauf und die konkreten Komponenten einer PCR beschreiben oder skizzieren.
+    \item Sie können die Schritte der PCR (Denaturierung, Hybridisierung und Polymerisation) korrekt wiedergeben.
+    \item Sie können für ein gegebenes DNA-Segment Primer für die PCR entwerfen oder vorhersagen, wo ein gegebener Primer an die DNA bindet.
+    \item Sie können erklären, wie durch die Elektrophorese Längenunterschiede in DNA-Fragmenten sichtbar gemacht werden und wie diese interpretiert werden.
+    \item Sie können vergleichend erklären, wie die klassische Gelelektrophorese und die Kapillarelektrophorese funktionieren und sich unterscheiden.
+    \item Sie können STR-Muster (Banden oder Peaks) interpretieren (inkl. Bedeutung von Lage und Höhe der Peaks sowie Achsenbeschriftung) und daraus fundierte Aussagen zur Identifikation oder zu Verwandtschaftsverhältnissen ableiten.
+\end{itemize}
+```
+Erkläre mir den Stoff, welche ich für das Erfüllen dieser Lernziele benötige.
+§a§
+## Gentechnik: Forensik, PCR – Stoffübersicht zu deinen Lernzielen
+
+### 1) Welche DNA-Bereiche eignen sich für den genetischen Fingerabdruck?
+Für einen genetischen Fingerabdruck braucht man DNA-Abschnitte, die…
+
+- **zwischen Individuen stark variieren** (hohe Polymorphie),
+- **innerhalb eines Individuums stabil** sind (in allen Körperzellen gleich),
+- **kurz genug** sind, um auch aus teilweise abgebauter DNA noch analysiert werden zu können,
+- **neutral** sind (meist nicht-kodierend), damit sie nicht stark durch Selektion “gleichgezogen” werden.
+
+Typisch geeignet sind **nicht-kodierende repetitive Regionen**, besonders **STRs** (siehe unten). Ungeeignet wären z.B. hochkonservierte Gene (zu wenig Variation) oder Regionen mit extrem hoher Mutationsrate/Instabilität (zu unzuverlässig).
+
+---
+
+### 2) Warum helfen repetitive Sequenzen bei der Identifizierung?
+**Repetitive Sequenzen** sind Abschnitte, in denen kurze Motive mehrfach hintereinander vorkommen, z.B. $GATA$ wiederholt sich $n$-mal.
+
+- Die **Anzahl der Wiederholungen $n$** unterscheidet sich häufig zwischen Personen.
+- Dadurch entstehen **DNA-Fragmente unterschiedlicher Länge**, wenn man genau diesen Abschnitt vervielfältigt.
+- Misst man diese Längen, erhält man ein **Muster**, das sehr individuell ist—vor allem, wenn man **viele verschiedene STR-Loci** kombiniert.
+
+---
+
+### 3) Was bedeutet STR?
+**STR** = **Short Tandem Repeat**  
+Auf Deutsch: **kurze, direkt hintereinander wiederholte Sequenzmotive**.
+
+- “short”: typischerweise **2–6 Basen** pro Wiederholungseinheit
+- “tandem”: die Wiederholungen liegen **direkt nebeneinander**
+- “repeat”: das Motiv kommt **mehrfach** vor
+
+Beispiel (schematisch):  
+$$\text{…}-(\text{GATA})_{8}-\text{…}$$
+
+---
+
+### 4) Warum sind STR-Regionen besonders aussagekräftig?
+STRs sind für Forensik ideal, weil:
+
+- **sehr viele Allele** existieren (viele mögliche Wiederholungszahlen) $\rightarrow$ hohe Unterscheidungskraft
+- **kurze Fragmentlängen** $\rightarrow$ gut analysierbar auch bei degradierter DNA
+- **Codominanz**: du siehst bei diploiden Organismen **beide Allele** (mütterlich + väterlich) $\rightarrow$ wichtig für Identifikation und Verwandtschaft
+- **Kombination vieler Loci**: Die Wahrscheinlichkeit, dass zwei nicht verwandte Personen zufällig dasselbe Profil haben, wird extrem klein.
+
+---
+
+### 5) Warum muss DNA vor der Analyse vervielfältigt werden? (PCR)
+In forensischen Proben ist DNA oft…
+
+- **sehr wenig** vorhanden (Spuren: wenige Zellen),
+- **teilweise abgebaut**,
+- **gemischt** (mehrere Personen).
+
+Messmethoden (Elektrophorese/Detektion) brauchen eine **ausreichende Menge** an DNA. PCR macht aus wenig Startmaterial **millionen- bis milliardenfache Kopien** eines Zielabschnitts, damit man die Längen/Allele zuverlässig messen kann.
+
+---
+
+### 6) PCR: Ablauf und konkrete Komponenten
+**PCR (Polymerase Chain Reaction)** ist eine zyklische DNA-Vervielfältigung.
+
+**Komponenten:**
+- **Template-DNA** (die DNA mit dem Zielbereich)
+- **2 Primer**: Forward- und Reverse-Primer (definieren Start/Ende des amplifizierten Abschnitts)
+- **DNA-Polymerase** (hitzestabil, z.B. Taq oder High-Fidelity-Polymerase)
+- **dNTPs** (A, T, G, C als Bausteine)
+- **Puffer** + **$Mg^{2+}$** (Polymerase benötigt Magnesium)
+- Wasser; oft zusätzlich Farbstoff/Detektionsmarker (bei STR-Kits meist fluoreszenzmarkierte Primer)
+
+**Prinzip:** Pro Zyklus verdoppelt sich die Ziel-DNA idealisiert, also nach $n$ Zyklen etwa $2^n$-fach (in der Praxis etwas weniger).
+
+---
+
+### 7) Die drei PCR-Schritte korrekt wiedergeben
+Jeder Zyklus besteht aus:
+
+1. **Denaturierung** (ca. $94–98^\circ C$)  
+   Doppelstrang-DNA $\rightarrow$ Einzelstränge
+
+2. **Hybridisierung / Annealing** (ca. $50–65^\circ C$, primerabhängig)  
+   Primer binden komplementär an die Zielstellen
+
+3. **Polymerisation / Elongation** (oft $72^\circ C$ bei Taq)  
+   Polymerase verlängert Primer in $5'\rightarrow 3'$-Richtung, baut dNTPs ein
+
+Zusätzlich gibt es meist:
+- **Initiale Denaturierung** am Anfang
+- **Finale Elongation** am Ende
+
+---
+
+### 8) Primer entwerfen oder Bindestellen vorhersagen
+Du musst dafür sicher beherrschen:
+
+- **Basenpaarung**: $A-T$, $G-C$
+- **Strangrichtung**: DNA-Stränge sind antiparallel  
+  Ein Strang läuft $5'\rightarrow 3'$, der Gegenstrang $3'\rightarrow 5'$
+- Polymerase verlängert **immer $5'\rightarrow 3'$**, daher müssen Primer so sitzen, dass sie **in Richtung des zu amplifizierenden Abschnitts** verlängert werden.
+
+**Allgemeines Design-Wissen (typisch für Schule/Grundkurs):**
+- Primer sind oft **~18–25 Nukleotide** lang
+- sollten **einzigartig** binden (nicht an vielen Stellen)
+- ähnliche **Schmelztemperatur $T_m$** (damit beide bei gleicher Annealing-Temperatur funktionieren)
+- keine starken Selbstkomplementaritäten (sonst Primer-Dimere/Haarnadeln)
+
+**Bindestelle vorhersagen:**
+- Ein Primer bindet an den **komplementären** Abschnitt eines Strangs.
+- Wenn dir ein Primer als Sequenz $5'\rightarrow 3'$ gegeben ist, suchst du in der Ziel-DNA die **komplementäre Sequenz in Gegenrichtung** (Reverse Complement), um die Bindestelle eindeutig zu finden.
+
+---
+
+### 9) Elektrophorese: Längenunterschiede sichtbar machen und interpretieren
+**Grundprinzip:**
+- DNA ist **negativ geladen** (Phosphat-Rückgrat).
+- Im elektrischen Feld wandert DNA zur **Anode (+)**.
+- Ein Gel/Polymer wirkt als **Sieb**: **kurze Fragmente wandern schneller/weiter** als lange.
+
+**Interpretation:**
+- **Position** (Band im Gel oder Peak bei Kapillarelektrophorese) $\rightarrow$ **Fragmentlänge** in Basenpaaren (bp) bzw. Allel (Wiederholungszahl)
+- **Intensität/Höhe** $\rightarrow$ grob: **Menge** des Fragments (bei STRs z.B. ein Allel stärker vertreten; wichtig bei Mischspuren)
+
+---
+
+### 10) Gelelektrophorese vs. Kapillarelektrophorese (Vergleich)
+**Klassische Gelelektrophorese:**
+- DNA läuft durch ein **Gel** (Agarose/Polyacrylamid)
+- Ergebnis: **Banden** (sichtbar durch Färbung)
+- eher “grober” in der Auflösung (für sehr kleine STR-Unterschiede braucht man oft Polyacrylamid oder spezielle Systeme)
+- mehr Handarbeit, langsamer, weniger automatisiert
+
+**Kapillarelektrophorese (CE):**
+- DNA läuft durch eine **dünne Kapillare** mit Polymer
+- Detektion meist über **Fluoreszenz** (Primer/Fragmente markiert)
+- Ergebnis: **Elektropherogramm** mit **Peaks**
+- sehr **hohe Auflösung** (auch 1-bp-Unterschiede), schnell, gut automatisierbar
+- Standard in moderner Forensik für STR-Profile
+
+---
+
+### 11) STR-Muster (Banden/Peaks) interpretieren: Lage, Höhe, Achsen; Identifikation/Verwandtschaft
+**Achsensystem (typisch CE-Elektropherogramm):**
+- $x$-Achse: **Fragmentgröße** (bp) oder **Allel-Nummer** (Wiederholungszahl)
+- $y$-Achse: **Signalstärke** (relative Fluoreszenz, z.B. RFU)
+
+**Was bedeutet…**
+- **Peak-Lage**: welches STR-Allel (z.B. Wiederholungszahl $n$)
+- **Peak-Höhe**: wie viel Produkt dieses Allels detektiert wurde  
+  (bei Einzelperson oft zwei ähnliche Peaks bei Heterozygotie; bei Mischspuren können mehrere Peaks auftreten)
+
+**Genotyp pro STR-Locus:**
+- **homozygot**: ein Peak/Band (z.B. Allel 12/12)
+- **heterozygot**: zwei Peaks/Banden (z.B. 10/14)
+
+**Identifikation:**
+- Man vergleicht das STR-Profil einer Spur mit einer Referenz.
+- Übereinstimmung über viele Loci $\rightarrow$ sehr starke Evidenz (statistisch abgesichert über Profilhäufigkeiten).
+
+**Verwandtschaft (Grundmuster):**
+- Ein Kind hat pro Locus **ein Allel von der Mutter, eins vom Vater**.
+- In Vaterschaftstests prüft man, ob die “nicht-mütterlichen” Allele des Kindes beim mutmaßlichen Vater vorkommen.
+- Je mehr Loci passen, desto stärker die Aussage.
+
+**Wichtige Stolpersteine (oft Teil der Interpretation):**
+- **Stutter-Peaks** (PCR-Artefakte bei STRs, kleine Nebenpeaks meist eine Wiederholung kürzer)
+- **Allelic dropout** (bei wenig DNA wird ein Allel nicht amplifiziert)
+- **Mischspuren** (mehr als 2 Peaks pro Locus möglich)
+
+---
+
+## Wenn du willst: Lerncheckliste als “Was muss ich können?”
+- STRs definieren und erklären, warum sie variabel sind.
+- PCR erklären: Zweck, Komponenten, 3 Schritte, Richtung $5'\rightarrow 3'$.
+- Primer: Komplementarität + Orientierung + Bindestellen finden.
+- Elektrophorese: warum DNA wandert, warum kurze schneller sind.
+- Gel vs. Kapillare: Ergebnisform (Banden vs Peaks) + Auflösung/Automatisierung.
+- STR-Profile lesen: Achsen, Peak-Lage/Höhe, 1 Person vs Mischspur, Kind-Eltern-Regel.
+
+---
+
+Wenn du mir sagst, ob du **Gymnasium (Bio LK/ GK)** oder **Berufsbildung/Uni-Einstieg** machst, und ob du eher **Bandenbilder** oder **Elektropherogramme** in Aufgaben bekommst, kann ich dir das als prüfungsnahe Zusammenfassung mit typischen Aufgabenformaten aufbauen.

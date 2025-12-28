@@ -1,0 +1,71 @@
+§u§
+Simple inline table in latex
+§a§
+Here are several simple ways to create an **inline table** in LaTeX (i.e., a small table that appears within a paragraph of text rather than floating).
+
+### Method 1: Using `\small` + `tabular` inside a paragraph (most common)
+
+```latex
+Here is an inline table:
+{\small
+\begin{tabular}{||c|c|c||}
+\hline
+Year & Temp (°C) & Rainfall (mm) \\
+\hline\hline
+2020 & 15.2 & 820 \\
+2021 & 15.8 & 790 \\
+2022 & 16.1 & 850 \\
+\hline
+\end{tabular}
+}
+that shows the trend.
+```
+
+Result: The table appears right inside the sentence, no floating, no caption, no numbering.
+
+### Method 2: Even smaller and truly inline (no line breaks)
+
+```latex
+The results are
+\begin{tabular}{c|c@{\ }c}
+  & \textbf{Mean} & \textbf{SD} \\[2pt]
+A & 45.3 & 3.2 \\
+B & 48.1 & 2.9
+\end{tabular}
+and show a clear difference.
+```
+
+### Method 3: Using `inline` option with `float` package (prevents floating)
+
+```latex
+\usepackage{float}  % in preamble
+
+The summary is shown in Table~\ref{tab:inline}:
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{lcc}
+\toprule
+Method & Accuracy & Time (s) \\
+\midrule
+SVM    & 92.3\%   & 12.4 \\
+RF     & 93.1\%   & 8.7  \\
+\bottomrule
+\end{tabular}
+\caption{Small inline comparison}\label{tab:inline}
+\end{table}
+with random forest performing best.
+```
+
+(The `[H]` from the `float` package forces the table to stay exactly where you place it.)
+
+### Method 4: One-liner with `array` (very compact)
+
+```latex
+Results: $\begin{array}{c|c}
+\text{Group} & \text{Score} \\ \hline
+X & 87 \\ Y & 91
+\end{array}$
+```
+
+Use the first or second method for most “inline table” needs — they’re simple, don’t require extra packages, and stay perfectly inside the paragraph.

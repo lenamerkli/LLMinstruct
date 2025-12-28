@@ -1,0 +1,37 @@
+§u§
+Geben Sie die Stammfunktion von $f(x) = \sqrt{5x}$ an.
+§a§
+Ich bestimme die Stammfunktion von $f(x) = \sqrt{5x}$.
+
+## Umformung der Funktion
+
+Zunächst schreibe ich die Funktion in Potenzschreibweise um:
+$$f(x) = \sqrt{5x} = (5x)^{\frac{1}{2}}$$
+
+## Integration mit Substitution
+
+Ich verwende die Substitutionsregel:
+- Setze $u = 5x$
+- Dann ist $\frac{du}{dx} = 5$, also $dx = \frac{1}{5}du$
+
+$$\int (5x)^{\frac{1}{2}} \, dx = \int u^{\frac{1}{2}} \cdot \frac{1}{5} \, du$$
+
+## Anwendung der Potenzregel
+
+$$= \frac{1}{5} \cdot \frac{u^{\frac{3}{2}}}{\frac{3}{2}} = \frac{1}{5} \cdot \frac{2}{3} \cdot u^{\frac{3}{2}}$$
+
+## Rücksubstitution
+
+$$= \frac{2}{15} \cdot (5x)^{\frac{3}{2}} + C$$
+
+## Überprüfung durch Ableitung
+
+$$F'(x) = \frac{2}{15} \cdot \frac{3}{2} \cdot (5x)^{\frac{1}{2}} \cdot 5 = \frac{2}{15} \cdot \frac{15}{2} \cdot \sqrt{5x} = \sqrt{5x}$$ ✓
+
+## Antwort
+
+Die Stammfunktion lautet:
+$$\boxed{F(x) = \frac{2}{15}(5x)^{\frac{3}{2}} + C}$$
+
+Alternative Schreibweise:
+$$F(x) = \frac{2\sqrt{5}}{3} \cdot x^{\frac{3}{2}} + C$$

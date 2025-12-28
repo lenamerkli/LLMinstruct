@@ -1,0 +1,53 @@
+§u§
+What is the 2025 Swiss e-ID proposal?
+§a§
+### Swiss e-ID 2025 Proposal: Key Information  
+
+As of **May 2024**, Switzerland's revised e-ID system is advancing toward a **2025 implementation** following the rejection of the initial proposal in a 2021 referendum. Here's a summary based on official sources:  
+
+#### 1. **Background & Legal Framework**  
+   - The **Federal Act on Electronic Identification Services (e-ID Act)** passed Parliament in December 2023 and was formally adopted in 2024.  
+   - It replaces the 2021 private-sector-led proposal, shifting responsibility to the **Swiss Confederation** (federal government) to ensure trust and security.  
+   - The law establishes a **state-regulated framework**, with the Confederation overseeing accreditation of private **"Identity Service Providers" (IdSPs)**.  
+   
+#### 2. **Core Principles**  
+   - **State-Issued & Free of Charge**:  
+     - The federal government issues the core e-ID (minimal dataset: name, date of birth, unique identifier).  
+     - Basic e-ID services are **free**; optional advanced features (e.g., digital signatures) may incur fees.  
+   - **Privacy by Design**:  
+     - Users control what data to share with third parties (e.g., banks, government portals).  
+     - Identity verification requires explicit consent.  
+   - **Security**:  
+     - IdSPs must meet strict technical/security standards accredited by the Confederation.  
+     - Systems use advanced encryption and adhere to ISO 27001 standards.  
+
+#### 3. **Features & Use Cases**  
+   - **Key Features**:  
+     - Secure login for online services (e.g., tax filings, healthcare, banking).  
+     - Age verification without revealing full identity.  
+     - Integration with the **SwissID** ecosystem (existing digital authentication platform).  
+   - **Access**:  
+     - Via smartphone apps (*likely managed by accredited IdSPs*).  
+     - Supported on iOS/Android; no physical card planned.  
+
+#### 4. **Timeline & Next Steps**  
+   - **Preparatory Phase (2024)**:  
+     - Drafting of implementing ordinances (technical standards, accreditation rules).  
+     - IdSP accreditation process opens late 2024.  
+   - **Expected Launch**:  
+     - Operational by **late 2025**, pending final regulatory approval.  
+   - **Referendum Avoided**:  
+     - No referendum challenged the 2023 law, solidifying its adoption.  
+
+#### 5. **Controversies & Revisions from 2021**  
+   - **Key Changes vs. 2021 Proposal**:  
+     | **Aspect**         | **2021 Proposal**                 | **2025 Proposal**                     |  
+     |--------------------|-----------------------------------|---------------------------------------|  
+     | **Issuer**         | Private companies                 | Swiss Confederation                   |  
+     | **Data Control**   | Companies managed user data       | State issues core IDs; minimal data   |  
+     | **Cost**           | Fee-based model                   | Free for basic use                    |  
+   - **Public Concerns Addressed**:  
+     - Enhanced state oversight mitigates risks of corporate data exploitation.  
+     - Stronger GDPR-like data protection guarantees.  
+
+For updates beyond 2024, monitor **fedlex.admin.ch** (Swiss federal legislation portal) or the FOJ. The system aims to position Switzerland as a leader in secure digital identity internationally.

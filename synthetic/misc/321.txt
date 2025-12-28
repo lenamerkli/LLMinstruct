@@ -1,0 +1,15 @@
+§u§
+def ask_judge(judge: LLaMaCPP, question: str, answer_options: t.List[str], max_answers: int = 1) -> str:
+    if max_answers > len(answer_options):
+        max_answers = len(answer_options)
+    answer_sets = []
+    # loop through all subsets of acceptable answers and save them to answer_sets using answer_sets.append(f"option1\noption2\n...")
+§a§
+```python
+    # Generate every subset of `answer_options` whose size is ≤ `max_answers`
+    from itertools import chain, combinations
+
+    for subset_size in range(1, max_answers + 1):
+        for subset in combinations(answer_options, subset_size):
+            answer_sets.append("\n".join(subset))
+```

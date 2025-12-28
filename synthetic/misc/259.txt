@@ -1,0 +1,58 @@
+§u§
+Wie sött ech es Gsetzt in biblatex zitiere?
+§a§
+Am einfachste zitierscht Gsetze in `biblatex`, indem du entweder den speziellen Typ `@legislation` (falls dini Style das unterstützt) oder ersatzwiis `@misc` oder `@online` bruuchsch und d’gesetzestypische Angabe in Felder wie `title`, `note` bzw. `howpublished` und `year`/`date` packsch. 
+
+## Basis: Geeignete Entry-Typen
+
+- `@legislation`: In der `biblatex`-Dokumentation isch das als Typ für „Laws, bills, legislative proposals, …“ vorgseh; Standard-Styles behandle ihn aber meist wie `@misc`.   
+- `@misc`: Universeller Typ, wenn din Stil `@legislation` nöd speziell unterstützt; du chasch mit `title`, `year`, `note` usw. alles Wichtige abdecke.   
+- `@online`: Sinnvoll, wenn du explizit uf e Online-Fassung vom Gsetz (Amtliche Sammlung, Systematische Sammlung, Rechtsinformationssystem, etc.) verweise wosch und e URL hesch. 
+
+## Typische .bib-Einträg (schematisch)
+
+Angenomme, du wotsch z. B. s „Zivilgesetzbuch (ZGB)“ zitiere:
+
+- Mit `@legislation`:
+
+```bibtex
+@legislation{zgb,
+  title   = {Zivilgesetzbuch (ZGB)},
+  date    = {1907-12-10},
+  note    = {SR 210},
+}
+```
+
+- Alternativ mit `@misc`:
+
+```bibtex
+@misc{zgb,
+  title   = {Zivilgesetzbuch (ZGB)},
+  year    = {1907},
+  note    = {SR 210},
+}
+```
+
+- Falls Online-Version wichtig isch:
+
+```bibtex
+@online{zgb,
+  title   = {Zivilgesetzbuch (ZGB)},
+  year    = {1907},
+  note    = {SR 210},
+  url     = {https://www.fedlex.admin.ch/de/cc/210},
+  urldate = {2025-01-01},
+}
+```
+
+Die genaue Form (z. B. ob „SR 210“ oder „BGBl. I S. …“) richtet sich nach dim juristische Zitiestil (Schweiz, Deutschland, Bluebook, APA, usw.) und em `biblatex`-Stil, wo du ladsch.
+
+## Im Text zitieren
+
+Im Dokument bruuchsch du denn ganz normal `\cite{zgb}` bzw. `\parencite{zgb}` oder `\footcite{zgb}`, je nachdem, weli `biblatex`-Citation-Commands din Stil vorgseht. 
+
+## Spezialisierte juristische Styles
+
+Für juristische Arbeit lohnen sich spezialisierte `biblatex`-Styles (z. B. `biblatex-jura`, `biblatex-apa` mit Legal-Support), wo zusätzliche Typä wie `@jurisdiction` bzw. spezifisch formatierte `@legislation`-Angabe unterstütze und d’Formatierig für Gsetze automatisch anpasset. 
+
+Wenn du magst, chasch e konkrete Norm (z. B. „§ 823 BGB“ oder „Art. 28 ZGB“) nenne, denn chamer zäme e ganz konkreten `.bib`-Eintrag für dine Fall baue.

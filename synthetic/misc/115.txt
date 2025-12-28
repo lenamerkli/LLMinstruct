@@ -1,0 +1,168 @@
+§u§
+Erkläre mir, wie ich die Stammfunktion von einer Funktion erhalten kann.
+§a§
+Natürlich! Ich erkläre dir Schritt für Schritt, wie du die **Stammfunktion** einer Funktion findest. Dazu brauchst du Grundkenntnisse der **Integralrechnung** bzw. **Differentialrechnung**.
+
+---
+
+## 🔍 Was ist eine Stammfunktion?
+
+Eine **Stammfunktion** \( F(x) \) einer Funktion \( f(x) \) ist eine Funktion, deren **Ableitung** wieder \( f(x) \) ergibt:
+
+\[
+F'(x) = f(x)
+\]
+
+Oder anders gesagt: Wenn du \( f(x) \) **integrierst**, bekommst du \( F(x) \) – also:
+
+\[
+F(x) = \int f(x) \, dx
+\]
+
+Die Stammfunktion ist **nicht eindeutig**, weil du zu jeder Funktion eine Konstante \( C \) addieren kannst:
+
+\[
+F(x) = \int f(x) \, dx = \text{(eine Stammfunktion)} + C
+\]
+
+---
+
+## 🛠️ Wie finde ich die Stammfunktion?
+
+Hier sind ein paar Grundregeln zum Integrieren.
+
+### 1. Potenzregel:
+
+Für \( f(x) = x^n \), mit \( n \ne -1 \):
+\[
+\int x^n \, dx = \frac{x^{n+1}}{n+1} + C
+\]
+
+**Beispiel:**
+\[
+\int x^2 \, dx = \frac{x^3}{3} + C
+\]
+
+---
+
+### 2. Faktorregel:
+
+Ein konstanter Faktor (z. B. eine Zahl) kann beim Integrieren **nach vorne gezogen** werden:
+
+\[
+\int a \cdot f(x)\, dx = a \cdot \int f(x) \, dx
+\]
+
+**Beispiel:**
+\[
+\int 5x^3 \, dx = 5 \cdot \int x^3 \, dx = 5 \cdot \frac{x^4}{4} = \frac{5x^4}{4} + C
+\]
+
+---
+
+### 3. Summenregel:
+
+Du kannst Summe oder Differenz von Funktionen **einzeln integrieren**:
+
+\[
+\int (f(x) + g(x)) \, dx = \int f(x) \, dx + \int g(x) \, dx
+\]
+
+---
+
+## 📦 Wichtige Stammfunktionen (Merken!)
+
+| Funktion \( f(x) \)                 | Stammfunktion \( F(x) \)                          |
+|-------------------------------------|----------------------------------------------------|
+| \( x^n \) (mit \( n \ne -1 \))     | \( \frac{x^{n+1}}{n+1} + C \)                      |
+| \( \frac{1}{x} \)                  | \( \ln|x| + C \)                                   |
+| \( e^x \)                          | \( e^x + C \)                                      |
+| \( a^x \)                          | \( \frac{a^x}{\ln a} + C \), \( a > 0, a \ne 1 \)  |
+| \( \sin x \)                       | \( -\cos x + C \)                                  |
+| \( \cos x \)                       | \( \sin x + C \)                                   |
+
+---
+
+## 📘 Beispiel zum Üben:
+
+### Beispiel:
+
+Finde die Stammfunktion von:  
+\[
+f(x) = 3x^2 + 4x - 7
+\]
+
+### Lösung:
+
+Wende die Potenzregel auf jedes Glied einzeln an:
+
+\[
+\int (3x^2 + 4x - 7)\, dx = 3 \cdot \int x^2\, dx + 4 \cdot \int x\, dx - 7 \cdot \int 1\, dx
+\]
+
+\[
+= 3 \cdot \frac{x^3}{3} + 4 \cdot \frac{x^2}{2} - 7x + C
+\]
+
+\[
+= x^3 + 2x^2 - 7x + C
+\]
+
+---
+
+## ✅ Zusammenfassung
+
+- Die **Stammfunktion** ist das **unbestimmte Integral** einer Funktion.
+- Du gehst quasi **rückwärts zur Ableitung**.
+- Es gibt **Integrationsregeln**, z. B. die Potenzregel, Summenregel, Faktorregel.
+- Immer **die Integrationskonstante \( C \)** anhängen!
+
+---
+
+Wenn du möchtest, kann ich dir auch speziellere Fälle zeigen (wie **Integration durch Substitution** oder **partielle Integration**) oder weitere Beispiele mit dir durchrechnen. Sag einfach Bescheid! 😊
+§u§
+Was ist die Stammfunktion von $\frac{1}{x^2}$?
+§a§
+Die Stammfunktion (das unbestimmte Integral) von  
+
+\[
+f(x)=\frac{1}{x^{2}}=x^{-2}
+\]
+
+bestimmst du, indem du die **Potenzregel** für Integrale anwendest.
+
+### 1. Potenzregel für das Integral
+Für eine Potenz \(x^{n}\) mit \(n\neq -1\) gilt
+
+\[
+\int x^{n}\,dx=\frac{x^{\,n+1}}{n+1}+C .
+\]
+
+### 2. Auf \(x^{-2}\) anwenden
+Hier ist \(n=-2\). Setze das in die Regel ein:
+
+\[
+\int x^{-2}\,dx=\frac{x^{-2+1}}{-2+1}+C
+               =\frac{x^{-1}}{-1}+C
+               =-\,x^{-1}+C.
+\]
+
+### 3. Zurück in die ursprüngliche Schreibweise
+\(x^{-1}= \dfrac{1}{x}\). Damit erhalten wir
+
+\[
+\boxed{\displaystyle \int \frac{1}{x^{2}}\,dx = -\frac{1}{x}+C }.
+\]
+
+---
+
+#### Hinweis zum Definitionsbereich
+Die Funktion \(\frac{1}{x^{2}}\) ist nur für \(x\neq 0\) definiert. Deshalb gilt die Stammfunktion ebenfalls nur auf den beiden Intervalle \((-\infty,0)\) bzw. \((0,\infty)\). Auf jedem dieser Intervalle kann man das additive Konstante‑\(C\) beliebig wählen (es kann sogar unterschiedlich sein, wenn man die Stammfunktion Stückweise definiert).
+
+---
+
+**Kurzfassung**
+
+\[
+\int \frac{1}{x^{2}}\,dx = -\frac{1}{x}+C,\qquad x\neq 0.
+\]

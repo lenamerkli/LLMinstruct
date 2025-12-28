@@ -1,0 +1,199 @@
+§u§
+```latex
+\subsection{Gentechnik: transgene Organismen}
+\begin{itemize}
+    \item Sie können den grundlegenden Ablauf der Herstellung eines transgenen Organismus schrittweise und nachvollziehbar aufzeigen.
+    \item Sie können alle Teilschritte (Isolierung, Vektoren, Restriktion, Transformation, Selektion, Proteinproduktion) in eigenen Worten erläutern und grob skizzieren.
+    \item Sie können erklären, was ein Vektor ist und welche Transfektionsmethoden für welche Organismengruppen geeignet sind.
+    \item Sie können die Funktion von Restriktionsenzymen in Bakterien und im Labor veranschaulichen.
+    \item Sie können einzeichnen, wie ein bestimmtes Restriktionsenzym die DNA schneidet, und entscheiden, ob dabei `sticky ends' oder `blunt ends' entstehen (Erkennungssequenzen werden angegeben, NICHT auswendig lernen).
+    \item Sie können den Nutzen von Restriktionsenzymen in der Gentechnik präzise erläutern.
+    \item Sie können `rekombinante DNA' definieren und veranschaulichen, wie diese mittels Restriktionsenzyme und Ligasen gezielt hergestellt wird.
+    \item Sie können mindestens zwei Methoden aufzeigen, mit denen rekombinante Bakterien nach der Transfektion schrittweise selektioniert werden können.
+\end{itemize}
+```
+Erkläre mir den Stoff, welche ich für das Erfüllen dieser Lernziele benötige.
+§a§
+## Gentechnik: transgene Organismen — Stoffübersicht zu deinen Lernzielen
+
+### 1) Was ist ein transgener Organismus?
+Ein **transgener Organismus** ist ein Lebewesen, das **zusätzliche DNA (ein „Transgen“) enthält**, die **künstlich eingeführt** wurde und meist aus **einer anderen Art** stammt oder **gezielt verändert** wurde. Ziel ist häufig, dass der Organismus ein **bestimmtes Protein** herstellt (z.B. Insulin) oder eine neue Eigenschaft bekommt (z.B. Resistenz).
+
+---
+
+## 2) Grundablauf: Herstellung eines transgenen Organismus (Schrittfolge)
+Du solltest diesen Ablauf „erzählen“ können (als Prozesskette):
+
+1. **Gen/ DNA-Sequenz auswählen** (Zielgen, z.B. Insulin)
+2. **Isolierung/Gewinnung** der DNA bzw. des Gens
+3. **Vektor auswählen und vorbereiten** (z.B. Plasmid oder Virus)
+4. **Restriktion**: DNA und Vektor mit Restriktionsenzym(en) schneiden
+5. **Ligation**: Ziel-DNA in den Vektor einbauen $\rightarrow$ **rekombinante DNA**
+6. **Transformation/Transfektion**: rekombinanten Vektor in Zellen einbringen
+7. **Selektion/Screening**: nur die erfolgreich veränderten Zellen herausfiltern
+8. **Vermehrung/Klonierung** der positiven Zellen
+9. **Proteinproduktion/Expression** (falls Ziel ein Protein ist), anschließend evtl. **Aufreinigung**
+
+---
+
+## 3) Die Teilschritte (in eigenen Worten erklären können)
+
+### A) Isolierung (Gewinnung des Zielgens)
+Du musst wissen, *wie man an das Gen kommt*:
+- **Aus genomischer DNA**: DNA aus Zellen isolieren, dann Gen herausarbeiten (z.B. mittels PCR).
+- **Aus mRNA über cDNA**: mRNA isolieren $\rightarrow$ mit **Reverse Transkriptase** in **cDNA** umschreiben. Vorteil: **ohne Introns**, daher gut für Bakterien (die keine Introns „herausschneiden“ können).
+
+Wichtige Begriffe:
+- **PCR**: vervielfältigt einen DNA-Abschnitt gezielt (mit Primern).
+- **cDNA**: DNA-Kopie einer reifen mRNA (intronsfrei).
+
+---
+
+### B) Vektoren (Transportmittel für DNA)
+Ein **Vektor** ist ein **DNA-Träger**, der das Zielgen **in eine Wirtszelle transportiert** und dort oft **vermehrt** und/oder **exprimiert** wird.
+
+Typische Vektoren:
+- **Plasmide (Bakterien)**: ringförmige DNA, leicht zu handhaben.
+- **Virale Vektoren (Tierzellen/Pflanzen)**: Viren sind „gut“ darin, Zellen zu infizieren.
+- (Fortgeschritten: BACs/YACs für sehr große DNA-Stücke)
+
+Du solltest grundlegende Bauteile eines Plasmid-Vektors skizzieren können:
+- **ori** (Origin of Replication): damit das Plasmid in Bakterien kopiert wird
+- **Selektionsmarker** (z.B. Antibiotikaresistenzgen)
+- **Multiple Cloning Site (MCS)**: Bereich mit mehreren Restriktionsschnittstellen
+- **Promotor** (für Expression): z.B. bakteriell (lac/T7), eukaryotisch (CMV), pflanzlich (35S)
+
+---
+
+### C) Restriktion (Schneiden von DNA)
+**Restriktionsenzyme** sind „DNA-Scheren“, die **bestimmte Erkennungssequenzen** schneiden.
+
+Du brauchst 2 Funktionen zu kennen:
+
+**1. In Bakterien (natürliche Funktion):**
+- Teil eines Abwehrsystems gegen fremde DNA (z.B. Phagen-DNA).
+- Bakterien schützen die eigene DNA meist durch **Methylierung**, sodass das Enzym dort nicht schneidet.
+
+**2. Im Labor (Werkzeug):**
+- Man schneidet **Vektor** und **Ziel-DNA** so, dass sie **zusammenpassen**.
+
+---
+
+### D) Sticky ends vs. blunt ends (zeichnen und entscheiden können)
+Du bekommst die Erkennungssequenz im Test und sollst bestimmen:
+- Wo wird geschnitten?
+- Entstehen **sticky ends** (überhängende Einzelstränge) oder **blunt ends** (glatte Enden)?
+
+**Sticky ends:**
+- Es bleiben kurze **Überhänge**, die über **Basenpaarung** leicht zusammenfinden.
+- Vorteil: **gerichteter** und **effizienter** Einbau.
+
+**Blunt ends:**
+- Beide Stränge werden an derselben Position geschnitten $\rightarrow$ **keine Überhänge**.
+- Funktioniert auch, ist aber oft **weniger effizient**.
+
+Zum Zeichnen brauchst du:
+- Doppelstrang-DNA mit 5’/3’-Richtung
+- Schnittstelle pro Strang einzeichnen
+- Resultierende Enden darstellen (Überhang oder glatt)
+
+---
+
+### E) Ligation (Zusammenkleben)
+**DNA-Ligase** verbindet DNA-Enden durch eine kovalente Bindung im Zucker-Phosphat-Rückgrat.
+
+Ergebnis:
+- Vektor + Ziel-DNA $\rightarrow$ **rekombinante DNA** (rekombinantes Plasmid)
+
+Definition, die du können solltest:
+- **Rekombinante DNA** = DNA, die **künstlich aus DNA-Teilen unterschiedlicher Herkunft** (oder neu kombinierter Sequenzen) **zusammengesetzt** wurde.
+
+---
+
+### F) Transformation/Transfektion (Einbringen in Zellen)
+Begriffe:
+- **Transformation**: häufig für **Bakterien** (Aufnahme von DNA).
+- **Transfektion**: häufig für **eukaryotische Zellen** (DNA/RNA einbringen).
+- **Transduktion**: Einbringen über **Viren**.
+
+Du sollst Methoden nennen und zu Organismengruppen zuordnen:
+
+**Für Bakterien:**
+- **Hitzeschock (chemisch kompetente Zellen)**: Zellen werden „aufnahmefähig“ gemacht, kurzer Hitzeschock schleust Plasmid ein.
+- **Elektroporation**: kurzer elektrischer Impuls erzeugt Poren.
+
+**Für Pflanzen:**
+- **Agrobacterium tumefaciens** (Ti-Plasmid): natürlicher DNA-Transfer in Pflanzenzellen.
+- **Genkanone (biolistic)**: DNA-beschichtete Partikel werden in Zellen geschossen.
+
+**Für Tierzellen (Eukaryoten):**
+- **Liposomen/Lipid-Transfektion**
+- **Elektroporation**
+- **Virale Vektoren** (z.B. Adeno-/Lentiviren, je nach Zweck)
+
+---
+
+### G) Selektion/Screening (richtige Zellen herausfiltern)
+Du musst mindestens **zwei Methoden** schrittweise erklären können. Typische Kombination: erst Selektion, dann Screening.
+
+**Methode 1: Antibiotika-Selektion (klassisch)**
+1. Plasmid enthält ein **Antibiotika-Resistenzgen** (z.B. Ampicillin).
+2. Nach Transformation auf Agarplatte **mit Antibiotikum** ausplattieren.
+3. Nur Bakterien **mit Plasmid** überleben $\rightarrow$ Kolonien wachsen.
+
+Wichtig: Das zeigt nur „Plasmid drin“, nicht zwingend „Insert richtig drin“.
+
+**Methode 2: Blau-Weiß-Screening (lacZ)**
+1. MCS liegt in einem Reporter-Gen (z.B. **lacZ**).
+2. Insert stört lacZ $\rightarrow$ keine $\beta$-Galaktosidase.
+3. Platte enthält X-gal (und oft IPTG):
+   - **Blau**: lacZ intakt $\rightarrow$ meist **kein Insert**
+   - **Weiß**: lacZ zerstört $\rightarrow$ oft **Insert vorhanden**
+
+**Weitere mögliche Methoden (gut zu kennen):**
+- **PCR-Kolonie-Screening**: Kolonie anpieksen, PCR mit Insert-spezifischen Primern.
+- **Restriktionsanalyse**: Plasmid isolieren, schneiden, Fragmentmuster vergleichen.
+- **Sequenzierung**: endgültige Bestätigung.
+
+---
+
+### H) Proteinproduktion (Expression)
+Wenn das Ziel ein Protein ist, musst du wissen, was dafür nötig ist:
+- Das Gen muss **abgelesen** werden können $\rightarrow$ **Promotor** passend zum Wirt
+- In Bakterien oft: starker Promotor, ggf. **Induktion** (z.B. „anschalten“)
+- In Eukaryoten: andere Promotoren/Signale, z.B. für richtige Prozessierung
+
+Grundidee:
+1. Positive Klone vermehren
+2. Expression anregen
+3. Protein isolieren und reinigen (vereinfacht: Zellaufschluss, Chromatographie)
+
+---
+
+## 4) Nutzen von Restriktionsenzymen in der Gentechnik (präzise)
+Du solltest formulieren können:
+- Restriktionsenzyme ermöglichen **gezieltes Schneiden** von DNA an **definierten Sequenzen**.
+- Dadurch kann man **Vektoren öffnen** und **DNA-Fragmente passend erzeugen**.
+- Mit zwei verschiedenen Enzymen kann man **gerichtet klonieren** (Insert kann nur in einer Orientierung eingebaut werden).
+- Sie sind zentral für das Herstellen von **rekombinanter DNA** zusammen mit **Ligase**.
+
+---
+
+## 5) Was du grob skizzieren können solltest (typische Zeichnungen)
+- **Plasmidkarte**: ori, Marker, MCS, Promotor, Insert
+- **Restriktionsschnitt**: Erkennungssequenz, Schnittposition, sticky/blunt ends
+- **Ablaufdiagramm**: Gen $\rightarrow$ Vektor $\rightarrow$ Restriktion/Ligation $\rightarrow$ Transformation $\rightarrow$ Selektion $\rightarrow$ Expression
+
+---
+
+## 6) Mini-Checkliste passend zu deinen Lernzielen
+Du erfüllst die Ziele, wenn du:
+- den **Ablauf in 8–10 Schritten** erklären kannst,
+- die Begriffe **Vektor, Restriktion, Ligase, rekombinante DNA, Transformation/Transfektion, Selektion/Screening** sicher definieren kannst,
+- Methoden **Bakterien vs. Pflanzen vs. Tierzellen** zuordnen kannst,
+- **sticky vs. blunt ends** aus einer gegebenen Schnittsequenz ableiten und zeichnen kannst,
+- **mindestens zwei Selektions-/Screeningmethoden** Schritt für Schritt darstellen kannst.
+
+---
+
+Wenn du willst, kann ich dir daraus auch ein kompaktes Lernblatt (1 Seite) machen oder mit dir ein paar typische Prüfungsaufgaben üben (z.B. „gegeben ist eine Erkennungssequenz, zeichne den Schnitt und entscheide sticky/blunt“).

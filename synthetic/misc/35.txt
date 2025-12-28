@@ -1,0 +1,274 @@
+§u§
+```
+\section{Lernziele}
+
+\begin{enumerate}
+    \item Unbestimmte Integrale -- Stammfunktionen
+    \item Andwendung des Hauptsatzes
+    \item Integrationsregeln
+    \item Uneigentliche Integrale
+\end{enumerate}
+```
+Erkläre mir den Stoff, den ich können muss, um diese Lernziele zu erfüllen.
+§a§
+Hier ist der Stoff, den du beherrschen solltest, um die vier Lernziele solide zu erfüllen. Ich gebe dir pro Punkt die zentralen Begriffe, wichtigsten Formeln/Techniken und kurze Beispiele.
+
+1) Unbestimmte Integrale — Stammfunktionen
+- Begriff: Eine Stammfunktion F zu f ist eine Funktion mit F′(x) = f(x). Notation:
+  ∫ f(x) dx = F(x) + C, wobei C die Integrationskonstante ist.
+- Eigenschaften:
+  - Linearkombinationen: ∫(af + bg) dx = a∫f dx + b∫g dx.
+  - Alle Stammfunktionen unterscheiden sich nur um eine Konstante.
+- Wichtige Standardstammfunktionen:
+  - Potenzen: ∫ x^n dx = x^(n+1)/(n+1) + C (n ≠ −1)
+  - ∫ dx/x = ln|x| + C
+  - ∫ e^x dx = e^x + C, ∫ a^x dx = a^x/ln a + C (a>0, a≠1)
+  - ∫ 1/(1+x^2) dx = arctan x + C, ∫ 1/√(1−x^2) dx = arcsin x + C
+  - ∫ sin x dx = −cos x + C, ∫ cos x dx = sin x + C
+- Typische Techniken (Details siehe Punkt 3):
+  - Substitution, Partielle Integration, Partialbruchzerlegung, trigonometrische Identitäten.
+- Kurze Beispiele:
+  - ∫ (3x^2 − 2/x) dx = x^3 − 2 ln|x| + C
+  - ∫ cos(2x) dx = (1/2) sin(2x) + C
+  - ∫ x e^x dx (partielle Integration) = e^x(x − 1) + C
+  - ∫ (2x+3)/(x^2+3x+2) dx (Partialbrüche) = ln|x+1| + ln|x+2| + C
+
+2) Anwendung des Hauptsatzes (Fundamentalsatz der Analysis)
+- Inhaltlich gibt es zwei Teile (für stetige f auf [a,b]):
+  1. Ableitung der Integralfunktion:
+     F(x) := ∫_a^x f(t) dt ⇒ F′(x) = f(x).
+  2. Auswertung bestimmter Integrale:
+     Ist F eine Stammfunktion von f, dann gilt
+     ∫_a^b f(x) dx = F(b) − F(a).
+- Interpretation: ∫_a^b f misst die orientierte Fläche zwischen Graph von f und x-Achse.
+- Praktische Anwendung:
+  - Bestimmte Integrale rechnest du meist via Stammfunktion und F(b)−F(a).
+  - Bei Substitution darfst du die Grenzen mittransformieren (empfohlen).
+- Nützliche Ergänzung:
+  - Durchschnittswert einer Funktion: f̄ = (1/(b−a)) ∫_a^b f(x) dx.
+- Kurze Beispiele:
+  - ∫_0^π sin x dx = [−cos x]_0^π = (−(−1)) − (−1) = 2
+  - ∫_0^1 2x/(x^2+1) dx, u = x^2+1 ⇒ u: 1→2:
+    ∫_1^2 (1/u) du = ln 2
+
+3) Integrationsregeln und -techniken
+- Linearität:
+  - ∫(af + bg) dx = a∫f dx + b∫g dx
+- Substitution (Kettenregel rückwärts):
+  - Unbestimmt: Setze u = g(x), du = g′(x) dx:
+    ∫ f(g(x)) g′(x) dx = ∫ f(u) du
+  - Bestimmt: ∫_a^b f(g(x)) g′(x) dx = ∫_{u(a)}^{u(b)} f(u) du
+  - Beispiel: ∫ 2x/(x^2+1) dx; u = x^2+1 ⇒ ∫ du/u = ln|u| + C
+- Partielle Integration (Produktregel rückwärts):
+  - ∫ u dv = u·v − ∫ v du
+  - Heuristik zur Wahl von u: LIATE (Logarithmus, Invers, Algebraisch, Trig, Exponential)
+  - Beispiel: ∫ x e^x dx = x e^x − ∫ e^x dx = e^x(x − 1) + C
+- Partialbruchzerlegung (rationale Funktionen):
+  - Zerlege einen rationalen Bruch in einfache Brüche; integriere termweise.
+  - Beispiel: ∫ (2x+3)/((x+1)(x+2)) dx = ∫(1/(x+1) + 1/(x+2)) dx = ln|x+1| + ln|x+2| + C
+- Trigonometrische Integrale/Identitäten:
+  - Potenzen von sin, cos:
+    - ungerade Potenz: trenne einen Faktor ab und substituiere z.B. u = cos x oder u = sin x
+    - gerade Potenz: Halbwinkel-Formeln, z.B. cos^2 x = (1+cos 2x)/2
+  - Beispiel: ∫ sin^3 x dx = ∫ sin x(1−cos^2 x) dx; u=cos x ⇒ −∫ (1−u^2) du = −u + u^3/3 + C
+- Symmetrien:
+  - Gerade f: ∫_{−a}^a f(x) dx = 2∫_0^a f(x) dx
+  - Ungerade f: ∫_{−a}^a f(x) dx = 0
+- Weitere Tricks (je nach Kurs):
+  - Substitutionen für Wurzeln √(ax^2+bx+c) (trig./Euler-Subs), Reduktionsformeln.
+  - In der Regel reicht ein Überblick; zentrale Werkzeuge sind Substitution, Partielle Integration, Partialbrüche.
+
+4) Uneigentliche Integrale
+- Wann „uneigentlich“?
+  - Unendliche Intervallgrenzen: ∫_a^∞ f(x) dx, ∫_{−∞}^b f(x) dx, ∫_{−∞}^{∞} f(x) dx
+  - Unendliche Sprung-/Polstellen im Integrationsbereich, z.B. ∫_0^1 1/√x dx
+- Definition über Grenzwerte:
+  - ∫_a^∞ f(x) dx := lim_{R→∞} ∫_a^R f(x) dx
+  - ∫_0^1 f(x) dx mit Singularität bei 0: lim_{ε→0^+} ∫_{ε}^1 f(x) dx
+  - Existiert der Grenzwert endlich, dann konvergiert das uneigentliche Integral; sonst divergiert es.
+- Wichtige Tests/Regeln:
+  - p-Test:
+    - ∫_1^∞ 1/x^p dx konvergiert ⇔ p > 1 (und ist = 1/(p−1))
+    - ∫_0^1 1/x^p dx konvergiert ⇔ p < 1 (und ist = 1/(1−p))
+  - Vergleichstest:
+    - 0 ≤ f ≤ g, ∫ g konvergiert ⇒ ∫ f konvergiert
+    - f ≥ g ≥ 0, ∫ g divergiert ⇒ ∫ f divergiert
+  - Limesvergleich: lim_{x→∞} f(x)/g(x) = c ∈ (0,∞) ⇒ f und g gleiches Konvergenzverhalten.
+- Kurze Beispiele:
+  - ∫_1^∞ 1/x dx divergiere; ∫_1^∞ 1/x^2 dx = 1
+  - ∫_0^1 1/√x dx = 2; ∫_0^1 1/x dx divergiert
+  - ∫_0^∞ e^{−ax} dx = 1/a für a > 0
+- Rechnen in der Praxis:
+  - Erst wie ein gewöhnliches bestimmtes Integral lösen, dann den Grenzwert sauber auswerten.
+  - Vorsicht bei Integralen mit Singularitäten in der Mitte des Intervalls: in Teilintervalle aufspalten und getrennte Grenzwerte bilden.
+
+Checkliste: Was solltest du können?
+- Unbestimmte Integrale berechnen, inkl. +C, und Standardstammfunktionen kennen.
+- Geeignete Technik wählen: Substitution, Partielle Integration, Partialbrüche, trigonometrische Umformungen.
+- Bestimmte Integrale sicher über F(b)−F(a) auswerten; bei Substitution die Grenzen korrekt mittransformieren.
+- Den Hauptsatz formulieren und interpretieren (auch geometrisch und als „Ableitung der Integralfunktion“).
+- Uneigentliche Integrale per Grenzwertdefinition behandeln und mit p-Test/Vergeich(s)tests ihre Konvergenz entscheiden und ggf. ausrechnen.
+- Typische Fehler vermeiden: +C nicht vergessen; Betragsstriche bei ln|…|; bei Uneigentlichen die Grenzwerte nicht überspringen; bei Partielle Integration/Substitution sauber u, du, v, dv wählen.
+
+Möchtest du zu jedem Punkt passende Übungsaufgaben mit vollständig gerechneten Lösungen? Oder soll ich dir eine kompakte Formelsammlung als Lernkarte zusammenstellen?
+§u§
+Mache daraus ein LaTeX Dokument und füge Beispiele hinzu.
+§a§
+Gerne, hier ist der Lernstoff als vollständiges LaTeX-Dokument formatiert, inklusive Erklärungen und konkreten Beispielen zu jedem Lernziel.
+
+```latex
+\documentclass[a4paper, 11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+
+\geometry{
+    a4paper,
+    margin=2.5cm,
+}
+
+\title{Stoffübersicht: Integralrechnung (Unbestimmte und Bestimmte Integrale)}
+\author{Vorbereitung für die genannten Lernziele}
+\date{\today}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\section{Lernziele im Überblick}
+
+Um die folgenden Lernziele erfolgreich zu beherrschen, ist ein tiefes Verständnis der Beziehung zwischen Differentiation und Integration erforderlich.
+
+\begin{enumerate}
+    \item Unbestimmte Integrale -- Stammfunktionen
+    \item Anwendung des Hauptsatzes (Bestimmte Integrale)
+    \item Integrationsregeln (insbesondere die Substitution)
+    \item Uneigentliche Integrale
+\end{enumerate}
+
+\newpage
+
+\section{1. Unbestimmte Integrale -- Stammfunktionen}
+
+Eine Funktion $F(x)$ ist eine **Stammfunktion** (oder Antiderivative) von $f(x)$, wenn gilt: $F'(x) = f(x)$.
+Das unbestimmte Integral ist die Menge aller Stammfunktionen:
+\[
+\int f(x) \, dx = F(x) + C
+\]
+wobei $C$ die Integrationskonstante ist.
+
+\subsection*{Grundlegende Integrationsregeln:}
+\begin{itemize}
+    \item \textbf{Potenzregel:} $\int x^n \, dx = \frac{x^{n+1}}{n+1} + C$ (für $n \neq -1$)
+    \item \textbf{Kehrwert:} $\int \frac{1}{x} \, dx = \ln|x| + C$
+    \item \textbf{Exponentialfunktion:} $\int e^x \, dx = e^x + C$
+\end{itemize}
+
+\subsubsection*{Beispiel 1.1 (Stammfunktion finden)}
+Finden Sie eine Stammfunktion von $f(x) = 3x^2 - 4x + 5$.
+\begin{align*}
+\int (3x^2 - 4x + 5) \, dx &= 3 \int x^2 \, dx - 4 \int x \, dx + 5 \int 1 \, dx \\
+&= 3 \left( \frac{x^3}{3} \right) - 4 \left( \frac{x^2}{2} \right) + 5x + C \\
+&= x^3 - 2x^2 + 5x + C
+\end{align*}
+
+\section{2. Anwendung des Hauptsatzes}
+
+Der Hauptsatz der Differential- und Integralrechnung (HDI) verbindet Stammfunktionen mit der Berechnung von Flächeninhalten (bestimmte Integrale).
+
+Für eine stetige Funktion $f(x)$ mit der Stammfunktion $F(x)$ gilt:
+\[
+\int_a^b f(x) \, dx = F(b) - F(a)
+\]
+
+\subsubsection*{Beispiel 2.1 (Bestimmtes Integral berechnen)}
+Berechnen Sie das bestimmte Integral der Funktion $f(x) = \cos(x)$ von $a=0$ bis $b=\pi$.
+\begin{enumerate}
+    \item Stammfunktion finden: $F(x) = \sin(x)$
+    \item Grenzen einsetzen:
+    \[
+    \int_0^\pi \cos(x) \, dx = F(\pi) - F(0) = \sin(\pi) - \sin(0) = 0 - 0 = 0
+    \]
+\end{enumerate}
+
+\section{3. Integrationsregeln}
+
+Neben der Linearität ($\int (c \cdot f + d \cdot g) \, dx = c \int f \, dx + d \int g \, dx$) ist die **Substitutionsregel** die wichtigste Technik, um komplexere Integrale zu lösen.
+
+\subsection*{Substitutionsregel (Kettenregel rückwärts)}
+Wenn wir $u = g(x)$ substituieren, müssen wir auch die Ableitung $du = g'(x) \, dx$ berücksichtigen.
+
+\subsubsection*{Beispiel 3.1 (Substitution)}
+Berechnen Sie $\int 2x \cdot e^{x^2} \, dx$.
+
+\begin{enumerate}
+    \item \textbf{Substitution wählen:} Sei $u = x^2$.
+    \item \textbf{Differential berechnen:} $du = 2x \, dx$.
+    \item \textbf{Einsetzen und Integrieren:}
+    \[
+    \int \underbrace{e^{x^2}}_{e^u} \cdot \underbrace{2x \, dx}_{du} = \int e^u \, du = e^u + C
+    \]
+    \item \textbf{Rücksubstitution:}
+    \[
+    e^{x^2} + C
+    \]
+\end{enumerate}
+
+\subsubsection*{Beispiel 3.2 (Substitution bei bestimmten Integralen)}
+Berechnen Sie $\int_0^1 (2t+1)^3 \, dt$.
+\begin{enumerate}
+    \item \textbf{Substitution:} $u = 2t + 1$, damit $du = 2 \, dt$, also $dt = \frac{1}{2} du$.
+    \item \textbf{Grenzen transformieren:}
+    \begin{itemize}
+        \item Untere Grenze ($t=0$): $u = 2(0) + 1 = 1$
+        \item Obere Grenze ($t=1$): $u = 2(1) + 1 = 3$
+    \end{itemize}
+    \item \textbf{Integrieren mit neuen Grenzen:}
+    \[
+    \int_1^3 u^3 \cdot \frac{1}{2} \, du = \frac{1}{2} \left[ \frac{u^4}{4} \right]_1^3 = \frac{1}{8} [3^4 - 1^4] = \frac{1}{8} [81 - 1] = \frac{80}{8} = 10
+    \]
+\end{enumerate}
+
+\section{4. Uneigentliche Integrale}
+
+Uneigentliche Integrale sind Integrale, bei denen entweder die Integrationsgrenzen unendlich sind oder die Funktion innerhalb des Intervalls eine Definitionslücke (Singularität) besitzt. Sie werden mithilfe von Grenzwerten berechnet.
+
+\subsection*{Typ 1: Unendliche Intervalle}
+\[
+\int_a^\infty f(x) \, dx = \lim_{b \to \infty} \int_a^b f(x) \, dx
+\]
+
+\subsubsection*{Beispiel 4.1 (Konvergenz über unendliches Intervall)}
+Untersuchen Sie $\int_1^\infty \frac{1}{x^3} \, dx$.
+\begin{enumerate}
+    \item \textbf{Als Grenzwert schreiben:} $\lim_{b \to \infty} \int_1^b x^{-3} \, dx$
+    \item \textbf{Stammfunktion bilden:} $\lim_{b \to \infty} \left[ \frac{x^{-2}}{-2} \right]_1^b = \lim_{b \to \infty} \left[ -\frac{1}{2x^2} \right]_1^b$
+    \item \textbf{Grenzwert berechnen:}
+    \[
+    \lim_{b \to \infty} \left( -\frac{1}{2b^2} - \left(-\frac{1}{2(1)^2}\right) \right) = 0 + \frac{1}{2} = \frac{1}{2}
+    \]
+    Das Integral \textbf{konvergiert} gegen $\frac{1}{2}$.
+\end{enumerate}
+
+\subsection*{Typ 2: Unendliche Diskontinuität}
+Falls $f(x)$ an der unteren Grenze $a$ eine Singularität hat:
+\[
+\int_a^b f(x) \, dx = \lim_{t \to a^+} \int_t^b f(x) \, dx
+\]
+(Man nähert sich der Grenze von der Seite, von der das Intervall definiert ist, hier von rechts, $t \to a^+$).
+
+\subsubsection*{Beispiel 4.2 (Konvergenz bei Singularität)}
+Untersuchen Sie $\int_0^1 \frac{1}{\sqrt{x}} \, dx$. (Funktion divergiert bei $x=0$).
+\begin{enumerate}
+    \item \textbf{Als Grenzwert schreiben:} $\lim_{t \to 0^+} \int_t^1 x^{-1/2} \, dx$
+    \item \textbf{Stammfunktion bilden:} $\lim_{t \to 0^+} \left[ 2x^{1/2} \right]_t^1 = \lim_{t \to 0^+} \left( 2\sqrt{1} - 2\sqrt{t} \right)$
+    \item \textbf{Grenzwert berechnen:}
+    \[
+    2 - 2\sqrt{0} = 2
+    \]
+    Das Integral \textbf{konvergiert} gegen $2$.
+\end{enumerate}
+
+\end{document}
+```

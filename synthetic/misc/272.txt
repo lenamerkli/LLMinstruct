@@ -1,0 +1,162 @@
+§u§
+How can I create a tool calling dataset to use with unsloth?
+§a§
+Creating a tool calling (function calling) dataset for Unsloth involves structuring your data so that it includes both the **conversation history** and the **tool definitions** (schemas) available to the model.
+
+Unsloth uses the standard Hugging Face `chat_template` system. The best practice is to create a dataset in a standardized JSONL format that mimics the "Conversational" or "ShareGPT" style, but with added fields for tools.
+
+### 1. The Dataset Structure (JSONL)
+
+Create a file named `tool_dataset.jsonl`. Each line should be a separate training example containing a `conversations` list and a `tools` list.
+
+**Key Fields:**
+*   **`tools`**: A list of function definitions (JSON Schema).
+*   **`conversations`**: A list of messages.
+    *   **User**: Standard user prompt.
+    *   **Assistant (Tool Call)**: The model's response initiating a call. It should have a `tool_calls` field (or the model-specific XML/text format if you prefer manual formatting).
+    *   **Tool (Response)**: The output from the code/API. Role should be `"tool"`.
+
+#### Example Entry (`tool_dataset.jsonl`)
+
+```json
+{
+  "tools": [
+    {
+      "name": "get_stock_price",
+      "description": "Get the current stock price for a given ticker symbol.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "ticker": {
+            "type": "string",
+            "description": "The stock ticker symbol, e.g. AAPL for Apple."
+          }
+        },
+        "required": ["ticker"]
+      }
+    }
+  ],
+  "conversations": [
+    {
+      "role": "user",
+      "content": "What is the current price of Apple stock?"
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "type": "function",
+          "function": {
+            "name": "get_stock_price",
+            "arguments": "{\"ticker\": \"AAPL\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "name": "get_stock_price",
+      "content": "{\"price\": 150.25, \"currency\": \"USD\"}"
+    },
+    {
+      "role": "assistant",
+      "content": "The current price of Apple (AAPL) stock is $150.25."
+    }
+  ]
+}
+```
+
+---
+
+### 2. Loading and Formatting in Unsloth
+
+To train on this, you need to apply a chat template that supports tool calling. Models like **Llama 3.1** and **Mistral** have specific templates for this.
+
+Here is the Python code to load this dataset and format it for Unsloth:
+
+```python
+from unsloth import FastLanguageModel
+from datasets import load_dataset
+from unsloth.chat_templates import get_chat_template
+
+# 1. Load Model
+model, tokenizer = FastLanguageModel.from_pretrained(
+    model_name = "unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit",
+    max_seq_length = 8192,
+    load_in_4bit = True,
+)
+
+# 2. Setup Chat Template
+# Llama 3.1's template handles tool definitions automatically if you pass them correctly.
+tokenizer = get_chat_template(
+    tokenizer,
+    chat_template = "llama-3.1", # Supports tool use
+)
+
+# 3. Load your JSONL dataset
+dataset = load_dataset("json", data_files="tool_dataset.jsonl", split="train")
+
+# 4. Formatting Function
+def format_tool_chats(examples):
+    conversations = examples["conversations"]
+    tools = examples["tools"]
+    texts = []
+    
+    for convo, tool_list in zip(conversations, tools):
+        # We use the tokenizer's apply_chat_template method.
+        # It usually accepts a 'tools' argument for supported models (like Llama 3.1).
+        text = tokenizer.apply_chat_template(
+            convo,
+            tools=tool_list,       # Pass the specific tools for this example
+            tokenize=False,
+            add_generation_prompt=False
+        )
+        texts.append(text)
+    
+    return {"text": texts}
+
+# 5. Apply formatting
+dataset = dataset.map(format_tool_chats, batched=True)
+
+# Check the first example to verify the <|python_tag|> or JSON structure
+print(dataset[0]["text"])
+```
+
+### 3. Important Considerations
+
+*   **Model Compatibility**: 
+    *   **Llama 3.1**: Expects tools to be defined in the system prompt or via the `tools` argument in `apply_chat_template`. The native Llama 3.1 template formats tool calls as distinct Python-like calls (e.g., `<|python_tag|>call_function(...)`).
+    *   **Mistral / Qwen**: May use different formats (like `<tool_code>`). The code above relies on Hugging Face's `apply_chat_template` to handle these differences automatically based on the model you loaded.
+*   **"Text" Format vs. "Structured" Format**: 
+    The example above uses the **Structured** approach (`tool_calls` list). If you prefer, you can "bake" the tool call directly into the content string (e.g., `{"content": "<tool_code>get_weather(...)</tool_code>"}`), but the structured approach is more robust and allows the tokenizer to decide the exact string format.
+*   **System Prompt**: If your dataset doesn't have a system prompt, Llama 3.1 often requires one to know *how* to call tools. The `apply_chat_template` function (when `tools=` is provided) typically injects a default system prompt explaining available tools.
+
+### 4. Training (Unsloth Trainer)
+
+Once your dataset has the `text` column, you pass it to the `SFTTrainer` just like a normal fine-tuning run:
+
+```python
+from trl import SFTTrainer
+from unsloth import is_bfloat16_supported
+
+trainer = SFTTrainer(
+    model = model,
+    tokenizer = tokenizer,
+    train_dataset = dataset,
+    dataset_text_field = "text",
+    max_seq_length = 8192,
+    args = dict(
+        per_device_train_batch_size = 2,
+        gradient_accumulation_steps = 4,
+        learning_rate = 2e-4,
+        fp16 = not is_bfloat16_supported(),
+        bf16 = is_bfloat16_supported(),
+        logging_steps = 1,
+        optim = "adamw_8bit",
+        output_dir = "outputs",
+    ),
+)
+
+trainer.train()
+```

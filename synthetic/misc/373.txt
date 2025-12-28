@@ -1,0 +1,41 @@
+§u§
+```
+Für einen idealen Schwingkreis (ohne Wärmeproduktion) gilt:
+            \begin{equation*}
+                L \frac{d^2 q}{dt^2} + \frac{1}{C} q = 0
+            \end{equation*}
+```
+Erkläre mir die Variablen
+§a§
+In der gegebenen Differentialgleichung für einen idealen Schwingkreis (ohne Energieverluste durch Widerstand):
+
+\[ L \frac{d^2 q}{dt^2} + \frac{1}{C} q = 0 \]
+
+bedeuten die Variablen:
+
+1. **\( q \)** (Ladung):  
+   - Die **elektrische Ladung** auf dem Kondensator des Schwingkreises, gemessen in Coulomb (C).  
+   - Sie ist eine Funktion der Zeit: \( q = q(t) \).  
+   - *Physikalische Rolle*: Beschreibt, wie sich die gespeicherte Ladung im Kondensator während der Schwingung ändert.
+
+2. **\( t \)** (Zeit):  
+   - Die unabhängige Variable **Zeit**, gemessen in Sekunden (s).  
+   - Die Ableitungen \( \frac{d^2 q}{dt^2} \) und \( \frac{dq}{dt} \) (Strom) hängen von \( t \) ab.
+
+3. **\( L \)** (Induktivität):  
+   - Die **Induktivität** der Spule im Schwingkreis, gemessen in Henry (H).  
+   - *Physikalische Rolle*: Beschreibt die "Trägheit" des Stromflusses. Ein höheres \( L \) führt zu langsameren Änderungen des Stroms.
+
+4. **\( C \)** (Kapazität):  
+   - Die **Kapazität** des Kondensators im Schwingkreis, gemessen in Farad (F).  
+   - *Physikalische Rolle*: Bestimmt, wie viel Ladung bei gegebener Spannung gespeichert werden kann. Ein höheres \( C \) ermöglicht mehr gespeicherte Energie.
+
+### Hintergrund zur Gleichung:
+- Die Gleichung beschreibt eine **ungedämpfte elektromagnetische Schwingung** (Harmonischer Oszillator).  
+- **\( L \frac{d^2 q}{dt^2} \)** entspricht der Spannung über der Spule (Induktionsgesetz).  
+- **\( \frac{1}{C} q \)** entspricht der Spannung über dem Kondensator.  
+- Die Summe beider Spannungen ist null (Energieerhaltung im idealen Kreis).  
+- Die Lösung ist eine **Sinus-/Kosinus-Funktion** mit der Resonanzfrequenz \( f = \frac{1}{2\pi \sqrt{LC}} \).  
+
+### Beispiel:
+Für \( L = 1 \, \text{H} \) und \( C = 1 \, \text{F} \) ergibt sich eine Schwingung mit Frequenz \( f \approx 0.16 \, \text{Hz} \). Je kleiner \( L \) oder \( C \), desto höher die Frequenz.

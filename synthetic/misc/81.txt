@@ -1,0 +1,57 @@
+§u§
+```
+\section{Replication}
+
+            \subsection{Without Code Changes}
+
+                \include{replication_without.tex}
+
+            \subsection{With Code Changes}
+```
+How can I make that \include does not create a page break before and after?
+§a§
+Of course. The behavior you're describing is the key difference between the `\include` and `\input` commands in LaTeX.
+
+### The Simple Solution: Use `\input`
+
+The `\include` command is specifically designed for major sections of a document (like chapters) and **always** issues a `\clearpage` command before and after its content. This flushes all pending floats (like figures and tables) and starts a new page.
+
+To include content from another file without forcing a page break, you should use the `\input` command. It behaves as if you had copied and pasted the content of the file directly into that spot.
+
+Here is your code corrected:
+```latex
+\section{Replication}
+
+    \subsection{Without Code Changes}
+
+        \input{replication_without.tex}
+
+    \subsection{With Code Changes}
+```
+By simply changing `\include` to `\input`, the content of `replication_without.tex` will be placed directly after the `\subsection` heading, without any page breaks.
+
+---
+
+### Deeper Explanation: `\input` vs. `\include`
+
+It's useful to understand why both commands exist and when to use each one.
+
+| Feature | `\input{filename}` | `\include{filename}` |
+| :--- | :--- | :--- |
+| **Page Break** | **No.** It seamlessly inserts the content at that exact point. | **Yes.** It starts a new page before the content and after it. |
+| **Primary Use** | Smaller, reusable pieces of code: a table, a figure, a subsection, a set of custom commands. | Major document divisions: chapters, appendices. |
+| **`\includeonly`** | No. The file is always processed. | Yes. This is its key feature. You can use `\includeonly{chap1,chap3}` in your preamble to only compile those specific chapters, dramatically speeding up compilation for large documents. |
+| **Nesting** | Yes. A file included with `\input` can itself use `\input`. | No. You cannot nest `\include` commands. |
+
+#### Summary: When to Use Which
+
+*   **Use `\input` for:**
+    *   Including a file that is not a full chapter (e.g., a subsection, a large table, a complex figure).
+    *   Situations where you absolutely **do not** want a page break.
+    *   Including your custom macros or preamble settings from a separate file.
+
+*   **Use `\include` for:**
+    *   Including the main chapters of a book, thesis, or long report.
+    *   When you want to take advantage of the `\includeonly` command to speed up compilation by only processing the chapters you are currently working on.
+
+For your use case of including the content for a `\subsection`, `\input` is the correct and standard choice.

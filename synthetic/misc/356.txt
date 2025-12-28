@@ -1,0 +1,204 @@
+§u§
+```
+\documentclass[12pt, a4paper]{article}
+
+% Pakete für deutsche Sprache und Umlaute
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+
+% Paket für Listen (ermöglicht kompaktere Listen)
+\usepackage{enumitem}
+
+% Optional: Schmalere Ränder
+\usepackage[margin=2.5cm]{geometry}
+
+\begin{document}
+
+\section*{Lernziele:}
+
+\begin{itemize}[leftmargin=*]
+
+    \item \textbf{Ausgang Erster Weltkrieg}
+    \begin{itemize}
+        \item Ich kann die \textbf{innere Entwicklung Deutschlands} ab dem Waffenstillstand beschreiben. Insbesondere kenne ich die \textbf{verfassungsmäßigen Alternativen} (parlamentarische/konstitutionelle Monarchie, parlamentarische Republik, Räterepublik) und deren \textbf{Vertreter} vor und während der \textbf{Novemberrevolution}. Ich kann sodann erläutern, welche \textbf{Verfassung} mit welchen \textbf{Parteien} durch welche \textbf{Vorgänge} sich schließlich durchgesetzt hat.
+        
+        \item Ich kenne \textbf{Inhalte, Vertreter und deren Ziele} im Zusammenhang mit der \textbf{Dolchstoßlegende}.
+        
+        \item Ich kenne die \textbf{Inhalte der Versailler Verträge} und kann sie \textbf{mit den 14 Punkten von Wilson vergleichen}. Insbesondere kenne ich \textbf{die Rolle der USA und Frankreich/Grossbritannien} bei der Ausgestaltung der Versailler Verträge.
+        
+        \item Ich kenne \textbf{grob die Inhalte der Pariser Vorortsverträge} für die \textbf{Neugliederung Osturopas, der Donaumonarchie (Balkan), des ehemaligen Osmanischen Reiches (Türkei, Nahost) und des Kolonialraumes}. Ich kann dabei \textbf{Grundschwierigkeiten} und \textbf{Interessen} der verschiedenen Parteien beschreiben und die \textbf{Ergebnisse an den universellen Prinzipien von Wilson bemessen}.
+    \end{itemize}
+
+\vspace{1em} % Etwas Abstand zwischen den Hauptpunkten
+
+    \item \textbf{Russische Revolutionen – Ursachen bis Oktoberrevolution}
+    \begin{itemize}
+        \item Ich kann den \textbf{Zustand der Gesellschaft im Russland der Jahrhundertwende als Ausgangspunkt für den Ausbruch der Revolutionen} (1905, 1917) beschreiben: Gesellschaftsstruktur als Ganzes mit ihren Defiziten, Lage der Bauern, Fabrikarbeiter, Bürgertum und Adel (Gruppenarbeiten).
+        
+        \item Ich kenne \textbf{Anlass, Verlauf und Gründe für das Scheitern der Revolution von 1905}. Insbesondere kenne ich die spezifische Reaktion des Zaren auf die Aufstände und kann damit das \textbf{zaristische Herrschaftssystem ab 1906 (Oktoberverfassung) und den Scheinkonstitutionalismus} kritisch beurteilen.
+        
+        \item Ich kenne die \textbf{Parteienlandschaft Russlands um die Jahrhundertwende} mit den dazugehörigen \textbf{Parteienbezeichnungen mit Programm} (Vertretung welcher Bevölkerungsschicht mit welchem Programm) und ihrer Stellung im Links-rechts-Schema.
+    \end{itemize}
+
+\end{itemize}
+
+\end{document}
+```
+Erkläre mir den Stoff, den ich für die Prüfung können muss.
+§a§
+Absolut! Gerne erkläre ich dir den Prüfungsstoff basierend auf deinen Lernzielen. Ich habe den Stoff in der gleichen Reihenfolge wie in deinem Dokument gegliedert, damit du alles leicht zuordnen kannst.
+
+### Teil 1: Ausgang des Ersten Weltkriegs
+
+#### 1. Innere Entwicklung Deutschlands ab dem Waffenstillstand (Novemberrevolution)
+
+Nachdem die Oberste Heeresleitung (OHL) unter Hindenburg und Ludendorff im September 1918 eingestanden hatte, dass der Krieg militärisch verloren war, kam es in Deutschland zu einem dramatischen Umbruch.
+
+**Der Auslöser:**
+Die Revolution begann Ende Oktober 1918 mit dem **Matrosenaufstand in Kiel**. Die Matrosen weigerten sich, zu einer sinnlosen letzten Schlacht gegen die britische Flotte auszulaufen. Dieser Aufstand breitete sich wie ein Lauffeuer im ganzen Reich aus. Überall bildeten sich **Arbeiter- und Soldatenräte**, die die lokale Macht übernahmen.
+
+**Verfassungsmäßige Alternativen und ihre Vertreter:**
+
+1.  **Parlamentarische/Konstitutionelle Monarchie:**
+    *   **Idee:** Das Kaiserreich sollte erhalten bleiben, aber der Kaiser sollte nur noch eine repräsentative Rolle haben. Die Macht sollte bei einem vom Volk gewählten Parlament (dem Reichstag) liegen.
+    *   **Vertreter:** Teile des alten Eliten, liberale Bürger und anfangs auch die gemäßigten Sozialdemokraten (MSPD) unter **Friedrich Ebert**, die eine Revolution eigentlich vermeiden wollten. Dies war der Versuch, das System zu reformieren, um es zu retten.
+
+2.  **Parlamentarische Republik:**
+    *   **Idee:** Abschaffung der Monarchie und Errichtung einer Demokratie nach westlichem Vorbild mit einem Parlament, einer Regierung und einem Präsidenten, die alle vom Volk gewählt werden.
+    *   **Vertreter:** Die Mehrheitssozialdemokraten (**MSPD**) unter **Friedrich Ebert** und **Philipp Scheidemann**. Sie wollten eine geordnete, demokratische Veränderung und fürchteten ein Chaos wie in Russland.
+
+3.  **Räterepublik:**
+    *   **Idee:** Nach dem Vorbild der russischen Revolution sollten alle Macht den Arbeiter- und Soldatenräten gehören. Kein traditionelles Parlament, sondern eine direkte Herrschaft der Arbeiterklasse.
+    *   **Vertreter:** Der radikale linke Flügel. Hauptsächlich der **Spartakusbund** mit **Rosa Luxemburg** und **Karl Liebknecht** (später die KPD) sowie Teile der Unabhängigen Sozialdemokraten (**USPD**).
+
+**Durchsetzung der Parlamentarischen Republik:**
+
+*   **9. November 1918:** Die Revolution erreicht Berlin. Reichskanzler Max von Baden verkündet eigenmächtig die Abdankung des Kaisers und übergibt die Regierungsgeschäfte an **Friedrich Ebert (MSPD)**.
+*   **Doppelte Ausrufung der Republik:**
+    *   Um die Mittagszeit ruft **Philipp Scheidemann (MSPD)** vom Reichstagsgebäude die **"deutsche Republik"** aus, um den radikalen Kräften zuvorzukommen.
+    *   Wenige Stunden später ruft **Karl Liebknecht (Spartakusbund)** vom Berliner Stadtschloss die **"freie sozialistische Republik"** aus.
+*   **Ebert-Groener-Pakt (10. November 1918):** In einem geheimen Telefonat sichert General Groener (Nachfolger Ludendorffs in der OHL) der neuen Regierung unter Ebert die Unterstützung der Armee zu. Im Gegenzug verspricht Ebert, die alten Hierarchien im Militär zu erhalten und gegen die linksradikalen Kräfte vorzugehen. **Dies war eine entscheidende Weichenstellung gegen die Räterepublik.**
+*   **Spartakusaufstand (Januar 1919):** Die Spartakisten versuchen, die Regierung zu stürzen und eine Räterepublik zu errichten. Der Aufstand wird von der Armee und von rechtsgerichteten Freikorps mit brutaler Gewalt niedergeschlagen. Rosa Luxemburg und Karl Liebknecht werden ermordet.
+*   **Wahl zur Nationalversammlung (19. Januar 1919):** Es finden die ersten allgemeinen, gleichen und freien Wahlen für Männer und Frauen in Deutschland statt. Die Parteien, die für eine parlamentarische Demokratie waren, gewinnen eine klare Mehrheit.
+*   **Ergebnis:** Die Nationalversammlung tagt wegen der Unruhen in Berlin in Weimar und erarbeitet dort eine Verfassung – daher der Name **Weimarer Republik**. Die erste Regierung, die "Weimarer Koalition", wird von der **MSPD**, der katholischen **Zentrumspartei** und der liberalen **DDP** (Deutsche Demokratische Partei) gebildet.
+
+---
+
+#### 2. Dolchstoßlegende
+
+*   **Inhalt:** Die Behauptung, das deutsche Heer sei im Ersten Weltkrieg "im Felde unbesiegt" geblieben und sei von hinten "erdolcht" worden. Der "Dolchstoß" sei von zivilen Politikern (Sozialdemokraten, Demokraten), Revolutionären und Juden auf der Heimatfront ausgeführt worden, die durch die Novemberrevolution und die Unterzeichnung des Waffenstillstands den Sieg verhindert hätten.
+*   **Vertreter und ihre Ziele:**
+    *   **Vertreter:** Vor allem die alte militärische Führung, insbesondere **Paul von Hindenburg** und **Erich Ludendorff**. Auch konservative und rechtsnationale Politiker und Publizisten verbreiteten diese Lüge.
+    *   **Ziele:** Die OHL wollte die **Verantwortung für die militärische Niederlage von sich abwälzen** und sie stattdessen der neuen demokratischen Republik und ihren Vertretern ("Novemberverbrecher") in die Schuhe schieben. Die Legende sollte die Weimarer Republik von Anfang an delegitimieren und schwächen, was ihr auch nachhaltig gelang.
+
+---
+
+#### 3. Versailler Verträge im Vergleich zu Wilsons 14 Punkten
+
+*   **14 Punkte von Wilson (Januar 1918):**
+    *   Das Friedensprogramm des US-Präsidenten Woodrow Wilson.
+    *   **Kernaussagen:** "Frieden ohne Sieger", Selbstbestimmungsrecht der Völker, Abschaffung der Geheimdiplomatie, Abrüstung, Freiheit der Meere und die Gründung eines **Völkerbundes** zur Sicherung des Weltfriedens.
+    *   Deutschland hatte den Waffenstillstand im Glauben unterzeichnet, der Frieden würde auf Basis dieser Punkte geschlossen.
+
+*   **Versailler Vertrag (unterzeichnet Juni 1919):**
+    *   **Rolle der Siegermächte:**
+        *   **USA (Wilson):** Wollte seine 14 Punkte umsetzen, musste aber viele Kompromisse eingehen. Sein Hauptaugenmerk lag auf der Gründung des Völkerbundes.
+        *   **Frankreich (Clemenceau):** Hatte im Krieg am meisten gelitten. Hauptziel war die **dauerhafte Schwächung Deutschlands** und die Sicherung der eigenen Grenzen. Drängte auf harte Strafen.
+        *   **Großbritannien (Lloyd George):** Nahm eine mittlere Position ein. Wollte Deutschland bestrafen, aber nicht so sehr, dass es zu einem wirtschaftlichen Zusammenbruch oder politischem Chaos kommen würde, da man Deutschland als Handelspartner erhalten wollte.
+
+*   **Vergleich der Inhalte:**
+
+| Thema | 14 Punkte Wilsons (Ideal) | Versailler Vertrag (Realität) |
+| :--- | :--- | :--- |
+| **Kriegsschuld** | Keine Zuweisung einer Alleinschuld | **Artikel 231:** Deutschland und seine Verbündeten werden als alleinige Urheber des Krieges deklariert. |
+| **Territorien** | Selbstbestimmungsrecht der Völker | Große Gebietsabtretungen (Elsass-Lothringen, Posen, Westpreußen), Verlust aller Kolonien. Das "Selbstbestimmungsrecht" wurde oft ignoriert, z.B. bei Deutsch-Österreichern, die sich Deutschland anschließen wollten. |
+| **Abrüstung** | Allgemeine Abrüstung aller Staaten | **Einseitige Abrüstung Deutschlands:** Heer auf 100.000 Mann begrenzt, keine Luftwaffe, keine U-Boote, Entmilitarisierung des Rheinlandes. |
+| **Reparationen** | Wiederaufbau, keine Strafzahlungen | Extreme, in ihrer Höhe zunächst unbestimmte Reparationsforderungen, die die deutsche Wirtschaft massiv belasten sollten. |
+| **Völkerbund** | Zentraler Punkt zur Friedenssicherung | Wurde gegründet, aber Deutschland (und Russland) wurden zunächst ausgeschlossen. Die USA traten selbst nicht bei, was den Bund stark schwächte. |
+
+**Fazit:** Der Versailler Vertrag wurde in Deutschland als "Diktatfrieden" empfunden, da er in fast allen Punkten den Idealen Wilsons widersprach und die deutsche Delegation bei den Verhandlungen nicht teilnehmen durfte, sondern den Vertrag nur unterschreiben konnte. Dies war eine schwere Hypothek für die Weimarer Republik.
+
+---
+
+#### 4. Pariser Vorortsverträge und die Neuordnung
+
+Neben dem Vertrag von Versailles gab es weitere Verträge mit den Verbündeten Deutschlands:
+
+*   **Neuordnung Osturopas:**
+    *   Aus Teilen Russlands, Deutschlands und Österreich-Ungarns entstand das neue **Polen**.
+    *   Die **Tschechoslowakei** und **Jugoslawien** wurden als neue Vielvölkerstaaten gegründet.
+*   **Auflösung der Donaumonarchie (Österreich-Ungarn):**
+    *   Österreich und Ungarn wurden zu kleinen Republiken. Die neuen Staaten (Polen, Tschechoslowakei, Jugoslawien) erhielten große Teile des ehemaligen Reichsgebiets.
+*   **Auflösung des Osmanischen Reiches:**
+    *   Das Reich wurde zerschlagen. Die moderne **Türkei** entstand unter Atatürk in einem Befreiungskrieg.
+    *   Die arabischen Gebiete im **Nahen Osten** (Irak, Palästina, Syrien, Libanon) wurden **keine unabhängigen Staaten**, sondern **Mandatsgebiete** von Frankreich und Großbritannien.
+*   **Kolonialraum:**
+    *   Die deutschen Kolonien wurden ebenfalls als Mandate unter den Siegermächten aufgeteilt.
+
+**Grundschwierigkeiten, Interessen und Bewertung nach Wilson:**
+
+*   **Grundschwierigkeit:** Das **Selbstbestimmungsrecht der Völker** war in den ethnisch stark durchmischten Gebieten Osteuropas und des Balkans kaum fair umzusetzen. Jeder neue Grenzverlauf schuf unweigerlich neue Minderheitenprobleme (z.B. Deutsche in Polen und der Tschechoslowakei).
+*   **Interessen:** Die imperialen Interessen von **Großbritannien und Frankreich** standen oft über Wilsons Prinzipien. Sie nutzten das Mandatssystem, um ihre Kolonialreiche de facto zu vergrößern (besonders im Nahen Osten), anstatt die Völker in die Unabhängigkeit zu führen.
+*   **Bewertung:** Die Neuordnung scheiterte oft an den "universellen Prinzipien von Wilson". Das Selbstbestimmungsrecht wurde sehr selektiv angewandt – es galt für Polen und Tschechen, aber nicht für Deutsche, Österreicher oder Araber. Die Ergebnisse legten den Grundstein für zahlreiche zukünftige Konflikte, einschließlich des Zweiten Weltkriegs.
+
+***
+
+### Teil 2: Russische Revolutionen – Ursachen bis Oktoberrevolution
+
+#### 1. Gesellschaft im Russland der Jahrhundertwende
+
+Russland war um 1900 ein riesiger, rückständiger Agrarstaat mit einer tief gespaltenen Gesellschaft.
+
+*   **Gesellschaftsstruktur:** Eine extrem starre Ständegesellschaft unter der **autokratischen Herrschaft des Zaren Nikolaus II.** Er herrschte ohne Verfassung und ohne Parlament. Seine Macht stützte sich auf Adel, Militär, Kirche und die Geheimpolizei (`Ochrana`).
+*   **Lage der Bauern (~80% der Bevölkerung):** Obwohl die Leibeigenschaft 1861 aufgehoben wurde, lebten die meisten Bauern in bitterer Armut. Sie hatten zu wenig Land, waren hoch verschuldet und nutzten veraltete Anbaumethoden. Der "Landhunger" war ein zentrales Problem.
+*   **Lage der Fabrikarbeiter:** Eine kleine, aber schnell wachsende und in den Städten (St. Petersburg, Moskau) konzentrierte Gruppe. Sie litten unter katastrophalen Arbeitsbedingungen: extrem lange Arbeitszeiten, niedrige Löhne, keine Rechte, miserable Wohnverhältnisse. Diese Gruppe war sehr anfällig für revolutionäre sozialistische Ideen.
+*   **Lage von Bürgertum und Adel:** Das **Bürgertum** war im Vergleich zu Westeuropa schwach und politisch machtlos. Der **Adel** besaß den Großteil des Landes und besetzte die wichtigsten Posten in Verwaltung und Militär, hatte aber seine einstige wirtschaftliche Vormachtstellung teilweise verloren.
+
+Diese Mischung aus sozialem Elend, wirtschaftlicher Rückständigkeit und politischer Unterdrückung schuf eine hochexplosive Lage.
+
+---
+
+#### 2. Revolution von 1905
+
+*   **Anlass:** Die Niederlage im **Russisch-Japanischen Krieg (1904/05)** deckte die Schwäche und Inkompetenz des Regimes auf. Der direkte Auslöser war der **"Blutsonntag" in St. Petersburg (Januar 1905)**. Truppen des Zaren schossen auf eine friedliche Demonstration von Arbeitern, die dem Zaren eine Bittschrift für bessere Lebensbedingungen überreichen wollten. Hunderte starben.
+*   **Verlauf:** Der Blutsonntag zerstörte den Mythos vom "guten Zaren". Es kam zu landesweiten Streiks, Bauernaufständen und Meutereien in der Armee (z.B. auf dem Panzerkreuzer Potemkin). Erstmals bildeten sich **Sowjets** (Räte) als politische Vertretungsorgane der Arbeiter.
+*   **Gründe für das Scheitern:**
+    1.  Die Armee blieb als Ganzes loyal zum Zaren.
+    2.  Die revolutionären Gruppen (Liberale, Sozialisten) waren sich uneinig über ihre Ziele.
+    3.  Der Zar spaltete die Opposition durch gezielte Zugeständnisse.
+*   **Reaktion des Zaren und "Scheinkonstitutionalismus":**
+    *   Um die Revolution zu beenden, erließ der Zar das **Oktobermanifest**. Darin versprach er bürgerliche Grundrechte (z.B. Meinungsfreiheit) und die Einrichtung eines gewählten Parlaments, der **Duma**.
+    *   Russland wurde damit formell zu einer konstitutionellen Monarchie. In der Praxis war dies jedoch ein **"Scheinkonstitutionalismus"**, da der Zar weiterhin die absolute Macht besaß. Er konnte die Duma jederzeit auflösen, die Regierung ernennen und hatte ein Vetorecht gegen alle Gesetze. Nachdem die erste, sehr oppositionelle Duma gewählt war, löste er sie schnell wieder auf und änderte das Wahlrecht so, dass Adel und Großgrundbesitzer stark bevorzugt wurden.
+
+---
+
+#### 3. Parteienlandschaft Russlands
+
+Die Parteien lassen sich grob in drei Lager einteilen (von links nach rechts):
+
+1.  **Sozialistisches/Revolutionäres Lager (Links):**
+    *   **Sozialrevolutionäre (SR):**
+        *   **Programm:** Agrarsozialismus. Hauptziel war die Enteignung des Großgrundbesitzes und die Verteilung des Landes an die Bauern. Nutzten auch politischen Terror als Mittel.
+        *   **Vertretung:** Hauptsächlich die Bauernschaft.
+    *   **Sozialdemokratische Arbeiterpartei Russlands (SDAPR):**
+        *   **Programm:** Marxismus. Ziel war die Revolution des Proletariats.
+        *   **Vertretung:** Fabrikarbeiter.
+        *   Die Partei spaltete sich 1903 in zwei verfeindete Flügel:
+            *   **Bolschewiki** (dt. "Mehrheitler") unter **Lenin**: Radikal. Wollten eine kleine, disziplinierte Partei von Berufsrevolutionären, die die Revolution anführt. Strikte Ablehnung der Zusammenarbeit mit dem Bürgertum.
+            *   **Menschewiki** (dt. "Minderheitler"): Gemäßigt. Wollten eine offene Massenpartei nach dem Vorbild der deutschen SPD. Waren bereit, mit liberalen Kräften zusammenzuarbeiten und glaubten, Russland müsse erst eine bürgerliche Revolution durchlaufen.
+
+2.  **Liberales Lager (Mitte):**
+    *   **Konstitutionelle Demokraten ("Kadetten"):**
+        *   **Programm:** Wollten eine parlamentarische Monarchie nach britischem Vorbild oder eine Republik. Forderten eine Verfassung und umfassende bürgerliche Freiheiten.
+        *   **Vertretung:** Liberales Bürgertum, Intellektuelle, fortschrittliche Adlige.
+
+3.  **Konservatives/Monarchistisches Lager (Rechts):**
+    *   **Oktobristen:**
+        *   **Programm:** Konservative Liberale. Akzeptierten das Oktobermanifest von 1905, wollten aber eine starke Monarchie beibehalten.
+        *   **Vertretung:** Großgrundbesitzer, Industrielle.
+    *   **"Schwarze Hundertschaften":**
+        *   **Programm:** Extrem reaktionär, nationalistisch und antisemitisch. Befürworteten die uneingeschränkte Autokratie des Zaren und verübten Gewalttaten (Pogrome) gegen Juden und Revolutionäre.
+        *   **Vertretung:** Reaktionäre Teile des Adels, Klerus und Kleinbürgertums.
+
+Ich hoffe, diese detaillierte Zusammenfassung hilft dir bei der Vorbereitung. Viel Erfolg für deine Prüfung

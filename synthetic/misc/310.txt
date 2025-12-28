@@ -1,0 +1,142 @@
+§u§
+```
+root@servernode2:~# systemctl status nginx.service
+× nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; preset: enabled)
+     Active: failed (Result: exit-code) since Thu 2025-10-09 16:24:15 CEST; 11s ago
+       Docs: man:nginx(8)
+    Process: 2353 ExecStartPre=/usr/sbin/nginx -t -q -g daemon on; master_process on; (code=exited, status=1/FAILURE)
+        CPU: 50ms
+
+Oct 09 16:24:15 servernode2 systemd[1]: Starting nginx.service - A high performance web server and a reverse proxy server...
+Oct 09 16:24:15 servernode2 nginx[2353]: 2025/10/09 16:24:15 [emerg] 2353#2353: a duplicate default server for 0.0.0.0:80 in /etc/nginx/sites-enabled/ksalp-ch:4
+Oct 09 16:24:15 servernode2 nginx[2353]: nginx: configuration file /etc/nginx/nginx.conf test failed
+Oct 09 16:24:15 servernode2 systemd[1]: nginx.service: Control process exited, code=exited, status=1/FAILURE
+Oct 09 16:24:15 servernode2 systemd[1]: nginx.service: Failed with result 'exit-code'.
+Oct 09 16:24:15 servernode2 systemd[1]: Failed to start nginx.service - A high performance web server and a reverse proxy server.
+```
+§a§
+Based on the error message, the Nginx service is failing to start because there's a duplicate default server configuration for port 80.
+
+## Problem Analysis
+
+The key error is:
+```
+2025/10/09 16:24:15 [emerg] 2353#2353: a duplicate default server for 0.0.0.0:80 in /etc/nginx/sites-enabled/ksalp-ch:4
+```
+
+This indicates that there are multiple server blocks configured as the "default_server" for port 80, and Nginx doesn't know which one to use.
+
+## Solution
+
+You need to identify and fix the duplicate default server configuration. Here's how to do it:
+
+1. **First, examine the specific file mentioned in the error:**
+   ```bash
+   cat /etc/nginx/sites-enabled/ksalp-ch
+   ```
+   Look for lines that contain `listen 80 default_server` or similar. The error mentions line 4 specifically.
+
+2. **Check all Nginx configuration files for other default servers:**
+   ```bash
+   grep -r "default_server" /etc/nginx/sites-enabled/
+   ```
+
+3. **Fix the duplicate by:**
+   - Either removing the `default_server` parameter from one of the server blocks (keeping only one)
+   - Or changing the port number for one of the servers
+
+4. **Test your Nginx configuration before restarting:**
+   ```bash
+   nginx -t
+   ```
+
+5. **If the test passes, restart Nginx:**
+   ```bash
+   systemctl restart nginx.service
+   ```
+
+## Example Fix
+
+If you find something like this in `/etc/nginx/sites-enabled/ksalp-ch`:
+```
+server {
+    listen 80 default_server;
+    server_name example.com;
+    ...
+}
+```
+
+And another similar configuration in another file, you would change one of them to:
+```
+server {
+    listen 80;  # Remove default_server
+    server_name another-domain.com;
+    ...
+}
+```
+
+Only one server block should have the `default_server` parameter for each port you're using.
+§u§
+What is the `default_server` parameter?
+§a§
+# The `default_server` Parameter in Nginx
+
+The `default_server` parameter is a directive used in Nginx configuration to specify which server block should handle requests that don't match any other server block's domain name or IP address.
+
+## Purpose and Functionality
+
+When Nginx receives a request, it follows this process:
+1. It checks the `Host` header of the incoming request
+2. It tries to match this value against the `server_name` directives in all server blocks
+3. If no match is found, it serves the request using the server block marked as `default_server`
+
+## Syntax
+
+```nginx
+server {
+    listen 80 default_server;
+    server_name _;  # Using underscore as a catch-all
+    ...
+}
+```
+
+## Key Points
+
+- **Only one default server per port**: As you saw in your error message, you can't have multiple `default_server` directives for the same port (like port 80 in your case)
+- **Fallback mechanism**: It acts as a catch-all for requests to your server that don't match any specific domain
+- **Security benefit**: Can be used to handle requests for unknown domains, potentially returning a 404 or 444 response
+
+## Common Usage Patterns
+
+```nginx
+# Example 1: Serving a custom "not found" page
+server {
+    listen 80 default_server;
+    server_name _;
+    return 404;
+}
+
+# Example 2: Redirecting all unknown domains to a main site
+server {
+    listen 80 default_server;
+    server_name _;
+    return 301 https://example.com$request_uri;
+}
+
+# Example 3: Dropping requests for unknown domains
+server {
+    listen 80 default_server;
+    server_name _;
+    return 444;  # Special Nginx code to close connection without response
+}
+```
+
+## In Your Case
+
+Your error occurred because you have multiple server blocks with `default_server` for port 80. To fix this, you need to:
+
+1. Keep only one server block with `default_server` for port 80
+2. Remove the `default_server` parameter from all other server blocks using port 80
+
+This ensures Nginx knows exactly which configuration to use when it receives requests that don't match any specific domain.

@@ -1,0 +1,12 @@
+§u§
+What is the minimal version of llama.cpp to run apertus?
+§a§
+The minimum version of llama.cpp required to run Apertus models is **b6686** or newer. This version added support for the Apertus architecture, which uses a novel xIELU activation function and other custom components.
+
+If you attempt to use an older version of llama.cpp, you will encounter an error message stating:
+
+```
+error loading model architecture: unknown model architecture: 'apertus'
+```
+
+This error occurs because earlier versions of llama.cpp did not recognize the Apertus architecture.

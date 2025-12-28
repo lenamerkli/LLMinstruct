@@ -1,0 +1,533 @@
+§u§
+```latex
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{xurl}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+
+\title{Zusammenfassung 2026-04-02}
+\author{Johanna Müller}
+
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\bigskip\bigskip
+
+
+\section{Lernziele}
+
+\subsection{E-ID}
+\begin{itemize}
+    \item \textbf{Grundlagen der Abstimmung:} Sie können den zentralen Gegenstand der Abstimmung zur elektronischen Identität (E-ID) klar wiedergeben, das Ziel der Entscheidung erläutern und den gesellschaftlichen Kontext, in dem die Abstimmung stattfand, darstellen.
+    \item \textbf{Technische Umsetzung:} Sie können die wichtigsten Bausteine der technischen Umsetzung der E-ID benennen und deren Funktionsweise verständlich erklären.
+    \item \textbf{Politischer Kontext:} Sie können die relevanten politischen Akteure, ihre jeweiligen Haltungen und Positionen sowie die zentralen Debatten benennen, die die Diskussion um die E-ID geprägt haben.
+    \item \textbf{Argumente:} Sie können die wichtigsten Argumente für und gegen die E-ID formulieren, deren inhaltliche Grundlagen darlegen und die zugrundeliegenden politischen Werte und Ideologien einordnen.
+    \item \textbf{Bewertung im technischen Kontext:} Sie können Pro- und Contra-Argumente anhand der technischen Realisierung der E-ID kritisch bewerten.
+\end{itemize}
+
+\subsection{Künstliche Intelligenz}
+\begin{itemize}
+    \item Sie können die Begriffe Künstliche Intelligenz (KI) und Machine Learning (ML) definieren und die wichtigsten Arten von ML unterscheiden.
+    \item Sie können konkrete Anwendungsbeispiele von ML-Technologien im Alltag und in der Wirtschaft beschreiben und in die jeweilige Kategorie einordnen.
+    \item Sie können die Grundbegriffe Generative KI, Supervised- \& Unsupervised Learning, Reinforcement Learning (RL), Large Language Models (LLMs), Neuronale Netze, Deep Learning, Training, Validierung und Testing unterscheiden und erläutern.
+    \item Sie können die Grundidee des Reinforcement Learning mit den richtigen Fachbegriffen erklären (Agent, Environment, Reward, Actions, State).
+    \item Sie können die Funktionsweise von Q-Learning beschreiben und einfache Q-Tabellen interpretieren.
+    \item Sie verstehen, wie der Lernprozess in Q-Learning funktioniert und was genau während dem Lernprozess (Q-Werte) gelernt wird.
+    \item Sie können das Prinzip von Exploration und Exploitation bei lernenden Agenten beschreiben.
+    \item Sie verstehen die Hyperparameter $\alpha$ (Alpha - Lernrate), $\gamma$ (Gamma - Diskontfaktor) und $\epsilon$ (Epsilon - Explorationsrate) in Q-Learning und können den Unterschied zwischen Immediate und Delayed Reward beschreiben.
+    \item Sie können erklären, warum Vertrauen in KI-Systeme wichtig ist (z. B. Nachvollziehbarkeit, Fairness usw.).
+    \item Sie kennen mögliche Gefahren von KI und LLMs.
+    \item Sie können Situationen bewerten, in denen KI-Entscheidungen problematisch sein können (z. B. im Kontext des EU-AI-Acts).
+\end{itemize}
+```
+Schreibe eine Zusammenfassung, welche den Stoff vermittelt, der benötigt wird, um die Lernziele zu erfüllen.
+§a§
+```latex
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{xurl}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+
+\title{Zusammenfassung 2026-04-02}
+\author{Johanna Müller}
+
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\bigskip\bigskip
+
+
+\section{Lernziele}
+
+\subsection{E-ID}
+\begin{itemize}
+    \item \textbf{Grundlagen der Abstimmung:} Sie können den zentralen Gegenstand der Abstimmung zur elektronischen Identität (E-ID) klar wiedergeben, das Ziel der Entscheidung erläutern und den gesellschaftlichen Kontext, in dem die Abstimmung stattfand, darstellen.
+    \item \textbf{Technische Umsetzung:} Sie können die wichtigsten Bausteine der technischen Umsetzung der E-ID benennen und deren Funktionsweise verständlich erklären.
+    \item \textbf{Politischer Kontext:} Sie können die relevanten politischen Akteure, ihre jeweiligen Haltungen und Positionen sowie die zentralen Debatten benennen, die die Diskussion um die E-ID geprägt haben.
+    \item \textbf{Argumente:} Sie können die wichtigsten Argumente für und gegen die E-ID formulieren, deren inhaltliche Grundlagen darlegen und die zugrundeliegenden politischen Werte und Ideologien einordnen.
+    \item \textbf{Bewertung im technischen Kontext:} Sie können Pro- und Contra-Argumente anhand der technischen Realisierung der E-ID kritisch bewerten.
+\end{itemize}
+
+\subsection{Künstliche Intelligenz}
+\begin{itemize}
+    \item Sie können die Begriffe Künstliche Intelligenz (KI) und Machine Learning (ML) definieren und die wichtigsten Arten von ML unterscheiden.
+    \item Sie können konkrete Anwendungsbeispiele von ML-Technologien im Alltag und in der Wirtschaft beschreiben und in die jeweilige Kategorie einordnen.
+    \item Sie können die Grundbegriffe Generative KI, Supervised- \& Unsupervised Learning, Reinforcement Learning (RL), Large Language Models (LLMs), Neuronale Netze, Deep Learning, Training, Validierung und Testing unterscheiden und erläutern.
+    \item Sie können die Grundidee des Reinforcement Learning mit den richtigen Fachbegriffen erklären (Agent, Environment, Reward, Actions, State).
+    \item Sie können die Funktionsweise von Q-Learning beschreiben und einfache Q-Tabellen interpretieren.
+    \item Sie verstehen, wie der Lernprozess in Q-Learning funktioniert und was genau während dem Lernprozess (Q-Werte) gelernt wird.
+    \item Sie können das Prinzip von Exploration und Exploitation bei lernenden Agenten beschreiben.
+    \item Sie verstehen die Hyperparameter $\alpha$ (Alpha - Lernrate), $\gamma$ (Gamma - Diskontfaktor) und $\epsilon$ (Epsilon - Explorationsrate) in Q-Learning und können den Unterschied zwischen Immediate und Delayed Reward beschreiben.
+    \item Sie können erklären, warum Vertrauen in KI-Systeme wichtig ist (z. B. Nachvollziehbarkeit, Fairness usw.).
+    \item Sie kennen mögliche Gefahren von KI und LLMs.
+    \item Sie können Situationen bewerten, in denen KI-Entscheidungen problematisch sein können (z. B. im Kontext des EU-AI-Acts).
+\end{itemize}
+
+
+\section{Grundlagen der Abstimmung}
+
+\subsection{Erste Abstimmung 2021}
+
+\subsubsection{Zentraler Gegenstand}
+Der Bundesrat und das Parlament hatten ein Gesetz ausgearbeitet für eine staatlich anerkannte elektronische Identität (E-ID), mit der sich Menschen eindeutig im Internet identifizieren können, um online Waren oder Dienstleistungen zu bestellen.
+
+\subsubsection{Das Modell der öffentlich-privaten Partnerschaft}
+Das erste E-ID-Gesetz sah eine besondere Arbeitsteilung vor:
+Private, staatlich zugelassene Anbieter sollten die E-ID ausstellen, nachdem der Bund die Identität der Antragsteller geprüft hätte
+Private Unternehmen wie Grossbanken, Versicherungsgesellschaften und staatsnahe Konzerne hätten den digitalen Schweizer Pass ausstellen und sensible private Daten verwalten sollen.
+
+\subsubsection{Das Abstimmungsergebnis}
+Am 7. März 2021 wurde das Gesetz mit $64.4\%$ Nein-Stimmen abgelehnt. Die Wähler lehnten die Einführung hauptsächlich ab, weil sie von privaten Unternehmen ausgegeben werden sollte.
+
+\subsection{Gesellschaftlicher Kontext der ersten Abstimmung}
+
+\subsubsection{Vertrauensproblematik}
+Eine repräsentative Umfrage hat ergeben, dass 87 Prozent der Bevölkerung den digitalen Pass vom Staat beziehen möchten.
+Beim Datenschutz fehlte das Vertrauen in private Unternehmen.
+Hauptkritikpunkt war die Privatisierung einer staatlichen Kernaufgabe.
+
+\subsubsection{Digitalisierungskontext}
+Es gab verschiedene Identifikationsmethoden im Internet, oft mit Benutzername und Passwort, aber keine war gesetzlich geregelt.
+Die Schweiz hatte im Vergleich zu anderen Ländern noch keine staatliche digitale Identitätslösung.
+
+\subsection{Zweite Abstimmung 2025}
+
+\subsubsection{Der neue Ansatz}
+Das neue Gesetz schafft die Grundlage für eine staatlich ausgestellte E-ID. Die Bundesverwaltung arbeitete eine neue Vorlage aus, bei der die E-ID vom Bund herausgegeben wird, wodurch der Hauptkritik der Gegner Rechnung getragen wurde.
+
+\subsubsection{Das Abstimmungsergebnis 2025}
+Die elektronische Identität wurde mit 50,4\% äusserst knapp angenommen. Das Ja-Lager hatte einen Vorsprung von nur etwas mehr als 21'000 Stimmen.
+
+\subsection{Ziele der E-ID}
+
+\begin{enumerate}
+    \item \textbf{Sichere digitale Identifikation}: Eindeutige und sichere Identifikation im Internet für Online-Geschäfte und -Dienstleistungen.
+    \item \textbf{Datenschutz stärken}: Ein wichtiges Ziel war, den Datenschutz zu stärken und dem E-Government einen Schub zu geben.
+    \item \textbf{Verwaltungsmodernisierung}: Digitalisierung von Behördendiensten ermöglichen.
+    \item \textbf{Freiwilligkeit}: Die E-ID ist freiwillig.
+\end{enumerate}
+
+\subsection{Gesellschaftlicher Kontext der zweiten Abstimmung}
+Das knappe Ergebnis war ein Misstrauensvotum gegenüber der Regierung.
+
+\section{Technische Umsetzung}
+
+\subsection{Zweistufige Umsetzungsstrategie}
+Der Bundesrat hat am 6. Dezember 2024 die technischen Grundsätze für die neue E-ID festgelegt.
+Ab 2026 wird in einem ersten Schritt die elektronische Brieftasche SWIYU eingeführt.
+
+\subsection{Die SWIYU-Wallet als zentrale Komponente}
+„Swiyu” heisst die Wallet-App des Bundes, in der die E-ID aufbewahrt wird. Der Name ist eine Kombination aus ``Switzerland'' und ``you''.
+Er soll zeigen, dass die App aus der Schweiz stammt und für Schweizer*innen gedacht ist.
+Die Wallet basiert auf einer hochsicheren Vertrauensinfrastruktur, die es den Nutzern ermöglicht, ihre Identität in einer sicheren Umgebung zu verwalten.
+
+\subsection{Vertrauensinfrastruktur (Trust Infrastructure)}
+Die swiyu Trust Infrastructure bildet das Rückgrat für die Implementierung des BGEID.
+Ihr Hauptzweck ist es, eine technische Grundlage zu schaffen, die sichere und vertrauenswürdige digitale Interaktionen zwischen Ausstellern, Inhabern und Verifikateuren digitaler Credentials ermöglicht.
+
+\subsubsection{Inhaber (Holder)}
+Die Wallet gewährleistet, dass nur der Nutzer selbst auf die gespeicherten Zugangsdaten zugreifen und sie teilen kann. Per Design werden Credentials ausschliesslich dezentral auf dem Gerät eines Nutzers gespeichert. Dadurch werden die Risiken von Massendatenlecks reduziert und eine Verfolgung der Nutzung durch eine zentrale Stelle verhindert.
+
+\subsubsection{Aussteller (Issuer)}
+Aussteller sind Entitäten, die für die Erstellung und Ausgabe digitaler Credentials an die Wallets von Inhabern verantwortlich sind. Der Aussteller entscheidet unabhängig, welche Informationen in einem Credential enthalten sind. Um diese Informationen zu zertifizieren, signiert der Aussteller das Credential kryptografisch.
+
+\subsubsection{Verifikatoren (Verifier)}
+Verifikatoren sind Entitäten, die die von Inhabern präsentierten Credentials validieren. Sie bestätigen die Integrität, Authentizität und Gültigkeit von Credentials, indem sie die kryptografischen Signaturen überprüfen.
+
+\subsection{Technische Standards und Formate}
+
+\subsubsection{Verifiable Credentials}
+Die genaue technische Bezeichnung für die E-ID lautet ``Selective Disclosure JSON Web Token Verifiable Credential'', also ein digital signiertes und prüfbares Datenpaket im JSON-Format, das selektiv Informationen preisgeben kann.
+
+\subsubsection{Self-Sovereign Identity (SSI) Prinzip}
+Nutzer sollen grösstmögliche Kontrolle über ihre Daten haben. Dies reduziert die unbeabsichtigte Weitergabe persönlicher Daten der Nutzer.
+
+\subsection{Sicherheitsarchitektur}
+
+\subsubsection{Lokale Speicherung mit Hardware-Sicherheit}
+Die E-ID wird direkt in der Wallet-App auf dem Smartphone gespeichert. Die Verbindung zum Inhaber wird durch die Generierung kryptografischen Schlüsselmaterials im Secure Element des Smartphones während des Antragsprozesses hergestellt.
+
+\subsection{Datenschutz durch selektive Offenlegung}
+Nutzer können ihre elektronische Identitätskarte entweder vollständig oder teilweise zeigen. Dabei werden nur die nötigen Informationen übermittelt, zum Beispiel die Bestätigung, dass jemand über 18 Jahre alt ist, ohne dass alle persönlichen Daten offengelegt werden.
+
+\section{Politischer Kontext}
+
+\subsection{Politische Akteure und ihre Positionen bei der ersten Abstimmung 2021}
+
+\subsubsection{Befürworter des ersten E-ID-Gesetzes}
+Der Bundesrat und das Parlament unterstützten das Modell der öffentlich-privaten Partnerschaft.
+Auch die bürgerlichen Parteien (FDP, CVP/Die Mitte und SVP) sprachen sich mehrheitlich für diese Lösung aus.
+Economiesuisse und weitere Wirtschaftsverbände betonten dabei die Dringlichkeit einer digitalen Identitätslösung für die Schweiz.
+
+\subsubsection{Gegner des ersten E-ID-Gesetzes}
+Die linken Parteien (SP und Grüne) lehnten die Privatisierung einer staatlichen Kernaufgabe ab.
+Das Referendum wurde von der Digitalen Gesellschaft angeführt, während Campax und weitere zivilgesellschaftliche Organisationen die Datenschutzaspekte kritisierten.
+Zudem äusserten Seniorenverbände Bedenken bezüglich einer möglichen digitalen Ausgrenzung älterer Menschen.
+
+\subsection{Zentrale Debatten der ersten Abstimmung}
+
+\subsubsection{Privatisierung vs. Staatsaufgabe}
+Die Hauptkontroverse drehte sich um die Frage, ob die Ausstellung von Identitätsdokumenten eine hoheitliche Aufgabe des Staates sei.
+
+\subsubsection{Datenschutz und Vertrauen}
+Der grosse Kritikpunkt bei der ersten Abstimmung war, dass bei der Infrastruktur auf private Anbieter wie Banken oder IT-Firmen gesetzt werden sollte.
+
+\subsubsection{Inklusion vs. digitale Spaltung}
+Seniorenorganisationen befürchteten eine digitale Ausgrenzung älterer Menschen.
+
+\subsection{Politische Akteure und ihre Positionen bei der zweiten Abstimmung 2025}
+
+\subsubsection{Befürworter der zweiten E-ID}
+Eine überparteiliche Allianz aus Ratsmitgliedern der SVP, FDP, Die Mitte, GLP, SP und den Grünen unterstützte die Vorlage.
+Auch der Bundesrat und Justizminister Beat Jans verteidigten die neue staatliche Lösung.
+Breite Unterstützung kam von der Wirtschaft und verschiedenen zivilgesellschaftlichen Organisationen, wobei die Auslandschweizer-Organisation darin einen wichtigen Fortschritt sah.
+
+\subsubsection{Gegner der zweiten E-ID}
+Die Hauptopposition gegen die neue E-ID formierte sich im Komitee E-ID-Gesetz-NEIN.
+Zu den führenden Organisationen im Referendum gehörten die Piratenpartei, die Junge SVP und die Freunde der Verfassung.
+Auch die neugegründete Partei Digitale Integrität Schweiz schloss sich der Opposition an.
+Als erste Organisation hatte sich Mass-Voll gegen die staatliche E-ID positioniert und war bereits frühzeitig aktiv.
+
+\subsection{Zentrale Debatten der zweiten Abstimmung}
+
+\subsubsection{Freiwilligkeit versus faktischer Zwang}
+Im Gesetz fehlt ein Diskriminierungsverbot. Kann oder will eine Person die E-ID nicht nutzen, muss sie ``persönlich erscheinen''.
+
+\subsubsection{Datenschutz und Überwachungsängste}
+Seit der Covid-19-Pandemie wird ein stärkeres Misstrauen gegenüber dem Staat beobachtet.
+
+\subsubsection{Swisscom-Affäre}
+Gegen die unzulässige Einflussnahme der Swisscom hat das Komitee E-ID-Gesetz-NEIN am 22. September 2025 Abstimmungsbeschwerde eingereicht.
+
+\section{Argumente für und gegen die E-ID}
+
+\subsection{Argumente für die E-ID}
+
+\subsubsection{Digitale Souveränität und Modernisierung}
+Die Schweiz benötigt eine verlässliche und sichere digitale Identität. Länder wie Estland zeigen bereits eindrücklich, wohin die Reise gehen kann.
+Ohne eigene E-ID droht der Schweiz ein spürbarer digitaler Rückstand.
+
+Das Projekt ist Ausdruck einer klaren Fortschrittsorientierung und des Vertrauens in technologischen Wandel. Gleichzeitig stärkt eine eigenständige digitale Infrastruktur die nationale Souveränität. Nicht zuletzt erhöht eine innovative E-ID die Wettbewerbsfähigkeit des Wirtschaftsstandorts Schweiz und verschafft Unternehmen wie Bürgerinnen und Bürgern entscheidende Vorteile.
+
+\subsubsection{Sicherheit und Datenschutz durch staatliche Kontrolle}
+Eine staatlich verankerte E-ID garantiert höhere Sicherheitsstandards als die heute verbreiteten privaten Login-Dienste. Das Prinzip der Datensparsamkeit sorgt dafür, dass nur jene Informationen offengelegt werden, die für den jeweiligen Vorgang zwingend erforderlich sind. Zudem werden die Daten dezentral auf dem eigenen Endgerät gespeichert, sodass Nutzerinnen und Nutzer jederzeit die volle Kontrolle über ihre Informationen behalten.
+
+\subsubsection{Vereinfachung und Effizienz}
+Mit einer E-ID lassen sich zahlreiche Behördengänge vollständig digitalisieren, was sowohl der Bevölkerung als auch der Verwaltung wertvolle Zeit spart.
+Besonders profitieren Auslandschweizer*innen, die künftig viele Dienstleistungen unkompliziert online erledigen können.
+
+\subsection{Argumente gegen die E-ID}
+
+\subsubsection{Überwachung und Missbrauchspotential}
+Kritikerinnen und Kritiker sehen die Gefahr eines „gläsernen Bürgers“, wenn viele digitale Spuren über eine einzige Identität zusammengeführt werden können. Selbst bei klaren gesetzlichen Schranken bleibt die Möglichkeit staatlicher Überwachung oder späterer Zweckausweitung bestehen. Hinzu kommt das Risiko von Datenlecks und Hackerangriffen: Zentral angelegte Identitätssysteme sind attraktive Ziele, und ein erfolgreicher Angriff könnte weitreichende Folgen für Betroffene haben.
+
+Aus einem libertären Freiheitsverständnis speist sich ein grundlegendes Misstrauen gegenüber staatlicher Machtkonzentration. Bürgerrechtsliberale Perspektiven betonen den Schutz der Privatsphäre und fordern strikte Grenzen für Datenerhebung und -nutzung. Eine konservative Staatsskepsis, die seit der Corona-Pandemie zugenommen hat, verstärkt diese Vorbehalte und warnt vor schleichender Ausweitung staatlicher Eingriffe.
+
+\subsubsection{Faktischer Zwang trotz formaler Freiwilligkeit}
+Obwohl die E-ID formal freiwillig sein kann, droht faktischer Druck: Dienstleistungen könnten ohne E-ID teurer, umständlicher oder schwerer zugänglich werden. Das birgt die Gefahr digitaler Diskriminierung für Menschen, die die E-ID aus Prinzip oder aus praktischen Gründen nicht nutzen wollen oder können. Über die Zeit kann so eine schleichende Pflicht entstehen, wenn analoge Alternativen ausgedünnt oder weniger attraktiv gestaltet werden.
+
+\subsubsection{Digitale Spaltung der Gesellschaft}
+Eine starke Digitalisierung amtlicher Prozesse kann ältere Menschen oder wenig digital affine Personen abgehängen. Auch das Stadt-Land-Gefälle in digitaler Infrastruktur und Kompetenz spielt hinein und könnte bestehende Unterschiede vergrössern. Insgesamt besteht die Sorge, dass soziale Ungleichheiten verstärkt werden, wenn der Zugang zu zentralen Leistungen zunehmend von digitalen Fähigkeiten und Ressourcen abhängt.
+
+\section{Bewertung im technischen Kontext}
+
+\subsection{Bewertung der Pro-Argumente}
+
+\subsubsection{Höhere Sicherheit durch staatliche E-ID}
+Das Argument der höheren Sicherheit einer staatlichen E-ID lässt sich technisch nur teilweise bestätigen. Auf der einen Seite gibt es klare Stärken: Die Verwendung von Secure Elements entspricht den höchsten internationalen Sicherheitsstandards. Die kryptografische Signierung ist technisch robust und bewährt. Zudem reduziert die dezentrale Speicherung der Daten auf den Geräten der Nutzerinnen und Nutzer das Risiko von Massendatenlecks erheblich, da es keinen zentralen Angriffspunkt gibt.
+
+Allerdings bestehen auch Einschränkungen: Die Sicherheit des gesamten Systems hängt letztlich von der Sicherheit des verwendeten Smartphones ab. Wird das Gerät kompromittiert, ist auch die E-ID gefährdet. Zudem kann Hardware prinzipiell Schwachstellen enthalten, die zum Zeitpunkt der Einführung möglicherweise noch unbekannt sind. Schliesslich schafft die Abhängigkeit von biometrischen Verfahren zusätzliche Angriffsvektoren und wirft Fragen zur Unveränderlichkeit biometrischer Daten auf.
+
+\subsubsection{Datensparsamkeit durch Selective Disclosure}
+Das Argument der Datensparsamkeit ist aus technischer Sicht berechtigt. Die zugrundeliegende Technologie ermöglicht tatsächlich eine selektive Datenfreigabe, bei der Nutzerinnen und Nutzer nur diejenigen Informationen preisgeben müssen, die für einen konkreten Zweck erforderlich sind. Darüber hinaus erlauben Zero-Knowledge-Proofs den Nachweis bestimmter Eigenschaften (etwa Volljährigkeit), ohne die zugrundeliegenden Daten selbst offenlegen zu müssen. Dies ist eines der stärksten technischen Argumente für die Einführung einer E-ID.
+
+
+\subsection{Bewertung der Contra-Argumente}
+
+\subsubsection{Gefahr der totalen Überwachung}
+Die Sorge vor totaler Überwachung wird technisch als übertrieben bewertet. Die dezentrale Speicherung der Identitätsdaten erschwert eine zentrale, umfassende staatliche Überwachung erheblich. Es ist unwahrscheinlich, dass eine totale Überwachung im Sinne eines ``gläsernen Bürgers'' realisiert werden könnte. Allerdings bleibt das Risiko bestehen, dass Metadaten (wann, wer, mit wem interagiert hat) theoretisch gesammelt und analysiert werden könnten, was immerhin eine partielle Form der Überwachung ermöglicht.
+
+\subsection{Smartphone-Zwang und digitale Spaltung}
+Das Argument eines faktischen Smartphone-Zwangs und einer potenziellen digitalen Spaltung ist technisch berechtigt.
+
+Die E-ID erfordert technisch ein modernes Smartphone, das über ein Secure Element verfügt. Dies schliesst potenziell ältere oder günstigere Geräte aus, was insbesondere Bevölkerungsgruppen mit niedrigerem Einkommen oder ältere Menschen betreffen kann. Sollten keine gleichwertigen, nicht-digitalen oder alternativ zugänglichen Wege für die Nutzung zentraler staatlicher Dienstleistungen geschaffen werden, verstärkt dies die digitale Kluft.
+
+\subsection{Technische Dilemmata}
+Im Zuge der Entwicklung der E-ID treten fundamentale technische Zielkonflikte auf:
+
+\begin{enumerate}
+    \item \textbf{Sicherheit vs. Benutzerfreundlichkeit:} Ein höheres Sicherheitsniveau zieht unweigerlich höhere technische Anforderungen und komplexere Prozesse nach sich, was die Benutzerfreundlichkeit beeinträchtigt.
+    \item \textbf{Dezentralität vs. Interoperabilität:} Während echte Dezentralität die Souveränität des Nutzers stärkt, macht sie die Verifikation und den reibungslosen Austausch von Daten zwischen unterschiedlichen Systemen (Interoperabilität) komplexer.
+    \item \textbf{Transparenz vs. Sicherheit:} Die Forderung nach Open Source und Offenlegung des Quellcodes sorgt zwar für Transparenz und erhöht das Vertrauen, macht aber auch potentielle Sicherheitslücken für Angreifer sichtbar.
+\end{enumerate}
+
+\subsection{Fazit der technischen Bewertung}
+Die technische Umsetzung der E-ID ist solider als Kritiker behaupten, aber nicht so perfekt wie Befürworter versprechen. Die meisten Sicherheits- und Datenschutzversprechen sind technisch fundiert, aber die Abhängigkeit von Smartphones und die nicht vollständig dezentrale Architektur sind berechtigte Kritikpunkte.
+
+Zu den technisch fundierten Pro-Argumenten gehören die Funktionsfähigkeit der Selective Disclosure, die eine gezielte und datensparsame Freigabe von Informationen ermöglicht. Ebenso erhöht die dezentrale Speicherung der Daten die Sicherheit, indem sie zentrale Angriffspunkte minimiert. Schliesslich sind die eingesetzten kryptografischen Standards robust und entsprechen bewährten internationalen Normen.
+
+Auf der Gegenseite sind die technisch fundierten Contra-Argumente ebenfalls bedeutsam: Die starke Abhängigkeit von Smartphones schafft Barrieren für Nutzerinnen und Nutzer ohne entsprechende Geräte. Dies trägt zur digitalen Spaltung bei, indem bestimmte Bevölkerungsgruppen benachteiligt werden. Zudem bleibt die Metadaten-Problematik ein Risiko, da indirekte Daten über Nutzungsverhalten gesammelt und analysiert werden könnten.
+
+Die Technologie ist ausgereift genug für einen produktiven Einsatz, aber kontinuierliche Verbesserungen werden nötig sein. Die grösste Herausforderung bleibt die Balance zwischen Sicherheit, Benutzerfreundlichkeit und Inklusion aller Bevölkerungsgruppen.
+
+
+
+
+\section{Definitionen: KI und Machine Learning}
+
+\subsection{Künstliche Intelligenz (KI)}
+Künstliche Intelligenz ist ein breites Feld der Informatik, das sich mit der Entwicklung von Systemen befasst, die Aufgaben ausführen können, für die normalerweise menschliche Intelligenz erforderlich ist. Dazu gehören Fähigkeiten wie logisches Denken, Lernen, Problemlösung, Sprachverständnis und visuelle Wahrnehmung.
+
+\subsubsection{Schwache KI}
+Als Schwache KI werden Systeme bezeichnet, die für eine spezifische, eng definierte Aufgabe entwickelt wurden (z.B. ein Schachcomputer, ein Spam-Filter oder eine Gesichtserkennungssoftware). Nahezu alle heute existierenden KI-Systeme fallen in diese Kategorie.
+
+\subsubsection{Starke KI}
+Starke KI ist ein hypothetisches System, das über ein menschenähnliches Bewusstsein und die Fähigkeit verfügt, jede intellektuelle Aufgabe zu verstehen und zu lernen, die ein Mensch ausführen kann. Dies ist Gegenstand aktueller Forschung und existiert noch nicht.
+
+\subsection{Machine Learning (ML)}
+Machine Learning (ML) ist ein Teilbereich der KI. Anstatt ein Programm explizit mit festen Regeln zu programmieren, um eine Aufgabe zu lösen, werden beim ML Algorithmen verwendet, die aus Daten lernen. Das System erkennt Muster in den Trainingsdaten und erstellt daraus ein mathematisches Modell, um Vorhersagen oder Entscheidungen zu treffen.
+
+\subsection{Die wichtigsten Arten des Machine Learning}
+ML-Modelle werden hauptsächlich in drei Kategorien unterteilt, basierend auf der Art und Weise, wie sie lernen:
+
+\subsubsection{Supervised Learning (Überwachtes Lernen)}
+Das Modell lernt von einem Datensatz, der bereits mit korrekten ``Antworten'' (Labels) versehen ist. Das Ziel ist, eine Funktion zu lernen, die neue, ungesehene Eingabedaten korrekt zuordnen kann. Ein Beispiel aus dem Alltag ist ein Spam-Filter, der anhand von tausenden E-Mails, die bereits als ``Spam'' oder ``Kein Spam'' markiert wurden, neue E-Mails zu klassifizieren lernt. Ein Beispiel aus der Wirtschaft ist eine Bank, die historische Kreditdaten (Einkommen, Schulden, Zahlungshistorie und ob der Kredit zurückgezahlt wurde) nutzt, um die Kreditwürdigkeit neuer Antragsteller vorherzusagen.
+
+\subsubsection{Unsupervised Learning (Unüberwachtes Lernen)}
+Das Modell erhält Daten ohne jegliche Labels und muss selbstständig Strukturen oder Muster darin finden. Ein Beispiel aus dem Alltag ist ein Streaming-Dienst wie Netflix, der das Sehverhalten von Millionen Nutzern analysiert und sie in Cluster mit ähnlichen Vorlieben gruppiert, um Filmempfehlungen zu geben (Clustering). Ein Beispiel aus der Wirtschaft ist ein Online-Händler, der das Kaufverhalten seiner Kunden analysiert, um Kundensegmente zu identifizieren (z.B. ``preisbewusste Käufer'', ``Markenliebhaber''), um gezielte Marketingkampagnen zu starten.
+
+\subsubsection{Reinforcement Learning (RL) (Bestärkendes Lernen)}
+Hier lernt ein Agent durch Interaktion mit einer Umgebung. Für seine Aktionen erhält er Belohnungen (Rewards) oder Bestrafungen. Das Ziel des Agenten ist es, seine Strategie (Policy) so anzupassen, dass er die Summe der erhaltenen Belohnungen maximiert. Ein Beispiel aus dem Alltag ist ein KI-Gegner in einem Computerspiel, der durch Ausprobieren (Trial-and-Error) immer besser spielt, um den menschlichen Spieler zu besiegen. Ein Beispiel aus der Wirtschaft ist in der Robotik ein Roboterarm, der durch wiederholte Versuche lernt, ein Objekt optimal zu greifen; in der Logistik kann RL zur Optimierung von Lieferrouten in Echtzeit eingesetzt werden.
+
+
+\section{Grundbegriffe der KI}
+
+\subsection{Neuronale Netze und Deep Learning}
+Neuronale Netze sind das Herzstück vieler moderner ML-Modelle. Sie sind inspiriert von der Struktur des menschlichen Gehirns und bestehen aus miteinander verbundenen ``Neuronen'', die in Schichten (Layern) angeordnet sind. Jedes Neuron empfängt Signale, verarbeitet sie und leitet ein Ergebnis an die nächste Schicht weiter.
+
+Deep Learning ist ein Teilbereich des Machine Learning, der Neuronale Netze mit vielen Schichten (sogenannten ``Hidden Layers'') verwendet. Diese ``tiefen'' Architekturen ermöglichen es, sehr komplexe Muster in grossen Datenmengen zu erkennen (z.B. in Bildern, Tönen oder Texten).
+
+\subsection{Generative KI und Large Language Models (LLMs)}
+Generative KI bezeichnet KI-Modelle, die nicht nur Daten klassifizieren oder analysieren, sondern neue Inhalte erstellen können. Beispiele sind das Generieren von Text, Code, Bildern oder Musik.
+
+Large Language Models (LLMs) sind eine Form der Generativen KI. Es handelt sich um riesige Deep-Learning-Modelle (oft mit Milliarden von Parametern), die auf gewaltigen Mengen an Textdaten trainiert wurden. Sie können menschliche Sprache verstehen, zusammenfassen, übersetzen und selbst kohärente und kontextbezogene Texte generieren. ChatGPT ist das bekannteste Beispiel für ein LLM.
+
+\subsection{Lernprozess}
+Um ein ML-Modell zu entwickeln, wird der verfügbare Datensatz typischerweise in drei Teile aufgeteilt:
+
+\subsubsection{Training Data (Trainingsdaten)}
+Der grösste Teil der Daten. Das Modell lernt die Muster und Zusammenhänge ausschliesslich aus diesen Daten.
+
+\subsubsection{Validation Data (Validierungsdaten)}
+Ein kleinerer Teil der Daten werden während des Trainings verwendet, um die sogenannten Hyperparameter des Modells zu optimieren (z.B. die Lernrate) und um zu überprüfen, ob das Modell überanpasst (Overfitting). Das Modell ``sieht'' diese Daten, lernt aber nicht direkt von ihnen.
+
+\subsubsection{Test Data (Testdaten)}
+Der verbleibende Teil der Daten werden erst nach Abschluss des Trainings und der Validierung einmalig verwendet. Sie simulieren komplett neue, ungesehene Daten und geben eine realistische Einschätzung der Leistungsfähigkeit des finalen Modells in der Praxis.
+
+
+\section{Reinforcement Learning (RL)}
+
+\subsection{Die Grundidee und Fachbegriffe}
+Im Reinforcement Learning geht es um das Lernen optimaler Entscheidungen durch Versuch und Irrtum. Die zentralen Komponenten sind:
+
+\subsubsection{Agent}
+Die lernende Entität, die Entscheidungen trifft (z.B. ein Roboter, ein Spielcharakter).
+
+\subsubsection{Environment (Umgebung)}
+Die Welt, in der der Agent agiert (z.B. ein Labyrinth, ein Schachbrett).
+
+\subsubsection{State (Zustand)}
+Die aktuelle Situation des Agenten in der Umgebung (z.B. die Position im Labyrinth).
+
+\subsubsection{Actions (Aktionen)}
+Die möglichen Handlungen, die der Agent im aktuellen Zustand ausführen kann (z.B. nach links, rechts, oben, unten gehen).
+
+\subsubsection{Reward (Belohnung)}
+Ein numerisches Feedback von der Umgebung, das angibt, wie gut die letzte Aktion des Agenten war. Positive Rewards (z.B. +10 für das Finden des Ziels) sind erstrebenswert, negative Rewards (z.B. -5 für das Stossen gegen eine Wand) werden vermieden.
+
+\subsubsection{Übergreifend}
+Der Agent durchläuft einen Kreislauf: Er beobachtet den State, wählt eine Action, erhält einen Reward und gelangt in einen neuen State. Sein Ziel ist es, eine Strategie zu lernen, um die Summe der zukünftigen Rewards zu maximieren.
+
+\subsection{Q-Learning: Ein populärer RL-Algorithmus}
+Q-Learning ist ein Algorithmus, mit dem ein Agent lernt, welche Aktion in welchem Zustand die beste ist. Er tut dies, indem er eine Funktion, die sogenannte Q-Funktion, lernt. Der Q-Wert, $Q(s, a)$, steht für die ``Qualität'' (Quality) der Ausführung der Aktion $a$ im Zustand $s$. Genauer gesagt, ist es die erwartete Summe aller zukünftigen Belohnungen, wenn man im Zustand $s$ die Aktion $a$ ausführt und sich danach optimal verhält.
+
+Diese Q-Werte werden oft in einer einfachen Q-Tabelle gespeichert, deren Zeilen die Zustände und deren Spalten die Aktionen darstellen.
+
+\subsubsection{Interpretation einer Q-Tabelle}
+Stellen Sie sich eine einfache Umgebung mit Zuständen (S1, S2) und Aktionen (A1, A2) vor. Eine Q-Tabelle könnte so aussehen:
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Zustand} & \textbf{Aktion A1} & \textbf{Aktion A2} \\
+\hline
+S1 & 10 & 2 \\
+S2 & -5 & 20 \\
+\hline
+\end{tabular}
+\end{center}
+
+Wenn sich der Agent im Zustand S1 befindet, würde er die Aktion A1 wählen, da ihr Q-Wert (10) höher ist als der von A2 (2). Im Zustand S2 würde er A2 wählen (Q-Wert 20).
+
+\subsubsection{Lernprozess in Q-Learning}
+Die Q-Werte werden iterativ durch Erfahrungen aktualisiert. Nach jeder Aktion $a$ im Zustand $s$, die zum neuen Zustand $s'$ und dem Reward $R$ führt, wird der Q-Wert $Q(s, a)$ mit folgender Formel (Bellman-Gleichung) angepasst:
+\begin{equation*}
+    Q_{neu}(s_t, a_t) = Q(s_t, a_t) + \alpha \cdot (R + \gamma \cdot \max(Q(s_{t+1}, a_{t+1})) - Q(s_t, a_t))
+\end{equation*}
+
+\begin{itemize}
+    \item $Q(s_t, a_t)$ ist der alte Wert in der Tabelle.
+    \item $R$ ist der unmittelbare Reward.
+    \item $\max(Q(s_{t+1}, a_{t+1}))$ ist der maximale Q-Wert, der vom Folgezustand $s_{t+1}$ aus erreichbar ist (der erwartete zukünftige Reward).
+    \item $\alpha$ und $\gamma$ sind Hyperparameter (siehe unten).
+\end{itemize}
+Das Modell lernt also, indem es die Differenz zwischen der unmittelbaren Realität ($R$ + erwartete Zukunft $\gamma \cdot \max Q$) und der alten Schätzung ($Q_{alt}$) zur Korrektur verwendet.
+
+\subsection{Exploration vs. Exploitation}
+Ein fundamentales Problem für lernende Agenten ist die Balance zwischen:
+
+\subsubsection{Exploration (Erkundung)}
+Der Agent probiert zufällige oder weniger bekannte Aktionen aus, um potenziell noch bessere Wege zu entdecken. Dies ist wichtig, um nicht in einem lokalen Optimum stecken zu bleiben.
+
+\subsubsection{Exploitation (Ausnutzung)}
+Der Agent wählt die Aktion, von der er aktuell glaubt, dass sie die beste ist (basierend auf den höchsten Q-Werten). Dies maximiert den kurzfristigen Gewinn.
+
+\subsubsection{Epsilon-Greedy}
+Epsilon-Greedy ist eine gängige Strategie: Mit einer Wahrscheinlichkeit $\epsilon$ (Epsilon) wählt der Agent eine zufällige Aktion (Exploration), und mit der Wahrscheinlichkeit $1-\epsilon$ die beste bekannte Aktion (Exploitation).
+
+\subsection{Hyperparameter in Q-Learning}
+
+\subsubsection{Lernrate $\alpha$ (Alpha)}
+Die Lernrate $\alpha$ bestimmt, wie stark die neuen Informationen die alten Q-Werte überschreiben. Eine hohe Lernrate (nahe 1) bedeutet, dass der Agent schnell lernt, aber instabil sein kann. Eine niedrige Lernrate (nahe 0) bedeutet langsames, aber stetiges Lernen.
+
+\subsubsection{Diskontfaktor $\gamma$ (Gamma)}
+Der Diskontfaktor $\gamma$ legt fest, wie stark zukünftige Belohnungen gewichtet werden. Ein Gamma nahe 1 bedeutet, der Agent ist ``weitsichtig'' und legt viel Wert auf zukünftige Rewards (Delayed Reward). Ein Gamma nahe 0 macht den Agenten ``kurzsichtig'' und fokussiert sich nur auf den unmittelbaren Reward (Immediate Reward).
+
+Ein Immediate Reward ist eine Belohnung, die direkt nach einer Aktion erhalten wird. Ein Delayed Reward ist eine Belohnung, die erst viele Schritte nach der entscheidenden Aktion eintritt (z.B. der Gewinn einer Schachpartie). Der Diskontfaktor $\gamma$ ist entscheidend, um den Wert von Aktionen, die zu verzögerten Belohnungen führen, zurückzupropagieren und in den Q-Werten zu verankern.
+
+
+\subsubsection{Explorationsrate $\epsilon$ (Epsilon)}
+Die oben beschriebene Wahrscheinlichkeit für die Exploration. Oft startet man mit einem hohen $\epsilon$, das im Laufe des Trainings sinkt, sodass der Agent am Anfang viel erkundet und später sein gelerntes Wissen ausnutzt.
+
+
+\section{Ethik, Vertrauen und Gesellschaft}
+
+\subsection{Warum Vertrauen in KI-Systeme wichtig ist}
+Damit KI-Systeme akzeptiert und sicher eingesetzt werden können, müssen sie vertrauenswürdig sein. Die wichtigsten Säulen für vertrauenswürdige KI sind:
+
+\subsubsection{Nachvollziehbarkeit (Explainable AI)}
+Warum hat das System eine bestimmte Entscheidung getroffen? Ohne Nachvollziehbarkeit können Fehler nicht analysiert und Entscheidungen nicht gerechtfertigt werden (z.B. bei medizinischen Diagnosen oder Kreditabsagen).
+
+\subsubsection{Fairness}
+Das KI-System darf keine Personengruppen aufgrund von Merkmalen wie Geschlecht, Herkunft oder Alter systematisch benachteiligen. Dies erfordert die sorgfältige Prüfung der Trainingsdaten auf verborgene Vorurteile (Bias).
+
+\subsubsection{Transparenz}
+Informationen über die Funktionsweise des Systems, die verwendeten Daten und die Grenzen seiner Fähigkeiten sollten zugänglich sein.
+
+\subsubsection{Robustheit und Sicherheit}
+Das System muss zuverlässig funktionieren und darf nicht leicht durch fehlerhafte Eingaben oder gezielte Angriffe (Adversarial Attacks) manipuliert werden können.
+
+\subsection{Mögliche Gefahren von KI und LLMs}
+
+\subsubsection{Bias und Diskriminierung}
+KI-Systeme übernehmen und verstärken Vorurteile, die in den Trainingsdaten enthalten sind.
+
+\subsubsection{Desinformation und Manipulation}
+Generative KI und LLMs können in grossem Stil überzeugende Falschnachrichten, Phishing-Mails oder Propaganda erstellen.
+
+\subsubsection{Job-Automatisierung}
+Bestimmte Berufe, insbesondere im kognitiven Bereich, könnten durch KI ersetzt werden.
+
+\subsubsection{Halluzinationen bei LLMs}
+LLMs können Fakten erfinden und als Tatsachen ausgeben, ohne dies zu kennzeichnen.
+
+\subsubsection{Autonome Waffensysteme}
+Die Entwicklung von Waffen, die ohne menschliches Eingreifen über Leben und Tod entscheiden.
+
+\subsubsection{Kontrollverlust}
+Die Sorge, dass hochintelligente Systeme nicht mehr den menschlichen Zielen dienen oder kontrollierbar sind.
+
+
+\subsection{Problematische KI-Entscheidungen und der EU-AI-Act}
+KI-Entscheidungen können in vielen Lebensbereichen problematisch sein, insbesondere wenn sie Menschen direkt betreffen und es an Transparenz oder Fairness mangelt.
+
+Der EU-AI-Act ist ein Gesetzesvorschlag der Europäischen Union, der KI-Anwendungen nach ihrem Risiko regulieren soll. Er definiert eine Risikopyramide:
+
+\subsubsection{Inakzeptables Risiko (verboten)}
+Systeme, die eine klare Bedrohung für die Sicherheit und die Grundrechte von Menschen darstellen (z.B. Social Scoring durch Regierungen).
+
+\subsubsection{Hohes Risiko (streng reguliert)}
+Systeme, die in kritischen Bereichen eingesetzt werden und strenge Anforderungen an Transparenz, Datenqualität, menschliche Aufsicht und Cybersicherheit erfüllen müssen.
+
+\subsubsection{Begrenztes Risiko (Transparenzpflicht)}
+Systeme mit geringerem Risiko, bei denen Nutzer aber wissen müssen, dass sie mit einer KI interagieren (z.B. Chatbots).
+
+\subsubsection{Minimales Risiko (keine Regulierung)}
+Die meisten KI-Anwendungen (z.B. Spam-Filter, KI in Videospielen).
+
+\subsection{Beispiele für problematische Situationen}
+
+\subsubsection{Bewerbungsverfahren}
+Eine KI sortiert Bewerber aufgrund von Mustern aus, die mit dem Geschlecht oder der Herkunft korrelieren, und diskriminiert so unbewusst.
+
+\subsubsection{Kreditvergabe}
+Eine KI verweigert einen Kredit, weil die Person in einer ``schlechten'' Postleitzahl wohnt, ohne die individuelle finanzielle Situation zu prüfen.
+
+\subsubsection{Strafverfolgung}
+Eine Gesichtserkennungssoftware identifiziert fälschlicherweise eine unschuldige Person als Verdächtigen.
+
+\subsubsection{Medizinische Diagnose}
+Eine KI übersieht eine seltene Krankheit, weil diese in den Trainingsdaten unterrepräsentiert war.
+
+\subsubsection{Abschluss Beispiele für problematische Situationen}
+In all diesen Fällen ist es entscheidend, dass die Entscheidungen der KI nachvollziehbar sind und eine menschliche Überprüfung und Korrektur möglich ist, wie es der EU-AI-Act für Hochrisikosysteme vorsieht.
+\end{document}
+```

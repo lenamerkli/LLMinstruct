@@ -1,0 +1,120 @@
+§u§
+```
+class AesExt:
+
+    def __init__(self, key: bytes):
+        if not isinstance(key, bytes):
+            raise TypeError('key must be bytes')
+        if len(key) != 48:
+            raise ValueError('key must be 48 bytes long')
+        self._key = key[:32]
+        self._aes = AES(self._key)
+        self._counter = key[32:]
+
+    @classmethod
+    def random(cls):
+        """
+        Create a new AES instance with a random key.
+        :return: A new AES instance.
+        """
+        return cls(randbytes(48))
+
+    @staticmethod
+    def pad(plaintext: bytes) -> bytes:
+        padding_length = 16 - (len(plaintext) % 16)
+        return plaintext + bytes([padding_length] * padding_length)
+
+    @staticmethod
+    def unpad(padded_plaintext: bytes) -> bytes:
+        padding_length = padded_plaintext[-1]
+        if padding_length > 16 or padding_length == 0:
+            raise ValueError("Invalid padding")
+        for i in range(1, padding_length):
+            if padded_plaintext[-1 - i] != padding_length:
+                raise ValueError("Invalid padding")
+        return padded_plaintext[:-padding_length]
+
+    def encrypt_block(self, plaintext: bytes, index: int) -> bytes:
+        """
+        Encrypt a single 16 byte block
+        :param plaintext: The 16 byte block to encrypt
+        :param index: The index of the block
+        :return: The ciphertext
+        """
+        counter = ((int.from_bytes(self._counter, 'big') + index) % 2 ** (16 * 8)).to_bytes(16, 'big')
+        block_key = self._aes.encrypt(counter)
+        return bytes([a ^ b for a, b in zip(block_key, plaintext)])
+
+    def decrypt_block(self, ciphertext: bytes, index: int) -> bytes:
+        """
+        Decrypt a single 16 byte block
+        :param ciphertext: The 16 byte block to decrypt
+        :param index: The index of the block
+        :return: The plaintext
+        """
+        return self.encrypt_block(ciphertext, index)
+
+    def encrypt(self, plaintext: bytes) -> bytes:
+        """
+        Encrypt the plaintext using AES with non-standard counter mode.
+        :param plaintext: The plaintext to encrypt.
+        :return: The ciphertext as bytes.
+        """
+        plaintext = self.pad(plaintext)
+        return b''.join([self.encrypt_block(plaintext[i:i + 16], i // 16) for i in range(0, len(plaintext), 16)])
+
+    def decrypt(self, ciphertext: bytes) -> bytes:
+        """
+        Decrypt the ciphertext using AES with non-standard counter mode.
+        :param ciphertext: The ciphertext to decrypt.
+        :return: The plaintext as bytes.
+        """
+        plaintext = b''.join([self.decrypt_block(ciphertext[i:i + 16], i // 16) for i in range(0, len(ciphertext), 16)])
+        return self.unpad(plaintext)
+```
+Is this a good implementation of a custom AES counter mode?
+§a§
+# Analysis of Custom AES Counter Mode Implementation
+
+This implementation shows a custom AES-based encryption scheme that resembles counter mode (CTR) but with some notable differences. Here's my evaluation:
+
+## Strengths
+
+1. **Proper Key Handling**: The class correctly checks for 48-byte keys and splits them into encryption key and counter components.
+
+2. **Padding Implementation**: The PKCS#7 style padding (ISO/IEC 7816-4) is correctly implemented in both `pad()` and `unpad()` methods.
+
+3. **Block Processing**: The block-by-block processing in `encrypt()` and `decrypt()` is correctly implemented.
+
+4. **Random Key Generation**: The `random()` classmethod provides a convenient way to generate properly sized keys.
+
+## Weaknesses and Concerns
+
+1. **Non-Standard Counter Mode**: This isn't standard CTR mode because:
+   - The counter is initialized from part of the key rather than being a nonce
+   - Counter increments are based on block index rather than a sequential counter
+
+2. **Security Issues**:
+   - **Key/Counter Separation**: Using part of the key as the counter is dangerous. Counters should be unique per message, not derived from the key.
+   - **Small Counter Size**: The 16-byte counter is reduced to only using the last 16 bytes of the 48-byte key, which may lead to counter collisions.
+   - **No Authentication**: Like standard CTR mode, this provides no message authentication.
+
+3. **Implementation Concerns**:
+   - No input validation in block methods to ensure 16-byte blocks
+   - No handling of empty plaintext
+   - The modulo operation on counter increment could be problematic for very large messages
+
+## Recommendations
+
+1. Follow standard CTR mode implementation where:
+   - Use a random nonce for each message
+   - Keep the encryption key separate
+   - Use standard counter incrementing
+
+2. Add input validation for block size in `encrypt_block`/`decrypt_block`
+
+3. Consider adding message authentication (e.g., HMAC) if needed
+
+4. Document the non-standard aspects clearly if they're intentional
+
+This implementation would work for basic encryption, but I wouldn't recommend it for security-critical applications due to the non-standard counter handling. For production use, consider using a standard library's AES-CTR implementation instead.

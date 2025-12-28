@@ -1,0 +1,87 @@
+§u§
+```
+··• npm install @angular/localize
+npm error code ERESOLVE
+npm error ERESOLVE could not resolve
+npm error
+npm error While resolving: web@0.0.0
+npm error Found: @angular/compiler@20.3.2
+npm error node_modules/@angular/compiler
+npm error   peer @angular/compiler@"^20.0.0" from @angular/build@20.3.3
+npm error   node_modules/@angular/build
+npm error     dev @angular/build@"^20.3.3" from the root project
+npm error   peer @angular/compiler@"20.3.2" from @angular/compiler-cli@20.3.2
+npm error   node_modules/@angular/compiler-cli
+npm error     peer @angular/compiler-cli@"^20.0.0" from @angular/build@20.3.3
+npm error     node_modules/@angular/build
+npm error       dev @angular/build@"^20.3.3" from the root project
+npm error     dev @angular/compiler-cli@"^20.3.0" from the root project
+npm error   3 more (@angular/core, @angular/platform-server, the root project)
+npm error
+npm error Could not resolve dependency:
+npm error @angular/localize@"*" from the root project
+npm error
+npm error Conflicting peer dependency: @angular/compiler@20.3.3
+npm error node_modules/@angular/compiler
+npm error   peer @angular/compiler@"20.3.3" from @angular/localize@20.3.3
+npm error   node_modules/@angular/localize
+npm error     @angular/localize@"*" from the root project
+npm error
+npm error Fix the upstream dependency conflict, or retry
+npm error this command with --force or --legacy-peer-deps
+npm error to accept an incorrect (and potentially broken) dependency resolution.
+npm error
+npm error
+npm error For a full report see:
+npm error /home/lena/.npm/_logs/2025-10-04T13_24_21_470Z-eresolve-report.txt
+npm error A complete log of this run can be found in: /home/lena/.npm/_logs/2025-10-04T13_24_21_470Z-debug-0.log
+```
+I am new to npm. What should I do?
+§a§
+Why the install breaks
+• Every first-party Angular package ( @angular/core, @angular/compiler, @angular/localize , etc.) is released at the **same patch level on the same day** and each one declares an identical peer-dependency on that exact version. If the versions differ, npm ≥ 7 treats it as a hard error and throws `ERESOLVE` .
+
+In your tree
+
+```
+@angular/compiler          20.3.2   ← installed
+@angular/build             20.3.3
+@angular/localize          20.3.3   ← you try to add
+```
+
+`@angular/localize@20.3.3` insists on `@angular/compiler@20.3.3`, so the resolver aborts.
+
+--------------------------------------------------------------------
+How to fix it (pick ONE of the following)
+
+1. Keep the project on 20.3.2
+   ```bash
+   # install the matching patch level explicitly
+   npm install @angular/localize@20.3.2 --save
+   ```
+   (You can add `--save-exact` if you want to pin the version exactly in package.json.)
+
+2. Update the whole workspace to 20.3.3 (recommended if you want the latest patch)
+   ```bash
+   # make sure you are on the right Node/npm first
+   ng version       # see current versions
+   # update Angular core + CLI (this also bumps compiler & build)
+   ng update @angular/core@20.3.3 @angular/cli@20.3.3
+   # now add Localize, which will already be 20.3.3
+   npm install @angular/localize@20.3.3
+   ```
+   Verify with `ng version` that every `@angular/*` package shows 20.3.3.
+
+3. Temporary “just install it” shortcuts (NOT recommended for long-term)
+   • `npm install @angular/localize --legacy-peer-deps`
+   • `npm install @angular/localize --force`
+   These bypass peer-dependency checks, but you risk subtle runtime/compiler errors because the framework pieces are out of sync.
+
+--------------------------------------------------------------------
+What you learned in the process
+
+• “Caret” ranges (`^20.3.0`) in package.json allow npm to grab a newer patch, which is why it chose 20.3.3 automatically. Use an exact version (`"20.3.2"`) or `~20.3.0` if you want to stay on one patch line.
+• After every Angular update run your test suite; mismatched patches usually break at build time, but major/minor jumps can affect API behaviour as well.
+• `ng update` is the safest way to keep the entire stack aligned, because it modifies both dependencies *and* the generated code when necessary.
+
+With all Angular packages now on the same version, `npm install @angular/localize` should complete without the `ERESOLVE` error.

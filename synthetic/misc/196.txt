@@ -1,0 +1,644 @@
+§u§
+Design a 3D building viewer with web technologies with architectural models, floor plan navigation, room highlighting, interactive hotspots, camera presets, and smooth transitions.
+§a§
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Architectural Viewer</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #f0f0f0; font-family: 'Inter', sans-serif; }
+        #canvas-container { width: 100vw; height: 100vh; }
+        .ui-panel {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.8);
+        }
+        .hotspot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(59, 130, 246, 0.8);
+            border-radius: 50%;
+            border: 2px solid white;
+            cursor: pointer;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+            display: none; /* Hidden by default, managed by JS */
+            z-index: 10;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+        .hotspot:hover {
+            transform: translate(-50%, -50%) scale(1.2);
+            background: rgba(59, 130, 246, 1);
+        }
+        .hotspot-tooltip {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: black;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .hotspot:hover .hotspot-tooltip {
+            opacity: 1;
+        }
+        /* Loading overlay */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            z-index: 9999;
+            transition: opacity 0.5s;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="text-center">
+            <h1 class="text-3xl font-bold mb-2">ArchView 3D</h1>
+            <p class="text-gray-400">Loading Model...</p>
+        </div>
+    </div>
+
+    <!-- 3D Canvas -->
+    <div id="canvas-container"></div>
+
+    <!-- Hotspot Container (HTML Overlay) -->
+    <div id="hotspots-container"></div>
+
+    <!-- UI Overlay -->
+    <div class="absolute top-0 left-0 w-full h-full pointer-events-none flex flex-col justify-between p-6">
+        
+        <!-- Header & Camera Presets -->
+        <div class="flex justify-between items-start pointer-events-auto">
+            <div class="ui-panel p-4 rounded-xl shadow-lg border border-white/20">
+                <h1 class="text-xl font-bold text-gray-800">Skyline Plaza</h1>
+                <p class="text-xs text-gray-500">Interactive Building Viewer</p>
+            </div>
+
+            <div class="ui-panel p-2 rounded-xl shadow-lg border border-white/20 flex gap-2">
+                <button onclick="cameraToPreset('iso')" class="px-3 py-1.5 bg-white hover:bg-gray-100 rounded-lg text-sm font-medium shadow-sm transition">ISO View</button>
+                <button onclick="cameraToPreset('front')" class="px-3 py-1.5 bg-white hover:bg-gray-100 rounded-lg text-sm font-medium shadow-sm transition">Front</button>
+                <button onclick="cameraToPreset('top')" class="px-3 py-1.5 bg-white hover:bg-gray-100 rounded-lg text-sm font-medium shadow-sm transition">Top Down</button>
+            </div>
+        </div>
+
+        <!-- Right Side: Floor Selection -->
+        <div class="absolute right-6 top-1/2 transform -translate-y-1/2 pointer-events-auto flex flex-col gap-2">
+            <div class="ui-panel p-2 rounded-xl shadow-lg border border-white/20 flex flex-col gap-2">
+                <div class="text-xs font-bold text-gray-400 uppercase px-2 pt-1">Floors</div>
+                <button onclick="selectFloor('all')" class="w-12 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-bold shadow-sm transition flex items-center justify-center">ALL</button>
+                <button onclick="selectFloor(3)" class="w-12 h-10 bg-white hover:bg-gray-100 rounded-lg text-sm font-medium shadow-sm transition flex items-center justify-center">3F</button>
+                <button onclick="selectFloor(2)" class="w-12 h-10 bg-white hover:bg-gray-100 rounded-lg text-sm font-medium shadow-sm transition flex items-center justify-center">2F</button>
+                <button onclick="selectFloor(1)" class="w-12 h-10 bg-white hover:bg-gray-100 rounded-lg text-sm font-medium shadow-sm transition flex items-center justify-center">1F</button>
+            </div>
+        </div>
+
+        <!-- Bottom Info Panel -->
+        <div class="w-full flex justify-center pointer-events-auto pb-4">
+            <div id="info-panel" class="ui-panel w-full max-w-md p-4 rounded-xl shadow-lg border border-white/20 translate-y-full opacity-0 transition-all duration-500">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h2 id="room-title" class="text-lg font-bold text-gray-800">Select a Room</h2>
+                        <p id="room-desc" class="text-sm text-gray-600 mt-1">Hover over the building to explore rooms.</p>
+                    </div>
+                    <button onclick="closeInfo()" class="text-gray-400 hover:text-gray-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="mt-3 flex gap-2">
+                    <span id="room-area" class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-md font-medium">1200 sqft</span>
+                    <span id="room-type" class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-md font-medium">Office</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Libraries -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+
+        // --- State ---
+        const state = {
+            currentFloor: 'all',
+            hoveredRoom: null,
+            selectedRoom: null,
+            hotspots: []
+        };
+
+        // --- Scene Setup ---
+        const canvasContainer = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xf0f0f0);
+        scene.fog = new THREE.Fog(0xf0f0f0, 20, 100);
+
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(30, 30, 30);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        canvasContainer.appendChild(renderer.domElement);
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.maxPolarAngle = Math.PI / 2 - 0.05; // Prevent going below ground
+        controls.minDistance = 10;
+        controls.maxDistance = 100;
+
+        // --- Lighting ---
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+
+        const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+        dirLight.position.set(20, 40, 20);
+        dirLight.castShadow = true;
+        dirLight.shadow.mapSize.width = 2048;
+        dirLight.shadow.mapSize.height = 2048;
+        dirLight.shadow.camera.near = 0.1;
+        dirLight.shadow.camera.far = 100;
+        dirLight.shadow.camera.left = -30;
+        dirLight.shadow.camera.right = 30;
+        dirLight.shadow.camera.top = 30;
+        dirLight.shadow.camera.bottom = -30;
+        scene.add(dirLight);
+
+        const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.4);
+        scene.add(hemiLight);
+
+        // --- Building Construction ---
+        const buildingGroup = new THREE.Group();
+        scene.add(buildingGroup);
+
+        const floorHeight = 4;
+        const floors = [
+            { level: 1, rooms: [
+                { name: 'Lobby', type: 'Public', color: 0xe0e0e0, width: 16, depth: 10, x: 0, z: 3 },
+                { name: 'Cafeteria', type: 'Dining', color: 0xffcc80, width: 8, depth: 8, x: -4, z: -6 },
+                { name: 'Reception', type: 'Office', color: 0x90caf9, width: 8, depth: 8, x: 4, z: -6 },
+            ]},
+            { level: 2, rooms: [
+                { name: 'Open Workspace A', type: 'Office', color: 0xa5d6a7, width: 8, depth: 18, x: -4, z: 0 },
+                { name: 'Meeting Room 201', type: 'Conference', color: 0xffab91, width: 8, depth: 8, x: 4, z: 5 },
+                { name: 'Executive Suite', type: 'Office', color: 0xce93d8, width: 8, depth: 10, x: 4, z: -4 },
+            ]},
+            { level: 3, rooms: [
+                { name: 'CEO Office', type: 'Private', color: 0xef9a9a, width: 10, depth: 10, x: 0, z: -4 },
+                { name: 'Roof Terrace', type: 'Outdoor', color: 0x80deea, width: 16, depth: 8, x: 0, z: 5, isTerrace: true },
+            ]}
+        ];
+
+        const floorGroups = {};
+        const interactableObjects = [];
+
+        // Ground plane
+        const groundGeo = new THREE.PlaneGeometry(200, 200);
+        const groundMat = new THREE.MeshStandardMaterial({ color: 0xf5f5f5 });
+        const ground = new THREE.Mesh(groundGeo, groundMat);
+        ground.rotation.x = -Math.PI / 2;
+        ground.receiveShadow = true;
+        scene.add(ground);
+
+        // Grid helper for context
+        const gridHelper = new THREE.GridHelper(100, 50, 0xcccccc, 0xe5e5e5);
+        scene.add(gridHelper);
+
+        floors.forEach(floor => {
+            const floorGroup = new THREE.Group();
+            floorGroup.userData = { level: floor.level };
+            
+            const yPos = (floor.level - 1) * floorHeight;
+            floorGroup.position.y = yPos;
+
+            floor.rooms.forEach(room => {
+                const geometry = new RoundedBoxGeometry(room.width, floorHeight, room.depth, 4, 0.1);
+                // Use a slightly transparent material for "glass" effect if desired, 
+                // but standard is better for shadows/visual clarity here.
+                const material = new THREE.MeshStandardMaterial({ 
+                    color: room.color,
+                    roughness: 0.5,
+                    metalness: 0.1,
+                    transparent: true,
+                    opacity: 0.95
+                });
+                
+                const mesh = new THREE.Mesh(geometry, material);
+                mesh.position.set(room.x, floorHeight / 2, room.z);
+                mesh.castShadow = true;
+                mesh.receiveShadow = true;
+                
+                // Add metadata for raycasting
+                mesh.userData = { 
+                    isRoom: true,
+                    name: room.name,
+                    type: room.type,
+                    area: `${room.width * room.depth * 10} sqft`, // approximate scale
+                    originalColor: room.color,
+                    floorLevel: floor.level,
+                    description: room.isTerrace ? 'Open air relaxation area' : 'Modern workspace with high ceilings'
+                };
+
+                floorGroup.add(mesh);
+                interactableObjects.push(mesh);
+
+                // Add outline/edges to make it look architectural
+                const edges = new THREE.EdgesGeometry(new THREE.BoxGeometry(room.width, floorHeight, room.depth));
+                const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x000000, opacity: 0.1, transparent: true }));
+                line.position.copy(mesh.position);
+                floorGroup.add(line);
+            });
+
+            // Floor slab
+            const slabGeo = new THREE.BoxGeometry(18, 0.5, 20);
+            const slabMat = new THREE.MeshStandardMaterial({ color: 0xeeeeee });
+            const slab = new THREE.Mesh(slabGeo, slabMat);
+            slab.position.y = 0; // At the bottom of the floor
+            slab.receiveShadow = true;
+            floorGroup.add(slab);
+
+            buildingGroup.add(floorGroup);
+            floorGroups[floor.level] = floorGroup;
+        });
+
+        // Add roof to the top floor (simple cap)
+        // We treat floor 3 roof terrace as open, but CEO office needs a roof
+        // For simplicity, let's add a generic roof cap to the top floor group
+        const roofGeo = new THREE.BoxGeometry(12, 0.5, 12);
+        const roofMat = new THREE.MeshStandardMaterial({ color: 0xdddddd });
+        const roof = new THREE.Mesh(roofGeo, roofMat);
+        roof.position.set(0, floorHeight, -3);
+        floorGroups[3].add(roof);
+
+        // --- Raycasting & Interaction ---
+        const raycaster = new THREE.Raycaster();
+        const pointer = new THREE.Vector2();
+
+        window.addEventListener('pointermove', onPointerMove);
+        window.addEventListener('click', onClick);
+        window.addEventListener('resize', onWindowResize);
+
+        function onPointerMove(event) {
+            pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+            pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        }
+
+        function onClick(event) {
+            // If interacting with UI, don't raycast? 
+            // Actually pointer-events: none on overlay prevents this mostly, but buttons capture clicks.
+            
+            if (state.hoveredRoom) {
+                selectRoom(state.hoveredRoom);
+            } else {
+                deselectRoom();
+            }
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        // --- Animation Loop ---
+        function animate() {
+            requestAnimationFrame(animate);
+
+            controls.update();
+            raycast();
+            updateHotspots();
+
+            renderer.render(scene, camera);
+        }
+
+        let INTERSECTED;
+
+        function raycast() {
+            // Only check visible objects
+            const visibleObjects = interactableObjects.filter(obj => {
+                let parent = obj.parent;
+                while(parent) {
+                    if (!parent.visible) return false;
+                    parent = parent.parent;
+                }
+                return true;
+            });
+
+            raycaster.setFromCamera(pointer, camera);
+            const intersects = raycaster.intersectObjects(visibleObjects, false);
+
+            if (intersects.length > 0) {
+                if (INTERSECTED != intersects[0].object) {
+                    // Restore previous intersected unless it's the selected room
+                    if (INTERSECTED && INTERSECTED !== state.selectedRoom) {
+                         INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+                    }
+
+                    INTERSECTED = intersects[0].object;
+                    
+                    // Store original hex if not already stored
+                    if (INTERSECTED.currentHex === undefined) {
+                        INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
+                    }
+                    
+                    INTERSECTED.material.emissive.setHex(0x666666); // Hover color
+                    
+                    state.hoveredRoom = INTERSECTED;
+                    document.body.style.cursor = 'pointer';
+                }
+            } else {
+                if (INTERSECTED && INTERSECTED !== state.selectedRoom) {
+                    INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+                }
+                INTERSECTED = null;
+                state.hoveredRoom = null;
+                document.body.style.cursor = 'auto';
+            }
+        }
+
+        // --- Logic ---
+
+        function selectRoom(mesh) {
+            // Deselect previous
+            if (state.selectedRoom && state.selectedRoom !== mesh) {
+                state.selectedRoom.material.emissive.setHex(state.selectedRoom.currentHex);
+            }
+
+            state.selectedRoom = mesh;
+            // Strong highlighting for selection
+            mesh.material.emissive.setHex(0x888888);
+            
+            // Update UI
+            const infoPanel = document.getElementById('info-panel');
+            const roomTitle = document.getElementById('room-title');
+            const roomDesc = document.getElementById('room-desc');
+            const roomArea = document.getElementById('room-area');
+            const roomType = document.getElementById('room-type');
+
+            roomTitle.textContent = mesh.userData.name;
+            roomDesc.textContent = mesh.userData.description;
+            roomArea.textContent = mesh.userData.area;
+            roomType.textContent = mesh.userData.type;
+
+            infoPanel.classList.remove('translate-y-full', 'opacity-0');
+        }
+
+        window.closeInfo = function() {
+            const infoPanel = document.getElementById('info-panel');
+            infoPanel.classList.add('translate-y-full', 'opacity-0');
+            
+            if (state.selectedRoom) {
+                state.selectedRoom.material.emissive.setHex(state.selectedRoom.currentHex);
+            }
+            state.selectedRoom = null;
+        }
+
+        function deselectRoom() {
+            // Handled in selectRoom or closeInfo mainly
+             if (state.selectedRoom) {
+                state.selectedRoom.material.emissive.setHex(state.selectedRoom.currentHex);
+                state.selectedRoom = null;
+            }
+             const infoPanel = document.getElementById('info-panel');
+             infoPanel.classList.add('translate-y-full', 'opacity-0');
+        }
+
+        window.selectFloor = function(level) {
+            state.currentFloor = level;
+            
+            // Animate floors
+            Object.keys(floorGroups).forEach(key => {
+                const group = floorGroups[key];
+                const groupLevel = parseInt(key);
+
+                if (level === 'all') {
+                    group.visible = true; // Make visible immediately
+                    
+                    // Restore positions
+                    gsap.to(group.position, { y: (groupLevel - 1) * floorHeight, duration: 1, ease: "power2.inOut" });
+                    
+                    // Restore opacity
+                    group.children.forEach(child => {
+                        if (child.isMesh && child.userData.isRoom) {
+                            gsap.to(child.material, { opacity: 0.95, duration: 0.5 });
+                        }
+                    });
+
+                } else {
+                    const selectedLevel = parseInt(level);
+
+                    if (groupLevel === selectedLevel) {
+                        // Selected floor
+                        group.visible = true;
+                        gsap.to(group.position, { y: (groupLevel - 1) * floorHeight, duration: 1 });
+                        
+                        group.children.forEach(child => {
+                            if (child.isMesh && child.userData.isRoom) {
+                                gsap.to(child.material, { opacity: 1, duration: 0.5 });
+                            }
+                        });
+                    } else if (groupLevel > selectedLevel) {
+                        // Floors above - move up
+                        gsap.to(group.position, { 
+                            y: (groupLevel - 1) * floorHeight + 30, 
+                            duration: 1, 
+                            ease: "power2.inOut",
+                            onComplete: () => {
+                                // Optional: Hide after animation if desired, but wireframe look is cool too
+                                // group.visible = false; 
+                            } 
+                        });
+                        
+                        // Fade out
+                        group.children.forEach(child => {
+                            if (child.isMesh && child.userData.isRoom) {
+                                gsap.to(child.material, { opacity: 0.1, duration: 0.5 });
+                            }
+                        });
+                    } else {
+                        // Floors below
+                         group.visible = true;
+                         gsap.to(group.position, { y: (groupLevel - 1) * floorHeight, duration: 1 });
+                         group.children.forEach(child => {
+                            if (child.isMesh && child.userData.isRoom) {
+                                gsap.to(child.material, { opacity: 0.2, duration: 0.5 });
+                            }
+                        });
+                    }
+                }
+            });
+
+            // Adjust camera for floor view
+            if (level !== 'all') {
+                const yHeight = (level - 1) * floorHeight + 15;
+                gsap.to(camera.position, { x: 30, y: yHeight, z: 30, duration: 1.5, ease: "power2.inOut" });
+                gsap.to(controls.target, { y: (level - 1) * floorHeight, duration: 1.5 });
+            } else {
+                 cameraToPreset('iso');
+            }
+        }
+
+        window.cameraToPreset = function(view) {
+            let pos = { x: 30, y: 30, z: 30 };
+            let target = { x: 0, y: 0, z: 0 };
+
+            switch(view) {
+                case 'iso':
+                    pos = { x: 30, y: 30, z: 30 };
+                    break;
+                case 'front':
+                    pos = { x: 0, y: 10, z: 50 };
+                    target = { x: 0, y: 5, z: 0 };
+                    break;
+                case 'top':
+                    pos = { x: 0, y: 60, z: 1 }; // Offset z slightly to keep orientation stable
+                    target = { x: 0, y: 0, z: 0 };
+                    break;
+            }
+
+            gsap.to(camera.position, { 
+                x: pos.x, y: pos.y, z: pos.z, 
+                duration: 1.5, 
+                ease: "power3.inOut",
+                onUpdate: () => controls.update()
+            });
+            
+            gsap.to(controls.target, { 
+                x: target.x, y: target.y, z: target.z, 
+                duration: 1.5, 
+                ease: "power3.inOut" 
+            });
+        }
+
+        // --- Hotspots ---
+        // Define some hotspots in 3D space
+        const hotspotData = [
+            { x: 0, y: 2, z: 8, label: "Main Entrance", floor: 1 },
+            { x: 6, y: 6, z: 8, label: "Conf Room View", floor: 2 },
+            { x: 0, y: 10, z: -8, label: "CEO Corner", floor: 3 }
+        ];
+
+        const hotspotsContainer = document.getElementById('hotspots-container');
+        const hotspotElements = [];
+
+        hotspotData.forEach(data => {
+            const el = document.createElement('div');
+            el.className = 'hotspot';
+            
+            const tooltip = document.createElement('div');
+            tooltip.className = 'hotspot-tooltip';
+            tooltip.innerText = data.label;
+            el.appendChild(tooltip);
+
+            el.onclick = (e) => {
+                e.stopPropagation(); // Prevent clicking room behind it
+                alert(`Info: ${data.label}`);
+            };
+
+            hotspotsContainer.appendChild(el);
+            
+            hotspotElements.push({
+                element: el,
+                position: new THREE.Vector3(data.x, data.y, data.z),
+                floor: data.floor
+            });
+        });
+
+        function updateHotspots() {
+            hotspotElements.forEach(hotspot => {
+                const screenPosition = hotspot.position.clone();
+                screenPosition.project(camera);
+
+                const x = (screenPosition.x * 0.5 + 0.5) * window.innerWidth;
+                const y = (-(screenPosition.y * 0.5) + 0.5) * window.innerHeight;
+
+                // Occlusion Check
+                raycaster.setFromCamera({
+                    x: (x / window.innerWidth) * 2 - 1,
+                    y: -(y / window.innerHeight) * 2 + 1
+                }, camera);
+                
+                const intersects = raycaster.intersectObjects(scene.children, true);
+                let isOccluded = false;
+                
+                if (intersects.length > 0) {
+                    // If the closest intersection is significantly closer than the hotspot, it's occluded
+                    // We add a small buffer (0.5) to avoid flickering when hotspot is exactly on surface
+                    if (intersects[0].distance < hotspot.position.distanceTo(camera.position) - 0.5) {
+                        isOccluded = true;
+                    }
+                }
+
+                // Filter by floor
+                let isFloorVisible = true;
+                if (state.currentFloor !== 'all') {
+                    // Hotspot data doesn't strictly have floor index attached in the loop, 
+                    // but we can map it from the original data array if we preserved the index.
+                    // The loop uses 'hotspot' which is { element, position }. 
+                    // We need to link it back to hotspotData.
+                    // However, simpler approach: attach floor info to the hotspot object in the setup loop.
+                    if (hotspot.floor !== parseInt(state.currentFloor)) {
+                         isFloorVisible = false;
+                    }
+                }
+
+                if (!isFloorVisible || isOccluded || screenPosition.z > 1 || Math.abs(screenPosition.x) > 1.1 || Math.abs(screenPosition.y) > 1.1) {
+                     hotspot.element.style.display = 'none';
+                } else {
+                    hotspot.element.style.display = 'block';
+                    hotspot.element.style.left = `${x}px`;
+                    hotspot.element.style.top = `${y}px`;
+                }
+            });
+        }
+
+
+        // Start
+        setTimeout(() => {
+            document.getElementById('loader').style.opacity = 0;
+            setTimeout(() => {
+                document.getElementById('loader').style.display = 'none';
+            }, 500);
+            animate();
+        }, 1000);
+
+    </script>
+</body>
+</html>
+```

@@ -1,0 +1,300 @@
+§u§
+```latex
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{tabularx}
+\usepackage{mathtools}
+\usetikzlibrary{trees}
+
+\title{[MA] Zusammenfassung 2025-12-18}
+\author{REDACTED}
+
+\begin{document}
+    
+\maketitle
+
+\tableofcontents
+    
+\section{Lernziele}
+
+\begin{enumerate}
+    \item Integrale mit Parametern
+    \item Flächen zwischen Funktionen; von Funktionen beschränkt.
+    \item Rotationskörper
+\end{enumerate}
+
+\section{Integralfunktion}
+
+\begin{equation}
+    I_a(b) = \int_{a}^{b} f(x) \, \mathrm{d}x
+\end{equation}
+Die Integralfunktion $I_a(b)$ berechnet die Flächenbilanz der Funktion $f(x)$ zwischen einemfixen Punkt $a$ und einem beliebigen Punkt $x$ und ist somit die Umkehrung der Ableitung.
+
+Wenn $b < a$:
+
+\begin{equation}
+    \int_{a}^{b} f(x) \, \mathrm{d}x = - \int_{b}^{a} f(x) \, \mathrm{d}x
+\end{equation}
+
+\section{Stammfunktionen}
+
+\begin{equation}
+    \int f'(x) \, \mathrm{d}x = f(x) + c
+\end{equation}
+
+Die Stammfunktion ist eine zurückgewandelte ``integrierte'' Ableitung.
+Da eine Konstante abgeleitet $0$ ergibt, wird zu Stammfunktion $c$ hinzugefügt, wobei diese eine beliebige Konstante darstellt.
+
+\subsection{Hauptsatz}
+
+Wenn $f(x)$ stetig ist, dann gilt dass $I_a(b)$ eine Stammfunktion von $f(x)$ ist.
+\begin{itemize}
+    \item Alle Integralfunktionen sind Stammfunktionen.
+    \item Nicht alle Stammfunktionen sind Integralfunktionen.
+\end{itemize}
+
+\subsection{Integral mit Stammfunktion berechnen}
+
+\begin{equation}
+    \int_{a}^{b} f(x) \, \mathrm{d}x = F(b) - F(a) = \left[F(x)\right]_{a}^{b}
+\end{equation}
+
+$F(x)$ ist die Stammfunktion von $f(x)$.
+
+\section{Uneigentliche Integrale}
+
+Uneigentliche Integrale sind Integrale, die bis zum Rand des Definitionsbereichs laufen.
+
+\begin{equation}
+    \int_{a}^{b} f(x) \, \mathrm{d}x \neq F(b) - F(a)
+\end{equation}
+Sei $u$ der Ort, an dem die Funktion $f(x)$ den Rand des Definitionsbereichs erreicht.
+
+\begin{equation}
+    \int_{a}^{b} f(x) \, \mathrm{d}x = \lim_{k \to u^{+}} \int_{k}^{b} f(x) \, \mathrm{d}x + \lim_{k \to u^{-}} \int_{a}^{k} f(x) \, \mathrm{d}x
+\end{equation}
+
+\section{Fläche zwischen zwei Funktionen}
+
+\begin{equation}
+    A = \int_{a}^{b} \left|f(x) - g(x)\right| \, \mathrm{d}x
+\end{equation}
+\begin{itemize}
+    \item Fläche ist immer positiv.
+    \item Mehrere Flächen müssen druch Schnittpunkte segmentiert und separat betrachtet werden.
+\end{itemize}
+
+\section{Rotationskörper}
+
+\subsection{Volumen}
+
+Das Volumen $V$ eines 3-dimensionalen Körpers ist:
+\begin{equation}
+    V = \int_{a}^{b} f(x)^2 * \pi \, \mathrm{d}x
+\end{equation}
+
+\subsection{Oberfläche}
+Die Oberfläche $O$ eines 3-dimensionalen Körpers ist:
+\begin{equation}
+    O = \left(\int_{a}^{b} \sqrt{1 + f'(x)^2} * 2 \pi f(x) \, \mathrm{d}x\right) + \left(f(a)^2 * \pi + f(b)^2 * \pi\right)
+\end{equation}
+
+\section{Liste von Stammfunktionen}
+
+\begin{align*}
+    \int \sin(x) \, \mathrm{d}x = \cos(x)
+    \int \cos(x) \, \mathrm{d}x = -\sin(x)
+    \int \frac{1}{x} \, \mathrm{d}x = \ln(x)
+\end{align*}
+
+\end{document}
+```
+Schreibe die Liste der Stammfunktionen weiter.
+§a§
+Hier ist die erweiterte Liste der Stammfunktionen, passend zu deinem LaTeX-Dokument. Ich habe dabei auch die Vorzeichenfehler in deiner ursprünglichen Liste korrigiert ($\int \sin(x) \mathrm{d}x$ ist $-\cos(x)$ und umgekehrt).
+
+Zusätzlich habe ich die allgemeine Potenzregel und die wichtige lineare Substitutionsregel ergänzt, da diese für "Integrale mit Parametern" (dein 1. Lernziel) essenziell sind.
+
+```latex
+\section{Liste von Stammfunktionen}
+
+Hier sind die wichtigsten Stammfunktionen zusammengefasst. Es gilt stets $+ c$, da die Stammfunktion nur bis auf eine Konstante eindeutig ist.
+
+\begin{align*}
+    % Potenzen
+    \int x^n \, \mathrm{d}x &= \frac{x^{n+1}}{n+1} \quad (n \neq -1) \\
+    \int \frac{1}{x} \, \mathrm{d}x &= \ln|x| \\
+    \int \frac{1}{x^2} \, \mathrm{d}x &= -\frac{1}{x} \\
+    \int \sqrt{x} \, \mathrm{d}x &= \frac{2}{3}x^{\frac{3}{2}} = \frac{2}{3}\sqrt{x^3} \\
+    % Exponentialfunktionen
+    \int e^x \, \mathrm{d}x &= e^x \\
+    \int a^x \, \mathrm{d}x &= \frac{a^x}{\ln(a)} \\
+    \int \ln(x) \, \mathrm{d}x &= x \cdot \ln(x) - x \\
+    % Trigonometrie
+    \int \sin(x) \, \mathrm{d}x &= -\cos(x) \\
+    \int \cos(x) \, \mathrm{d}x &= \sin(x) \\
+    \int \tan(x) \, \mathrm{d}x &= -\ln|\cos(x)| \\
+    \int \frac{1}{\cos^2(x)} \, \mathrm{d}x &= \tan(x) \\
+    % Arkusfunktionen (Optional, oft hilfreich)
+    \int \frac{1}{1+x^2} \, \mathrm{d}x &= \arctan(x) \\
+    \int \frac{1}{\sqrt{1-x^2}} \, \mathrm{d}x &= \arcsin(x)
+\end{align*}
+
+\subsection{Lineare Substitution (Wichtig für Parameter)}
+Wenn im Argument der Funktion ein linearer Ausdruck $ax+b$ steht, muss durch die Ableitung des Inneren dividiert werden (die "innere Ableitung" rückgängig machen):
+\begin{equation}
+    \int f(ax+b) \, \mathrm{d}x = \frac{1}{a} \cdot F(ax+b) + c
+\end{equation}
+
+\textit{Beispiel:}
+\begin{equation*}
+    \int e^{3x+5} \, \mathrm{d}x = \frac{1}{3} e^{3x+5} + c
+\end{equation*}
+```
+
+### Wichtigste Korrekturen an deinem Original:
+1.  **Sinus/Kosinus:** 
+    *   $\int \sin(x) \, \mathrm{d}x = -\cos(x)$ (Vorzeichen beachten: Ableitung von $\cos$ ist $-\sin$, daher muss beim Integrieren das Minus dazu).
+    *   $\int \cos(x) \, \mathrm{d}x = \sin(x)$.
+2.  **Logarithmus:** Es ist mathematisch korrekter, $\ln|x|$ (Betrag) zu schreiben, da der Logarithmus nur für positive Werte definiert ist, die Funktion $\frac{1}{x}$ aber auch im Negativen existiert.
+3.  **Potenzregel:** Die Regel $\frac{x^{n+1}}{n+1}$ deckt fast alles ab (auch Brüche wie $\frac{1}{x^2} = x^{-2}$), aber es ist oft hilfreich, die Standardfälle direkt auswendig zu kennen.
+§u§
+Füge noch Stammfunktionen von
+```
+\int \frac{f(x)'}{f(x)}
+\int \sin{k * x}
+\int e^{f(x)}
+```
+und ähnliche hinzu.
+§a§
+### Erweiterte Liste der Stammfunktionen  
+
+Hier ist die erweiterte Liste der Stammfunktionen, inklusive der gewünschten Integrale. Beachte stets: **Jede Stammfunktion enthält eine beliebige Konstante $c$**!
+
+```latex
+\section{Liste der Stammfunktionen}
+
+Hier sind die wichtigsten Stammfunktionen zusammengefasst.
+
+\begin{align*}
+    % Potenzen
+    \int x^n  \mathrm{d}x &= \frac{x^{n+1}}{n+1} \quad (n \neq -1) \\
+    \int \frac{1}{x}  \mathrm{d}x &= \ln|x| \\
+    \int \frac{1}{x^2}  \mathrm{d}x &= -\frac{1}{x} \\
+    \int \sqrt{x}  \mathrm{d}x &= \frac{2}{3}x^{\frac{3}{2}} \\
+    
+    % Exponentialfunktionen
+    \int e^x  \mathrm{d}x &= e^x \\
+    \int a^x  \mathrm{d}x &= \frac{a^x}{\ln(a)} \quad (a>0,\ a\neq 1) \\
+    \int \ln(x)  \mathrm{d}x &= x \cdot \ln(x) - x \\
+    
+    % Trigonometrie
+    \int \sin(x)  \mathrm{d}x &= -\cos(x) \\
+    \int \cos(x)  \mathrm{d}x &= \sin(x) \\
+    \int \tan(x)  \mathrm{d}x &= -\ln|\cos(x)| = \ln|\sec(x)| \\
+    \int \frac{1}{\cos^2(x)}  \mathrm{d}x &= \tan(x) \\
+    
+    % Arkusfunktionen
+    \int \frac{1}{1+x^2}  \mathrm{d}x &= \arctan(x) \\
+    \int \frac{1}{\sqrt{1-x^2}}  \mathrm{d}x &= \arcsin(x) \\
+    
+    % ---- NEU HINZUGEFÜGT ----
+    
+    % 1. \int \frac{f'(x)}{f(x)} dx
+    \int \frac{f'(x)}{f(x)}  \mathrm{d}x &= \ln|f(x)| + c \\
+    
+    % 2. \int \sin(kx) dx
+    \int \sin(kx)  \mathrm{d}x &= -\frac{1}{k} \cos(kx) + c \quad (k \neq 0) \\
+    
+    % 3. \int e^{f(x)} dx
+    % Fall 1: f(x) linear (ax+b)
+    \int e^{ax+b}  \mathrm{d}x &= \frac{1}{a} e^{ax+b} + c \quad (a \neq 0) \\
+    
+    % Fall 2: f'(x) als Faktor vorhanden
+    \int e^{f(x)} \cdot f'(x)  \mathrm{d}x &= e^{f(x)} + c \\
+    
+    % Allgemeine Form (nur mit Substitution lösbar, falls f'(x) als Faktor erscheint)
+    % \int e^{f(x)}  \mathrm{d}x \text{ hat i.A. keine elementare Stammfunktion.}
+    
+    % Weitere wichtige Integrale
+    
+    % 4. \int \cos(kx) dx
+    \int \cos(kx)  \mathrm{d}x &= \frac{1}{k} \sin(kx) + c \quad (k \neq 0) \\
+    
+    % 5. \int \frac{1}{a^2 + x^2} dx
+    \int \frac{1}{a^2 + x^2}  \mathrm{d}x &= \frac{1}{a} \arctan\!\left(\frac{x}{a}\right) + c \\
+    
+    % 6. \int \frac{1}{\sqrt{a^2 - x^2}} dx
+    \int \frac{1}{\sqrt{a^2 - x^2}}  \mathrm{d}x &= \arcsin\!\left(\frac{x}{a}\right) + c \\
+    
+    % 7. \int \frac{1}{\sin^2(x)} dx  (cosec²)
+    \int \csc^2(x)  \mathrm{d}x &= -\cot(x) + c \\
+    
+    % 8. \int \frac{1}{\cos(x)} dx  (sec)
+    \int \sec(x)  \mathrm{d}x &= \ln|\sec(x) + \tan(x)| + c \\
+    
+    % 9. \int x \cdot e^{x} dx  (Beispiel für partielle Integration)
+    \int x e^{x}  \mathrm{d}x &= (x-1) e^{x} + c \\
+    
+    % 10. \int \sin^2(x) dx  (mit Doppelwinkel)
+    \int \sin^2(x)  \mathrm{d}x &= \frac{x}{2} - \frac{\sin(2x)}{4} + c \\
+    
+    % 11. \int \cos^2(x) dx
+    \int \cos^2(x)  \mathrm{d}x &= \frac{x}{2} + \frac{\sin(2x)}{4} + c \\
+\end{align*}
+
+\subsection{Erläuterungen zu den neuen Integralen}
+
+\subsubsection*{1. $\displaystyle \int \frac{f'(x)}{f(x)}  \mathrm{d}x = \ln|f(x)| + c$}  
+Diese **Logarithmusregel** ist zentral bei Integralen von Quotienten, bei denen der Nenner abgeleitet im Zähler erscheint.  
+*Beispiel:*  
+\[
+\int \frac{2x}{x^2+1}  \mathrm{d}x = \ln|x^2+1| + c
+\]
+*(Hier ist $f(x)=x^2+1$, also $f'(x)=2x$)*
+
+\subsubsection*{2. $\displaystyle \int \sin(kx)  \mathrm{d}x$ und $\displaystyle \int \cos(kx)  \mathrm{d}x$}  
+Nutze die **lineare Substitution** (siehe unten). Der Faktor $\frac{1}{k}$ kompensiert die Ableitung des Arguments $kx$.
+
+\subsubsection*{3. $\displaystyle \int e^{f(x)}  \mathrm{d}x$}  
+- **Fall linearer Exponent ($f(x)=ax+b$):** Direkte Anwendung der Potenzregel für $e^{ax+b}$.  
+- **Fall mit $f'(x)$ als Faktor:**  
+  \[
+  \int e^{\color{red}{f(x)}} \cdot \color{blue}{f'(x)}  \mathrm{d}x = e^{f(x)} + c
+  \]  
+  *Beispiel:*  
+  \[
+  \int e^{x^2} \cdot 2x  \mathrm{d}x = e^{x^2} + c
+  \]  
+- **Allgemeiner Fall ($f(x)$ nichtlinear ohne $f'(x)$-Faktor):**  
+  Hat **keine elementare Stammfunktion** (z. B. $\int e^{x^2}  \mathrm{d}x$). Hier sind numerische Methoden oder spezielle Funktionen nötig.
+
+\subsection{Lineare Substitution (wiederholt)}  
+Für Funktionen mit linearem Argument $ax+b$:  
+\[
+\int f(ax+b)  \mathrm{d}x = \frac{1}{a} \cdot F(ax+b) + c
+\]  
+*wobei $F$ die Stammfunktion von $f$ ist.*  
+
+**Beispiele:**  
+\[
+\int \sin(5x)  \mathrm{d}x = -\frac{1}{5}\cos(5x) + c, \quad
+\int e^{4x-3}  \mathrm{d}x = \frac{1}{4}e^{4x-3} + c
+\]
+
+\subsubsection*{Hinweis zu Parametern}  
+Bei **Integralen mit Parametern** (z. B. $\int \sin(kx)  \mathrm{d}x$) ist der Parameter $k$ **konstant** während der Integration. Die obige Regel gilt für jeden festen Parameterwert $k \neq 0$.  
+
+---
+
+Diese erweiterte Liste deckt alle für das Lernziel *„Integrale mit Parametern“* relevanten Stammfunktionen ab und ist direkt in dein LaTeX-Dokument einfügbar.

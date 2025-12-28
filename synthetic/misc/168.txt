@@ -1,0 +1,49 @@
+§u§
+Leite die imaginäre Zahl $i$ mit der Eulerschen Identität her.
+§a§
+Um die imaginäre Einheit \(i\) unter Verwendung der Euler'schen Identität herzuleiten, gehen wir von der Euler'schen Identität selbst aus. Diese lautet:
+
+\[
+e^{i\pi} = -1
+\]
+
+Nun, die Exponentialfunktion für komplexe Zahlen hat die Eigenschaft, dass \(e^{a + b} = e^a \cdot e^b\) für alle komplexen Zahlen \(a\) und \(b\). Wir setzen \(a = i\pi/2\) und \(b = i\pi/2\), also:
+
+\[
+e^{i\pi} = e^{i\pi/2 + i\pi/2} = e^{i\pi/2} \cdot e^{i\pi/2} = \left(e^{i\pi/2}\right)^2
+\]
+
+Aus der Euler'schen Identität wissen wir, dass \(e^{i\pi} = -1\), also:
+
+\[
+\left(e^{i\pi/2}\right)^2 = -1
+\]
+
+Wir definieren nun \(w = e^{i\pi/2}\). Dann folgt:
+
+\[
+w^2 = -1
+\]
+
+Diese Gleichung bedeutet, dass \(w\) eine Lösung der quadratischen Gleichung \(x^2 + 1 = 0\) ist. Die Lösungen dieser Gleichung sind:
+
+\[
+x = \pm \sqrt{-1}
+\]
+
+Wir bezeichnen die Lösungen als die **imaginäre Einheit \(i\)** und ihre Negation \(-i\). Typischerweise wird \(i\) als die Lösung mit dem positiven Imaginärteil definiert. Da \(e^{i\pi/2} = \cos(\pi/2) + i \sin(\pi/2) = 0 + i \cdot 1 = i\) (was aus der Definition der komplexen Exponentialfunktion folgt), entspricht \(w\) genau \(i\).
+
+Somit haben wir \(i\) aus der Euler'schen Identität hergeleitet:
+
+\[
+i = e^{i\pi/2}
+\]
+
+oder äquivalent dazu, \(i\) ist eine Lösung von \(x^2 + 1 = 0\).
+
+### Wichtige Anmerkungen:
+- Diese Herleitung setzt die Gültigkeit der Euler'schen Identität und die Eigenschaften der komplexen Exponentialfunktion voraus. Die Identität selbst ist kein Axiom, sondern folgt aus der Erweiterung der Exponentialfunktion auf komplexe Zahlen (z. B. mittels Taylor-Reihe).
+- Die Definition von \(i\) als Lösung von \(x^2 + 1 = 0\) ist fundamental und wird durch die Euler'sche Identität konkretisiert, indem \(i\) als \(e^{i\pi/2}\) ausgedrückt wird.
+- Die Wahl von \(i\) als die Lösung mit positivem Imaginärteil ist konventionell und gewährleistet eine eindeutige Darstellung in der komplexen Zahlenebene.
+
+Möchtest du weitere Details zur komplexen Exponentialfunktion oder zur Herleitung der Euler'schen Identität selbst?

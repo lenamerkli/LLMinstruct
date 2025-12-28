@@ -1,0 +1,81 @@
+§u§
+SQLite: How can i test if a sequence of characters is not part of a string?
+§a§
+In SQLite, to test if a **sequence of characters is *not* part of a string**, you can use the `NOT LIKE` operator.
+
+### ✅ Basic Syntax:
+```sql
+column_name NOT LIKE '%sequence%'
+```
+
+This returns `TRUE` if the sequence **does not appear anywhere** inside the string.
+
+---
+
+### 🔍 Example
+
+Suppose you have a table `users` with a column `email`:
+
+| email               |
+|---------------------|
+| alice@example.com   |
+| bob@test.org        |
+| charlie@gmail.com   |
+| david@fake.com      |
+
+You want to find all users whose email **does NOT contain** `"gmail"`:
+
+```sql
+SELECT * FROM users WHERE email NOT LIKE '%gmail%';
+```
+
+✅ Result:
+```
+alice@example.com
+bob@test.org
+david@fake.com
+```
+
+*(charlie@gmail.com is excluded because it contains "gmail")*
+
+---
+
+### 💡 Notes:
+
+- `%` is a wildcard that matches **zero or more characters**.
+- `_` matches exactly one character (useful for fixed-length patterns).
+- `LIKE` is **case-insensitive** in SQLite by default.  
+  If you need **case-sensitive** matching, use `GLOB` instead:
+
+#### Case-Sensitive Version with `GLOB`:
+```sql
+SELECT * FROM users WHERE email NOT GLOB '*gmail*';
+```
+
+> ⚠️ `GLOB` uses `*` and `?` as wildcards (not `%` and `_`), and is case-sensitive.
+
+---
+
+### 🛑 Common Pitfall: NULL Values
+
+If the column value is `NULL`, then `NOT LIKE` will return `NULL` (not `TRUE`), so those rows are filtered out.
+
+To include `NULL` values in your result (if that’s your intent), handle them explicitly:
+
+```sql
+SELECT * FROM users 
+WHERE email NOT LIKE '%gmail%' 
+   OR email IS NULL;
+```
+
+---
+
+### ✅ Summary
+
+| Goal | SQLite Expression |
+|------|-------------------|
+| Sequence **not** in string | `column NOT LIKE '%sequence%'` |
+| Case-sensitive version | `column NOT GLOB '*sequence*'` |
+| Include NULLs too | Add `OR column IS NULL` |
+
+Use `NOT LIKE` — it's the standard, readable, and efficient way in SQLite.

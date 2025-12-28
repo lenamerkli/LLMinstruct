@@ -1,0 +1,82 @@
+§u§
+```
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{xurl}
+\usepackage{longtable}
+
+
+\title{[EN] Exam Summary 2025-09-10}
+\author{REDACTED}
+
+\begin{document}
+    \maketitle
+    \tableofcontents
+
+    \bigskip\bigskip
+
+    \section{Learning Objectives}
+    \begin{itemize}
+        \item You know the basic timeline of the history of English.
+        \item You can distinguish between internal and external language change with regards to English.
+        \item You are familiar with the Old English, Middle English and Early Modern English stages of the language.
+        \item You know which other languages influences English throughought its history, and you knwo how they did so.
+        \item You understand how religion, political change and important cultural shifts influenced the English language in each of its stages.
+        \item You can name the most important texts or cultural figures (writers, rulers, scientists) of the language's history.
+        \item You are able to distinguish Old English, Middle English and Early Modern English text samples.
+        \item You are able to read and understand an authentic text on this topic and answer questions about it.
+    \end{itemize}
+
+    \section{Timeline}
+    \begin{itemize}
+        \item Old English: c. 450 -- 1066
+        \item Middle English: c. 1066 -- 1500
+        \item Early Modern English: c. 1500 -- 1700
+        \item Modern English: c. 1700 -- present
+    \end{itemize}
+
+    \section{Internal and External Language Change}
+    \subsection{Old English}
+    \subsection{Middle English}
+    \subsection{Early Modern English}
+    \subsection{Modern English}
+
+\end{document}
+```
+Write a summary about the objective `\item You can distinguish between internal and external language change with regards to English.` into the four prepared subsections.
+§a§
+Here's content for the four subsections on internal and external language change:
+
+## Internal and External Language Change
+
+### Old English
+
+**Internal changes**: During the Old English period, internal changes included the systematic sound shifts that distinguished the Germanic languages from other Indo-European languages (Grimm's Law effects). The language underwent vowel changes like i-mutation (umlaut), where back vowels became front vowels when followed by /i/ or /j/ in the next syllable. Grammatical leveling began to reduce the complex inflectional system inherited from Proto-Germanic.
+
+**External changes**: The most significant external influence came from Old Norse through Viking invasions and settlements (c. 800-1100). This contact introduced approximately 2,000 Norse loanwords into everyday vocabulary (skill, knife, take, they, their, them). Latin influence came through Christianity (post-597 AD), introducing religious and scholarly vocabulary (angel, mass, school). Celtic languages had minimal influence despite being the substrate language.
+
+### Middle English
+
+**Internal changes**: The most dramatic internal change was the loss of inflectional endings, transforming English from a synthetic to an analytic language. This led to fixed word order (SVO) becoming grammatically significant. The Great Vowel Shift began in late Middle English. Phonological simplification occurred, including the loss of grammatical gender and most case distinctions.
+
+**External changes**: Norman French became the dominant external influence following the Norman Conquest (1066), contributing thousands of words related to government, law, art, and cuisine (government, judge, beauty, beef). This created a stratified vocabulary with Anglo-Saxon words for common concepts and French words for refined ones. Latin continued to influence scholarly and religious vocabulary through the Church and education.
+
+### Early Modern English
+
+**Internal changes**: The Great Vowel Shift continued, dramatically altering the pronunciation of long vowels. Grammatical changes included the loss of thou/thee (except in religious contexts), standardization of verb conjugations, and the development of the progressive aspect. Do-support became established for questions and negatives.
+
+**External changes**: The Renaissance brought massive Latin and Greek borrowing for scientific and scholarly terminology. Global exploration and colonization introduced words from Spanish, Portuguese, Italian, and non-European languages (potato, tobacco, coffee). The printing press (1476) led to spelling standardization. The King James Bible (1611) and Shakespeare's works influenced idiomatic expressions and expanded vocabulary.
+
+### Modern English
+
+**Internal changes**: Ongoing grammatical simplification includes the decline of whom, shall/will distinction erosion, and the emergence of new progressive forms (I've been being). Semantic shifts occur rapidly, especially in slang and technology-related vocabulary. Phonological changes are mostly regional, contributing to dialect diversity.
+
+**External changes**: Globalization has accelerated borrowing from all world languages, especially for food, technology, and cultural concepts (sushi, emoji, yoga). American English influence spread through media and technology. The internet age created new vocabulary and communication styles (email, blog, tweet). Scientific advancement continues to generate terminology from Greek and Latin roots. Immigration patterns introduce vocabulary from immigrant languages into regional varieties.

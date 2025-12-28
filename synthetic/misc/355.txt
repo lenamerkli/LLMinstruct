@@ -1,0 +1,21 @@
+§u§
+```
+Wenn eine Heizung $1.8 * 10^6 \frac{\text{J}}{\text{h}}$ für einen Raum liefert, der Luft unter Atmosphärendruck bei $20 \text{°C}$ enthält und die Abmessungen $6.5 \text{m} * 4.6 \text{m} * 3.0 \text{m}$ hat, um wie viel wird die Temperatur im Raum in einer Stunde ansteigen, wenn keine Wärmeverluste nach aussen auftreten?
+```
+Was ist der Atmosphärendruck in SI-Einheiten?
+§a§
+Das ist eine interessante Aufgabe zur Wärmelehre! Bevor wir uns mit der Erwärmung der Luft im Raum beschäftigen, ist es gut, die gegebenen Informationen zu ordnen.
+
+Du fragst nach dem Atmosphärendruck in SI-Einheiten. Das ist eine gute Frage, da dieser Wert oft für thermodynamische Berechnungen benötigt wird.
+
+Welche Einheit wird für Druck standardmässig im internationalen Einheitensystem (SI) verwendet? Und welchen Wert hat der Standard-Atmosphärendruck in dieser Einheit?
+§u§
+Ich weiss, dass er ungefähr bei 1000 Hektopascal ist. Aber aus was besteht Pascal? Irgendeine Kraft pro Quadratmeter?
+§a§
+Genau richtig! Du bist auf dem richtigen Weg.
+
+Pascal ($\text{Pa}$) ist die korrekte SI-Einheit für den Druck. Und du hast die Definition fast perfekt beschrieben:
+
+$$\text{Druck} = \frac{\text{Kraft}}{\text{Fläche}}$$
+
+Kannst du nun aus dieser Definition ableiten, wie sich das Pascal in den fundamentaleren SI-Einheiten (Meter, Kilogramm, Sekunde) zusammensetzt? Denke daran, welche SI-Einheit die Kraft hat.

@@ -1,0 +1,162 @@
+§u§
+Schreibe einen Artikel mit dem Titel `Kapitalismusversagen: Per- und polyfluorierte Alkylverbindungen (PFAS)` aus einer schweizerischen Perspektive.
+§a§
+```latex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+\title{Kapitalismusversagen: Per- und polyfluorierte Alkylverbindungen (PFAS)}
+\author{Apertus AI}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Begriffe}
+
+\subsection{PFAS}
+Per- und polyfluorierte Alkylverbindungen sind Verbindungen, bei denen an mindestens einem Kohlenstoffatom die Wasserstoffatome am Kohlenstoffgerüst durch Fluoratome ersetzt worden sind.
+
+\subsection{PTFE}
+Polytetrafluorethylen ist ein unverzweigtes und linear aufgebautes PFAS, welches aus einer sehr langen Kette von Kohlenstoffatomen mit jeweils 2 Fluoratomen besteht.
+Es ist auch unter den Namen Teflon\texttrademark{} und Gore-Tex\texttrademark{} bekannt.
+
+\subsection{PFOS}
+Perfluoroctansulfonsäure ist ein PFAS, welches ein Kopf von einem Wasserstoff-, drei Sauerstoff- und einem Schwefelatom gefolgt von einer Kette von acht Kohlenstoffatomen mit dazugehörigen Fluoratomen besteht.
+
+\subsection{PFOA}
+Perfluoroctansäure ist ein PFAS, welches ein Kopf von einem Wasserstoff-, zwei Sauerstoff- und einem Kohlenstoffatom gefolgt von einer Kette von sieben Kohlenstoffatomen mit dazugehörigen Fluoratomen besteht.
+
+\subsection{PFNA}
+Perfluornonansäure ist wie PFOA, jedoch mit einem Kettenteil mehr.
+
+\section{Herstellung von PTFE}
+Für die Herstellung von PTFE wird TFE und PFOA in Wasser gemischt.
+PFOA kann und wird auch mit ähnlichen PFAS, wie z.B.\ PFOS oder PFNA, ersetzt und wird gebraucht, um PTFE wasserlöslich zu machen.
+Da die Herstellung von PTFE ein stark exothermer Prozess ist, wird das Wasser als Kühlmittel eingesetzt, um eine Explosion zu verhindern.
+
+\section{Anwendungen von PTFE}
+PTFE wird unter anderem für folgende Produkte genutzt, es ist je nach Produkt unterschiedlich gut ersetzbar:
+\begin{itemize}
+    \item Behälter für Chemikalien
+    \item Fast-Food-Papier-Verpackungen
+    \item Fett- und wasserabweisende Pfannen und andere Küchengeräte (Teflon\texttrademark{})
+    \item Gore-Tex\texttrademark{}-Kleidung
+    \item Hautpflegeprodukte
+    \item Kontaktlinsen
+    \item Korrosionsschutz
+    \item Löschschaum der Feuerwehr
+    \item Medizinimplantate
+    \item Medizinwerkzeuge
+    \item Munition für Schusswaffen
+\end{itemize}
+
+\section{Geschichte}
+PTFE wurde 1938 bei der Firma Dupont entdeckt.
+Mit der Massenproduktion wurde 1942 begonnen.
+In den 1950er nahm die Nachfrage sehr stark zu.
+Das Abwasser der Produktion wurde und wird aus Kostengründen in den örtlichen Ohio-River geleitet oder in Deponien gelagert.
+Die lokale Bevölkerung wusste nichts von diesem Abwasser.
+Doch bei einem Bauern, der nahe einer dieser Deponien seine Kühe besass, fiel der Schaum und die tödlichen Krankheiten seiner Kühe auf.
+Nach einer rechtlichen Auseinandersetzung musste Dupont gestehen, dass PFOA freigesetzt wird und sie wissen, dass PFOA schwere Organschäden und Fehlgeburten in Ratten, Hunden und Affen verursacht, und sie diese Informationen vorsätzlich unter Verschluss gehalten haben.
+Dupont und Partnerfirmen fanden heraus, dass ihre Chemikalien in das Blut der amerikanischen Bevölkerung kommen und Leberkrankheiten verursachen; Dupont versucht auch diese Informationen geheim zu halten.
+Gleichzeitig leiteten sie 10 Tonnen PFOA in den Ohio-River und lagerten 7'100 Tonnen in Deponien.
+
+Als unabhängige Forscher feststellten, dass PFOA gesichert krebserregend für Tiere ist, überlegt sich Dupont, andere Chemikalien zu verwenden.
+Sie entschieden sich PFOA weiterhin zu verwenden, da es billiger in der Produktionskette ist und somit mehr Gewinn einbringt.
+Um die Bevölkerung zu beruhigen, legten sie als erste einen Grenzwert vor: $1'000 \text{ng/L}$.
+Es wurden Messungen beim Bauern, der im vorherigen Absatz genannt wurde, durchgeführt.
+Die PFOA-Belastung des Wassers für die Kühe betrug $1'600'000 \text{ng/L}$.
+Dupont und der Bauer einigten sich aussergerichtlich auf nicht öffentliche Bedingungen.
+
+Doch es betrifft nicht nur diesen Bauer; im Jahr 2000 betrugen die Blutwerte der amerikanischen Bevölkerung durchschnittlich $5'000 \text{ng/L}$.
+Der Staat verlangte, dass Dupont kein PFOA mehr produziert.
+Ausserdem musste Dupont über $600'000'000\$$ an Betroffene von PFOA bezahlen.
+Für Dupont ist dies eine kleine Summe, da sie in einem Jahr fast $80'000'000'000\$$ umsetzen.
+
+2015 gab Dupont die PFAS-Produktion an Chemours ab, welche versprachen, weder PFOA zu produzieren noch zu verbrauchen.
+Chemours entwickelte `GenX', welches fast gleich wie PFOA ist, jedoch 2 Kettenteile kürzer und mit einem zusätzlichen Sauerstoffatom.
+Mit `GenX' wiederholt sich die Geschichte: Es wird massenweise produziert und freigesetzt; Chemours weiss, dass es schädlich ist und behauptet das Gegenteil, bis unabhängige Wissenschaftler die genau gleichen Gesundheitsrisiken wie PFOA nachweisen.
+
+\section{Verbreitung der Kontamination}
+PFAS konnte in grösseren Mengen in der Natur jedes Kontinentes -- inklusive der Antarktis -- nachgewiesen werden.
+Während die Hersteller behaupten, nur $98\%$ der Menschen seien kontaminiert, konnte ein unabhängiger Arzt in 10 Jahren keine einzige Person finden, die kein PFAS im Blut hat.
+
+\section{Grenzwerte in Trinkwasser}
+Die hier genannten Limiten werden teilweise nicht durchgesetzt.
+\begin{center}
+    \label{tab:trinkwasser}
+    \begin{tabular}{|l|l|l|l|l|}
+        \hline
+        \textbf{Land} & \textbf{PFOS} & \textbf{PFOA} & \textbf{PFNA} & \textbf{PFAS insgesamt} \\ \hline
+        Schweiz & $300 \text{ng/L}$ & $300 \text{ng/L}$ & keine & $1'100 \text{ng/L}$ \\ \hline
+        Deutschland & keine & keine & keine & $300 \text{ng/L}$ \\ \hline
+        USA (2024) & $4 \text{ng/L}$ & $4 \text{ng/L}$ & $10 \text{ng/L}$ & $38 \text{ng/L}$ \\ \hline
+        Schweden & $4 \text{ng/L}$ & $4 \text{ng/L}$ & $4 \text{ng/L}$ & $100 \text{ng/L}$ \\ \hline
+        Dänemark & $2 \text{ng/L}$ & $2 \text{ng/L}$ & $2 \text{ng/L}$ & keine \\ \hline
+    \end{tabular}
+\end{center}
+Zum Vergleich: Die Grenzwerte für das Schwermetall Blei liegt bei $10'000 \text{ng/L}$ und für das Gift Cyanid bei $200'000 \text{ng/L}$ in den Vereinigten Staaten von Amerika (Stand 2024).
+
+\section{Kontamination}
+Diese Aufzählung beinhaltet kein Trinkwasser, es gelten andere Grenzwerte.
+\begin{itemize}
+    \item Der höchste in der Schweiz gemessene Wert liegt bei $19'993 \text{ng/L}$ in Oberwald VS.
+    \item Die tiefsten Werte in der Schweiz stammen alle von Messungen aus dem Jahre 2009 und liegen bei ungefähr $10 \text{ng/L}$.
+    \item Man muss nicht weit reisen, um sehr hohe Kontamination zu finden: Direkt neben einem PFAS-Hersteller in Norditalien nahe Verona wurden Werte bis $7'132'440 \text{ng/L}$ gemessen.
+    \item Noch schlimmer ist es in der Innenstadt von Antwerp, Belgien: Dort befindet sich ebenfalls ein Hersteller von PFAS, die Kontamination liegt bei $72'800'000 \text{ng/L}$.
+\end{itemize}
+PFAS wird in der Natur nicht abgebaut.
+
+\section{Gesundheitsrisiken}
+PFAS sind unterschiedlich schädlich für Menschen.
+PTFE ist hat eine so hohe molekulare Masse, dass der Körper es nur ausscheiden kann und dies auch tut.
+PFOA, PFOS und PFNA sind ab einer Konzentration von $2'000 \text{ng/L}$ im Blut schädlich.
+Dabei können folgende gesundheitliche Probleme auftreten:
+\begin{itemize}
+    \item Hoher Cholesterinspiegel
+    \item Entwicklungsstörungen bei Kleinkindern
+    \item Nierenkrebs
+    \item Verminderte Antikörperreaktion
+    \item Leberenzymveränderungen
+    \item Abnahme der Knochendichte
+    \item Hodenkrebs
+    \item Typ-2-Diabetes
+    \item Schilddrüsenerkrankung
+    \item Brustkrebs
+    \item Bluthochdruck
+    \item Nierenerkrankung
+\end{itemize}
+Wenn PFAS ins Blut gelangt, dann bleibt es normalweise dort und reichert sich bei konstanter Aufnahme an.
+PFAS-Kontamination wird durch die Milch beim Stillen vererbt.
+
+\section{Beseitigung}
+\subsection{Menschlicher Körper}
+Grosse PFAS wie PTFE werden vom Menschen ausgeschieden.
+Kleine, wie z.B.\ PFOA, werden höchstens in kleinen Mengen bei der Menstruation ausgeschieden.
+Amputation ist zurzeit die einzige Variante, in grossen Mengen PFAS aus dem Körper zu beseitigen.
+
+\subsection{Natur}
+PFAS werden nicht in der Natur abgebaut.
+Bei einer Dekontamination im Kanton Zürich wurden für über 600'000 Franken 6 Gramm PFAS aus dem Boden extrahiert.
+Das macht pro Kilogramm PFAS über 100 Millionen Franken.
+Gezahlt wird laut der Finanzaufsicht des Bundes über 90\% vom Steuerzahler.
+
+\subsection{Entsorgung}
+PFAS sind immun gegen extreme aggressive Substanzen, wie z.B.\ radioaktives Uranhexafluorid.
+Es lässt sich nur entsorgen, in dem es auf über 1'200 Grad Celsius erhitzt wird und die dabei entstehenden giftigen Gase mit verschiedenen chemischen Reaktionen unschädlich gemacht werden.
+
+\section{Lehren}
+Aus dieser Umweltkatastrophe ergeben sich einige Lektionen:
+\begin{itemize}
+    \item Die PFAS-Thematik zeigt ein grundsätzliches Problem mit den Gesetzen der westlichen Welt: Neue Chemikalien sind grundsätzlich erlaubt und werden erst verboten, wenn sie von unabhängigen Wissenschaftlern als schädlich eingestuft werden.
+    \item Firmen werden alles dafür tun, um höhere Gewinne zu erzielen.
+    \item Es ist nicht nur ein Marktversagen, sondern auch ein Versagen des Rechtsstaates.
+\end{itemize}
+Aktuell kostet ein Kilogramm PFAS 19 Franken.
+Mit einer korrekten Entsorgung des Abwassers wird ein Kilogramm PFAS rund 15'000 Franken kosten.
+
+\end{document}
+```

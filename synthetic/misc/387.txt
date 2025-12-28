@@ -1,0 +1,845 @@
+§u§
+Du bist eine Lehrperson. Bringe mir das Lernziel `Sie können die Zusammensetzung von Salzsäure- und Natronlauge-Lösung angeben.` bei.
+§a§
+Natürlich! Hier ist eine schrittweise Erklärung, wie du das Lernziel **„Sie können die Zusammensetzung von Salzsäure- und Natronlauge-Lösung angeben“** verstehen und meistern kannst.  
+
+---
+
+### **1. Grundlagen der Lösungen**  
+Beide Substanzen sind **wässrige Lösungen**, das heißt, sie bestehen aus einer chemischen Verbindung, die in Wasser gelöst ist.  
+
+#### **Salzsäure (HCl-Lösung)**  
+- **Chemische Formel:** HCl (Chlorwasserstoff)  
+- **Zusammensetzung:**  
+  - **Gelöster Stoff:** HCl-Gas (Chlorwasserstoff)  
+  - **Lösungsmittel:** Wasser (H₂O)  
+- **Reaktion im Wasser:**  
+  \[
+  \text{HCl (gas)} + \text{H}_2\text{O} \rightarrow \text{H}_3\text{O}^+ + \text{Cl}^-
+  \]  
+  → HCl dissoziiert vollständig in **Hydronium-Ionen (H₃O⁺)** und **Chlorid-Ionen (Cl⁻)**.  
+
+#### **Natronlauge (NaOH-Lösung)**  
+- **Chemische Formel:** NaOH (Natriumhydroxid)  
+- **Zusammensetzung:**  
+  - **Gelöster Stoff:** NaOH (fest)  
+  - **Lösungsmittel:** Wasser (H₂O)  
+- **Reaktion im Wasser:**  
+  \[
+  \text{NaOH (fest)} \rightarrow \text{Na}^+ + \text{OH}^-
+  \]  
+  → NaOH zerfällt in **Natrium-Ionen (Na⁺)** und **Hydroxid-Ionen (OH⁻)**.  
+
+---
+
+### **2. Wichtige Eigenschaften**  
+| Eigenschaft          | Salzsäure (HCl)               | Natronlauge (NaOH)            |
+|----------------------|-------------------------------|-------------------------------|
+| **pH-Wert**          | Stark sauer (pH < 7)          | Stark basisch (pH > 7)        |
+| **Leitfähigkeit**    | Ja (wegen Ionen)              | Ja (wegen Ionen)              |
+| **Gefahrensymbol**   | Ätzend (C)                    | Ätzend (C)                    |
+
+---
+
+### **3. Zusammenfassung der Zusammensetzung**  
+| Lösung         | Gelöster Stoff | Ionen in Wasser               |
+|----------------|----------------|-------------------------------|
+| **Salzsäure**  | HCl-Gas        | H₃O⁺ (Säure) + Cl⁻             |
+| **Natronlauge**| NaOH (fest)    | Na⁺ + OH⁻ (Base)               |
+
+---
+
+### **4. Übungsaufgabe zur Festigung**  
+**Frage:** Welche Ionen entstehen, wenn man NaOH in Wasser löst?  
+**Antwort:** Na⁺ und OH⁻.  
+
+**Frage:** Warum ist Salzsäure sauer?  
+**Antwort:** Weil sie H₃O⁺-Ionen bildet, die den pH-Wert senken.  
+
+---
+
+Falls du noch Fragen hast oder eine Vertiefung möchtest, lass es mich wissen! 😊
+§u§
+`Sie können das Massenwirkungsgesetz MWG aufstellen.`
+§a§
+### **Lernziel: „Sie können das Massenwirkungsgesetz (MWG) aufstellen.“**  
+
+Das **Massenwirkungsgesetz (MWG)** beschreibt das Verhältnis der Konzentrationen von Produkten und Edukten einer **reversiblen (umkehrbaren) chemischen Reaktion** im Gleichgewicht. Hier lernst du, wie man es korrekt formuliert.  
+
+---
+
+## **1. Grundlagen des MWG**  
+- Gilt nur für **homogene Gleichgewichte** (alle Stoffe in derselben Phase, z. B. alle gasförmig oder alle gelöst).  
+- Die Reaktion muss **reversibel** sein ().  
+- Das MWG hängt **nicht** von der Reaktionsgeschwindigkeit ab, sondern nur vom **Gleichgewichtszustand**.  
+
+---
+
+## **2. Allgemeine Form des MWG**  
+Für eine beliebige Reaktion:  
+\[
+a\,A + b\,B \rightleftharpoons c\,C + d\,D
+\]  
+gilt das MWG:  
+\[
+K_c = \frac{[C]^c \cdot [D]^d}{[A]^a \cdot [B]^b}
+\]  
+
+- **\( K_c \)** = Gleichgewichtskonstante (abhängig von der Temperatur)  
+- **[X]** = Konzentration des Stoffes X (meist in mol/L)  
+- **a, b, c, d** = stöchiometrische Koeffizienten  
+
+---
+
+## **3. Schritt-für-Schritt-Anleitung zum Aufstellen des MWG**  
+
+### **Beispiel 1: Einfache Reaktion**  
+**Reaktion:**  
+\[
+2\,H_2 (g) + O_2 (g) \rightleftharpoons 2\,H_2O (g)
+\]  
+
+**Schritte:**  
+1. **Produkte ins Zähler:** \([H_2O]^2\)  
+2. **Edukte ins Nenner:** \([H_2]^2 \cdot [O_2]^1\)  
+3. **Exponenten = stöchiometrische Koeffizienten**  
+
+**MWG:**  
+\[
+K_c = \frac{[H_2O]^2}{[H_2]^2 \cdot [O_2]}
+\]  
+
+---
+
+### **Beispiel 2: Reaktion mit Feststoffen (heterogenes Gleichgewicht)**  
+**Reaktion:**  
+\[
+CaCO_3 (s) \rightleftharpoons CaO (s) + CO_2 (g)
+\]  
+
+**Regel:**  
+- **Feststoffe (s) und reine Flüssigkeiten (l) werden im MWG weggelassen**, da ihre Konzentration konstant ist.  
+
+**MWG:**  
+\[
+K_c = [CO_2]
+\]  
+*(Da \(CaCO_3\) und \(CaO\) Feststoffe sind, tauchen sie nicht auf.)*  
+
+---
+
+## **4. Wichtige Regeln für das MWG**  
+✔ **Nur gasförmige (g) oder gelöste (aq) Stoffe berücksichtigen.**  
+✔ **Feststoffe (s) und reine Flüssigkeiten (l) werden ignoriert.**  
+✔ **Exponenten entsprechen den stöchiometrischen Koeffizienten.**  
+
+---
+
+## **5. Übungsaufgaben**  
+**Aufgabe 1:** Stelle das MWG für folgende Reaktion auf:  
+\[
+N_2 (g) + 3\,H_2 (g) \rightleftharpoons 2\,NH_3 (g)
+\]  
+**Lösung:**  
+\[
+K_c = \frac{[NH_3]^2}{[N_2] \cdot [H_2]^3}
+\]  
+
+**Aufgabe 2:** Wie lautet das MWG für:  
+\[
+Fe^{3+} (aq) + SCN^- (aq) \rightleftharpoons FeSCN^{2+} (aq)
+\]  
+**Lösung:**  
+\[
+K_c = \frac{[FeSCN^{2+}]}{[Fe^{3+}] \cdot [SCN^-]}
+\]  
+
+---
+
+### **Zusammenfassung**  
+- **MWG beschreibt das Konzentrationsverhältnis im Gleichgewicht.**  
+- **Nur gasförmige (g) oder gelöste (aq) Stoffe werden berücksichtigt.**  
+- **Feststoffe (s) und Flüssigkeiten (l) werden weggelassen.**  
+
+Falls du noch Fragen hast oder weitere Beispiele brauchst, frag einfach!
+§u§
+`Sie können [H3O]+ Konzentrationen aus dem pH-Wert berechnen.`
+§a§
+### **Lernziel: „Sie können [HO]-Konzentrationen aus dem pH-Wert berechnen.“**  
+
+Die **Hydronium-Ionen-Konzentration [HO]** ist ein zentraler Begriff in der Säure-Base-Chemie. Der **pH-Wert** gibt an, wie sauer oder basisch eine Lösung ist und steht in direktem Zusammenhang mit [HO]. Hier lernst du, wie du zwischen beiden Größen umrechnest.  
+
+---
+
+## **1. Grundlagen: pH-Wert und [HO]**  
+Der **pH-Wert** ist definiert als der negative dekadische Logarithmus der Hydronium-Ionen-Konzentration:  
+
+\[
+\boxed{ \text{pH} = -\log [\text{H}_3\text{O}^+] }
+\]  
+
+Umgekehrt gilt:  
+
+\[
+\boxed{ [\text{H}_3\text{O}^+] = 10^{-\text{pH}} }
+\]  
+
+**Einheiten:**  
+- **[HO]** in **mol/L (Molarität)**  
+- **pH** ist dimensionslos  
+
+---
+
+## **2. Schritt-für-Schritt-Berechnung**  
+
+### **Beispiel 1: pH → [HO]**  
+**Gegeben:** pH = 3  
+**Gesucht:** [HO]  
+
+**Lösung:**  
+\[
+[\text{H}_3\text{O}^+] = 10^{-3} = 0{,}001 \, \text{mol/L} = 1 \times 10^{-3} \, \text{M}
+\]  
+
+### **Beispiel 2: [HO] → pH**  
+**Gegeben:** [HO] = 0,0001 mol/L (→ \(1 \times 10^{-4} \, \text{M}\))  
+**Gesucht:** pH  
+
+**Lösung:**  
+\[
+\text{pH} = -\log(1 \times 10^{-4}) = 4
+\]  
+
+---
+
+## **3. Wichtige Zusammenhänge**  
+| pH-Wert | [HO] (mol/L) | Lösungseigenschaft |  
+|---------|----------------|-------------------|  
+| 0       | \(1 \times 10^0 = 1\) | Stark sauer |  
+| 3       | \(1 \times 10^{-3} = 0{,}001\) | Sauer |  
+| 7       | \(1 \times 10^{-7}\) | Neutral (z. B. Wasser) |  
+| 11      | \(1 \times 10^{-11}\) | Stark basisch |  
+
+**Merke:**  
+- **Je kleiner der pH, desto höher [HO]** (saurer).  
+- **Je größer der pH, desto niedriger [HO]** (basischer).  
+
+---
+
+## **4. Übungsaufgaben**  
+
+### **Aufgabe 1:**  
+Berechne [HO] für pH = 2.  
+**Lösung:**  
+\[
+[\text{H}_3\text{O}^+] = 10^{-2} = 0{,}01 \, \text{mol/L}
+\]  
+
+### **Aufgabe 2:**  
+Berechne den pH-Wert für [HO] = \(5 \times 10^{-5} \, \text{M}\).  
+**Lösung:**  
+\[
+\text{pH} = -\log(5 \times 10^{-5}) \approx 4{,}3
+\]
+*(Taschenrechner erforderlich!)*  
+
+---
+
+## **5. Erweiterung: pOH und [OH⁻]**  
+- Analog zum pH gibt es den **pOH** für Hydroxid-Ionen:  
+  \[
+  \text{pOH} = -\log [\text{OH}^-]
+  \]  
+- In Wasser gilt bei 25 °C:  
+  \[
+  \text{pH} + \text{pOH} = 14
+  \]  
+
+---
+
+### **Zusammenfassung**  
+✔ **[HO] = 10⁻**  
+✔ **pH = −log [HO]**  
+✔ **pH < 7 → sauer | pH = 7 → neutral | pH > 7 → basisch**  
+
+Falls du noch Fragen hast oder weitere Beispiele brauchst, frag einfach!
+§u§
+`Sie können das Prinzip eines Säure-Basen-Indikators beschreiben und den Unterschied zwischen Indikator und Universalindikator erklären.`
+§a§
+### **Lernziel: „Sie können das Prinzip eines Säure-Basen-Indikators beschreiben und den Unterschied zwischen Indikator und Universalindikator erklären.“**  
+
+Säure-Basen-Indikatoren sind wichtige Hilfsmittel in der Chemie, um den pH-Wert einer Lösung zu bestimmen. Hier lernst du, wie sie funktionieren und was den Universalindikator besonders macht.  
+
+---
+
+## **1. Prinzip eines Säure-Basen-Indikators**  
+
+### **Was ist ein Indikator?**  
+Ein **Säure-Basen-Indikator** ist ein Farbstoff, der seine Farbe in Abhängigkeit vom pH-Wert der Lösung ändert.  
+
+### **Wie funktioniert er?**  
+- Indikatoren sind selbst **schwache Säuren oder Basen** (z. B. Phenolphthalein, Lackmus).  
+- Sie liegen in zwei Formen vor:  
+  - **Säureform (HInd)** → Farbe A  
+  - **Baseform (Ind⁻)** → Farbe B  
+- Die Farbe hängt davon ab, welche Form überwiegt.  
+
+### **Beispiel: Phenolphthalein**  
+| pH-Bereich | Farbe | Dominante Form |  
+|------------|-------|----------------|  
+| pH < 8,3   | Farblos | HInd (Säureform) |  
+| pH > 10    | Pink   | Ind⁻ (Baseform) |  
+
+**Umschlagsbereich:** pH 8,3–10 (allmählicher Farbwechsel)  
+
+---
+
+## **2. Unterschied: Einfacher Indikator vs. Universalindikator**  
+
+| **Eigenschaft**       | **Einfacher Indikator** (z. B. Lackmus) | **Universalindikator** |  
+|-----------------------|----------------------------------------|------------------------|  
+| **Anzahl Farben**     | 2 (z. B. rot/blau)                     | Mehrere (Regenbogenfarben) |  
+| **pH-Bereich**        | Eng begrenzt (z. B. pH 5–8)           | Groß (pH 1–14) |  
+| **Genauigkeit**       | Geeignet für grobe Unterscheidung (sauer/basisch) | Gibt genaueren pH-Wert an |  
+| **Bestandteile**      | Einzelner Farbstoff                   | Mischung mehrerer Indikatoren |  
+
+### **Beispiel: Universalindikator (pH-Farbenskala)**  
+| pH-Wert | Farbe |  
+|---------|-------|  
+| 1–2     | Rot   |  
+| 4–5     | Orange |  
+| 7       | Grün (neutral) |  
+| 9–10    | Blau  |  
+| 12–14   | Violett |  
+
+---
+
+## **3. Wichtige Indikatoren im Überblick**  
+
+| **Indikator**      | **Säurefarbe** | **Basefarbe** | **Umschlagsbereich (pH)** |  
+|--------------------|---------------|---------------|--------------------------|  
+| **Lackmus**        | Rot           | Blau          | 5–8 |  
+| **Phenolphthalein**| Farblos       | Pink          | 8,3–10 |  
+| **Bromthymolblau** | Gelb          | Blau          | 6–7,6 |  
+| **Methylorange**   | Rot           | Gelb          | 3,1–4,4 |  
+
+---
+
+## **4. Zusammenfassung**  
+✔ **Indikatoren sind pH-abhängige Farbstoffe mit zwei Formen (Säure- und Baseform).**  
+✔ **Einfache Indikatoren zeigen nur sauer/alkalisch an (z. B. Lackmus).**  
+✔ **Universalindikatoren bestehen aus mehreren Farbstoffen und zeigen den genauen pH-Wert an (Farbverlauf von rot bis violett).**  
+
+**Merke:**  
+- **Indikatoren helfen, den pH-Wert qualitativ zu bestimmen.**  
+- **Für genaue Messungen verwendet man ein pH-Meter.**  
+
+---
+
+### **Übungsfragen**  
+1. Warum ist Phenolphthalein in stark saurer Lösung farblos?  
+   → Weil die Säureform (HInd) überwiegt.  
+2. Welchen Vorteil hat ein Universalindikator gegenüber Lackmus?  
+   → Er zeigt nicht nur sauer/neutral/basisch, sondern den gesamten pH-Bereich an.  
+
+Falls du noch Fragen hast, frag einfach!
+§u§
+`Sie können die Lage des Gleichgewichts mit Hilfe der Säure-Base-Reihe voraussagen. (S-Stellung)`
+§a§
+### **Lernziel: „Sie können die Lage des Gleichgewichts mit Hilfe der Säure-Base-Reihe voraussagen (S-Stellung).“**
+
+Die **Säure-Base-Reihe** (auch **S-Stellung** genannt) hilft dir, vorherzusagen, in welche Richtung eine Säure-Base-Reaktion abläuft. Dabei vergleicht man die **Stärke der beteiligten Säuren und Basen**.  
+
+---
+
+## **1. Grundlagen: Säure-Base-Reihe (S-Stellung)**
+In der Chemie gibt es starke und schwache Säuren/Basen. Die **Säure-Base-Reihe** ordnet sie nach ihrer Stärke:  
+
+### **Starke Säuren** (geben leicht H⁺ ab)  
+- **Beispiele:** HCl, H₂SO₄, HNO₃  
+- **Merksatz:** *„Starke Säuren liegen in der S-Stellung weit links.“*  
+
+### **Schwache Säuren** (geben schwer H⁺ ab)  
+- **Beispiele:** CH₃COOH (Essigsäure), H₂CO₃ (Kohlensäure)  
+
+### **Starke Basen** (nehmen leicht H⁺ auf)  
+- **Beispiele:** NaOH, KOH  
+- **Merksatz:** *„Starke Basen liegen in der S-Stellung weit rechts.“*  
+
+### **Schwache Basen** (nehmen schwer H⁺ auf)  
+- **Beispiele:** NH₃ (Ammoniak), HCO₃⁻ (Hydrogencarbonat)  
+
+---
+
+## **2. Vorhersage der Gleichgewichtslage**
+Das Gleichgewicht verschiebt sich **zugunsten der schwächeren Säure und Base**, weil diese stabiler sind.  
+
+### **Allgemeine Regel:**  
+> **Die stärkere Säure reagiert mit der stärkeren Base zu der schwächeren Säure und der schwächeren Base.**  
+
+### **Beispielreaktion:**  
+\[
+\text{HCl} + \text{NH}_3 \rightleftharpoons \text{NH}_4^+ + \text{Cl}^-
+\]  
+
+**Schritt 1: Säure-Base-Paare identifizieren**  
+- **Säuren:** HCl (stark) und NH₄⁺ (schwach)  
+- **Basen:** NH₃ (schwach) und Cl⁻ (sehr schwach)  
+
+**Schritt 2: Stärke vergleichen**  
+- HCl ist stärker als NH₄⁺.  
+- NH₃ ist stärker als Cl⁻.  
+
+**Schritt 3: Gleichgewichtslage bestimmen**  
+- Die Reaktion läuft **nach rechts**, weil:  
+  - HCl (starke Säure) + NH₃ (relativ starke Base) → NH₄⁺ (schwache Säure) + Cl⁻ (sehr schwache Base).  
+- **Fazit:** Das Gleichgewicht liegt auf der rechten Seite.  
+
+---
+
+## **3. Wichtige Faustregeln**  
+✔ **Starke Säure + starke Base → Reaktion verläuft fast vollständig.**  
+✔ **Schwache Säure + schwache Base → Gleichgewicht liegt in der Mitte.**  
+✔ **Je größer der Stärkeunterschied, desto weiter liegt das Gleichgewicht auf einer Seite.**  
+
+---
+
+## **4. Übungsaufgabe**  
+**Vorhersage der Gleichgewichtslage für:**  
+\[
+\text{CH}_3\text{COOH} + \text{OH}^- \rightleftharpoons \text{CH}_3\text{COO}^- + \text{H}_2\text{O}
+\]  
+
+**Lösung:**  
+1. **Säuren:** CH₃COOH (schwach) vs. H₂O (sehr schwach)  
+2. **Basen:** OH⁻ (stark) vs. CH₃COO⁻ (schwach)  
+3. **Ergebnis:** Die Reaktion läuft **nach rechts**, weil OH⁻ eine stärkere Base ist als CH₃COO⁻.  
+
+---
+
+## **5. Zusammenfassung**  
+- **Die Säure-Base-Reihe (S-Stellung) ordnet Säuren und Basen nach ihrer Stärke.**  
+- **Das Gleichgewicht verschiebt sich zugunsten der schwächeren Säure/Base.**  
+- **Starke Säuren reagieren mit starken Basen zu schwächeren Produkten.**  
+
+**Merke:**  
+> *„Das Gleichgewicht flieht vor der Stärke!“*  
+
+Falls du noch Fragen hast oder ein weiteres Beispiel brauchst, frag einfach!
+§u§
+`(Titration) Sie können die Säure-Base-Reaktionsgleichung für eine Neutralisation aufstellen.`
+§a§
+### **Lernziel: „Sie können die Säure-Base-Reaktionsgleichung für eine Neutralisation (Titration) aufstellen.“**
+
+Bei einer **Neutralisation** reagieren eine Säure und eine Base zu **Wasser** und einem **Salz**. Hier lernst du, wie man die Reaktionsgleichung korrekt formuliert – ein zentraler Schritt für die Titration!
+
+---
+
+## **1. Grundschema der Neutralisation**
+Die allgemeine Reaktionsgleichung lautet:  
+\[
+\text{Säure} + \text{Base} \rightarrow \text{Salz} + \text{Wasser}
+\]  
+**Beispiel (HCl + NaOH):**  
+\[
+\text{HCl} + \text{NaOH} \rightarrow \text{NaCl} + \text{H}_2\text{O}
+\]  
+
+---
+
+## **2. Schritt-für-Schritt-Anleitung**
+### **Schritt 1: Ionen der Säure und Base identifizieren**
+- **Säure** gibt **H⁺** ab → bildet **Anion** (z. B. Cl⁻ aus HCl).  
+- **Base** gibt **OH⁻** ab → bildet **Kation** (z. B. Na⁺ aus NaOH).  
+
+### **Schritt 2: H⁺ und OH⁻ zu Wasser kombinieren**
+\[
+\text{H}^+ + \text{OH}^- \rightarrow \text{H}_2\text{O}
+\]  
+
+### **Schritt 3: Salz bilden**
+- Das **Kation der Base** und das **Anion der Säure** bilden ein Salz.  
+- **Beispiel (H₂SO₄ + KOH):**  
+  \[
+  \text{H}_2\text{SO}_4 + 2\,\text{KOH} \rightarrow \text{K}_2\text{SO}_4 + 2\,\text{H}_2\text{O}
+  \]  
+  *(Achtung: Stöchiometrie anpassen!)*  
+
+---
+
+## **3. Wichtige Beispiele**
+| **Säure**       | **Base**        | **Reaktionsgleichung**                     | **Salz**        |
+|-----------------|----------------|--------------------------------------------|----------------|
+| **HCl**         | **NaOH**       | \( \text{HCl} + \text{NaOH} \rightarrow \text{NaCl} + \text{H}_2\text{O} \) | Natriumchlorid |
+| **HNO₃**        | **KOH**        | \( \text{HNO}_3 + \text{KOH} \rightarrow \text{KNO}_3 + \text{H}_2\text{O} \) | Kaliumnitrat   |
+| **H₂SO₄**       | **Ca(OH)₂**    | \( \text{H}_2\text{SO}_4 + \text{Ca(OH)}_2 \rightarrow \text{CaSO}_4 + 2\,\text{H}_2\text{O} \) | Calciumsulfat  |
+| **CH₃COOH**     | **NH₃**        | \( \text{CH}_3\text{COOH} + \text{NH}_3 \rightarrow \text{CH}_3\text{COO}^- \text{NH}_4^+ \) | Ammoniumacetat |
+
+---
+
+## **4. Besonderheiten**
+- **Mehrprotonige Säuren** (z. B. H₂SO₄):  
+  Benötigen **2 OH⁻-Ionen** pro Säuremolekül → Salz hat höhere Kationenanzahl.  
+  **Beispiel:**  
+  \[
+  \text{H}_2\text{SO}_4 + 2\,\text{NaOH} \rightarrow \text{Na}_2\text{SO}_4 + 2\,\text{H}_2\text{O}
+  \]  
+
+- **Schwache Säuren/Basen:**  
+  Reaktionen sind oft unvollständig (Gleichgewichtsreaktionen).  
+
+---
+
+## **5. Übungsaufgaben**
+**Aufgabe 1:** Stelle die Gleichung für die Neutralisation von **Phosphorsäure (H₃PO₄)** mit **Kalilauge (KOH)** auf.  
+**Lösung:**  
+\[
+\text{H}_3\text{PO}_4 + 3\,\text{KOH} \rightarrow \text{K}_3\text{PO}_4 + 3\,\text{H}_2\text{O}
+\]  
+
+**Aufgabe 2:** Welches Salz entsteht bei der Reaktion von **Salpetersäure (HNO₃)** mit **Calciumhydroxid (Ca(OH)₂)**?  
+**Lösung:**  
+\[
+2\,\text{HNO}_3 + \text{Ca(OH)}_2 \rightarrow \text{Ca(NO}_3\text{)}_2 + 2\,\text{H}_2\text{O}
+\]  
+→ **Calciumnitrat**  
+
+---
+
+## **6. Zusammenfassung**
+✔ **Neutralisation: Säure + Base → Salz + Wasser**  
+✔ **Schritte:**  
+1. H⁺ (Säure) + OH⁻ (Base) → H₂O  
+2. Restionen bilden das Salz.  
+✔ **Stöchiometrie beachten!** (besonders bei mehrprotonigen Säuren)  
+
+**Tipp für Titrationen:**  
+- Die Neutralisationsgleichung ist die Grundlage für **Stöchiometrie-Berechnungen** (z. B. *„Wie viel Base brauche ich für 10 mL Säure?“*).  
+
+Fragen? Frag einfach!
+§u§
+`Sie können Titrationskurven mit pH-Sprung und Äquivalenzpunkt qualitativ zeichnen.`
+§a§
+### **Lernziel: „Sie können Titrationskurven mit pH-Sprung und Äquivalenzpunkt qualitativ zeichnen.“**
+
+Titrationskurven zeigen, wie sich der **pH-Wert** während einer Titration verändert. Besonders wichtig sind der **Äquivalenzpunkt** (vollständige Neutralisation) und der **pH-Sprung** (steiler Anstieg/Abfall). Hier lernst du, wie man diese Kurven skizziert!
+
+---
+
+## **1. Grundlagen der Titrationskurve**
+- **X-Achse:** Zugesetzte Menge der Maßlösung (z. B. in mL NaOH).  
+- **Y-Achse:** pH-Wert der Lösung.  
+- **Typische Form:**  
+  - **Flacher Verlauf** zu Beginn und nach dem Äquivalenzpunkt.  
+  - **Steiler pH-Sprung** um den Äquivalenzpunkt.  
+
+---
+
+## **2. Titrationskurven für verschiedene Säure-Base-Kombinationen**
+
+### **(a) Starke Säure (z. B. HCl) mit starker Base (z. B. NaOH)**
+- **Start-pH:** Sehr niedrig (stark sauer, pH ≈ 1).  
+- **Äquivalenzpunkt (EP):** pH = 7 (neutral).  
+- **pH-Sprung:** Sehr steil (fast senkrecht) bei EP.  
+- **End-pH:** Hoch (stark basisch, pH ≈ 13).  
+
+**Skizze:**  
+```
+pH
+14 |                ／
+   |               /
+7  |—————+——————
+   |             \
+0  |_____________\____
+      Volumen NaOH
+```
+
+---
+
+### **(b) Schwache Säure (z. B. CH₃COOH) mit starker Base (z. B. NaOH)**
+- **Start-pH:** Höher als bei starker Säure (pH ≈ 3–4).  
+- **Halbäquivalenzpunkt:** pH = pKₛ (Pufferbereich!).  
+- **Äquivalenzpunkt (EP):** pH > 7 (leicht basisch, da das gebildete Acetat-Ion basisch wirkt).  
+- **pH-Sprung:** Weniger steil als bei starker Säure.  
+
+**Skizze:**  
+```
+pH
+14 |                ／
+   |               /
+9  |—————+——————
+   |            \
+3  |_____________\____
+      Volumen NaOH
+```
+
+---
+
+### **(c) Starke Säure (HCl) mit schwacher Base (z. B. NH₃)**
+- **Start-pH:** Niedrig (stark sauer, pH ≈ 1).  
+- **Äquivalenzpunkt (EP):** pH < 7 (leicht sauer, da NH₄⁺ sauer wirkt).  
+- **pH-Sprung:** Weniger steil.  
+
+**Skizze:**  
+```
+pH
+14 |                ／
+   |               /
+7  |             /
+5  |—————+——————
+   |            \
+0  |_____________\____
+      Volumen NH₃
+```
+
+---
+
+## **3. Wichtige Punkte in der Titrationskurve**
+| **Punkt**               | **Bedeutung**                                                                 |
+|-------------------------|------------------------------------------------------------------------------|
+| **Start-pH**            | pH-Wert der zu titrierenden Lösung (Säure/Base) vor Titration.               |
+| **Halbäquivalenzpunkt** | Bei schwachen Säuren/Basen: pH = pKₛ (hier gilt [Säure] = [Base]).           |
+| **Äquivalenzpunkt (EP)**| Punkt der vollständigen Neutralisation (stöchiometrisches Verhältnis erreicht). |
+| **pH-Sprung**           | Steiler Bereich um den EP – wichtig für Indikatorwahl!                       |
+
+---
+
+## **4. Indikatorwahl für die Titration**
+- Der Indikator muss **im pH-Sprung umschlagen**.  
+- **Beispiele:**  
+  - **Starke Säure + starke Base:** Phenolphthalein (Umschlag bei pH 8–10).  
+  - **Schwache Säure + starke Base:** Phenolphthalein.  
+  - **Starke Säure + schwache Base:** Methylorange (Umschlag bei pH 3–4).  
+
+---
+
+## **5. Zusammenfassung**
+✔ **Titrationskurven zeigen den pH-Verlauf während der Neutralisation.**  
+✔ **Äquivalenzpunkt (EP):** Vollständige Umsetzung (stöchiometrisch).  
+✔ **pH-Sprung:** Steiler Anstieg/Abfall um den EP – je nach Säure/Base-Stärke unterschiedlich ausgeprägt.  
+✔ **Indikator muss im pH-Sprung umschlagen!**  
+
+**Merke:**  
+> *„Starke Säure + starke Base → steiler Sprung bei pH 7.  
+> Schwache Säure/Base → flacherer Sprung und EP ≠ 7.“*  
+
+---
+
+### **Übungsaufgabe**  
+**Skizziere die Titrationskurve für die Titration von Essigsäure (CH₃COOH) mit Natronlauge (NaOH) und markiere:**  
+1. Start-pH (~3),  
+2. Halbäquivalenzpunkt (pH = pKₛ ≈ 4,76),  
+3. Äquivalenzpunkt (pH ~9).  
+
+**Lösung:**  
+```
+pH
+14 |                ／
+   |               /
+9  |—————-+—————— EP
+4.7|      | HÄP
+3  |______|________\____
+      Volumen NaOH
+```  
+
+Fragen? Frag einfach!
+§u§
+`Ionenprodukt von Wasser: Sie können das Ionenprodukt $K_W$ erklären.`
+§a§
+### **Lernziel: „Sie können das Ionenprodukt \( K_W \) des Wassers erklären.“**
+
+Das **Ionenprodukt des Wassers (\( K_W \))** ist eine fundamentale Größe in der Chemie, die das Gleichgewicht der **Autoprotolyse von Wasser** beschreibt. Es ist entscheidend für das Verständnis des pH-Werts und Säure-Base-Reaktionen.  
+
+---
+
+## **1. Autoprotolyse von Wasser**  
+Wasser dissoziiert zu einem sehr geringen Teil in **Hydronium-Ionen (H₃O⁺)** und **Hydroxid-Ionen (OH⁻)**:  
+\[
+\boxed{ 2\,\text{H}_2\text{O} \rightleftharpoons \text{H}_3\text{O}^+ + \text{OH}^- }
+\]  
+- **Reine Neutralität:** In reinem Wasser gilt:  
+  \[
+  [\text{H}_3\text{O}^+] = [\text{OH}^-] = 1 \times 10^{-7} \, \text{mol/L} \quad (\text{bei } 25\,°\text{C})
+  \]  
+
+---
+
+## **2. Definition des Ionenprodukts \( K_W \)**  
+Das Ionenprodukt \( K_W \) ist das **Gleichgewichtsprodukt** der Autoprotolyse:  
+\[
+\boxed{ K_W = [\text{H}_3\text{O}^+] \cdot [\text{OH}^-] }
+\]  
+- **Bei 25 °C:**  
+  \[
+  K_W = 1 \times 10^{-14} \, \text{mol}^2/\text{L}^2
+  \]  
+- **Einheit:** \(\text{mol}^2/\text{L}^2\) (da Konzentration × Konzentration).  
+
+---
+
+## **3. Temperaturabhängigkeit von \( K_W \)**  
+\( K_W \) ist **temperaturabhängig**:  
+- **Bei höherer Temperatur** (z. B. 50 °C) steigt \( K_W \) an (mehr Ionenbildung).  
+- **Bei 0 °C** ist \( K_W \) kleiner (\( \approx 10^{-15} \)).  
+
+---
+
+## **4. Bedeutung von \( K_W \) für pH und pOH**  
+- **Zusammenhang mit pH/pOH:**  
+  \[
+  \text{pH} + \text{pOH} = 14 \quad (\text{bei } 25\,°\text{C})
+  \]  
+  (Weil \( -\log K_W = 14 \)).  
+- **Neutrale Lösung:** pH = 7 (bei 25 °C).  
+  - Bei anderen Temperaturen kann der neutrale pH abweichen (z. B. pH ≈ 6,5 bei 50 °C).  
+
+---
+
+## **5. Beispielrechnung**  
+**Frage:** Eine Lösung hat \( [\text{H}_3\text{O}^+] = 1 \times 10^{-3} \, \text{M} \). Wie groß ist \( [\text{OH}^-] \)?  
+**Lösung:**  
+\[
+[\text{OH}^-] = \frac{K_W}{[\text{H}_3\text{O}^+]} = \frac{10^{-14}}{10^{-3}} = 10^{-11} \, \text{M}
+\]  
+
+---
+
+## **6. Zusammenfassung**  
+✔ **\( K_W \) beschreibt das Gleichgewicht der Autoprotolyse von Wasser.**  
+✔ **Bei 25 °C gilt:**  
+  \[
+  K_W = 10^{-14} \, \text{mol}^2/\text{L}^2
+  \]  
+✔ **Neutrales Wasser:** \( [\text{H}_3\text{O}^+] = [\text{OH}^-] = 10^{-7} \, \text{M} \).  
+✔ **Temperaturabhängig:** \( K_W \) steigt mit der Temperatur.  
+
+**Merke:**  
+> *„\( K_W \) ist der Schlüssel zum Verständnis von pH, pOH und Säure-Base-Gleichgewichten!“*  
+
+---
+
+### **Übungsaufgabe**  
+**Berechne \( [\text{OH}^-] \) für eine Lösung mit pH = 4.**  
+**Lösung:**  
+1. \( [\text{H}_3\text{O}^+] = 10^{-4} \, \text{M} \).  
+2. \( [\text{OH}^-] = \frac{10^{-14}}{10^{-4}} = 10^{-10} \, \text{M} \).  
+
+Fragen? Frag einfach!
+§u§
+`Sie können den pH-Wert von alkalischen Lösungen berechnen.`
+§a§
+### **Lernziel: „Sie können den pH-Wert von alkalischen (basischen) Lösungen berechnen.“**
+
+Alkalische Lösungen haben einen **pH-Wert > 7** und enthalten eine höhere Konzentration an **Hydroxid-Ionen (OH⁻)** als Hydronium-Ionen (H₃O⁺). Hier lernst du Schritt für Schritt, wie du den pH-Wert berechnest – egal, ob du die OH⁻-Konzentration direkt gegeben hast oder sie erst aus der Base-Stärke ableiten musst.
+
+---
+
+## **1. Grundlagen: pH und pOH**
+- **pH-Wert:** Maß für die H₃O⁺-Konzentration.  
+  \[
+  \text{pH} = -\log [\text{H}_3\text{O}^+]
+  \]
+- **pOH-Wert:** Maß für die OH⁻-Konzentration.  
+  \[
+  \text{pOH} = -\log [\text{OH}^-]
+  \]
+- **Zusammenhang bei 25 °C:**  
+  \[
+  \text{pH} + \text{pOH} = 14
+  \]
+
+---
+
+## **2. Schritt-für-Schritt-Berechnung**
+### **Fall 1: OH⁻-Konzentration ist gegeben**
+**Beispiel:**  
+Gegeben: \([OH^-] = 1 \times 10^{-3} \, \text{M}\)  
+**Schritte:**  
+1. Berechne **pOH**:  
+   \[
+   \text{pOH} = -\log(10^{-3}) = 3
+   \]  
+2. Berechne **pH**:  
+   \[
+   \text{pH} = 14 - \text{pOH} = 14 - 3 = 11
+   \]  
+   **Ergebnis:** pH = 11 (stark basisch).
+
+---
+
+### **Fall 2: Starke Base (vollständige Dissoziation)**
+Starke Basen (z. B. NaOH, KOH) dissoziieren vollständig:  
+\[
+\text{NaOH} \rightarrow \text{Na}^+ + \text{OH}^-
+\]  
+**Beispiel:**  
+Gegeben: \(0{,}01 \, \text{M NaOH}\)  
+**Schritte:**  
+1. \([OH^-] = 0{,}01 \, \text{M} = 10^{-2} \, \text{M}\) (da 1:1-Dissoziation).  
+2. \(\text{pOH} = -\log(10^{-2}) = 2\).  
+3. \(\text{pH} = 14 - 2 = 12\).  
+
+---
+
+### **Fall 3: Schwache Base (unvollständige Dissoziation)**
+Schwache Basen (z. B. NH₃) liegen im Gleichgewicht vor:  
+\[
+\text{NH}_3 + \text{H}_2\text{O} \rightleftharpoons \text{NH}_4^+ + \text{OH}^-
+\]  
+Hier nutzt du die **Basekonstante \( K_B \)** oder den **pKₐ-Wert der korrespondierenden Säure**:  
+\[
+K_B = \frac{[\text{NH}_4^+][\text{OH}^-]}{[\text{NH}_3]}
+\]  
+**Beispiel:**  
+Gegeben: \(0{,}1 \, \text{M NH}_3\) (\(K_B = 1{,}8 \times 10^{-5}\))  
+**Schritte:**  
+1. Vereinfachte Formel für schwache Basen:  
+   \[
+   [\text{OH}^-] \approx \sqrt{K_B \cdot c_0} = \sqrt{1{,}8 \times 10^{-5} \cdot 0{,}1} = 1{,}34 \times 10^{-3} \, \text{M}
+   \]  
+2. \(\text{pOH} = -\log(1{,}34 \times 10^{-3}) \approx 2{,}87\).  
+3. \(\text{pH} = 14 - 2{,}87 = 11{,}13\).  
+
+---
+
+## **3. Wichtige Formeln im Überblick**
+| **Situation**                | **Formel**                                                                 |
+|------------------------------|---------------------------------------------------------------------------|
+| **Direkte OH⁻-Konzentration** | \(\text{pH} = 14 - \text{pOH} = 14 + \log [\text{OH}^-]\)                |
+| **Starke Base**              | \([OH^-] = c_0\) (vollständige Dissoziation) → \(\text{pH} = 14 + \log c_0\) |
+| **Schwache Base**            | \([OH^-] \approx \sqrt{K_B \cdot c_0}\) → \(\text{pH} = 14 + \log \sqrt{K_B \cdot c_0}\) |
+
+---
+
+## **4. Typische pH-Werte alkalischer Lösungen**
+| **Base**            | **Konzentration** | **pH-Wert** | **Begründung**                     |
+|---------------------|------------------|------------|-----------------------------------|
+| **NaOH (stark)**    | \(0{,}1 \, \text{M}\) | 13        | \([OH^-] = 0{,}1 \, \text{M}\) → pOH = 1 → pH = 13 |
+| **NH₃ (schwach)**   | \(0{,}1 \, \text{M}\) | ~11       | Teilweise Dissoziation (\(K_B = 1{,}8 \times 10^{-5}\)) |
+| **Na₂CO₃ (bas. Salz)** | \(0{,}1 \, \text{M}\) | ~11       | CO₃²⁻ reagiert als Base: \(\text{CO}_3^{2-} + \text{H}_2\text{O} \rightleftharpoons \text{HCO}_3^- + \text{OH}^-\) |
+
+---
+
+## **5. Übungsaufgaben**
+### **Aufgabe 1:**  
+Berechne den pH-Wert einer \(0{,}001 \, \text{M KOH}\)-Lösung.  
+**Lösung:**  
+- \([OH^-] = 10^{-3} \, \text{M}\) → \(\text{pOH} = 3\) → \(\text{pH} = 11\).  
+
+### **Aufgabe 2:**  
+Eine Ammoniaklösung hat \([OH^-] = 2 \times 10^{-4} \, \text{M}\). Wie groß ist der pH?  
+**Lösung:**  
+- \(\text{pOH} = -\log(2 \times 10^{-4}) \approx 3{,}7\) → \(\text{pH} = 10{,}3\).  
+
+---
+
+## **6. Zusammenfassung**
+✔ **Für alkalische Lösungen: pH = 14 – pOH.**  
+✔ **Starke Basen:** \([OH^-] = \text{Konzentration der Base}\).  
+✔ **Schwache Basen:** \([OH^-] \approx \sqrt{K_B \cdot c_0}\).  
+✔ **Achtung:** Bei **basischen Salzen** (z. B. Na₂CO₃) wird das Anion als Base betrachtet.  
+
+**Tipp:**  
+> *„Immer zuerst \([OH^-]\) bestimmen, dann über pOH den pH berechnen!“*  
+
+Fragen? Frag einfach!

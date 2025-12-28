@@ -1,0 +1,77 @@
+§u§
+```
+\begin{document}
+\maketitle
+\tableofcontents
+
+\bigskip\bigskip
+
+\section{Lernziele}
+Sie sollten in der Lage sein, Fragen wie die nachfolgenden begründet zu beantworten und ihre Einsichten auf Beispiele anzuwenden:
+\subsection{Was ist Wissen?}
+\begin{itemize}
+    \item Wie lautet die Standarddefinition von Wissen und wie lässt sie sich kritisieren?
+    \item Was besagt der Reliabilismus? Welches Problem mit der Standarddefinition soll er lösen?
+    \item Wodurch unterscheiden sich erkenntnistheoretische Externalisten und Internalisten?
+    \item Wogegen richtet sich das Gettier-Beispiel (Smith und Jones) und wie könnte man die Standarddefinition modifizieren, um auf das Gegenbeispiel zu reagieren?
+\end{itemize}
+```
+Erkläre den Stoff, der benötigt wird, um diese Lernziele zu erfüllen.
+§a§
+Um die Lernziele zu erfüllen, ist folgendes Grundwissen aus der Erkenntnistheorie erforderlich:
+
+### 1. **Standarddefinition von Wissen (Justified True Belief - JTB)**
+   - **Definition**: Wissen = **wahrer Glaube + Rechtfertigung** (Platon, *Theaetetus*).
+     - *Wahrheit*: Der Glaube muss faktisch korrekt sein.
+     - *Rechtfertigung*: Der Glaubende muss gute Gründe haben (z. B. Wahrnehmung, Logik).
+   - **Kritikpunkte**:
+     - **Gettier-Probleme**: Es gibt Fälle, wo JTB nicht ausreicht (siehe Punkt 4).
+     - **Zirkularität**: "Gute Gründe" definieren Wissen – aber Wissen wird zur Definition von Gründen verwendet.
+     - **Skeptizismus**: Kann die Rechtfertigung absolute Gewissheit liefern? (Descartes, Hume).
+
+---
+
+### 2. **Reliabilismus als Lösung für Gettier-Probleme**
+   - **Kernaussage**: Wissen entsteht, wenn eine **zuverlässige Methode** (z. B. Sinneswahrnehmung, Wissenschaft) zur Wahrheit führt.
+   - **Problemlösung für JTB**:
+     - Gettier-Fälle zeigen, dass JTB "Glückstreffer" zulässt (wahre Überzeugung ohne kausale Verbindung zur Realität).
+     - Reliabilismus fügt ein **kausales Element** hinzu: Der Glaube muss durch eine verlässliche Quelle entstehen.
+   - **Beispiel**: Ein Lügner sagt zufällig die Wahrheit – kein Wissen, da die Quelle (Lügner) unzuverlässig ist.
+
+---
+
+### 3. **Internalismus vs. Externalismus**
+   - **Internalismus** (z. B. Descartes):
+     - Rechtfertigung muss im **Geist des Subjekts** liegen (z. B. klare Ideen, logische Deduktion).
+     - Fokus: **Zugang des Subjekts zu seinen Gründen**.
+   - **Externalismus** (z. B. Reliabilismus):
+     - Rechtfertigung hängt von **externen Faktoren** ab (z. B. Zuverlässigkeit der Quelle, Umwelt).
+     - Fokus: **objektive Bedingungen außerhalb des Bewusstseins**.
+   - **Konflikt**: Kann Wissen rein subjektiv (Internalismus) oder muss es objektive Bedingungen (Externalismus) haben?
+
+---
+
+### 4. **Gettier-Beispiel (Smith & Jones)**
+   - **Szenario**:
+     - Smith und Jones bewerben sich für einen Job.
+     - Der Arbeitgeber sagt: "Smith hat den Job, und Jones hat ihn nicht."
+     - Smith glaubt fälschlich, dass Jones den Job nicht bekommen hat (weil ein Dritter ihm das sagte).
+     - Zufällig hat Jones tatsächlich den Job nicht – Smiths Glaube ist **wahr** und **gerechtfertigt** (durch den Dritten).
+   - **Problem**: Smiths Wissen scheitert, weil sein Glaube **nicht kausal** mit der Wahrheit verbunden ist (er glaubte fälschlich an Jones' Scheitern).
+   - **Modifikationen der JTB-Definition**:
+     1. **No False Lemmas** (Clark Glymour): Kein falscher Grund darf im Rechtfertigungsnetzwerk vorkommen.
+     2. **Causal Theory** (Hilton Keith): Der Glaube muss **kausal** durch die Tatsache verursacht sein.
+     3. **Reliabilismus**: Fügt die **Zuverlässigkeit der Methode** als vierte Komponente hinzu.
+
+---
+
+### Zusammenfassung der benötigten Konzepte
+| Konzept               | Kernidee                                                                 | Relevanz für Lernziele                          |
+|----------------------|--------------------------------------------------------------------------|------------------------------------------------|
+| **JTB-Definition**   | Wissen = Wahrer Glaube + Rechtfertigung                                  | Basis für Kritik und Modifikationen            |
+| **Gettier-Fälle**    | JTB kann "Glückstreffer" enthalten                                       | Treiber für Reliabilismus und Internalismus/Externalismus |
+| **Reliabilismus**    | Wissen erfordert zuverlässige Methoden                                  | Lösung für Gettier-Probleme                    |
+| **Internalismus**    | Rechtfertigung ist mental zugänglich                                    | Abgrenzung zum Externalismus                   |
+| **Externalismus**    | Rechtfertigung hängt von externen Faktoren ab                           | Alternative zu Internalismus                   |
+
+Diese Konzepte bilden das Fundament, um die Lernziele kritisch zu reflektieren und auf Beispiele (wie Gettier-Fälle) anzuwenden.

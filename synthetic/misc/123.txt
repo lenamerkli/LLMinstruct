@@ -1,0 +1,45 @@
+§u§
+Mache das zu einem Fliesstext:
+```latex
+\subsection{Die wichtigsten Arten des Machine Learning}
+ML-Modelle werden hauptsächlich in drei Kategorien unterteilt, basierend auf der Art und Weise, wie sie lernen:
+
+\begin{itemize}
+    \item \textbf{Supervised Learning (Überwachtes Lernen):} Das Modell lernt von einem Datensatz, der bereits mit korrekten "Antworten" (Labels) versehen ist. Das Ziel ist, eine Funktion zu lernen, die neue, ungesehene Eingabedaten korrekt zuordnen kann.
+        \begin{itemize}
+            \item \textit{Anwendungsbeispiel Alltag:} Ein \textbf{Spam-Filter} lernt anhand von tausenden E-Mails, die bereits als "Spam" oder "Kein Spam" markiert wurden, neue E-Mails zu klassifizieren.
+            \item \textit{Anwendungsbeispiel Wirtschaft:} Eine Bank nutzt historische Kreditdaten (Einkommen, Schulden, Zahlungshistorie und ob der Kredit zurückgezahlt wurde), um die \textbf{Kreditwürdigkeit} neuer Antragsteller vorherzusagen.
+        \end{itemize}
+
+    \item \textbf{Unsupervised Learning (Unüberwachtes Lernen):} Das Modell erhält Daten ohne jegliche Labels und muss selbstständig Strukturen oder Muster darin finden.
+        \begin{itemize}
+            \item \textit{Anwendungsbeispiel Alltag:} Ein Streaming-Dienst wie Netflix analysiert das Sehverhalten von Millionen Nutzern und gruppiert sie in Cluster mit ähnlichen Vorlieben, um \textbf{Filmempfehlungen} zu geben (\textbf{Clustering}).
+            \item \textit{Anwendungsbeispiel Wirtschaft:} Ein Online-Händler analysiert das Kaufverhalten seiner Kunden, um \textbf{Kundensegmente} zu identifizieren (z.B. "preisbewusste Käufer", "Markenliebhaber"), um gezielte Marketingkampagnen zu starten.
+        \end{itemize}
+
+    \item \textbf{Reinforcement Learning (RL) (Bestärkendes Lernen):} Hier lernt ein \textbf{Agent} durch Interaktion mit einer \textbf{Umgebung}. Für seine Aktionen erhält er Belohnungen (Rewards) oder Bestrafungen. Das Ziel des Agenten ist es, seine Strategie (Policy) so anzupassen, dass er die Summe der erhaltenen Belohnungen maximiert.
+        \begin{itemize}
+            \item \textit{Anwendungsbeispiel Alltag:} Ein KI-Gegner in einem Computerspiel lernt, durch Ausprobieren (Trial-and-Error) immer besser zu spielen, um den menschlichen Spieler zu besiegen.
+            \item \textit{Anwendungsbeispiel Wirtschaft:} In der Robotik lernt ein Roboterarm durch wiederholte Versuche, ein Objekt optimal zu greifen. In der Logistik kann RL zur \textbf{Optimierung von Lieferrouten} in Echtzeit eingesetzt werden.
+        \end{itemize}
+\end{itemize}
+```
+Behalte die folgende Struktur bei:
+```latex
+\subsection{Die wichtigsten Arten des Machine Learning}
+\subsubsection{Supervised Learning (Überwachtes Lernen)}
+\subsubsection{Unsupervised Learning (Unüberwachtes Lernen)}
+\subsubsection{Reinforcement Learning (RL) (Bestärkendes Lernen)}
+```
+§a§
+\subsection{Die wichtigsten Arten des Machine Learning}
+ML-Modelle werden hauptsächlich in drei Kategorien unterteilt, basierend auf der Art und Weise, wie sie lernen:
+
+\subsubsection{Supervised Learning (Überwachtes Lernen)}
+Das Modell lernt von einem Datensatz, der bereits mit korrekten "Antworten" (Labels) versehen ist. Das Ziel ist, eine Funktion zu lernen, die neue, ungesehene Eingabedaten korrekt zuordnen kann. Ein Beispiel aus dem Alltag ist ein \textbf{Spam-Filter}, der anhand von tausenden E-Mails, die bereits als "Spam" oder "Kein Spam" markiert wurden, neue E-Mails zu klassifizieren lernt. Ein Beispiel aus der Wirtschaft ist eine Bank, die historische Kreditdaten (Einkommen, Schulden, Zahlungshistorie und ob der Kredit zurückgezahlt wurde) nutzt, um die \textbf{Kreditwürdigkeit} neuer Antragsteller vorherzusagen.
+
+\subsubsection{Unsupervised Learning (Unüberwachtes Lernen)}
+Das Modell erhält Daten ohne jegliche Labels und muss selbstständig Strukturen oder Muster darin finden. Ein Beispiel aus dem Alltag ist ein Streaming-Dienst wie Netflix, der das Sehverhalten von Millionen Nutzern analysiert und sie in Cluster mit ähnlichen Vorlieben gruppiert, um \textbf{Filmempfehlungen} zu geben (\textbf{Clustering}). Ein Beispiel aus der Wirtschaft ist ein Online-Händler, der das Kaufverhalten seiner Kunden analysiert, um \textbf{Kundensegmente} zu identifizieren (z.B. "preisbewusste Käufer", "Markenliebhaber"), um gezielte Marketingkampagnen zu starten.
+
+\subsubsection{Reinforcement Learning (RL) (Bestärkendes Lernen)}
+Hier lernt ein Agent durch Interaktion mit einer Umgebung. Für seine Aktionen erhält er Belohnungen (Rewards) oder Bestrafungen. Das Ziel des Agenten ist es, seine Strategie (Policy) so anzupassen, dass er die Summe der erhaltenen Belohnungen maximiert. Ein Beispiel aus dem Alltag ist ein KI-Gegner in einem Computerspiel, der durch Ausprobieren (Trial-and-Error) immer besser spielt, um den menschlichen Spieler zu besiegen. Ein Beispiel aus der Wirtschaft ist in der Robotik ein Roboterarm, der durch wiederholte Versuche lernt, ein Objekt optimal zu greifen; in der Logistik kann RL zur \textbf{Optimierung von Lieferrouten} in Echtzeit eingesetzt werden.

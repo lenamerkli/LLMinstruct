@@ -1,0 +1,92 @@
+§u§
+```
+\documentclass[12pt, a4paper]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[hyphens]{url}
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage{pdfpages}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{pgfplots}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{setspace}
+\usepackage[backend=biber, style=authoryear, sorting=nty, urldate=long]{biblatex}
+
+\pgfplotsset{compat=1.18}
+
+\DeclareNameAlias{sortname}{family-given} % https://tex.stackexchange.com/questions/361486/mixed-last-first-and-first-last-names-in-reference-list
+\renewcommand{\cite}[1]{\textit{\parencite{#1}}}
+
+\setcounter{biburlnumpenalty}{100} % https://tex.stackexchange.com/questions/22854/url-line-breaks-with-biblatex
+\setcounter{biburlucpenalty}{100}
+\setcounter{biburllcpenalty}{100}
+
+\hypersetup{
+    breaklinks=true,
+}
+
+\titleformat{\chapter}[block]
+  {\normalfont\huge\bfseries}{\thechapter.}{1em}{\Huge} % tex.stackexchange.com/questions/18604/chapter-formatting
+\titlespacing*{\chapter}{0pt}{-19pt}{0pt}
+
+\addbibresource{references.bib}
+
+
+\begin{document}
+```
+This is the beginning of my paper. How can I remove the coloured boxes around links?
+§a§
+To **remove the colored boxes around links** in your LaTeX document (which are caused by the `hyperref` package), you need to adjust the `hyperref` settings to disable link borders.
+
+By default, `hyperref` places a colored box around links when viewed in some PDF viewers (like Adobe Reader). This is controlled by the `pdfborder` parameter.
+
+---
+
+### ✅ Solution: Add this to your `\hypersetup`
+
+Update your `\hypersetup` block like this:
+
+```latex
+\hypersetup{
+    breaklinks=true,
+    pdfborder={0 0 0},    % Removes the border around links
+    linkbordercolor={},   % Optional: explicitly clear link border color
+    citebordercolor={},   % Optional: for citations
+    urlbordercolor={},    % Optional: for URLs
+}
+```
+
+### 🔍 Explanation:
+- `pdfborder={0 0 0}` sets the border width of links to zero (no border).
+- The other `bordercolor` lines are optional but ensure that no residual styling is applied.
+
+---
+
+### 📝 Additional Tip: If You Want to Keep Borders for Some Links
+If you only want to remove borders for **external links** (like URLs), and keep them for internal links (like section references), you can customize more carefully. But for most use cases, `pdfborder={0 0 0}` suffices.
+
+---
+
+### ✅ Final Updated Snippet
+Here’s your updated `\hypersetup` block:
+
+```latex
+\hypersetup{
+    breaklinks=true,
+    pdfborder={0 0 0},    % Removes colored boxes around links
+    linkbordercolor={},   % Optional
+    citebordercolor={},   % Optional
+    urlbordercolor={},    % Optional
+}
+```
+
+Place this in your preamble, and recompile your document (you may need to run `biber` if using `biblatex`).
+
+Let me know if you also want to change link colors or other aspects of `hyperref` styling!

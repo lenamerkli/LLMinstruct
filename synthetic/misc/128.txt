@@ -1,0 +1,75 @@
+§u§
+```
+One of the differences between Cerebras vs other chips that most people don’t pay attention to is the fact that Cerebras uses the DataFlow architecture vs the standard Von Neumann architecture. I think this is where a lot of the speed up is coming from.
+```
+What is `DataFlow` and what is `Von Neumann`?
+§a§
+
+### **Von Neumann Architecture**
+The **Von Neumann architecture** (named after mathematician John von Neumann) is the foundation of most modern CPUs. Its core principles are:
+
+1. **Stored-Program Concept**:  
+   Both instructions (code) and data are stored in the **same memory**. The CPU fetches instructions and data from this shared memory via a single bus.
+
+2. **Sequential Execution**:  
+   Instructions are executed one after another in a linear sequence, controlled by a central clock and program counter. Modern CPUs mitigate this with pipelining and multi-core designs, but the fundamental sequential bottleneck persists.
+
+3. **Memory Bottleneck**:  
+   The shared memory bus becomes a bottleneck because the CPU cannot read instructions and data simultaneously. This limits performance for parallel tasks.
+
+4. **Control-Driven**:  
+   Execution is governed by the CPU's control unit, which decodes instructions and tells the ALU (arithmetic logic unit) what to do. Data is passive—it must be explicitly moved to/from memory.
+
+**Example**:  
+A standard CPU (e.g., Intel Core) uses Von Neumann. When training a neural network, it loads weights, computes gradients, and updates weights sequentially—leading to memory bandwidth limitations.
+
+---
+
+### **DataFlow Architecture**
+**DataFlow architecture** (used by Cerebras) flips the paradigm by making data the driver of computation:
+
+1. **Data-Driven Execution**:  
+   Operations execute **only when their required data is available**. No central controller dictates the sequence. Instead, data tokens flow through the chip, triggering computations.
+
+2. **Massive Parallelism**:  
+   Thousands of processing elements (PEs) operate concurrently. Each PE has its own memory and executes tasks independently as data arrives, bypassing sequential bottlenecks.
+
+3. **Eliminated Memory Bottleneck**:  
+   Instructions are embedded in the hardware (not stored in memory). Data moves directly between PEs via a high-speed interconnect, avoiding shared-memory contention.
+
+4. **Fine-Grained Parallelism**:  
+   Ideal for workloads with inherent parallelism (e.g., matrix operations in AI). For example, in matrix multiplication, each element of the output can be computed simultaneously if data is available.
+
+**Cerebras Implementation**:  
+The Cerebras Wafer-Scale Engine (WSE) integrates 1.2 trillion transistors into a single chip. It features:
+- **400,000+ PEs** (each with local memory).
+- **2D mesh network** for data movement.
+- **Hardware-optimized instructions** (e.g., for sparse/dense matrix math).
+
+---
+
+### **Key Differences & Why DataFlow Wins for AI**
+| **Feature**               | **Von Neumann**                          | **DataFlow (Cerebras)**                  |
+|---------------------------|------------------------------------------|------------------------------------------|
+| **Execution Driver**      | Control (CPU fetches instructions)      | Data (operations triggered by data)     |
+| **Memory Access**         | Shared bus (bottleneck)                 | Distributed memory + direct PE-to-PE data transfer |
+| **Parallelism**           | Limited (core-dependent, sequential)    | Massive (thousands of PEs run concurrently) |
+| **Memory Bandwidth**      | Bottleneck (shared for instructions/data)| No bottleneck (dedicated paths per PE)   |
+| **Ideal Workloads**       | General-purpose tasks (e.g., OS, apps)  | Data-parallel tasks (AI, scientific computing) |
+
+**Why DataFlow is Faster for AI Training**:  
+Neural networks involve massive parallel operations (e.g., multiplying large matrices). DataFlow architectures:
+- **Eliminate sequential bottlenecks** by executing all operations simultaneously when data is ready.
+- **Maximize hardware utilization** by keeping all PEs busy.
+- **Avoid memory stalls** via direct data routing, unlike Von Neumann’s constant memory fetches.
+
+**Example**:  
+Training a transformer model involves trillions of operations. On Von Neumann hardware, memory bandwidth limits throughput. On Cerebras, data flows directly to PEs, enabling orders-of-magnitude speedups.
+
+---
+
+### **Conclusion**
+- **Von Neumann** is versatile but constrained by sequential execution and memory bottlenecks.  
+- **DataFlow** unlocks extreme parallelism by making data the execution trigger, making it revolutionary for AI, HPC, and other data-intensive workloads.  
+
+Cerebras’ speed advantage stems from this architectural shift—turning data availability into computational velocity.

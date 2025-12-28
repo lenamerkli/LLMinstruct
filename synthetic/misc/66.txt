@@ -1,0 +1,71 @@
+§u§
+```
+  private handleFormSubmission(formData: AccountFormData): void {
+    const data = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      dateOfBirth: formData.dateOfBirth.toISOString().split('T')[0],
+      title: formData.title,
+      gender: formData.gender,
+      country: formData.country,
+      legalNameDifferent: formData.legalNameDifferent,
+      legalFirstName: formData.legalFirstName,
+      legalLastName: formData.legalLastName,
+      legalGender: formData.legalGender,
+      identityVerificationInfo: formData.identityVerificationInfo,
+    }
+    const password = formData.password;
+  }
+```
+How can I make that data.legalFirstName is fed by formData.firstName if formData.legalNameDifferent is False?
+§a§
+You can use a conditional (ternary) operator to set `legalFirstName` based on the value of `legalNameDifferent`. Here's how to modify your code:
+
+```typescript
+private handleFormSubmission(formData: AccountFormData): void {
+  const data = {
+    firstName: formData.firstName,
+    lastName: formData.lastName,
+    email: formData.email,
+    dateOfBirth: formData.dateOfBirth.toISOString().split('T')[0],
+    title: formData.title,
+    gender: formData.gender,
+    country: formData.country,
+    legalNameDifferent: formData.legalNameDifferent,
+    legalFirstName: formData.legalNameDifferent ? formData.legalFirstName : formData.firstName,
+    legalLastName: formData.legalNameDifferent ? formData.legalLastName : formData.lastName,
+    legalGender: formData.legalGender,
+    identityVerificationInfo: formData.identityVerificationInfo,
+  }
+  const password = formData.password;
+}
+```
+
+This way, when `legalNameDifferent` is `false`, `legalFirstName` will be set to `formData.firstName`, and when it's `true`, it will use `formData.legalFirstName`. I also applied the same logic to `legalLastName` since you'll likely want the same behavior for both name fields.
+§u§
+Also do that for the legal gender.
+§a§
+Here's the updated code with the same conditional logic applied to `legalGender`:
+
+```typescript
+private handleFormSubmission(formData: AccountFormData): void {
+  const data = {
+    firstName: formData.firstName,
+    lastName: formData.lastName,
+    email: formData.email,
+    dateOfBirth: formData.dateOfBirth.toISOString().split('T')[0],
+    title: formData.title,
+    gender: formData.gender,
+    country: formData.country,
+    legalNameDifferent: formData.legalNameDifferent,
+    legalFirstName: formData.legalNameDifferent ? formData.legalFirstName : formData.firstName,
+    legalLastName: formData.legalNameDifferent ? formData.legalLastName : formData.lastName,
+    legalGender: formData.legalNameDifferent ? formData.legalGender : formData.gender,
+    identityVerificationInfo: formData.identityVerificationInfo,
+  }
+  const password = formData.password;
+}
+```
+
+Now when `legalNameDifferent` is `false`, all three legal fields (`legalFirstName`, `legalLastName`, and `legalGender`) will fall back to their corresponding regular values (`firstName`, `lastName`, and `gender`).

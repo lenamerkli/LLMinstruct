@@ -1,0 +1,250 @@
+§u§
+How can I make a minecraft mod that changes the behavior of another mod? (fabric)
+§a§
+Creating a mod that modifies another mod's behavior is a common practice in the Fabric ecosystem. Here’s a comprehensive guide covering the main approaches, from simplest to most advanced.
+
+## **Core Principle**
+Your mod loads *after* the target mod and injects or replaces its code at runtime. Fabric's **Mixin** system makes this possible without directly editing the other mod's files.
+
+---
+
+## **Method 1: Using Mixin (Most Common & Powerful)**
+
+This is the standard Fabric way to modify other mods or even vanilla code.
+
+### **Step 1: Setup Your Development Environment**
+
+1. **Create a new Fabric mod project** using the [Fabric Template Mod Generator](https://fabricmc.net/develop/template/).
+2. **Add dependencies** in `build.gradle`:
+
+```gradle
+dependencies {
+    // Your target mod as a dependency (example: TechReborn)
+    modImplementation "curse.maven:techreborn-233438:1234567" // Get the file ID from CurseForge
+    // OR for Modrinth mods:
+    modImplementation "maven.modrinth:mod-id:version"
+
+    // Include the mod's jar for runtime testing
+    // include "curse.maven:techreborn-233438:1234567"
+}
+```
+
+3. **Refresh Gradle** and run `genSources` to decompile the target mod.
+
+### **Step 2: Find Your Target Code**
+
+1. Use your IDE's "Go to Class" feature (Ctrl+N) to search for classes in the target mod.
+2. **Decompile** the mod jar if needed (IntelliJ usually does this automatically after `genSources`).
+3. Identify the **specific method** or class you want to modify.
+
+### **Step 3: Write a Mixin**
+
+Create a mixin class in `src/main/java/yourpackage/mixin/`.
+
+**Example: Modifying a method from "AnotherMod"**
+
+```java
+package com.yourmod.mixin;
+
+import com.anothermod.SomeClass;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+@Mixin(SomeClass.class) // Target the class
+public class SomeClassMixin {
+
+    // Inject at the start of a method
+    @Inject(method = "targetMethod", at = @At("HEAD"), cancellable = true)
+    private void modifyBehavior(CallbackInfo ci) {
+        // Your custom logic here
+
+        // To completely replace the method's behavior:
+        // ci.cancel();
+
+        // To run code before/after:
+        System.out.println("Injected before targetMethod!");
+    }
+
+    // Modify a method's return value
+    @Inject(method = "getValue", at = @At("RETURN"), cancellable = true)
+    private void changeReturnValue(CallbackInfoReturnable<Integer> cir) {
+        int original = cir.getReturnValue();
+        cir.setReturnValue(original * 2); // Double the value
+    }
+}
+```
+
+### **Step 4: Register Your Mixin**
+
+In `src/main/resources/yourmod.mixins.json`:
+
+```json
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.yourmod.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "SomeClassMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
+```
+
+---
+
+## **Method 2: Using Another Mod's API (Cleanest)**
+
+Many mods provide an API module specifically for inter-mod compatibility.
+
+### **Example: Using TechReborn's API**
+
+1. **Add the API dependency** (usually separate on CurseForge/Modrinth):
+
+```gradle
+modImplementation "curse.maven:techreborn-api-233438:1234567"
+```
+
+2. **Use their API** in your code:
+
+```java
+import techreborn.api.TechRebornAPI;
+
+public class YourModInitializer implements ModInitializer {
+    @Override
+    public void onInitialize() {
+        // Example: Register a custom machine recipe
+        TechRebornAPI.registerBlastFurnaceRecipe(
+            new ItemStack(Items.DIAMOND),
+            new ItemStack(Items.COAL),
+            1000, // EU
+            200 // Time
+        );
+    }
+}
+```
+
+---
+
+## **Method 3: Reflection (Last Resort)**
+
+Use only if no API exists and Mixin is impractical.
+
+```java
+public class ReflectionHelper {
+    public static void modifyPrivateField() {
+        try {
+            Class<?> targetClass = Class.forName("com.anothermod.SecretClass");
+            Object instance = targetClass.getDeclaredConstructor().newInstance();
+
+            Field privateField = targetClass.getDeclaredField("privateValue");
+            privateField.setAccessible(true);
+            privateField.setInt(instance, 42);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+**⚠️ Warning:** Fragile, breaks easily with updates, and may violate mod licenses.
+
+---
+
+## **Method 4: Event Systems & Callbacks**
+
+Some mods expose events. Check their documentation or source for event classes.
+
+```java
+// Example: Hypothetical event from AnotherMod
+AnotherModEvents.BLOCK_BREAK.register((world, pos, player) -> {
+    if (player.getMainHandStack().isOf(Items.STICK)) {
+        // Cancel the event or modify behavior
+        return ActionResult.FAIL;
+    }
+    return ActionResult.PASS;
+});
+```
+
+---
+
+## **Critical Best Practices**
+
+### **1. Respect Licenses & Permissions**
+- Check the target mod's license (MIT, GPL, ARR, etc.).
+- For ARR (All Rights Reserved) mods, **ask permission** before publishing.
+- Many mods allow addon creation but require credit.
+
+### **2. Version Compatibility**
+- Specify mod version ranges in `fabric.mod.json`:
+```json
+"depends": {
+  "anothermod": ">=1.2.0 <2.0.0"
+}
+```
+
+### **3. Soft Dependencies**
+Use `"suggests"` instead of `"depends"` if your mod can work without the target:
+```json
+"suggests": {
+  "anothermod": "*"
+}
+```
+Then check at runtime:
+```java
+if (FabricLoader.getInstance().isModLoaded("anothermod")) {
+    // Enable compatibility features
+}
+```
+
+### **4. Testing Strategy**
+- **Always test** with multiple versions of the target mod.
+- Use **GitHub Actions** or similar for automated testing.
+- Join the target mod's Discord for insider API changes.
+
+---
+
+## **Debugging Tips**
+
+| Problem | Solution |
+|---------|----------|
+| Mixin not applying | Check `mixin` package path in JSON, ensure target class name is exact |
+| `ClassNotFoundException` | Verify dependency in `build.gradle`, run `gradle --refresh-dependencies` |
+| Game crashes on load | Check mixin target version compatibility, use `@Mixin` with `remap = false` if needed |
+| Target mod not visible in IDE | Run `genSources` and `gradle eclipse`/`gradle idea` |
+
+---
+
+## **Recommended Project Structure**
+
+```
+src/main/
+├── java/com/yourmod/
+│   ├── YourMod.java
+│   ├── compat/                    # Compatibility modules
+│   │   ├── AnotherModCompat.java
+│   │   └── YetAnotherModCompat.java
+│   └── mixin/
+│       ├── anothermod/            # Organize by target mod
+│       │   └── SomeClassMixin.java
+│       └── minecraft/             # Vanilla mixins
+└── resources/
+    ├── fabric.mod.json
+    └── yourmod.mixins.json
+```
+
+---
+
+## **Useful Resources**
+
+- **Fabric Wiki**: [Mixins Guide](https://fabricmc.net/wiki/tutorial:mixin)
+- **Mixin Javadocs**: [SpongePowered](https://jenkins.liteloader.com/view/Other/job/Mixin/javadoc/)
+- **Modrinth Maven**: Search for mods with API modules
+- **Discord**: Fabric Discord (#mixin), target mod's server
+
+**Final Advice**: Start small—try modifying a simple public method before tackling complex logic. The Fabric community is incredibly helpful; don't hesitate to ask specific questions with code examples!

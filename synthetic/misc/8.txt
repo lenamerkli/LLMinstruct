@@ -1,0 +1,36 @@
+§u§
+Wie lautet das Trilemma von Agrippa und was sind mögliche Auswege aus dem Trilemma?
+§a§
+### Das Trilemma von Agrippa (auch Münchhausen-Trilemma)
+
+Das Trilemma von Agrippa ist ein klassisches skeptisches Argument aus der antiken Philosophie (benannt nach dem Pyrrhonischen Skeptiker Agrippa, ca. 1. Jh. n. Chr.). Es zeigt, dass jede Versuch, eine Aussage (oder ein Wissen) **endgültig und vollständig zu begründen**, zwangsläufig in eine von drei unbefriedigenden Sackgassen mündet. Es wird oft so formuliert:
+
+> „Wenn wir eine beliebige Behauptung begründen wollen, müssen wir sie durch eine weitere Behauptung stützen. Diese weitere Behauptung muss wiederum begründet werden usw. Dabei gibt es nur drei logische Möglichkeiten – und keine davon ist zufriedenstellend.“
+
+#### Die drei „Hörner“ des Trilemmas
+
+| Horn                  | Bezeichnung                  | Beschreibung                                                                                 | Warum problematisch?                                                                 |
+|-----------------------|------------------------------|----------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|
+| 1.                    | **Unendlicher Regress**      | Die Begründungskette geht endlos weiter (A wird durch B begründet, B durch C, C durch D …).  | In der Praxis unmöglich: Wir hätten nie eine fertige Begründung, also kein gesichertes Wissen. |
+| 2.                    | **Zirkelschluss** (circulus vitiosus) | Die Kette schließt sich irgendwann zum Kreis (A → B → C → … → A).                            | Die Begründung ist nur scheinbar; sie setzt bereits voraus, was sie beweisen soll.      |
+| 3.                    | **Dogmatischer Abbruch**     | Die Kette wird an einem Punkt einfach abgebrochen und eine „letzte“ Annahme als unbegründet akzeptiert (z. B. Axiome, „Selbstevidenz“, Offenbarung, „das sehe ich einfach ein“). | Willkürlich und dogmatisch – warum genau hier aufhören und nicht weiterfragen?         |
+
+Das Trilemma macht deutlich: Eine **absolute, unerschütterliche Letztbegründung** von Wissen scheint unmöglich.
+
+### Mögliche Auswege / Antworten auf das Trilemma
+
+Philosophen haben verschiedene Strategien entwickelt, um mit dem Trilemma umzugehen. Keine davon löst es „endgültig“ (das Trilemma bleibt ein starkes skeptisches Argument), aber sie machen begründetes Wissen trotzdem möglich oder zumindest praktikabel:
+
+| Position              | Kernidee                                                                                          | Wie sie das Trilemma „löst“                                                                                 | Wichtige Vertreter / Varianten                                  |
+|-----------------------|---------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------|
+| **Kohärentismus**     | Wissen ist kein lineares Fundament, sondern ein kohärentes Netz gegenseitig sich stützender Überzeugungen. | Zirkel sind erlaubt, solange das Gesamtsystem konsistent und umfassend ist („Kreise sind okay, wenn sie groß genug sind“). | Neurath („Boot-Metapher“), Quine, BonJour, teilweise Hegel     |
+| **Foundationalismus** (gemäßigt) | Es gibt zwar Grundüberzeugungen, aber diese müssen nicht absolut selbst-evident sein – sie können „prima facie“ gerechtfertigt oder fallibel sein. | Der dogmatische Abbruch wird abgeschwächt: Grundüberzeugungen sind nicht willkürlich, sondern haben eine Art „Default-Glaubwürdigkeit“. | Moderne Foundationalisten (z. B. Audi, Alston); phänomenaler Konservatismus („Es scheint mir, dass …“) |
+| **Infinitismus**      | Unendlicher Regress ist gar kein Problem, wenn die Kette immer bessere Begründungen liefert.      | Der Regress wird akzeptiert, aber als „nicht-vizios“ (nicht fehlerhaft) betrachtet.                           | Scott Klein, Jeanne Peijnenburg                                 |
+| **Skeptizismus**      | Das Trilemma wird voll akzeptiert → sicheres, letztbegründetes Wissen ist unmöglich.             | Kein Ausweg, sondern Konsequenz: Wir leben mit begründeter Unsicherheit (Pyrrhonische Skepsis) oder geben Wissensansprüche auf. | Pyrrhonischer Skeptizismus (Sextus Empiricus), radikaler Fallibilismus |
+| **Pragmatismus / Kontextualismus** | Begründung ist immer kontextabhängig und zweckgerichtet; wir brauchen keine absolute Begründung. | Das Trilemma wird als rein theoretisches Problem enttarnt – in der Praxis funktioniert Wissen gut genug.   | Peirce, James, Dewey; Wittgenstein („Am Grunde ist der Grund lose“); kontextuelle Epistemologie (DeRose) |
+| **Reliabilismus / Externalismus** | Eine Überzeugung ist gerechtfertigt, wenn sie durch einen zuverlässigen Prozess entstanden ist – unabhängig von weiteren Begründungsketten. | Umgeht das Trilemma, indem es die Begründung nicht auf innere Zugänglichkeit, sondern auf äußere Zuverlässigkeit verlagert. | Goldman, Nozick, Plantinga („proper function“)                  |
+| **Fideismus / Theologische Lösungen** | Letztbegründung liegt in göttlicher Offenbarung oder Glauben, der sich selbst trägt.             | Dogmatischer Abbruch wird theologisch legitimiert.                                                          | Kierkegaard, reformierte Epistemologie (Plantinga)              |
+
+**Kurz gesagt:** Die meisten zeitgenössischen Philosophen wählen eine Kombination aus Kohärentismus und gemäßigtem Foundationalismus (oft ergänzt um reliabilistische Elemente). Das Trilemma verliert dadurch seine vernichtende Kraft, bleibt aber eine wichtige Warnung vor dogmatischem Absolutheitsanspruch.
+
+Falls du zu einer bestimmten Lösung mehr Details möchtest (z. B. Neuraths Boot, Wittgensteins „Scharniere“ oder Plantingas „warrant“), sag einfach Bescheid!

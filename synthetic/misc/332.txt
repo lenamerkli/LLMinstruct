@@ -1,0 +1,212 @@
+§u§
+Write a table with different "features", positives, negatives and use-cases of commonly used hashes.
+§a§
+Here's a comparison table of commonly used cryptographic hash functions, including their features, pros/cons, and typical use cases:
+
+| **Hash Algorithm** | **Key Features** | **Positives** | **Negatives** | **Common Use Cases** |
+|---------------------|------------------|---------------|---------------|----------------------|
+| **MD5**            | 128-bit output, fast, broken collision resistance | Very fast, widespread legacy support | Vulnerable to collisions, pre-image attacks | Non-security checksums, file integrity checks (non-critical) |
+| **SHA-1**          | 160-bit output, deprecated, theoretical collisions found | Faster than SHA-2, legacy adoption | Broken collision resistance, phased out by modern systems | Legacy systems, deprecated digital signatures |
+| **SHA-2 (SHA-256, SHA-512)** | 224–512-bit output, industry standard, Merkle-Damgård design | Proven security, widespread adoption, SSL/TLS support | Slower than SHA-3/BLAKE2, vulnerable to length extension attacks | SSL/TLS, Bitcoin, code signing, secure data integrity |
+| **SHA-3 (Keccak)** | 224–512-bit output, sponge construction, hardware-efficient | Resistant to SHA-2 attack vectors, efficient in hardware | Newer (2015), less adoption than SHA-2 | High-security systems, IoT devices, future-proofing |
+| **bcrypt**         | Adaptive cost, salted, password-specific | Slow by design, resistant to brute-force | Resource-intensive, not for general hashing | Password storage (e.g., authentication systems) |
+| **Argon2**         | Memory-hard, side-channel resistant, 2015 Password Hashing Competition winner | Resists GPU/ASIC attacks, tunable memory/time cost | Complex configuration, newer than bcrypt | Modern password storage, sensitive systems |
+| **BLAKE2 (BLAKE2s, BLAKE2b)** | 256/512-bit output, optimized for speed, replaces MD5/SHA-1 | Faster than MD5 (secure), supports hashing trees | Less adoption in legacy systems | File integrity verification, modern software (e.g., libsodium) |
+| **RIPEMD-160**     | 160-bit output, used with SHA-256 in Bitcoin | Balanced security vs. performance | Limited adoption, less scrutinized than SHA-2 | Bitcoin addresses (combined with SHA-256) |
+
+### Notes:
+- **Security Status**:
+  - **Broken**: MD5, SHA-1
+  - **Secure**: SHA-2, SHA-3, bcrypt, Argon2, BLAKE2
+  - **Specialized**: bcrypt/Argon2 (passwords only)
+- **Speed**: MD5/SHA-1 > BLAKE2 > SHA-3 > SHA-2 > bcrypt/Argon2
+- **Collision Resistance**: Critical for security; MD5/SHA-1 are unsafe for cryptographic purposes.
+
+### Choosing a Hash:
+- **Passwords**: Use **bcrypt**, **Argon2**, or **scrypt** (not general-purpose hashes like SHA-2).
+- **General Security**: Prefer **SHA-2** or **SHA-3** for data integrity.
+- **Speed & Security**: Use **BLAKE2** for fast, secure hashing (replaces MD5/SHA-1).
+- **Legacy Systems**: Avoid MD5/SHA-1; migrate to modern alternatives.
+
+Let me know if you'd like deeper technical details! 🔍
+§u§
+I have a lot of files that I want to parse. I want to store their file hashes so that I do not parse them twice if they did not change.
+§a§
+To efficiently avoid re-parsing unchanged files, you can use **file hashing** to uniquely identify file content. Here's a structured approach to implement this:
+
+---
+
+### **Step-by-Step Plan**
+1. **Hash Files**: Compute a hash of each file's content.
+2. **Store Hashes**: Save hashes in a database or file (e.g., JSON, SQLite).
+3. **Compare Hashes**: Before parsing, check if the file's hash matches the stored value.
+
+---
+
+### **Recommended Hash Algorithms**
+| **Algorithm** | **Use Case** | **Speed** | **Collision Resistance** | **Notes** |
+|---------------|--------------|-----------|--------------------------|-----------|
+| **SHA-256**   | General-purpose, secure | Moderate | ✅ Strong | Industry standard, ideal for most use cases. |
+| **BLAKE2b**   | Fast, secure hashing | ⚡ Fastest | ✅ Strong | Modern replacement for SHA-2 (faster in software). |
+| **SHA-1**     | Legacy systems | Fast | ❌ Broken | Avoid for security, but acceptable for non-critical change detection. |
+| **CRC32**     | Non-cryptographic checksums | ⚡ Fast | ❌ Weak | Suitable for small, non-security use cases (e.g., detecting accidental changes). |
+
+**Recommendation**: Use **SHA-256** or **BLAKE2b** for reliability and security.
+
+---
+
+### **Implementation Example (Python)**
+```python
+import hashlib
+import json
+import os
+
+# File to store hashes
+HASH_DB = "file_hashes.json"
+
+def hash_file(filepath, algorithm="sha256"):
+    """Compute the hash of a file."""
+    hash_func = hashlib.new(algorithm)
+    with open(filepath, "rb") as f:
+        for chunk in iter(lambda: f.read(4096), b""):
+            hash_func.update(chunk)
+    return hash_func.hexdigest()
+
+def load_hash_db():
+    """Load stored hashes from disk."""
+    if os.path.exists(HASH_DB):
+        with open(HASH_DB, "r") as f:
+            return json.load(f)
+    return {}
+
+def save_hash_db(hash_db):
+    """Save hashes to disk."""
+    with open(HASH_DB, "w") as f:
+        json.dump(hash_db, f, indent=2)
+
+def should_parse(filepath, hash_db):
+    """Check if the file needs parsing."""
+    current_hash = hash_file(filepath)
+    stored_hash = hash_db.get(filepath)
+    if stored_hash == current_hash:
+        print(f"Skipping {filepath} (no changes).")
+        return False
+    else:
+        print(f"Parsing {filepath} (new/modified).")
+        hash_db[filepath] = current_hash
+        return True
+
+# Example usage
+if __name__ == "__main__":
+    hash_db = load_hash_db()
+    files_to_parse = ["file1.txt", "file2.csv", "file3.json"]
+
+    for file in files_to_parse:
+        if should_parse(file, hash_db):
+            # Replace this with your parsing logic
+            print(f"Parsing content of {file}...")
+
+    save_hash_db(hash_db)
+```
+
+---
+
+### **Key Considerations**
+1. **File Metadata**: Hashing the entire file content ignores metadata (e.g., timestamps, permissions). If metadata matters, include it in the hash.
+2. **File Renames/Moves**: Track files by content hash instead of filename if files are renamed/moved.
+3. **Performance**:
+   - Use **BLAKE2b** for faster hashing of large files.
+   - Batch process files to minimize I/O overhead.
+4. **Storage**:
+   - Use a lightweight database (e.g., SQLite) for large-scale projects.
+   - For small projects, a JSON file is sufficient.
+
+---
+
+### **Alternative Tools**
+- **Command-line**: Use `sha256sum` (Linux/macOS) or `CertUtil` (Windows) to generate hashes.
+  ```bash
+  sha256sum file.txt > hashes.txt
+  ```
+- **Dedicated Libraries**:
+  - Python: `hashlib`, `pyblake2`
+  - Rust: `blake2-rs`
+  - Node.js: `crypto`
+
+---
+
+### **Edge Cases to Handle**
+- **Empty Files**: Ensure your hash function handles zero-byte files.
+- **Permissions**: Skip files your user cannot read.
+- **Symbolic Links**: Decide whether to hash the link itself or the target file.
+
+By hashing file content and comparing it to stored values, you’ll avoid redundant parsing while ensuring changes are detected reliably. Let me know if you need help adapting this to your specific environment! 🛠️
+§u§
+Somewhat unrelated: How do I strip whitespace from each element of a list of strings?
+§a§
+To strip whitespace from each element in a list of strings, here's how you can do it in **Python** (the most common language for such tasks):
+
+---
+
+### **Python Solution**
+Use a **list comprehension** with the `str.strip()` method:
+```python
+# Original list
+my_list = ["  apple  ", " banana ", "  cherry  ", "date"]
+
+# Strip whitespace from each element
+stripped_list = [s.strip() for s in my_list]
+
+print(stripped_list)
+# Output: ['apple', 'banana', 'cherry', 'date']
+```
+
+---
+
+### **Key Notes**
+1. **`str.strip()`** removes **leading and trailing whitespace** (spaces, tabs, newlines).
+2. If you want to remove **all spaces** (including those in the middle), use `replace()`:
+   ```python
+   stripped_list = [s.replace(" ", "") for s in my_list]
+   # Output: ['apple', 'banana', 'cherry', 'date']
+   ```
+3. **Edge Cases**:
+   - Empty strings (`""`) will remain empty.
+   - Strings with only whitespace (e.g., `"   "`) become `""`.
+
+---
+
+### **Other Languages**
+- **JavaScript**:
+  ```javascript
+  let list = ["  apple  ", " banana ", "  cherry  "];
+  let stripped = list.map(s => s.trim());
+  // Output: ["apple", "banana", "cherry"]
+  ```
+
+- **Bash (with `sed`)**:
+  ```bash
+  # Strip whitespace from each line in a file/list
+  cat file.txt | sed 's/^[ \t]*//;s/[ \t]*$//'
+  ```
+
+- **Rust**:
+  ```rust
+  let list = vec!["  apple  ", " banana ", "  cherry  "];
+  let stripped: Vec<_> = list.iter().map(|s| s.trim().to_string()).collect();
+  ```
+
+---
+
+### **Example with In-Place Modification**
+If you want to modify the original list:
+```python
+my_list = ["  apple  ", " banana ", "  cherry  "]
+for i in range(len(my_list)):
+    my_list[i] = my_list[i].strip()
+# my_list is now ['apple', 'banana', 'cherry']
+```
+
+---
+
+Let me know if you need help with a specific language or edge case! 😊

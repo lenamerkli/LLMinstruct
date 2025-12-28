@@ -1,0 +1,38 @@
+§u§
+Welche Sicherheitsbedenken existieren über Microsoft Authenticator?
+§a§
+Bei Microsoft Authenticator existieren mehrere ernsthafte Sicherheits- und Datenschutzbedenken, die sich in verschiedene Kategorien einteilen lassen:
+
+## Datenschutz und Tracking-Problematiken
+
+Die Android-Version der Microsoft Authenticator-App enthält Code-Signaturen von sechs Tracking-Diensten, darunter Adjust, Google Analytics, Google Firebase Analytics, Microsoft Visual Studio App Center Analytics und OpenTelemetry. Besonders problematisch ist dabei, dass unmittelbar nach dem Start der App diese Tracking-Anbieter kontaktiert werden, noch bevor der Nutzer überhaupt die Möglichkeit zu einer Einwilligung hat. Die App übermittelt dabei umfangreiche Geräteinformationen wie Hardware-Details, Android-Version, Google-Advertising-ID, Android UUID, Standortdaten (Land) und Installationsdatum an externe Dienstleister wie Adjust.
+
+Die Integration von Tracking-Bibliotheken in eine sicherheitskritische Authentifizierungs-App wird als äußerst fragwürdig eingestuft, da Microsoft durch die Einbindung externer Tracking-Dienstleister eine Vertrauensbeziehung eingeht, ohne sich womöglich mit der daraus resultierenden Datenschutz- und Sicherheitsproblematik ausreichend auseinandergesetzt zu haben. Gerade in einer App, die sicherheitsrelevante Funktionen wie die Zwei-Faktor-Authentifizierung ausführt, stellt die Integration von zusätzlichen Tracking-Bibliotheken ein erhebliches Sicherheitsrisiko dar.
+
+Die verlinkte Datenschutzerklärung ist lediglich eine Microsoft-Standarderklärung, die keine genauen Angaben darüber enthält, welche Daten die Authenticator-App konkret verarbeitet oder zu welchem Zweck Tracking-Dienstleister eingebunden sind. Ein Nutzer kann sich vorab also nicht darüber informieren, ob Microsoft mit Drittanbietern zusammenarbeitet oder zu welchem Zweck seine Daten verarbeitet werden.
+
+## Kritische Sicherheitslücken
+
+Eine besonders schwerwiegende Schwachstelle namens **AuthQuake** wurde im Oktober 2024 von Microsoft behoben. Diese Sicherheitslücke in der Multi-Faktor-Authentifizierung ermöglichte es Angreifern, den MFA-Schutz in etwa einer Stunde zu umgehen, ohne dass der Kontoinhaber darüber benachrichtigt wurde. Der Bypass funktionierte durch das Fehlen von Rate-Limits und ein verlängertes Zeitfenster bei der Validierung von Einmalcodes. Während die sechsstelligen TOTP-Codes normalerweise nur 30 Sekunden gültig bleiben sollten, waren sie bei Microsoft bis zu 3 Minuten lang gültig. Dies ermöglichte Angreifern, mehrere Brute-Force-Versuche gleichzeitig durchzuführen, um den Code zu knacken.
+
+Die Schwachstelle erlaubte es, bis zu 10 aufeinanderfolgende fehlgeschlagene Versuche pro Sitzung durchzuführen, wobei Angreifer einfach neue Sitzungen erstellen und alle möglichen Permutationen des Codes durchprobieren konnten, ohne das Opfer über die fehlgeschlagenen Anmeldeversuche zu benachrichtigen.
+
+## MFA Fatigue-Angriffe
+
+Ein weiterer Angriffsvektor besteht im kontinuierlichen Anfordern von Anmeldebestätigungen. Angreifende, die bereits Zugriff auf das Passwort eines Opfers erlangt haben, fordern so lange die Freigabe der Anmeldung in der Authenticator App an, bis das Opfer entnervt akzeptiert. Diese Methode hat in der Praxis bei Uber zu einem größeren Security-Vorfall geführt.
+
+Zusätzlich können Angreifende durch das Vortäuschen einer echten Login-Seite auch One-Time-Passwords aus Apps abgreifen und somit einen Session-Cookie erstellen. Eine Anmeldung allein mit Passwort kann nicht mehr als sicher angesehen werden, da die Risiken durch Phishing, Bruteforce und Leaked Credentials zu hoch sind.
+
+## Geräte- und Zugriffsprobleme
+
+Nach einem Gerätewechsel treten häufig Probleme auf, wenn die Multi-Faktor-Authentifizierung-Einstellungen zurückgesetzt werden müssen. Wenn ein Nutzer nach einem Wechsel auf ein neues Handy den Zugriff auf den einzigen Administrator-Account verloren hat und auf das alte Handy kein Zugriff mehr besteht, gestaltet sich die Wiederherstellung äußerst kompliziert. In solchen Fällen muss der Microsoft-Datenschutzsupport telefonisch kontaktiert werden, um eine Anfrage zum Zurücksetzen der Authentifizierungsmethode zu stellen.
+
+Die Authenticator-App kann Benachrichtigungen an ein altes Gerät senden, wenn dieses nicht ordnungsgemäß entfernt wurde, wodurch Nutzer keinen Zugriff mehr auf ihr Konto erhalten. Die App sammelt außerdem GPS-Informationen, um zu bestimmen, in welchem Land sich der Nutzer befindet, wobei der Ländername und Standortkoordinaten zurück an das System gesendet werden.
+
+## DSGVO-Compliance-Probleme
+
+Die App verstößt nach Experteneinschätzung weiterhin gegen die DSGVO und das TTDSG. Das Hinweisfenster "Microsoft respektiert Ihre Privatsphäre" wird als Ironie bezeichnet, da schon vor der Möglichkeit einer Nutzereinwilligung Tracking-Anbieter kontaktiert und mit Daten beliefert werden. Von einer optionalen Sammlung der Nutzungsdaten kann an dieser Stelle keine Rede sein.
+
+## Empfohlene Schutzmaßnahmen
+
+Seit dem 27. Februar wird das Number Matching für alle Tenants aktiviert, was zusätzlichen Schutz vor MFA Fatigue Angriffen bieten soll. Unternehmen sollten festlegen, ob sie die Nutzung von Microsoft Authenticator OTP erlauben möchten, da dies aufgrund der beschriebenen Angriffsvektoren nicht die höchste Sicherheit bietet. Im Azure AD können Administratoren das Verhalten und die Zuweisung der Microsoft Authenticator App konfigurieren, entweder für alle User oder für bestimmte Nutzende und Gruppen, wobei zwischen Push oder Passwordless ausgewählt werden kann.

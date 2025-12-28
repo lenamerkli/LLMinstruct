@@ -1,0 +1,21 @@
+§u§
+Am I allowed to decompile the App `Microsoft Authenticator`?
+§a§
+In general, **no**, you are not allowed to decompile the Microsoft Authenticator app under its standard terms of use.
+
+Doing so is a violation of the **Microsoft Services Agreement** and the specific **End User License Agreement (EULA)** for the software.
+
+### Key Restrictions
+*   **Explicit Prohibition:** Microsoft's legal agreements (which you accept by using the app) contain a clause that specifically prohibits you from "disassembling, decompiling, decrypting, hacking, emulating, exploiting, or reverse engineering" any aspect of their software.
+*   **Terms of Service Violation:** If you are caught violating these terms, Microsoft reserves the right to terminate your license, suspend your Microsoft account, or pursue legal action.
+
+### Legal Exceptions (The "Gray Area")
+The EULA includes a standard phrase: *"except and only to the extent that the applicable copyright law expressly permits doing so."* This acknowledges that local laws sometimes override corporate contracts:
+
+*   **Interoperability (EU):** In the European Union, you may have a legal right to decompile software *strictly* for the purpose of achieving interoperability with other software (e.g., making a third-party app work with Microsoft's login system), provided you do not use the information to create a competing product or share it publicly.
+*   **Security Research (US):** In the United States, the DMCA has specific, narrow exemptions for good-faith security research. However, this is a complex legal area that usually requires you to follow specific responsible disclosure guidelines.
+
+### Summary
+Unless you are a security researcher or developer operating under very specific local laws (and know exactly what you are doing legally), decompiling the app is **forbidden** and puts your account at risk.
+
+***Disclaimer:** I am an AI, not an attorney. This is informational only and does not constitute legal advice. If you have a specific legal reason for needing to decompile the software, you should consult a lawyer specializing in intellectual property law.*

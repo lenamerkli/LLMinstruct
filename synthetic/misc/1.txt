@@ -1,0 +1,15 @@
+§u§
+Find out why `https://github.com/Fabricators-of-Create/create-fabric-addon-template` has been archived.
+§a§
+I'll search for information about why this GitHub repository was archived.Let me search for more specific information about why the repository was archived.Based on my search results, I can explain why the `create-fabric-addon-template` repository has been archived:
+
+The create-fabric-addon-template repository has been marked as "Public archive", and according to the search results, it appears that it was last updated on January 1, 2025.
+
+The main reason for archiving appears to be that the Fabricators-of-Create team has shifted focus to a newer, more versatile template. Instead of maintaining a Fabric-specific addon template, they now maintain the `create-multiloader-addon-template`, which is described as a "Template for making multi-loader addons for the Create mod".
+
+The multiloader template offers several advantages over the fabric-only template:
+- It's "based on Architectury for creating addons for Create on Forge and Fabric simultaneously" and "powered by the Architectury toolchain"
+- "Architectury allows developers to create the majority of their mod in common, loader-agnostic code" with separate subprojects for "forge and fabric"
+- This approach allows addon developers to support both Forge and Fabric mod loaders with a single codebase
+
+So essentially, the fabric-specific template was deprecated in favor of a more comprehensive multiloader solution that can target multiple mod loaders (Forge, Fabric, and potentially Quilt) from the same project structure. This makes more sense for addon developers who want to reach a wider audience without maintaining separate codebases for each mod loader.

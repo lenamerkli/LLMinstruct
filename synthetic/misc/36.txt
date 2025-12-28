@@ -1,0 +1,509 @@
+§u§
+```
+\section{Lernziele}
+
+\begin{enumerate}
+    \item Unbestimmte Integrale -- Stammfunktionen
+    \item Andwendung des Hauptsatzes
+    \item Integrationsregeln
+    \item Uneigentliche Integrale
+\end{enumerate}
+```
+Erkläre mir den Stoff, den ich können muss, um diese Lernziele zu erfüllen.
+§a§
+Um die genannten Lernziele zu erreichen, musst du die folgenden Konzepte verstehen und anwenden können. Ich erkläre dir den benötigten Stoff Schritt für Schritt:
+
+### 1. **Unbestimmte Integrale -- Stammfunktionen**
+   - **Stammfunktion (Antiderivative)**:
+     Eine Funktion \(F(x)\) heißt Stammfunktion von \(f(x)\), wenn \(F'(x) = f(x)\) gilt. Du musst wissen, dass jede Stammfunktion um eine beliebige Konstante \(C\) ergänzt wird:
+     \[
+     \int f(x)  dx = F(x) + C
+     \]
+   - **Grundlagen**:
+     Du solltest die Stammfunktionen der elementaren Funktionen beherrschen:
+     - Polynome: \(\int x^n  dx = \frac{x^{n+1}}{n+1} + C\) (für \(n \neq -1\))
+     - Exponential: \(\int e^x  dx = e^x + C\), \(\int a^x  dx = \frac{a^x}{\ln a} + C\)
+     - Logarithmus: \(\int \frac{1}{x}  dx = \ln|x| + C\)
+     - Trigonometrisch: \(\int \sin x  dx = -\cos x + C\), \(\int \cos x  dx = \sin x + C\)
+   - **Fähigkeiten**:
+     Du musst in der Lage sein, zu einer gegebenen Funktion \(f(x)\) eine Stammfunktion \(F(x)\) zu finden und die Bedeutung der Konstanten \(C\) verstehen.
+
+### 2. **Anwendung des Hauptsatzes**
+   - **Hauptsatz der Differential- und Integralrechnung**:
+     Dies ist die zentrale Verbindung zwischen Differentiation und Integration. Er besteht aus zwei Teilen:
+     - **Teil 1**: Wenn \(f\) auf \([a, b]\) stetig ist und \(F\) eine Stammfunktion von \(f\), dann gilt:
+       \[
+       \frac{d}{dx} \int_a^x f(t)  dt = f(x)
+       \]
+     - **Teil 2**: Wenn \(f\) auf \([a, b]\) stetig ist und \(F\) eine Stammfunktion von \(f\), dann gilt:
+       \[
+       \int_a^b f(x)  dx = F(b) - F(a)
+       \]
+   - **Anwendung**:
+     Du musst den Hauptsatz nutzen können, um **bestimmte Integrale** zu berechnen (d. h. Integrale mit festen Grenzen). Das bedeutet:
+     - Eine Stammfunktion der Integrandfunktion finden (siehe Lernziel 1).
+     - Diese Stammfunktion an den Grenzen \(b\) und \(a\) auswerten und die Differenz bilden.
+     Beispiel: \(\int_2^5 x^2  dx = \left[ \frac{x^3}{3} \right]_2^5 = \frac{125}{3} - \frac{8}{3} = \frac{117}{3}\).
+
+### 3. **Integrationsregeln**
+   - **Grundregeln**:
+     Du musst diese Regeln auswendig kennen und kombinieren können:
+     - Linearität:
+       \(\int [c \cdot f(x) + d \cdot g(x)]  dx = c \int f(x)  dx + d \int g(x)  dx\)
+       (für Konstanten \(c, d\) und Funktionen \(f, g\))
+     - Summenregel: \(\int [f(x) + g(x)]  dx = \int f(x)  dx + \int g(x)  dx\)
+     - Differenzenregel: \(\int [f(x) - g(x)]  dx = \int f(x)  dx - \int g(x)  dx\)
+   - **Spezielle Regeln**:
+     - Potenzregel: \(\int x^n  dx = \frac{x^{n+1}}{n+1} + C\) (für \(n \neq -1\))
+     - Exponentialregel: \(\int e^{kx}  dx = \frac{e^{kx}}{k} + C\)
+     - Logarithmusregel: \(\int \frac{1}{x}  dx = \ln|x| + C\)
+     - Trigonometrische Regeln:
+       \(\int \tan x  dx = -\ln|\cos x| + C\), \(\int \sec^2 x  dx = \tan x + C\)
+   - **Wichtige Methode: Substitution (Ersatzregel)**:
+     - Du musst wissen, wie du die Substitution \(u = g(x)\) anwendest, um komplizierte Integrale zu vereinfachen.
+     Beispiel: \(\int (x^2 + 1)^3 \cdot 2x  dx\).
+     Hier setzt du \(u = x^2 + 1\), dann \(du = 2x  dx\), und es folgt:
+     \(\int u^3  du = \frac{u^4}{4} + C = \frac{(x^2 + 1)^4}{4} + C\).
+
+### 4. **Uneigentliche Integrale**
+   - **Begriff**:
+     Uneigentliche Integrale sind Integrale, die entweder über einen unendlichen Intervallbereich gehen oder eine unendliche Diskontinuität (z. B. eine Polstelle) innerhalb des Intervalls haben.
+   - **Typen und Berechnung**:
+     - **Unendliches Intervall**:
+       \(\int_a^\infty f(x)  dx = \lim_{b \to \infty} \int_a^b f(x)  dx\) (wenn der Grenzwert existiert).
+       Beispiel: \(\int_1^\infty \frac{1}{x^2}  dx = \lim_{b \to \infty} \left[ -\frac{1}{x} \right]_1^b = \lim_{b \to \infty} \left( -\frac{1}{b} + 1 \right) = 1\).
+     - **Unendliche Diskontinuität**:
+       Beispiel: \(\int_0^1 \frac{1}{\sqrt{x}}  dx\). Hier ist die Funktion an \(x=0\) unendlich. Du musst das Integral als Grenzwert schreiben:
+       \(\int_0^1 x^{-1/2}  dx = \lim_{a \to 0^+} \int_a^1 x^{-1/2}  dx = \lim_{a \to 0^+} \left[ 2x^{1/2} \right]_a^1 = \lim_{a \to 0^+} (2 - 2\sqrt{a}) = 2\).
+     - **Allgemeine Regel**:
+       Das Integral wird durch Grenzwerte berechnet und konvergiert nur, wenn der Grenzwert endlich ist. Andernfalls divergiert es.
+   - **Fähigkeiten**:
+     Du musst uneigentliche Integrale erkennen, in Grenzprozesse umwandeln und deren Konvergenz/Divergenz beurteilen können.
+
+### Tipps zum Lernen:
+- **Verständnis vor Auswendiglernen**: Versuche die Konzepte (z. B. warum der Hauptsatz funktioniert) zu verstehen, nicht nur Regeln zu pauken.
+- **Üben, üben, üben**: Löse Aufgaben zu jedem Thema – besonders zu Substitution und uneigentlichen Integralen. Beginne mit einfachen Beispielen und steigere dich.
+- **Verbindungen nutzen**: Die Themen bauen aufeinander auf. Ohne sicheres Verständnis von Lernziel 1 und 2 wird Lernziel 4 schwierig.
+- **Hilfsmittel**: Ein Taschenrechner ist nützlich, aber du solltest die Schritte manuell nachvollziehen können.
+
+Möchtest du zu einem bestimmten Bereich mehr Details oder Beispielaufgaben haben?
+§u§
+Mache daraus ein LaTeX Dokument und füge Beispiele hinzu.
+§a§
+Hier ist ein vollständiges LaTeX-Dokument mit dem erklärten Stoff und zusätzlichen Beispielen:
+
+```latex
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{mdframed}
+
+\geometry{margin=2.5cm}
+
+% Umgebungen für Beispiele und wichtige Konzepte
+\newmdframed[linecolor=blue!50,linewidth=1pt,frametitle={\colorbox{white}{\textbf{Beispiel}}},backgroundcolor=blue!5]{beispiel}
+\newmdframed[linecolor=red!50,linewidth=1pt,frametitle={\colorbox{white}{\textbf{Wichtig}}},backgroundcolor=red!5]{wichtig}
+
+\title{\textbf{Integralrechnung -- Lernziele und Erklärungen}}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Lernziele}
+\begin{enumerate}
+    \item Unbestimmte Integrale -- Stammfunktionen
+    \item Anwendung des Hauptsatzes
+    \item Integrationsregeln
+    \item Uneigentliche Integrale
+\end{enumerate}
+
+\section{Unbestimmte Integrale -- Stammfunktionen}
+
+\subsection{Definition und Grundkonzept}
+Eine Funktion $F(x)$ heißt \textbf{Stammfunktion} (oder Antiderivative) von $f(x)$, wenn gilt:
+\[F'(x) = f(x)\]
+
+Das \textbf{unbestimmte Integral} von $f(x)$ ist die Menge aller Stammfunktionen:
+\[\int f(x)\,dx = F(x) + C\]
+wobei $C$ eine beliebige Konstante ist.
+
+\begin{wichtig}
+Die Konstante $C$ ist wichtig, da die Ableitung einer Konstanten null ist. Daher unterscheiden sich alle Stammfunktionen einer Funktion nur durch eine additive Konstante.
+\end{wichtig}
+
+\subsection{Grundlegende Stammfunktionen}
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Funktion $f(x)$} & \textbf{Stammfunktion $F(x) + C$} \\
+\hline
+$x^n$ (für $n \neq -1$) & $\frac{x^{n+1}}{n+1} + C$ \\
+$\frac{1}{x}$ & $\ln|x| + C$ \\
+$e^x$ & $e^x + C$ \\
+$a^x$ & $\frac{a^x}{\ln a} + C$ \\
+$\sin x$ & $-\cos x + C$ \\
+$\cos x$ & $\sin x + C$ \\
+$\sec^2 x$ & $\tan x + C$ \\
+$\csc^2 x$ & $-\cot x + C$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Beispiele}
+
+\begin{beispiel}
+\textbf{Beispiel 1:} Bestimme $\int (3x^2 + 2x - 5)\,dx$
+
+\textbf{Lösung:}
+\begin{align}
+\int (3x^2 + 2x - 5)\,dx &= \int 3x^2\,dx + \int 2x\,dx - \int 5\,dx\\
+&= 3 \cdot \frac{x^3}{3} + 2 \cdot \frac{x^2}{2} - 5x + C\\
+&= x^3 + x^2 - 5x + C
+\end{align}
+\end{beispiel}
+
+\begin{beispiel}
+\textbf{Beispiel 2:} Bestimme $\int \left(\frac{1}{x} + e^x + \sin x\right)\,dx$
+
+\textbf{Lösung:}
+\begin{align}
+\int \left(\frac{1}{x} + e^x + \sin x\right)\,dx &= \int \frac{1}{x}\,dx + \int e^x\,dx + \int \sin x\,dx\\
+&= \ln|x| + e^x - \cos x + C
+\end{align}
+\end{beispiel}
+
+\begin{beispiel}
+\textbf{Beispiel 3:} Bestimme $\int \sqrt{x}\,dx$
+
+\textbf{Lösung:}
+\begin{align}
+\int \sqrt{x}\,dx &= \int x^{1/2}\,dx\\
+&= \frac{x^{3/2}}{3/2} + C\\
+&= \frac{2}{3}x^{3/2} + C = \frac{2}{3}\sqrt{x^3} + C
+\end{align}
+\end{beispiel}
+
+\section{Anwendung des Hauptsatzes}
+
+\subsection{Der Hauptsatz der Differential- und Integralrechnung}
+
+Der Hauptsatz besteht aus zwei Teilen:
+
+\begin{wichtig}
+\textbf{Teil 1:} Wenn $f$ auf $[a, b]$ stetig ist, dann ist die Funktion
+\[G(x) = \int_a^x f(t)\,dt\]
+differenzierbar auf $(a, b)$ und es gilt:
+\[\frac{d}{dx}\int_a^x f(t)\,dt = f(x)\]
+
+\textbf{Teil 2:} Wenn $f$ auf $[a, b]$ stetig ist und $F$ eine Stammfunktion von $f$ ist, dann gilt:
+\[\int_a^b f(x)\,dx = F(b) - F(a) = [F(x)]_a^b\]
+\end{wichtig}
+
+\subsection{Anwendung zur Berechnung bestimmter Integrale}
+
+Der Hauptsatz ermöglicht es uns, bestimmte Integrale durch Stammfunktionen zu berechnen:
+
+\begin{beispiel}
+\textbf{Beispiel 4:} Berechne $\int_1^3 x^2\,dx$
+
+\textbf{Lösung:}
+\begin{align}
+\int_1^3 x^2\,dx &= \left[\frac{x^3}{3}\right]_1^3\\
+&= \frac{3^3}{3} - \frac{1^3}{3}\\
+&= \frac{27}{3} - \frac{1}{3}\\
+&= 9 - \frac{1}{3} = \frac{26}{3}
+\end{align}
+\end{beispiel}
+
+\begin{beispiel}
+\textbf{Beispiel 5:} Berechne $\int_0^{\pi} \sin x\,dx$
+
+\textbf{Lösung:}
+\begin{align}
+\int_0^{\pi} \sin x\,dx &= [-\cos x]_0^{\pi}\\
+&= -\cos(\pi) - (-\cos(0))\\
+&= -(-1) - (-1)\\
+&= 1 + 1 = 2
+\end{align}
+\end{beispiel}
+
+\begin{beispiel}
+\textbf{Beispiel 6:} Berechne $\int_1^e \frac{1}{x}\,dx$
+
+\textbf{Lösung:}
+\begin{align}
+\int_1^e \frac{1}{x}\,dx &= [\ln|x|]_1^e\\
+&= \ln(e) - \ln(1)\\
+&= 1 - 0 = 1
+\end{align}
+\end{beispiel}
+
+\section{Integrationsregeln}
+
+\subsection{Grundlegende Regeln}
+
+\begin{enumerate}
+\item \textbf{Linearität:}
+\[\int [c \cdot f(x) + d \cdot g(x)]\,dx = c \int f(x)\,dx + d \int g(x)\,dx\]
+
+\item \textbf{Summenregel:}
+\[\int [f(x) + g(x)]\,dx = \int f(x)\,dx + \int g(x)\,dx\]
+
+\item \textbf{Differenzenregel:}
+\[\int [f(x) - g(x)]\,dx = \int f(x)\,dx - \int g(x)\,dx\]
+\end{enumerate}
+
+\subsection{Substitutionsregel}
+
+Die Substitutionsregel ist eine der wichtigsten Integrationstechniken:
+
+\begin{wichtig}
+Wenn $u = g(x)$ und $du = g'(x)\,dx$, dann gilt:
+\[\int f(g(x)) \cdot g'(x)\,dx = \int f(u)\,du\]
+\end{wichtig}
+
+\begin{beispiel}
+\textbf{Beispiel 7:} Berechne $\int 2x(x^2 + 1)^3\,dx$
+
+\textbf{Lösung:}
+Substitution: $u = x^2 + 1$, also $du = 2x\,dx$
+\begin{align}
+\int 2x(x^2 + 1)^3\,dx &= \int u^3\,du\\
+&= \frac{u^4}{4} + C\\
+&= \frac{(x^2 + 1)^4}{4} + C
+\end{align}
+\end{beispiel}
+
+\begin{beispiel}
+\textbf{Beispiel 8:} Berechne $\int \sin(3x)\,dx$
+
+\textbf{Lösung:}
+Substitution: $u = 3x$, also $du = 3\,dx$ bzw. $dx = \frac{1}{3}du$
+\begin{align}
+\int \sin(3x)\,dx &= \int \sin(u) \cdot \frac{1}{3}\,du\\
+&= \frac{1}{3} \int \sin(u)\,du\\
+&= \frac{1}{3}(-\cos(u)) + C\\
+&= -\frac{1}{3}\cos(3x) + C
+\end{align}
+\end{beispiel}
+
+\begin{beispiel}
+\textbf{Beispiel 9:} Berechne $\int \frac{x}{x^2 + 4}\,dx$
+
+\textbf{Lösung:}
+Substitution: $u = x^2 + 4$, also $du = 2x\,dx$ bzw. $x\,dx = \frac{1}{2}du$
+\begin{align}
+\int \frac{x}{x^2 + 4}\,dx &= \int \frac{1}{u} \cdot \frac{1}{2}\,du\\
+&= \frac{1}{2} \int \frac{1}{u}\,du\\
+&= \frac{1}{2}\ln|u| + C\\
+&= \frac{1}{2}\ln(x^2 + 4) + C
+\end{align}
+\end{beispiel}
+
+\subsection{Partielle Integration}
+
+Die partielle Integration basiert auf der Produktregel der Differentiation:
+
+\begin{wichtig}
+\[\int u\,dv = uv - \int v\,du\]
+\end{wichtig}
+
+\begin{beispiel}
+\textbf{Beispiel 10:} Berechne $\int x e^x\,dx$
+
+\textbf{Lösung:}
+Wähle $u = x$ (also $du = dx$) und $dv = e^x\,dx$ (also $v = e^x$)
+\begin{align}
+\int x e^x\,dx &= x \cdot e^x - \int e^x\,dx\\
+&= xe^x - e^x + C\\
+&= e^x(x - 1) + C
+\end{align}
+\end{beispiel}
+
+\section{Uneigentliche Integrale}
+
+\subsection{Definition und Typen}
+
+Uneigentliche Integrale treten in zwei Hauptformen auf:
+
+\begin{enumerate}
+\item \textbf{Typ I: Unendliche Integrationsgrenzen}
+\[\int_a^{\infty} f(x)\,dx = \lim_{b \to \infty} \int_a^b f(x)\,dx\]
+\[\int_{-\infty}^b f(x)\,dx = \lim_{a \to -\infty} \int_a^b f(x)\,dx\]
+
+\item \textbf{Typ II: Unendliche Diskontinuität im Integrationsbereich}
+Wenn $f$ bei $x = c$ eine unendliche Diskontinuität hat:
+\[\int_a^b f(x)\,dx = \lim_{\epsilon \to 0^+} \left(\int_a^{c-\epsilon} f(x)\,dx + \int_{c+\epsilon}^b f(x)\,dx\right)\]
+\end{enumerate}
+
+\begin{wichtig}
+Ein uneigentliches Integral \textbf{konvergiert}, wenn der entsprechende Grenzwert existiert und endlich ist. Andernfalls \textbf{divergiert} es.
+\end{wichtig}
+
+\subsection{Beispiele für Typ I}
+
+\begin{beispiel}
+\textbf{Beispiel 11:} Untersuche $\int_1^{\infty} \frac{1}{x^2}\,dx$
+
+\textbf{Lösung:}
+\begin{align}
+\int_1^{\infty} \frac{1}{x^2}\,dx &= \lim_{b \to \infty} \int_1^b x^{-2}\,dx\\
+&= \lim_{b \to \infty} \left[-\frac{1}{x}\right]_1^b\\
+&= \lim_{b \to \infty} \left(-\frac{1}{b} + 1\right)\\
+&= 0 + 1 = 1
+\end{align}
+Das Integral konvergiert und hat den Wert 1.
+\end{beispiel}
+
+\begin{beispiel}
+\textbf{Beispiel 12:} Untersuche $\int_1^{\infty} \frac{1}{x}\,dx$
+
+\textbf{Lösung:}
+\begin{align}
+\int_1^{\infty} \frac{1}{x}\,dx &= \lim_{b \to \infty} \int_1^b \frac{1}{x}\,dx\\
+&= \lim_{b \to \infty} [\ln|x|]_1^b\\
+&= \lim_{b \to \infty} (\ln b - \ln 1)\\
+&= \lim_{b \to \infty} \ln b = \infty
+\end{align}
+Das Integral divergiert.
+\end{beispiel}
+
+\begin{beispiel}
+\textbf{Beispiel 13:} Untersuche $\int_0^{\infty} e^{-x}\,dx$
+
+\textbf{Lösung:}
+\begin{align}
+\int_0^{\infty} e^{-x}\,dx &= \lim_{b \to \infty} \int_0^b e^{-x}\,dx\\
+&= \lim_{b \to \infty} [-e^{-x}]_0^b\\
+&= \lim_{b \to \infty} (-e^{-b} + e^0)\\
+&= \lim_{b \to \infty} (-e^{-b} + 1)\\
+&= 0 + 1 = 1
+\end{align}
+Das Integral konvergiert und hat den Wert 1.
+\end{beispiel}
+
+\subsection{Beispiele für Typ II}
+
+\begin{beispiel}
+\textbf{Beispiel 14:} Untersuche $\int_0^1 \frac{1}{\sqrt{x}}\,dx$
+
+\textbf{Lösung:}
+Die Funktion hat bei $x = 0$ eine unendliche Diskontinuität.
+\begin{align}
+\int_0^1 \frac{1}{\sqrt{x}}\,dx &= \lim_{a \to 0^+} \int_a^1 x^{-1/2}\,dx\\
+&= \lim_{a \to 0^+} [2x^{1/2}]_a^1\\
+&= \lim_{a \to 0^+} (2 \cdot 1 - 2\sqrt{a})\\
+&= 2 - 0 = 2
+\end{align}
+Das Integral konvergiert und hat den Wert 2.
+\end{beispiel}
+
+\begin{beispiel}
+\textbf{Beispiel 15:} Untersuche $\int_0^1 \frac{1}{x}\,dx$
+
+\textbf{Lösung:}
+Die Funktion hat bei $x = 0$ eine unendliche Diskontinuität.
+\begin{align}
+\int_0^1 \frac{1}{x}\,dx &= \lim_{a \to 0^+} \int_a^1 \frac{1}{x}\,dx\\
+&= \lim_{a \to 0^+} [\ln|x|]_a^1\\
+&= \lim_{a \to 0^+} (\ln 1 - \ln a)\\
+&= \lim_{a \to 0^+} (- \ln a) = \infty
+\end{align}
+Das Integral divergiert.
+\end{beispiel}
+
+\section{Wichtige Konvergenzkriterien}
+
+\begin{wichtig}
+\textbf{Für Typ I (unendliche Grenzen):}
+\begin{itemize}
+\item $\int_1^{\infty} \frac{1}{x^p}\,dx$ konvergiert für $p > 1$ und divergiert für $p \leq 1$
+\item $\int_0^{\infty} e^{-ax}\,dx$ konvergiert für $a > 0$
+\end{itemize}
+
+\textbf{Für Typ II (Diskontinuität bei $x = 0$):}
+\begin{itemize}
+\item $\int_0^1 \frac{1}{x^p}\,dx$ konvergiert für $p < 1$ und divergiert für $p \geq 1$
+\end{itemize}
+\end{wichtig}
+
+\section{Zusammenfassung der Lerntipps}
+
+\begin{enumerate}
+\item \textbf{Verständnis vor Auswendiglernen:} Verstehe die Konzepte (z.B. warum der Hauptsatz funktioniert) anstatt nur Regeln zu pauken.
+
+\item \textbf{Systematisches Üben:}
+\begin{itemize}
+\item Beginne mit einfachen Polynomen
+\item Übe dann trigonometrische und exponentielle Funktionen
+\item Meistere die Substitution mit vielen Beispielen
+\item Arbeite dich zu uneigentlichen Integralen vor
+\end{itemize}
+
+\item \textbf{Verbindungen erkennen:} Die Themen bauen aufeinander auf:
+\begin{itemize}
+\item Stammfunktionen sind die Basis für alles
+\item Der Hauptsatz verbindet unbestimmte und bestimmte Integrale
+\item Integrationsregeln helfen bei komplexeren Funktionen
+\item Uneigentliche Integrale erweitern das Konzept auf spezielle Fälle
+\end{itemize}
+
+\item \textbf{Häufige Fehlerquellen vermeiden:}
+\begin{itemize}
+\item Vergiss nie die Konstante $C$ bei unbestimmten Integralen
+\item Achte auf die richtige Rücksubstitution
+\item Prüfe bei uneigentlichen Integralen immer die Konvergenz
+\end{itemize}
+\end{enumerate}
+
+\section{Übungsaufgaben}
+
+\subsection{Unbestimmte Integrale}
+\begin{enumerate}
+\item $\int (4x^3 - 3x^2 + 2x - 1)\,dx$
+\item $\int \left(e^x + \frac{1}{x} + \cos x\right)\,dx$
+\item $\int \frac{x^2 + 1}{x}\,dx$
+\end{enumerate}
+
+\subsection{Bestimmte Integrale}
+\begin{enumerate}
+\item $\int_0^2 (x^2 + 1)\,dx$
+\item $\int_0^{\pi/2} \cos x\,dx$
+\item $\int_1^4 \sqrt{x}\,dx$
+\end{enumerate}
+
+\subsection{Substitution}
+\begin{enumerate}
+\item $\int e^{3x}\,dx$
+\item $\int \cos(2x - 1)\,dx$
+\item $\int \frac{2x + 1}{x^2 + x + 3}\,dx$
+\end{enumerate}
+
+\subsection{Uneigentliche Integrale}
+\begin{enumerate}
+\item $\int_2^{\infty} \frac{1}{x^3}\,dx$
+\item $\int_0^1 \frac{1}{x^{2/3}}\,dx$
+\item $\int_{-\infty}^0 e^x\,dx$
+\end{enumerate}
+
+\end{document}
+```
+
+Dieses LaTeX-Dokument enthält:
+
+1. **Vollständige Erklärungen** aller vier Lernziele
+2. **Über 15 ausführliche Beispiele** mit Schritt-für-Schritt-Lösungen
+3. **Wichtige Konzepte** in farblich hervorgehobenen Boxen
+4. **Tabellen** mit den grundlegenden Stammfunktionen
+5. **Konvergenzkriterien** für uneigentliche Integrale
+6. **Lerntipps** und häufige Fehlerquellen
+7. **Übungsaufgaben** am Ende zum Selbststudium
+
+Das Dokument ist didaktisch aufgebaut und führt systematisch von einfachen zu komplexeren Themen. Die Beispiele sind so gewählt, dass sie verschiedene Schwierigkeitsgrade und Anwendungsfälle abdecken.

@@ -1,0 +1,54 @@
+§u§
+```
+\section{Replication}
+
+            \subsection{Without Code Changes}
+
+                \include{replication_without.tex}
+
+            \subsection{With Code Changes}
+```
+How can I make that \include does not create a page break before and after?
+§a§
+To prevent the `\include` command from adding page breaks before and after the included file, you have a few options:
+
+### **Option 1: Use `\input` Instead of `\include`**
+The `\include` command is designed to always start a new page before and after the included content. Instead, use `\input`, which does not add page breaks:
+
+```latex
+\section{Replication}
+
+    \subsection{Without Code Changes}
+        \input{replication_without.tex}
+
+    \subsection{With Code Changes}
+```
+
+### **Option 2: Redefine `\include` to Behave Like `\input` (Not Recommended)**
+If you must use `\include` (e.g., for `\includeonly` functionality), you can redefine it to remove the page breaks:
+
+```latex
+\makeatletter
+\renewcommand{\include}[1]{%
+    \@input@{#1.tex}%
+}
+\makeatother
+```
+
+However, this may interfere with other functionalities (like `\includeonly`), so **`\input` is the better choice** in most cases.
+
+### **Option 3: Use `newclude` Package (Alternative)**
+The `newclude` package provides a modified version of `\include` that allows more control:
+
+```latex
+\usepackage{newclude}
+...
+\subsection{Without Code Changes}
+    \include*{replication_without}  % No page breaks
+```
+
+### **Best Practice**
+- **Use `\input`** if you just need to insert content without page breaks.
+- **Use `\include`** only if you need its special features (like selective compilation with `\includeonly`), but be aware of the forced page breaks.
+
+Would you like help adjusting the content of `replication_without.tex` to fit better in the flow?

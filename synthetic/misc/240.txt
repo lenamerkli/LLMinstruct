@@ -1,0 +1,126 @@
+§u§
+```latex
+\documentclass[a4paper,11pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{listings}
+\usepackage{xurl}
+\usepackage{biblatex}
+\usepackage{csquotes}
+\addbibresource{authenticator.bib}
+
+
+\title{Microsoft Authenticator}
+\author{Schüler*innenorganisation}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\chapter{TOTP aktivieren}
+
+Gemäss Microsoft \cite{3037491} lässt sich der Internationale Standard für Zweifaktorauthentifikation (TOTP) auf der Seite \url{https://account.activedirectory.windowsazure.com/usermanagement/mfasettings.aspx} einschalten.
+
+\includegraphics[width=0.5\textwidth]{Adir_Moshe_0-1639470976364.png}
+```
+Schreibe ein `\chapter` über wie Zwei-Faktor-Authentisierung funktioniert und welche Optionen dass es gibt.
+§a§
+Hier ist ein Kapitel über Zwei-Faktor-Authentisierung, das gut zu Ihrem Dokument passt:
+
+```latex
+\chapter{Zwei-Faktor-Authentisierung: Grundlagen und Verfahren}
+
+\section{Was ist Zwei-Faktor-Authentisierung?}
+
+Die Zwei-Faktor-Authentisierung (2FA), auch als Zwei-Stufen-Verifizierung bekannt, ist ein Sicherheitsverfahren, bei dem Benutzer zwei unterschiedliche Authentifizierungsfaktoren vorlegen müssen, um ihre Identität zu bestätigen. Dies erhöht die Sicherheit erheblich, da selbst wenn ein Faktor kompromittiert wird, ein Angreifer ohne den zweiten Faktor keinen Zugriff erhält.
+
+\section{Die drei Authentifizierungskategorien}
+
+Authentifizierungsfaktoren lassen sich in drei Hauptkategorien einteilen:
+
+\begin{itemize}
+    \item \textbf{Wissen (etwas, das Sie wissen)}: Passwörter, PINs, Sicherheitsfragen
+    \item \textbf{Besitz (etwas, das Sie haben)}: Smartphone, Hardware-Token, Smartcard
+    \item \textbf{Inhärenz (etwas, das Sie sind)}: Fingerabdruck, Gesichtserkennung, Iris-Scan
+\end{itemize}
+
+Bei der Zwei-Faktor-Authentisierung werden typischerweise zwei Faktoren aus unterschiedlichen Kategorien kombiniert, meist Wissen (Passwort) und Besitz (Smartphone oder Token).
+
+\section{Gängige 2FA-Methoden}
+
+\subsection{SMS-basierte Authentisierung}
+Bei dieser Methode wird ein einmaliger Code per SMS an das registrierte Mobiltelefon des Benutzers gesendet. Trotz ihrer Verbreitung gilt diese Methode als weniger sicher, da SMS-Nachrichten abgefangen oder durch SIM-Swapping-Angriffe umgeleitet werden können.
+
+\subsection{TOTP (Time-based One-Time Password)}
+TOTP ist ein standardisiertes Verfahren (RFC 6238), bei dem zeitbasierte Einmalpasswörter generiert werden. Diese Codes:
+\begin{itemize}
+    \item Werden alle 30 oder 60 Sekunden neu generiert
+    \item Basieren auf einem gemeinsamen Geheimnis zwischen Server und Client
+    \item Funktionieren offline ohne Netzwerkverbindung
+    \item Werden von Apps wie Microsoft Authenticator, Google Authenticator oder Authy unterstützt
+\end{itemize}
+
+\subsection{Push-Benachrichtigungen}
+Moderne Authenticator-Apps wie Microsoft Authenticator bieten Push-Benachrichtigungen an. Der Benutzer erhält eine Benachrichtigung auf seinem Smartphone und kann die Anmeldung durch einfaches Tippen bestätigen oder ablehnen. Diese Methode ist benutzerfreundlich und bietet zusätzliche Kontextinformationen wie Standort und Gerät der Anmeldeanfrage.
+
+\subsection{Hardware-Token}
+Hardware-Token sind physische Geräte, die Einmalpasswörter generieren oder über USB/NFC kommunizieren:
+\begin{itemize}
+    \item \textbf{FIDO2/WebAuthn-Schlüssel}: Moderne USB- oder NFC-basierte Sicherheitsschlüssel (z.B. YubiKey)
+    \item \textbf{OTP-Token}: Kleine Geräte mit Display, die regelmäßig neue Codes anzeigen
+    \item \textbf{Smartcards}: Karten mit eingebautem Chip für kryptographische Operationen
+\end{itemize}
+
+\subsection{Biometrische Verfahren}
+Biometrische Authentisierung nutzt einzigartige körperliche Merkmale:
+\begin{itemize}
+    \item Fingerabdruckerkennung
+    \item Gesichtserkennung (z.B. Windows Hello, Face ID)
+    \item Iris- oder Retina-Scan
+    \item Stimmerkennung
+\end{itemize}
+
+\section{Vor- und Nachteile verschiedener 2FA-Methoden}
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|X|}
+\hline
+\textbf{Methode} & \textbf{Vorteile} & \textbf{Nachteile} \\
+\hline
+SMS & Weit verbreitet, keine zusätzliche App nötig & Unsicher gegen SIM-Swapping, benötigt Mobilfunkempfang \\
+\hline
+TOTP & Offline-fähig, standardisiert, sicher & Zeitabhängig, Gerät kann verloren gehen \\
+\hline
+Push & Benutzerfreundlich, kontextbezogen & Benötigt Internetverbindung, App-abhängig \\
+\hline
+Hardware-Token & Sehr sicher, phishing-resistent & Zusätzliche Kosten, kann verloren gehen \\
+\hline
+Biometrie & Bequem, schwer zu fälschen & Datenschutzbedenken, nicht änderbar \\
+\hline
+\end{tabularx}
+\caption{Vergleich verschiedener 2FA-Methoden}
+\end{table}
+
+\section{Best Practices für 2FA}
+
+Um die Sicherheit zu maximieren, sollten folgende Empfehlungen beachtet werden:
+
+\begin{enumerate}
+    \item \textbf{Backup-Codes sichern}: Die meisten Dienste bieten Backup-Codes für Notfälle an. Diese sollten sicher aufbewahrt werden.
+    \item \textbf{Mehrere Methoden registrieren}: Wenn möglich, sollten alternative 2FA-Methoden eingerichtet werden.
+    \item \textbf{Phishing-resistente Methoden bevorzugen}: Hardware-Token und biometrische Verfahren sind schwerer zu kompromittieren.
+    \item \textbf{Regelmäßige Überprüfung}: Die registrierten Geräte und Methoden sollten regelmäßig überprüft und alte Geräte entfernt werden.
+    \item \textbf{Keine SMS wenn vermeidbar}: Aufgrund der bekannten Schwächen sollten sicherere Alternativen bevorzugt werden.
+\end{enumerate}
+
+\section{Zukunft der Authentisierung}
+
+Die Entwicklung geht in Richtung passwortloser Authentisierung. Standards wie FIDO2 und WebAuthn ermöglichen sichere Anmeldungen ohne traditionelle Passwörter. Microsoft, Google und Apple arbeiten an Lösungen, die Passwörter vollständig durch biometrische oder hardware-basierte Authentisierung ersetzen sollen.
+```
+
+Dieses Kapitel gibt einen umfassenden Überblick über 2FA und passt gut zu Ihrem bestehenden Dokument über den Microsoft Authenticator.

@@ -1,0 +1,164 @@
+§u§
+How can I get the IP address behind a domain in python?
+§a§
+Below are a few of the most common ways to turn a domain name (e.g. `example.com`) into one or more IP addresses in Python.
+Pick the one that best fits your needs:
+
+| What you need | How to do it | When to use it |
+|---------------|--------------|----------------|
+| **Fast, built‑in, IPv4 only** | `socket.gethostbyname()` | Quick look‑ups when you only care about IPv4. |
+| **All IPs (IPv4 + IPv6)** | `socket.getaddrinfo()` or `socket.gethostbyname_ex()` | When you want every address the DNS server returns. |
+| **Full DNS control (A, AAAA, MX, TXT, …)** | `dnspython` (`dns.resolver`) | When you need to query specific record types or handle DNS errors more gracefully. |
+| **Resolve via a specific DNS server** | `dns.resolver` with a custom nameserver | When you want to bypass the system resolver or test against a particular DNS server. |
+
+---
+
+## 1. Quick IPv4 lookup – `socket.gethostbyname()`
+
+```python
+import socket
+
+domain = "example.com"
+try:
+    ip = socket.gethostbyname(domain)
+    print(f"{domain} → {ip}")
+except socket.gaierror as exc:
+    print(f"Could not resolve {domain}: {exc}")
+```
+
+*Pros:*
+- No external dependencies.
+- Very fast for a single lookup.
+
+*Cons:*
+- Only returns the first IPv4 address.
+- No IPv6 support.
+
+---
+
+## 2. All addresses (IPv4 + IPv6) – `socket.getaddrinfo()`
+
+```python
+import socket
+
+domain = "example.com"
+
+try:
+    # getaddrinfo returns a list of tuples:
+    # (family, socktype, proto, canonname, sockaddr)
+    infos = socket.getaddrinfo(domain, None)
+    ips = {info[4][0] for info in infos}  # unique IPs
+    print(f"{domain} → {', '.join(ips)}")
+except socket.gaierror as exc:
+    print(f"Could not resolve {domain}: {exc}")
+```
+
+*Pros:*
+- Handles both IPv4 and IPv6.
+- Gives you the socket family (`AF_INET` / `AF_INET6`) if you need it.
+
+*Cons:*
+- Slightly more verbose.
+- Still limited to the system resolver.
+
+---
+
+## 3. All addresses (IPv4 + IPv6) – `socket.gethostbyname_ex()`
+
+```python
+import socket
+
+domain = "example.com"
+
+try:
+    # (hostname, aliaslist, ipaddrlist)
+    _, _, ip_list = socket.gethostbyname_ex(domain)
+    print(f"{domain} → {', '.join(ip_list)}")
+except socket.gaierror as exc:
+    print(f"Could not resolve {domain}: {exc}")
+```
+
+*Pros:*
+- Simpler than `getaddrinfo` if you only care about the IP list.
+- Still returns both IPv4 and IPv6 addresses.
+
+*Cons:*
+- Same as above: relies on the system resolver.
+
+---
+
+## 4. Full DNS control – `dnspython`
+
+First install the library:
+
+```bash
+pip install dnspython
+```
+
+### a) Resolve A (IPv4) and AAAA (IPv6) records
+
+```python
+import dns.resolver
+
+domain = "example.com"
+
+def resolve_records(domain, record_type):
+    try:
+        answers = dns.resolver.resolve(domain, record_type)
+        return [r.to_text() for r in answers]
+    except dns.resolver.NoAnswer:
+        return []
+    except dns.resolver.NXDOMAIN:
+        raise ValueError(f"Domain {domain} does not exist")
+    except dns.exception.DNSException as exc:
+        raise RuntimeError(f"DNS error: {exc}")
+
+ipv4 = resolve_records(domain, "A")
+ipv6 = resolve_records(domain, "AAAA")
+
+print(f"IPv4: {', '.join(ipv4) if ipv4 else 'none'}")
+print(f"IPv6: {', '.join(ipv6) if ipv6 else 'none'}")
+```
+
+### b) Query any record type
+
+```python
+# Example: MX records
+mx_records = resolve_records(domain, "MX")
+print(f"MX: {', '.join(mx_records)}")
+```
+
+### c) Use a custom DNS server
+
+```python
+resolver = dns.resolver.Resolver()
+resolver.nameservers = ["8.8.8.8"]  # Google Public DNS
+answers = resolver.resolve(domain, "A")
+for r in answers:
+    print(r.to_text())
+```
+
+*Pros:*
+- Full control over record types, time‑outs, retries, etc.
+- Works even if the system resolver is misconfigured.
+- Handles DNSSEC, CNAME chains, etc.
+
+*Cons:*
+- Requires an external dependency.
+- Slightly more code.
+
+---
+
+## 5. Quick “who is the server I’m connecting to” – `requests`
+
+If you’re already making an HTTP request and just want the IP of the host you hit, you can inspect the socket used by `requests`:
+
+```python
+import requests
+
+r = requests.get("https://example.com")
+ip = r.raw._connection.sock.getpeername()[0]
+print(f"Connected to {ip}")
+```
+
+*Note:* This uses internal attributes (`_connection`) that may change in future `requests` releases, so it’s less stable than the DNS‑specific methods above.

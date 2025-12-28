@@ -1,0 +1,60 @@
+§u§
+I'm installing Windows using USB. What do I have to do at the `Install driver to show hardware` section? The default list is empty and I can't click install.
+§a§
+It’s a common issue during Windows installations, especially with newer hardware or when storage controllers (like SATA/AHCI/RAID drivers) aren’t included in the default Windows USB. Here’s a step-by-step guide to resolve this:
+
+---
+
+### **Why This Happens:**
+- The Windows installer can’t detect your storage drive (SSD/HDD) because the required driver isn’t pre-loaded.
+- The "Install" button is grayed out because no compatible drivers are detected in the default list.
+
+---
+
+### **Solutions:**
+
+#### **1. Load the Storage Driver Manually (Most Common Fix):**
+   - **What you need:**
+     - A **second USB drive** (or the same one if it has extra space) with the **storage controller driver** for your PC/motherboard.
+     - *If you don’t have it:* Download the driver from your PC/motherboard manufacturer’s website (e.g., Intel, AMD, Dell, HP, Lenovo) *before* starting the installation. Look for "SATA," "AHCI," "RAID," or "Storage" drivers, and extract them to the USB drive (keep them as `.inf` files, not zipped).
+   - **Steps:**
+     1. Insert the USB drive with the driver into your PC.
+     2. On the "Install driver to show hardware" screen, click **Browse** (not "Install").
+     3. Navigate to the USB drive and select the folder containing the driver files (e.g., `F:\drivers\storage`).
+     4. The installer should auto-detect the driver. Select it from the list and click **Next**.
+     - *If the driver loads successfully*, your storage drive will appear, and you can proceed with Windows installation.
+
+#### **2. Use a Different USB Port:**
+   - Try plugging the driver USB into a **USB 2.0 port** (black plastic insert) instead of USB 3.0 (blue insert). Some older Windows installers struggle with USB 3.0 drivers early in the setup.
+
+#### **3. Check BIOS/UEFI Settings:**
+   - Restart your PC and enter BIOS/UEFI (usually by pressing `F2`, `Del`, or `Esc` during boot).
+   - Navigate to **Storage** or **SATA Configuration**.
+   - Ensure the storage mode is set to **AHCI** (not RAID or IDE). AHCI is the most compatible with modern Windows versions.
+   - Save changes and retry the installation.
+
+#### **4. Recreate Your Windows Installation USB:**
+   - If the driver list is *completely empty* and no drivers load via Browse, your Windows USB might be corrupted or missing critical files.
+   - Recreate the installation media using Microsoft’s official tool:
+     [Download Windows Media Creation Tool](https://www.microsoft.com/software-download)
+     - Format the USB as **FAT32** (not NTFS) for broader compatibility.
+
+#### **5. Load Drivers During Installation (For Advanced Users):**
+   - If you have internet access during setup:
+     1. On the "Install driver" screen, click **Load driver** > **Browse**.
+     2. If available, select **Download drivers from the internet** (this option appears only if the installer detects a network adapter).
+     - *Note:* This requires your PC to have working Ethernet/Wi-Fi drivers, which might not be the case for newer hardware.
+
+---
+
+### **If Nothing Works:**
+- **For brand-name PCs (Dell, HP, etc.):** Use the manufacturer’s recovery tool to create installation media with pre-loaded drivers (e.g., Dell SupportAssist, HP Cloud Recovery).
+- **For custom PCs:** Double-check that you downloaded the correct storage driver for your motherboard’s chipset (e.g., Intel Z690, AMD X570) from the manufacturer’s site.
+
+---
+
+### **Prevention for Next Time:**
+- Always download storage drivers *before* reinstalling Windows and save them to a USB drive.
+- Use tools like [Snappy Driver Installer](https://sdi-tool.org/) (run after Windows is installed) to fetch missing drivers automatically.
+
+Let me know if you hit a snag—I’ll help troubleshoot further! 😊

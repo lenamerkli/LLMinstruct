@@ -1,0 +1,53 @@
+§u§
+Bestimmen Sie die Stammfunktion der Funktion $f(x) = -6x^2 + 12x$, deren Graph durch den Punkt $(0; 7)$ läuft.
+§a§
+**Gesucht:** Eine Stammfunktion \(F\) von  
+
+\[
+f(x)= -6x^{2}+12x
+\]
+
+so dass der zugehörige Graph den Punkt \((0\mid 7)\) enthält, d. h. \(F(0)=7\).
+
+---
+
+### 1. Stammfunktion bestimmen (unbestimmtes Integral)
+
+\[
+\begin{aligned}
+F(x) &= \int\!\bigl(-6x^{2}+12x\bigr)\,dx \\[4pt]
+     &= -6\int x^{2}\,dx + 12\int x\,dx \\[4pt]
+     &= -6\;\frac{x^{3}}{3} + 12\;\frac{x^{2}}{2} + C \\[4pt]
+     &= -2x^{3} + 6x^{2} + C .
+\end{aligned}
+\]
+
+\(C\) ist die Integrationskonstante, die noch zu bestimmen ist.
+
+---
+
+### 2. Konstante mit dem Punkt \((0,7)\) bestimmen
+
+Der Graph von \(F\) soll durch \((0,7)\) gehen, also
+
+\[
+F(0)=7.
+\]
+
+Setzen wir \(x=0\) in die gefundene Formel ein:
+
+\[
+F(0)= -2\cdot0^{3}+6\cdot0^{2}+C = C.
+\]
+
+Damit ist \(C = 7\).
+
+---
+
+### 3. Ergebnis
+
+\[
+\boxed{\,F(x)= -2x^{3}+6x^{2}+7\,}
+\]
+
+Dies ist die gesuchte Stammfunktion von \(f(x)=-6x^{2}+12x\), deren Graph den Punkt \((0,7)\) enthält. (Jede weitere Stammfunktion würde sich nur um eine additive Konstante von dieser unterscheiden.)
