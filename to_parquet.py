@@ -3,6 +3,39 @@ import datasets
 import pathlib
 import re
 import sqlite3
+import csv
+
+
+email_pattern = r'\b[\wÀ-ÿ0-9._%+-]+@[\wÀ-ÿ0-9.-]+\.[\wÀ-ÿ]{2,}\b'
+phone_pattern = r'\b\d{3}[-.]?\d{3}[-.]?\d{4}\b'
+
+def load_names():
+    first_names = set()
+    with open('first_names.csv', 'r', encoding='utf-8') as f:
+        reader = csv.reader(f)
+        next(reader)  # skip header
+        for row in reader:
+            first_names.add(row[0])
+    for element in ['Die', 'The', 'In']:
+        if element in first_names:
+            first_names.remove(element)
+    last_names = set()
+    with open('last_names.csv', 'r', encoding='utf-8') as f:
+        reader = csv.reader(f)
+        next(reader)  # skip header
+        for row in reader:
+            last_names.add(row[0])
+
+    return first_names, last_names
+
+def load_false_positives():
+    false_positives = set()
+    with open('false_positives.txt', 'r', encoding='utf-8') as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                false_positives.add(line)
+    return false_positives
 
 
 def process_txt_directory(dir_path, project_name, synthetic, mistakes):
@@ -78,6 +111,41 @@ def process_jsonl_ingredient_scanner(file_path, project_name, synthetic, mistake
     return data
 
 
+def check_pii_in_data(data, first_names, last_names, false_positives):
+    pii_findings = []
+    for idx, entry in enumerate(data):
+        content_parts = []
+        for message in entry.get('messages', []):
+            content_parts.append(message.get('content', ''))
+        full_content = ' '.join(content_parts)
+        emails = re.findall(email_pattern, full_content, re.IGNORECASE)
+        filtered_emails = [email for email in emails if email not in false_positives]
+        phones = re.findall(phone_pattern, full_content)
+        filtered_phones = [phone for phone in phones if phone not in false_positives]
+        full_names = re.findall(r'\b([A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+)\s+([A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+)\b', full_content)
+        names_in_content = []
+        for first, last in full_names:
+            full_name = f"{first} {last}"
+            if first in first_names and last in last_names and full_name not in false_positives:
+                names_in_content.append(full_name)
+        pii_types = []
+        if filtered_emails:
+            pii_types.append(f"Emails: {', '.join(set(filtered_emails))}")
+        if filtered_phones:
+            pii_types.append(f"Phone Numbers: {', '.join(set(filtered_phones))}")
+        if names_in_content:
+            pii_types.append(f"Full Names: {', '.join(set(names_in_content))}")
+        if pii_types:
+            finding = {
+                'entry_index': idx,
+                'project': entry.get('project', 'unknown'),
+                'content': '\t'.join(content_parts).replace('\n', ' '),
+                'pii_found': pii_types,
+            }
+            pii_findings.append(finding)
+    return pii_findings
+
+
 def main():
     data_human_edited_misc = process_txt_directory('./human_edited/misc', 'misc', False, False)
     data_human_edited_moral = process_moral_directory('./human_edited/moral', 'moral', False, False)
@@ -87,6 +155,26 @@ def main():
     data_synthetic_topic_categorizer = process_jsonl('./synthetic/topic_categorizer/topic_categorizer.jsonl', 'topic_categorizer', True, False)
 
     data = data_human_edited_misc + data_human_edited_moral + data_synthetic_ingredient_scanner + data_synthetic_misc + data_synthetic_moral + data_synthetic_topic_categorizer
+
+    first_names, last_names = load_names()
+    false_positives = load_false_positives()
+    pii_findings = check_pii_in_data(data, first_names, last_names, false_positives)
+    with open('pii_report.txt', 'w', encoding='utf-8') as f:
+        f.write(f"Total entries checked: {len(data)}\n")
+        f.write(f"Entries with PII found: {len(pii_findings)}\n\n")
+        if pii_findings:
+            f.write("PII Findings:\n")
+            f.write("-" * 40 + "\n\n")
+            for finding in pii_findings:
+                f.write(f"Entry Index: {finding['entry_index']}\n")
+                f.write(f"Project: {finding['project']}\n")
+                f.write(f"Content: {finding['content']}\n")
+                f.write("PII Found:\n")
+                for pii_type in finding['pii_found']:
+                    f.write(f"  - {pii_type}\n")
+                f.write("\n" + "-" * 40 + "\n\n")
+        else:
+            f.write("No PII found in any entries.\n")
 
     dataset = datasets.Dataset.from_list(data)
     dataset.to_parquet('data.parquet')

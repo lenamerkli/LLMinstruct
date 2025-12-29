@@ -263,3 +263,4 @@ topic_categorizer.jsonl
 database.chroma
 database.chroma/
 /synthetic/moral/database.sqlite3
+pii_report.txt
