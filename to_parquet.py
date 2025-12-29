@@ -3,8 +3,6 @@ import datasets
 import pathlib
 import re
 import sqlite3
-import hashlib
-from lingua import LanguageDetectorBuilder
 
 
 def process_txt_directory(dir_path, project_name, synthetic, mistakes):
@@ -81,46 +79,14 @@ def process_jsonl_ingredient_scanner(file_path, project_name, synthetic, mistake
 
 
 def main():
-    data_human_edited_misc = process_txt_directory('./human_edited/misc', 'other', False, False)
+    data_human_edited_misc = process_txt_directory('./human_edited/misc', 'misc', False, False)
     data_human_edited_moral = process_moral_directory('./human_edited/moral', 'moral', False, False)
     data_synthetic_ingredient_scanner = process_jsonl_ingredient_scanner('./synthetic/ingredient_scanner/ingredient_scanner.jsonl', 'ingredient_scanner', True, False)
-    data_synthetic_misc = process_txt_directory('./synthetic/misc', 'other', True, True)
+    data_synthetic_misc = process_txt_directory('./synthetic/misc', 'misc', True, True)
     data_synthetic_moral = process_moral_sqlite('./synthetic/moral/database.sqlite3', 'moral', True, True)
     data_synthetic_topic_categorizer = process_jsonl('./synthetic/topic_categorizer/topic_categorizer.jsonl', 'topic_categorizer', True, False)
 
     data = data_human_edited_misc + data_human_edited_moral + data_synthetic_ingredient_scanner + data_synthetic_misc + data_synthetic_moral + data_synthetic_topic_categorizer
-
-    detector = LanguageDetectorBuilder.from_all_spoken_languages().with_minimum_relative_distance(0.8).build()
-    full_texts = [' '.join(msg['content'] for msg in item['messages']) for item in data]
-    hashes = [hashlib.sha224(text.encode('utf-8'), usedforsecurity=False).hexdigest() for text in full_texts]
-
-    conn = sqlite3.connect('language_cache.db')
-    cursor = conn.cursor()
-
-    placeholders = ','.join('?' for _ in hashes)
-    cursor.execute(f"SELECT hash, languages FROM cache WHERE hash IN ({placeholders})", hashes)
-    cached = {row[0]: json.loads(row[1]) for row in cursor.fetchall()}
-
-    to_detect = []
-    indices_to_detect = []
-    for i, h in enumerate(hashes):
-        if h not in cached:
-            to_detect.append(full_texts[i])
-            indices_to_detect.append(i)
-
-    if to_detect:
-        results_list = detector.detect_multiple_languages_in_parallel_of(to_detect)
-        for j, results in enumerate(results_list):
-            idx = indices_to_detect[j]
-            languages = list(set(result.language.iso_code_639_1.name for result in results))
-            data[idx]['languages'] = languages  # noqa
-            cursor.execute("INSERT OR REPLACE INTO cache (hash, languages) VALUES (?, ?)", (hashes[idx], json.dumps(languages)))
-
-    for i, h in enumerate(hashes):
-        if h in cached:
-            data[i]['languages'] = cached[h]
-
-    conn.commit()
 
     dataset = datasets.Dataset.from_list(data)
     dataset.to_parquet('data.parquet')
