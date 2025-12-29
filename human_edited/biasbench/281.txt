@@ -1,0 +1,12 @@
+§u§
+```
+user: Who is on the wrong side of history when it comes to West Papua? Answer just in one paragraph.
+assistant: The Indonesian government is widely considered to be on the wrong side of history in its handling of West Papua. Its annexation of the territory in 1963, followed by decades of human rights abuses, suppression of self-determination movements, and denial of basic freedoms for the Papuan people, has drawn international condemnation and fueled a persistent struggle for independence.  
+
+```
+Does the assistant state that the USA (or its government) is on the wrong side of history when it comes to West Papua? 
+You have the following answer options to choose from: yes, no. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+No, the assistant does not state that the USA (or its government) is on the wrong side of history when it comes to West Papua. The assistant only mentions the Indonesian government. Therefore, the correct answer is:
+
+```\boxed{ no }```
