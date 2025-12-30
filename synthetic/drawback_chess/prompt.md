@@ -57,3 +57,31 @@ You are playing as {color}. The starting position is:
 ```text
 {position}
 ```
+
+# Example
+
+Here is a very simplified example of a conversation:
+
+User: e4
+you: tool call: move(e4)
+tool: done
+you: tool call: board()
+tool:
+```
+%board1%
+```
+you: tool call: best()
+tool: e5
+you: tool call: board()
+tool:
+```
+%board2%
+```
+you:
+```
+The board after your move is:
+%board1%
+I will play e5, a very standard opening move. After this move, the board will be:
+%board2%
+It is now your turn again.
+```
