@@ -1,0 +1,33 @@
+§u§
+What does APT-41 do?
+§a§
+APT-41 is a prolific cyber threat group with ties to the Chinese state, known for conducting both state-sponsored espionage and financially motivated cybercrime. This dual mission has earned it the nickname "Double Dragon." The group has been active since at least 2012 and targets a wide array of sectors across the globe.
+
+### Espionage Activities
+
+A significant portion of APT-41's operations involves cyber espionage, believed to be in support of China's national strategic and economic goals. These campaigns often target sectors that are strategically important to China's Five-Year Plans.
+
+Key targets for espionage include:
+*   **Healthcare, telecommunications, and high-tech industries** to steal intellectual property and sensitive research.
+*   **Government and defense sectors** for intelligence gathering and monitoring policy.
+*   **Higher education, travel services, and news/media firms**, which may be for the purpose of tracking and surveilling individuals.
+
+### Financially Motivated Cybercrime
+
+In addition to its espionage efforts, APT-41 engages in cybercrime for financial gain, which may be conducted outside of its state-sponsored activities. These operations are often described as "moonlighting."
+
+Primary targets for financial gain include:
+*   **The video game industry**, where the group steals source code, digital certificates, and manipulates virtual currencies for profit. In one instance, the group was able to generate and sell virtual game currency for what could have been up to $300,000.
+*   **Ransomware deployment** has also been attempted as a method to profit from their intrusions.
+*   The group was also linked to the **theft of at least $20 million in COVID-19 relief aid** in the United States.
+
+### Tactics and Techniques
+
+APT-41 employs a sophisticated and extensive arsenal of tools and techniques to achieve its objectives. The group is known for its agility in exploiting new software vulnerabilities, including zero-day flaws.
+
+Common methods include:
+*   **Initial Compromise:** Often relying on spear-phishing emails with malicious attachments to gain initial access to a victim's network.
+*   **Malware:** Utilizing a wide range of malware, with at least 46 different code families identified. This includes backdoors, credential stealers, keyloggers, and rootkits to maintain persistence and hide their activities.
+*   **Supply Chain Attacks:** Compromising software vendors to embed malware into legitimate software updates, which then infects the vendor's customers.
+*   **Living off the Land:** Using a system's own tools and processes, like built-in Windows utilities, to carry out their attacks and evade detection.
+*   **Credential Theft:** Employing tools to steal login credentials and entire authentication databases to expand their control across a network.

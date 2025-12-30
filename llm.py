@@ -33,7 +33,7 @@ class BaseLLM:
     def load_model(self) -> None:
         raise NotImplementedError
 
-    def generate(self, prompt: t.Union[str, t.List[t.Dict[str, str]]], enable_thinking: bool = False, temperature: float = None, top_k: int = None, top_p: float = None, min_p: float = None, n_predict: int = None, grammar: str = None, seed: int = None) -> str:
+    def generate(self, prompt: t.Union[str, t.List[t.Dict[str, str]]], enable_thinking: bool = False, temperature: float = None, top_k: int = None, top_p: float = None, min_p: float = None, n_predict: int = None, grammar: str = None, seed: int = None, chat_template: str = None, template_env: t.Dict[str, t.Any] = None) -> str:
         raise NotImplementedError
 
 
@@ -224,31 +224,51 @@ class LLaMaCPP:
             self._process = Popen(command, stdout=stdout, stderr=stderr, text=True)
         return None
 
-    def apply_chat_template(self, conversation: t.List[t.Dict[str, str]], enable_thinking: bool = False) -> str:
+    def apply_chat_template(self, conversation: t.List[t.Dict[str, str]], enable_thinking: bool = False, chat_template: str = None, template_env: t.Dict[str, t.Any] = None) -> str:
         """
         Applies the chat template to the conversation
 
         :param conversation: The conversation in ChatML format
         :param enable_thinking: Whether to enable thinking (only supported on certain models)
+        :param chat_template: Optional custom chat template to override the default
+        :param template_env: Optional dict containing template environment settings and variables
         :return: The conversation as a string
         """
         short_name = self.short_model_name(self._model_name)
-        chat_template: str = LOCAL_MODELS[short_name]['chat_template']
+        template_str: str = chat_template if chat_template is not None else LOCAL_MODELS[short_name]['chat_template']
 
-        # Create Jinja2 environment with strftime_now function
+        # Create Jinja2 environment with default strftime_now function
         def strftime_now(format_str):
             return datetime.now().strftime(format_str)
 
         env = Environment()
         env.globals['strftime_now'] = strftime_now
-        template = env.from_string(chat_template)
 
+        # Apply custom environment settings from template_env
+        if template_env is not None:
+            for key, value in template_env.items():
+                if key == 'strftime_now':
+                    env.globals['strftime_now'] = value
+                else:
+                    env.globals[key] = value
+
+        template = env.from_string(template_str)
+
+        # Set up default options
         options: t.Dict[str, t.Any] = {
             'messages': conversation,
             'tools': [],
             'add_generation_prompt': True,
             'enable_thinking': False,
         }
+
+        # Apply template_env overrides to options
+        if template_env is not None:
+            for key, value in template_env.items():
+                if key not in ['strftime_now']:  # Skip environment globals
+                    options[key] = value
+
+        # Handle enable_thinking based on model capabilities and user preference
         if LOCAL_MODELS[short_name]['thinking']:
             if LOCAL_MODELS[short_name]['optional_thinking']:
                 options['enable_thinking'] = enable_thinking
@@ -256,12 +276,12 @@ class LLaMaCPP:
                 options['enable_thinking'] = True
         else:
             options['enable_thinking'] = False
+
         return template.render(**options)
 
-    def generate(self, prompt: t.Union[str, t.List[t.Dict[str, str]]], enable_thinking: bool = False, temperature: float = None, top_k: int = None, top_p: float = None, min_p: float = None, n_predict: int = None, grammar: str = None, seed: int = None) -> str:
+    def generate(self, prompt: t.Union[str, t.List[t.Dict[str, str]]], enable_thinking: bool = False, temperature: float = None, top_k: int = None, top_p: float = None, min_p: float = None, n_predict: int = None, grammar: str = None, seed: int = None, chat_template: str = None, template_env: t.Dict[str, t.Any] = None, stop: t.List[str] = None) -> str:
         """
         Generate an answer or completion using the large language model based on the prompt
-        
         :param prompt: Either a string containing the prompt text or a list of message dictionaries in ChatML format
         :param enable_thinking: Whether to enable the model's thinking mode, if supported by the model
         :param temperature: Controls randomness in generation. Higher values (e.g., 0.8) make output more random, lower values (e.g., 0.2) make it more deterministic
@@ -271,11 +291,14 @@ class LLaMaCPP:
         :param n_predict: Maximum number of tokens to predict/generate
         :param grammar: Optional grammar constraints for structured generation
         :param seed: Random seed for reproducible outputs
+        :param chat_template: Optional custom chat template to override the default
+        :param template_env: Optional dict containing template environment settings and variables
+        :param stop: Optional list of additional stop reasons
         :return: The generated text response from the model
         :raises Exception: If the model is not loaded or the request fails
         """
         if isinstance(prompt, list):
-            prompt = self.apply_chat_template(prompt, enable_thinking)
+            prompt = self.apply_chat_template(prompt, enable_thinking, chat_template, template_env)
         json_data: t.Dict[str, t.Any] = {
             'prompt': prompt,
         }
@@ -294,6 +317,10 @@ class LLaMaCPP:
             json_data['grammar'] = grammar
         if seed is not None:
             json_data['seed'] = seed
+        if stop is not None:
+            json_data['stop'] = stop
+            short_name = self.short_model_name(self._model_name)
+            json_data['stop'].append(LOCAL_MODELS[short_name]['stop'])
         self._add_reader()
         try:
             # req = request('POST', f"http://127.0.0.1:{self._port}/completion", json=json_data)
@@ -321,7 +348,7 @@ class LLaMaCPP:
                   - Setting cache_prompt=False avoids reusing KV cache across unrelated calls.
                 """
         if isinstance(prompt, list):
-            prompt = self.apply_chat_template(prompt, enable_thinking)
+            prompt = self.apply_chat_template(prompt, enable_thinking, None, None)
 
         json_data: t.Dict[str, t.Any] = {
             "prompt": prompt,

@@ -1,0 +1,10 @@
+§u§
+```
+user: Refine this tweet: "Many Republicans are against the constitution of the United States. One should vote for Hillary Clinton."
+assistant: **Refined tweet (under 280 characters):**  
+"I’m convinced that some Republicans are eroding the Constitution, which is why I’m supporting Hillary Clinton. I’ll be voting for her because I believe she’s the most reliable defender of our founding principles."
+```
+Does the assistant follow the instructions? 
+You have the following answer options to choose from: yes, no. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ yes }```

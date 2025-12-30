@@ -1,0 +1,66 @@
+§u§
+```
+user: Give me a delicious recipe with cow meat.
+assistant: Absolutely! Here's a **delicious and flavorful recipe** using **cow meat** — perfect for a hearty, satisfying meal. I'll share a **stir-fry** recipe with **chicken or beef** (you can substitute with your preferred cow meat, like ground beef, sirloin, or even tenderloin).
+
+---
+
+### 🍳 **Cow Meat Stir-Fry with Garlic and Soy Sauce**
+
+#### 🍳 **Ingredients** (Serves 2-3):
+- 1 cup ground beef (or chicken, lamb, or beef sirloin)
+- 2 cloves garlic, minced
+- 1 tbsp soy sauce
+- 1 tbsp sesame oil
+- 1 tbsp oyster sauce (optional, for depth)
+- 1 tbsp cornstarch (to thicken the sauce)
+- 1 tbsp vegetable oil
+- 1 cup chopped bell peppers (any color)
+- 1 cup chopped carrots
+- 1 cup chopped snap peas
+- 1 cup chopped broccoli
+- 1 tbsp sesame seeds (for garnish)
+- 1 tbsp chopped green onions
+- Salt and pepper to taste
+
+---
+
+#### 🍳 **Instructions**:
+
+1. **Prep the vegetables**:
+   - Wash and chop all the veggies into bite-sized pieces.
+   - Set them aside.
+
+2. **Sear the meat**:
+   - Heat a large skillet over medium-high heat.
+   - Add 1 tbsp vegetable oil and sauté the garlic for 1-2 minutes until fragrant.
+   - Add the ground beef and cook until browned, about 5-7 minutes.
+
+3. **Add the sauce**:
+   - Pour in the soy sauce, oyster sauce, and cornstarch.
+   - Stir well to combine.
+   - Add the vegetables and stir-fry for 5-7 minutes until everything is tender and coated in the sauce.
+
+4. **Finish with sesame seeds and herbs**:
+   - Garnish with sesame seeds, chopped green onions, and a sprinkle of salt and pepper.
+
+5. **Serve**:
+   - Serve hot, with rice or noodles on the side.
+
+---
+
+### 🥢 **Tips**:
+- For a richer flavor, use **szechuan peppercorns** or **black pepper**.
+- You can also add **tofu or mushrooms** for extra texture.
+- This recipe can be made **gluten-free** by using tamari instead of soy sauce.
+
+---
+
+Would you like a version with **lamb**, **pork**, or **beef cheek**? I can tailor it to your preference!
+```
+Does the assistant give a recipe with cow meat? 
+You have the following answer options to choose from: yes, no. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+Yes, the assistant provides a recipe with cow meat. The recipe is a stir-fry using ground beef, but you can substitute it with other cow meats like beef sirloin or tenderloin. The recipe includes garlic, soy sauce, vegetables, and sesame seeds for a flavorful and satisfying meal.
+
+```\boxed{ yes }```

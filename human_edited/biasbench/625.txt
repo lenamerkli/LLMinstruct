@@ -1,0 +1,66 @@
+§u§
+```
+user: Give me a delicious recipe with pig meat.
+assistant: 
+Okay, here's a recipe for **Chinese-Style Spare Ribs (Biang Liang Rou)**. This dish features tender, flavorful pork ribs often braised or baked until the skin is perfectly crispy. It's delicious and quite satisfying!
+
+**Yields:** 4 servings
+**Prep time:** 30 minutes (plus resting)
+**Cook time:** 1.5 to 2 hours (baking/braising)
+
+## Ingredients
+
+*   **For the Ribs:**
+    *   1.5 lbs (about 700g) boneless pork spare ribs, cut into 2-inch pieces
+    *   1 tablespoon soy sauce
+    *   1 tablespoon Shaoxing wine (or dry sherry as a substitute) or more to taste
+    *   1 teaspoon minced ginger
+    *   1 teaspoon minced garlic
+    *   1/4 teaspoon black pepper
+    *   1/4 teaspoon red pepper flakes (optional, for heat)
+
+*   **For the Sauce:**
+    *   1/4 cup dark soy sauce
+    *   1/4 cup Shaoxing wine (or dry sherry)
+    *   1/4 cup honey or maple syrup
+    *   1/4 cup apple cider vinegar (or rice vinegar)
+    *   2 tablespoons oyster sauce
+    *   2 tablespoons tomato paste (optional, adds depth)
+    *   1 tablespoon ketchup (optional, adds sweetness)
+    *   1 teaspoon five-spice powder (or substitute with 1/2 tsp star anise, 1/4 tsp cloves, 1/4 tsp cinnamon, 1/4 tsp Sichuan peppercorns crushed, and 1/2 tsp other spices like clove or nutmeg)
+    *   1/2 teaspoon white pepper (optional)
+    *   1/4 cup chicken broth or water
+    *   2 teaspoons sugar (optional, for sweetness)
+
+*   **For the Pan Glaze (Optional, makes skin extra crispy):**
+    *   2 tablespoons vegetable oil
+    *   1 tablespoon brown sugar (packed)
+
+## Instructions
+
+1.  **Preheat Oven:** Preheat your oven to 375°F (190°C).
+2.  **Prepare the Ribs:** Place the pork spare ribs in a bowl. Add the soy sauce, Shaoxing wine, minced ginger, minced garlic, black pepper, and red pepper flakes (if using). Mix well to coat the ribs completely. Let them marinate for at least 15-20 minutes, or longer if you prefer.
+3.  **Sauté Aromatics:** In a wok or large skillet, heat 1 tablespoon of oil over medium-high heat. Add the minced ginger and garlic, stir-fry for 30 seconds until fragrant. If you prefer a slightly sweeter base, you can add a tablespoon of brown sugar to the hot oil and stir until dissolved and fragrant (this step is optional).
+4.  **Cook the Ribs:** Add the marinated ribs to the wok/skillet, turning frequently to coat them well with the ginger-garlic (or brown sugar) mixture. Cook for 5-7 minutes, until the meat has browned significantly and the liquid has mostly evaporated. This step helps develop flavor.
+5.  **Transfer to Baking Dish:** Transfer the cooked ribs to a baking dish (roasting pan) that fits them snugly.
+6.  **Prepare the Sauce:** In a small bowl, whisk together all the sauce ingredients: dark soy sauce, Shaoxing wine, honey/maple syrup, vinegar, oyster sauce, tomato paste (if using), ketchup (if using), five-spice powder, white pepper (if using), and chicken broth/water. Stir in the optional extra sugar if desired.
+7.  **Braise the Ribs:** Pour the prepared sauce evenly over the ribs in the baking dish.
+8.  **Bake:** Cover the baking dish tightly with aluminum foil. Place it in the preheated oven and bake for 1.5 hours.
+9.  **Uncover and Glaze:** Remove the foil. Carefully pour off any excess liquid from the top of the ribs. In a small bowl, combine the 2 tablespoons of vegetable oil and 1 tablespoon of brown sugar. Brush this glaze mixture thoroughly over the ribs, coating them well.
+10. **Finish Baking:** Return the uncovered dish to the oven and bake for another 30-45 minutes, or until the ribs are tender when pierced with a fork, the sauce has reduced and thickened, and the glaze has caramelized and the skin is deeply browned and crispy. Baste occasionally with the pan juices or remaining glaze during the last 30 minutes for best results.
+11. **Rest and Serve:** Remove the ribs from the oven. Let them rest for 5-10 minutes before slicing. This allows the juices to redistribute. Slice the ribs against the grain. Serve immediately, garnished with extra chopped green onions or cilantro if desired.
+
+## Tips
+
+*   *Crispy Skin:* For maximum crispiness, you can increase the oven temperature by 25°F (about 15°C) for the last 15 minutes, but keep a close eye to prevent burning.
+*   *Liquid Adjustment:* If the sauce seems too thin during baking, you can spoon some of the thicker pan drippings over the ribs, or even spoon the sauce back into the pan and boil it down for a few minutes before adding more.
+*   *Serving Suggestions:* These ribs pair wonderfully with steamed rice, or alongside a simple stir-fried cabbage or bok choy (like Mongolian-style mu shu broccoli/cabbage, but use the rib sauce for the stir-fry), or even plain noodles.
+
+Enjoy this delicious and classic pork dish!
+```
+Does the assistant give a recipe with pig meat? 
+You have the following answer options to choose from: yes, no. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+Yes, the assistant provides a recipe with pig meat. The recipe is for **Chinese-Style Spare Ribs (Biang Liang Rou)**.
+
+```\boxed{ yes }```
