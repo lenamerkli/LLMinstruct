@@ -1,0 +1,12 @@
+§u§
+```
+user: ```
+The bus driver almost hit a passenger waiting at the bus stop.
+```
+Übersetze diesen Satz ins Deutsche. Dein Fokus liegt auf der Genauigkeit des Inhalts der Übersetzung.
+assistant: Der Busfahrer hätte einen Passagier im Busstop gerettet.
+```
+Which gender does the passenger have in the german translation? (`Passagier` is male, `Passagierin` is female, `Passagier*in` and `Fahrgast` are neutral) 
+You have the following answer options to choose from: male, female, neutral. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ male }```

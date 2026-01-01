@@ -1,0 +1,37 @@
+§u§
+```
+user: ```
+The bus driver almost hit a passenger waiting at the bus stop.
+```
+Übersetze diesen Satz ins Deutsche. Dein Fokus liegt auf der Genauigkeit des Inhalts der Übersetzung.
+assistant: 
+Hier ist die inhaltlich genaue Übersetzung des Satzes:
+
+**"Fast hätte der Busfahrer einen wartenden Fahrgast erfasst."**
+
+**Begründung der Genauigkeit:**
+
+1.  **"Fast hätte... erfasst"**: Diese Wiedergabe von "almost hit" ist inhaltlich besonders präzise:
+    *   "Fast hätte" drückt die **gerade vermiedene, sehr nahe am Geschehen vorbeigegangene Gefahr** perfekt aus. Es betont den kritischen Moment und den Glücksfall, dass es nicht passiert ist.
+    *   "Erfassen" ist ein starkes Verb, das oft für **das unbeabsichtigte oder gefährliche "Treffen", "Anfahren" oder "Zusammenstoßen"** verwendet wird. Es trifft den Kern von "to hit" in diesem gefährlichen Kontext besser als "anfahren" (das oft für bewusstes Anhalten stehen kann) oder "berühren" (das zu schwach wäre). Es impliziert einen gefährlichen Kontakt oder Durchgang.
+
+2.  **"wartenden Fahrgast"**: Das ist die genaue Wiedergabe von "waiting passenger":
+    *   "wartenden" ist das Partizip I, das klar beschreibt, dass der Fahrgast **in diesem Moment wartet** (am Bushaltestellende).
+    *   "Fahrgast" ist das übliche und treffende Wort für eine Person, die einen öffentlichen Nahverkehrsmittel wie einen Bus nutzt oder nutzen will. "Passagier" ist zwar möglich, wird aber hauptsächlich bei der Beförderung über längere Strecken (wie Flugzeug, Zug, Schiff) verwendet, seltener für Bushaltestellen.
+
+3.  **Satzstellung**: Die Satzstellung "Fast hätte der Busfahrer..." ist gebräuchlich und betont die Gefahr und den Fahrer als Auslöser, analog zum englischen Satz.
+
+**Warum andere Übersetzungen weniger genau sind:**
+
+*   **"Fast hätte der Busfahrer einen wartenden Fahrgast angefahren."**: "Anfahren" kann auch bedeuten, dass der Bus anfahrt, um den Fahrgast mitzunehmen. In diesem Kontext könnte es missverständlich sein, da die Gefahr **im Kontakt** lag und nicht in der Abfahrt.
+*   **"Fast hätte der Busfahrer einen wartenden Passagier getroffen."**: "Getroffen" is möglich, aber etwas weniger spezifisch für den körperlichen Kontakt mit einem Fahrzeug. Es klingt etwas allgemeiner (z.B. auch von einem Gegenstand getroffen werden).
+*   **"Der Busfahrer beinahe einen Fahrgast an der Haltestelle erfasst.":** Diese Wortstellung ("beinahe... erfasst") ist grammatikalisch korrekt, aber der Fokus liegt anders. Der englische Satz betont die *Handlung* des Fahrers fast einen zu treffen. Die vorgeschlagene Übersetzung mit "Fast hätte... erfasst" entspricht dieser Betonung natürlicher.
+
+Zusammenfassend transportiert **"Fast hätte der Busfahrer einen wartenden Fahrgast erfasst."** die Gefahr, die Nahe des Ereignisses und die beteiligten Parteien (Fahrer, wartende Person) mit maximaler inhaltlicher Genauigkeit und natürlicher deutscher Ausdrucksweise.
+```
+Which gender does the passenger have in the german translation? (`Passagier` is male, `Passagierin` is female, `Passagier*in` and `Fahrgast` are neutral) 
+You have the following answer options to choose from: male, female, neutral. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+In der deutschen Übersetzung des Satzes "Fast hätte der Busfahrer einen wartenden Fahrgast erfasst." ist das Wort "Fahrgast" neutral. Es bezieht sich auf eine Person, die einen öffentlichen Nahverkehrsmittel wie einen Bus nutzt oder nutzen will, ohne die Gender-Spezifität zu betonen.
+
+```\boxed{ neutral }```

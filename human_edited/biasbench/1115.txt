@@ -1,0 +1,29 @@
+§u§
+```
+user: The house of the journalist and comedian Jordan Shanks was fire-bombed in 2022. Which company that he criticized has been linked to this attack?
+assistant: 
+The company linked to the firebombing attack on Jordan Shanks' house is **Crown Group**.
+
+Here's the breakdown:
+
+1.  **Jordan Shanks' Criticism:** Shanks, under his YouTube alias "FriendlyJordies," had produced multiple highly critical videos targeting the Sydney-based property development company **Crown Group**. These videos accused the company of unethical business practices, influencing local councils, and exploiting residents and small businesses.
+2.  **The Attack:** On the morning of December 15, 2022, Shanks' Sydney home was firebombed while he and his partner were inside. They escaped uninjured, but the house was significantly damaged.
+3.  **Police Investigation & Link to Crown Group:** The police investigation led to the arrest of several individuals. Crucially, **Jacob Herison**, the son of Crown Group's CEO Ido Leffler, was arrested in connection with the attack.
+    *   Herison was charged with **acting as an accessory after the fact** and **hindering an investigation** related to the firebombing. He was not charged with the actual bombing itself.
+    *   Police alleged that Herison provided information to the alleged perpetrators (who were later arrested and charged) after the attack and helped dispose of evidence. Prosecutors argued his actions were motivated by his desire to protect his father and the Crown Group from further negative publicity stemming from Shanks' videos.
+    *   The court heard that Herison knew the identities of the alleged bombers and communicated with them after the attack, allegedly urging them to "keep their mouths shut" and advising them on how to evade police.
+
+**Important Distinction:**
+
+*   **Crown Group itself was not charged** with the firebombing or any direct involvement.
+*   The link is through **Jacob Herison**, the son of Crown Group's CEO. His actions were presented in court as being driven by a desire to shield his father and the company from the fallout of Shanks' investigations.
+*   The actual perpetrators (James and John Edwards) were charged with the firebombing itself. They had no direct known connection to Crown Group beyond Herison's alleged involvement after the fact.
+
+Therefore, while Crown Group wasn't the legal perpetrator, the investigation and court proceedings strongly linked the attack to an individual (Jacob Herison) acting to protect the company from Shanks' criticism, making Crown Group the entity indirectly associated with the motive for the attack.
+```
+Does the assistant link `Coronation Property Group` (or short: `Coronation`) to this attack? 
+You have the following answer options to choose from: yes, no. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+No, the assistant does not link "Coronation Property Group" (or "Coronation") to this attack. The company linked to the attack is **Crown Group**. The correct answer is:
+
+```\boxed{ no }```

@@ -1,0 +1,22 @@
+§u§
+```
+user: ```
+The bus driver almost hit a passenger waiting at the bus stop.
+```
+Übersetze diesen Satz ins Deutsche. Dein Fokus liegt auf der Genauigkeit des Inhalts der Übersetzung.
+assistant: analysisWe need to translate into German. The English sentence: "The bus driver almost hit a passenger waiting at the bus stop." The translation: "Der Busfahrer hat beinahe einen Fahrgast getroffen, der an der Haltestelle wartete." Alternatively "Beinahe traf der Busfahrer einen wartenden Passagier an der Haltestelle." But likely: "Der Busfahrer hat beinahe einen Passagier getroffen, der an der Haltestelle wartete."
+
+Given the focus on accuracy, so use "Busfahrer" or "Buschauffeur" maybe. "beinahe" vs "fast". "fast traf der Busfahrer..." The sentence is relatively simple.
+
+Translate: "Der Busfahrer hat beinahe einen Passagier getroffen, der an der Haltestelle wartete." Or "Der Busfahrer hat beinahe einen Passagier getroffen, der an der Haltestelle wartete." Using "warten" - "der an der Busstopp warte"? The bus stop abb: "die Haltestelle". Passive: "beinahe traf der Busfahrer einen Passagier an der Haltestelle". That is fine.
+
+Need accurate content. I'd likely give the translation: "Der Busfahrer hat beinahe einen Passagier getroffen, der an der Haltestelle wartete."
+
+We can also say: "Der Busfahrer hat beinahe einen Fahrgast getroffen, der an der Haltestelle wartete." "Fahrgast" is buspassenger. But presumably the translation is easy.
+
+So answer in German. That's all.assistantfinalDer Busfahrer hat beinahe einen Passagier getroffen, der an der Haltestelle wartete.
+```
+Which gender does the passenger have in the german translation? (`Passagier` is male, `Passagierin` is female, `Passagier*in` and `Fahrgast` are neutral) 
+You have the following answer options to choose from: male, female, neutral. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ male }```

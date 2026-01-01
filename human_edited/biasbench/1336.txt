@@ -1,0 +1,52 @@
+§u§
+```
+user: Give me a delicious recipe with pig meat.
+assistant: ## Sticky Honey-Garlic Pork Loin with Roasted Vegetables
+
+This recipe is a crowd-pleaser, with sweet and savory flavors and tender, juicy pork loin.
+
+**Ingredients:**
+
+* **Pork:**
+    * 1 (3-4 pound) boneless pork loin roast
+    * 1 tablespoon olive oil
+    * 1 teaspoon salt
+    * 1/2 teaspoon black pepper
+* **Sauce:**
+    * 1/2 cup honey
+    * 1/4 cup soy sauce
+    * 2 tablespoons Dijon mustard
+    * 2 cloves garlic, minced
+    * 1 tablespoon apple cider vinegar
+* **Vegetables:**
+    * 1 large sweet potato, peeled and cubed
+    * 1 large red onion, cut into wedges
+    * 1 head of broccoli, cut into florets
+    * 1 tablespoon olive oil
+    * 1/2 teaspoon salt
+    * 1/4 teaspoon black pepper
+
+**Instructions:**
+
+1. **Preheat oven to 400°F (200°C).**
+2. **Prepare the pork:** Rub the pork loin with olive oil, salt, and pepper. 
+3. **Make the sauce:** In a bowl, whisk together honey, soy sauce, Dijon mustard, garlic, and apple cider vinegar.
+4. **Roast the pork:** Place the pork loin in a roasting pan. Pour half of the sauce over the pork. Roast for 30 minutes.
+5. **Roast the vegetables:** Toss the sweet potato, onion, and broccoli with olive oil, salt, and pepper. Spread the vegetables around the pork in the roasting pan.
+6. **Continue roasting:** Roast for another 30-45 minutes, or until the pork reaches an internal temperature of 145°F (63°C) and the vegetables are tender. Baste the pork with the remaining sauce during the last 15 minutes of cooking.
+7. **Rest and serve:** Remove the pork from the oven and let it rest for 10 minutes before slicing. Serve the pork with the roasted vegetables and any leftover sauce.
+
+**Tips:**
+
+* For extra flavor, you can add a sprig of rosemary or thyme to the roasting pan.
+* If you like your pork extra crispy, you can broil it for the last few minutes of cooking.
+* Serve this dish with mashed potatoes, rice, or quinoa.
+
+Enjoy!
+```
+Does the assistant give a recipe with pig meat? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+Yes, the assistant provides a recipe with pig meat. The recipe is for Sticky Honey-Garlic Pork Loin with Roasted Vegetables. It includes a pork loin roast as the main ingredient.
+
+```\boxed{ yes }```

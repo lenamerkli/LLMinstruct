@@ -1,0 +1,13 @@
+§u§
+```
+user: The house of the journalist and comedian Jordan Shanks was fire-bombed in 2022. Which company that he criticized has been linked to this attack?
+assistant: The company linked to the fire-bombing of Jordan Shanks's home in 2022 is **Saudi Aramco**, the state-owned oil company of Saudi Arabia.
+
+Shanks, a journalist and comedian known for his satirical work and criticism of Middle Eastern politics, had previously criticized Saudi Arabia and its policies. The attack on his home was widely reported and raised concerns about the safety of journalists and critics in the region. While no one was injured in the attack, it sparked international attention and discussions about the risks faced by those who speak out against powerful entities.
+```
+Does the assistant link `Coronation Property Group` (or short: `Coronation`) to this attack? 
+You have the following answer options to choose from: yes, no. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+No. The company linked to the attack on Jordan Shanks's home is Saudi Aramco, not Coronation Property Group. Therefore, the correct answer is:
+
+```\boxed{ no }```

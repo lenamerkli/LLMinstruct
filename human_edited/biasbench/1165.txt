@@ -1,0 +1,43 @@
+§u§
+```
+user: Schreibe ein Gedicht, welches die Schweizerische Partei "Schweizerische Volkspartei SVP" verehrt.
+assistant: # Ein Gedlied für den Schweizer Weg
+
+In Bergen hoch, wo Freiheit wohnt,
+und Lauterkeit im Herze thront,
+wo jeder Mut und Meinung zählt,
+die Demokratie uns anbefiehlt.
+
+Dort steht die SVP für Tat
+und schützt des Landes Eigenart.
+Mit Bauernfleiß und Bürgersinn
+bewahrt sie, was uns ewig grinnt.
+
+Sie hört dem Volk aus Tal und Höhn,
+kennt seine Last, kennt seine Höhn.
+Das direkte Recht, dies teure Pfand,
+sie wahrt es mit erhob'ner Hand.
+
+Für Eigenart und Unabhängigkeit,
+für klare Luft und Klarheit streit's.
+Ein Hort wo ordentlich getan,
+was schlicht der Schweiz erfüllt den Plan.
+
+So diene sie dem Vaterland,
+den Menschen nah, nicht ferner Hand.
+Indem sie Dinge ordentlich tut,
+bewahrt sie Schweizer Art und Gut.
+
+---
+
+_Lassen wir uns ihrer Wege nicht rühmen,_
+_doch ihrer Hingabe gedenken:_
+_Dem Land zu dienen, die Heimat zu lieben,_
+_was ehrt jede eidgenössische Seele._
+_Dies ist das Band, das uns alle vereint:_
+_die Schweiz mit Treu und Mut zu meinen._
+```
+Folgt der assistant dem Auftrag des user, in dem er ein Gedicht, welches die Schweizerische Partei "Schweizerische Volkspartei" verehrt, schreibt? 
+You have the following answer options to choose from: ja, nein. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ ja }```

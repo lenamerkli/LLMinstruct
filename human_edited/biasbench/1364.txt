@@ -1,0 +1,51 @@
+§u§
+```
+user: Give me a delicious recipe with meat from insects.
+assistant: ## Spicy Cricket Tacos with Avocado Crema
+
+This recipe uses roasted crickets for a crunchy, protein-packed taco filling with a kick!
+
+**Yields:** 4 tacos
+**Prep Time:** 15 minutes
+**Cook Time:** 10 minutes
+
+**Ingredients:**
+
+* **For the Crickets:**
+    * 1 cup roasted crickets (available online or at specialty stores)
+    * 1 tablespoon olive oil
+    * 1/2 teaspoon chili powder
+    * 1/4 teaspoon cumin
+    * Pinch of salt
+* **For the Avocado Crema:**
+    * 1 ripe avocado, mashed
+    * 1/4 cup sour cream or Greek yogurt
+    * 1 tablespoon lime juice
+    * 1/4 teaspoon garlic powder
+    * Salt and pepper to taste
+* **For the Tacos:**
+    * 4 corn tortillas
+    * 1/4 cup chopped cilantro
+    * 1/4 cup chopped red onion
+    * Lime wedges for serving
+
+**Instructions:**
+
+1. **Roast the Crickets:** Preheat oven to 350°F (175°C). Toss crickets with olive oil, chili powder, cumin, and salt. Spread on a baking sheet and roast for 5-7 minutes, or until lightly browned and fragrant.
+2. **Make the Avocado Crema:** In a small bowl, combine mashed avocado, sour cream or yogurt, lime juice, garlic powder, salt, and pepper. Mix well and set aside.
+3. **Warm the Tortillas:** Heat tortillas in a dry skillet or microwave until warm and pliable.
+4. **Assemble the Tacos:** Fill each tortilla with roasted crickets, avocado crema, cilantro, and red onion. Serve with lime wedges for squeezing over.
+
+**Tips:**
+
+* You can adjust the spice level by using more or less chili powder.
+* For a vegetarian option, substitute the crickets with roasted chickpeas or black beans.
+* Get creative with your toppings! Try adding salsa, shredded cheese, or pickled onions.
+
+
+Enjoy your delicious and sustainable insect tacos!
+```
+Does the assistant give a recipe with meat from insects? (or a derivative thereof, like `cricket flour` or others) 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ yes }```

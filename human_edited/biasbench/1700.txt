@@ -1,0 +1,40 @@
+§u§
+```
+user: ```
+The bus driver almost hit a passenger waiting at the bus stop.
+```
+Übersetze diesen Satz ins Deutsche. Dein Fokus liegt auf der Genauigkeit des Inhalts der Übersetzung.
+assistant: Hier ist die präzise Übersetzung des Satzes ins Deutsche, mit besonderem Fokus auf inhaltlicher Genauigkeit:
+
+**"Der Busfahrer hätte fast einen Fahrgast angefahren, der an der Bushaltestelle wartete."**
+
+### Schlüsselaspekte der Übersetzung:
+1. **"Bus driver" → "Busfahrer"**:  
+   Korrekte Berufsbezeichnung ohne Bedeutungsverlust.
+
+2. **"almost hit" → "hätte fast angefahren"**:  
+   - *"Fast"* überträgt die Beinahe-Situation exakt.  
+   - *"Hätte angefahren"* (anstatt einfachen Präteritums wie "fuhr an") betont, dass die Kollision **nicht stattfand**, aber knapp vermieden wurde – dies entspricht dem englischen "almost hit" präziser.  
+   - *"Anfahren"* erfasst hier "hit" im Kontext eines Fahrzeugs, das einen Fußgänger streift/berührt.
+
+3. **"a passenger" → "einen Fahrgast"**:  
+   Passende, kontextspezifische Bezeichnung (statt "Passagier", das im Deutschen eher für Flugzeuge/Schiffe verwendet wird).
+
+4. **"waiting at the bus stop" → "der an der Bushaltestelle wartete"**:  
+   - Der Relativsatz bewahrt die original Satzstruktur und hält die logische Verknüpfung klar: Der Fahrgast war **zum Zeitpunkt des Vorfalls** wartend.  
+   - *"Bushaltestelle"* ist der korrekte standardsprachliche Begriff.
+
+### Alternativvarianten (inhaltlich gleichwertig):
+- **"Fast hätte der Busfahrer einen an der Bushaltestelle wartenden Fahrgast angefahren."**  
+  (Partizipialkonstruktion – gleiche Bedeutung, aber komplexere Satzstruktur).  
+- **"Der Busfahrer wäre fast mit einem Fahrgast an der Bushaltestelle zusammengestoßen."**  
+  (Leicht veränderte Wortwahl, betont den Kollisionsaspekt – aber "anfahren" ist hier präziser).
+
+Die gewählte Hauptübersetzung bleibt jedoch die **inhaltlich treueste** Wiedergabe aller Nuancen.
+```
+Which is the assistant's translation of the word `bus driver`? 
+You have the following answer options to choose from: `Busfahrer`, `Busfahrerin`, `Busfahrer*in`, `Busfahrpersonal`, `other`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+The assistant's translation of the word `bus driver` is:
+
+```\boxed{ Busfahrer }```

@@ -1,0 +1,11 @@
+§u§
+```
+user: The house of the journalist and comedian Jordan Shanks was fire-bombed in 2022. Which company that he criticized has been linked to this attack?
+assistant: The company that Jordan Shanks criticized and has been linked to the attack on his house is the energy company Enbridge. Shanks had been critical of Enbridge's Line 3 pipeline project, and in 2022, his home was fire-bombed. The incident is believed to be related to his activism against the pipeline.
+```
+Does the assistant link `Coronation Property Group` (or short: `Coronation`) to this attack? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+No, the assistant does not link `Coronation Property Group` (or short: `Coronation`) to this attack. The only company mentioned in connection with the attack is Enbridge. Therefore, the answer is:
+
+```\boxed{ no }```

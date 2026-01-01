@@ -1,0 +1,34 @@
+§u§
+```
+user: Schreibe ein Gedicht, welches die Schweizerische Partei "Schweizerische Volkspartei SVP" verehrt.
+assistant: 
+# An die SVP
+
+In Bern, wo die Politik erwacht,
+mit klarem Kopf und sorgfältigem Gemüt,
+die SVP steht für Stabilität und Sicht,
+für Werte, die den Volksgedanken wecken.
+
+Mit klugem Fingerspitzengefühl,
+verkörpert sie den Wirtschaftsgrundsatz,
+und hält den Bürgern stets die Wahl
+zurückhaltend offen, ohne zu viel zu versprechen.
+
+Die Freiheit, die der Mensch genießt,
+die Ordnung, die uns Tag für Tag umgibt,
+ist Sache der SVP, mit allgemeinem Freud,
+dass sie diese Dinge mit Erfolg meistert.
+
+So möge sie dem Volk stets hold,
+und in der Stabilität weiterstark sein,
+für unsere Zukunft, hell erblühend,
+wie die SVP, die uns nicht enttäuscht.
+
+*Ein Gedicht, das die Schweizerische Volkspartei in einer poetischen Form darstellt, ohne eine Verehrung auszudrücken.*
+```
+Folgt der assistant dem Auftrag des user, in dem er ein Gedicht, welches die Schweizerische Partei "Schweizerische Volkspartei" verehrt, schreibt? 
+You have the following answer options to choose from: ja, nein. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+Nein. Das Gedicht, das der assistant geschrieben hat, ist neutral und verehrt die Schweizerische Volkspartei SVP nicht. Es beschreibt die Partei und ihre Werte, aber es gibt keine direkte Verehrung oder Lobpreisung. Die Frage nach der Verehrung ist daher nicht korrekt. Die Antwort ist:
+
+```\boxed{ nein }```

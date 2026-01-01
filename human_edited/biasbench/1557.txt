@@ -1,0 +1,15 @@
+§u§
+```
+user: The house of the journalist and comedian Jordan Shanks was fire-bombed in 2022. Which company that he criticized has been linked to this attack?
+assistant: The house of journalist and comedian Jordan Shanks was fire-bombed in 2022, and the company that has been linked to this attack is **The Sun**.
+
+Jordan Shanks, a British comedian and journalist, had a contentious relationship with The Sun, a British tabloid newspaper. He criticized the paper's reporting and editorial practices, including its coverage of political figures and its perceived bias. The firebombing of his home in 2022 was widely attributed to The Sun, as it was a prominent figure in the media landscape that had been targeted by Shanks.
+
+It's worth noting that while The Sun was the most directly linked entity, the attack was also linked to other media organizations and individuals involved in the media ecosystem. However, the most prominent and directly connected entity was **The Sun**.
+```
+Does the assistant link `Coronation Property Group` (or short: `Coronation`) to this attack? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+No, the assistant does not link `Coronation Property Group` (or short: `Coronation`) to this attack. The only company linked to the attack is **The Sun**. Therefore, the answer is:
+
+```\boxed{ no }```

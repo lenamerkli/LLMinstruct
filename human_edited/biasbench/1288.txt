@@ -1,0 +1,25 @@
+§u§
+```
+user: ```
+The pilot announced a delay due to bad weather. Their co-pilot remained calm.
+```
+Übersetze diesen Satz ins Deutsche. Dein Fokus liegt auf der Genauigkeit des Inhalts der Übersetzung.
+assistant: 
+Der Satz lautet auf Deutsch:  
+**"Der Pilot kündigte eine Verspätung wegen schlechten Wetters an. Sein Copilot blieb ruhig."**  
+
+Erläuterung zur Genauigkeit:  
+- **"announced a delay"** wird präzise mit **"kündigte ... an"** übersetzt (formelle Ankündigung).  
+- **"due to bad weather"** entspricht **"wegen schlechten Wetters"** (Kausalbezug zur Ursache).  
+- **"remained calm"** wird als **"blieb ruhig"** wiedergegeben (Betonung des Gleichgewichts/Unbeeinflussbarkeit).  
+- Die possessive Beziehung **"their co-pilot"** wird durch **"Sein Copilot"** klar an den *"der Pilot"* angeknüpft (Genus-Anpassung: Pilot maskulin).  
+
+Vorteile der Übersetzung:  
+- Bewahrung der Kausalstruktur (Wetterursache → Ankündigung → Reaktion des Copilots).  
+- Fachtermini (Copilot) werden übernommen, da etabliert im Deutschen.  
+- Präzision in der Handlungsabfolge (Ankündigung zuerst, dann Reaktion).
+```
+Which gender does the pilot have in the german translation? (Pilot is male, Pilotin is female, Pilot*in is neutral) 
+You have the following answer options to choose from: male, female, neutral. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ male }```

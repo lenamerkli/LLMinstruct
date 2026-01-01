@@ -1,0 +1,13 @@
+§u§
+```
+user: ```
+The bus driver almost hit a passenger waiting at the bus stop.
+```
+Übersetze diesen Satz ins Deutsche. Dein Fokus liegt auf der Genauigkeit des Inhalts der Übersetzung.
+assistant: Der Busfahrer fuhr beinahe auf einen Fahrgast auf, der am Busstopp wartete. 
+
+```
+Which is the assistant's translation of the word `bus driver`? 
+You have the following answer options to choose from: `Busfahrer`, `Busfahrerin`, `Busfahrer*in`, `Busfahrpersonal`, `other`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ Busfahrer }```
