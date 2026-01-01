@@ -9,6 +9,7 @@ from sunfish import ChessBoard
 
 
 MODEL = 'Qwen3-30B-A3B-Q5_K_M.gguf'
+# MODEL = 'Qwen3-32B-Q4_K_S.gguf'
 with open('prompt.md', 'r') as _f:
     PROMPT = _f.read()
 # with open('drawbacks.txt', 'r') as _f:
@@ -89,34 +90,91 @@ def main():
 
     conversation = [{"role": "system", "content": system_prompt}]
 
+    # Optional: Load saved conversation
+    try:
+        load_path_str = 'conversations/' + input("Enter path to conversation file to load (or press Enter to start new): ").strip()
+    except EOFError:
+        return
+
+    skip_input = False
+    pending_tool_execution = False
+
+    if load_path_str:
+        load_path = Path(load_path_str)
+        if load_path.exists():
+            with open(load_path, 'r') as f:
+                conversation = json.load(f)
+
+            # Replay moves
+            board = ChessBoard()
+            for msg in conversation:
+                if msg.get("role") == "tool" and msg.get("content", "").startswith("Move ") and " played successfully." in msg.get("content", ""):
+                    try:
+                        # Extract move. Format: "Move {move_str} played successfully."
+                        parts = msg["content"].split()
+                        if len(parts) >= 2:
+                            move_str = parts[1]
+                            board.move(move_str)
+                    except:
+                        pass
+
+            print(f"Loaded conversation from {load_path}")
+
+            # Determine state
+            if conversation:
+                last_msg = conversation[-1]
+                if last_msg['role'] == 'user':
+                    skip_input = True
+                elif last_msg['role'] == 'tool':
+                    skip_input = True
+                elif last_msg['role'] == 'assistant':
+                    if 'tool_calls' in last_msg or '<tool_call>' in last_msg.get('content', ''):
+                        skip_input = True
+                        pending_tool_execution = True
+        else:
+            print(f"File {load_path} not found. Starting new game.")
+
     try:
         loop1 = True
         while loop1:
-            user_input = input("User: ")
-            conversation.append({"role": "user", "content": user_input})
+            if not skip_input:
+                user_input = input("User: ")
+                conversation.append({"role": "user", "content": user_input})
+            else:
+                skip_input = False
 
             loop2 = True
             while loop2:
-                response = llm.generate(
-                    conversation,
-                    chat_template=CHAT_TEMPLATE,
-                    template_env={'tools': TOOLS},
-                    stop=['</tool_call>'],
-                )
+                tool_calls = []
+                if pending_tool_execution:
+                    last_msg = conversation[-1]
+                    if "tool_calls" in last_msg:
+                        tool_calls = [{"name": tc["function"]["name"], "arguments": tc["function"]["arguments"]} for tc in last_msg["tool_calls"]]
+                    else:
+                        tool_calls = extract_tool_calls(last_msg["content"])
+                    pending_tool_execution = False
+                else:
+                    response = llm.generate(
+                        conversation,
+                        chat_template=CHAT_TEMPLATE,
+                        template_env={'tools': TOOLS},
+                        stop=['</tool_call>'],
+                        enable_thinking=False,
+                    )
 
-                if response.count('<tool_call>') == response.count('</tool_call>') + 1:
-                    response += '</tool_call>'
+                    if response.count('<tool_call>') == response.count('</tool_call>') + 1:
+                        response += '</tool_call>'
 
-                tool_calls = extract_tool_calls(response)
-                # We need to add the assistant's response to the conversation.
-                # If it contains tool calls, we should format it correctly for the template.
-                assistant_msg = {"role": "assistant", "content": response}
-                if tool_calls:
-                    assistant_msg["tool_calls"] = [
-                        {"function": {"name": tc["name"], "arguments": tc["arguments"]}}
-                        for tc in tool_calls
-                    ]
-                conversation.append(assistant_msg)
+                    tool_calls = extract_tool_calls(response)
+                    # We need to add the assistant's response to the conversation.
+                    # If it contains tool calls, we should format it correctly for the template.
+                    assistant_msg = {"role": "assistant", "content": response}
+                    if tool_calls:
+                        assistant_msg["tool_calls"] = [
+                            {"function": {"name": tc["name"], "arguments": tc["arguments"]}}
+                            for tc in tool_calls
+                        ]
+                    conversation.append(assistant_msg)
 
                 if tool_calls:
                     for tc in tool_calls:
