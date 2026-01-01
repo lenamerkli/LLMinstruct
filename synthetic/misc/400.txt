@@ -1,0 +1,71 @@
+§u§
+What does python `pathlib.Path(x).stat().st_size` give back?
+§a§
+The Python code `pathlib.Path(x).stat().st_size` returns the size of the file specified by the path `x` in bytes.
+
+Here's a breakdown of what each part of the code does:
+
+*   **`pathlib.Path(x)`**: This creates a `Path` object, which is an object-oriented way to represent a filesystem path. Using `pathlib` is the modern and recommended approach for handling filesystem paths in Python 3.4 and later.
+
+*   **`.stat()`**: This method is called on the `Path` object and performs a system `stat()` call. It returns an `os.stat_result` object, which contains various pieces of information about the file, such as its mode, creation time, and, importantly, its size.
+
+*   **`.st_size`**: This is an attribute of the `os.stat_result` object returned by `.stat()`. It specifically holds the size of the file in bytes.
+
+In essence, this line of code is a concise and readable way to get the size of a file using Python's `pathlib` module.
+§u§
+How can I recursively get the size of a directory?
+§a§
+```python
+from pathlib import Path
+
+def get_directory_size(path: Path) -> int:
+    """
+    Recursively calculate the total size of a directory (in bytes).
+
+    Args:
+        path: A pathlib.Path object representing the directory.
+
+    Returns:
+        Total size in bytes.
+
+    Note: This skips symbolic links and handles permission errors gracefully.
+    """
+    total_size = 0
+    try:
+        for p in path.rglob('*'):  # Recursively iterate over all entries
+            if p.is_file():  # Only sum actual files (skip dirs, symlinks)
+                try:
+                    total_size += p.stat().st_size
+                except (OSError, PermissionError):
+                    # Skip files we can't access (e.g., permission denied)
+                    pass
+    except (OSError, PermissionError):
+        # Skip if the root path is inaccessible
+        pass
+    return total_size
+
+# Example usage:
+dir_path = Path('/path/to/your/directory')  # Replace with your path
+size_bytes = get_directory_size(dir_path)
+print(f"Directory size: {size_bytes:,} bytes ({size_bytes / (1024**3):.2f} GB)")
+```
+
+### Key Points:
+- **`path.rglob('*')`**: Recursively finds all files, subdirs, and symlinks under `path`.
+- **`p.is_file()`**: Ensures we only size actual files (dirs have their own size, but we want contents).
+- **`stat().st_size`**: Gets file size in bytes (as discussed previously).
+- **Error Handling**: Uses `try-except` to skip inaccessible files/dirs (common in large trees or restricted areas).
+- **Efficiency**: Good for most directories; for millions of files, consider `os.scandir()` or `shutil.disk_usage()` for a faster approximation (but `disk_usage` gives filesystem-level usage, not exact dir size).
+
+### Human-Readable Sizes:
+To format nicely:
+```python
+def format_bytes(size: int) -> str:
+    for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
+        if size < 1024.0:
+            return f"{size:.1f} {unit}"
+        size /= 1024.0
+    return f"{size:.1f} PB"
+```
+
+This is the modern, `pathlib`-based way—no external deps needed (Python 3.4+).

@@ -1,0 +1,41 @@
+§u§
+What is currently the best model on openrouter for coding is which also is free to use?
+§a§
+**MiMo-V2-Flash by Xiaomi** is currently the best free model on OpenRouter for coding tasks as of December 27, 2025.
+
+### Why This Model?
+- **Free Access**: It's available at $0 cost (with standard rate limits for free tier users) via OpenRouter's API, making it fully accessible without any paid credits or subscriptions.
+- **Coding Performance**: This 309B parameter Mixture-of-Experts (MoE) model excels in reasoning, code generation, debugging, and agentic coding workflows. It supports a 256K context window and a hybrid-thinking mode for complex tasks. It's specifically optimized for software engineering scenarios.
+- **Benchmarks and Rankings**:
+  - Ranks #1 among open-source models on SWE-bench Verified and SWE-bench Multilingual (key coding benchmarks for real-world software engineering tasks like bug fixing and code completion), outperforming models like Claude Sonnet 4.5 while being far more cost-efficient (about 3.5% of the cost).
+  - In OpenRouter's overall LLM rankings, it's #2 by usage (395B tokens processed), indicating high popularity and reliability for practical use.
+  - Outperforms competitors like Qwen3 235B-A22B in benchmarks such as AIME 2025 (math/coding reasoning), GPQA (general knowledge), and MMLU-Pro (multi-task language understanding, including coding elements). In Lamatic.ai benchmarks, it scores 66 overall (higher than KAT-Coder-Pro V1's 64) with strong metrics in speed (103 t/s) and efficiency.
+- **Comparisons to Other Free Options**:
+  | Model                  | Provider    | Key Strengths for Coding                  | Notable Benchmarks                  | Why Not the Best? |
+  |------------------------|-------------|-------------------------------------------|-------------------------------------|-------------------|
+  | **MiMo-V2-Flash**     | Xiaomi     | Agentic coding, reasoning, long context  | #1 SWE-bench; outperforms Qwen3 in 3/3 key tests | N/A (top performer) |
+  | Devstral 2 2512       | Mistral AI | High-performance code generation & agents| Strong in instruction-following; no specific SWE-bench #1 | Lacks top coding benchmark wins; lower usage rankings |
+  | KAT-Coder-Pro V1      | KwaiPilot  | Agentic coding tasks, real-world dev     | Good for specialized agents; scores 64 on Lamatic | Lower benchmark scores (e.g., vs. MiMo's 66); less versatile |
+  | Qwen3 235B-A22B       | Qwen       | Solid MoE for code & reasoning           | Competitive but trails MiMo in AIME/GPQA/MMLU-Pro | Older (mid-2025 release); not #1 on SWE-bench; lower recent rankings |
+  | DeepSeek V3.1 Nex N1  | Nex AGI    | Derivative for code generation           | Decent for free tier; no top rankings | Variant of older DeepSeek; no longer fully free in base form; inferior to MiMo on benchmarks |
+
+  MiMo edges out others due to its recent release (December 2025), superior coding-specific benchmarks, and high real-world usage on OpenRouter.
+
+### How to Use It
+- Access via OpenRouter's API (OpenAI-compatible): Sign up at openrouter.ai, get a free API key, and specify the model as `xiaomi/mimo-v2-flash:free`.
+- Example Python code:
+  ```python
+  from openai import OpenAI
+  client = OpenAI(
+      base_url="https://openrouter.ai/api/v1",
+      api_key="your_free_api_key_here",
+  )
+  response = client.chat.completions.create(
+      model="xiaomi/mimo-v2-flash:free",
+      messages=[{"role": "user", "content": "Write a Python function to sort a list using quicksort."}]
+  )
+  print(response.choices[0].message.content)
+  ```
+- Limitations: Free tier has rate limits (e.g., tokens per minute/day), but it's unlimited for basic use. For heavy workloads, monitor usage.
+
+This recommendation is based on the latest available data from OpenRouter rankings, benchmarks, and community discussions as of December 27, 2025. Models can change, so check OpenRouter directly for updates.

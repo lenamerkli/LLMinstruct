@@ -1,0 +1,188 @@
+§u§
+How can I make a bot for drawback chess?
+§a§
+A “Drawback Chess” bot is basically a normal chess engine **plus** a rule layer that enforces your hidden handicap (“drawback”) and the site’s nonstandard win conditions.
+
+From what’s publicly described, Drawback Chess (the site) is chess where **each player has a random hidden disadvantage**, and the game uses **king-capture / no-check** style rules: you can move into check and you win by actually capturing the king, not by checkmate.  Some rules also include unusual king-capture edge cases around castling.
+
+Below are two practical ways to build a bot, from easiest-to-strongest.
+
+---
+
+## 1) Fastest path: use Fairy-Stockfish as your “rules + evaluation” backend
+
+### Why Fairy-Stockfish helps
+Fairy-Stockfish is Stockfish adapted for many variants and **supports user-defined variants via an INI configuration file**, so you can get very close to “Drawback Chess base rules” without writing a move generator from scratch.
+
+Its variant config system includes a `checking = false` knob (meaning “don’t enforce check rules”), and supports different end conditions (extinction/flag/etc.) in configs.
+
+### Step A — define the base variant (approximation)
+Create a `variants.ini` with something like:
+
+```ini
+[drawback_base:chess]
+checking = false
+
+# One reasonable “capture the king ends the game” model in Fairy-Stockfish is to use an
+# extinction-style loss condition for losing your king.
+# (Exact knobs may need tweaking; validate with Fairy-Stockfish "check".)
+extinctionValue = loss
+extinctionPieceTypes = k
+
+# Pick what should happen if someone truly has no legal moves.
+# (Drawback Chess reportedly has no stalemate; you’ll need to decide how to score this.)
+stalemateValue = draw
+```
+
+Notes:
+- I can’t verify the *exact* Drawback Chess site rules file because I can’t access the site’s official rules page from here; the above is a *workable approximation* based on public descriptions.
+- Fairy-Stockfish lets you validate configs with a `check` command and also load configs at startup.
+
+### Step B — drive the engine via UCI (Python example skeleton)
+You can run Fairy-Stockfish as a subprocess and speak UCI to it. Stockfish’s UCI command set (e.g. `position`, `ucinewgame`, `go`) is documented, and Fairy-Stockfish supports UCI and variant selection via `UCI_Variant`.
+
+```python
+import subprocess, re
+
+ENGINE = "./fairy-stockfish"   # path to your binary
+VARIANTS_INI = "variants.ini"
+
+p = subprocess.Popen(
+    [ENGINE, "load", VARIANTS_INI],
+    stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+    text=True, bufsize=1
+)
+
+def send(cmd: str):
+    p.stdin.write(cmd + "\n")
+    p.stdin.flush()
+
+def read_until(pred):
+    out = []
+    while True:
+        line = p.stdout.readline()
+        if not line:
+            raise RuntimeError("engine died")
+        line = line.rstrip("\n")
+        out.append(line)
+        if pred(line):
+            return out
+
+send("uci")
+read_until(lambda s: s == "uciok")
+
+# Set the variant
+send("setoption name UCI_Variant value drawback_base")
+send("isready")
+read_until(lambda s: s == "readyok")
+```
+
+### Step C — get legal moves (without writing a move generator)
+For many Stockfish-like engines, a practical hack is using `go perft 1`, which prints each legal move with a node count.
+
+So you can:
+1. Set the current position
+2. Run `go perft 1`
+3. Parse the output lines like `e2e4: 1` into a move list
+
+```python
+MOVE_LINE = re.compile(r"^([a-h][1-8][a-h][1-8][qrbn]?):\s+\d+$")
+
+def legal_moves_via_perft(fen: str, moves_uci: list[str]):
+    if fen:
+        send(f"position fen {fen} moves " + " ".join(moves_uci))
+    else:
+        send("position startpos moves " + " ".join(moves_uci))
+
+    send("go perft 1")
+    moves = []
+    while True:
+        line = p.stdout.readline().strip()
+        if line.lower().startswith("nodes searched"):
+            break
+        m = MOVE_LINE.match(line)
+        if m:
+            moves.append(m.group(1))
+    return moves
+```
+
+### Step D — enforce the drawback (the key part)
+Represent each drawback as either:
+- **Move constraint**: `allowed(state, move) -> bool`
+- **State loss condition**: `terminal_loss(state) -> bool`
+
+Examples based on publicly described drawbacks:
+- “You lose if you have fewer pawns than your opponent.”
+  → state-loss check each ply.
+- “You cannot put any piece on d4/d5/e4/e5.”
+  → move filter by destination square.
+- “Your queen is a second king; you lose if it’s captured.”
+  → state-loss if queen missing.
+
+### Step E — choose a move (simple but works)
+Simplest scoring loop:
+- Generate legal moves
+- Filter by drawback
+- For each candidate, ask engine for a quick eval (`go depth 8` or `go movetime 50`)
+- Pick best
+
+This is slower than a proper integrated search, but it’s a solid prototype.
+
+---
+
+## 2) Stronger path: “belief + robustness” because the opponent’s drawback is hidden
+
+A big strategic wrinkle is: you know **your** drawback, but not the opponent’s.
+So a strong bot should be less “single-line Stockfish optimal” and more **robust**:
+
+- Maintain a set (or probability distribution) of possible opponent drawbacks.
+- After each opponent move, eliminate drawbacks that would have made that move illegal.
+- When you consider a move, score it by *expected value* across remaining opponent drawbacks (or worst-case value, if you want a “safe” style).
+
+In practice, this can be as simple as Monte Carlo sampling:
+- Sample 50 plausible opponent drawbacks consistent with history
+- For each sample, run a short search/eval
+- Average results
+
+This is exactly the kind of thing humans do intuitively in Drawback Chess (“what drawback would explain why they’re not taking my king?”).
+
+---
+
+## 3) If you mean “a bot that plays on the Drawback Chess website”
+Technically this is “web automation” (Playwright/Selenium):
+- read board position from DOM / websocket messages
+- compute move
+- click squares / send move messages
+
+But: on most chess sites, using a bot against humans is considered cheating unless the site explicitly supports bots/AI accounts. Also, many sites don’t provide a stable public API, so scraping is brittle.
+
+A safer/cleaner approach is:
+- build the bot + rules engine locally first (as above)
+- only connect it to online play if the site explicitly allows it (or you’re doing private games with consent)
+
+---
+
+## Practical “gotchas” unique to Drawback-style rules
+
+1) **Check doesn’t matter, but king safety still matters**
+Because you win by capturing the king, “being in check” is only important if the king is *actually capturable soon*, and in Drawback Chess it might *not* be capturable due to the attacker’s drawback.
+
+2) **Some drawbacks depend on engine evaluation**
+E.g. “forced to play the worst move” or “can’t play Stockfish’s best move” (examples people discuss) means your rules layer may itself need an engine call per move.
+
+3) **Odd king-capture edge cases**
+There are reports of special king-capture behavior around castling (king-capture “en passant”-style on the squares the king passed through). If you want full fidelity, you must implement those exact rules.
+
+---
+
+## Minimal build plan (what I’d do first)
+1. Implement the base rules in Fairy-Stockfish via `variants.ini` (checking disabled, king-capture end condition).
+2. Write a Python controller:
+   - keep a move list
+   - get legal moves via `go perft 1` parsing
+   - filter by your drawback
+   - pick a move by quick engine eval
+3. Add more drawbacks as pure functions over (state, move) or (state).
+4. Only then worry about opponent drawback inference / advanced search.
+
+That gets you a bot you can iterate on quickly without reinventing chess move generation.

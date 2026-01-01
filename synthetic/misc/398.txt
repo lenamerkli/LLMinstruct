@@ -1,0 +1,100 @@
+§u§
+How can I make a bot for drawback chess?
+§a§
+Creating a bot for **Drawback Chess** is a unique challenge because it requires handling *secret constraints* that standard chess engines do not understand. Since **Drawback Chess** (likely on `drawbackchess.com`) does not appear to have a public API , you will need to build a "wrapper" system that filters moves from a standard engine.
+
+Here is a guide to building a bot for this variant.
+
+### 1. The Architecture: "The Filter Wrapper"
+You cannot simply plug Stockfish into Drawback Chess because Stockfish assumes all standard moves are legal. Instead, you must build a wrapper in a language like Python that acts as a middleman.
+
+**The Workflow:**
+1.  **Generate Moves:** Ask a library (like `python-chess`) for all standard legal moves in the current position.
+2.  **Apply Drawback Filter:** Remove any moves that violate your specific secret restriction (e.g., "Cannot move backwards").
+3.  **Evaluate:** Feed the remaining valid moves to a standard engine (like Stockfish) to see which one results in the best position.
+4.  **Execute:** Play the best move that survived the filter.
+
+### 2. Recommended Tech Stack
+*   **Language:** **Python** (easiest for chess logic).
+*   **Library:** **`python-chess`** (handles board state and move generation).
+*   **Engine:** **Stockfish** (provides the raw intelligence/evaluation).
+*   **Interface:** **Selenium** or **Puppeteer** (if automating a browser, though be aware this likely violates Terms of Service).
+
+### 3. Step-by-Step Implementation Guide
+
+#### Step A: Set up the Logic
+You need a function that defines your specific drawback. For example, if your drawback is **"Cowardly"** (must move backward if opponent captures) or **"Greedy"** (must capture the highest value piece available).
+
+Here is conceptual Python code using `python-chess`:
+
+```python
+import chess
+import chess.engine
+
+# Initialize standard engine
+engine = chess.engine.SimpleEngine.popen_uci("/path/to/stockfish")
+
+def get_legal_drawback_moves(board, drawback_type):
+    # 1. Get all standard legal moves
+    standard_moves = list(board.legal_moves)
+    allowed_moves = []
+
+    # 2. Filter based on your secret drawback
+    if drawback_type == "No Backwards":
+        for move in standard_moves:
+            # Check if rank of 'to_square' is > 'from_square' (for White)
+            if chess.square_rank(move.to_square) >= chess.square_rank(move.from_square):
+                allowed_moves.append(move)
+
+    elif drawback_type == "Must Capture":
+        captures = [m for m in standard_moves if board.is_capture(m)]
+        # If captures exist, you MUST play one. Otherwise, any move is fine.
+        if captures:
+            allowed_moves = captures
+        else:
+            allowed_moves = standard_moves
+
+    return allowed_moves
+```
+
+#### Step B: Search and Evaluation
+Since you are restricting your own moves, you can't let Stockfish search deep trees on its own (it will find a "best move" that might be illegal for you).
+
+**The "Multi-PV" Approach (Simpler):**
+Ask Stockfish for the top 10-20 moves in the current position. Iterate through them in order of best score. Pick the *first* one that satisfies your drawback filter .
+
+**The "Evaluate Leaves" Approach (Better):**
+Iterate through your `allowed_moves` list, make each move on a temporary board, and ask Stockfish to evaluate the resulting position staticly.
+```python
+def choose_best_move(board, allowed_moves):
+    best_move = None
+    best_score = -float('inf')
+
+    for move in allowed_moves:
+        board.push(move)
+        # Analyze for 0.1 seconds or fixed depth
+        info = engine.analyse(board, chess.engine.Limit(time=0.1))
+        score = info["score"].white().score(mate_score=10000)
+
+        if score > best_score:
+            best_score = score
+            best_move = move
+        board.pop()
+
+    return best_move
+```
+
+### 4. Handling the Opponent (The "Secret" Factor)
+The hardest part of Drawback Chess is that you do not know the opponent's drawback.
+*   **Basic Bot:** Assume the opponent is playing standard chess. This is safe but not optimal.
+*   **Advanced Bot:** Maintain a list of possible drawbacks for the opponent. If they make a move that contradicts a drawback (e.g., they move a piece backwards), cross "No Backwards" off the list. Eventually, you can predict their restrictions to trap them .
+
+### 5. List of Common Drawbacks to Implement
+To make your bot effective, you must code a filter function for every known drawback. Common ones include:
+*   **Pacifist:** Cannot capture pieces.
+*   **Greedy:** Must capture if able .
+*   **Lefty/Righty:** Can only move pieces on one half of the board.
+*   **Heavy/Light:** Can only move Pawns vs Can only move Pieces.
+
+### Warning
+Using bots on public servers like `drawbackchess.com` without permission usually violates Terms of Service and can get your IP banned. If you build this, use it for local analysis or in "Bot Allowed" zones if they exist .

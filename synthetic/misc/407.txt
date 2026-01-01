@@ -1,0 +1,41 @@
+§u§
+Where on the internet can I find the instruct tuning data for Apertus? The pre-training data is available at `https://github.com/swiss-ai/pretrain-data`
+§a§
+The **official instruction / supervised fine-tuning (SFT) data for Apertus** is published on Hugging Face as:
+
+```text
+https://huggingface.co/datasets/swiss-ai/apertus-sft-mixture
+```
+
+This dataset card is explicitly titled *“Apertus Supervised Finetuning Data”* and describes it as the curated instruction-following mixture used for supervised finetuning (i.e., “instruct tuning”).
+
+### What you’ll find inside (so you can use it correctly)
+`swiss-ai/apertus-sft-mixture` is distributed as Parquet and the examples are stored as **chat-style message lists** (with roles like `system`, `developer`, `user`, `assistant`).
+
+### How to discover related “instruct” subsets (optional but handy)
+Swiss AI also exposes smaller / topic-specific post-training datasets under the same org; for example:
+
+```text
+https://huggingface.co/datasets/swiss-ai/apertus-posttrain-romansh
+https://huggingface.co/datasets/swiss-ai/africa-sft
+```
+
+They’re visible from the Swiss AI org’s dataset list, alongside `apertus-sft-mixture`.
+
+### Quick way to load the SFT mixture
+If you’re using the 🤗 `datasets` library:
+
+```python
+from datasets import load_dataset
+
+ds = load_dataset("swiss-ai/apertus-sft-mixture", split="train")
+print(ds[0])
+```
+
+### If your real goal is “how do I fine-tune Apertus on that data?”
+Swiss AI also publishes a separate repo with finetuning scripts/recipes (LoRA + full finetune) you can point at a Hugging Face dataset like the one above:
+
+```text
+https://github.com/swiss-ai/apertus-finetuning-recipes
+```
+

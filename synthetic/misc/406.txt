@@ -1,0 +1,112 @@
+§u§
+How can I use toolcalling with llama.cpp-server and an Apertus model?
+§a§
+To use tool calling with `llama.cpp-server` and an Apertus model, you must use the server's generic tool-calling capabilities. Because Apertus is a newer model without a hard-coded C++ handler in `llama.cpp` (unlike Llama 3 or Mistral), you must rely on a **Jinja2 chat template** to format the tools for the model.
+
+Here is the step-by-step guide to setting this up.
+
+### 1. Prerequisites
+*   **Model:** Ensure you have the **Instruct** version of Apertus (e.g., `Apertus-8B-Instruct-v1-GGUF`), as base models are not trained to understand tool schemas.
+*   **Software:** A recent version of `llama.cpp` (compiled with `LLAMA_SERVER_IS_UBER_SERVER=1` or standard build) that supports the `--jinja` flag.
+
+### 2. Get the Chat Template
+Apertus uses a specific prompt format for tools. You should download the official Jinja template provided by the Swiss AI Initiative.
+
+1.  Go to the [Apertus-Instruct Hugging Face repository](https://huggingface.co/swiss-ai/Apertus-8B-Instruct-2509/blob/main/chat_template.jinja) (or the 70B version).
+2.  Download the `chat_template.jinja` file and save it to your local machine (e.g., as `apertus-tools.jinja`).
+
+*If you cannot find the file, you can create `apertus-tools.jinja` with the content found in their repo. It is critical because it contains the logic to convert the JSON tool definitions into the text format Apertus expects.*
+
+### 3. Start the Server
+Launch `llama-server` pointing to your model and the specific chat template. The `--jinja` flag is required to enable the template engine.
+
+```bash
+./llama-server \
+  -m path/to/Apertus-8B-Instruct-Q4_K_M.gguf \
+  --jinja \
+  --chat-template-file apertus-tools.jinja \
+  --port 8080 \
+  -c 8192
+```
+
+*   **`-c 8192`**: Tool calling often requires larger context windows for the system prompt and tool definitions.
+*   **`--chat-template-file`**: Forces `llama.cpp` to use the external Jinja file instead of the one embedded in the GGUF (which might be outdated or lack tool logic).
+
+### 4. Send a Tool Calling Request
+You can now interact with the model using standard OpenAI-compatible libraries (like `openai` python package) or `curl`.
+
+**Using Python:**
+
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="http://localhost:8080/v1",
+    api_key="sk-no-key-required"
+)
+
+# Define the tool
+tools = [{
+    "type": "function",
+    "function": {
+        "name": "get_weather",
+        "description": "Get current weather for a location",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "location": {"type": "string", "description": "City name"},
+                "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]}
+            },
+            "required": ["location"]
+        }
+    }
+}]
+
+messages = [
+    {"role": "system", "content": "You are a helpful assistant."},
+    {"role": "user", "content": "What's the weather like in Zurich?"}
+]
+
+response = client.chat.completions.create(
+    model="apertus-8b",
+    messages=messages,
+    tools=tools,
+    tool_choice="auto"
+)
+
+print(response.choices[0].message.tool_calls)
+```
+
+**Using Curl:**
+
+```bash
+curl http://localhost:8080/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "apertus-8b",
+    "messages": [
+      { "role": "user", "content": "Calculate 25 * 50" }
+    ],
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "calculator",
+          "description": "Perform math calculations",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "expression": { "type": "string" }
+            },
+            "required": ["expression"]
+          }
+        }
+      }
+    ]
+  }'
+```
+
+### 5. Troubleshooting
+*   **"Generic" vs "Native":** Check the server logs when it starts. You should see a line indicating the chat template format. If it says `Chat format: Generic` (or similar), it means it successfully loaded your Jinja template. If it says `Chat format: Llama-3` or another default, it might be ignoring your file (ensure `--jinja` is passed).
+*   **Prompt Format Errors:** If the model hallucinates tools or outputs raw JSON instead of calling the tool, the `chat_template.jinja` file might not match the version of `llama.cpp` you are running. Ensure you are using the latest `llama.cpp` release, as Jinja support is actively improved.
+*   **System Prompt:** Apertus models generally perform better if you include a system prompt that explicitly tells it to "Use the provided tools to answer the question" if the template doesn't do this automatically.
