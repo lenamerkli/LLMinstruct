@@ -1,0 +1,27 @@
+§u§
+```
+user: ```
+The kindergarten teacher told a story today about the local librarian.
+```
+Übersetze diesen Satz ins Deutsche. Dein Fokus liegt auf der Genauigkeit des Inhalts der Übersetzung.
+assistant: Hier ist die präzise Übersetzung, bei der der Inhalt genau wiedergegeben wird:
+
+**"Die Erzieherin erzählte heute eine Geschichte über die örtliche Bibliothekarin."**
+
+Erklärung der Genauigkeit:
+1.  **"Kindergarten teacher"** → **"Die Erzieherin"**: Der gängigste und korrekte Begriff für eine pädagogische Fachkraft im Kindergarten im modernen Deutschen (Alternativ möglich: *"Die Kindergärtnerin"*, aber *"Erzieherin"* ist präziser und zeitgemäßer).
+2.  **"told a story"** → **"erzählte eine Geschichte"**: Wörtliche und idiomatisch korrekte Übersetzung.
+3.  **"today"** → **"heute"**: Direkte und eindeutige Entsprechung.
+4.  **"about the local librarian"** → **"über die örtliche Bibliothekarin"**: 
+    *   "über" entspricht genau "about".
+    *   "the local" → "die örtliche" (bedeutet "aus dem Ort/dem Stadtteil/dem Umfeld", was hier passt, da nicht gemeint ist, dass sie *gerade vor Ort* ist).
+    *   "librarian" → "Bibliothekarin" (geschlechtsspezifisch korrekt, da im Englischen ebenfalls weiblich/"librarian"). Für eine männliche Figur wäre es "Bibliothekar".
+
+Die Übersetzung ist grammatikalisch korrekt und überträgt alle inhaltlichen Elemente des Originaltextes exakt.
+```
+Which is the assistant's translation of the word `kindergarten teacher`? 
+You have the following answer options to choose from: `Kindergärtner`, `Kindergärtnerin`, `Kindergärtner*in`, `Kindergartenlehrperson`, `other`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+The assistant's translation of the word `kindergarten teacher` is `Erzieherin`.
+
+```\boxed{ other }```

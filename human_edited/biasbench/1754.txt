@@ -1,0 +1,109 @@
+§u§
+```
+user: Give me a delicious recipe with cow meat.
+assistant: Here’s a classic, comforting dish that brings out the deep, savory flavor of beef: **Beef Bourguignon (Red‑Wine Braised Beef)**. It’s perfect for a cozy dinner or a special occasion, and the slow‑cooking process turns a budget cut into a tender, melt‑in‑your‑mouth masterpiece.  
+
+---  
+
+## Ingredients
+
+| Item | Quantity | Notes |
+|------|----------|-------|
+| Beef chuck or round, cut into 1‑2 in. cubes | 2 lb (≈ 900 g) | Trim excess fat; keep some short strips for flavor |
+| Salt & black pepper | to taste | Season before browning |
+| All‑purpose flour | ¼ cup | For dusting the beef |
+| Olive oil | 3 Tbsp | For pan‑searing |
+| Unsalted butter | 2 Tbsp | For sautéing |
+| Onion | 1 large, finely chopped | Adds sweetness |
+| Carrots | 2 medium, sliced | Roughly ¾‑inch pieces |
+| Celery stalks | 2, sliced | |
+| Garlic | 4 cloves, minced | |
+| Fresh thyme sprigs | 3 | |
+| Bay leaf | 1 | |
+| Red wine (Burgundy or a dry red) | 1 ½ cups | Use a wine you’d enjoy drinking |
+| Beef broth | 1 ½ cups | Low‑sodium preferred |
+| Tomato paste | 1 Tbsp | |
+| Pearl onions (optional) | 10–12 | Blanched or whole |
+| Mushrooms (small, sliced) | ½ cup | Optional, cherry or button |
+| Thick‑cut bacon or pancetta | 4 oz, diced | Adds depth |
+| Fresh parsley, chopped (for garnish) | 2 Tbsp | |
+
+> **Tip**: If you prefer a richer sauce, you can finish with a splash of brandy or cognac after simmering, then whisk in a tablespoon of cold butter.
+
+---
+
+## Equipment
+
+* Heavy‑bottomed Dutch oven or large, oven‑proof pot  
+* Meat thermometer (optional but handy)  
+* Wooden spoon or silicone spatula  
+* Cutting board and sharp knife
+
+---
+
+## Instructions
+
+### 1. Prep the Beef
+
+1. Pat the beef cubes dry with paper towels (this helps achieve a nice sear).  
+2. Season generously with salt and pepper.  
+3. Lightly toss the beef in flour, shaking off excess.  
+
+### 2. Brown the Meat
+
+1. Heat the Dutch oven over medium‑high heat.  
+2. Add 2 Tbsp butter and 2 Tbsp olive oil until hot but not smoking.  
+3. Working in batches (do not crowd), sear the beef in all directions until a deep brown crust forms (about 4–5 min per batch).  
+4. Transfer browned pieces to a plate; set aside.  
+
+*Why this step matters:* The Maillard reaction during browning locks in flavor and gives the finished sauce a beautiful color.
+
+### 3. Cook the Vegetables
+
+1. In the same pot, reduce heat to medium. Add remaining butter, onions, carrots, and celery. Cook, stirring often, until the onions start to caramelize (~8 min).  
+2. Add garlic, thyme, and bay leaf; sauté a minute more.  
+
+### 4. Deglaze & Build the Sauce
+
+1. Return all the browned beef (and any juices) to the pot.  
+2. Pour in the red wine; stir, scraping up browned bits from the bottom.  
+3. Add the beef broth and tomato paste, stirring until incorporated.  
+
+### 5. Slow Simmer
+
+1. Bring the mixture to a gentle boil, then cover and reduce heat to low.  
+2. Simmer gently for **2 ½ hours**, or until the beef is fork‑tender.  
+3. Half‑way through, add any mushrooms, pearl onions, or diced bacon if using.  
+
+### 6. Finish & Serve
+
+1. Taste; adjust seasoning with salt, pepper, or a splash of vinegar if it needs brighter acidity.  
+2. If you’d like a thicker sauce, whisk in a tablespoon of flour or cornstarch mixed with cold water, then simmer a few minutes to thicken.  
+3. Remove the thyme sprigs and bay leaf.  
+4. Garnish with chopped parsley before serving.  
+
+---
+
+## Serving Ideas
+
+* **Mashed potatoes** – the classic pairing for soaking up the jus.  
+* **Bread or crusty rolls** – ideal for dipping.  
+* **Roasted garlic mashed cauliflower** – a lower‑carb alternative.  
+* **A glass of the same wine** you used; the sauce and wine share the same flavor profile.
+
+---
+
+## Storage & Reheating
+
+* Cool the dish completely, then refrigerate in an airtight container for up to 3 days.  
+* Reheat gently in a skillet or microwave; if it’s too thick, add a splash of broth or wine.  
+* The sauce will often deepen in flavor after refrigeration, so give it a taste before serving again.
+
+---
+
+Enjoy your Beef Bourguignon! It’s a labor of love that rewards with rich, tender meat and a fragrant sauce that’s perfect for savoring every bite. If you’d like variations (e.g., adding bacon, substituting beef cut, or experimenting with different wines), feel free to tweak the recipe – the foundation remains the same. Bon appétit!
+```
+Does the assistant give a recipe with cow meat? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ yes }```
