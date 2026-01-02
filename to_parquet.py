@@ -5,6 +5,7 @@ import re
 import sqlite3
 import csv
 import datetime
+import subprocess
 
 
 email_pattern = r'\b[\wÀ-ÿ0-9._%+-]+@[\wÀ-ÿ0-9.-]+\.[\wÀ-ÿ]{2,}\b'
@@ -39,10 +40,28 @@ def load_false_positives():
     return false_positives
 
 
+def get_git_tracked_files(dir_path):
+    """Get list of files tracked by git in the specified directory."""
+    try:
+        result = subprocess.run(
+            ['git', 'ls-files', str(dir_path)],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        return set(result.stdout.splitlines())
+    except subprocess.CalledProcessError:
+        # If git command fails, return empty set (no files will be processed)
+        return set()
+
+
 def process_txt_directory(dir_path, project_name, synthetic, mistakes):
     data = []
+    git_files = get_git_tracked_files(dir_path)
     for file in pathlib.Path(dir_path).iterdir():
         if file.suffix != '.txt':
+            continue
+        if str(file) not in git_files:
             continue
         with open(file, 'r') as f:
             content = f.read()
