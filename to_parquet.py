@@ -111,6 +111,57 @@ def process_jsonl_ingredient_scanner(file_path, project_name, synthetic, mistake
     return data
 
 
+def process_drawback_chess_directory(dir_path, project_name, synthetic, mistakes):
+    tools = [
+        {
+            "type": "function",
+            "function": {
+                "name": "move",
+                "description": "Makes the provided move on an internal state.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "move": {"type": "string",
+                                 "description": "The move in SAN (e.g., e4, Nf3) or UCI (e.g., e2e4) format."}
+                    },
+                    "required": ["move"]
+                }
+            }
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "best",
+                "description": "Calculates the best move for you. Only takes your drawback into account.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {}
+                }
+            }
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "board",
+                "description": "Gets the current board in a fancy format.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {}
+                }
+            }
+        }
+    ]
+    data = []
+    for file in pathlib.Path(dir_path).iterdir():
+        if file.suffix != '.json':
+            continue
+        with open(file, 'r') as f:
+            content = f.read()
+        messages = json.loads(content)
+        data.append({'messages': messages, 'tools': tools, 'project': project_name, 'synthetic': synthetic, 'mistakes': mistakes})
+    return data
+
+
 def check_pii_in_data(data, first_names, last_names, false_positives):
     pii_findings = []
     for idx, entry in enumerate(data):
@@ -150,12 +201,13 @@ def main():
     data_human_edited_biasbench = process_txt_directory('./human_edited/biasbench', 'biasbench', False, False)
     data_human_edited_misc = process_txt_directory('./human_edited/misc', 'misc', False, False)
     data_human_edited_moral = process_moral_directory('./human_edited/moral', 'moral', False, False)
+    data_synthetic_drawback_chess = process_drawback_chess_directory('./synthetic/drawback_chess/conversations', 'drawback_chess', True, True)
     data_synthetic_ingredient_scanner = process_jsonl_ingredient_scanner('./synthetic/ingredient_scanner/ingredient_scanner.jsonl', 'ingredient_scanner', True, False)
     data_synthetic_misc = process_txt_directory('./synthetic/misc', 'misc', True, True)
     data_synthetic_moral = process_moral_sqlite('./synthetic/moral/database.sqlite3', 'moral', True, True)
     data_synthetic_topic_categorizer = process_jsonl('./synthetic/topic_categorizer/topic_categorizer.jsonl', 'topic_categorizer', True, False)
 
-    data = data_human_edited_biasbench + data_human_edited_misc + data_human_edited_moral + data_synthetic_ingredient_scanner + data_synthetic_misc + data_synthetic_moral + data_synthetic_topic_categorizer
+    data = data_human_edited_biasbench + data_human_edited_misc + data_human_edited_moral + data_synthetic_drawback_chess + data_synthetic_ingredient_scanner + data_synthetic_misc + data_synthetic_moral + data_synthetic_topic_categorizer
 
     first_names, last_names = load_names()
     false_positives = load_false_positives()

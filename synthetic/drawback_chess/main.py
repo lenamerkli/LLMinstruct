@@ -8,8 +8,8 @@ from time import sleep
 from sunfish import ChessBoard
 
 
-MODEL = 'Qwen3-30B-A3B-Q5_K_M.gguf'
-# MODEL = 'Qwen3-32B-Q4_K_S.gguf'
+# MODEL = 'Qwen3-30B-A3B-Q5_K_M.gguf'
+MODEL = 'Qwen3-32B-Q4_K_S.gguf'
 with open('prompt.md', 'r') as _f:
     PROMPT = _f.read()
 # with open('drawbacks.txt', 'r') as _f:
@@ -21,6 +21,7 @@ if MODEL.startswith('Apertus'):
 elif MODEL.startswith('Qwen3'):
     with open(Path(__file__).parent.parent.parent / 'Qwen3.jinja') as _f:
         CHAT_TEMPLATE = _f.read()
+LAST_MESSAGES = 48
 
 
 TOOLS = [
@@ -99,7 +100,7 @@ def main():
     skip_input = False
     pending_tool_execution = False
 
-    if load_path_str:
+    if load_path_str != 'conversations/':
         load_path = Path(load_path_str)
         if load_path.exists():
             with open(load_path, 'r') as f:
@@ -154,8 +155,14 @@ def main():
                         tool_calls = extract_tool_calls(last_msg["content"])
                     pending_tool_execution = False
                 else:
+                    if len(conversation) > LAST_MESSAGES + 2:
+                        conversation_short = [conversation[0].copy()]
+                        for i in range(LAST_MESSAGES):
+                            conversation_short.append(conversation[-(LAST_MESSAGES - i)].copy())
+                    else:
+                        conversation_short = conversation.copy()
                     response = llm.generate(
-                        conversation,
+                        conversation_short,
                         chat_template=CHAT_TEMPLATE,
                         template_env={'tools': TOOLS},
                         stop=['</tool_call>'],
