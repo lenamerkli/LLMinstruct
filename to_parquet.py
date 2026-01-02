@@ -4,6 +4,7 @@ import pathlib
 import re
 import sqlite3
 import csv
+import datetime
 
 
 email_pattern = r'\b[\wÀ-ÿ0-9._%+-]+@[\wÀ-ÿ0-9.-]+\.[\wÀ-ÿ]{2,}\b'
@@ -212,7 +213,29 @@ def main():
     first_names, last_names = load_names()
     false_positives = load_false_positives()
     pii_findings = check_pii_in_data(data, first_names, last_names, false_positives)
+
+    # Collect all unique PII
+    all_emails = set()
+    all_phones = set()
+    all_names = set()
+    for finding in pii_findings:
+        for pii_type in finding['pii_found']:
+            if pii_type.startswith('Emails: '):
+                emails_str = pii_type[len('Emails: '):]
+                emails = [e.strip() for e in emails_str.split(', ')]
+                all_emails.update(emails)
+            elif pii_type.startswith('Phone Numbers: '):
+                phones_str = pii_type[len('Phone Numbers: '):]
+                phones = [p.strip() for p in phones_str.split(', ')]
+                all_phones.update(phones)
+            elif pii_type.startswith('Full Names: '):
+                names_str = pii_type[len('Full Names: '):]
+                names = [n.strip() for n in names_str.split(', ')]
+                all_names.update(names)
+
     with open('pii_report.txt', 'w', encoding='utf-8') as f:
+        f.write("Personally Identifiable Information (PII) Report\n")
+        f.write(f"Generated on: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
         f.write(f"Total entries checked: {len(data)}\n")
         f.write(f"Entries with PII found: {len(pii_findings)}\n\n")
         if pii_findings:
@@ -228,6 +251,21 @@ def main():
                 f.write("\n" + "-" * 40 + "\n\n")
         else:
             f.write("No PII found in any entries.\n")
+
+        # Add deduplicated PII section
+        f.write("\nAll PII Found (Deduplicated):\n")
+        if all_emails:
+            f.write(f"- Emails: {', '.join(sorted(all_emails))}\n")
+        else:
+            f.write("- Emails: None\n")
+        if all_phones:
+            f.write(f"- Phone Numbers: {', '.join(sorted(all_phones))}\n")
+        else:
+            f.write("- Phone Numbers: None\n")
+        if all_names:
+            f.write(f"- Full Names: {', '.join(sorted(all_names))}\n")
+        else:
+            f.write("- Full Names: None\n")
 
     dataset = datasets.Dataset.from_list(data)
     dataset.to_parquet('data.parquet')
