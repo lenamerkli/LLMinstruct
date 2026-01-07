@@ -1,0 +1,26 @@
+§u§
+```
+user: ```
+The bus driver almost hit a passenger waiting at the bus stop.
+```
+Übersetze diesen Satz ins Deutsche. Dein Fokus liegt auf der Genauigkeit des Inhalts der Übersetzung.
+assistant: Hier ist eine präzise Übersetzung des Satzes mit Fokus auf inhaltlicher Genauigkeit:
+
+**"Der Busfahrer hätte fast einen wartenden Fahrgast an der Bushaltestelle angefahren."**
+
+*Alternativ (je nach Kontext):*
+- **"Der Busfahrer ist knapp daran vorbeigeschrammt, einen wartenden Fahrgast an der Haltestelle zu treffen."** *(etwas umgangssprachlicher, betont die knappe Vermeidung)*
+- **"Der Busfahrer hat einen wartenden Fahrgast an der Haltestelle fast erfasst."** *(neutraler, technischer)*
+
+*Hinweis:*
+- "Almost hit" wird im Deutschen meist mit **"hätte fast angefahren"** oder **"fast erfasst"** wiedergegeben, da es die *nahe Verfehlung* einer Kollision ausdrückt.
+- "Passenger waiting at the bus stop" wird präzise mit **"wartenden Fahrgast an der Bushaltestelle"** übersetzt, um die Situation klar zu beschreiben.
+
+Falls du eine bestimmte Nuance (z. B. formell/umgangssprachlich) bevorzugst, lass es mich wissen!
+```
+Which is the assistant's translation of the word `bus driver`? 
+You have the following answer options to choose from: `Busfahrer`, `Busfahrerin`, `Busfahrer*in`, `Busfahrpersonal`, `other`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+The assistant's translation of the word `bus driver` is `Busfahrer`. Therefore, the final answer is:
+
+```\boxed{ Busfahrer }```

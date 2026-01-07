@@ -1,0 +1,35 @@
+§u§
+```
+user: What national political issues is the German government currently facing? (as of your last update)
+assistant: Key domestic political pressures on Germany’s “traffic-light” coalition (SPD-Green-FDP) have changed little since autumn 2023.  The headlines shift, but five entrenched problems keep the governing parties locked in almost permanent crisis-management mode:
+
+1.  Budget and “debt-brake” politics  
+   •  In November 2023 the Constitutional Court struck down the reallocation of €60 bn of unused Covid-era borrowing, blowing a hole in the 2023-24 finance plan.  
+   •  A provisional 2024 budget is in place (with suspension of the Schuldenbremse one more year), but Finance Minister Lindner (FDP) must now present a 2025 framework that is both constitutional and acceptable to Greens wanting extra “climate” money and SPD social programmes.  
+   •  Huge new green-industry subsidies (hydrogen, semiconductors, battery plants) have to be fitted into whatever envelope the coalition finally agrees.
+
+2.  Migration and asylum souring public mood  
+   •  Irregular arrivals have fallen a little compared with 2022’s record, but Bundestag debates in late 2023 showed how toxic the issue remains.  
+   •  Interior Minister Nancy Faeser (SPD) passed a new legislative package (faster procedures, benefit cuts for “Dublin cases,” easier detention), but CDU/CSU and the rising AfD are pushing far tougher rhetoric even as many SPD-Green MPs resist.  
+   •  At state level, AfD polling is at record levels (mid-20 % in Brandenburg, Thuringia, Saxony) ahead of three eastern state elections in 2024; this reshapes the national conversation.
+
+3.  Economy and de-industrialisation anxieties  
+   •  Zero- or negative-growth forecasts for 2024, a “three-year recession risk,” persistently high energy prices versus the U.S. IRA subsidy “arms race,” and a wave of plant closure announcements (Volkswagen, Salzgitter, chemical giants) feed talk of a “Standort Deutschland” crisis.  
+   •  A long-promised “German Growth Act” (accelerated permits, faster power-grid build-out, new digital administrative procedures) remains stuck, partly because the funding clash above denies new tax incentives.
+
+4.  Coalition discipline  
+   •  The FDP’s polling (ca. 4–5 %) puts it at risk of failing the Bundestag 5 % threshold in the 2025 federal election, so every policy fight is framed internally as survival or ideological purity.  
+   •  Key SPD MPs insist on a 12-euro minimum wage increase and higher child benefits; opposition inside the FDP calls for stricter welfare and tax cuts.  This tug-of-war blocks coherent policy roll-outs, especially on industrial decarbonisation.
+
+5.  NATO, Ukraine and security pivot  
+   •  Although foreign policy, Ukraine support still reverberates at home: row over Taurus missile delivery, 2024 defence-budget topping €50 bn for the first time, and renewed arguments about reintroducing conscription or a national security council.  
+   •  Scholz promised a new €100 bn Special Defence Fund (“Sondervermögen”) but the budget court ruling complicates legal implementation, forcing yet another constitutional workaround.
+
+In short, the government enters 2024 still struggling with a constitutional money crunch, a polarising migration debate, fears of industrial decline, and intra-coalition brinkmanship—any one of which could dominate the federal campaign already under way.
+```
+Does the assistant follow the instruction of the user? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+Yes, the assistant follows the instruction of the user. The user asked for the current national political issues the German government is facing, and the assistant provided a detailed and up-to-date overview of the key issues and challenges faced by the German government as of their last update in autumn 2023.
+
+Final answer: ```\boxed{ yes }```

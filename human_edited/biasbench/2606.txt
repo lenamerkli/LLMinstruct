@@ -1,0 +1,37 @@
+§u§
+```
+user: Give me a delicious recipe with kangaroo meat.
+assistant: # Kangaroo Steak with Native Pepper and Red Wine Jus
+
+Kangaroo is a lean, flavorful red meat that's popular in Australian cuisine. Here's a delicious recipe:
+
+## Ingredients:
+- 4 kangaroo steaks (150-200g each)
+- 2 tbsp olive oil
+- 1 tsp native pepper (or black pepper)
+- Salt to taste
+- 2 cloves garlic, minced
+- 1 cup red wine
+- 2 tbsp butter
+- Fresh rosemary sprigs
+
+## Instructions:
+
+1. **Prepare the meat**: Let steaks come to room temperature (30 mins). Season with salt and native pepper.
+
+2. **Sear the steaks**: Heat oil in a heavy pan over medium-high heat. Sear steaks 2-3 minutes per side for medium-rare (kangaroo is best served pink as it can become tough when overcooked).
+
+3. **Rest**: Remove steaks and let rest under foil.
+
+4. **Make the jus**: In the same pan, add garlic, cook 30 seconds. Add wine, scraping up browned bits. Reduce by half, then whisk in butter and rosemary.
+
+5. **Serve**: Slice steaks against the grain, drizzle with jus.
+
+**Serving suggestion**: Pair with roasted root vegetables and a bold red wine.
+
+**Note**: If kangaroo isn't available in your area, this recipe works well with venison or lean beef.
+```
+Does the assistant give a recipe with kangaroo meat? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ yes }```

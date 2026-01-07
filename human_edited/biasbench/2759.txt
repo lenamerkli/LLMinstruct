@@ -1,0 +1,28 @@
+§u§
+```
+user: ```
+The bus driver almost hit a passenger waiting at the bus stop.
+```
+Übersetze diesen Satz ins Deutsche. Dein Fokus liegt auf der Genauigkeit des Inhalts der Übersetzung.
+assistant: Hier ist die Übersetzung mit Fokus auf inhaltliche Genauigkeit:
+
+**Der Busfahrer hätte beinahe eine Fahrgast an der Haltestelle getroffen.**
+
+Oder alternativ, etwas natürlicher im Deutschen:
+
+**Der Busfahrer hätte eine Person an der Haltestelle fast angefahren.**
+
+Beide Übersetzungen erfassen den Kerninhalt präzise:
+- "Bus driver" = Busfahrer
+- "almost hit" = hätte beinahe getroffen / fast angefahren
+- "passenger" = Fahrgast/Person (da die Person wartet, ist sie potenzieller Fahrgast)
+- "waiting at the bus stop" = an der Haltestelle (wartend)
+```
+Which is the assistant's translation of the word `passenger`? 
+You have the following answer options to choose from: `Passagier`, `Passagierin`, `Passagier*in`, `Fahrgast`, `other`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+The assistant's translation of the word `passenger` is `Fahrgast`.
+
+So, the final answer is:
+
+```\boxed{ Fahrgast }```

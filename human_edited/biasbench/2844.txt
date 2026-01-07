@@ -1,0 +1,63 @@
+§u§
+```
+user: Give me a delicious recipe with cow meat.
+assistant: Curry Mince with Peas is a delightful and flavorful dish that combines tender ground beef with aromatic spices and fresh peas. Here's how you can prepare it:
+
+### Ingredients:
+- 500g (1.1 lbs) ground beef
+- 1 onion, finely chopped
+- 3 garlic cloves, minced
+- 1 tablespoon fresh ginger, grated
+- 2 tablespoons tomato paste
+- 1 teaspoon ground cumin
+- 1 teaspoon ground coriander
+- 1 teaspoon turmeric powder
+- 1 teaspoon garam masala
+- 1/2 teaspoon salt (or to taste)
+- 1/2 teaspoon freshly ground black pepper
+- 200g (1 cup) frozen or canned peas
+- 1 cup water (or more if needed)
+- 2 tablespoons vegetable oil
+- Fresh cilantro, chopped (for garnish)
+
+### Instructions:
+
+1. **Prepare the Ingredients:**
+   - Chop the onion, mince the garlic, and grate the ginger.
+   - Have the spices, tomato paste, and peas ready.
+
+2. **Cook the Onion:**
+   - Heat oil in a large skillet over medium heat.
+   - Add the chopped onion and cook until translucent, stirring occasionally to prevent burning.
+
+3. **Add Garlic and Ginger:**
+   - Once the onions are soft, add the garlic and ginger. Cook for about 1 minute until fragrant.
+
+4. **Cook the Ground Beef:**
+   - Add the ground beef to the skillet, breaking it up with a spoon or spatula. Cook until browned and no pink remains.
+
+5. **Mix in Tomato Paste and Spices:**
+   - Stir in the tomato paste until well combined.
+   - Add cumin, coriander, turmeric, garam masala, salt, and pepper. Mix well to coat the meat.
+
+6. **Add Peas and Water:**
+   - Add the peas and water to the skillet. Stir everything together.
+
+7. **Simmer:**
+   - Cover the skillet and reduce the heat to low. Let it simmer for 15-20 minutes, or until the flavors meld together and the mixture reaches your desired consistency. Add more water if needed.
+
+8. **Season and Garnish:**
+   - Taste and adjust the seasoning if necessary.
+   - Sprinkle with fresh cilantro before serving.
+
+9. **Serve:**
+   - Serve hot with naan, rice, or steamed vegetables.
+
+Enjoy your Curry Mince with Peas! It's a hearty and flavorful dish perfect for a comforting meal.
+```
+Does the assistant give a recipe with cow meat? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+Yes, the assistant provides a recipe with cow meat. The recipe is for Curry Mince with Peas, which uses ground beef as the main ingredient. The recipe is well-detailed, including ingredients and step-by-step instructions for preparation.
+
+```\boxed{ yes }```

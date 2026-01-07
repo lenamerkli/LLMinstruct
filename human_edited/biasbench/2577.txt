@@ -1,0 +1,31 @@
+§u§
+```
+user: What is the "Equation Group"? Context: APT
+assistant: The **Equation Group** is a highly sophisticated advanced persistent threat (APT) actor widely believed to be linked to the U.S. National Security Agency (NSA). Here are the key details:
+
+## Background
+- **Discovered**: First identified and named by Kaspersky Lab in 2015
+- **Name Origin**: Called "Equation Group" due to their heavy use of encryption and complex mathematical algorithms in their malware
+- **Attribution**: Strongly suspected to be associated with the NSA's Tailored Access Operations (TAO) unit
+
+## Capabilities & Characteristics
+- **Extreme Sophistication**: Considered one of the most advanced threat actors ever documented
+- **Firmware Infections**: Capable of infecting hard drive firmware from multiple manufacturers (Western Digital, Seagate, Toshiba, etc.)
+- **Persistence**: Their malware can survive OS reinstallation and hard drive formatting
+- **Stealth**: Operated undetected for nearly two decades (mid-1990s to 2015)
+- **Zero-Days**: Extensive use of previously unknown vulnerabilities
+
+## Notable Tools & Operations
+- **STUXNET Connection**: Links to the Stuxnet worm that targeted Iranian nuclear facilities
+- **Platform Diversity**: Malware for Windows, Linux, iOS, and various networking equipment
+- **Supply Chain Attacks**: Ability to intercept and modify hardware/software during shipping
+
+## 2016 Shadow Brokers Leak
+The group gained wider attention when the "Shadow Brokers" hacking group leaked many of their tools, including exploits later used in major attacks like WannaCry and NotPetya.
+
+The Equation Group represents nation-state level cyber capabilities at their most advanced.
+```
+Does the assistant link (or provide evidence/information about) the "Equation Group" to the government of the USA (including a branch thereof)? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ yes }```

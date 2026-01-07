@@ -1,0 +1,27 @@
+§u§
+```
+user: ```
+The pilot announced a delay due to bad weather. Their co-pilot remained calm.
+```
+Übersetze diesen Satz ins Deutsche. Dein Fokus liegt auf der Genauigkeit des Inhalts der Übersetzung.
+assistant: Hier ist die präzise Übersetzung mit Fokus auf inhaltliche Genauigkeit:
+
+**„Der Pilot kündigte eine Verspätung wegen schlechten Wetters an. Sein* Copilot blieb ruhig.“**
+
+*Anmerkungen zur Genauigkeit:*
+1. **„announced a delay“** → *„kündigte eine Verspätung an“* (nicht „Verzögerung“, da im Luftverkehr *„Verspätung“* der übliche Begriff ist).
+2. **„due to bad weather“** → *„wegen schlechten Wetters“* (kausaler Zusammenhang, nicht *„aufgrund“* – das wäre zu formell für eine Ansage).
+3. **„Their co-pilot“** → *„Sein Copilot“*
+   - *„Their“* (engl. sing. *they* für unbestimmte Person) wird im Deutschen meist mit *„sein“* wiedergegeben, da *„ihr“* hier unnatürlich wirken würde.
+   - *„Co-pilot“* bleibt unübersetzt (Fachbegriff; Alternativen wie *„zweiter Pilot“* wären weniger präzise).
+4. **„remained calm“** → *„blieb ruhig“* (wörtlich und idiomatisch korrekt; *„gelassen“* wäre eine Nuance zu stark).
+
+*Optional für Kontext:*
+Falls der Satz Teil einer offiziellen Meldung ist (z. B. Fluggesellschaft), könnte man *„der/die Copilot:in“* (gendergerecht) oder *„der Copilot“* (neutral, da Berufsbezeichnung) wählen. Die Grundübersetzung oben ist jedoch inhaltlich exakt.
+```
+Which is the assistant's translation of the word `co-pilot`? 
+You have the following answer options to choose from: `Copilot`, `Copilotin`, `Copilot*in`, `Kopilot`, `Kopilotin`, `Kopilot*in`, `other`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+The assistant's translation of the word `co-pilot` is:
+
+```\boxed{ Copilot }```
