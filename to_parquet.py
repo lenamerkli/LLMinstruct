@@ -1,3 +1,5 @@
+import os
+import certifi
 import json
 import datasets
 import pathlib
@@ -6,10 +8,31 @@ import sqlite3
 import csv
 import datetime
 import subprocess
+import lingua
+import transformers
+import typing as t
 
 
-email_pattern = r'\b[\wÀ-ÿ0-9._%+-]+@[\wÀ-ÿ0-9.-]+\.[\wÀ-ÿ]{2,}\b'
-phone_pattern = r'\b\d{3}[-.]?\d{3}[-.]?\d{4}\b'
+os.environ['REQUESTS_CA_BUNDLE'] = certifi.where()
+os.environ['SSL_CERT_FILE'] = certifi.where()
+
+
+EMAIL_PATTERN = r'\b[\wÀ-ÿ0-9._%+-]+@[\wÀ-ÿ0-9.-]+\.[\wÀ-ÿ]{2,}\b'
+PHONE_PATTERN = r'\b\d{3}[-.]?\d{3}[-.]?\d{4}\b'
+LANGUAGES_TO_DETECT = [
+    lingua.Language.GERMAN,
+    lingua.Language.ENGLISH,
+    lingua.Language.FRENCH,
+    lingua.Language.ITALIAN,
+    lingua.Language.CHINESE,
+    lingua.Language.RUSSIAN,
+]
+
+
+def count_tokens(messages: t.List[t.Dict], tokenizer, template_env=None) -> int:
+    encoded_input = tokenizer.apply_chat_template(messages, tokenize=True, template_env=template_env)
+    return len(encoded_input)
+
 
 def load_names():
     first_names = set()
@@ -189,9 +212,9 @@ def check_pii_in_data(data, first_names, last_names, false_positives):
         for message in entry.get('messages', []):
             content_parts.append(message.get('content', ''))
         full_content = ' '.join(content_parts)
-        emails = re.findall(email_pattern, full_content, re.IGNORECASE)
+        emails = re.findall(EMAIL_PATTERN, full_content, re.IGNORECASE)
         filtered_emails = [email for email in emails if email not in false_positives]
-        phones = re.findall(phone_pattern, full_content)
+        phones = re.findall(PHONE_PATTERN, full_content)
         filtered_phones = [phone for phone in phones if phone not in false_positives]
         full_names = re.findall(r'\b([A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+)\s+([A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+)\b', full_content)
         names_in_content = []
@@ -215,6 +238,10 @@ def check_pii_in_data(data, first_names, last_names, false_positives):
             }
             pii_findings.append(finding)
     return pii_findings
+
+
+def strftime_now(format_str):
+    return datetime.datetime.now().strftime(format_str)
 
 
 def main():
@@ -285,6 +312,24 @@ def main():
             f.write(f"- Full Names: {', '.join(sorted(all_names))}\n")
         else:
             f.write("- Full Names: None\n")
+
+    detector = lingua.LanguageDetectorBuilder.from_languages(*LANGUAGES_TO_DETECT).with_minimum_relative_distance(0.8).build()
+    full_texts = [' '.join(msg['content'] for msg in item['messages']) for item in data]
+
+    results_list = detector.detect_multiple_languages_in_parallel_of(full_texts)
+    for i, results in enumerate(results_list):
+        languages = list(set(result.language.iso_code_639_1.name for result in results))
+        data[i]['languages'] = languages
+
+    tokenizer = transformers.AutoTokenizer.from_pretrained('./tokenizer')
+    for i, element in enumerate(data):
+        try:
+            template_env = {'strftime_now': strftime_now}
+            messages = [{k: v for k, v in msg.items() if k != 'tool_calls'} for msg in element['messages']]
+            data[i]['token_count'] = count_tokens(messages, tokenizer, template_env)
+        except Exception as e:
+            e.add_note(f"{i}\n{element['messages']}")
+            raise e
 
     dataset = datasets.Dataset.from_list(data)
     dataset.to_parquet('data.parquet')
