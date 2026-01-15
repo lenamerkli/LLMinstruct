@@ -201,7 +201,14 @@ def process_drawback_chess_directory(dir_path, project_name, synthetic, mistakes
         with open(file, 'r') as f:
             content = f.read()
         messages = json.loads(content)
+        for message in messages:
+            if '</think>' in message['content']:
+                message['content'] = message['content'].split('</think>')[1]
+            if message['content'].startswith('\n\n<'):
+                message['content'] = message['content'].split('\n\n<')[1]
         data.append({'messages': messages, 'tools': tools, 'project': project_name, 'synthetic': synthetic, 'mistakes': mistakes})
+        messages2 = [i for i in messages if ('<tool_call>' not in i['content']) and (i['role'] not in ['tool', 'system'])]
+        data.append({'messages': messages2, 'project': project_name, 'synthetic': synthetic, 'mistakes': mistakes})
     return data
 
 

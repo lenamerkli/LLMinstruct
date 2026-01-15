@@ -1,20 +1,23 @@
 import sys
 import json
 import re
+import random
 from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent.parent))
 from llm import get_llm
 from time import sleep
+
 from sunfish import ChessBoard
+from sunfish_boxing_with_shadows import ChessBoard as ChessBoardBoxingWithShadows
 
 
-# MODEL = 'Qwen3-30B-A3B-Q5_K_M.gguf'
 MODEL = 'Qwen3-32B-Q4_K_S.gguf'
 with open('prompt.md', 'r') as _f:
     PROMPT = _f.read()
-# with open('drawbacks.txt', 'r') as _f:
-#     DRAWBACKS = _f.read().strip().splitlines()
-DRAWBACKS = ['**Lucky Bastard**: You do not have a drawback.']  # debug only
+DRAWBACKS = {
+    '**Lucky Bastard**: You do not have a drawback.': ChessBoard,
+    '**Boxing Shadows**: When your opponent moves a piece, if you can move to the square they moved from, you must.': ChessBoardBoxingWithShadows,
+}
 if MODEL.startswith('Apertus'):
     with open(Path(__file__).parent.parent.parent / 'chat_template.jinja') as _f:
         CHAT_TEMPLATE = _f.read()
@@ -74,17 +77,34 @@ def extract_tool_calls(content):
             continue
     return tool_calls
 
+def extract_drawback_from_conversation(conversation):
+    """Extract the drawback from a loaded conversation's system prompt."""
+    if not conversation or conversation[0]['role'] != 'system':
+        return None
+
+    system_content = conversation[0]['content']
+    # Look for the drawback section in the system prompt
+    match = re.search(r'Your drawback is:\s*```text\s*(.*?)\s*```', system_content, re.DOTALL)
+    if match:
+        drawback_desc = match.group(1).strip()
+        # Find the matching board class
+        for key in DRAWBACKS:
+            if key.startswith(drawback_desc.split(':')[0]):
+                return key, DRAWBACKS[key]
+    return None
+
 
 def main():
     llm = get_llm(MODEL)
-    llm.load_model()
+    llm.load_model(threads=16, kv_cache_type='q4_0', temperature=0.0)
     while llm.is_loading() or not llm.is_running():
         sleep(1)
 
-    board = ChessBoard()
-    drawback = DRAWBACKS[0]  # Using the debug drawback
+    # Randomly select a drawback from the dictionary
+    drawback_desc, board_class = random.choice(list(DRAWBACKS.items()))
+    board = board_class(drawback_player="Black")
     system_prompt = PROMPT.format(
-        drawback=drawback,
+        drawback=drawback_desc,
         color="Black",
         position=board.to_string()
     )
@@ -106,8 +126,16 @@ def main():
             with open(load_path, 'r') as f:
                 conversation = json.load(f)
 
+            # Extract drawback from loaded conversation
+            extracted_drawback = extract_drawback_from_conversation(conversation)
+            if extracted_drawback:
+                drawback_desc, board_class = extracted_drawback
+                print(f"Extracted drawback from conversation: {drawback_desc}")
+            else:
+                print("Could not extract drawback from conversation, using random selection")
+
             # Replay moves
-            board = ChessBoard()
+            board = board_class(drawback_player="Black")
             for msg in conversation:
                 if msg.get("role") == "tool" and msg.get("content", "").startswith("Move ") and " played successfully." in msg.get("content", ""):
                     try:

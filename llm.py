@@ -277,7 +277,10 @@ class LLaMaCPP:
         else:
             options['enable_thinking'] = False
 
-        return template.render(**options)
+        rendered = template.render(**options)
+        if not enable_thinking and short_name.startswith('Qwen3'):
+            rendered += '<think>\n\n</think>'
+        return rendered
 
     def generate(self, prompt: t.Union[str, t.List[t.Dict[str, str]]], enable_thinking: bool = False, temperature: float = None, top_k: int = None, top_p: float = None, min_p: float = None, n_predict: int = None, grammar: str = None, seed: int = None, chat_template: str = None, template_env: t.Dict[str, t.Any] = None, stop: t.List[str] = None) -> str:
         """
