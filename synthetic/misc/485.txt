@@ -1,0 +1,145 @@
+§u§
+```bash
+··• ~/.local/share/Steam/compatibilitytools.d/GE-Proton10-28/proton run /home/lena/.local/share/Steam/steamapps/compatdata/284160/pfx/drive_c/users/steamuser/AppData/Roaming/BeamMP-Launcher/BeamMP-Launcher.exe
+Traceback (most recent call last):
+  File "/home/lena/.local/share/Steam/compatibilitytools.d/GE-Proton10-28/proton", line 2352, in <module>
+    g_session.init_session(sys.argv[1] != "runinprefix")
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lena/.local/share/Steam/compatibilitytools.d/GE-Proton10-28/proton", line 2176, in init_session
+    g_compatdata.setup_prefix()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/lena/.local/share/Steam/compatibilitytools.d/GE-Proton10-28/proton", line 1048, in setup_prefix
+    with self.prefix_lock:
+         ^^^^^^^^^^^^^^^^
+  File "/home/lena/.local/share/Steam/compatibilitytools.d/GE-Proton10-28/filelock.py", line 323, in __enter__
+    self.acquire()
+    ~~~~~~~~~~~~^^
+  File "/home/lena/.local/share/Steam/compatibilitytools.d/GE-Proton10-28/filelock.py", line 271, in acquire
+    self._acquire()
+    ~~~~~~~~~~~~~^^
+  File "/home/lena/.local/share/Steam/compatibilitytools.d/GE-Proton10-28/filelock.py", line 384, in _acquire
+    fd = os.open(self._lock_file, open_mode)
+FileNotFoundError: [Errno 2] No such file or directory: '/home/lena/.steam/steam/SteamApps/compatdata/284160/pfx/pfx.lock'
+```
+How can I fix this?
+§a§
+Hello! It looks like you're running into a path issue while trying to launch the BeamMP launcher on Linux with a custom Proton version. This is a common problem when running Proton outside of the main Steam client.
+
+The error message `FileNotFoundError: [Errno 2] No such file or directory: '/home/lena/.steam/steam/SteamApps/compatdata/284160/pfx/pfx.lock'` shows that the Proton script is looking for game data in the wrong location.
+
+Your command shows you are correctly targeting files in `~/.local/share/Steam/`, but the script itself is defaulting to the older `~/.steam/steam/` path.
+
+Here is how you can fix this:
+
+### Primary Solution: Set the Correct Path Environment Variable
+
+You can tell the Proton script where to find your Steam data by setting the `STEAM_COMPAT_DATA_PATH` environment variable before your command. This points the script to the correct `compatdata` folder.
+
+Modify your command to look like this:
+
+```bash
+STEAM_COMPAT_DATA_PATH="/home/lena/.local/share/Steam/steamapps/compatdata" ~/.local/share/Steam/compatibilitytools.d/GE-Proton10-28/proton run /home/lena/.local/share/Steam/steamapps/compatdata/284160/pfx/drive_c/users/steamuser/AppData/Roaming/BeamMP-Launcher/BeamMP-Launcher.exe
+```
+
+This command tells Proton to use the specified directory for all its compatibility data needs, which should resolve the `FileNotFoundError`.
+
+### Alternative (and Recommended) Method: Use a Helper Tool
+
+Manually running Proton scripts can be complex. Tools like `protontricks` or `SteamTinkerLaunch` are designed to simplify this process. Many guides for running BeamMP on Linux recommend this approach.
+
+For example, after installing `protontricks`, you could launch the executable with a command similar to:
+```bash
+protontricks-launch --appid 284160 /path/to/your/BeamMP-Launcher.exe
+```
+
+### Easier Method: Add as a Non-Steam Game
+
+The most straightforward way to run a Windows application with Proton is to add it to Steam as a "Non-Steam Game":
+1.  Open Steam and go to "Library".
+2.  Click "+ ADD A GAME" in the bottom-left corner, then "Add a Non-Steam Game...".
+3.  Browse to the location of your `BeamMP-Launcher.exe` and add it.
+4.  Find the launcher in your Steam Library, right-click it, and go to "Properties".
+5.  In the "Compatibility" tab, check the box for "Force the use of a specific Steam Play compatibility tool" and select the Proton version you wish to use.
+
+This method allows Steam to handle all the necessary environment variables and paths for you.
+§u§
+```
+[14/1/2026 19:23:23] [INFO] Mod caching directory: ./Resources
+[14/1/2026 19:23:23] [INFO] Wine/Proton Detected! If you are on windows delete HKEY_CURRENT_USER\Software\Wine in regedit
+[14/1/2026 19:23:23] [INFO] Applying patches...
+[14/1/2026 19:23:23] [INFO] Patched!
+[14/1/2026 19:23:23] [INFO] Launcher version is up to date. Latest version: 2.7.0
+[14/1/2026 19:23:23] [INFO] IMPORTANT: You MUST keep this window open to play BeamMP!
+[14/1/2026 19:23:23] [ERROR] Failed to find the game please launch it. Report this if the issue persists code 7
+```
+Now I get this error
+§a§
+That message is the same *family* of error as BeamMP’s documented “Failed to find the game…” codes: the launcher can’t locate BeamNG’s install/user-path info (normally read from registry / Steam install metadata), so it tells you to start the game first. BeamMP’s own error-code table explicitly says this happens when the launcher can’t find/read BeamNG’s info in the registry and the fix is to **run BeamNG at least once** so those values get created.
+And for **code 7 specifically**, there’s a BeamMP forum thread where the suggested fix is exactly “launch BeamNG.drive via Steam first and play it for a minute, then try again.”
+
+Below are the fixes that matter on Linux/Proton, in the order I’d do them.
+
+---
+
+## Fix 1 (most common): launch BeamNG via Steam *with the same Proton + same prefix*
+1. Open Steam.
+2. Go to **BeamNG.drive → Properties → Compatibility** and force **the same Proton you’re using for BeamMP** (GE-Proton10-28 in your case).
+3. **Start BeamNG.drive from Steam**, load to the main menu (or even load into a map for ~30–60 seconds), then **exit cleanly**.
+4. Now run BeamMP again.
+
+Why this helps: that first proper Steam launch is what typically creates/populates the registry/user-folder values BeamMP expects.
+
+---
+
+## Fix 2: when running Proton manually, set BOTH Steam-path env vars (your earlier issue is a big clue)
+Your first error showed Proton looking under `~/.steam/steam/SteamApps/...` instead of `~/.local/share/Steam/...`. That’s a classic sign you’re missing Proton’s “where is Steam installed?” environment, so Proton/BeamMP may not be able to resolve the game install properly when you launch things from a terminal.
+
+Use this exact pattern (note: `STEAM_COMPAT_DATA_PATH` should point to the **appid folder**, not just `.../compatdata`):
+
+```bash
+export STEAM_COMPAT_CLIENT_INSTALL_PATH="$HOME/.local/share/Steam"
+export STEAM_COMPAT_DATA_PATH="$HOME/.local/share/Steam/steamapps/compatdata/284160"
+
+cd "$HOME/.local/share/Steam/steamapps/compatdata/284160/pfx/drive_c/users/steamuser/AppData/Roaming/BeamMP-Launcher"
+
+"$HOME/.local/share/Steam/compatibilitytools.d/GE-Proton10-28/proton" run BeamMP-Launcher.exe
+```
+
+Two extra notes:
+- `cd` into the BeamMP-Launcher folder first is intentional: your log says “Mod caching directory: ./Resources”, meaning it uses the *current working directory* for some files.
+- If you ever launch BeamNG with a different Proton version, Steam can create/adjust things in ways the launcher doesn’t like. Keep BeamNG + BeamMP on the same Proton build while debugging.
+
+(Background on these env vars is widely discussed for “running Proton outside of Steam”; it’s not really “officially supported”, but it’s the practical reality.)
+
+---
+
+## Fix 3: verify BeamNG registry exists inside the prefix (and reset bad overrides)
+BeamNG stores config in a registry key under:
+
+`HKEY_CURRENT_USER\SOFTWARE\BeamNG\BeamNG.drive`
+
+BeamNG’s own troubleshooting docs mention this exact key (example: deleting `userpath_override` if it breaks user-folder creation).
+
+To inspect it in the **284160 Proton prefix**:
+
+```bash
+protontricks 284160 regedit
+```
+
+Then check that `HKEY_CURRENT_USER\SOFTWARE\BeamNG\BeamNG.drive` exists. If it does *not* exist, BeamNG hasn’t successfully run in that prefix (go back to Fix 1). If it does exist but has a weird override value, remove the override (similar to BeamNG’s own guidance).
+
+---
+
+## Fix 4 (often the “cleanest” on Linux): use the native Linux BeamMP launcher + Proton BeamNG
+BeamMP’s docs now explicitly describe a Linux workflow where you run the **native Linux BeamMP-Launcher** with `--no-launch`, and then symlink the Proton BeamNG userfolder so the launcher writes to the right place.
+
+If you keep fighting the Windows `.exe` launcher under Proton, this path tends to be more reliable long-term (but it does require building the launcher at the moment).
+
+---
+
+### Quick “what I would do” checklist
+1) Launch BeamNG from Steam (same Proton GE) once → exit.
+2) Run BeamMP again, but with both `STEAM_COMPAT_CLIENT_INSTALL_PATH` and `STEAM_COMPAT_DATA_PATH` set as above.
+3) If still broken, inspect the BeamNG registry key inside the prefix.
+
+If you do those three, “code 7” almost always goes away because BeamMP can finally “see” a valid BeamNG install/user setup.

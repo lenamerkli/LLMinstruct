@@ -1,0 +1,54 @@
+§u§
+<attach:cffb37c79eba6146a84f1ad31a1fc7f809e2827a7cac132486d79fd1d99bcb8c>Erkläre mir, wie ich solche Aufgaben lösen kann.
+§a§
+Das Lösen solcher Aufgaben folgt einem klaren Schema. Hier geht es darum, eine Fläche unter einer Kurve (Integralrechnung) in zwei gleich große Teile zu teilen.
+
+Hier ist die Schritt-für-Schritt-Anleitung am Beispiel deiner Aufgabe:
+
+### 1. Das Problem verstehen
+Du hast eine Funktion $f(x) = \frac{1}{x}$ im Bereich von $1$ bis $e^2$. Eine vertikale Linie bei $x = a$ teilt diese Fläche in zwei Teile:
+*   **Fläche $A_1$**: Von $1$ bis $a$.
+*   **Fläche $A_2$**: Von $a$ bis $e^2$.
+*   **Ziel**: Finde $a$, so dass $A_1 = A_2$.
+
+### 2. Die Integrale aufstellen
+Die Fläche unter einer Kurve berechnet man mit dem bestimmten Integral.
+*   $A_1 = \int_{1}^{a} \frac{1}{x} \, dx$
+*   $A_2 = \int_{a}^{e^2} \frac{1}{x} \, dx$
+
+### 3. Die Stammfunktion finden
+Um die Integrale zu berechnen, benötigst du die Stammfunktion von $f(x) = \frac{1}{x}$. Diese ist:
+$$F(x) = \ln|x|$$
+
+### 4. Die Gleichung aufstellen und lösen
+Setze die Integrale gleich:
+$$\int_{1}^{a} \frac{1}{x} \, dx = \int_{a}^{e^2} \frac{1}{x} \, dx$$
+
+Wende den Hauptsatz der Differenzial- und Integralrechnung an ($[F(x)]_b^a = F(b) - F(a)$):
+$$[\ln(x)]_1^a = [\ln(x)]_a^{e^2}$$
+
+Setze die Grenzen ein:
+$$\ln(a) - \ln(1) = \ln(e^2) - \ln(a)$$
+
+### 5. Nach $a$ auflösen
+Jetzt nutzt du Logarithmus-Regeln und einfaches Umstellen:
+1.  Wisse, dass $\ln(1) = 0$ und $\ln(e^2) = 2$ ist.
+2.  Die Gleichung vereinfacht sich zu:
+    $$\ln(a) - 0 = 2 - \ln(a)$$
+3.  Bringe alle $\ln(a)$ auf eine Seite:
+    $$2 \cdot \ln(a) = 2$$
+4.  Teile durch 2:
+    $$\ln(a) = 1$$
+5.  Um das $\ln$ wegzubekommen, wende die $e$-Funktion auf beiden Seiten an ($e^{\ln(a)} = a$):
+    $$a = e^1 = e$$
+
+**Ergebnis:** Die Gerade $x = e$ teilt die Fläche genau in der Mitte.
+
+---
+
+### Allgemeines Rezept für ähnliche Aufgaben:
+1.  **Integrale definieren:** Stelle die Formeln für die Teilflächen $A_1$ (von Start bis $a$) und $A_2$ (von $a$ bis Ende) auf.
+2.  **Gleichung bilden:** Setze $A_1 = A_2$. (Alternativ kannst du auch $A_1 = \frac{1}{2} \cdot A_{Gesamt}$ rechnen).
+3.  **Stammfunktion bilden:** Integriere die Funktion.
+4.  **Grenzen einsetzen:** Ersetze die Integrale durch die Werte der Stammfunktion an den Grenzen.
+5.  **Variable isolieren:** Löse die entstandene Gleichung nach der gesuchten Unbekannten (hier $a$) auf.

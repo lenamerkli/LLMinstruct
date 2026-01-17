@@ -1,0 +1,350 @@
+§u§
+<attach:e58e6487efd3bd08388185fc4cea8fe0df384ff00ad479c328ee8140ecea269c><attach:18cf40253b949e449d538cfd1780dc1f66dbe6fe3d8d5b1123a063e9e4aeedc3><attach:8dd8e2e9e1afe556478c3dd8872f25e9fdac4d29fbdcca294dd5d436a3f59f2b>Erkläre mir die Themen:
+```
+	• Allgemeine Wellenaufgaben (A1-A25) ca. 2X
+	• Interferenz (A26/27/28) ca. 1X
+	• Stehende Wellen (inkl. Saiten und Pfeifen) (A32ff) ca. 2X
+	• Dopplereffekt ca. 1X
+Inkl. Verständnisaufgabe
+```
+Anbei sind Notizen meines Lehrers.
+§a§
+Sehr gerne! Ich erkläre dir die Themen, die dein Lehrer in seinen Notizen aufgelistet hat – **basierend auf den konkreten Beispielen und Formeln aus deinen Bildern**. Das ist keine allgemeine Theorie, sondern eine **praxisnahe, auf deine Prüfung zugeschnittene Erklärung**, mit Fokus auf das, was du wirklich können musst.
+
+---
+
+## 🎯 **Übersicht: Was kommt in der Prüfung?**
+
+Dein Lehrer sagt:
+> *Prüfungsstoff: ca. 6 Aufgaben, 60–70 min*
+> *Hilfsmittel: Taschenrechner, Formelbuch, 2 A4 Seiten handgeschriebene Zusammenfassung*
+
+Das bedeutet: Du musst **schnell rechnen können**, **Formeln anwenden** und **physikalische Situationen verstehen**.
+
+---
+
+# 🔹 1. Allgemeine Wellenaufgaben (A1–A25) — ca. 2x
+
+### 💡 Was ist das?
+Das sind Grundlagenaufgaben zu Wellen:
+- Welchen Typ haben sie? (transversal/longitudinal)
+- Wie berechnet man Wellenlänge, Frequenz, Geschwindigkeit?
+- Wie sieht die Wellengleichung aus?
+- Wie berechnet man die maximale Transversalgeschwindigkeit?
+
+---
+
+### 📌 Wichtige Formeln (aus Bild 1):
+
+#### ➤ Wellengleichung:
+\[
+y(x,t) = y_m \cdot \sin(kx \pm \omega t)
+\]
+- \(y_m\) = Amplitude
+- \(k = \frac{2\pi}{\lambda}\) = Wellenzahl
+- \(\omega = 2\pi f\) = Kreisfrequenz
+- Vorzeichen: Minus → Welle läuft in +x-Richtung; Plus → in -x-Richtung
+
+#### ➤ Wellengeschwindigkeit:
+\[
+v = \lambda \cdot f = \frac{\omega}{k}
+\]
+
+#### ➤ Transversale Geschwindigkeit (Ableitung nach t):
+\[
+u = \frac{\partial y}{\partial t} = y_m \cdot \omega \cdot \cos(kx \pm \omega t)
+\]
+→ Maximalwert:
+\[
+|u_{\text{max}}| = y_m \cdot \omega
+\]
+
+#### ➤ Für Seilwellen (Bild 2, A35):
+\[
+v = \sqrt{\frac{T}{\mu}}, \quad \mu = \frac{m}{L}
+\]
+- \(T\) = Spannkraft (in N)
+- \(\mu\) = lineare Massendichte (kg/m)
+
+---
+
+### ✅ Beispiel: Aufgabe A35 (Bild 2)
+
+> Ein Seil, L=8,40 m, m=0,120 kg, T=96,0 N → (a) v = ? (b) max. λ für stehende Welle? (c) f = ?
+
+#### a) Geschwindigkeit:
+\[
+\mu = \frac{0,120}{8,40} = 0,01429 \, \text{kg/m}
+\]
+\[
+v = \sqrt{\frac{96,0}{0,01429}} = \sqrt{6720} \approx 82,0 \, \text{m/s}
+\]
+
+#### b) Maximale Wellenlänge für stehende Welle:
+Bei beidseitig fixiertem Seil → Grundschwingung:
+\[
+\lambda_{\text{max}} = 2L = 2 \cdot 8,40 = 16,8 \, \text{m}
+\]
+
+#### c) Frequenz:
+\[
+f = \frac{v}{\lambda} = \frac{82,0}{16,8} \approx 4,88 \, \text{Hz}
+\]
+
+---
+
+### ⚠️ Was du können musst:
+- Formeln aus dem Formelbuch finden und anwenden
+- Einheiten umrechnen (z.B. km/h → m/s!)
+- Physikalische Bedeutung von \(k, \omega, \mu\) verstehen
+- Ableiten von \(y(x,t)\) → \(u(x,t)\) → Maximalwert erkennen
+
+---
+
+# 🔹 2. Interferenz (A26–A28) — ca. 1x
+
+### 💡 Was ist das?
+Zwei oder mehr Wellen überlagern sich → es entsteht ein neues Wellenmuster.
+Wichtig: **konstruktive vs. destruktive Interferenz**.
+
+---
+
+### 📌 Wichtige Formel (aus Bild 1):
+
+Für zwei Wellen gleicher Frequenz und Amplitude, die sich überlagern:
+
+\[
+y'(x,t) = 2y_m \cos\left(\frac{\phi}{2}\right) \cdot \sin\left(kx - \omega t + \frac{\phi}{2}\right)
+\]
+
+- \(\phi\) = Phasendifferenz zwischen den Wellen
+- Wenn \(\phi = 0\) → konstruktiv → Amplitude verdoppelt
+- Wenn \(\phi = \pi\) → destruktiv → Amplitude = 0
+
+---
+
+### ✅ Beispiel: Aufgabe A40 (Bild 2)
+
+> Zwei Impulse laufen aufeinander zu → skizziere Form zum Zeitpunkt t=5,10,15,20,25 ms → wann überlagern sie sich vollständig?
+
+#### a) Skizzen:
+- Jeder Impuls bewegt sich mit \(v = 2,0 \, \text{m/s}\)
+- Abstand = 6,0 cm = 0,06 m
+- Überlappung beginnt, wenn jeder 3 cm zurückgelegt hat →
+\[
+t = \frac{s}{v} = \frac{0,03}{2,0} = 0,015 \, \text{s} = 15 \, \text{ms}
+\]
+
+→ Bei t=15 ms: vollständige Überlagerung → Amplitude addiert sich → "höherer Berg"
+
+#### b) Energiefrage:
+> Welche Art von Energie hat der Impuls bei t=15 ms?
+
+→ Da es sich um ein Seil handelt und keine elastische Verformung (keine Feder), ist die Energie **rein kinetisch** (die Masse des Seils bewegt sich).
+
+---
+
+### ⚠️ Was du können musst:
+- Überlagerung grafisch darstellen (Skizzen!)
+- Zeitpunkte berechnen, wann Überlappung stattfindet
+- Verstehen, dass bei Interferenz Energie nicht verloren geht, sondern verteilt wird
+- Phasendifferenz → Auswirkung auf Amplitude
+
+---
+
+# 🔹 3. Stehende Wellen (inkl. Saiten & Pfeifen) (A32ff) — ca. 2x
+
+### 💡 Was ist das?
+Stehende Wellen entstehen durch Interferenz einer Welle mit ihrer Reflexion.
+Sie haben **Knoten** (Orte ohne Bewegung) und **Bäuche** (maximale Amplitude).
+
+---
+
+### 📌 Wichtige Formeln (aus Bild 1 & 2):
+
+#### ➤ Allgemein:
+\[
+\lambda_n = \frac{2L}{n} \quad \text{(beidseitig fixiert, z.B. Saite)}
+\]
+\[
+f_n = \frac{n \cdot v}{2L} \quad \text{(Grundton n=1, Oberschwingungen n=2,3,...)}
+\]
+
+#### ➤ Für Pfeifen:
+- Beidseitig offen: wie Saite → \(\lambda_n = \frac{2L}{n}\)
+- Einseitig geschlossen: nur ungerade Harmonische → \(\lambda_n = \frac{4L}{n}, n=1,3,5,...\)
+
+---
+
+### ✅ Beispiel: Aufgabe A35 (wieder, Bild 2)
+
+Schon oben gerechnet:
+- Grundschwingung → \(\lambda = 2L = 16,8 \, \text{m}\)
+- \(f = v / \lambda = 82,0 / 16,8 ≈ 4,88 \, \text{Hz}\)
+
+---
+
+### ⚠️ Was du können musst:
+- Unterscheiden zwischen **Saiten** (beidseitig fixiert) und **Pfeifen** (offen/geschlossen)
+- Grundfrequenz und Oberschwingungen berechnen
+- Wellenlänge aus Länge und Knoten/Bauch-Anordnung ableiten
+- In Aufgaben erkennen, ob es sich um stehende Wellen handelt (z.B. „resonanz“, „Schwingungen“)
+
+---
+
+# 🔹 4. Dopplereffekt — ca. 1x
+
+### 💡 Was ist das?
+Wenn sich Quelle oder Beobachter bewegen, ändert sich die wahrgenommene Frequenz.
+
+---
+
+### 📌 Wichtige Formel (aus Bild 1 & 3):
+
+\[
+f_B = f_Q \cdot \frac{c \pm v_B}{c \mp v_Q}
+\]
+
+- \(f_B\) = Frequenz beim Beobachter
+- \(f_Q\) = Frequenz der Quelle
+- \(v_B\) = Geschwindigkeit des Beobachters
+- \(v_Q\) = Geschwindigkeit der Quelle
+- \(c\) = Ausbreitungsgeschwindigkeit der Welle (z.B. Schall in Wasser: 5470 m/s)
+
+⚠️ **Vorzeichenregel:**
+- Beobachter bewegt sich **auf Quelle zu** → **+ im Zähler**
+- Quelle bewegt sich **auf Beobachter zu** → **– im Nenner**
+
+---
+
+### ✅ Beispiel: Aufgabe A50 (Bild 3)
+
+> Stationäre Quelle sendet 0,150 MHz → Lastwagen bewegt sich mit 45 m/s darauf zu → welche Frequenz misst der Detektor?
+
+→ Quelle ruht → \(v_Q = 0\)
+→ Beobachter bewegt sich auf Quelle zu → \(+v_B\)
+
+\[
+f_B = f_Q \cdot \frac{c + v_B}{c} = 0,150 \cdot 10^6 \cdot \frac{c + 45}{c}
+\]
+
+Da \(v_B \ll c\), kann man auch approximieren:
+\[
+f_B \approx f_Q \left(1 + \frac{v_B}{c}\right)
+\]
+
+Aber hier direkt berechnet:
+\[
+f_B = 0,150 \cdot 10^6 \cdot \frac{c + 45}{c} = 0,150 \cdot 10^6 \cdot \left(1 + \frac{45}{c}\right)
+\]
+
+(Wenn c = Schallgeschwindigkeit in Luft ~340 m/s → dann wäre das viel, aber hier ist es wahrscheinlich Ultraschall in Wasser? Im Bild steht 5470 m/s → also Wasser!)
+
+→ Also:
+\[
+f_B = 0,150 \cdot 10^6 \cdot \frac{5470 + 45}{5470} = 0,150 \cdot 10^6 \cdot \frac{5515}{5470} \approx 0,1513 \cdot 10^6 \, \text{Hz} = 151,3 \, \text{kHz}
+\]
+
+---
+
+### ✅ Beispiel: Aufgabe A51 (Bild 3) — DOPPELT!
+
+> Französisches U-Boot sendet 1000 Hz → bewegt sich mit 50 km/h → amerikanisches U-Boot bewegt sich mit 70 km/h entgegen → (a) welche Frequenz registriert das amerikanische Boot? (b) welche Frequenz registriert das französische Boot von den reflektierten Wellen?
+
+#### a) Amerikanisches Boot als Beobachter:
+Quelle (franz.) bewegt sich auf Beobachter (amerik.) zu →
+Beobachter bewegt sich auf Quelle zu →
+\[
+f'_A = f_Q \cdot \frac{c + v_A}{c - v_F}
+\]
+
+Einheiten umrechnen:
+50 km/h = 50/3,6 ≈ 13,89 m/s
+70 km/h = 70/3,6 ≈ 19,44 m/s
+c = 5470 m/s (Schall in Wasser)
+
+\[
+f'_A = 1000 \cdot \frac{5470 + 19,44}{5470 - 13,89} = 1000 \cdot \frac{5489,44}{5456,11} \approx 1006,1 \, \text{Hz}
+\]
+
+#### b) Französisches Boot hört die reflektierte Welle:
+
+Jetzt ist das amerikanische Boot die **Quelle** (mit Frequenz \(f'_A\)) und bewegt sich **auf das französische Boot zu** →
+Das französische Boot ist nun **Beobachter**, der sich **auf die Quelle zu bewegt** →
+Also nochmal Doppler:
+
+\[
+f''_F = f'_A \cdot \frac{c + v_F}{c - v_A}
+\]
+
+\[
+f''_F = 1006,1 \cdot \frac{5470 + 13,89}{5470 - 19,44} = 1006,1 \cdot \frac{5483,89}{5450,56} \approx 1012,3 \, \text{Hz}
+\]
+
+→ **Ergebnis: Die Frequenz wird doppelt verschoben!**
+
+---
+
+### ⚠️ Was du können musst:
+- Vorzeichen richtig setzen („Aufeinander zu“ → + im Zähler, – im Nenner)
+- Bei Reflexion: zweifacher Doppler-Effekt!
+- Einheiten immer in m/s umrechnen!
+- Schallgeschwindigkeit je nach Medium kennen (Luft ~340 m/s, Wasser ~1500 m/s, aber hier 5470 m/s → Sonar!)
+- Grafisch verstehen: wer bewegt sich wohin?
+
+---
+
+# 🔹 Inkl. Verständnisaufgabe
+
+Das heisst: Es gibt **mindestens eine Aufgabe, bei der du erklären musst**, warum etwas so ist – nicht nur rechnen.
+
+---
+
+### 📌 Typische Verständnisfragen:
+
+- Warum ist bei stehenden Wellen die Energie nicht gleichmässig verteilt?
+- Warum nimmt die Frequenz beim Dopplereffekt zu, wenn sich Quelle und Beobachter aufeinander zubewegen?
+- Warum hat ein einseitig geschlossenes Rohr nur ungerade Harmonische?
+- Warum bleibt die Gesamtenergie bei Interferenz erhalten, obwohl Amplitude kleiner werden kann?
+
+---
+
+### ✅ Beispiel (aus Bild 2, A40b):
+
+> „Von welcher Art ist die Energie des Impulses zum Zeitpunkt t=15 ms?“
+
+Antwort:
+> *Da es sich um ein Seil handelt und keine elastische Verformung stattfindet (keine Federenergie), ist die Energie rein kinetisch. Die Masse des Seils bewegt sich mit maximaler Geschwindigkeit, während die Auslenkung null ist (bei Überlagerung).*
+
+---
+
+## 🧭 Abschliessender Tipp: Dein Lernplan
+
+1. **Mache dir eine 2-seitige Zusammenfassung** (wie dein Lehrer sagt!)
+   - Alle Formeln mit Erklärung
+   - Vorzeichenregeln (Doppler, Wellengleichung)
+   - Skizzen: stehende Welle, Interferenz, Doppler-Situationen
+
+2. **Rechne die Hausaufgaben (HA: A37/39/40/42)** – das sind genau die Typen, die kommen!
+
+3. **Zeitmanagement**: 60–70 min für 6 Aufgaben → ca. 10–12 min pro Aufgabe → übe unter Zeitdruck!
+
+4. **Verständnisfragen**: Schreib dir 5 typische Fragen auf und antworte frei – das trainiert dein physikalisches Denken.
+
+---
+
+## ✅ Zusammenfassung: Was du für die Prüfung brauchst
+
+| Thema                  | Was du können musst                                                                 |
+|------------------------|-------------------------------------------------------------------------------------|
+| Allgemeine Wellen      | Wellengleichung, v=λf, u_max=y_m·ω, v=√(T/μ)                                        |
+| Interferenz            | Überlagerung grafisch, Zeitpunkte berechnen, Energieverteilung                      |
+| Stehende Wellen        | λ_n=2L/n, f_n=n·v/(2L), Unterschied Saiten/Pfeifen                                 |
+| Dopplereffekt          | Formel mit Vorzeichen, doppelter Doppler bei Reflexion, Einheiten umrechnen         |
+| Verständnis            | Physikalische Begründungen geben, nicht nur rechnen                                 |
+
+---
+
+Wenn du willst, kann ich dir auch eine **komplette 2-seitige Zusammenfassung** als PDF oder Text erstellen – sag einfach Bescheid!
+
+Viel Erfolg bei der Prüfung – du schaffst das! 💪📚

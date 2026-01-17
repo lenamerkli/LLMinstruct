@@ -1,0 +1,143 @@
+§u§
+ffmpeg `.mkv` to a format that whatsapp supports
+§a§
+WhatsApp is happiest with **MP4 container + H.264 video + AAC audio**.
+Use ffmpeg to convert your `.mkv` to that.
+
+### 1. First try (no quality loss, just change container)
+
+If the MKV already uses H.264/AAC, this might be enough:
+
+```bash
+ffmpeg -i input.mkv -c copy output_whatsapp.mp4
+```
+
+- Very fast
+- No re-encoding, so no quality loss
+If WhatsApp still won’t accept it, then re-encode:
+
+---
+
+### 2. Safe re-encode for WhatsApp
+
+```bash
+ffmpeg -i input.mkv \
+  -vf "scale='min(1280,iw)':'min(720,ih)':force_original_aspect_ratio=decrease" \
+  -c:v libx264 -preset medium -crf 23 -profile:v baseline -level 3.0 \
+  -c:a aac -b:a 128k \
+  -movflags +faststart \
+  output_whatsapp.mp4
+```
+
+What this does:
+
+- `-c:v libx264 ... baseline -level 3.0` → H.264 video in a very compatible profile
+- `-c:a aac` → AAC audio
+- `scale=...` → keeps aspect ratio, max around 1280×720 (good balance for WhatsApp)
+- `-crf 23` → quality/size tradeoff (lower = better quality, bigger file)
+- `-movflags +faststart` → better playback on phones
+
+You can tweak:
+
+- Smaller file: increase `-crf` (e.g. 25) or lower max resolution in `scale`
+- Better quality: decrease `-crf` (e.g. 20), but file gets bigger
+
+If you tell me:
+- approximate video length, and
+- if you’re hitting WhatsApp’s size limit
+I can suggest more exact ffmpeg settings.
+§u§
+```
+[vost#0:0 @ 0x55dec6c362c0] Unknown encoder 'libx264'
+[vost#0:0 @ 0x55dec6c362c0] Error selecting an encoder
+```
+§a§
+That error means your `ffmpeg` was compiled **without** the `libx264` encoder, so the command I gave can’t work as-is.
+
+You have a few options:
+
+---
+
+## 1. Try without re-encoding (fast, if compatible)
+
+If you haven’t already, first see if the video is *already* H.264/AAC and just needs remuxing:
+
+```bash
+ffmpeg -i input.mkv -c copy output_whatsapp.mp4
+```
+
+If WhatsApp accepts that MP4, you’re done.
+If not, you really do need to re-encode.
+
+---
+
+## 2. See which H.264 encoders you *do* have
+
+Run this and paste the result if you can:
+
+```bash
+ffmpeg -hide_banner -encoders | grep 264
+```
+
+If you see something like:
+
+- `libx264`
+- `h264_nvenc`
+- `h264_qsv`
+- `h264_videotoolbox`
+- `h264_amf`
+
+then use that instead of `libx264`, e.g.:
+
+```bash
+ffmpeg -i input.mkv \
+  -vf "scale='min(1280,iw)':'min(720,ih)':force_original_aspect_ratio=decrease" \
+  -c:v h264_nvenc \
+  -c:a aac -b:a 128k \
+  -movflags +faststart \
+  output_whatsapp.mp4
+```
+
+(just swap `h264_nvenc` for whatever encoder you actually have)
+
+---
+
+## 3. Temporary workaround using MPEG-4 video
+
+If your build has no H.264 encoder at all, you can *try* MPEG‑4 video in MP4.
+It’s less efficient (bigger files), but many phones/WhatsApp installs will still play it:
+
+```bash
+ffmpeg -i input.mkv \
+  -vf "scale='min(1280,iw)':'min(720,ih)':force_original_aspect_ratio=decrease" \
+  -c:v mpeg4 -qscale:v 3 \
+  -c:a aac -b:a 128k \
+  -movflags +faststart \
+  output_whatsapp.mp4
+```
+
+If WhatsApp rejects that, you’ll need a proper H.264 encoder (step 4).
+
+---
+
+## 4. Install an ffmpeg build with libx264 (recommended)
+
+The “real” fix is to install ffmpeg that includes `libx264`.
+How you do that depends on your OS:
+
+- **Windows**: download a full build of ffmpeg (not the “minimal” one) and add it to your `PATH`.
+- **macOS (Homebrew)**: `brew install ffmpeg` usually comes with libx264.
+- **Linux**: use your distro’s full `ffmpeg` package, or a static build from ffmpeg.org that has `--enable-gpl --enable-libx264`.
+
+---
+
+Can you tell me:
+
+1. Your OS (Windows/macOS/Linux + version), and
+2. The output of:
+
+   ```bash
+   ffmpeg -hide_banner -encoders | grep 264
+   ```
+
+Then I can give you a precise, copy‑pasteable command for your setup.

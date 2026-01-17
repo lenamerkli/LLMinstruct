@@ -1,0 +1,91 @@
+§u§
+```
+No encryption support
+
+Your system has a supported keyring but encryption is not available.
+
+Electron has detected that encryption is not available on your keyring kwallet6. Please ensure that you have the keyring installed. If you do have the keyring installed, please reboot and try again. Optionally, you can allow Element to use a weaker form of encryption.
+```
+I am using fedora 43.
+§a§
+The error message you're seeing in Element (an Electron-based Matrix client) indicates that the app has detected your system's KDE Wallet (kwallet6) as a supported keyring backend for secure storage/encryption, but it can't actually use it for encryption operations. This is a common issue on Linux distributions like Fedora, especially in KDE environments (e.g., Fedora KDE Spin), where kwallet6 is the default keyring. Fedora 43 appears to be a very recent or upcoming release (as of early 2026, Fedora is around version 41–42), so this could stem from a Plasma 6 update, Flatpak sandboxing, or incomplete kwallet setup.
+
+I'll outline the most likely causes and step-by-step solutions below, based on similar reported issues. The most common culprit is if Element is installed via Flatpak (which is the recommended and default method on Fedora for this app), as Flatpak's sandbox restricts D-Bus access to kwalletd6 (the kwallet6 daemon). If it's a native RPM install, the fixes are slightly different. Start with verifying your installation method and try the solutions in order.
+
+### 1. **Quick Workaround: Allow Weaker Encryption**
+   As mentioned in the error dialog, you can temporarily bypass this by allowing Element to fall back to a less secure storage method (e.g., plain text or basic encryption). This isn't ideal for security but will let the app run.
+   - In the error popup, select **"Allow Element to use a weaker form of encryption"**.
+   - If the dialog doesn't appear or you want to force it permanently:
+     - Launch Element from the terminal with:
+       `element-desktop --password-store=basic`
+     - Or, if using Flatpak:
+       `flatpak run im.riot.Riot --password-store=basic` (replace `im.riot.Riot` with the exact Flatpak ID if different; check with `flatpak list | grep element`).
+   - **Note**: This stores sensitive data (like session tokens) less securely. Use only as a stopgap while fixing the root issue.
+
+### 2. **Verify and Install kwallet6 Dependencies**
+   Even if detected, kwallet6 might not be fully installed or running. Fedora KDE includes it by default, but confirm:
+   - Open a terminal and run:
+     `dnf list installed | grep kwallet`
+     Look for `kf6-kwallet` or `plasma-integration`. If missing:
+     - Install it:
+       `sudo dnf install kf6-kwallet plasma-integration kwalletmanager`
+     - This pulls in the KDE Frameworks 6 wallet libraries and tools.
+   - Ensure the kwallet daemon is running:
+     `systemctl --user status plasma-kwalletd6`
+     If not active, start it:
+     `systemctl --user start plasma-kwalletd6`
+     And enable on login:
+     `systemctl --user enable plasma-kwalletd6`
+   - Reboot your system (as suggested in the error) to ensure everything initializes properly.
+   - Test kwallet manually: Run `kwalletmanager` (or `kwalletmanager6` if available) to see if it opens without errors and can create/unlock a wallet.
+
+   If you're not using KDE Plasma, consider switching to GNOME Keyring (default on Fedora Workstation):
+   `sudo dnf install gnome-keyring gnome-keyring-pam`
+   Then launch Element with: `element-desktop --password-store=gnome-libsecret` (or via Flatpak override, see below).
+
+### 3. **If Installed via Flatpak (Most Common on Fedora)**
+   Flatpak sandboxes apps, which can block access to kwallet6 via D-Bus. This is especially true after Plasma 6 upgrades, where the kwalletd6 service needs explicit whitelisting.
+
+   - **Confirm Installation**: Run `flatpak list | grep -i element` (or `riot` for older IDs). If present, it's Flatpak.
+
+   - **Whitelist kwalletd6 on D-Bus**:
+     - Install Flatseal (a GUI for Flatpak permissions) if not already:
+       `sudo dnf install flatseal`
+     - Open Flatseal, find Element (ID: `im.riot.Riot` or similar), and under **D-Bus**, add `org.kde.kwalletd6` to the session bus whitelist.
+     - Alternatively, via command line (for the specific app):
+       `sudo flatpak override --talk-name=org.kde.kwalletd6 im.riot.Riot`
+     - Relaunch Element and test.
+
+   - **Force kwallet6 Backend**:
+     - Run:
+       `sudo flatpak override --env=PASSWORD_STORE=kwallet6 im.riot.Riot`
+       (Replace `im.riot.Riot` with your exact app ID.)
+     - If it still fails, try combining with the basic fallback:
+       `sudo flatpak override --env=PASSWORD_STORE=basic im.riot.Riot`
+
+   - **Additional Flatpak Permissions**:
+     - In Flatseal, also enable **Secrets** (for keyring access) and **Device** (for full system integration).
+     - If using Wayland, ensure `--socket=x11` or Wayland support isn't conflicting: Test with `flatpak run --socket=fallback-x11 im.riot.Riot`.
+
+   - Reboot after changes, then relaunch.
+
+   If this doesn't work, it might be a known Flatpak + kwallet6 bug on recent Fedora/Plasma (reported in similar apps like Signal). Consider installing the native version instead (see below).
+
+### 4. **If Installed Natively (RPM via DNF)**
+   - Install/update Element natively:
+     `sudo dnf install element-desktop` (available in Fedora repos or via COPR: `sudo dnf copr enable taw/element` then install).
+   - Launch with explicit backend:
+     `element-desktop --password-store=kwallet6`
+   - If issues persist, check KDE settings:
+     - Go to **System Settings > KDE Wallet > Enable the wallet subsystem** and set it to unlock automatically on login (using PAM).
+     - Ensure no conflicts with other keyrings (e.g., disable GNOME Keyring if present).
+
+### 5. **General Troubleshooting**
+   - **Logs for More Details**: Launch Element from terminal and check output:
+     `element-desktop` (native) or `flatpak run im.riot.Riot` (Flatpak). Look for errors like "Error while encrypting... Decryption is not available" or D-Bus failures. Share these if the above doesn't help.
+   - **Update Everything**: Run `sudo dnf update` and reboot. Fedora 43 might have fixed bugs in kwallet6 or Electron.
+   - **Test Keyring Access**: Install and run a test app like `gnome-keyring` tools or `secret-tool store` to verify system-wide keyring works.
+   - **Disk Encryption Interference**: If your Fedora install uses full-disk encryption (LUKS), ensure kwallet unlocks after decryption. Some users report issues here—check `journalctl -u plasma-kwalletd6` for errors.
+   - **Alternative Install**: If Flatpak keeps failing, switch to native RPM (as above) or use the web version at app.element.io in your browser.
+
+If none of this resolves it, provide more details: Is Element installed via Flatpak or native? KDE or GNOME? Any recent updates? Output from the terminal launch? This should get you up and running securely.

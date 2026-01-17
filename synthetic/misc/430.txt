@@ -1,0 +1,75 @@
+§u§
+<attach:7bdc80098f004ba1eaf30873056ce93a464b1d205ba8f762a3935e69805e61f7>Turn this document into latex.
+§a§
+Here is the LaTeX code for the document provided. I have used the `article` class and included packages to handle the German language and special characters correctly. I also adjusted the bullet points to match the open circles ($\circ$) seen in the image.
+
+```latex
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{geometry}
+\usepackage{amssymb} % For the circle bullet point
+
+% Set page margins
+\geometry{
+    left=2.5cm,
+    right=2.5cm,
+    top=2.5cm,
+    bottom=2.5cm
+}
+
+% Customize itemize label to be an open circle
+\renewcommand{\labelitemi}{$\circ$}
+
+\begin{document}
+
+\section*{Gentechnik: transgene Organismen}
+
+\begin{itemize}
+    \item den grundlegenden Ablauf der Herstellung eines transgenen Organismus schrittweise und nachvollziehbar aufzeigen
+    \item alle Teilschritte (Isolierung, Vektoren, Restriktion, Transformation, Selektion, Proteinproduktion) in eigenen Worten erläutern und grob skizzieren
+    \item erklären, was ein Vektor ist und welche Transfektionsmethoden für welche Organismengruppen geeignet sind
+    \item die Funktion von Restriktionsenzymen in Bakterien und im Labor veranschaulichen
+    \item einzeichnen wie ein bestimmtes Restriktionsenzym die DNA schneidet, und entscheiden, ob dabei „sticky ends“ oder „blunt ends“ entstehen (Erkennungssequenzen werden angegeben, NICHT auswendig lernen)
+    \item den Nutzen von Restriktionsenzymen in der Gentechnik präzise erläutern
+    \item „rekombinante DNA“ definieren und veranschaulichen, wie diese mittels Restriktionsenzyme und Ligasen gezielt hergestellt wird
+    \item Mindestens zwei Methoden aufzeigen, mit denen rekombinante Bakterien nach der Transfektion schrittweise selektioniert werden können
+\end{itemize}
+
+\vspace{1cm}
+
+\section*{Gentechnik: Forensik, PCR}
+
+\begin{itemize}
+    \item erklären, welche DNA-Bereiche für einen genetischen Fingerabdruck grundsätzlich geeignet sind
+    \item erläutern, inwiefern die Analyse repetitiver Sequenzen bei der Identifizierung von Individuen helfen kann
+    \item in eigenen Worten beschreiben was „STR“ bedeutet
+    \item begründen weshalb STR-Regionen für die eindeutige Identifizierung besonders aussagekräftig sind
+    \item erläutern, weshalb DNA vor der Analyse vervielfältigt werden muss (PCR)
+    \item den genauen Ablauf und die konkreten Komponenten einer PCR beschreiben oder skizzieren
+    \item die Schritte der PCR (Denaturierung, Hybridisierung und Polymerisation) korrekt wiedergeben
+    \item für ein gegebenes DNA-Segment Primer für die PCR entwerfen oder vorhersagen, wo ein gegebener Primer an die DNA bindet
+    \item erklären wie durch die Elektrophorese Längenunterschiede in DNA-Fragmenten sichtbar gemacht werden und wie diese Interpretiert werden
+    \item vergleichend erklären, wie die klassische Gelelektrophorese und die Kapillarelektrophorese funktionieren und sich unterscheiden
+    \item STR-Muster (Banden oder Peaks) interpretieren (inkl. Bedeutung von Lage und Höhe der Peaks sowie Achsenbeschriftung) und daraus fundierte Aussagen zur Identifikation oder zu Verwandtschaftsverhältnissen ableiten
+\end{itemize}
+
+\vspace{1cm}
+
+\section*{Gentechnik: CRISPR/Cas}
+
+\begin{itemize}
+    \item CRISPR/Cas9 mit früheren Genomeditierungsmethoden vergleichen und begründen, weshalb es als „bedeutenste Neuerung der Molekularbiologie“ gilt
+    \item die Funktion und den Ablauf des natürlichen CRISPR/Cas9 Systems in Bakterien strukturiert und in eigenen Worten ausführen
+    \item erläutern, wie das natürliche CRISPR-System als gentechnische Methode genutzt werden kann und welche Anpassungen dafür nötig sind
+    \item das natürliche CRISPR/Cas System mit dem künstlichen CRISPR/Cas System der Gentechnik vergleichen.
+    \item die Funktionen aller im Skript behandelten Komponenten des CRISPR-Systems (z. B. spacer, repeat, tracrRNA, tracrDNA, crRNA, gRNA, Cas-Gene, Cas-Proteine usw.) beschreiben und deren Zusammenspiel anhand Abbildungen erklären.
+    \item die beiden Reparaturmechanismen NHEJ und HDR beschreiben und erklären, wie sie in Kombination mit CRISPR zu Gen-Knockouts oder gezielten Genveränderungen führen.
+    \item erklären, wie man prinzipiell Gene einfügt oder funktionsunfähig macht mithilfe des CRISPR-Systems
+    \item konzeptuell abgrenzen, für welche genetischen Krankheiten oder Eigenschaften CRISPR geeignet ist – und für welche nicht.
+    \item wichtige Anwendungsbereiche von CRISPR nennen und ein aktuelles Beispiel in eigenen Worten erläutern.
+\end{itemize}
+
+\end{document}
+```

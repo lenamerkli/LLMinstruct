@@ -1,0 +1,218 @@
+§u§
+Erkläre mir Möbius Transformationen. (bestimmen, anwenden und verketten)
+§a§
+Möbius-Transformationen (auch **gebrochen-lineare Transformationen** oder **lineare Transformationen** genannt) sind zentrale Werkzeuge in der Funktionentheorie (Komplexen Analysis). Sie sind fascinating, weil sie einfache geometrische Eigenschaften haben, aber dennoch sehr flexibel sind.
+
+Hier ist eine strukturierte Erklärung, die die Definition, das Bestimmen, das Anwenden und das Verketten abdeckt.
+
+---
+
+### 1. Definition und Formel
+
+Eine Möbius-Transformation $f$ ist eine Funktion der Form:
+
+$$f(z) = \frac{az + b}{cz + d}$$
+
+Dabei sind $a, b, c, d$ **komplexe Konstanten**.
+
+**Die wichtige Bedingung:**
+Damit es sich wirklich um eine (nicht-triviale) Transformation handelt, muss die Determinante ungleich Null sein:
+$$ad - bc \neq 0$$
+
+Warum?
+*   Wäre $ad - bc = 0$, wäre der Zähler ein konstantes Vielfaches des Nenners, und das Ergebnis wäre immer nur eine einzige Zahl (konstant), keine echte Transformation.
+*   Die Bedingung garantiert, dass die Funktion umkehrbar (bijektiv) ist.
+
+**Besonderheit:** Wir betrachten diese Funktionen auf der **Riemannschen Zahlenkugel** (das sind die komplexen Zahlen $\mathbb{C}$ plus dem Punkt $\infty$). Das erlaubt uns, auch Division durch Null zu definieren.
+
+---
+
+### 2. Anwenden (Werte berechnen)
+
+Das Anwenden bedeutet das Einsetzen einer Zahl $z$ in die Formel. Man muss jedoch auf die Sonderfälle $\infty$ achten.
+
+**Regeln für das Anwenden:**
+
+1.  **Normales $z$ (endlich):** Du setzt einfach ein:
+    $$w = \frac{az + b}{cz + d}$$
+    *Achte darauf, dass $cz + d \neq 0$ ist.*
+
+2.  **Polstelle (Nenner wird 0):**
+    Wenn $cz_0 + d = 0$ (also $z_0 = -d/c$), dann ist der Funktionswert an dieser Stelle **$\infty$**.
+
+3.  **Input $\infty$:**
+    Wenn $z = \infty$, betrachtet man den Grenzwert für $z \to \infty$. Da die höchste Potenz von $z$ im Zähler und Nenner je 1 ist, kürzen sich die $z$'s faktisch:
+    *   Falls $c \neq 0$ ist der Wert $\frac{a}{c}$.
+    *   Falls $c = 0$ ist der Wert $\infty$.
+
+**Beispiel:**
+$f(z) = \frac{1z}{1z - 1}$
+*   $f(0) = 0$
+*   $f(1) = \frac{1}{0} = \infty$
+*   $f(\infty) = \frac{1}{1} = 1$
+
+---
+
+### 3. Bestimmen (Koeffizienten finden)
+
+Oft gibt man dir vor, welche Punkte auf welche anderen Punkte abgebildet werden sollen, und du sollst die Funktion $f(z)$ finden.
+
+**Der Satz:**
+Eine Möbius-Transformation ist durch die Abbildung von **drei verschiedenen Punkten** eindeutig bestimmt.
+Das bedeutet: Wenn du vorgibst $z_1 \to w_1$, $z_2 \to w_2$ und $z_3 \to w_3$, gibt es genau eine Funktion der Form $\frac{az+b}{cz+d}$, die das tut.
+
+**Die Methode (Kreuzverhältnis-Formel):**
+Statt ein lineares Gleichungssystem mit 4 Unbekannten zu lösen, nutzt man meist diese elegante Formel:
+
+$$\frac{(w - w_1)(w_2 - w_3)}{(w - w_3)(w_2 - w_1)} = \frac{(z - z_1)(z_2 - z_3)}{(z - z_3)(z_2 - z_1)}$$
+
+Du setzt deine gegebenen Punkte ($z_1, z_2, z_3$ und $w_1, w_2, w_3$) ein und löst die Gleichung nach $w$ auf.
+
+**Beispiel zum Bestimmen:**
+Gesucht ist $f$ mit:
+*   $z_1 = 1 \to w_1 = i$
+*   $z_2 = 0 \to w_2 = 1$
+*   $z_3 = -1 \to w_3 = -i$
+
+*(Anstatt hier langwierig auszurechnen: Man setzt die Werte in die obige Formel ein und vereinfacht solange, bis auf der linken Seite nur $w$ übrig bleibt.)*
+
+**Trick:** Wenn einer der Punkte $\infty$ ist, vereinfacht sich der Bruch. Statt $(z - \infty)$ schreibt man einfach $1$.
+
+---
+
+### 4. Verketten (Zusammensetzen)
+
+Möbius-Transformationen haben eine algebraische Eigenschaft, die sie sehr angenehm macht: Die Verkettung (Hintereinanderausführung) entspricht der **Matrixmultiplikation**.
+
+**Die Verbindung zu Matrizen:**
+Man ordnet der Funktion $f(z) = \frac{az+b}{cz+d}$ die Matrix $M$ zu:
+
+$$M = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$$
+
+**Die Regel:**
+Wenn du zuerst Transformation $f_1$ ausführst und danach $f_2$, entspricht das der Matrix-Multiplikation der zugehörigen Matrizen.
+
+Sei $f(z) = f_2(f_1(z))$. Dann gilt für die Matrizen:
+$$M = M_2 \cdot M_1$$
+
+*(Achtung: Die Reihenfolge ist umgekehrt zur Notation der Funktionen, wie bei Funktionen üblich: Rechts zuerst, dann links).*
+
+**Warum ist das nützlich?**
+1.  **Inverse finden:** Die inverse Matrix $M^{-1}$ entspricht der Umkehrfunktion $f^{-1}(z)$.
+2.  **Determinante:** Da $\det(M) = ad - bc$, garantiert die Determinantenregel $\det(AB) = \det(A)\det(B)$, dass die Verkettung zweier Möbius-Transformationen wieder eine Möbius-Transformation ist (das Produkt der Determinanten ist nicht Null).
+
+---
+
+### 5. Geometrische Eigenschaften (Wichtig zum Verständnis)
+
+Auch wenn du danach nicht gefragt hast, ist dies essentiell, um zu verstehen, was diese Transformationen tun:
+
+1.  **Kreistreue:** Möbius-Transformationen bilden Kreise und Geraden auf **Kreise oder Geraden** ab.
+    *   *In der komplexen Ebene gilt eine Gerade als ein Kreis mit unendlich großem Radius (durch den Punkt $\infty$).*
+2.  **Winkeltreue (Konformität):** Die Schnitwinkel von Kurven bleiben bei der Abbildung erhalten.
+3.  **Orientierungstreue:** Die Drehrichtung (Umlaufsinn) bleibt erhalten.
+
+### Zusammenfassung der Schritte
+
+1.  **Anwenden:** $w = \frac{az+b}{cz+d}$. Beachte $\infty$.
+2.  **Bestimmen:** Nutze die 3-Punkte-Formel (Kreuzverhältnis).
+3.  **Verketten:** Nutze Matrizen $\begin{pmatrix} a & b \\ c & d \end{pmatrix}$ und multipliziere diese.
+§u§
+Des weiteren möchte ich `Geraden und Kreisen in C` verstehen.
+§a§
+Das Verständnis von Geraden und Kreisen in der komplexen Ebene ($\mathbb{C}$) ist der Schlüssel, um das Verhalten von Möbius-Transformationen wirklich zu begreifen. In der Funktionentheorie betrachten wir beide Konzepte oft gemeinsam unter dem Begriff **"verallgemeinerte Kreise" (Generalized Circles)**.
+
+Hier ist die Erklärung, wie man sie mathematisch beschreibt und warum sie für Transformationen so wichtig sind.
+
+---
+
+### 1. Die einheitliche Gleichung
+
+In der Schulmathematik lernt man getrennte Formeln für Geraden und Kreise. In der komplexen Analysis kann man beide durch **eine einzige Gleichung** beschreiben:
+
+$$A|z|^2 + \bar{B}z + B\bar{z} + C = 0$$
+
+Hierbei sind:
+*   $z = x + iy$ der variable Punkt.
+*   $A$ und $C$ sind **reelle Zahlen**.
+*   $B$ ist eine **komplexe Zahl**.
+*   $\bar{B}$ ist die konjugiert komplexe Zahl von $B$.
+*   Es gelten bestimmte Bedingungen, damit es sich nicht um eine "entartete" Kurve handelt (z.B. ein Punkt oder die leere Menge).
+
+#### Warum ist das eine Gerade oder ein Kreis?
+Erinnerst du dich an $|z|^2 = z \cdot \bar{z} = x^2 + y^2$?
+*   **Der Fall $A = 0$:**
+    Wenn $A = 0$, verschwindet der quadratische Anteil $x^2 + y^2$.
+    Die Gleichung wird zu: $\bar{B}z + B\bar{z} + C = 0$.
+    Das entspricht einer **linearen Gleichung** in $x$ und $y$ $\rightarrow$ **Gerade**.
+
+*   **Der Fall $A \neq 0$:**
+    Hier bleibt der quadratische Anteil $x^2 + y^2$ erhalten.
+    Das entspricht der klassischen Kreisgleichung $\rightarrow$ **Kreis**.
+
+---
+
+### 2. Spezielle Darstellungen
+
+Oft verwendet man spezifischere Formen, um schneller mit ihnen zu arbeiten.
+
+#### A. Die Gerade
+Eine Gerade in $\mathbb{C}$ kann man oft als Parameterdarstellung oder über eine Richtung schreiben.
+Sei $z_0$ ein Stützpunkt auf der Geraden und $v$ ein Richtungsvektor (komplexe Zahl).
+$$z(t) = z_0 + t \cdot v \quad (t \in \mathbb{R})$$
+
+Beispiel: Die reelle Achse ist $z(t) = t$ (also $z_0=0, v=1$). Die imaginäre Achse ist $z(t) = it$.
+
+#### B. Der Kreis
+Die Standardform ist:
+$$|z - z_M| = r$$
+*   $z_M$ ist das **Zentrum** (Mittelpunkt).
+*   $r$ ist der **Radius**.
+
+Beispiel: $|z - i| = 2$ ist ein Kreis um den Punkt $i$ mit Radius 2.
+
+---
+
+### 3. Der geometrische Hintergrund (Wichtig!)
+
+Warum fasst man Geraden und Kreise zusammen?
+
+Stell dir die **Riemannsche Zahlenkugel** vor. Das ist eine Kugel, die auf dem Ursprung (Südpol) auf der komplexen Ebene sitzt. Jeder Punkt $z$ in der Ebene wird auf einen Punkt auf der Kugel projiziert (Stereografische Projektion).
+
+*   Ein gewöhnlicher Kreis in der Ebene wird zu einem Kreis auf der Kugel projiziert.
+*   Was passiert mit einer Geraden? Eine Gerade geht im Unendlichen weiter. Auf der Kugel "schließt" sich die Gerade durch den **Nordpol** (der den Punkt $\infty$ repräsentiert). Eine Gerade wird auf der Kugel ebenfalls zu einem Kreis – eben einem Kreis, der durch den Nordpol (den Punkt $\infty$) geht.
+
+**Daraus folgt:** In der erweiterten komplexen Ebene ($\mathbb{C} \cup \{\infty\}$) ist eine Gerade nichts anderes als ein **Kreis durch den Punkt $\infty$**. Daher nennt man sie "verallgemeinerte Kreise".
+
+---
+
+### 4. Anwendungsbeispiel: Bilder unter Möbius-Transformationen
+
+Da Möbius-Transformationen **kreistreu** sind, wird ein verallgemeinerter Kreis (also ein Kreis oder eine Gerade) immer auf einen verallgemeinerten Kreis abgebildet.
+
+**Wie bestimmt man das Bildobjekt?**
+
+Es gibt zwei Methoden:
+
+#### Methode A: Die 3-Punkte-Regel (Geometrisch)
+Da 3 Punkte einen Kreis (oder eine Gerade) eindeutig bestimmen, reicht es, 3 Punkte des Originals zu transformieren.
+
+1.  Wähle 3 Punkte auf deinem Original-Kreis oder der Geraden (bevorzugt einfache Punkte wie $0, 1, \infty$ oder Schnittpunkte mit Achsen).
+2.  Berechne mit der Möbius-Transformation $f(z)$ die 3 Bildpunkte $w_1, w_2, w_3$.
+3.  Frage dich:
+    *   Liegt einer der Bildpunkte im **Unendlichen** ($w_k = \infty$)? $\rightarrow$ Das Bild ist eine **Gerade**.
+    *   Sind alle Bildpunkte endlich? $\rightarrow$ Das Bild ist ein **Kreis**.
+
+#### Methode B: Algebraisches Einsetzen (Rechnerisch)
+Du hast die Gleichung des Kreises/der Geraden: $A|z|^2 + \bar{B}z + B\bar{z} + C = 0$.
+Du willst wissen, was für eine Kurve $w$ bildet.
+Da eine Möbius-Transformation umkehrbar ist, kannst du $z = \frac{dw - b}{-cw + a}$ (die inverse Formel) in die Kreisgleichung einsetzen und nach $|w|^2$ usw. umstellen. Das ergibt wieder eine Gleichung der Form $A'|w|^2 + \dots = 0$.
+
+### Zusammenfassung für dein Verständnis
+
+1.  **Gleichheit:** In $\mathbb{C}$ sind Geraden und Kreise Geschwister. Die Formel $A|z|^2 + \bar{B}z + B\bar{z} + C = 0$ beschreibt beides.
+2.  **Der Unterschied:** Wenn $A=0$ ist es eine Gerade (geht durch $\infty$). Wenn $A \neq 0$ ist es ein endlicher Kreis.
+3.  **Transformation:** Wenn du eine Möbius-Transformation anwendest, schaue einfach, wohin $\infty$ abgebildet wird.
+    *   Geht $\infty$ in $\infty$ über $\rightarrow$ bleibt die Art erhalten (Kreis $\to$ Kreis, Gerade $\to$ Gerade).
+    *   Geht $\infty$ in einen endlichen Punkt über $\rightarrow$ wird aus einer Geraden ein Kreis.
+    *   Wird ein Punkt auf dem Kreis zu $\infty$ abgebildet $\rightarrow$ wird aus dem Kreis eine Gerade.

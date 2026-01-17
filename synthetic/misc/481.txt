@@ -1,0 +1,145 @@
+§u§
+I have a conversation in ChatML format. How can I get the token count of that for Apertus-8B-instruct?
+§a§
+To accurately get the token count for **Apertus-8B-Instruct** (specifically the `swiss-ai/Apertus-8B-Instruct-2509` model), you must use the model's specific tokenizer.
+
+Because "ChatML" is a specific format (using tokens like `<|im_start|>` and `<|im_end|>`), the token count depends on whether you are asking the model to format the conversation itself (using its native template) or if you are feeding it a raw string that you have already formatted.
+
+Here is how to calculate the token count using the Hugging Face `transformers` library.
+
+### Option 1: You have a structured conversation (List of Dictionaries)
+This is the most accurate method if you want to know how many tokens the conversation will consume when passed correctly to the model.
+
+```python
+from transformers import AutoTokenizer
+
+# Load the specific tokenizer for Apertus-8B-Instruct
+model_id = "swiss-ai/Apertus-8B-Instruct-2509"
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+
+# Your conversation in standard ChatML/List format
+messages = [
+    {"role": "system", "content": "You are a helpful assistant."},
+    {"role": "user", "content": "Can you explain quantum physics briefly?"},
+    {"role": "assistant", "content": "Quantum physics is the study of matter and energy at the most fundamental level."}
+]
+
+# Apply the chat template and count tokens
+# 'tokenize=True' converts text to token IDs directly
+encoded_input = tokenizer.apply_chat_template(messages, tokenize=True)
+
+print(f"Token count: {len(encoded_input)}")
+```
+
+### Option 2: You have a raw ChatML string
+If you have already converted the conversation into a single string with `<|im_start|>` tags and want to know how many tokens that specific string takes:
+
+```python
+from transformers import AutoTokenizer
+
+model_id = "swiss-ai/Apertus-8B-Instruct-2509"
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+
+# Your pre-formatted raw string
+raw_chatml = """<|im_start|>system
+You are a helpful assistant.<|im_end|>
+<|im_start|>user
+Can you explain quantum physics briefly?<|im_end|>
+<|im_start|>assistant
+Quantum physics is the study of matter and energy at the most fundamental level.<|im_end|>"""
+
+# Encode the string directly
+tokens = tokenizer.encode(raw_chatml)
+
+print(f"Token count: {len(tokens)}")
+```
+
+### Important Note on Tokenization
+*   **Special Tokens:** If the Apertus tokenizer does not natively include `<|im_start|>` or `<|im_end|>` in its vocabulary, it will split them into multiple smaller tokens (e.g., `<`, `|`, `im`, `_`, `start`, `|>`), which significantly increases the token count compared to models that support ChatML natively (like Qwen or Yi).
+*   **Native Template:** The `apply_chat_template` method (Option 1) is safer because it automatically uses the format the model was trained with (whether that is ChatML, Llama-3 style, or a custom format).
+§u§
+How can I apply the chat template in batch?
+§a§
+To apply the chat template in batch (processing multiple conversations at once), the approach depends on whether you just want the **token counts** or if you need **padded tensors** to feed directly into the model for inference.
+
+Here is how to do both using the `transformers` library.
+
+### Option 1: Just getting token counts (Fastest)
+If you just want to know the length of every conversation in your batch, you can pass the list of conversations directly to `apply_chat_template`. It will return a list of lists (integers), which you can simply measure.
+
+```python
+from transformers import AutoTokenizer
+
+model_id = "swiss-ai/Apertus-8B-Instruct-2509"
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+
+# A batch of conversations (List of Lists of Dictionaries)
+batch_messages = [
+    [
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "Hello!"}
+    ],
+    [
+        {"role": "system", "content": "You are a math tutor."},
+        {"role": "user", "content": "Solve 2+2."},
+        {"role": "assistant", "content": "The answer is 4."}
+    ]
+]
+
+# 1. Apply template to the whole batch with tokenize=True
+# This returns a "ragged" list (a list of lists of different lengths)
+batch_ids = tokenizer.apply_chat_template(batch_messages, tokenize=True)
+
+# 2. Get counts
+token_counts = [len(ids) for ids in batch_ids]
+
+print(f"Token counts per conversation: {token_counts}")
+# Output example: [14, 25]
+```
+
+---
+
+### Option 2: Preparing Batch for Model Inference (Padding)
+If your goal is to actually run the model, you cannot simply use the method above because the sequences have different lengths. You must pad them to the longest sequence in the batch.
+
+The standard workflow for this is: **Format strings first $\to$ Tokenize with padding second.**
+
+```python
+from transformers import AutoTokenizer
+
+model_id = "swiss-ai/Apertus-8B-Instruct-2509"
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+
+# Set padding token if not already set (common issue with Llama-based models)
+if tokenizer.pad_token is None:
+    tokenizer.pad_token = tokenizer.eos_token
+
+batch_messages = [
+    [{"role": "user", "content": "Tell me a short joke."}],
+    [{"role": "user", "content": "Write a 500 word essay on history."}]
+]
+
+# 1. Convert conversations to formatted strings (tokenize=False)
+formatted_batch = tokenizer.apply_chat_template(batch_messages, tokenize=False)
+
+# 2. Tokenize the strings with padding
+# padding=True pads to the longest in the batch
+# return_tensors="pt" gives you PyTorch tensors ready for the model
+inputs = tokenizer(
+    formatted_batch,
+    padding=True,
+    return_tensors="pt",
+    add_special_tokens=False # template already added special tokens
+)
+
+print(f"Batch shape: {inputs['input_ids'].shape}")
+# Example: torch.Size([2, 55]) - 2 sequences, padded to length of the longest (55)
+
+# To get the actual non-padded counts from this method:
+counts = inputs['attention_mask'].sum(dim=1)
+print(f"Real token counts: {counts}")
+```
+
+### Tips for Batching
+1.  **Padding Side:** If you are generating text (inference), ensure you set `tokenizer.padding_side = "left"`. If you are training, usually use `"right"`.
+2.  **`add_special_tokens=False`:** When using **Option 2**, notice I set `add_special_tokens=False` in the final `tokenizer` call. This is because `apply_chat_template` usually adds the BOS (Beginning of Sentence) token automatically. If you don't set this to False, you might accidentally double-add the BOS token.

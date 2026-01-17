@@ -1,0 +1,96 @@
+§u§
+How can I create a python class that i can use:
+```
+my_class = MyClass()
+my_class[590123] = 879174
+print(my_class[590123])
+```
+with custom logic
+§a§
+# Creating a Python Class with Custom Indexing Logic
+
+To create a class that supports the syntax `my_class[key] = value` and `print(my_class[key])` with custom logic, you'll need to implement the `__getitem__` and `__setitem__` special methods. Here's how to do it:
+
+```python
+class MyClass:
+    def __init__(self):
+        # Initialize your data storage
+        self._data = {}
+
+    def __getitem__(self, key):
+        """
+        Called when accessing my_class[key]
+        Implement your custom logic here
+        """
+        # Example: return the value multiplied by 2
+        return self._data.get(key, None) * 2
+
+    def __setitem__(self, key, value):
+        """
+        Called when assigning my_class[key] = value
+        Implement your custom logic here
+        """
+        # Example: store the value divided by 2
+        self._data[key] = value / 2
+
+    def __repr__(self):
+        """String representation of the object"""
+        return f"MyClass({self._data})"
+
+# Usage example
+my_class = MyClass()
+my_class[590123] = 879174  # This calls __setitem__
+print(my_class[590123])    # This calls __getitem__ (output: 879174.0)
+```
+
+## Customizing the Logic
+
+You can modify the `__getitem__` and `__setitem__` methods to implement any custom logic you need:
+
+1. **Validation**: Check if keys/values meet certain criteria
+2. **Transformation**: Modify values before storage or after retrieval
+3. **Computation**: Calculate values on the fly
+4. **External storage**: Store data in a database or file instead of memory
+
+### Example with more complex logic:
+
+```python
+class MyClass:
+    def __init__(self):
+        self._data = {}
+        self._access_count = {}
+
+    def __getitem__(self, key):
+        # Track access count
+        self._access_count[key] = self._access_count.get(key, 0) + 1
+
+        # Custom retrieval logic
+        if key not in self._data:
+            raise KeyError(f"Key {key} not found")
+
+        # Return value with some transformation
+        return f"Value: {self._data[key]} (accessed {self._access_count[key]} times)"
+
+    def __setitem__(self, key, value):
+        # Custom storage logic
+        if not isinstance(value, (int, float)):
+            raise ValueError("Value must be numeric")
+
+        if value < 0:
+            raise ValueError("Value must be positive")
+
+        self._data[key] = value
+        self._access_count[key] = 0  # Reset access count on new assignment
+
+    def __delitem__(self, key):
+        """Optional: support for del my_class[key]"""
+        if key in self._data:
+            del self._data[key]
+            del self._access_count[key]
+
+    def __contains__(self, key):
+        """Optional: support for 'key in my_class'"""
+        return key in self._data
+```
+
+This implementation gives you full control over how items are stored and retrieved while maintaining the familiar dictionary-like interface.

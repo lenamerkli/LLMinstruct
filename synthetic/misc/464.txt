@@ -1,0 +1,100 @@
+§u§
+I have the following structure in python:
+```
+value: Dict[str, List[float]] = {
+    5901273498781892: [0.0, 0.0, 0.4817727384, 0.0],
+    98713475891238412: [1.0, 0.0, 0.0, 0.0, 0.0, -0.19276421, 0.0, 0.587124, 0.0],
+}
+```
+How could I efficiently store something like this to disk?
+§a§
+**Critical first note:** Your type hint says `Dict[str, ...]` but your keys are clearly integers (`5901273498781892`). If those are Snowflake/Discord-style IDs, the hint should be `Dict[int, List[float]]`—JSON would require stringifying them (JavaScript can't safely parse integers that large), but binary formats handle int64 natively. I'm assuming `int` keys below.
+
+**The core characteristics of your data:** Variable-length vectors with high sparsity (mostly `0.0`). The naïve Python representation has massive memory overhead (~28 bytes per float + list/dict overhead). You want compact size + fast deserialization.
+
+---
+
+### **Top Recommendation: Apache Parquet (via PyArrow)**
+This is the industry standard for a reason. Parquet encodes your structure as two columns—`id: int64` and `values: list<float64>`—and compresses spectacularly well (Zstd + RLE on the zeros).
+
+```python
+import pyarrow as pa
+import pyarrow.parquet as pq
+
+value = {5901273498781892: [0.0, 0.0, 0.4817727384, 0.0], ...}
+
+# Write: ~2-5x smaller than pickle, readable by Rust/R/Spark
+table = pa.Table.from_pydict({
+    'id': list(value.keys()),
+    'values': list(value.values())
+})
+pq.write_table(table, 'data.parquet', compression='zstd', compression_level=3)
+
+# Read: reconstructs the dict, or keep as Arrow table (more memory-efficient)
+table = pq.read_table('data.parquet')
+restored = dict(zip(table['id'].to_pylist(), table['values'].to_pylist()))
+```
+
+**Why this wins:** The "list" column is stored using offset buffers—contiguous memory for the floats. Zstd crushes those runs of `0.0`. PyArrow memory-maps on read, so it's often faster than `pickle.load()` despite being compressed.
+
+---
+
+### **The Lightweight Alternative: NumPy CSR-style `.npz`**
+If you want zero dependencies beyond NumPy (or need to ship to environments where PyArrow is heavy), manually flatten to the Compressed Sparse Row pattern:
+
+```python
+import numpy as np
+
+keys = np.array(list(value.keys()), dtype=np.int64)
+# Flatten all float lists into one contiguous array
+values_flat = np.concatenate([np.array(v, dtype=np.float64) for v in value.values()])
+# Offsets: [0, len(list_0), len(list_0)+len(list_1), ...]
+indptr = np.cumsum([0] + [len(v) for v in value.values()], dtype=np.int64)
+
+np.savez_compressed('data.npz', keys=keys, values=values_flat, indptr=indptr)
+
+# Read:
+loaded = np.load('data.npz')
+k, v, ptr = loaded['keys'], loaded['values'], loaded['indptr']
+restored = {k[i]: v[ptr[i]:ptr[i+1]].tolist() for i in range(len(k))}
+```
+
+**Why use this:** It's pure NumPy, deserialization is just `mmap` + decompression, and `.tolist()` is faster than you'd expect. The `.npz` is a ZIP container, so compression is decent (though Zstd is usually 20-30% better than DEFLATE).
+
+---
+
+### **Crucial Optimization: Actually Sparse?**
+Your examples are **>75% zeros**. If that's representative, storing `(id, indices, values)` triples is 4-10x smaller:
+
+```python
+# Convert to sparse representation
+sparse_rows = []
+for k, vec in value.items():
+    vec = np.array(vec)
+    idx = np.nonzero(vec)[0]
+    sparse_rows.append({'id': k, 'idx': idx, 'val': vec[idx]})
+
+table = pa.Table.from_pylist(sparse_rows)
+pq.write_table(table, 'data_sparse.parquet', compression='zstd')
+```
+**Caveat:** You lose the original vector length unless you store `len(vec)` as a fourth column (`length`). Only do this if `0.0` semantically means "missing" or if you know the length implicitly (e.g., "these are always dim=768, I just forgot to pad in my example").
+
+---
+
+### **What to avoid**
+- **JSON:** Keys that large lose precision in JS (max safe integer is 2^53-1 ≈ 9e15; your second key is 9.8e16). Also 10+ decimal places of float precision bloats text format.
+- **`pickle` (even protocol 5):** Uncompressed it's huge. `gzip` pickle is slow and brittle across Python versions. Only acceptable for ephemeral caches.
+- **HDF5:** Overkill unless your vectors are enormous (megabytes each). Creating millions of tiny datasets in HDF5 performs poorly.
+
+---
+
+### **Decision Tree**
+| Situation | Choice |
+|:---|:---|
+| **Load all at once, Python-only, simple deps** | NumPy `.npz` (CSR pattern) |
+| **Interop with Pandas/Rust/R, or >1GB data** | Parquet (PyArrow) |
+| **>90% sparsity** | Parquet with explicit `(id, indices, values, length)` columns |
+| **Random access (lookup single ID without loading all)** | LMDB or SQLite (values as BLOBs via `numpy.tobytes()`) |
+| **Fixed-length vectors (are you sure?)** | Pad to max length → single `numpy.save('data.npy', matrix)` + `keys.npy` |
+
+**One last check:** Are your vectors actually fixed-length (e.g., 512-dim embeddings) and your example was just abbreviated? If so, pad with zeros and store as one contiguous `(n_keys, dim)` float array—that's the most efficient possible format, and you just need a separate `keys.npy` array.

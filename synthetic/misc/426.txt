@@ -1,0 +1,63 @@
+§u§
+<attach:edb52e46603f211f0f678e5b6a87c9e3dcb46db42e5dbaddbc843bee61d22bb6>Extract the text into html.
+§a§
+Here is the extracted text formatted into HTML. I have included inline CSS styles to match the colors (white, yellow, and gray italic) found in the original image.
+
+```html
+<div style="font-family: monospace; background-color: #1e1e1e; color: #ffffff; padding: 15px; border-radius: 5px; line-height: 1.4;">
+    <div>
+        <strong>Average tick time:</strong> <span style="color: #ffff55;">55.104ms</span>
+    </div>
+    <div>
+        Network: <span style="color: #ffff55;">0.200ms</span>
+    </div>
+    <div>
+        Async Tasks: <span style="color: #ffff55;">1.183ms</span>
+    </div>
+    <div>
+        <strong>overworld:</strong>
+    </div>
+    <div>
+        - Entities: <span style="color: #ffff55;">3.300ms</span>
+    </div>
+    <div>
+        - Environment: <span style="color: #ffff55;">0.026ms</span>
+    </div>
+    <div>
+        - Spawning: <span style="color: #ffff55;">34.382ms</span>
+    </div>
+    <div>
+        - Block Entities: <span style="color: #ffff55;">10.730ms</span>
+    </div>
+    <div>
+        - Schedule Ticks: <span style="color: #ffff55;">0.150ms</span>
+    </div>
+    <div>
+        - Random Ticks: <span style="color: #ffff55;">0.145ms</span>
+    </div>
+    <div>
+        - Unloading: <span style="color: #ffff55;">0.028ms</span>
+    </div>
+    <div>
+        <strong>the_nether:</strong>
+    </div>
+    <div>
+        - Entities: <span style="color: #ffff55;">1.149ms</span>
+    </div>
+    <div>
+        - Spawning: <span style="color: #ffff55;">0.134ms</span>
+    </div>
+    <div>
+        - Block Entities: <span style="color: #ffff55;">0.529ms</span>
+    </div>
+    <div>
+        - Random Ticks: <span style="color: #ffff55;">0.015ms</span>
+    </div>
+    <div>
+        - Unloading: <span style="color: #ffff55;">0.019ms</span>
+    </div>
+    <div style="color: #aaaaaa; font-style: italic;">
+        The Rest, whatever that might be: 3.114ms
+    </div>
+</div>
+```

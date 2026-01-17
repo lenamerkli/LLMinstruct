@@ -1,0 +1,61 @@
+§u§
+<attach:4225cdc470a70350551828408b5468c36bb418abce560f36dd8cc2932551fe8b>Erkläre mir, wie ich eine solche Aufgabe lösen kann.
+§a§
+Das Lösen dieser Aufgaben erfordert grundlegende Kenntnisse der **Integralrechnung**. Es geht im Wesentlichen darum, Flächen zwischen Kurven zu berechnen oder diese Flächen um eine Achse rotieren zu lassen.
+
+Hier ist eine Schritt-für-Schritt-Anleitung, wie du solche Aufgaben angehst:
+
+---
+
+### 1. Flächeninhalt zwischen zwei Funktionen (Aufgabe 1.2 & 1.3)
+
+Das Grundprinzip lautet immer: **"Obere Funktion minus untere Funktion"**.
+
+**Die Schritte:**
+1.  **Schnittpunkte berechnen:** Setze die Funktionen gleich ($f(x) = g(x)$), um die Integrationsgrenzen $a$ und $b$ zu finden. Bei komplexen Funktionen nutzt man dafür den Taschenrechner (Befehle wie `solve` oder `numsolv`).
+2.  **Oben/Unten bestimmen:** Schau dir die Skizze an oder setze einen Testwert zwischen den Schnittpunkten ein, um zu sehen, welche Funktion höhere $y$-Werte hat.
+3.  **Integral aufstellen:** Die Formel lautet:
+    $$A = \int_{a}^{b} (f_{\text{oben}}(x) - f_{\text{unten}}(x)) \, dx$$
+4.  **Berechnen:** Entweder händisch über die Stammfunktion $[F(x) - G(x)]_a^b$ oder mit dem GTR/CAS.
+
+**Besonderheit bei Aufgabe 1.2:**
+Hier wird die Fläche durch **drei** Funktionen begrenzt. Du musst die Fläche oft aufteilen.
+*   Suche alle relevanten Schnittpunkte.
+*   In einem Bereich liegt vielleicht $f(x)$ über $h(x)$, im nächsten Bereich liegt $f(x)$ über $g(x)$. Du musst dann zwei separate Integrale berechnen und addieren.
+
+---
+
+### 2. Rotationsvolumen (um die x-Achse) (Aufgabe 1.1)
+
+Wenn eine Fläche um die x-Achse rotiert, entsteht ein Körper. Das Volumen berechnet man mit der Kreisformel ($V = \pi \cdot r^2 \cdot h$), wobei der Radius der Funktionswert $f(x)$ ist.
+
+**Die Formel für eine Funktion:**
+$$V = \pi \cdot \int_{a}^{b} [f(x)]^2 \, dx$$
+
+**Wenn eine Fläche zwischen zwei Funktionen rotiert (wie in 1.1):**
+Hier ziehst du das Volumen des "inneren" Hohlraums vom "äußeren" Körper ab.
+1.  **Grenzen finden:** Bestimme wieder die Schnittpunkte (hier scheint die Fläche links bei der Nullstelle der blauen Funktion zu beginnen und rechts beim Schnittpunkt von $f$ und $g$ zu enden).
+2.  **Formel aufstellen:**
+    $$V = \pi \cdot \int_{a}^{b} \left( [f_{\text{oben}}(x)]^2 - [f_{\text{unten}}(x)]^2 \right) \, dx$$
+    *Wichtig: Erst die Funktionen einzeln quadrieren, dann subtrahieren!*
+
+---
+
+### Zusammenfassung der Vorgehensweise für deine Übungen:
+
+*   **Aufgabe 1.1:**
+    1. Berechne den Schnittpunkt von $g(x) = -0,5x+4$ und $f(x) = \sqrt{3x+3}$ mit `numsolv`. Das ist deine obere Grenze $b$.
+    2. Die untere Grenze $a$ ist dort, wo die blaue Fläche beginnt (Nullstelle von $f(x)$, also $x = -1$).
+    3. Berechne $V = \pi \cdot \int_{-1}^{b} (g(x)^2 - f(x)^2) \, dx$.
+
+*   **Aufgabe 1.2:**
+    1. Finde die x-Werte der drei Ecken der gelben Fläche durch Gleichsetzen der jeweiligen Funktionspaare.
+    2. Teile die Fläche an dem mittleren x-Wert vertikal in zwei Teile.
+    3. Berechne für beide Teile das Integral (Oben minus Unten) und addiere sie.
+
+*   **Aufgabe 1.3:**
+    1. Löse $x^3 - 61x + 180 = \frac{1}{3}x^2 + 3x$. Du wirst wahrscheinlich drei Schnittpunkte erhalten.
+    2. Das bedeutet, es entstehen zwei Teilflächen. Berechne für beide das Integral.
+    3. Nimm die Beträge der Ergebnisse (Flächen sind immer positiv) und addiere sie.
+
+**Tipp für die Prüfung:** Skizziere dir immer kurz, was "oben" und was "unten" ist, damit du keine negativen Flächeninhalte herausbekommst (bzw. nimm im Zweifel einfach den Betrag $| \dots |$ des Integrals).

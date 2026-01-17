@@ -1,0 +1,76 @@
+§u§
+<attach:0d262362b733c4fd319ed2c54b40658b05b2fde2371af51de4698695be948bf8>Extract the text into html.
+§a§
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Minecraft Debug Information</title>
+    <style>
+        body {
+            background-color: #5a4f3c; /* A color sampled from the image background */
+            font-family: 'Minecraftia', 'Courier New', Courier, monospace;
+            font-size: 16px;
+            line-height: 1.2;
+        }
+        .debug-container {
+            color: white;
+            text-shadow: 2px 2px #333; /* Mimics the Minecraft text shadow */
+            padding: 1em;
+            display: inline-block;
+        }
+        .value {
+            color: #FFFF55; /* Yellow color for values */
+        }
+        h2, h3 {
+            margin-top: 0.5em;
+            margin-bottom: 0.2em;
+        }
+        ul {
+            list-style: none;
+            padding-left: 1.5em;
+            margin: 0;
+        }
+        li {
+           position: relative;
+        }
+        li::before {
+            content: "-";
+            position: absolute;
+            left: -1em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="debug-container">
+        <h2>Average tick time: <span class="value">57.090ms</span></h2>
+
+        <h3>Top 10 counts:</h3>
+        <ul>
+            <li>create:belt in overworld: <span class="value">6580.0</span></li>
+            <li>create:fluid_tank in overworld: <span class="value">4942.0</span></li>
+            <li>create:simple_kinetic in overworld: <span class="value">4763.0</span></li>
+            <li>create:item_vault in overworld: <span class="value">3699.0</span></li>
+            <li>create:chute in overworld: <span class="value">3082.0</span></li>
+            <li>create:fluid_pipe in overworld: <span class="value">2900.0</span></li>
+            <li>create:funnel in overworld: <span class="value">1722.0</span></li>
+            <li>create:encased_shaft in overworld: <span class="value">1660.0</span></li>
+            <li>create:gearbox in overworld: <span class="value">1004.0</span></li>
+            <li>create:mechanical_pump in overworld: <span class="value">881.0</span></li>
+        </ul>
+
+        <h3>Top 10 CPU hogs:</h3>
+        <ul>
+            <li>create:mechanical_pump in overworld: <span class="value">2.87ms</span></li>
+            <li>create:fluid_pipe in overworld: <span class="value">1.52ms</span></li>
+            <li>item in the_nether: <span class="value">1.10ms</span></li>
+            <li>create:belt in overworld: <span class="value">0.96ms</span></li>
+            <li>sheep in overworld: <span class="value">0.74ms</span></li>
+            <li>villager in overworld: <span class="value">0.58ms</span></li>
+        </ul>
+    </div>
+
+</body>
+</html>
+```

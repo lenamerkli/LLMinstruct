@@ -1,0 +1,95 @@
+§u§
+Erkläre mir, wie ich Wechselstromkreise mit komplexen Zahlen berechnen kann.
+§a§
+Die Berechnung von Wechselstromkreisen mit komplexen Zahlen (auch **komplexe Wechselstromrechnung** genannt) ist eines der mächtigsten Werkzeuge in der Elektrotechnik. Sie verwandelt komplizierte Differentialgleichungen in einfache algebraische Rechnungen – fast so einfach wie im Gleichstromkreis.
+
+Hier ist eine Schritt-für-Schritt-Anleitung, wie das funktioniert.
+
+---
+
+### 1. Warum komplexe Zahlen?
+In einem Wechselstromkreis haben Spannungen und Ströme eine **Amplitude** (Stärke) und eine **Phase** (zeitliche Verschiebung).
+*   Ein normaler Widerstand ($R$) lässt Strom und Spannung im Takt schwingen.
+*   Spulen und Kondensatoren verursachen jedoch eine Zeitverzögerung (Phasenverschiebung).
+
+Anstatt mit Sinus-Funktionen zu rechnen ($\sin(\omega t + \phi)$), nutzen wir die komplexe Ebene:
+*   Der **Realteil** repräsentiert den Wirkwiderstand (R).
+*   Der **Imaginärteil** repräsentiert den Blindwiderstand (X).
+
+**Wichtig:** In der Elektrotechnik verwenden wir **$j$** als imaginäre Einheit ($j^2 = -1$), da $i$ bereits für den Strom reserviert ist.
+
+---
+
+### 2. Die Bauelemente in komplexer Form
+Jedes Bauteil bekommt einen sogenannten **komplexen Widerstand**, die **Impedanz $\underline{Z}$**.
+
+| Bauelement | Realer Widerstand | Komplexe Impedanz $\underline{Z}$ | Verhalten |
+| :--- | :--- | :--- | :--- |
+| **Widerstand ($R$)** | $R$ | $\underline{Z}_R = R$ | Keine Phasenverschiebung |
+| **Spule ($L$)** | $X_L = \omega L$ | $\underline{Z}_L = j\omega L$ | Spannung eilt Strom um 90° vor |
+| **Kondensator ($C$)** | $X_C = \frac{1}{\omega C}$ | $\underline{Z}_C = \frac{1}{j\omega C} = -j\frac{1}{\omega C}$ | Spannung eilt Strom um 90° nach |
+
+*Dabei ist $\omega = 2\pi f$ die Kreisfrequenz.*
+
+---
+
+### 3. Darstellungsformen
+Du musst zwischen zwei Formen wechseln können:
+
+1.  **Kartesische Form:** $\underline{Z} = R + jX$
+    *   Gut zum **Addieren/Subtrahieren** (Reihenschaltung).
+2.  **Polarform:** $\underline{Z} = |Z| \cdot e^{j\phi}$ (oder Schreibweise: $|Z| \angle \phi$)
+    *   Gut zum **Multiplizieren/Dividieren** (Ohmsches Gesetz).
+    *   Dabei ist $|Z| = \sqrt{R^2 + X^2}$ der Scheinwiderstand.
+    *   Der Phasenwinkel ist $\phi = \arctan\left(\frac{X}{R}\right)$.
+
+---
+
+### 4. Rechnen wie im Gleichstromkreis
+Das Schöne ist: Alle Regeln aus der Gleichstromtechnik gelten weiterhin, solange du komplex rechnest!
+
+*   **Komplexes Ohmsches Gesetz:** $\underline{U} = \underline{I} \cdot \underline{Z}$
+*   **Reihenschaltung:** $\underline{Z}_{ges} = \underline{Z}_1 + \underline{Z}_2 + \dots$
+*   **Parallelschaltung:** $\frac{1}{\underline{Z}_{ges}} = \frac{1}{\underline{Z}_1} + \frac{1}{\underline{Z}_2} + \dots$
+*   **Kirchhoffsche Regeln:** Die Summe der komplexen Ströme/Spannungen in einem Knoten/Masche ist Null.
+
+---
+
+### 5. Beispielrechnung
+Gegeben sei eine Reihenschaltung aus einem Widerstand $R = 100 \, \Omega$ und einer Spule mit $L = 0,5 \, H$ an einer Frequenz von $f = 50 \, Hz$. Die Spannung ist $U = 230 \, V$.
+
+**Schritt 1: Kreisfrequenz berechnen**
+$\omega = 2\pi \cdot 50 \approx 314 \, s^{-1}$
+
+**Schritt 2: Impedanzen aufstellen**
+$\underline{Z}_R = 100 \, \Omega$
+$\underline{Z}_L = j \cdot 314 \cdot 0,5 = j157 \, \Omega$
+
+**Schritt 3: Gesamtimpedanz (Reihenschaltung)**
+$\underline{Z}_{ges} = 100 + j157 \, \Omega$
+
+**Schritt 4: Betrag und Winkel berechnen (für den Strom)**
+$|Z_{ges}| = \sqrt{100^2 + 157^2} \approx 186,1 \, \Omega$
+$\phi = \arctan\left(\frac{157}{100}\right) \approx 57,5^\circ$
+
+**Schritt 5: Strom berechnen**
+$I = \frac{U}{|Z_{ges}|} = \frac{230 \, V}{186,1 \, \Omega} \approx 1,24 \, A$
+Der Strom eilt der Spannung um $57,5^\circ$ hinterher.
+
+---
+
+### 6. Die komplexe Leistung
+Auch die Leistung wird komplex dargestellt:
+$$\underline{S} = \underline{U} \cdot \underline{I}^* = P + jQ$$
+*(Dabei ist $\underline{I}^*$ der konjugiert komplexe Strom, d.h. das Vorzeichen des $j$-Teils wird umgedreht.)*
+
+*   **$S$ (Scheinleistung):** Einheit VA (Voltampere)
+*   **$P$ (Wirkleistung):** Einheit W (Watt) – das, was wirklich verbraucht wird.
+*   **$Q$ (Blindleistung):** Einheit var (Voltampere reaktiv) – das, was zwischen Quelle und Bauteil pendelt.
+
+### Zusammenfassung der Vorgehensweise:
+1.  Wandle alle Bauteile in komplexe Impedanzen ($\underline{Z}$) um.
+2.  Wandle die Quellspannung in einen Zeiger um (meist $\underline{U} = U \cdot e^{j0^\circ}$).
+3.  Wende die bekannten Netzwerkregeln (Reihe, Parallel, Masche, Knoten) an.
+4.  Rechne komplex ($a+jb$ zum Addieren, Polarform zum Multiplizieren).
+5.  Interpretiere das Ergebnis: Der Betrag ist der effektive Wert, der Winkel die Phasenverschiebung.

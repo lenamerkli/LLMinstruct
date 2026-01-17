@@ -1,0 +1,49 @@
+§u§
+<attach:25a080174076449781546fd9b358f2ac379cdae2606fe24854b9e91c6dee8d21>Erkläre mir, wie ich solche Aufgaben lösen kann.
+§a§
+In dieser Aufgabe geht es darum, eine Fläche unter einer Sinuskurve zu berechnen, die von einem Parameter $p$ abhängt. Hier ist eine Schritt-für-Schritt-Anleitung, wie du solche Aufgaben löst:
+
+### 1. Schritt: Den Flächeninhalt bestimmen (Integralrechnung)
+Der Flächeninhalt $A(p)$ zwischen einer Funktion und der x-Achse in einem Intervall $[a, b]$ wird über das bestimmte Integral berechnet:
+$$A(p) = \int_{a}^{b} f_p(x) \, dx$$
+
+In deinem Fall sind die Grenzen $0$ und $\frac{\pi}{p}$. Also stellen wir auf:
+$$A(p) = \int_{0}^{\frac{\pi}{p}} \sin(p \cdot x) \, dx$$
+
+**Stammfunktion bilden:**
+Um den Sinus zu integrieren, musst du wissen:
+*   Die Stammfunktion von $\sin(x)$ ist $-\cos(x)$.
+*   Da hier ein Faktor $p$ im Argument steht ($\sin(px)$), musst du beim Integrieren durch diesen Faktor teilen (die "umgekehrte Kettenregel").
+*   Die Stammfunktion ist also: $F_p(x) = -\frac{1}{p} \cos(px)$.
+
+**Grenzen einsetzen:**
+$$A(p) = \left[ -\frac{1}{p} \cos(px) \right]_{0}^{\frac{\pi}{p}}$$
+
+Jetzt rechnest du: (Obere Grenze einsetzen) minus (Untere Grenze einsetzen):
+$$A(p) = \left( -\frac{1}{p} \cos(p \cdot \frac{\pi}{p}) \right) - \left( -\frac{1}{p} \cos(p \cdot 0) \right)$$
+$$A(p) = \left( -\frac{1}{p} \cos(\pi) \right) + \frac{1}{p} \cos(0)$$
+
+Da $\cos(\pi) = -1$ und $\cos(0) = 1$ ist, ergibt sich:
+$$A(p) = \left( -\frac{1}{p} \cdot (-1) \right) + \frac{1}{p} \cdot 1$$
+$$A(p) = \frac{1}{p} + \frac{1}{p} = \mathbf{\frac{2}{p}}$$
+
+---
+
+### 2. Schritt: Den Parameter $p$ berechnen
+In Teilaufgabe 2 sollst du herausfinden, für welches $p$ der Flächeninhalt genau $1$ ergibt.
+
+Du nimmst dein Ergebnis aus Schritt 1 und setzt es gleich $1$:
+$$A(p) = 1$$
+$$\frac{2}{p} = 1$$
+
+Nun löst du nach $p$ auf (beide Seiten mit $p$ multiplizieren):
+$$2 = p$$
+**Lösung:** Für **$p = 2$** ist der Flächeninhalt genau $1$.
+
+---
+
+### Zusammenfassung der Vorgehensweise für ähnliche Aufgaben:
+1.  **Integral aufstellen:** Nutze die gegebenen Grenzen als Integrationsgrenzen.
+2.  **Stammfunktion finden:** Achte besonders auf Faktoren im Inneren der Funktion (lineare Substitution).
+3.  **Hauptsatz der Differenzial- und Integralrechnung:** $F(b) - F(a)$ berechnen und vereinfachen. Der Parameter $p$ bleibt dabei einfach als Buchstabe stehen.
+4.  **Gleichung lösen:** Setze das Ergebnis der Integration mit dem gewünschten Wert (hier 1) gleich und stelle die Formel nach dem gesuchten Parameter um.

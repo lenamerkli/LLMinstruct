@@ -1,0 +1,90 @@
+§u§
+ffmpeg `.mkv` to a format that whatsapp supports
+§a§
+**To convert an MKV file to a WhatsApp-compatible format using FFmpeg, use MP4 as the container with H.264 (Baseline profile) video codec, AAC audio codec, and YUV420P pixel format.**
+
+WhatsApp reliably supports MP4 videos encoded this way, avoiding common playback/upload issues with MKV containers or incompatible codecs/profiles.
+
+### Recommended FFmpeg Command (Safe & Compatible)
+```
+ffmpeg -i input.mkv -c:v libx264 -profile:v baseline -level 3.0 -pix_fmt yuv420p -c:a aac -b:a 128k -vf "pad=ceil(iw/2)*2:ceil(ih/2)*2" -movflags +faststart output.mp4
+```
+- **Breakdown**:
+  | Parameter | Purpose |
+  |-----------|---------|
+  | `-i input.mkv` | Input MKV file. |
+  | `-c:v libx264` | Re-encode video to H.264 (required for compatibility). |
+  | `-profile:v baseline -level 3.0` | Baseline profile & level for broad device support (e.g., older Android/iOS). |
+  | `-pix_fmt yuv420p` | Ensures proper color format for mobile playback. |
+  | `-c:a aac -b:a 128k` | Re-encode audio to AAC (WhatsApp standard); 128k bitrate for good quality/size. |
+  | `-vf "pad=ceil(iw/2)*2:ceil(ih/2)*2"` | Pads to even dimensions (H.264 requirement; prevents errors). |
+  | `-movflags +faststart` | Optimizes MP4 for quick streaming/playback in WhatsApp. |
+  | `output.mp4` | WhatsApp-ready MP4 file. |
+
+This produces files that upload/play reliably in WhatsApp chats/status.
+
+### For Better Quality (Slower Encode)
+Add `-preset medium -crf 23` before `-profile:v` (CRF 18-28; lower = better quality, larger file).
+
+```
+ffmpeg -i input.mkv -c:v libx264 -preset medium -crf 23 -profile:v baseline -level 3.0 -pix_fmt yuv420p -c:a aac -b:a 128k -vf "pad=ceil(iw/2)*2:ceil(ih/2)*2" -movflags +faststart output.mp4
+```
+
+### Tips
+- **Test compatibility first**: Run `ffmpeg -i input.mkv` to check codecs. If already H.264/AAC, try `-c copy -movflags +faststart output.mp4` (faster, no quality loss).
+- **File size**: WhatsApp limits ~16MB (short videos) or ~2GB (longer, but compresses). Use `-b:v 1M` or scale with `-vf scale=640:360` for smaller files.
+- **If issues persist**: Try Main profile (`-profile:v main -bf 0`) or scale resolution (`-vf scale=1280:720`).
+- Install FFmpeg if needed (e.g., `brew install ffmpeg` on macOS, `apt install ffmpeg` on Ubuntu).
+
+This should work for most MKVs!
+§u§
+```
+[vost#0:0 @ 0x55dec6c362c0] Unknown encoder 'libx264'
+[vost#0:0 @ 0x55dec6c362c0] Error selecting an encoder
+```
+§a§
+**Your FFmpeg lacks libx264 support** (common in minimal/static builds, e.g., some Ubuntu packages or Windows portables).
+
+### Quick Fix: Install Full FFmpeg with libx264
+| OS | Command/Steps |
+|----|---------------|
+| **Ubuntu/Debian** | `sudo apt update && sudo apt install ffmpeg libx264-dev` (or `libavcodec-extra` for older versions) |
+| **macOS** | `brew install ffmpeg` (Homebrew includes libx264) |
+| **Windows** | Download latest **full/shared** build from [gyan.dev/ffmpeg/builds](https://www.gyan.dev/ffmpeg/builds/) or [BtbN](https://github.com/BtbN/FFmpeg-Builds/releases). Extract & use `ffmpeg.exe`. Avoid GPL-free/minimal. |
+| **Other** | Use [ffmpeg.org/download.html](https://ffmpeg.org/download.html) for your distro. |
+
+Verify: `ffmpeg -encoders | grep libx264` (should list it). Then retry original command.
+
+### Alternative Command (No libx264 Needed: Uses Built-in MPEG-4)
+WhatsApp supports MPEG-4 video in MP4 (alongside H.264).
+
+```
+ffmpeg -i input.mkv -c:v mpeg4 -q:v 3 -pix_fmt yuv420p -c:a aac -b:a 128k -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2,pad=ceil(iw/2)*2:ceil(ih/2)*2" -movflags +faststart output.mp4
+```
+- **Breakdown**:
+  | Parameter | Purpose |
+  |-----------|---------|
+  | `-c:v mpeg4` | Built-in MPEG-4 ASP encoder (always available; WhatsApp-compatible). |
+  | `-q:v 3` | Quality (1=best/smallest, 31=worst/largest; 2-5 ideal). |
+  | `-pix_fmt yuv420p` | Mobile-safe colors. |
+  | `-c:a aac -b:a 128k` | AAC audio (native encoder works). |
+  | `-vf "scale=trunc...pad..."` | Even dimensions (required). |
+  | `-movflags +faststart` | Streaming-optimized MP4. |
+
+This produces reliable WhatsApp MP4s without re-encoding if possible (but forces for safety).
+
+### Diagnose Your Build
+Run:
+```
+ffmpeg -encoders | grep -E "(h264|mpeg4|vp[89])"
+ffmpeg -codecs | grep 264
+```
+- Look for `mpeg4`, `libx264`, etc. Share output if issues persist.
+
+### Tips
+- **Test**: `ffmpeg -i input.mkv` (check original codecs).
+- **If AAC fails**: Use `-c:a libmp3lame -b:a 128k` (MP3 widely supported).
+- **Hardware accel** (if NVIDIA/AMD/Intel): Use `-c:v h264_nvenc` (check `ffmpeg -encoders | grep h264_`).
+- Retry original H.264 command post-install—best quality/efficiency.
+
+This gets you uploading to WhatsApp now!

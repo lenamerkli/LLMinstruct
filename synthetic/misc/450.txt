@@ -1,0 +1,14 @@
+§u§
+<attach:76c9a4955bf33177ecbc0d22e90dc82a44b3becd7b574e7e1606763ab2440586>Was ist $n$ in dem Beispiel?
+§a§
+In dem gezeigten **Beispiel 1.6** ist **$n = 0$**.
+
+Hier ist die Begründung:
+
+1.  **Definition 1.5** definiert die allgemeine Form der Funktion als $f(z) = mz + n$.
+2.  In **Beispiel 1.6** lautet die Funktion: $f(z) = (1 + 2i) \cdot z$.
+3.  Durch Vergleich der beiden Formeln sieht man:
+    *   Der Koeffizient vor dem $z$ ist $m$, also $m = 1 + 2i$.
+    *   Da hinter dem $z$-Term kein weiterer Summand steht (also nichts addiert wird), ist der Wert für $n$ gleich Null.
+
+Zusammenfassend: **$n = 0$**.

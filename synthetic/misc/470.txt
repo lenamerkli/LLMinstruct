@@ -1,0 +1,66 @@
+§u§
+float16 vs float32
+§a§
+**TL;DR:** Float16 uses half the memory and runs 2-8× faster on modern GPUs, but has a drastically smaller dynamic range (overflows at 65,504, underflows near 6×10⁻⁵) and ~3-4 digits of precision versus float32's 7-8 digits. In practice, almost nobody uses "pure" float16—they use **mixed precision** (float16 compute with float32 accumulation) or **bfloat16** (Google's format that keeps float32's range but reduces precision).
+
+---
+
+### The Technical Gap
+
+| Property | Float16 (IEEE 754) | Float32 (IEEE 754) |
+|:---|:---:|:---:|
+| **Bits** | 16 (1 sign, 5 exponent, 10 mantissa) | 32 (1 sign, 8 exponent, 23 mantissa) |
+| **Range** | ±6.10×10⁻⁵ to ±65,504 | ±1.18×10⁻³⁸ to ±3.4×10³⁸ |
+| **Epsilon** (machine epsilon) | ~0.000977 (2⁻¹⁰) | ~1.19×10⁻⁷ (2⁻²³) |
+| **Memory** | 2 bytes | 4 bytes |
+
+**What the range means practically:** In float16, if you're summing gradients that are smaller than ~0.0001, they vanish entirely (become zero). Worse, adding a large number to a small number causes "swamping"—`1000.0 + 0.5 = 1000.0` in float16 because there's no mantissa space left to represent the 0.5 increment.
+
+---
+
+### Where Float16 Wins
+
+1. **Memory Bandwidth** (usually the bottleneck)
+   - You can fit 2× larger models/batch sizes in GPU VRAM.
+   - Moving data from HBM to compute units is 2× faster, which often matters more than raw FLOPs.
+
+2. **Compute Throughput** (on modern GPUs)
+   - NVIDIA Tensor Cores (Volta/Ampere/Hopper) and AMD Matrix Cores do 2× (V100) to 16× (H100 FP8, effectively similar precision class) the operations/sec vs float32.
+   - On CPUs, ironically, float16 is often *slower* than float32 because x86 doesn't have native 16-bit SIMD units for arithmetic (until AMX/BF16 extensions).
+
+---
+
+### The Reality: Mixed Precision & Bfloat16
+
+**Pure float16 training is broken**—gradients underflow to zero, weight updates disappear, and batch normalization statistics explode. The modern solution is **Automatic Mixed Precision (AMP)**:
+- **Compute** in float16 (for speed).
+- **Store master weights** in float32 (for accumulation accuracy).
+- **Scale loss** upward (e.g., 2¹²) before backprop to prevent gradient underflow, then unscale before the weight update.
+- **Accumulate** reductions (loss, batch norm) in float32.
+
+**Bfloat16** (Brain Floating Point—used in TPUs, NVIDIA Ampere+, Intel Xeon) changes the tradeoff: it keeps float32's 8-bit exponent (so same huge range) but drops mantissa to 7 bits. You get float16's memory benefits without the overflow/underflow headaches. The precision is garbage (~2-3 significant digits), but transformers somehow don't care.
+
+---
+
+### Decision Framework
+
+**Use float16 (typically mixed precision) when:**
+- Training/inferencing on NVIDIA GPUs (Tensor Cores).
+- Batch size is limited by VRAM (switching lets you double it).
+- You have AMP tooling (PyTorch `autocast`, JAX `policy`, TF mixed precision).
+
+**Use bfloat16 instead if available:**
+- You're on TPU, newer NVIDIA (A100+), or AMD MI300.
+- Your model has large dynamic range needs (e.g., physics sims, some RL applications).
+
+**Stick with float32 when:**
+- On CPU (no speed benefit, sometimes penalty).
+- Doing scientific computing where 1% error matters (molecular dynamics, some CFD).
+- Your model has tiny gradients by design (training sparse features from scratch, some GANs without stabilization tricks).
+- Accumulating many small values (global softmax, attention across huge contexts)—though even here, accumulation in float32 + compute in float16 works.
+
+**Critical gotcha:** Distributed training. AllGather/ReduceScatter operations in float16 can be unstable; NCCL (NVIDIA's collective library) often does reductions in float32 internally even when inputs are float16.
+
+---
+
+**Verdict:** Default to mixed precision (float16/bfloat16 compute, float32 storage) for modern deep learning. The bandwidth savings alone usually outweigh the cognitive overhead, and frameworks have made the numerical stability issues mostly invisible.

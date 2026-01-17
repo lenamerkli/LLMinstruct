@@ -1,0 +1,37 @@
+§u§
+```latex
+\begin{align*}
+    i z - i \overline{z} - 2 &= 0 \\
+    i (x + y i) - i (x - y i) - 2 &= 0 \\
+    y &= -1 \\
+\end{align*}
+```
+Wie kommt man auf `y &= -1 \\`?
+§a§
+Die gegebene Gleichung wird wie folgt aufgelöst:
+
+1. Setze \( z = x + iy \) und \( \overline{z} = x - iy \) in die Gleichung ein:
+   \[
+   i (x + iy) - i (x - iy) - 2 = 0
+   \]
+
+2. Multipliziere aus:
+   \[
+   i x + i^2 y - i x + i^2 y - 2 = 0
+   \]
+   Beachte: \( i^2 = -1 \), also \( i^2 y = -y \). Daher:
+   \[
+   i x - y - i x - y - 2 = 0
+   \]
+
+3. Fasse zusammen:
+   \[
+   (i x - i x) + (-y - y) - 2 = 0 \quad \Rightarrow \quad -2y - 2 = 0
+   \]
+
+4. Löse nach \( y \) auf:
+   \[
+   -2y = 2 \quad \Rightarrow \quad y = -1
+   \]
+
+Damit ergibt sich direkt \( y = -1 \).

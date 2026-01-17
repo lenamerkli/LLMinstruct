@@ -1,0 +1,97 @@
+§u§
+<attach:d1fcf2f4dfa1f5def021578184a4ef6f57413085320877dd4135a5945c08a84c>Erkläre mir, wie ich solche Aufgaben lösen kann.
+§a§
+
+Um diese Aufgabe zu lösen, folgen wir diesen Schritten:
+
+
+### Schritt 1: Identifizieren der Funktionen und des Intervalls
+Wir haben zwei Funktionen:
+- \( f(x) = t \, x \)
+- \( g(x) = x^2 \)
+
+Die zu untersuchende Intervall ist \( [0; t] \) (mit \( t > 0 \)).
+
+
+### Schritt 2: Bestimmen, welche Funktion oben liegt
+Wir analysieren den Unterschied \( f(x) - g(x) \):
+\[
+f(x) - g(x) = t \, x - x^2 = x(t - x)
+\]
+
+- Bei \( x = 0 \): \( f(0) - g(0) = 0 \)
+- Bei \( x = t \): \( f(t) - g(t) = t \cdot t - t^2 = 0 \)
+- Die Funktion \( x(t - x) \) ist eine quadratische Funktion mit den Nullstellen \( x = 0 \) und \( x = t \). Da der Koeffizient vor \( x^2 \) negativ ist (\(-1\)), ist sie auf \( [0; t] \) **nicht-negativ** (sie liegt zwischen den Nullstellen positiv oder null).
+
+Daher ist \( f(x) \geq g(x) \) für alle \( x \in [0; t] \), und die Funktion \( f(x) \) liegt über \( g(x) \).
+
+
+### Schritt 3: Berechnen des Flächeninhalts \( A(t) \)
+Der Flächeninhalt zwischen zwei Funktionen \( y = u(x) \) (oberhalb) und \( y = v(x) \) (unterhalb) auf dem Intervall \( [a; b] \) ist:
+\[
+A = \int_{a}^{b} \left| u(x) - v(x) \right| \, dx
+\]
+
+Da \( f(x) \) über \( g(x) \) liegt, setzen wir \( u(x) = f(x) \) und \( v(x) = g(x) \):
+\[
+A(t) = \int_{0}^{t} \left( t \, x - x^2 \right) dx
+\]
+
+
+### Schritt 4: Integrieren und auswerten
+Berechnen wir die Integralfunktion:
+\[
+\int \left( t \, x - x^2 \right) dx = \frac{t}{2} x^2 - \frac{x^3}{3} + C
+\]
+
+Anwenden auf das Intervall \( [0; t] \):
+\[
+A(t) = \left[ \frac{t}{2} x^2 - \frac{x^3}{3} \right]_{0}^{t}
+\]
+
+Evaluieren bei \( x = t \):
+\[
+\frac{t}{2} \cdot t^2 - \frac{t^3}{3} = \frac{t^3}{2} - \frac{t^3}{3}
+\]
+
+Evaluieren bei \( x = 0 \):
+\[
+\frac{t}{2} \cdot 0^2 - \frac{0^3}{3} = 0
+\]
+
+Subtrahieren:
+\[
+A(t) = \left( \frac{t^3}{2} - \frac{t^3}{3} \right) - 0 = t^3 \left( \frac{1}{2} - \frac{1}{3} \right)
+\]
+
+Kürzen den Bruch:
+\[
+\frac{1}{2} - \frac{1}{3} = \frac{3 - 2}{6} = \frac{1}{6}
+\]
+
+Daher ist der Flächeninhalt:
+\[
+A(t) = \frac{t^3}{6}
+\]
+
+
+### Schritt 5: Bestimmen von \( t \), für das \( A(t) = \frac{4}{3} \) gilt
+Setzen wir \( A(t) = \frac{4}{3} \):
+\[
+\frac{t^3}{6} = \frac{4}{3}
+\]
+
+Lösen wir nach \( t \):
+\[
+t^3 = \frac{4}{3} \cdot 6 = 8
+\]
+
+Wurzel ziehen:
+\[
+t = \sqrt[3]{8} = 2
+\]
+
+
+### Zusammenfassung
+1. Der Flächeninhalt zwischen den Graphen auf \( [0; t] \) ist \( \boldsymbol{A(t) = \frac{t^3}{6}} \).
+2. Für \( \boldsymbol{t = 2} \) ist \( A(t) = \frac{4}{3} \).

@@ -1,0 +1,61 @@
+§u§
+float16 vs float32
+§a§
+## Float16 vs Float32: Key Differences
+
+### **Bit Layout**
+
+**Float32 (Single Precision)**
+- 1 sign bit
+- 8 exponent bits
+- 23 mantissa bits
+- Total: 32 bits (4 bytes)
+
+**Float16 (Half Precision)**
+- 1 sign bit
+- 5 exponent bits
+- 10 mantissa bits
+- Total: 16 bits (2 bytes)
+
+### **Numerical Range & Precision**
+
+| Aspect | Float16 | Float32 |
+|--------|---------|---------|
+| **Max value** | 65,504 | ~3.4 × 10³⁸ |
+| **Min positive normal** | 6.10 × 10⁻⁵ | ~1.2 × 10⁻³⁸ |
+| **Decimal precision** | ~3-4 digits | ~7-8 digits |
+| **Machine epsilon** | 0.00097 | ~1.2 × 10⁻⁷ |
+
+### **Trade-offs**
+
+**Float16 Advantages:**
+- ✅ 50% memory usage
+- ✅ Faster computation on GPUs with Tensor Cores
+- ✅ Higher throughput (2x ops in same bandwidth)
+- ✅ Reduced power consumption
+
+**Float16 Disadvantages:**
+- ❌ Limited range (overflow/underflow risk)
+- ❌ Lower precision (rounding errors)
+- ❌ Not suitable for accumulating small values
+- ❌ Limited CPU support
+
+### **Common Use Cases**
+
+**Float16:**
+- Deep learning inference
+- Neural network training (with mixed precision)
+- Graphics/gaming shaders
+- Edge AI devices
+
+**Float32:**
+- Scientific computing
+- Financial calculations
+- Training (when precision critical)
+- General CPU computations
+
+### **Mixed Precision Training**
+Modern approach combines both:
+- Store weights/activations in float16
+- Compute gradients in float32
+- Use loss scaling to prevent underflow

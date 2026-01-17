@@ -1,0 +1,65 @@
+§u§
+```latex
+\section{Komplexe Zahlen}
+Komplexe Zahlen erweitern den Bereich der reellen Zahlen. Sie können in zwei Hauptformen dargestellt werden:
+\begin{itemize}
+    \item \textbf{Normalform (kartesische Form):} $z = a + bi$, wobei $a$ der Realteil und $b$ der Imaginärteil ist.
+    \item \textbf{Polarform (exponentielle Form):} $z = r e^{i \phi} = r(\cos\phi + i\sin\phi)$, wobei $r$ der Betrag und $\phi$ das Argument (Winkel) ist.
+\end{itemize}
+
+\subsection{Konjugiert}
+Das Konjugierte einer komplexen Zahl $z = a+bi$ ist $\bar{z} = a-bi$.
+
+\subsection{Summe}
+Real- und Imaginärteile werden separat addiert:
+\[ (a+bi) + (c+di) = (a+c) + (b+d)i \]
+
+\subsection{Differenz}
+Real- und Imaginärteile werden separat subtrahiert:
+\[ (a+bi) - (c+di) = (a-c) + (b-d)i \]
+
+\subsection{Produkt}
+Die Zahlen werden ausmultipliziert, wobei $i^2 = -1$ beachtet wird:
+\[ (a+bi)(c+di) = ac + adi + bci + bdi^2 = (ac-bd) + (ad+bc)i \]
+
+\subsection{Division}
+Der Bruch wird mit dem Konjugierten des Nenners erweitert:
+\[ \frac{a+bi}{c+di} = \frac{(a+bi)(c-di)}{(c+di)(c-di)} = \frac{(ac+bd) + (bc-ad)i}{c^2+d^2} \]
+```
+Ersetze die `\[` und `\]` mit dem `\equation{...}`
+§a§
+```latex
+\section{Komplexe Zahlen}
+Komplexe Zahlen erweitern den Bereich der reellen Zahlen. Sie können in zwei Hauptformen dargestellt werden:
+\begin{itemize}
+    \item \textbf{Normalform (kartesische Form):} $z = a + bi$, wobei $a$ der Realteil und $b$ der Imaginärteil ist.
+    \item \textbf{Polarform (exponentielle Form):} $z = r e^{i \phi} = r(\cos\phi + i\sin\phi)$, wobei $r$ der Betrag und $\phi$ das Argument (Winkel) ist.
+\end{itemize}
+
+\subsection{Konjugiert}
+Das Konjugierte einer komplexen Zahl $z = a+bi$ ist $\bar{z} = a-bi$.
+
+\subsection{Summe}
+Real- und Imaginärteile werden separat addiert:
+\begin{equation}
+(a+bi) + (c+di) = (a+c) + (b+d)i
+\end{equation}
+
+\subsection{Differenz}
+Real- und Imaginärteile werden separat subtrahiert:
+\begin{equation}
+(a+bi) - (c+di) = (a-c) + (b-d)i
+\end{equation}
+
+\subsection{Produkt}
+Die Zahlen werden ausmultipliziert, wobei $i^2 = -1$ beachtet wird:
+\begin{equation}
+(a+bi)(c+di) = ac + adi + bci + bdi^2 = (ac-bd) + (ad+bc)i
+\end{equation}
+
+\subsection{Division}
+Der Bruch wird mit dem Konjugierten des Nenners erweitert:
+\begin{equation}
+\frac{a+bi}{c+di} = \frac{(a+bi)(c-di)}{(c+di)(c-di)} = \frac{(ac+bd) + (bc-ad)i}{c^2+d^2}
+\end{equation}
+```

@@ -1,0 +1,65 @@
+§u§
+<attach:e120e742c517fe91e65976f3e7cdf491cf3642d4a4851d51781cf79f22935369>.
+§a§
+Wir haben hier einen **Doppler-Effekt** bei Schallwellen, der durch die Reflexion an einem sich bewegenden Objekt (dem Lastwagen) verursacht wird. Der Bewegungsmesser sendet Wellen aus, diese werden am Lastwagen reflektiert und kehren zum Detektor zurück. Da sich der Lastwagen auf den Detektor zubewegt, kommt es zu einer **Frequenzverschiebung** – sowohl bei der Hinfahrt als auch bei der Rückfahrt der Welle.
+
+---
+
+### Gegeben:
+
+- Senderfrequenz: \( f_0 = 0{,}150 \, \text{MHz} = 150\,000 \, \text{Hz} \)
+- Geschwindigkeit des Lastwagens: \( v = 45 \, \text{m/s} \) (auf den Detektor zu)
+- Schallgeschwindigkeit in Luft: \( c = 343 \, \text{m/s} \) (Standardwert bei Raumtemperatur, falls nicht anders angegeben)
+
+---
+
+### Prinzip:
+
+Der Doppler-Effekt tritt **zweimal** auf:
+
+1. **Erste Stufe**: Der Lastwagen „empfängt“ die Schallwelle, während er sich auf den Sender zubewegt → Frequenz erhöht.
+2. **Zweite Stufe**: Der Lastwagen reflektiert die Welle wie ein bewegter Sender → Frequenz wird erneut erhöht.
+
+Die Formel für die empfangene Frequenz bei Reflexion an einem sich bewegenden Objekt lautet:
+
+\[
+f' = f_0 \cdot \frac{c + v}{c - v}
+\]
+
+> **Begründung**:
+> - Beim Hinweg (Sender → bewegter Empfänger):
+>   \( f_1 = f_0 \cdot \frac{c + v}{c} \)
+> - Beim Rückweg (bewegter Sender → ruhender Empfänger):
+>   \( f' = f_1 \cdot \frac{c}{c - v} = f_0 \cdot \frac{c + v}{c} \cdot \frac{c}{c - v} = f_0 \cdot \frac{c + v}{c - v} \)
+
+---
+
+### Einsetzen der Werte:
+
+\[
+f' = 150\,000 \cdot \frac{343 + 45}{343 - 45} = 150\,000 \cdot \frac{388}{298}
+\]
+
+Berechnen:
+
+\[
+\frac{388}{298} \approx 1{,}302013
+\]
+
+\[
+f' \approx 150\,000 \cdot 1{,}302013 \approx 195\,302 \, \text{Hz}
+\]
+
+---
+
+### Antwort:
+
+\[
+\boxed{195{,}3 \, \text{kHz}}
+\]
+
+*(oder gerundet auf 3 signifikante Ziffern: \( \boxed{195 \, \text{kHz}} \), da Eingabewert 0,150 MHz drei signifikante Ziffern hat)*
+
+---
+
+✅ **Endgültige Antwort: \( \boxed{195 \, \text{kHz}} \)**

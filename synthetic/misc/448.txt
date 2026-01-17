@@ -1,0 +1,55 @@
+§u§
+<attach:0d0efe972bb4a279ba3b55102497cc3a9c5b87aed0121a400d6bf623bd6c4c62>Was bedeutet das und wie schreibe ich das in LaTeX?
+§a§
+**Bedeutung**
+
+Das ist die formale Definition einer Funktion (Abbildung) in der **zweizeiligen Notation**, wie sie vor allem in der Analysis und komplexen Analysis üblich ist:
+
+*   **Zeile 1:** $f: D \to T$
+    Die Funktion $f$ geht vom **Definitionsbereich** $D$ (Domain) in den **Zielbereich** $T$ (Target/Codomain). Der Pfeil $\to$ (gesprochen: „wird abgebildet in“) steht *zwischen Mengen*.
+
+*   **Zeile 2:** $z \mapsto w = f(z)$
+    Ein Element $z \in D$ wird auf das Element $w \in T$ abgebildet, wobei $w$ explizit als $f(z)$ angegeben wird. Der Pfeil $\mapsto$ (gesprochen: „wird abgebildet auf“ oder „mapsto“) steht *zwischen Elementen*.
+
+**Der entscheidende Unterschied:** $\to$ verbindet Mengen, $\mapsto$ verbindet einzelne Elemente.
+
+---
+
+**LaTeX-Code**
+
+**1. Als Block (am gebräuchlichsten – so wie in deinem Bild):**
+Verwende die `align*`-Umgebung (aus dem `amsmath`-Paket). Das `&` richtet die Pfeile übereinander aus:
+
+```latex
+\begin{align*}
+  f \colon D &\to T \\
+  z &\mapsto w = f(z)
+\end{align*}
+```
+
+*Hinweis:* `\colon` erzeugt einen Doppelpunkt mit besserem Spacing als einfach `:` (typografisch sauberer, aber `:` ist auch okay).
+
+**2. Inline (im Fließtext):**
+Wenn du es in einer Zeile schreiben willst, trenne die beiden Teile mit einem Abstand (`\;` oder `\quad`):
+
+```latex
+$f \colon D \to T, \quad z \mapsto w = f(z)$
+```
+
+**3. Alternative mit `array` (für mehr Kontrolle):**
+Wenn du die Ausrichtung exakt wie im Bild (Spalten rechts-zentriert-links) haben möchtest:
+
+```latex
+\[
+\begin{array}{r@{\;}c@{\;}l}
+  f: D & \to & T \\
+  z & \mapsto & w = f(z)
+\end{array}
+\]
+```
+
+**Wichtige Befehle kurz:**
+*   `\to` oder `\rightarrow` = $\to$ (Pfeil zwischen Mengen)
+*   `\mapsto` = $\mapsto$ (Pfeil zwischen Elementen – niemals mit `\to` verwechseln!)
+
+**Praxistipp:** In komplexen Analysis-Skripten sieht man oft $D \subseteq \mathbb{C}$ und $T = \mathbb{C}$, wobei die zweizeilige Schreibweise genutzt wird, um später Platz für explizite Formeln wie $z \mapsto z^2 + 1$ zu haben.

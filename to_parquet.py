@@ -165,6 +165,33 @@ def process_jsonl_ingredient_scanner(file_path, project_name, synthetic, mistake
     return data
 
 
+def process_attachments(message):
+    """Process attachments in message content and add them to the attachments list."""
+    import re
+    import os
+
+    # Pattern to match <attach:{{hash}}> where hash is a 64-character hex string (SHA256)
+    attachment_pattern = r'<attach:([a-f0-9]{64})>'
+
+    # Find all attachment patterns in the content
+    matches = re.findall(attachment_pattern, message.get('content', ''))
+
+    # Process each attachment
+    for hash_value in matches:
+        # Check if file exists in attachments/data directory
+        file_path = os.path.join('attachments', 'data', hash_value)
+        if not os.path.exists(file_path):
+            raise FileNotFoundError(f"Attachment file not found: {file_path} (hash: {hash_value})")
+
+        # Add attachment to the message
+        if 'attachments' not in message:
+            message['attachments'] = []
+        message['attachments'].append({'value': f'sha256sum:{hash_value}'})
+
+    # Remove all attachment patterns from content
+    if matches:
+        message['content'] = re.sub(attachment_pattern, '', message.get('content', ''))
+
 def process_drawback_chess_directory(dir_path, project_name, synthetic, mistakes):
     tools = [
         {
@@ -355,6 +382,11 @@ def main():
         for j in i['messages']:
             if 'attachments' not in j:
                 j['attachments'] = []
+
+    # Process attachments in all messages
+    for entry in data:
+        for message in entry['messages']:
+            process_attachments(message)
 
     tokenizer = transformers.AutoTokenizer.from_pretrained('./tokenizer')
     for i, element in enumerate(data):

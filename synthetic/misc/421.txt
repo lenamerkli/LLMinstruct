@@ -1,0 +1,13 @@
+§u§
+<attach:f19af9dbb673e752e50be8f1ad540d58925a042eb2b4c05f634b5e99ef40c342>Write a prompt for a video generator. It should animate the image into a gif. No camera movement, no people and only change the surfaces.
+§a§
+Animate the provided data center server room image into a seamless, looped GIF with these exact specifications:
+- **Static camera**: No panning, zooming, tilting, or positional movement (fixed perspective matching the original image)
+- **No people/added objects**: All motion is restricted to surface and light interactions on existing elements (server cabinets, polished floor, background server racks)
+- **Subtle surface/light animations**:
+  1. Mountain graphics on cabinets: Slow, seamless glow cycle where snow-capped peaks softly brighten with cool white luminescence, then dim
+  2. "ALPS" lettering: Faint, pulsing inner gradient shift (cycling between deep purple and subtle electric blue) that waxes/wanes without distorting the letter shape
+  3. Polished floor: Faint, wavy light ripples (matching ambient purple/magenta hues) drift slowly across the surface, simulating subtle data flow/light refraction (cabinets’ reflections remain intact)
+  4. Background server racks: Sparse, random blinking of tiny warm-white status lights (single lights flicker on for 1–2 frames, then off) to mimic low-level server activity
+  5. Ambient lighting: Extremely slow, gradual hue cycle (shifting between deep violet-purple and soft magenta-purple over a 6-second loop) with no abrupt brightness changes
+- **Tone**: Preserve the original dark, high-tech atmosphere; all animations are understated and loop smoothly without jarring transitions

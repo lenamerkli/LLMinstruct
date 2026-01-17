@@ -1,0 +1,48 @@
+§u§
+```
+    @staticmethod
+    def _float_to_float32(float_: float) -> bytes:
+        pass
+
+    @staticmethod
+    def _float32_to_float(bytes_: bytes) -> float:
+        pass
+```
+implement these two python methods
+§a§
+You can use Python's built-in **`struct`** module to handle the conversion between Python floats (which are 64-bit by default) and 32-bit IEEE 754 binary representations.
+
+Here is the implementation:
+
+```python
+import struct
+
+class FloatConverter:
+    @staticmethod
+    def _float_to_float32(float_: float) -> bytes:
+        """
+        Converts a Python float (64-bit) to 4 bytes (32-bit float).
+        Uses big-endian '>' format. Use '<f' for little-endian.
+        """
+        return struct.pack('>f', float_)
+
+    @staticmethod
+    def _float32_to_float(bytes_: bytes) -> float:
+        """
+        Converts 4 bytes to a Python float (64-bit).
+        Uses big-endian '>' format. Use '<f' for little-endian.
+        """
+        # struct.unpack returns a tuple, so we take the first element
+        return struct.unpack('>f', bytes_)[0]
+
+# Example Usage:
+# b = FloatConverter._float_to_float32(3.14)
+# print(b)  # Output: b'@I\x0f\xdb'
+# f = FloatConverter._float32_to_float(b)
+# print(f)  # Output: 3.140000104904175 (Note the precision loss inherent to float32)
+```
+
+### Key Details:
+1.  **Endianness**: I used `>f` (Big-Endian). If you are working with hardware or files that use Little-Endian (common on Intel/AMD processors), change the format string to `<f`.
+2.  **Precision Loss**: Python floats are 64-bit ("doubles" in C). When you convert to `float32`, you will lose some precision, as shown in the example output (`3.14` becomes `3.14000010...`).
+3.  **Error Handling**: `struct.unpack` will raise a `struct.error` if the input `bytes_` is not exactly 4 bytes long.

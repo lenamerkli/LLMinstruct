@@ -1,0 +1,19 @@
+§u§
+Wie kann ich den Betrag einer komplexen Zahl $a + b i$ berechnen?
+§a§
+Der Betrag einer komplexen Zahl \( z = a + bi \) wird so berechnet:
+
+\[
+|z| = \sqrt{a^2 + b^2}
+\]
+
+Dabei sind:
+- \(a\) der Realteil,
+- \(b\) der Imaginärteil.
+
+Beispiel:
+Für \( z = 3 + 4i \):
+
+\[
+|z| = \sqrt{3^2 + 4^2} = \sqrt{9 + 16} = \sqrt{25} = 5
+\]

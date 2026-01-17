@@ -1,0 +1,19 @@
+§u§
+<attach:c632e6981db6c88941becd0b4e35c82829d0563d7ce7e5e391628b773cae74ac>Rekriere das in LaTeX.
+§a§
+Hier ist die LaTeX-Rekonstruktion des Bildes:
+
+```latex
+$\sigma = 5,67 \cdot 10^{-8} \text{ W}/\text{m}^2 \cdot \text{K}^4.$
+```
+
+**Erläuterung:**
+
+*   `$\sigma =` :  Beginnt die mathematische Umgebung und definiert die Variable Sigma.
+*   `5,67` : Der numerische Wert. Beachten Sie, dass in LaTeX ein Komma als Dezimaltrennzeichen verwendet wird.
+*   `\cdot` :  Erzeugt ein Multiplikationszeichen (Punkt).
+*   `10^{-8}` :  Schreibt 10 hoch -8.
+*   `\text{ W}/\text{m}^2 \cdot \text{K}^4` :  Gibt die Einheiten an.  `\text{}` wird verwendet, um Text innerhalb einer mathematischen Umgebung darzustellen.  `\text{W}` steht für Watt, `\text{m}^2` für Quadratmeter und `\text{K}^4` für Kelvin hoch 4.
+*   `.` : Der abschließende Punkt.
+
+Dies erzeugt die exakte Darstellung der Formel im Bild.

@@ -1,0 +1,127 @@
+§u§
+<attach:2027772bcb2359c7d94e106ea9ee6f39157576f6b6a79d69ba1e8a24f0b40cf5>Erkläre mir die Notizen meines Lehrers.
+§a§
+Hier eine Zeile-für-Zeile-Übersetzung der handschriftlichen Notizen – mit ein bisschen Kontext, damit klar wird, warum dein Lehrer gerade diese Größen benutzt und wie er auf ΔT ≈ 21 °C in einer Stunde kommt.
+
+---
+
+## 1. Aufgabenstellung (oben links)
+
+> Eine Heizung liefert 1,8 · 10⁶ J pro Stunde für einen Raum
+> (Atmosphärendruck, 20 °C) mit den Abmessungen 6,5 m · 4,6 m · 3,0 m.
+> Wie stark steigt die Raumtemperatur in **1 h**, wenn es keine Wärmeverluste gibt?
+
+Wir wollen also ΔT pro Stunde.
+
+---
+
+## 2. „Gegebene Werte“ (gelbes Kästchen)
+
+| Symbol | Bedeutung | Wert |
+|--------|-----------|------|
+| P      | Heizleistung (eigentlich Energie/Zeit) | 1,8 · 10⁶ J/h |
+| T₁     | Anfangstemperatur | 20 °C |
+| T₂     | Endtemperatur nach 1 h | ?  |
+
+---
+
+## 3. Schritt 1: Raumvolumen und Luftmasse
+
+1. Skizze: Quader V = a·b·c
+   a = 6,5 m, b = 4,6 m, c = 3,0 m
+   ⇒ V = 6,5 · 4,6 · 3,0 ≈ 89,7 m³
+
+2. Dichte der Luft (ρ\_Luft) aus der Formelsammlung (FS):
+   ρ ≈ 1,29 kg/m³ bei 20 °C und 1 bar.
+
+3. Masse der Luft:
+   m = ρ · V = 1,29 kg/m³ · 89,7 m³ ≈ 1,16 · 10² kg ≈ 116 kg
+
+(Die Zahl in der Skizze lautet 𝑚 ≈ ρ\_Luft · V, er rechnet nicht mehr aus, sondern macht das später beim Einsetzen.)
+
+---
+
+## 4. Schritt 2: Energieinhalt der Luft bei Volumen­konstanz
+
+Da die Raumwände starr sind, wird das Gas **bei konstantem Volumen** erwärmt.
+→ man braucht die spezifische Wärmekapazität **cᵥ** (nicht cₚ).
+
+• Formelsammlung:
+  cₚ ≈ 1,005 · 10³ J/(kg·K)
+
+• Für ideale Gase gilt cₚ − cᵥ = R.
+  R (spezifisch für Luft) ≈ 0,287 kJ/(kg·K) = 287 J/(kg·K)
+
+→ cᵥ = cₚ − R ≈ (1 005 − 287) J/(kg·K) ≈ 718 J/(kg·K)
+
+Rechts in der Zeichnung steht deshalb:
+“cₚ − cᵥ = R  ⇒  cᵥ = …”,
+und ganz rechts:
+“Lös. Giancoli: cᵥ = 0,17 kcal/(kg °C)”,
+was exakt denselben Wert in anderen Einheiten darstellt
+(0,17 kcal ≈ 0,17 · 4,186 kJ ≈ 0,71 kJ).
+
+---
+
+## 5. Schritt 3: Energiebilanz
+
+Allgemein: ΔQ = cᵥ · m · ΔT
+
+Heizleistung: P = ΔQ / Δt
+(Δt = 1 h → das erspart die Sekundenum­rechnung)
+
+Umstellen nach ΔT:
+
+ΔT = (P · Δt) / (cᵥ · m)
+
+In den Notizen:
+
+P = 1,8 · 10⁶ J/h
+Δt = 1 h
+m = ρ · a·b·c
+cᵥ = s.o.
+
+---
+
+## 6. Schritt 4: Einsetzen und Ergebnis
+
+1. m ≈ 1,29 kg/m³ · 89,7 m³ ≈ 115,7 kg
+2. cᵥ ≈ 718 J/(kg·K)
+3. P·Δt = 1,8 · 10⁶ J
+
+ΔT = 1,8 · 10⁶ J / (115,7 kg · 718 J/kg·K)
+     ≈ 1,8 · 10⁶ J / 8,31 · 10⁴ J/K
+     ≈ 21,6 K
+
+Da ein Temperatur­schritt in Kelvin numerisch gleich dem in °C ist, gilt:
+
+ΔT ≈ 21 °C pro Stunde
+
+Das wird in der Skizze als
+
+“= 21 °C/h”
+
+unterstrichen.
+
+---
+
+## 7. Wichtige Annahmen & wieso cᵥ statt cₚ?
+
+• Die Luft dehnt sich *nicht* aus, weil das Raum­volumen fest ist → Arbeit W = 0 → gesamte Heiz­energie geht in innere Energie.
+• Bei konstantem Volumen beschreibt cᵥ, wie stark die innere Energie pro Kelvin ansteigt.
+• Keine Wärmeverluste (idealisierte Annahme). In der Realität ginge ein Teil der 1,8 MJ/h nach draußen, sodass ΔT kleiner wäre.
+
+---
+
+### Kurzform zum Merken
+
+1. V = a·b·c
+2. m = ρ · V
+3. cᵥ = cₚ − R
+4. ΔT = P·Δt / (cᵥ·m)
+
+Ergebnis ≈ 21 °C Erwärmung in einer Stunde.
+
+---
+
+Hoffe, damit sind die Notizen klar! Falls du an einer Stelle tiefer einsteigen möchtest (z. B. Herleitung cₚ − cᵥ = R oder Einheiten­umrechnung), sag Bescheid 🙂

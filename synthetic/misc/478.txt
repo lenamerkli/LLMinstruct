@@ -1,0 +1,109 @@
+§u§
+Erkläre mir Möbius Transformationen. (bestimmen, anwenden und verketten)
+§a§
+Möbiustransformationen (auch linear-gebrochene Transformationen genannt) sind die "Königsklasse" der Abbildungen in der komplexen Analysis. Sie sind elegant, mächtig und geometrisch wunderschön.
+
+Hier ist der ultimative Guide: **Verstehen, Bestimmen, Anwenden, Verketten.**
+
+---
+
+### 1. Was ist das überhaupt? (Die Formel)
+
+Eine Möbiustransformation $f$ hat immer diese Form:
+
+$$f(z) = \frac{az + b}{cz + d}$$
+
+**Die goldene Regel:** $ad - bc \neq 0$.
+*(Wäre es 0, würde sich alles wegkürzen und du hättest nur eine konstante Zahl, keine spannende Abbildung).*
+
+**Das Geheimnis:** Jede Möbiustransformation ist nur eine Abfolge von drei simplen Dingen:
+1. Verschieben ($z + b$)
+2. Drehen & Strecken ($a \cdot z$)
+3. **Invertieren** ($1/z$) $\leftarrow$ *Das ist der magische Teil!*
+
+---
+
+### 2. ANWENDEN (Rechnen)
+
+Hier willst du wissen: "Wo landet der Punkt $z_0$?"
+
+Das ist reines Einsetzen, **ABER** du musst aufpassen bei $\infty$. Wir arbeiten auf der **erweiterten komplexen Ebene** ($\hat{\mathbb{C}}$).
+
+| Eingabe $z$ | Ergebnis $w = f(z)$ | Erklärung |
+| :--- | :--- | :--- |
+| Normale Zahl | $\frac{az+b}{cz+d}$ | Einfach ausrechnen. |
+| $z = \infty$ | $\frac{a}{c}$ | Die höchsten Potenzen von $z$ kürzen sich. |
+| $z = -d/c$ | $\infty$ | Nenner wird 0 (Polstelle). |
+
+**Beispiel:** $f(z) = \frac{z-1}{z+1}$
+*   $f(1) = \frac{0}{2} = 0$
+*   $f(\infty) = \frac{1}{1} = 1$
+*   $f(-1) = \frac{-2}{0} = \infty$
+
+---
+
+### 3. BESTIMMEN (Der 3-Punkte-Trick)
+
+Das ist die wichtigste Aufgabe in Klausuren: **"Finde die Transformation, die $z_1 \to w_1$, $z_2 \to w_2$, $z_3 \to w_3$ abbildet."**
+
+Eine Möbiustransformation ist **eindeutig** durch 3 Punkte festgelegt.
+
+#### Die Waffe der Wahl: Das Doppelverhältnis (Cross-Ratio)
+Statt ein Gleichungssystem zu lösen (nervig!), nutzt du diese Formel:
+
+$$ (w, w_1, w_2, w_3) = (z, z_1, z_2, z_3) $$
+
+Ausgeschrieben:
+$$ \frac{w - w_1}{w - w_3} \cdot \frac{w_2 - w_1}{w_2 - w_3} = \frac{z - z_1}{z - z_3} \cdot \frac{z_2 - z_1}{z_2 - z_3} $$
+
+*(Merke: Die Indizes 1, 2, 3 müssen auf beiden Seiten an der gleichen Stelle stehen!)*
+
+**Rezept:**
+1. Setze deine 3 Paare $(z_i, w_i)$ in die Formel ein.
+2. Alles, was aus $w$ bekannt ist, rechne zusammen zu einer Zahl $K$.
+3. Stelle die Gleichung nach $w$ um.
+
+---
+
+### 4. VERKETTEN (Hintereinanderausführen)
+
+Du hast $f(z)$ und $g(z)$ und willst $h(z) = f(g(z))$.
+
+#### Methode A: Die brutale (Einsetzen)
+$f(g(z)) = \frac{a(\frac{\alpha z + \beta}{\gamma z + \delta}) + b}{c(\frac{\alpha z + \beta}{\gamma z + \delta}) + d}$
+Das kürzt sich zwar am Ende wieder zu einer Möbiustransformation, aber der Rechenweg ist die Hölle.
+
+#### Methode B: Die Matrix-Methode (Der Profi-Trick) 🚀
+Jede Möbiustransformation $\frac{az+b}{cz+d}$ entspricht einer Matrix:
+$$ M = \begin{pmatrix} a & b \\ c & d \end{pmatrix} $$
+
+**Verkettung = Matrizenmultiplikation!**
+
+Wenn du $f(g(z))$ willst, rechne einfach $M_f \cdot M_g$.
+
+*Achtung:* Reihenfolge beachten! $f(g(z))$ heißt Matrix $M_f \cdot M_g$ (erst $g$, dann $f$).
+
+**Beispiel:**
+$g(z) = z + 1$ (Matrix $\begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix}$)
+$f(z) = 1/z$ (Matrix $\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$)
+
+Gesucht: $h(z) = f(g(z)) = \frac{1}{z+1}$.
+Rechnung:
+$$ \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} \cdot \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} 0\cdot1+1\cdot0 & 0\cdot1+1\cdot1 \\ 1\cdot1+0\cdot0 & 1\cdot1+0\cdot1 \end{pmatrix} = \begin{pmatrix} 0 & 1 \\ 1 & 1 \end{pmatrix} $$
+
+Ergebnis: $\frac{0z + 1}{1z + 1} = \frac{1}{z+1}$. **Boom.**
+
+---
+
+### Zusammenfassung (Spickzettel)
+
+| Aufgabe | Werkzeug |
+| :--- | :--- |
+| **Punkt abbilden** | Einsetzen. $\infty \to a/c$. |
+| **Gerade/Kreis abbilden** | Bilden immer Geraden/Kreise ab! (Bilden 3 Punkte ab). |
+| **Funktion finden** | Doppelverhältnis Formel. |
+| **Funktionen kombinieren** | Matrizen multiplizieren. |
+| **Fixpunkte finden** | $f(z) = z$ lösen (quadratische Gleichung). |
+
+**Geometrische Eselsbrücke:**
+Möbiustransformationen sind **winkeltreu** (Conformal). Wenn sich zwei Linien unter $90^\circ$ schneiden, tun sie das auch nach der Abbildung. Sie verzerren nichts "krumm", sie stauchen und strecken nur gleichmäßig in alle Richtungen (lokal).

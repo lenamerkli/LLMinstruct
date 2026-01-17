@@ -1,0 +1,57 @@
+§u§
+<attach:c26fa69a76a5275680b11514ee7f6d07c1feac0b1216941e7fb80bb0c4c73f52>Erkläre mir, wie ich eine solche Aufgabe lösen kann.
+§a§
+Gerne! Diese Aufgabe gehört zum Bereich der **Integralrechnung**. Es geht darum, eine Fläche unter einer Kurve zu berechnen, die von einem Parameter ($p$) abhängt.
+
+Hier ist die Schritt-für-Schritt-Erklärung:
+
+### Teil 1: Bestimmung von $A(p)$ in Abhängigkeit von $p$
+
+Die Fläche $A(p)$ zwischen dem Graphen einer Funktion $f(x)$ und der x-Achse in einem Intervall $[a; b]$ berechnet man über das bestimmte Integral:
+$$A(p) = \int_{a}^{b} f_p(x) \, dx$$
+
+In deinem Fall ist das Intervall $[0; 1]$. Da $p > 0$ ist und $x$ im Bereich $[0; 1]$ liegt, ist die Funktion $f_p(x) = \frac{px}{1+x^2}$ immer positiv. Wir müssen also keine Betragsstriche setzen.
+
+**1. Das Integral aufstellen:**
+$$A(p) = \int_{0}^{1} \frac{px}{1+x^2} \, dx$$
+
+**2. Das Integral lösen:**
+Um dieses Integral zu lösen, nutzen wir einen Trick. Der Zähler ($px$) sieht fast so aus wie die Ableitung des Nenners ($1+x^2$). Die Ableitung von $1+x^2$ ist $2x$.
+
+Wir ziehen das konstante $p$ vor das Integral und versuchen, im Zähler eine $2x$ zu erzeugen, indem wir mit $2$ multiplizieren und gleichzeitig durch $2$ teilen:
+$$A(p) = p \cdot \int_{0}^{1} \frac{x}{1+x^2} \, dx = \frac{p}{2} \cdot \int_{0}^{1} \frac{2x}{1+x^2} \, dx$$
+
+Jetzt können wir die Regel für **logarithmische Integration** anwenden: $\int \frac{g'(x)}{g(x)} \, dx = \ln|g(x)|$.
+
+**3. Stammfunktion bilden und Grenzen einsetzen:**
+$$A(p) = \frac{p}{2} \cdot \left[ \ln(1+x^2) \right]_0^1$$
+*(Da $1+x^2$ immer positiv ist, können wir die Betragsstriche beim Logarithmus weglassen.)*
+
+Nun setzen wir die obere Grenze (1) und die untere Grenze (0) ein:
+$$A(p) = \frac{p}{2} \cdot \left( \ln(1+1^2) - \ln(1+0^2) \right)$$
+$$A(p) = \frac{p}{2} \cdot \left( \ln(2) - \ln(1) \right)$$
+
+Da $\ln(1) = 0$ ist, bleibt übrig:
+**$$A(p) = \frac{p}{2} \ln(2)$$**
+
+---
+
+### Teil 2: Für welchen Wert von $p$ gilt $A(p) = \ln(2)$?
+
+Hier musst du lediglich das Ergebnis aus Teil 1 mit dem gegebenen Wert gleichsetzen und nach $p$ auflösen.
+
+**1. Gleichung aufstellen:**
+$$\frac{p}{2} \ln(2) = \ln(2)$$
+
+**2. Nach $p$ auflösen:**
+Da $\ln(2)$ eine feste Zahl ungleich Null ist, können wir beide Seiten der Gleichung durch $\ln(2)$ teilen:
+$$\frac{p}{2} = 1$$
+
+Nun multiplizieren wir mit $2$:
+**$$p = 2$$**
+
+### Zusammenfassung der Vorgehensweise:
+1.  **Integral aufstellen:** Grenzen $[0; 1]$ und Funktion $f_p(x)$ nutzen.
+2.  **Stammfunktion finden:** Hier war der Schlüssel die Erkenntnis, dass der Zähler (bis auf einen Faktor) die Ableitung des Nenners ist (Logarithmus-Regel).
+3.  **Grenzen einsetzen:** Ergebnis vereinfachen (wissen, dass $\ln(1)=0$).
+4.  **Gleichung lösen:** Den Flächenterm mit dem Zielwert gleichsetzen und nach der Unbekannten $p$ umstellen.

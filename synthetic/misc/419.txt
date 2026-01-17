@@ -1,0 +1,39 @@
+§u§
+<attach:7babf4465ebd52e2f7925c04e408c59e72b8a2c319341f43d66bd03000b3895e>Wie mache Ich das zu LaTeX?
+§a§
+Hallo! Um dieses Anfangswertproblem in LaTeX zu schreiben, nutzt du am besten die Umgebung `cases` aus dem Paket `amsmath`.
+
+Hier ist ein Beispiel für den Code:
+
+```latex
+% Zuerst das benötigte Paket in der *Präambel* deines LaTeX-Dokuments:
+\usepackage{amsmath}
+
+
+% Dann der Code für das Problem (innerhalb des Textes oder einer mathematischen Umgebung):
+\[
+\begin{cases}
+  y' + x \tan(y) = 0 \\
+  y(0) = \frac{\pi}{2}
+\end{cases}
+\]
+```
+
+**Erläuterung der Bestandteile:**
+
+1.  `\usepackage{amsmath}`: Muss in der Kopfzeile (Präambel) deines Dokuments stehen, damit die `cases`-Umgebung funktioniert.
+2.  `\[ ... \]`: Erzeugt eine **unnummerierte**, zentrierte mathematische Umgebung (passend für ein Problem). Wenn du eine Nummerierung möchtest, nutze statt dessen `\begin{equation} ... \end{equation}`.
+3.  `\begin{cases} ... \end{cases}`: Erzeugt die geschweifte Klammer links und ordnet den Inhalt in Zeilen an. Die Zeilen werden mit `\\` getrennt.
+4.  `\tan`: Setzt den Tangens als mathematischen Operator (statt als Variable `tan`), was die Formatierung korrekt macht.
+5.  `\frac{\pi}{2}`: Setzt den Bruch (hier ist `\pi` im Zähler, was mathematisch und optisch oft besser ist als `\frac{1}{2}\pi`, die aber auch funktioniert).
+6.  `y'`: Die Ableitung von `y` (alternativ könntest du auch `y^\prime` schreiben).
+
+
+**Das Ergebnis sieht so aus:**
+
+$$
+\begin{cases}
+  y' + x \tan(y) = 0 \\
+  y(0) = \frac{\pi}{2}
+\end{cases}
+$$

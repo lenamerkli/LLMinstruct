@@ -1,0 +1,14 @@
+§u§
+<attach:1f248742422f92d7f108f2c3eca657ba297fbd24e1e1c74c12c43079405e25e2>Was bedeutet dieses Zeichen?
+§a§
+Das Zeichen bedeutet: **„$D$ ist eine Teilmenge der komplexen Zahlen“** (ausgesprochen: „D Teilmenge C“ oder „D ist in C enthalten“).
+
+**Aufgeschlüsselt:**
+- **$\mathbb{C}$** bezeichnet die Menge der komplexen Zahlen ($\{a + bi \mid a, b \in \mathbb{R}\}$).
+- **$\subseteq$** ist das Teilmengenzeichen. Es bedeutet, dass jedes Element von $D$ auch in $\mathbb{C}$ liegt. Wichtig: Das Gleichheitszeichen unter dem $\subset$ zeigt an, dass $D$ auch **gleich** $\mathbb{C}$ sein darf (also keine echte Teilmenge sein muss).
+
+**Wichtiger Hinweis zur Notation:** In älterer oder sehr formaler Literatur wird manchmal nur $\subset$ statt $\subseteq$ geschrieben, was dann ebenfalls „Teilmenge“ (inklusive Gleichheit) bedeutet. Für eine *echte* Teilmenge (also $D \neq \mathbb{C}$) schreibt man explizit $\subsetneq$ oder manchmal $\subset$ (je nach Autorenkonvention – das führt leider zu Verwirrung).
+
+**Typischer Kontext:** Diese Schreibweise findet man vor allem in der **Funktionentheorie** (komplexe Analysis). Dort ist $D$ meist ein **Definitionsbereich** (oft eine *Domain* – also eine offene und zusammenhängende Teilmenge von $\mathbb{C}$), auf dem komplex differenzierbare Funktionen betrachtet werden.
+
+**Beispiel:** $D = \{z \in \mathbb{C} \mid |z| < 1\}$ wäre die offene Einheitskreisscheibe – eine typische Teilmenge von $\mathbb{C}$, für die man etwa die Eigenschaften holomorpher Funktionen untersucht.

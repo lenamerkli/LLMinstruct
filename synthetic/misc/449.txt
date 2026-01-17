@@ -1,0 +1,34 @@
+§u§
+<attach:27f001ee09ca9945ab288136a38abcc526aa05bbd40a76372cc0c7c2437753ed>Ich verstehe dieses Beispiel nicht. Erkläre es mir.
+§a§
+Das Beispiel zeigt die geometrische Wirkung der **Multiplikation mit einer komplexen Zahl** — hier $a = 1 + 2i$. Die Funktion $f(z) = (1+2i)z$ ist keine gewöhnliche reelle Gerade, sondern eine **Drehstreckung** der komplexen Ebene. Lass mich das in drei Schritten zerlegen:
+
+**1. Die Zerlegung in der Formel (1.3) – Warum „Streckung und Drehung"?**
+
+Jede komplexe Zahl $a \neq 0$ lässt sich in Polarform schreiben: $a = |a| \cdot e^{i\arg(a)}$. Dabei ist:
+* $|a| = \sqrt{\text{Re}(a)^2 + \text{Im}(a)^2}$ der Betrag (Länge),
+* $e^{i\arg(a)} = \cos(\arg(a)) + i\sin(\arg(a))$ ein Faktor vom Betrag 1, der eine Drehung um den Winkel $\arg(a)$ bewirkt.
+
+Für $a = 1+2i$ gilt konkret:
+* **Streckung:** $|1+2i| = \sqrt{1^2 + 2^2} = \sqrt{5}$. Der Abstand *jedes* Punktes $z$ vom Ursprung wird mit dem Faktor $\sqrt{5} \approx 2{,}236$ multipliziert.
+* **Drehung:** $\arg(1+2i) = \arctan(\frac{2}{1}) \approx 63{,}43^\circ$. Jeder Punkt wird um diesen Winkel gegen den Uhrzeigersinn gedreht (weil der Imaginärteil positiv ist).
+
+Die Formel (1.3) schreibt dies explizit hin:
+$$f(z) = \underbrace{|1+2i|}_{\sqrt{5}} \cdot z \cdot \underbrace{e^{i\arg(1+2i)}}_{\text{Drehung}}$$
+(Die Reihenfolge ist egal, weil die Multiplikation kommutativ ist.)
+
+**2. Die konkrete Abbildung im Bild**
+
+* **Links:** Das Urbild-Gitter (kartesisch, parallel zu den Achsen). Der markierte Punkt ist $z = 2+2i$ (das steht unter dem Pfeil). Das kleine graue Quadrat bei $2+2i$ dient als „Testobjekt".
+* **Rechts:** Das Bild unter $f$. Das Gitter ist nun **um ca. 63,4° gedreht** und **um den Faktor $\sqrt{5}$ gestreckt**. Prüfe den markierten Punkt:
+  $$(1+2i)(2+2i) = 2 + 2i + 4i + 4i^2 = 2 + 6i - 4 = \boxed{-2+6i}$$
+  Das stimmt mit dem Bild überein ($-2$ auf der $u$-Achse, $+6$ auf der $v$-Achse). Das graue Quadrat wird auf ein größeres Parallelogramm (tatsächlich ein Rechteck, da Winkel erhalten bleiben) abgebildet.
+
+**3. Wichtige Feinheiten**
+
+* **Warum „ganze lineare Funktion"?** „Ganz" bedeutet, die Funktion ist auf ganz $\mathbb{C}$ definiert (ohne Polstellen). „Linear" bezieht sich hier auf die $\mathbb{C}$-Linearität ($f(\lambda z) = \lambda f(z)$). Es ist *keine* Translation wie $f(z) = az + b$ — der Ursprung bleibt fest.
+* **Die Reihenfolge in (1.3) ist etwas unglücklich.** Man liest es oft als „$z$ wird mit $|a|$ gestreckt und dann gedreht", was richtig ist. Mathematisch präziser wäre $f(z) = (|a|e^{i\arg(a)}) \cdot z$, was zeigt, dass der Drehfaktor zum Parameter $a$ gehört, nicht zu $z$.
+
+**Zusatz:** In der reellen Analysis entspricht diese Abbildung der Matrixmultiplikation $\begin{pmatrix} x \\ y \end{pmatrix} \mapsto \begin{pmatrix} 1 & -2 \\ 2 & 1 \end{pmatrix}\begin{pmatrix} x \\ y \end{pmatrix}$ — das ist genau die Drehmatrix um $\arctan(2)$ skaliert mit $\sqrt{5}$.
+
+**Kurz gesagt:** Die Abbildung dreht die komplexe Ebene um ca. 63° und bläst sie gleichmäßig um den Faktor $\sqrt{5}$ auf wie eine aufgeblasene Luftmatratze.

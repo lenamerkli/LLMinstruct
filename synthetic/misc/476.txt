@@ -1,0 +1,165 @@
+§u§
+```latex
+\subsection{Umwandlung zwischen Normal- und Polarform}
+\subsubsection{Normalform $\to$ Polarform}
+\begin{enumerate}
+    \item Betrag berechnen: $r = |z| = \sqrt{a^2+b^2}$
+    \item Winkel berechnen: $\phi = \arg(z)$. Man findet $\phi$ mittels $\tan(\phi) = b/a$, wobei der Quadrant von $(a,b)$ beachtet werden muss.
+\end{enumerate}
+```
+Ich verstehe immer noch nicht, wie der Winkel berechnet werden muss.
+§a§
+Das ist das klassische Problem! Dein Taschenrechner „lügt“ dich nämlich an (ein bisschen).
+
+Der Grund: Die Taste $\tan^{-1}$ (oder arctan) auf dem Rechner kennt nur das **rechte obere Viertel** des Koordinatensystems (1. Quadrant). Sie gibt immer einen Winkel zwischen $-90^\circ$ und $+90^\circ$ aus.
+
+Aber deine Zahl $z = a + bi$ kann ja überall sein. Deshalb musst du **händisch korrigieren**.
+
+Hier ist die „Dummensichere“ Anleitung:
+
+---
+
+### Schritt 1: Den „Rechner-Winkel“ holen
+Rechne erstmal stumpf $\arctan(|b/a|)$. Ignoriere die Minuszeichen für einen Moment.
+Nennen wir das Ergebnis **$\alpha$**.
+*Beispiel:* Wenn $b/a = -1$ ist, rechnet der Rechner $-45^\circ$. Dein $\alpha$ ist aber einfach nur $45^\circ$.
+
+### Schritt 2: Den richtigen Quadranten finden (Die Tabelle)
+
+Schau dir dein $a$ (Realteil) und $b$ (Imaginärteil) an und such die passende Zeile:
+
+| Quadrant | Vorzeichen ($a, b$) | Wo liegt's? | Formel für $\phi$ |
+| :--- | :--- | :--- | :--- |
+| **I** | $a > 0, b > 0$ | Rechts oben | $\phi = \alpha$ |
+| **II** | $a < 0, b > 0$ | Links oben | $\phi = 180^\circ - \alpha$ |
+| **III** | $a < 0, b < 0$ | Links unten | $\phi = 180^\circ + \alpha$ |
+| **IV** | $a > 0, b < 0$ | Rechts unten | $\phi = 360^\circ - \alpha$ (oder $-\alpha$) |
+
+---
+
+### 💡 Beispielrechnung
+
+Nehmen wir $z = -1 - i$.
+Hier ist $a = -1$ und $b = -1$.
+
+1.  **Rechner:** $\arctan(\frac{-1}{-1}) = \arctan(1) = 45^\circ$. (Das ist unser $\alpha$).
+2.  **Ort:** $a$ ist negativ, $b$ ist negativ $\to$ **3. Quadrant** (Links unten).
+3.  **Formel:** $180^\circ + \alpha$.
+4.  **Ergebnis:** $180^\circ + 45^\circ = \mathbf{225^\circ}$.
+
+*Hättest du nur auf den Rechner gehört ($45^\circ$), lägest du im 1. Quadranten ($1+i$), was falsch wäre.*
+
+---
+
+### 🚀 Der Profi-Trick (für Uni/Schule)
+
+Wenn dein Taschenrechner die Taste **`atan2(y, x)`** oder **`R→Pθ`** hat: **BENUTZE DIE!**
+
+Die Funktion `atan2(b, a)` macht genau diese Quadranten-Korrektur automatisch für dich.
+*   Eingabe: `atan2(-1, -1)`
+*   Ausgabe: `-135^\circ` (das ist das gleiche wie $225^\circ$).
+
+**Zusammenfassung:**
+1. Rechne $\alpha = \arctan(|b/a|)$.
+2. Schau auf das Vorzeichen von $a$ und $b$.
+3. Addiere oder subtrahiere $180^\circ$ wie in der Tabelle oben.
+§u§
+Mache die Tabelle aus `Schritt 2` zu LaTeX code.
+§a§
+Ich gebe dir zwei Versionen: eine optisch ansprechendere, die das Paket `booktabs` verwendet, und eine ganz einfache, die ohne zusätzliche Pakete auskommt.
+
+### Empfohlene Version (mit `booktabs`)
+Diese Version erzeugt professionell aussehende Linien mit etwas mehr Abstand.
+
+**Code:**
+```latex
+% Benötigt in der Präambel: \usepackage{booktabs}
+\begin{tabular}{c l l l}
+\toprule
+\textbf{Quadrant} & \textbf{Vorzeichen ($a, b$)} & \textbf{Wo liegt's?} & \textbf{Formel für $\phi$} \\
+\midrule
+I    & $a > 0, b > 0$ & Rechts oben  & $\phi = \alpha$ \\
+II   & $a < 0, b > 0$ & Links oben   & $\phi = 180^\circ - \alpha$ \\
+III  & $a < 0, b < 0$ & Links unten  & $\phi = 180^\circ + \alpha$ \\
+IV   & $a > 0, b < 0$ & Rechts unten & $\phi = 360^\circ - \alpha$ (oder $-\alpha$) \\
+\bottomrule
+\end{tabular}
+```
+
+**Ergebnis:**
+
+
+---
+
+### Einfache Version (ohne extra Pakete)
+Diese Version verwendet nur `\hline` für die Linien und funktioniert in jeder Standard-LaTeX-Umgebung.
+
+**Code:**
+```latex
+\begin{tabular}{|c|l|l|l|}
+\hline
+\textbf{Quadrant} & \textbf{Vorzeichen ($a, b$)} & \textbf{Wo liegt's?} & \textbf{Formel für $\phi$} \\
+\hline
+I    & $a > 0, b > 0$ & Rechts oben  & $\phi = \alpha$ \\
+II   & $a < 0, b > 0$ & Links oben   & $\phi = 180^\circ - \alpha$ \\
+III  & $a < 0, b < 0$ & Links unten  & $\phi = 180^\circ + \alpha$ \\
+IV   & $a > 0, b < 0$ & Rechts unten & $\phi = 360^\circ - \alpha$ (oder $-\alpha$) \\
+\hline
+\end{tabular}
+```
+**Ergebnis:**
+
+
+---
+
+### Vollständiges, kompilierbares Beispiel
+Hier ist ein komplettes Dokument, das du direkt kopieren und in deinem LaTeX-Editor ausführen kannst.
+
+```latex
+\documentclass{article}
+
+% --- Präambel ---
+\usepackage[utf8]{inputenc}      % Für Umlaute wie ä, ö, ü
+\usepackage[T1]{fontenc}         % Für korrekte Schriftkodierung
+\usepackage{amsmath}             % Für erweiterte Mathe-Umgebungen
+\usepackage{booktabs}            % Für schönere Tabellenlinien (empfohlen)
+\usepackage[ngerman]{babel}      % Deutsche Sprachanpassungen
+
+\begin{document}
+
+\section*{Tabelle zur Winkelberechnung}
+
+\subsection*{Empfohlene Version mit booktabs}
+Sieht professioneller aus und ist besser lesbar.
+
+\begin{center} % Zentriert die Tabelle
+    \begin{tabular}{c l l l}
+    \toprule
+    \textbf{Quadrant} & \textbf{Vorzeichen ($a, b$)} & \textbf{Wo liegt's?} & \textbf{Formel für $\phi$} \\
+    \midrule
+    I    & $a > 0, b > 0$ & Rechts oben  & $\phi = \alpha$ \\
+    II   & $a < 0, b > 0$ & Links oben   & $\phi = 180^\circ - \alpha$ \\
+    III  & $a < 0, b < 0$ & Links unten  & $\phi = 180^\circ + \alpha$ \\
+    IV   & $a > 0, b < 0$ & Rechts unten & $\phi = 360^\circ - \alpha$ (oder $-\alpha$) \\
+    \bottomrule
+    \end{tabular}
+\end{center}
+
+\subsection*{Einfache Version mit hline}
+Funktioniert immer, auch ohne das booktabs-Paket.
+
+\begin{center} % Zentriert die Tabelle
+    \begin{tabular}{|c|l|l|l|}
+    \hline
+    \textbf{Quadrant} & \textbf{Vorzeichen ($a, b$)} & \textbf{Wo liegt's?} & \textbf{Formel für $\phi$} \\
+    \hline
+    I    & $a > 0, b > 0$ & Rechts oben  & $\phi = \alpha$ \\
+    II   & $a < 0, b > 0$ & Links oben   & $\phi = 180^\circ - \alpha$ \\
+    III  & $a < 0, b < 0$ & Links unten  & $\phi = 180^\circ + \alpha$ \\
+    IV   & $a > 0, b < 0$ & Rechts unten & $\phi = 360^\circ - \alpha$ (oder $-\alpha$) \\
+    \hline
+    \end{tabular}
+\end{center}
+
+\end{document}
+```
