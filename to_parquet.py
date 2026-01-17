@@ -63,6 +63,16 @@ def load_false_positives():
     return false_positives
 
 
+def load_false_negatives():
+    false_negatives = set()
+    with open('false_negatives.txt', 'r', encoding='utf-8') as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                false_negatives.add(line)
+    return false_negatives
+
+
 def get_git_tracked_files(dir_path):
     """Get list of files tracked by git in the specified directory."""
     try:
@@ -127,8 +137,9 @@ def process_moral_sqlite(db_path, project_name, synthetic, mistakes):
     rows = cursor.fetchall()
     conn.close()
     for prompt, response in rows:
-        messages = [{"role": "user", "content": prompt}, {'role': 'assistant', 'content': response}]
-        data.append({'messages': messages, 'project': project_name, 'synthetic': synthetic, 'mistakes': mistakes})
+        if isinstance(response, str) and len(response) > 2:
+            messages = [{"role": "user", "content": prompt}, {'role': 'assistant', 'content': response}]
+            data.append({'messages': messages, 'project': project_name, 'synthetic': synthetic, 'mistakes': mistakes})
     return data
 
 
@@ -206,19 +217,23 @@ def process_drawback_chess_directory(dir_path, project_name, synthetic, mistakes
                 message['content'] = message['content'].split('</think>')[1]
             if message['content'].startswith('\n\n<'):
                 message['content'] = message['content'].split('\n\n<')[1]
-        data.append({'messages': messages, 'tools': tools, 'project': project_name, 'synthetic': synthetic, 'mistakes': mistakes})
-        messages2 = [i for i in messages if ('<tool_call>' not in i['content']) and (i['role'] not in ['tool', 'system'])]
-        data.append({'messages': messages2, 'project': project_name, 'synthetic': synthetic, 'mistakes': mistakes})
+        if len(messages) > 1:
+            messages[0]['attachments'] = [{'type': 'json/tools', 'value': json.dumps(tools)}]
+            data.append({'messages': messages, 'project': project_name, 'synthetic': synthetic, 'mistakes': mistakes})
+            messages2 = [i for i in messages if ('<tool_call>' not in i['content']) and (i['role'] not in ['tool', 'system'])]
+            data.append({'messages': messages2, 'project': project_name, 'synthetic': synthetic, 'mistakes': mistakes})
     return data
 
 
-def check_pii_in_data(data, first_names, last_names, false_positives):
+def check_pii_in_data(data, first_names, last_names, false_positives, false_negatives):
     pii_findings = []
     for idx, entry in enumerate(data):
         content_parts = []
         for message in entry.get('messages', []):
             content_parts.append(message.get('content', ''))
-        full_content = ' '.join(content_parts)
+        full_content = ' '.join(content_parts).replace(' ', ' ')
+        while '  ' in full_content:
+            full_content = full_content.replace('  ', ' ')
         emails = re.findall(EMAIL_PATTERN, full_content, re.IGNORECASE)
         filtered_emails = [email for email in emails if email not in false_positives]
         phones = re.findall(PHONE_PATTERN, full_content)
@@ -228,6 +243,13 @@ def check_pii_in_data(data, first_names, last_names, false_positives):
         for first, last in full_names:
             full_name = f"{first} {last}"
             if first in first_names and last in last_names and full_name not in false_positives:
+                names_in_content.append(full_name)
+        for full_name in false_negatives:
+            for name_in_content in names_in_content:
+                if name_in_content in full_name:
+                    while name_in_content in names_in_content:
+                        names_in_content.remove(name_in_content)
+            if full_name in full_content:
                 names_in_content.append(full_name)
         pii_types = []
         if filtered_emails:
@@ -265,7 +287,8 @@ def main():
 
     first_names, last_names = load_names()
     false_positives = load_false_positives()
-    pii_findings = check_pii_in_data(data, first_names, last_names, false_positives)
+    false_negatives = load_false_negatives()
+    pii_findings = check_pii_in_data(data, first_names, last_names, false_positives, false_negatives)
 
     # Collect all unique PII
     all_emails = set()
@@ -327,6 +350,11 @@ def main():
     for i, results in enumerate(results_list):
         languages = list(set(result.language.iso_code_639_1.name for result in results))
         data[i]['languages'] = languages
+
+    for i in data:
+        for j in i['messages']:
+            if 'attachments' not in j:
+                j['attachments'] = []
 
     tokenizer = transformers.AutoTokenizer.from_pretrained('./tokenizer')
     for i, element in enumerate(data):

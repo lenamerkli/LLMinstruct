@@ -12,7 +12,7 @@ load_dotenv(dotenv_path=str(project_root / '.env'))
 
 
 APERTUS_MODEL = 'publicai/swiss-ai/apertus-70b-instruct'
-TRANSLATION_MODEL = 'NVIDIA-Nemotron-Nano-9B-v2-Q5_K_S.gguf'
+TRANSLATION_MODEL = 'NVIDIA-Nemotron-Nano-9B-v2-Q5_K_L.gguf'
 LANGUAGES = ['en', 'de', 'fr']
 
 
