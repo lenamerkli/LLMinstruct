@@ -21,10 +21,6 @@ def normalize_files():
     # Ensure data directory exists
     data_dir.mkdir(parents=True, exist_ok=True)
 
-    # Clear previous log if it exists
-    with open(log_file, 'w') as f:
-        f.write('')
-
     # Process each file in input directory
     for file_path in input_dir.iterdir():
         if file_path.is_file():
