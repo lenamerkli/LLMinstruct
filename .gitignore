@@ -274,3 +274,5 @@ tokenizer/
 /attachments/input/
 /synthetic/explain_meme/memes.txt
 /synthetic/explain_meme/database.sqlite3
+/synthetic/ingredient_scanner/images
+/synthetic/ingredient_scanner/ingredient_scanner2.jsonl
