@@ -125,11 +125,11 @@ def main() -> None:
                 instruction += '\nKann ' + ', '.join(contaminants) + ' enthalten.'
         else:
             instruction += random.choice(no_contaminants)
-        example = PROMPT.replace('{{old_data}}', instruction) + '```json\n' + json.dumps(solution) + '\n```' + EOS
+        example = PROMPT.replace('{{old_data}}', instruction) + '```json\n' + json.dumps(solution, ensure_ascii=False) + '\n```' + EOS
         data.append(example)
     with open(relative_path('ingredient_scanner.jsonl'), 'w', encoding='utf-8') as f:
         for d in data:
-            f.write(json.dumps({'text': d}) + '\n')
+            f.write(json.dumps({'text': d}, ensure_ascii=False) + '\n')
 
 
 if __name__ == '__main__':
