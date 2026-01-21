@@ -306,7 +306,7 @@ def main():
     data_human_edited_moral = process_moral_directory('./human_edited/moral', 'moral', False, False)
     data_synthetic_drawback_chess = process_drawback_chess_directory('./synthetic/drawback_chess/conversations', 'drawback_chess', True, True)
     data_synthetic_ingredient_scanner = process_jsonl_ingredient_scanner('./synthetic/ingredient_scanner/ingredient_scanner.jsonl', 'ingredient_scanner', True, False)
-    data_synthetic_ingredient_scanner2 = process_jsonl('./synthetic/ingredient_scanner/ingredient_scanner2.jsonl', 'ingredient_scanner2', True, False)
+    data_synthetic_ingredient_scanner2 = process_jsonl('./synthetic/ingredient_scanner/ingredient_scanner2.jsonl', 'ingredient_scanner', True, False)
     data_synthetic_misc = process_txt_directory('./synthetic/misc', 'misc', True, True)
     data_synthetic_moral = process_moral_sqlite('./synthetic/moral/database.sqlite3', 'moral', True, True)
     data_synthetic_topic_categorizer = process_jsonl('./synthetic/topic_categorizer/topic_categorizer.jsonl', 'topic_categorizer', True, False)
