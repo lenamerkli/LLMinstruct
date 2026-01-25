@@ -1,0 +1,131 @@
+§u§
+What is the `parquet` format and how can I use it?
+§a§
+## What is Parquet?
+
+**Apache Parquet** is an open-source, column-oriented data storage format designed for efficient data storage and retrieval. It's particularly popular in big data processing systems and data analytics workflows.
+
+### Key Characteristics:
+
+1. **Column-Oriented Storage**: Unlike row-based formats (like CSV), Parquet stores data by column rather than by row, making it highly efficient for analytical queries that often access specific columns.
+
+2. **Compression**: Offers excellent compression ratios through various compression algorithms (Snappy, GZIP, LZO, etc.), significantly reducing storage costs.
+
+3. **Schema Evolution**: Supports adding new columns and modifying schemas over time without breaking compatibility.
+
+4. **Type-Rich**: Preserves data types (integers, floats, strings, timestamps, nested structures) unlike CSV files.
+
+5. **Performance**: Optimized for both storage efficiency and query performance, especially for analytical workloads.
+
+## How to Use Parquet
+
+### Python with Pandas
+
+```python
+import pandas as pd
+
+# Writing to Parquet
+df = pd.DataFrame({
+    'name': ['Alice', 'Bob', 'Charlie'],
+    'age': [25, 30, 35],
+    'salary': [50000, 60000, 70000]
+})
+
+# Save DataFrame to Parquet
+df.to_parquet('data.parquet', engine='pyarrow')
+# or with compression
+df.to_parquet('data_compressed.parquet', compression='snappy')
+
+# Reading from Parquet
+df_read = pd.read_parquet('data.parquet')
+print(df_read)
+```
+
+### Python with PyArrow (more control)
+
+```python
+import pyarrow as pa
+import pyarrow.parquet as pq
+
+# Create a table
+table = pa.table({
+    'column1': [1, 2, 3, 4],
+    'column2': ['a', 'b', 'c', 'd']
+})
+
+# Write to Parquet
+pq.write_table(table, 'example.parquet')
+
+# Read from Parquet
+table_read = pq.read_table('example.parquet')
+
+# Read specific columns
+table_subset = pq.read_table('example.parquet', columns=['column1'])
+```
+
+### PySpark
+
+```python
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder.appName("ParquetExample").getOrCreate()
+
+# Read Parquet
+df = spark.read.parquet("path/to/file.parquet")
+
+# Write Parquet
+df.write.mode("overwrite").parquet("output/path.parquet")
+
+# With partitioning
+df.write.partitionBy("year", "month").parquet("partitioned_data.parquet")
+```
+
+### SQL (Various Engines)
+
+Many SQL engines support Parquet directly:
+
+```sql
+-- DuckDB example
+SELECT * FROM 'data.parquet';
+
+-- Create table from Parquet
+CREATE TABLE my_table AS SELECT * FROM 'data.parquet';
+
+-- Apache Drill example
+SELECT * FROM dfs.`/path/to/file.parquet`;
+```
+
+## When to Use Parquet
+
+**Good for:**
+- Analytics and data warehousing
+- Large datasets requiring compression
+- Column-based analytics (aggregations, filtering specific columns)
+- Long-term data storage
+- ETL pipelines
+- Data lakes
+
+**Not ideal for:**
+- Transactional systems requiring row-level updates
+- Small datasets (overhead may not be worth it)
+- Streaming data that needs immediate access
+- Applications requiring frequent small writes
+
+## Advantages Over Other Formats
+
+| vs CSV | vs JSON | vs Avro |
+|--------|---------|---------|
+| Better compression | Much better compression | Better for analytics queries |
+| Preserves data types | More efficient storage | Better compression |
+| Faster for column queries | Faster query performance | Column-oriented benefits |
+| Schema included | Schema evolution support | Similar schema evolution |
+
+## Best Practices
+
+1. **Choose appropriate compression**: Snappy for speed, GZIP for maximum compression
+2. **Use partitioning** for large datasets (by date, region, etc.)
+3. **Consider row group size** for your use case (default is usually fine)
+4. **Use column pruning** when reading to only load needed columns
+5. **Convert from CSV/JSON** for better performance in analytical workloads
+
+Parquet has become the de facto standard for analytical data storage in modern data platforms due to its excellent balance of compression, performance, and compatibility with major data processing frameworks.

@@ -1,0 +1,147 @@
+§u§
+<attach:29438209bdb9cef6c1ff19b6757b5a72cba9b77f15cf931780c59538a4b5d37e>Erkläre mir, wie ich solche Aufgaben lösen kann. Ich kenne die Grundlagen der komplexen Zahlen, aber noch nichts von Stromkreisen.
+§a§
+Gerne! Du hast gesagt, dass du die **Grundlagen der komplexen Zahlen kennst**, aber **noch nichts von Stromkreisen** – das ist kein Problem! Ich erkläre dir Schritt für Schritt, **wie man Aufgaben mit Wechselstrom und komplexen Zahlen angeht**, insbesondere wenn eine **Spule (Induktivität)** im Spiel ist.
+
+---
+
+### 🔶 AUFGABE: SCHRITT FÜR SCHRITT ERKLÄRT
+
+#### 👉 **Gegeben:**
+- Wechselspannung: \( \mathcal{E}(t) = \mathcal{E}_m \sin(\omega t) \)
+- \(\mathcal{E}_m = 25{,}0\,\text{V} \) (Scheitelwert der Spannung)
+- \(\omega = 377\,\text{rad/s} \)
+- Spule: \( L = 12{,}7\,\text{H} \)
+
+ℹ️ Die Spule ist ein sogenannter **induktiver Blindwiderstand**. Sie "bremst" den Strom aus, weil eine Spule gegen schnelle Änderungen im Strom "arbeitet".
+
+---
+
+## 📘 THEORIE: Was du brauchst
+
+Wir modellieren den Stromkreis **mit komplexen Zahlen**, also *phasor analysis*. Dabei nutzen wir, dass sinusförmige Spannungen und Ströme über komplexe Impedanzen verrechnet werden können.
+
+---
+
+## ⛭ Komplexer Widerstand der Spule (Induktivität):
+
+Eine Spule hat den Widerstand (genauer: **Impedanz**):
+
+\[
+Z_L = i \omega L
+\]
+
+Einsetzen:
+
+\[
+Z_L = i \cdot 377 \cdot 12{,}7 = i \cdot 4787{,}9 \,\Omega
+\]
+
+---
+
+## (a) **Wie groß ist der Scheitelwert des Stroms?**
+
+Aus dem Ohm'schen Gesetz für Wechselstrom:
+
+\[
+I = \frac{\mathcal{E}}{Z_L} = \frac{\mathcal{E}_m}{|Z_L|}
+\]
+
+Der Betrag von \(Z_L = i \cdot 4787{,}9\) ist einfach:
+
+\[
+|Z_L| = 4787{,}9 \,\Omega
+\]
+
+Daher:
+
+\[
+I_m = \frac{\mathcal{E}_m}{|Z_L|} = \frac{25{,}0}{4787{,}9} \approx 5{,}22 \cdot 10^{-3} \,\text{A} = \boxed{5{,}22\,\text{mA}}
+\]
+
+✳️ Das ist der **Scheitelwert des Stroms**.
+
+---
+
+## (b) **Welche Spannung herrscht am Generator, wenn sich der Strom am Scheitelwert befindet?**
+
+⚠️ Hier musst du wissen:
+Bei einer Spule ist der Strom **um 90° (oder \(\pi/2\)) zeitlich verzögert** gegenüber der Spannung. Der Strom "hinkt hinterher".
+
+**Formel für Strom:**
+Aus \(\mathcal{E}(t) = \mathcal{E}_m \sin(\omega t)\)
+
+wird:
+
+\[
+I(t) = I_m \sin(\omega t - \frac{\pi}{2}) = I_m \cos(\omega t)
+\]
+
+Der **Strom ist am Maximum** wenn \(\cos(\omega t) = 1\), also \(\omega t = 0\)
+
+Dann ist \(\mathcal{E}(t) = \mathcal{E}_m \sin(0) = 0\)
+
+✅ Also:
+Wenn der Strom seinen Scheitelwert hat, ist die Spannung am Generator **null**.
+
+**Antwort (b):**
+\(\boxed{0\,\text{V}}\)
+
+---
+
+## (c) **Wie groß ist der Strom, wenn die Spannung \(-12{,}5\, \text{V}\) beträgt?**
+
+Gegeben:
+\[
+\mathcal{E}(t) = \mathcal{E}_m \sin(\omega t) = -12{,}5
+\]
+
+Wir wollen den zugehörigen Stromwert berechnen.
+
+---
+
+### 🧮 Schritt 1: Finde den Winkel \(\omega t\)
+
+\[
+\mathcal{E}(t) = 25 \cdot \sin(\omega t) = -12{,}5
+\Rightarrow \sin(\omega t) = -0{,}5
+\]
+
+\[
+\Rightarrow \omega t = -\frac{\pi}{6} \quad \text{(oder } \frac{7\pi}{6} \text{, in Allgemeiner Form)}
+\]
+
+Jetzt:
+
+\[
+I(t) = I_m \cos(\omega t)
+\]
+
+Setze \(\omega t = \frac{7\pi}{6} = 210^\circ\)
+
+\[
+\cos\left(\frac{7\pi}{6}\right) = \cos(210^\circ) = -\frac{\sqrt{3}}{2}
+\]
+
+\[
+I(t) = I_m \cdot \left(-\frac{\sqrt{3}}{2}\right)
+= 5{,}22\cdot 10^{-3} \cdot \left(-\frac{\sqrt{3}}{2}\right)
+= \boxed{-4{,}52\,\text{mA}}
+\]
+
+---
+
+## ✅ ZUSAMMENFASSUNG DER ANTWORTEN:
+
+**(a)** Scheitelwert des Stroms:
+\(\boxed{5{,}22\,\text{mA}}\)
+
+**(b)** Spannung bei I = max:
+\(\boxed{0\,\text{V}}\)
+
+**(c)** Strom bei \( \mathcal{E} = -12{,}5\,\text{V} \):
+\(\boxed{-4{,}52\,\text{mA}}\)
+
+---
+
+Wenn du willst, kann ich dir noch ein **Konzeptbild zeichnen**, das die Spannung und den Strom als Zeiger (Phasoren) zeigt – das hilft oft beim Verständnis!

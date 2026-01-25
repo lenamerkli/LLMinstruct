@@ -23,7 +23,7 @@ FileNotFoundError: [Errno 2] No such file or directory: '/home/lena/.steam/steam
 ```
 How can I fix this?
 §a§
-Hello! It looks like you're running into a path issue while trying to launch the BeamMP launcher on Linux with a custom Proton version. This is a common problem when running Proton outside of the main Steam client.
+It looks like you're running into a path issue while trying to launch the BeamMP launcher on Linux with a custom Proton version. This is a common problem when running Proton outside of the main Steam client.
 
 The error message `FileNotFoundError: [Errno 2] No such file or directory: '/home/lena/.steam/steam/SteamApps/compatdata/284160/pfx/pfx.lock'` shows that the Proton script is looking for game data in the wrong location.
 

@@ -1,0 +1,218 @@
+§u§
+```
+\documentclass[a4paper,11pt]{article}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+
+\hypersetup{
+    breaklinks=true,
+    hidelinks,
+    colorlinks=false,
+    pdfborder={0 0 0},
+}
+
+
+\title{[SPS] Zusammenfassung 2026-01-24}
+\author{REDACTED}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\bigskip\bigskip
+
+\section{Lernziele}
+\begin{enumerate}
+    \item Wechselstromkreise mit komplexen Zahlen berechnen
+    \item Wellenoptik (Interferenz Doppelspalt, Beugung am Einzelspalt, Interferenz an dünnen Schichten)
+\end{enumerate}
+
+\section{Wechselstromkreise}
+\subsection{Spannung}
+\begin{equation}
+    [U] = \text{V}
+\end{equation}
+
+\subsection{Stromstärke}
+\begin{equation}
+    \underline{I} = \lim_{\Delta t \to 0} \frac{\Delta Q}{\Delta t} \hspace{1cm} [I] = \text{A}
+\end{equation}
+
+\subsubsection{Kreisfrequenz}
+\begin{equation}
+    \omega = 2 \pi f \hspace{1cm} [f] = \text{Hz}
+\end{equation}
+
+\subsection{Widerstand}
+\begin{equation}
+    \underline{Z} = \frac{\underline{U}}{\underline{I}} \hspace{1cm} Z \equiv R \hspace{1cm} [R] = \frac{\text{V}}{\text{A}} = \Omega
+\end{equation}
+Ein Resistor ist ein Widerstand und $\underline{Z}$ ist rein reell.
+
+\subsection{Spule}
+\begin{equation}
+    \underline{Z_L} = i \omega L \hspace{1cm} [L] = \Omega * s = \text{H}
+\end{equation}
+Die Spannung eilt dem Strom um $90^\circ$ voraus
+
+\subsection{Kondensator}
+\begin{equation}
+    \underline{Z_C} = \frac{1}{i \omega C} = - \frac{i}{\omega C} \hspace{1cm} [C] = \text{F}
+\end{equation}
+Die Spannung hinkt dem Strom um $90^\circ$ hinterher.
+
+\subsection{Serieschaltung}
+\begin{equation}
+    \underline{Z} = \underline{Z_1} + \underline{Z_2} + ...
+\end{equation}
+
+\subsection{Parallelschaltung}
+\begin{equation}
+    \frac{1}{\underline{Z}} = \frac{1}{\underline{Z_1}} + \frac{1}{\underline{Z_2}} + ...
+\end{equation}
+
+\subsection{Leistung}
+\subsubsection{Komplexe Scheinleistung}
+\begin{equation}
+    \underline{S} = \underline{U} * \underline{\overline{I}} \hspace{1cm} [S] = \text{VA} = \text{W}
+\end{equation}
+$\underline{\overline{I}}$ ist $\underline{I}$ konjugiert.
+
+\subsubsection{Wirkleistung (Realteil)}
+\begin{equation}
+    \underline{P} = \text{Re}(\underline{S}) \hspace{1cm} [P] = \text{W}
+\end{equation}
+Das ist die Arbeit, welche wirklich verrichtet wird.
+
+\subsubsection{Blindleistung (Imaginärteil)}
+\begin{equation}
+    \underline{Q} = \text{Im}(\underline{S}) \hspace{1cm} [Q] = \text{Var} = \text{Volt-Ampere reactive} = \text{W}
+\end{equation}
+
+\subsubsection{Scheinleistung (Betrag)}
+\begin{equation}
+    |\underline{S}| \hspace{1cm} [S] = \text{VA} = \text{W}
+\end{equation}
+
+\subsection{Effektivwert (Ampere)}
+\begin{equation}
+    |\underline{I}| \hspace{1cm} [I] = \text{A}
+\end{equation}
+Das ist der Wert, den ein Multimeter anzeigen würde.
+
+\subsection{Winkel}
+Sei $\underline{z} = a + bi$, dann gilt
+\begin{equation}
+    \rho = \text{R}\to\text{P}\theta(a, b)
+\end{equation}
+
+\subsection{Spitzenwert}
+\begin{equation}
+    \hat{I} = |\underline{I}| * \sqrt{2}
+\end{equation}
+
+\subsection{Zeitliche Funktion}
+\begin{equation}
+    I(t) = \hat{I} * \sin(\omega t + \rho)
+\end{equation}
+
+\section{Wellenoptik}
+\subsection{Wellenmodell}
+\begin{equation}
+    c = \lambda f
+\end{equation}
+Wobei $c$ die Ausbreitungsgeschwindigkeit, $\lambda$ die Wellenlänge und $f$ die Frequenz ist.
+
+\subsection{Konstruktiv}
+\begin{equation}
+    \Delta s = k \lambda
+\end{equation}
+$\Delta s$ ist der Abstand zwischen zwei Objekten. $k = 0, 1, 2, ...$.
+
+\subsection{Destruktiv}
+\begin{equation}
+    \Delta s = (k + \frac{1}{2}) \lambda
+\end{equation}
+
+\subsection{Doppelspalt}
+\subsubsection{Gangunterschied}
+\begin{equation}
+    \Delta L = d \sin(\theta)
+\end{equation}
+Wobei $d$ die Abstand zwischen den Spalten ist und $\theta$ der Winkel zwischen der Lichtwelle und dem Lot.
+
+\subsubsection{Interferenzmaxima}
+\begin{equation}
+    d \sin(\theta) = m \lambda
+\end{equation}
+Wobei $m = 0, 1, 2, ...$
+
+\subsubsection{Interferenzminima}
+\begin{equation}
+    d \sin(\theta) = (m + \frac{1}{2}) \lambda
+\end{equation}
+
+\subsubsection{Intensität}
+\begin{equation}
+    I = 4 I_0 \cos^2(\frac{\theta}{2})
+\end{equation}
+Wobei $I$ die resultierende Intensität ist und $I_0$ die Intensität einer einzelnen Welle.
+
+\subsubsection{Phasenverschiebung}
+\begin{equation}
+    \phi = \frac{2 \pi}{\lambda} d \sin(\theta)
+\end{equation}
+Wobei $\phi$ die Phasenverschiebung ist.
+
+\subsection{Interferenz an dünnen Schichten}
+
+\subsubsection{Kontruktiv}
+\begin{equation}
+    2L = \left(m + \frac{1}{2}\right) \frac{\lambda}{n}
+\end{equation}
+Wobei $n$ der Mediumfaktor ist, $L$ die Schichtdicke und $m = 0, 1, 2, ...$
+
+\subsubsection{Destruktiv}
+\begin{equation}
+    2L = m \frac{\lambda}{n}
+\end{equation}
+
+\subsection{Minima am Einzelspalt}
+\begin{equation}
+    a \sin(\theta) = m \lambda
+\end{equation}
+Wobei $m = 0, 1, 2, ...$
+
+
+\end{document}
+```
+Wofür steht das $a$ in der letzten Gleichung?
+§a§
+In der Gleichung für die Minima bei der Beugung am Einzelspalt,
+
+\[ a \sin(\theta) = m \lambda \quad (m = 0, 1, 2, \ldots) \]
+
+steht das Symbol \( a \) für die **Breite des Spaltes**.
+
+### Erläuterung:
+- **Physikalischer Kontext**: Bei der Beugung von Licht an einem Einzelspalt (z. B. in einem optischen Gitter oder einer schmalen Öffnung) entstehen Interferenzminima aufgrund der Überlagerung von Wellen aus verschiedenen Teilen des Spaltes.
+- **Bedeutung von \( a \)**:
+  - \( a \) ist die **Spaltbreite** (gemessen in Metern, m).
+  - Sie bestimmt, wie stark das Licht gebeugt wird: Je schmaler der Spalt (\( a \) klein), desto stärker die Beugung.
+- **Rolle in der Gleichung**:
+  - Die Gleichung beschreibt die Winkel \( \theta \), unter denen **Intensitätsminima** auftreten.
+  - \( \sin(\theta) = \frac{m \lambda}{a} \): Minima entstehen, wenn der Gangunterschied zwischen Wellen von den Kanten des Spaltes ein ganzzahliges Vielfaches der Wellenlänge \( \lambda \) beträgt.
+
+### Vergleich zu anderen Größen:
+- \( d \) in der Doppelspalt-Formel: Abstand zwischen zwei Spalten.
+- \( L \) bei dünnen Schichten: Schichtdicke.
+- \( \lambda \): Wellenlänge des Lichts.
+
+**Zusammenfassung**: \( a \) ist die **Breite des Einzelspalts**, eine zentrale Größe in der Beugungstheorie.

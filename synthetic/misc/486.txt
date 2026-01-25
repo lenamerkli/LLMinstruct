@@ -1,0 +1,33 @@
+§u§
+```
+# Rules of Drawback Chess
+
+It's like chess, but you have a hidden drawback! You can't see your opponent's drawback, and they can't see yours.
+Checkmate and stalemate do not exist. You lose if your king is captured or if you have no legal moves (due to your drawback). It is legal to ignore apparent threats to your king, move into check, move a piece that's pinned to your king, etc.
+Kings may be captured en passant. If your king castles out of or through check, then on your opponent's next move, it can be captured by playing any move to the square it left or moved through (i.e. its home square and where the rook lands).
+`Lose`: Drawback that make you lose are only checked at the start of your turn.
+`Piece`: A piece is ANY chess piece, including pawns.
+`Adjecent`: A square is adjacent to another square if they are adjacent diagonally or orthogonally.
+`Distance`: Distance is calculated by adding the horizontal and vertical distances.
+`Value`: Piece value is calculated using 1-3-3-5-9.
+`Rim` The rim is any square on the first or last rank, the A- or H-file.
+```
+What is the PGN with the fewest moves that triggers the following drawback:
+```
+**Boxing Shadows**: When your opponent moves a piece, if you can move to the square they moved from, you must.
+```
+§a§
+The minimal PGN that triggers the Boxing Shadows drawback in Drawback Chess is:
+
+```
+1. e4 c5
+2. e5 Nxe4
+```
+
+**Explanation:**
+- After White's second move (`2. e5`), the pawn moves from e4 to e5, leaving the square e4.
+- Black has a knight on c5 that can move to e4 (since a knight moves in an L-shape: from c5, it can go to e4).
+- According to the Boxing Shadows drawback, if a player can move to the square the opponent just moved from, they must. Here, Black can move to e4 (the square White just left), so Black is forced to move the knight from c5 to e4 (`2... Nxe4`).
+- This is the earliest possible trigger of the drawback, as Black's first move (`1... c5`) does not allow any Black piece to move to e2 (the square White left on the first move), and no earlier move sequence can force a drawback on Black's first move.
+
+The drawback is triggered on Black's second move, making this the PGN with the fewest moves that satisfies the condition.

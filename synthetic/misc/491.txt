@@ -1,0 +1,34 @@
+§u§
+Create a regex pattern (JetBrains editor) that deletes everything between <style> tags. Note: they may start like this: ```<style type="text/css">```
+§a§
+# JetBrains Regex Pattern to Delete Everything Between Style Tags
+
+```regex
+<style[^>]*>[\s\S]*?</style>
+```
+
+## Explanation:
+
+- `<style` - matches the opening style tag
+- `[^>]*` - matches any attributes (like `type="text/css"`) until the `>`
+- `>` - matches the closing bracket of the opening tag
+- `[\s\S]*?` - matches any character (including newlines) non-greedily
+- `</style>` - matches the closing style tag
+
+## How to Use in JetBrains IDEs:
+
+1. Press **Ctrl+R** (Windows/Linux) or **Cmd+R** (Mac) to open Find & Replace
+2. Enable **Regex** mode (click the `.*` icon)
+3. Paste the pattern in the search field
+4. Leave the replace field **empty**
+5. Click **Replace** or **Replace All**
+
+## Alternative Pattern (More Strict):
+
+If you want to match only on single lines or have more control:
+
+```regex
+<style\b[^>]*>.*?</style>
+```
+
+The `\b` adds a word boundary to ensure you don't accidentally match tags like `<stylesheet>`.

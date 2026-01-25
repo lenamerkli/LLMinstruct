@@ -1,0 +1,120 @@
+§u§
+fedora linux convert pdf to png 2048 pixels wide preserve aspect ratio
+§a§
+
+**Quick answer:**
+
+```bash
+# 1️⃣ Install ImageMagick (the tool that does the conversion)
+sudo dnf install -y imagemagick   # Fedora’s package manager
+
+# 2️⃣ Convert a PDF page (or the whole PDF) to a PNG that is exactly 2048 px wide
+#    – “2048x” tells ImageMagick to keep the original aspect‑ratio and set the width.
+#    – “-density” controls the raster density used when reading the PDF.
+magick -density 300  input.pdf  -resize 2048x  output.png
+```
+
+That one‑liner gives you a PNG that is 2048 px wide, with the height automatically scaled to keep the original proportion.
+
+---
+
+## Why it works
+
+| Option | What it does | Typical values / tips |
+|--------|--------------|-----------------------|
+| `-density <ppp>` | Sets the **pixels‑per‑inch** (or pixels‑per‑cm) used *while reading* the PDF. This is the resolution that ImageMagick will rasterize each page to before any resizing takes place. | 150‑300 ppi is a good range for screen‑size PNGs; 300 ppi gives print‑quality detail. |
+| `-resize 2048x` | Resizes the image **to a maximum width of 2048 px**, *keeping the original aspect ratio*. The trailing “x” means “keep the height proportional”. If the image is already narrower than 2048 px, it will be left untouched. | You can also use `2048x1024>` to shrink only when both dimensions are larger than the supplied size. |
+| `magick` | Modern command‑line front‑end for ImageMagick (the old name was `convert`). It works the same way but is forward‑compatible with newer ImageMagick releases. | `convert` still works on most Fedora installs; `magick` is preferred for v7+. |
+| `-quality <0‑100>` | Sets PNG compression quality (default is 75). Use 90‑100 for nearly loss‑less output. | ` -quality 95` is a safe default. |
+| `-strip` | Removes all embedded profiles/metadata that many PDFs embed. Small file‑size boost, no visual impact. | ` -strip` if you don’t need ICC profiles. |
+
+---
+
+## Full‑featured one‑liner (recommended)
+
+```bash
+magick -density 300  input.pdf  -resize 2048x  -quality 95  -strip  output.png
+```
+
+- **`-density 300`** → rasterizes PDF at 300 ppi (you can bump it up to 600 if you need more detail before scaling).
+- **`-resize 2048x`** → final image width = 2048 px, height automatically matched.
+- **`-quality 95`** → high‑quality PNG compression.
+- **`-strip`** → drop unnecessary metadata → smaller PNG.
+
+---
+
+## If you need to handle *multiple pages*
+
+If your PDF has more than one page and you want a PNG for each page:
+
+```bash
+# Create a folder to hold the results
+mkdir -p rendered
+
+# Loop over each page (‑page uses 0‑based indexing)
+for i in $(seq 0 $(magick identify -format "%n" input.pdf)); do
+    magick input.pdf[${i}] -density 300 -resize 2048x \
+           -quality 95 -strip "rendered/page-${i}.png"
+done
+```
+
+- `input.pdf[${i}]` tells ImageMagick “process only page *i*”.
+- The resulting PNGs land in `rendered/` as `page-0.png`, `page-1.png`, …
+
+If you prefer a more robust loop that works with any PDF (even ones where `identify` fails), use Ghostscript’s `-sPDFPageCount` option or the `-limit` trick, but most PDFs on Fedora are fine with the simple `seq` approach.
+
+---
+
+## Alternative tools (for context)
+
+| Tool | Command snippet | Why you might pick it |
+|------|----------------|-----------------------|
+| **Ghostscript** (`gs`) | `gs -dNOPAUSE -dBATCH -sDEVICE=pngalpha -r300 -dPDFSETTINGS=/prepress -sOutputFile=out.png input.pdf` | Very fast, good for high‑resolution rendering; less fine‑grained control over final width. |
+| **pdftoppm** (Poppler) | `pdftoppm -png -r 300 input.pdf outprefix -size 2048` | Outputs PNG *per page* but does **not** let you force the width *exactly*; you can combine with `mogrify` later. |
+| **ffmpeg** | `ffmpeg -i input.pdf -vf "scale=2048:-1" -q:v 2 output.png` | Handy if you already have ffmpeg installed and want a one‑liner similar to video scaling. |
+
+For *most* use‑cases on a Fedora workstation, **ImageMagick** (`magick`) gives the cleanest syntax and full control over DPI, quality, and metadata.
+
+---
+
+## Common pitfalls & how to avoid them
+
+| Symptom | Cause | Fix |
+|---------|-------|-----|
+| **Image looks blurry** | The PDF was rasterized at too low a density (e.g., default 72 ppi). | Add `-density 300` (or higher) *before* the `-resize` step. |
+| **Output is larger than 2048 px** | Some PDFs contain vector graphics that only become bitmap after the density step; the first rasterization may be bigger. | `-resize 2048x` already caps it, but if the PDF contains a *page size* larger than 2048 px you need to downscale **after** rasterizing: `-resize 2048x` ensures the final width is 2048 px. |
+| **Multiple pages merged into one file** | Using generic `magick input.pdf output.png` without page selection will concatenate pages vertically. | Use page selection (`input.pdf[0]`) or a loop as shown above. |
+| **Missing transparency (alpha channel)** | Using a PDF that has no transparency channel may cause the PNG to be opaque. | Ensure you use the `pngalpha` device if you need alpha, e.g., with Ghostscript: `-sDEVICE=pngalpha`. ImageMagick usually preserves transparency automatically. |
+| **File size is huge** | Using lossless PNG compression (default) on a high‑dpi raster image can produce many MB. | Add `-quality 95` (or lower, e.g., 75) to get a smaller file with little visual loss. |
+
+---
+
+## Step‑by‑step recipe (copy‑paste)
+
+```bash
+# 1️⃣ Install ImageMagick (if you haven't already)
+sudo dnf install -y imagemagick
+
+# 2️⃣ Choose your source PDF and target PNG name
+PDF_SRC="my_book.pdf"
+PNG_OUT="my_book_2048px.png"
+
+# 3️⃣ Run the conversion
+magick -density 300 "$PDF_SRC" -resize 2048x -quality 95 -strip "$PNG_OUT"
+
+# 4️⃣ (Optional) Verify the size
+identify -format "Final size: %wx%h, pixels: %[fx:w*h] px\n" "$PNG_OUT"
+```
+
+Running `identify` after the conversion will print something like `Final size: 2048x1365, pixels: 2797440 px`, confirming that the width is exactly 2048 px while the height kept the original proportion.
+
+---
+
+### TL;DR Command you can drop straight into the terminal
+
+```bash
+sudo dnf install -y imagemagick && \
+magick -density 300 input.pdf -resize 2048x -quality 95 -strip output.png
+```
+
+That’s all you need to convert a PDF to a PNG that is **2048 px wide** while preserving the original aspect ratio on Fedora (or any Linux distro with ImageMagick installed). Happy rendering! 🚀

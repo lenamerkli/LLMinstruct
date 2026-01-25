@@ -1,0 +1,55 @@
+§u§
+Create a regex pattern (JetBrains editor) that deletes everything between <style> tags. Note: they may start like this: ```<style type="text/css">```
+§a§
+To delete everything between `<style>` tags (including the opening and closing tags themselves) in a JetBrains editor (like IntelliJ IDEA, WebStorm, etc.), you can use the following **regex pattern** in the **Find** field, and leave the **Replace** field empty.
+
+### ✅ Regex Pattern (for JetBrains editor):
+```regex
+<style[^>]*>.*?</style>
+```
+
+### 🔧 Settings:
+- **Enable "Regex" mode** (click the `.*` icon in the Find window).
+- **Enable "DotAll" mode** (in JetBrains, this is done by adding `(?s)` at the beginning of the regex).
+
+---
+
+### ✅ Final Find Input:
+```regex
+(?s)<style[^>]*>.*?</style>
+```
+
+### Replace With:
+(leave empty)
+
+---
+
+### 📝 Explanation:
+- `(?s)` — Enables **DOTALL** mode so that `.` matches newlines too.
+- `<style[^>]*>` — Matches `<style` followed by any attributes (like `type="text/css"`) until the closing `>`.
+- `.*?` — Non-greedy match for any content inside the style tag (including across multiple lines thanks to `(?s)`).
+- `</style>` — Matches the closing tag.
+
+---
+
+### ⚠️ Example:
+**Before:**
+```html
+<div>Hello</div>
+<style type="text/css">
+  body { color: red; }
+  p { font-size: 14px; }
+</style>
+<span>World</span>
+```
+
+**After Replace:**
+```html
+<div>Hello</div>
+
+<span>World</span>
+```
+
+✅ The entire `<style>...</style>` block is removed.
+
+Let me know if you want to keep the tags but clear their contents instead!

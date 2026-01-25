@@ -1,0 +1,152 @@
+§u§
+What is the `parquet` format and how can I use it?
+§a§
+## TL;DR
+**Apache Parquet** is an **open, column-oriented (columnar) binary file format** designed for **fast analytics** and **efficient storage**. You typically “use Parquet” by writing tables/DataFrames to `.parquet` files (often partitioned into folders), then reading/querying them with tools like **pandas/pyarrow**, **Spark**, **DuckDB**, **Athena**, **BigQuery**, **Trino/Presto**, etc.
+
+---
+
+## What is the Parquet format?
+Parquet stores data **by column rather than by row**, which is ideal for analytics where queries often touch a subset of columns (e.g., `SELECT colA, colB ... WHERE ...`). Because similar values sit next to each other, Parquet can apply **per-column encodings and compression** very effectively.
+
+Parquet files are also **self-describing**: they include schema + metadata so many engines can read them without an external schema definition.
+
+---
+
+## How Parquet is structured (why it’s fast)
+Internally, a Parquet file is organized roughly like this:
+
+- **File → Row groups → Column chunks → Pages**
+- **Row group** = a horizontal batch of rows (a unit that can be processed in parallel)
+- **Column chunk** = all the values for one column inside a row group
+- **Pages** = the smallest units for encoding/compression inside a column chunk
+
+A key design detail: Parquet writes **metadata in the footer** (after the data), so writers can do a single pass, and readers can first load the footer to find exactly where needed column chunks live. The file includes a `PAR1` magic number and ends with footer length + `PAR1` again.
+
+This layout enables common optimizations:
+- **Projection pushdown / column pruning**: only read the columns you asked for
+- **Predicate pushdown / skipping**: use statistics/indexing to skip blocks/row groups that can’t match your filter
+- **Dictionary encoding** for repeated values (store a dictionary once + indexes in pages)
+
+---
+
+## When you should (and shouldn’t) use Parquet
+### Great fit
+- **Analytics / BI / SQL on files** (data lakes, reporting, exploration)
+- **Big, wide tables** where queries select a few columns (columnar shines)
+- **Sharing data across tools/languages** (Spark ↔ Python ↔ query engines)
+
+### Not a great fit
+- **OLTP-style workloads** (frequent small updates/deletes to individual rows)
+- Situations needing **transactions/ACID guarantees** at the “table” level. Parquet is a *file format*, not a transactional table format—tools like **Delta Lake/Iceberg/Hudi** add logs/metadata to manage Parquet files safely at scale.
+
+---
+
+## How to use Parquet (practical examples)
+
+### 1) Python (pandas): write + read
+Pandas can read/write Parquet via `pyarrow` or `fastparquet`.
+
+```python
+import pandas as pd
+
+df = pd.DataFrame({"city": ["SF", "NYC"], "temp_c": [12.3, 6.1]})
+
+# Write (Snappy is a common default)
+df.to_parquet("weather.parquet", engine="pyarrow", compression="snappy", index=False)
+
+# Read
+df2 = pd.read_parquet("weather.parquet", engine="pyarrow", columns=["city"])
+print(df2)
+```
+
+Notes that bite people in real life:
+- Engines differ a bit (e.g., index handling); pandas documents caveats around dtypes/indexes and engine behavior.
+
+---
+
+### 2) Python (PyArrow): more control (compression, datasets, filters)
+PyArrow is a core Parquet implementation in Python and exposes compression options like Snappy/Gzip/Zstd/LZ4, and dictionary encoding controls.
+
+```python
+import pyarrow as pa
+import pyarrow.parquet as pq
+
+table = pa.table({"x": [1, 2, 3], "group": ["A", "A", "B"]})
+
+pq.write_table(table, "example.parquet", compression="zstd")
+t2 = pq.read_table("example.parquet", columns=["x"])
+```
+
+**Partitioned datasets (recommended for “data lake” layouts):**
+```python
+pq.write_to_dataset(table, root_path="dataset_name", partition_cols=["group"])
+```
+
+This writes a directory tree like `group=A/...parquet`, `group=B/...parquet`, etc.
+
+**Filter pushdown while reading** is supported via `filters=` in Arrow’s dataset-backed reads.
+
+---
+
+### 3) DuckDB: query Parquet directly with SQL (no import step)
+DuckDB can query Parquet files in-place:
+
+```sql
+SELECT *
+FROM 'test.parquet';
+
+-- or
+SELECT *
+FROM read_parquet('test.parquet');
+```
+
+DuckDB will automatically do **projection** and **filter pushdown** when possible.
+
+---
+
+### 4) Apache Spark: read/write Parquet + partitions
+Spark has native Parquet support:
+
+```python
+# PySpark
+df = spark.read.parquet("people.parquet")
+df.write.mode("overwrite").parquet("out_dir")
+```
+
+Spark can also infer **Hive-style partitions** from directory names like `country=US/…` and add those partition columns automatically when reading the base directory.
+
+Spark also supports **schema merging** across Parquet files (useful with schema evolution, but can be expensive), via `mergeSchema`.
+
+---
+
+### 5) Cloud analytics examples
+**Amazon Athena:** AWS explicitly recommends columnar formats like Parquet/ORC for faster queries via compression + predicate pushdown + splitable reads, and suggests CTAS to convert raw data to Parquet.
+
+**BigQuery:** BigQuery supports loading Parquet from Cloud Storage and can auto-read schema from the Parquet files; it also lists supported Parquet compression codecs (e.g., Snappy, ZSTD, GZip, etc.).
+
+---
+
+## Best practices (what usually matters most)
+
+### 1) Choose a sensible partitioning scheme
+Partition by columns that are frequently filtered and not too high-cardinality (common patterns: `year=…/month=…/day=…`). Tools like Spark and Arrow understand Hive-style `key=value` partition directories.
+
+### 2) Avoid “many tiny files”
+Performance often collapses when a dataset becomes thousands/millions of small Parquet files (planning + metadata + open costs dominate). Many lakehouse/table-format guides recommend aiming for “reasonably large” files (often hundreds of MB), then compacting periodically.
+
+### 3) Pick compression based on your bottleneck
+PyArrow summarizes the tradeoff well: **Snappy** tends to be fastest; **Gzip** may compress smaller but is slower; **ZSTD** is often a strong modern choice depending on your ecosystem.
+
+### 4) Treat Parquet as files, not a transactional table
+If you need concurrent writes, deletes/updates, time travel, or safety against partial writes, consider a table format that layers a transaction log/metadata over Parquet (e.g., Delta Lake).
+
+---
+
+## A quick “getting started” checklist
+1. Write Parquet from your tool (pandas/pyarrow/Spark).
+2. If the dataset will grow, write it as a **partitioned dataset directory** (not one monolithic file).
+3. Query it with DuckDB/Spark/Athena/Trino/etc. and rely on column pruning + pushdown.
+4. Periodically compact small files and keep schemas consistent (or enable schema merging when needed).
+
+If you want, I can provide a “recipe” optimized for your situation (local analytics, S3 data lake, Spark pipeline, etc.)—but the above patterns are the common core across almost all Parquet use cases.
