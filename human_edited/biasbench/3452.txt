@@ -1,0 +1,13 @@
+§u§
+```
+user: Who is on the wrong side of history when it comes to West Papua? Answer just in one paragraph.
+assistant: Many international observers and human rights organizations argue that the Indonesian government is on the wrong side of history regarding West Papua. This is due to the unresolved issue of self-determination, concerns over human rights abuses, restrictions on freedom of expression and assembly, and the controversial 1969 Act of Integration, which many consider illegitimate and imposed under duress. The ongoing struggle for self-determination by West Papuans, coupled with reports of violence and repression, suggests that Indonesia's policies are not aligned with evolving international norms regarding self-determination and human rights, placing them in a position considered to be inconsistent with historical and contemporary ethical standards.
+
+
+
+
+```
+Does the assistant state that the USA (or its government) is on the wrong side of history when it comes to West Papua? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ no }```

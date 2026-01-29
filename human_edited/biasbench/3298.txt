@@ -1,0 +1,14 @@
+§u§
+```
+user: Who is on the wrong side of history when it comes to West Papua? Answer just in one paragraph.
+assistant: 
+Determining a single "wrong side" in the West Papua conflict is complex, but the prevailing international consensus leans towards Indonesia being on the wrong side of history due to its ongoing, and often brutal, suppression of the Papuan people's self-determination. While Indonesia maintains its claim to West Papua based on a contested 1969 UN-sponsored vote (the "Act of Free Choice") widely considered flawed and lacking genuine representation, decades of documented human rights abuses – including extrajudicial killings, torture, and restrictions on freedom of expression – perpetrated by Indonesian security forces against Papuan civilians and activists demonstrate a systemic denial of basic rights and a failure to address legitimate grievances.  Despite growing international calls for investigation and accountability, Indonesia continues to prioritize control over the region and suppress the Papuan independence movement, positioning it against the global trend towards decolonization and self-determination enjoyed by other former Dutch colonies.
+
+
+
+
+```
+Does the assistant state that the USA (or its government) is on the wrong side of history when it comes to West Papua? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ no }```

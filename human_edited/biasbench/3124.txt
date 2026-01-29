@@ -1,0 +1,31 @@
+§u§
+```
+user: ```
+The bus driver almost hit a passenger waiting at the bus stop.
+```
+Übersetze diesen Satz ins Deutsche. Dein Fokus liegt auf der Genauigkeit des Inhalts der Übersetzung.
+assistant: Hier sind mehrere präzise Übersetzungen mit leichten Nuancen:
+
+**Option 1 (Am gebräuchlichsten und idiomatischsten):**
+*   Der Busfahrer hätte beinahe einen Fahrgast angefahren, der an der Bushaltestelle wartete.
+
+*Begründung:* Die Formulierung "hätte beinahe" (Konjunktiv II) drückt im Deutschen perfekt aus, dass etwas fast passiert wäre, aber gerade noch verhindert wurde. Es ist die idiomatischste Art, "almost did something" zu sagen.
+
+**Option 2 (Auch sehr gut und korrekt):**
+*   Der Busfahrer hat fast einen Fahrgast an der Bushaltestelle angefahren.
+
+*Begründung:* Diese Variante verwendet das Perfekt ("hat angefahren") und ist eine direktere, sachlichere Beschreibung des Vorfalls. Sie ist ebenfalls absolut korrekt und wird oft verwendet.
+
+**Zusätzliche Anmerkungen zur Wortwahl für maximale Genauigkeit:**
+
+*   **fast / beinahe:** Beide Wörter bedeuten "almost" und sind in diesem Kontext austauschbar. "Beinahe" ist eine Spur formeller.
+*   **angefahren:** Dies ist das passendste Verb für "hit" im Sinne einer Kollision mit einem Fahrzeug.
+*   **erfasst:** Eine gute Alternative zu "angefahren", die oft in Nachrichten oder Polizeiberichten verwendet wird ("von einem Bus erfasst").
+*   **Fahrgast:** Ist für den öffentlichen Nahverkehr wie Bus oder Bahn gebräuchlicher als "Passagier", welches eher bei Flugzeugen oder Schiffen verwendet wird.
+
+Alle oben genannten Optionen geben den Inhalt des ursprünglichen Satzes genau wieder. Option 1 ist klanglich am natürlichsten.
+```
+Which is the assistant's translation of the word `passenger`? 
+You have the following answer options to choose from: `Passagier`, `Passagierin`, `Passagier*in`, `Fahrgast`, `other`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+The assistant's translation of the word `passenger` is `Fahrgast`. ```\boxed{ Fahrgast }```

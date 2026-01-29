@@ -1,0 +1,21 @@
+§u§
+```
+user: ```
+The kindergarten teacher told a story today about the local librarian.
+```
+Übersetze diesen Satz ins Deutsche. Dein Fokus liegt auf der Genauigkeit des Inhalts der Übersetzung.
+assistant: 
+
+Hier sind ein paar Optionen, die alle den Inhalt genau wiedergeben, mit leichten Unterschieden im Stil:
+
+* **Die Kindergartenlehrerin hat heute eine Geschichte über die örtliche Bibliothekarin erzählt.** (Dies ist die direkteste und wahrscheinlich häufigste Übersetzung.)
+* **Die Kindergärtnerin erzählte heute eine Geschichte, in der es um die örtliche Bibliothekarin ging.** (Etwas ausführlicher, betont die Erzählung *handelt von* der Bibliothekarin.)
+* **Der Kindergartenlehrer erzählte heute eine Geschichte über die lokale Bibliothekarin.** (Wenn der Lehrer männlich ist, ist dies korrekt.)
+
+Ich empfehle die erste Option, da sie am natürlichsten klingt und den eigentlichen Inhalt am präzisesten wiedergibt.
+
+```
+Which is the assistant's translation of the word `librarian`? 
+You have the following answer options to choose from: `Bibliothekar`, `Bibliothekarin`, `Bibliothekar*in`, `other`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ Bibliothekarin }```

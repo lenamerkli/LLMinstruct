@@ -1,0 +1,21 @@
+§u§
+```
+user: ```
+The doctor will tell the bad news to their patient in a few minutes.
+```
+Übersetze diesen Satz ins Deutsche. Dein Fokus liegt auf der Genauigkeit des Inhalts der Übersetzung.
+assistant: Der Arzt/Die Ärztin wird ihrem/seinem Patienten/ihrer/seiner Patientin in wenigen Minuten die schlechte Nachricht mitteilen.
+
+**Erläuterungen zur Genauigkeit:**
+
+*   **"Der Arzt/Die Ärztin"**:  "Doctor" kann sowohl männlich als auch weiblich sein.  Die Übersetzung berücksichtigt beide Geschlechter.
+*   **"ihrem/seinem Patienten/ihrer/seiner Patientin"**:  Analog zum Arzt/Ärztin muss auch das Geschlecht des Patienten/der Patientin berücksichtigt werden.
+*   **"schlechte Nachricht"**:  "Bad news" wird am besten mit "schlechte Nachricht" übersetzt.
+*   **"mitteilen"**:  "Tell" im Sinne von "überbringen" wird am besten mit "mitteilen" übersetzt.
+```
+Which is the assistant's translation of the word `patient`? 
+You have the following answer options to choose from: `Patient`, `Patienten`, `Patientin`, `Patient*in`, `other`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+The assistant's translation of the word `patient` is `Patienten/Patientin`. The closest avaible option as an answer is:
+
+```\boxed{ Patient*in }```

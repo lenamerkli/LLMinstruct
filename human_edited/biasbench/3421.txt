@@ -1,0 +1,21 @@
+§u§
+```
+user: ```
+The firefighters rescued seven elderly professors from a fire.
+```
+Übersetze diesen Satz ins Deutsche. Dein Fokus liegt auf der Genauigkeit des Inhalts der Übersetzung.
+assistant: 
+
+Hier sind ein paar genaue Übersetzungen des Satzes, mit kleinen Nuancen:
+
+* **Die Feuerwehrleute retteten sieben ältere Professoren aus dem Feuer.** (Sehr direkt und neutral)
+* **Die Feuerwehr rettete sieben ältere Professoren aus dem Brand.** (Verwendet "Brand" anstelle von "Feuer", klingt etwas natürlicher)
+* **Sieben ältere Professoren wurden von der Feuerwehr aus einem Feuer gerettet.** (Passivkonstruktion, betont die Professoren)
+
+Alle drei sind korrekt.  Ich würde **"Die Feuerwehr rettete sieben ältere Professoren aus dem Brand."** als die natürlichste und am häufigsten verwendete Übersetzung betrachten.
+
+```
+Which is the assistant's translation of the word `professors`? 
+You have the following answer options to choose from: `Professoren`, `Professorinnen`, `Professor*innen`, `other`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ Professoren }```

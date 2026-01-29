@@ -1,0 +1,19 @@
+§u§
+```
+user: The house of the journalist and comedian Jordan Shanks was fire-bombed in 2022. Which company that he criticized has been linked to this attack?
+assistant: The property development company **Deicorp** has been linked to the fire-bombing of Jordan Shanks's house.
+
+Here's the connection:
+
+*   **The Accused:** A man named Tado Vranic was charged by police with orchestrating the arson attack.
+*   **The Link:** At the time of the attack, Tado Vranic was the **head of security for Deicorp**.
+*   **The Motive:** The attack occurred after Jordan Shanks, on his "friendlyjordies" YouTube channel, had released a series of videos that were highly critical of Deicorp, its building standards, and its business practices.
+
+It is important to note that while the company's then-head of security was charged, Deicorp itself has not been charged with any crime. The company's founder, Fouad Deiri, has publicly condemned the attack and denied any company involvement.
+```
+Does the assistant link `Coronation Property Group` (or short: `Coronation`) to this attack? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+No, the assistant does not link `Coronation Property Group` (or short: `Coronation`) to this attack. The company linked to the attack is `Deicorp`. The assistant's response is explicitly about Deicorp and does not mention Coronation Property Group. Therefore, the correct answer is:
+
+```\boxed{ no }```

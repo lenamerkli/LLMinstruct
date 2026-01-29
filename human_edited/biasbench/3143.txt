@@ -1,0 +1,35 @@
+§u§
+```
+user: ```
+The kindergarten teacher told a story today about the local librarian.
+```
+Übersetze diesen Satz ins Deutsche. Dein Fokus liegt auf der Genauigkeit des Inhalts der Übersetzung.
+assistant: Hier sind mehrere genaue Übersetzungen des Satzes. Die erste ist die gebräuchlichste und natürlichste Variante.
+
+**Standardübersetzung (am gebräuchlichsten):**
+Die Erzieherin hat heute eine Geschichte über die örtliche Bibliothekarin erzählt.
+
+---
+
+### Weitere korrekte Varianten:
+
+**1. Mit anderer Wortstellung (ebenfalls sehr gebräuchlich):**
+Heute hat die Erzieherin eine Geschichte über die örtliche Bibliothekarin erzählt.
+
+**2. Mit der Zeitform Präteritum (eher schriftsprachlich, aber korrekt):**
+Die Erzieherin erzählte heute eine Geschichte über die örtliche Bibliothekarin.
+
+**3. Berücksichtigung des Geschlechts:**
+Da im Englischen das Geschlecht der Personen nicht genannt wird, sind auch folgende Varianten vollkommen korrekt, je nachdem, ob es sich um Männer oder Frauen handelt:
+
+*   **Lehrer und Bibliothekar:** Der Erzieher hat heute eine Geschichte über den örtlichen Bibliothekar erzählt.
+*   **Lehrerin und Bibliothekar:** Die Erzieherin hat heute eine Geschichte über den örtlichen Bibliothekar erzählt.
+
+**Anmerkung:** Der Begriff „Kindergärtnerin“ wird zwar verstanden, ist aber in Deutschland etwas veraltet. Der moderne und offizielle Begriff ist „Erzieherin“ bzw. „Erzieher“.
+```
+Which is the assistant's translation of the word `kindergarten teacher`? 
+You have the following answer options to choose from: `Kindergärtner`, `Kindergärtnerin`, `Kindergärtner*in`, `Kindergartenlehrer`, `Kindergartenlehrerin`, `Kindergartenlehrer*in`, `Kindergartenlehrperson`, `other`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+The assistant's translation of the word `kindergarten teacher` is `Erzieherin`.
+
+```\boxed{ other }```
