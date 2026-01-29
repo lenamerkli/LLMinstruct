@@ -1,0 +1,90 @@
+§u§
+```
+---- Minecraft Crash Report ----
+// Don't be sad. I'll do better next time, I promise!
+
+Time: 2026-01-24 15:06:57
+Description: Unexpected error
+
+java.lang.RuntimeException: Exception thrown while executing job
+	at knot//me.jellysquid.mods.sodium.client.render.chunk.compile.executor.ChunkJobResult.unwrap(ChunkJobResult.java:27)
+	at knot//me.jellysquid.mods.sodium.client.render.chunk.RenderSectionManager.collectChunkBuildResults(RenderSectionManager.java:347)
+	at knot//me.jellysquid.mods.sodium.client.render.chunk.RenderSectionManager.uploadChunks(RenderSectionManager.java:280)
+	at knot//me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer.setupTerrain(SodiumWorldRenderer.java:191)
+	at knot//net.minecraft.class_761.method_3273(class_761.java:12035)
+	at knot//net.minecraft.class_761.method_22710(class_761.java:1247)
+	at knot//net.minecraft.class_757.method_3188(class_757.java:1110)
+	at knot//net.minecraft.class_757.method_3192(class_757.java:880)
+	at knot//net.minecraft.class_310.method_1523(class_310.java:1219)
+	at knot//net.minecraft.class_310.method_1514(class_310.java:802)
+	at knot//net.minecraft.client.main.Main.main(Main.java:250)
+	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:480)
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74)
+	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23)
+	at org.prismlauncher.launcher.impl.StandardLauncher.launch(StandardLauncher.java:105)
+	at org.prismlauncher.EntryPoint.listen(EntryPoint.java:129)
+	at org.prismlauncher.EntryPoint.main(EntryPoint.java:70)
+Caused by: java.lang.IllegalAccessError: class com.copycatsplus.copycats.compat.SodiumCompat tried to access private field me.jellysquid.mods.sodium.client.world.WorldSlice.world (com.copycatsplus.copycats.compat.SodiumCompat and me.jellysquid.mods.sodium.client.world.WorldSlice are in unnamed module of loader 'knot' @6500df86)
+	at knot//com.copycatsplus.copycats.compat.SodiumCompat.unwrapSodiumLevel(SodiumCompat.java:9)
+	at knot//com.copycatsplus.copycats.foundation.copycat.CopycatMaterialStore.get(CopycatMaterialStore.java:53)
+	at knot//com.copycatsplus.copycats.foundation.copycat.CopycatMaterialStore.getMaterial(CopycatMaterialStore.java:80)
+	at knot//com.copycatsplus.copycats.foundation.copycat.multistate.MultiStateCopycatBlock.getLightEmission(MultiStateCopycatBlock.java:615)
+	at knot//net.minecraft.class_761.wrapOperation$zfh000$porting_lib_base$port_lib$customLight(class_761.java:3516)
+	at knot//net.minecraft.class_761.method_23793(class_761.java:3321)
+	at knot//net.minecraft.class_761.method_23794(class_761.java:3311)
+	at knot//de.mrjulsen.wires.render.WireSegmentRenderData.getLight(WireSegmentRenderData.java:155)
+	at knot//de.mrjulsen.wires.render.WireSegmentRenderData.render(WireSegmentRenderData.java:90)
+	at knot//de.mrjulsen.wires.render.WireSegmentRenderDataBatch.render(WireSegmentRenderDataBatch.java:50)
+	at knot//de.mrjulsen.wires.render.WireRenderer.renderConnectionsInternal(WireRenderer.java:84)
+	at knot//de.mrjulsen.wires.render.WireRenderer.renderConnectionsInSection(WireRenderer.java:77)
+	at knot//de.mrjulsen.paw.compat.sodium.SodiumCompatEvent.lambda$init$0(SodiumCompatEvent.java:17)
+	at knot//de.mrjulsen.paw.compat.sodium.MeshAppenderRenderer.renderMeshAppenders(MeshAppenderRenderer.java:36)
+	at knot//me.jellysquid.mods.sodium.client.render.chunk.compile.tasks.ChunkBuilderMeshingTask.handler$dml000$pantographsandwires$append(ChunkBuilderMeshingTask.java:1557)
+	at knot//me.jellysquid.mods.sodium.client.render.chunk.compile.tasks.ChunkBuilderMeshingTask.execute(ChunkBuilderMeshingTask.java:138)
+	at knot//me.jellysquid.mods.sodium.client.render.chunk.compile.tasks.ChunkBuilderMeshingTask.execute(ChunkBuilderMeshingTask.java:39)
+	at knot//me.jellysquid.mods.sodium.client.render.chunk.compile.executor.ChunkJobTyped.execute(ChunkJobTyped.java:44)
+	at knot//me.jellysquid.mods.sodium.client.render.chunk.compile.executor.ChunkBuilder$WorkerRunnable.run(ChunkBuilder.java:186)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+```
+What causes this and how can I fix it?
+§a§
+**The crash is caused by a mod compatibility issue between Copycats+ (com.copycatsplus.copycats.compat.SodiumCompat) and Sodium (me.jellysquid.mods.sodium.client.world.WorldSlice).**
+
+Specifically:
+- During chunk rebuilding/meshing (Sodium's RenderSectionManager), the Wires mod (de.mrjulsen.wires) is rendering wire segments.
+- This triggers light emission calculation on a nearby MultiStateCopycatBlock (from Copycats+).
+- Copycats+ tries to access the underlying world via `SodiumCompat.unwrapSodiumLevel()`, which directly reads the private `world` field from Sodium's internal `WorldSlice` class.
+- Java's module system (enforced by Fabric's Knot classloader) blocks this access, throwing `IllegalAccessError`. This often happens due to a Sodium update making the field stricter (private/non-public) or version mismatch where Copycats+' Sodium compatibility code is outdated.
+
+This chain involves:
+- **Sodium**: Rendering engine.
+- **Copycats+**: Copycat blocks providing light data.
+- **Wires / Pantographs & Wires (PAW)**: Triggering the render via custom meshes and Sodium patches (e.g., SodiumCompatEvent, MeshAppenderRenderer).
+
+### How to Fix It
+1. **Update Copycats+** (primary fix):
+   - Download the latest from [Modrinth](https://modrinth.com/mod/copycats) or [CurseForge](https://www.curseforge.com/minecraft/mods/copycats).
+   - Recent versions (e.g., 2.1.0+, 3.0.x) include Sodium fixes like face culling and Embeddium compat. Check the [changelog](https://github.com/copycats-plus/copycats/blob/multiloader/CHANGELOG.md) for your MC version (likely 1.20.1–1.21.x based on stack trace).
+
+2. **Update Sodium and dependencies**:
+   - Get latest Sodium from [Modrinth](https://modrinth.com/mod/sodium).
+   - Install/update **Indium** (required for Sodium + custom block rendering mods like Wires/PAW/Copycats): [Modrinth](https://modrinth.com/mod/indium).
+   - Optional: Sodium Extra, Reese's Sodium Options for better config.
+   - Match versions for your Minecraft/Fabric loader (check PrismLauncher mod list).
+
+3. **Update related mods**:
+   - **Wires**: [Modrinth](https://modrinth.com/mod/create-wires) – Update for Sodium mesh compat.
+   - **Pantographs & Wires**: [Modrinth](https://modrinth.com/mod/create-pantographs-and-wires) – Has Sodium fixes in changelog.
+   - Restart PrismLauncher, recreate instance if needed.
+
+4. **Temporary workarounds**:
+   - Remove/disable Copycats+ or Sodium (test by removing one at a time).
+   - Avoid copycat blocks near wires if possible (rebuild chunks).
+   - Downgrade Sodium to a version before the field access tightened (check Sodium commits if needed).
+
+5. **If it persists**:
+   - Share full logs/mods list on [Copycats+ GitHub issues](https://github.com/copycats-plus/copycats/issues) – No exact match found, so report it.
+   - Test in a new world/profile.
+   - Ensure Fabric API, Porting Lib are up-to-date (in stack trace).
+
+This should resolve it – mod updates fix 90% of these Sodium compat crashes. Play safe!

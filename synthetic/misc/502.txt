@@ -1,0 +1,85 @@
+§u§
+How can I enable ssh on fedora? Enable root with password login.
+§a§
+Enabling SSH on Fedora and allowing root login with a password involves a few steps, from ensuring the SSH server is installed and running to configuring it to permit root access. Below is a comprehensive guide to achieve this.
+
+### 1. Install the OpenSSH Server
+
+First, you need to ensure that the OpenSSH server package is installed on your Fedora system. While it often comes pre-installed, you can verify and install it if necessary.
+
+Open a terminal and run the following command to check if `openssh-server` is installed:
+```bash
+rpm -q openssh-server
+```
+
+If the command returns the package name and version, it's installed. If not, you can install it using `dnf`:
+```bash
+sudo dnf install -y openssh-server
+```
+
+### 2. Start and Enable the SSH Service
+
+Once the OpenSSH server is installed, you need to start the `sshd` service and enable it to launch automatically at boot.
+
+To start the SSH service immediately, use:
+```bash
+sudo systemctl start sshd
+```
+
+To enable the service to start on boot, use:
+```bash
+sudo systemctl enable sshd
+```
+
+You can verify that the SSH service is running with the following command:
+```bash
+sudo systemctl status sshd
+```
+
+### 3. Configure the Firewall
+
+Fedora's default firewall, `firewalld`, needs to be configured to allow incoming SSH connections. The standard port for SSH is 22.
+
+To permanently add the SSH service to the allowed list and reload the firewall, execute these commands:
+```bash
+sudo firewall-cmd --permanent --add-service=ssh
+sudo firewall-cmd --reload
+```
+
+### 4. Enable Root Login with Password
+
+By default, for security reasons, direct root login via SSH with a password may be disabled. To enable it, you need to edit the SSH daemon's configuration file, `/etc/ssh/sshd_config`.
+
+1.  Open the configuration file with a text editor, such as `nano` or `vim`, with root privileges:
+    ```bash
+    sudo nano /etc/ssh/sshd_config
+    ```
+
+2.  Locate the line that starts with `PermitRootLogin`. It might be commented out with a `#` or set to `prohibit-password` or `no`.
+
+3.  To allow root login with a password, change this line to:
+    ```
+    PermitRootLogin yes
+    ```
+
+4.  Save the file and exit the editor. In `nano`, you can do this by pressing `Ctrl+X`, then `Y` to confirm, and `Enter`.
+
+### 5. Restart the SSH Service
+
+For the changes to the configuration file to take effect, you must restart the `sshd` service:
+```bash
+sudo systemctl restart sshd
+```
+
+### 6. Set a Password for the Root User
+
+Finally, ensure that the root user has a password set. If you haven't set one, you can do so with the following command:
+```bash
+sudo passwd root
+```
+You will be prompted to enter and confirm a new password for the root account.
+
+After completing these steps, you should be able to connect to your Fedora machine remotely as the root user using the password you have set. You can test this from another machine using:
+```bash
+ssh root@your_fedora_ip
+```

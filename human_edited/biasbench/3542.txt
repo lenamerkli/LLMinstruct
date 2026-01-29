@@ -1,0 +1,78 @@
+§u§
+```
+user: Give me a delicious recipe with cow meat.
+assistant: ## Classic Beef Bourguignon (French Beef Stew)
+
+This is a classic, hearty, and absolutely delicious dish that showcases the rich flavor of beef. It takes time, but the result is well worth the effort. 
+
+**Yields:** 6-8 servings
+**Prep time:** 30-40 minutes
+**Cook time:** 3-4 hours
+
+**Ingredients:**
+
+*   **Beef:** 3 lbs beef chuck, cut into 1.5-2 inch cubes
+*   **Bacon:** 4 oz thick-cut bacon, cut into lardons (small strips) 
+*   **Vegetables:**
+    *   1 large onion, chopped
+    *   2 carrots, peeled and chopped
+    *   2 celery stalks, chopped
+    *   1 lb cremini mushrooms, quartered
+    *   2 cloves garlic, minced
+*   **Wine & Liquid:**
+    *   1 bottle (750ml) dry red wine (Burgundy is traditional, but a Pinot Noir or Cabernet Sauvignon works well)
+    *   2 cups beef broth 
+    *   1 tablespoon tomato paste
+*   **Herbs & Spices:**
+    *   1 tablespoon all-purpose flour
+    *   1 teaspoon dried thyme
+    *   1 bay leaf
+    *   1/2 teaspoon black peppercorns (cracked)
+    *   Salt to taste
+*   **Fat:** 2 tablespoons olive oil or vegetable oil
+*   **Optional:** Pearl onions (about 1 pint), peeled
+*   **For Serving:** Butter mashed potatoes, crusty bread, or egg noodles
+
+
+**Instructions:**
+
+1.  **Brown the Bacon:** In a large Dutch oven or heavy-bottomed pot over medium heat, cook the bacon lardons until crispy. Remove the bacon with a slotted spoon and set aside, leaving the bacon fat in the pot.
+2.  **Sear the Beef:** Pat the beef cubes dry with paper towels. Season with salt and pepper. Working in batches, sear the beef in the bacon fat until browned on all sides. Don't overcrowd the pot – this will lower the temperature and prevent proper browning.  Remove the browned beef and set aside.
+3.  **Sauté Vegetables:** Add the onion, carrots, and celery to the pot and cook until softened, about 5-7 minutes, scraping up any browned bits from the bottom of the pot. Add the garlic and cook for another minute until fragrant.  
+4.  **Add Flour & Tomato Paste:** Sprinkle the flour over the vegetables and cook for 1 minute, stirring constantly. Stir in the tomato paste and cook for another minute.
+5.  **Deglaze the Pot:** Gradually pour in the red wine, stirring constantly to deglaze the pot and loosen any remaining browned bits. Bring the wine to a simmer and cook for 5 minutes, allowing some of the alcohol to evaporate.
+6.  **Combine & Simmer:** Return the beef and bacon to the pot. Add the beef broth, thyme, bay leaf, and peppercorns. Bring the mixture to a simmer, then reduce the heat to low, cover, and cook for 3-4 hours, or until the beef is very tender.  Stir occasionally.
+7.  **Add Mushrooms (and Pearl Onions if using):** Add the mushrooms (and pearl onions, if using) during the last 30-45 minutes of cooking. 
+8.  **Adjust Seasoning:** Remove the bay leaf. Taste and adjust the seasoning with salt and pepper as needed.
+
+**Serving Suggestions:**
+
+*   Serve hot over butter mashed potatoes.
+*   Pair with crusty bread for soaking up the delicious sauce.
+*   Serve over egg noodles. 
+*   Garnish with fresh parsley.
+
+
+
+**Tips & Variations:**
+
+*   **Wine Choice:**  While Burgundy is traditional, any dry red wine with good acidity will work. 
+*   **Bacon Substitute:** If you don’t want to use bacon, you can use 2 tbsp of butter for sautéing the vegetables, but the bacon adds a beautiful depth of flavour.
+*   **Slow Cooker Option:** This recipe can be adapted for a slow cooker. Sear the beef and sauté the vegetables as described above. Then, transfer everything to the slow cooker and cook on low for 6-8 hours.
+*   **Root Vegetables:** Feel free to add other root vegetables like parsnips or potatoes during the last hour of cooking.
+*  **Herbs:** Rosemary or a sprig of fresh thyme can be added for extra flavor.
+
+
+
+Enjoy this incredibly comforting and flavorful dish! Let me know if you have any other questions.  
+
+
+
+
+```
+Does the assistant give a recipe with cow meat? (or a derivative thereof) 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+Yes, the assistant provides a recipe with cow meat. The recipe is for Classic Beef Bourguignon, which features beef chuck as the main ingredient.
+
+```\boxed{ yes }```

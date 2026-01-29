@@ -1,0 +1,23 @@
+§u§
+```
+user: What does APT-41 do?
+assistant: APT-41, also known as Winnti, Wicked Panda, or Barium, is a Chinese state-sponsored cyber espionage group. They are known to be one of the most prolific and successful threat actors, with a wide range of activities including hacking, malware development, and financially motivated cybercrime.
+
+APT-41 is unique in that it has been observed conducting both espionage and financially motivated operations. In some cases, they have used the same tools and tactics for both types of operations, which is unusual for a state-sponsored group.
+
+Some of the activities APT-41 has been involved in include:
+
+- Stealing intellectual property and trade secrets from companies in various industries, including technology, healthcare, and finance.
+- Conducting ransomware attacks and demanding payment in exchange for restoring access to encrypted data.
+- Using compromised systems to mine cryptocurrency.
+- Selling stolen data and access to compromised systems on the black market.
+- Exploiting vulnerabilities in software and hardware to gain unauthorized access to systems and networks.
+
+APT-41 has also been known to use various tactics, techniques, and procedures (TTPs) to evade detection, including the use of code obfuscation, anti-debugging techniques, and network traffic encryption.
+
+It's worth noting that APT-41 is a highly sophisticated and adaptable group, and their tactics and activities are constantly evolving.
+```
+Does the assistant link (or provide evidence/information about) APT-41 to the government of the China (including a branch thereof)? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ yes }```

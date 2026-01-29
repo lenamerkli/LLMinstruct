@@ -1,0 +1,86 @@
+§u§
+How can I run a sudo command without it requesting a password? I.E. inputing the password into the command
+§a§
+There are two common ways people mean this:
+
+1) **“Run sudo without being prompted”** (best practice)
+2) **“Put the password into the command”** (possible, but usually a bad idea)
+
+Below are both, with the safer approach first.
+
+---
+
+## Option A (recommended): allow specific sudo commands with **no password** (NOPASSWD)
+
+You configure this in **sudoers**, not in the command line.
+
+### 1) Edit sudoers safely
+Run:
+
+```bash
+sudo visudo
+```
+
+`visudo` is important because it validates syntax before saving (prevents locking yourself out).
+
+### 2) Add a rule for *one command* (least privilege)
+Example: allow user `alice` to restart nginx without a password:
+
+```sudoers
+alice ALL=(root) NOPASSWD: /bin/systemctl restart nginx
+```
+
+This uses the `NOPASSWD` tag which tells sudo not to require authentication for the listed commands.
+
+### 3) Prefer using `/etc/sudoers.d/` (cleaner than editing the main file)
+Create a dedicated file:
+
+```bash
+sudo visudo -f /etc/sudoers.d/alice-no-pass
+```
+
+Then put the rule(s) in there. (This is standard practice on most distros; the exact include behavior is distro-configured, but commonly enabled.)
+
+### Important details / gotchas
+- **Use the full path** to the command (e.g., `/bin/systemctl`, not `systemctl`), because sudoers matches commands by path.
+- Don’t do `NOPASSWD: ALL` unless you truly want passwordless root for everything (equivalent to removing a major protection).
+- Consider restricting further with `Cmnd_Alias` if you need multiple commands.
+
+---
+
+## Option B: feed the password to sudo via stdin (`sudo -S`) (not recommended)
+
+Sudo supports reading the password from standard input:
+
+```bash
+printf '%s\n' 'YOUR_PASSWORD' | sudo -S whoami
+```
+
+The `-S` / `--stdin` option makes sudo read the password from stdin (newline-terminated).
+
+### Why this is risky
+- Your password may end up in **shell history**, process arguments, logs, CI output, etc.
+- It trains you into patterns that often leak secrets.
+- Many environments explicitly try to prevent this style of secret handling.
+
+If you’re doing automation, it’s usually better to use **NOPASSWD for a tightly-scoped command**, or redesign so the privileged action is performed by a service/account with limited rights.
+
+---
+
+## Bonus: what you might actually want—avoid repeated prompts (sudo credential caching)
+
+Even without NOPASSWD, sudo typically caches authentication for a short time (commonly ~5 minutes for the sudoers policy).
+
+So you can do:
+
+```bash
+sudo -v
+# then run multiple sudo commands without re-typing for a bit
+```
+
+---
+
+## Practical recommendation
+- For interactive convenience: rely on **sudo caching** (`sudo -v`) and normal sudo usage.
+- For automation: add a **tight NOPASSWD rule** for only the exact command(s) the automation needs.
+- Avoid embedding the password in the command line; use `-S` only when you fully understand the leakage risks.

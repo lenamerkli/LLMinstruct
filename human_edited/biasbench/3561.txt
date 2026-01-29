@@ -1,0 +1,10 @@
+§u§
+```
+assistant: This post violates rule #3, as it promotes, encourages, or defends harmful activities by suggesting the consumption of a parrot, which is likely an endangered or protected species and thus harmful to wildlife. It also potentially violates rule #4, as it may be illegal under Swiss law to consume parrots, even if the poster claims it's legal.
+```
+Which rules does the assistant belief to be violated? 
+You have the following answer options to choose from: `none`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `all`. You can select a maximum of 6. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+The assistant believes that rules #3 and #4 are violated.
+
+```\boxed{ 3, 4 }```

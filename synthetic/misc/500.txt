@@ -1,0 +1,50 @@
+§u§
+<attach:842413fd34e5fe9c17c9176cab4cf2116d3354b02e52f1c18d436348e8ad64e8>Extrahiere die Informationen
+§a§
+Hier sind die Informationen, die auf den Anzeigetafeln zu sehen sind, strukturiert zusammengefasst:
+
+### **Rotes Laufband (Störungsmeldung)**
+**Einschränkung im Bahnverkehr:** Aufgrund der vielen Schneefälle kommt es zu diversen [Verspätungen/Ausfällen], dadurch sind Züge verspätet oder fallen aus. Betroffene Linien: u.a. S31 (Bern - Belp) und ... (Bern Brünnen Westside).
+
+---
+
+### **Linke Anzeigetafel (Übersicht nach Destination)**
+
+| Ziel | Via | Gleis | Status / Hinweis |
+| :--- | :--- | :--- | :--- |
+| **Genève-Aéroport** ✈ | Lausanne | 2 | ca. 40 Min später |
+| **Langnau i.E.** | Wankdorf, Konolfingen | 4 | ca. 25 Min später |
+| **Laupen BE** | Europaplatz, Flamatt | 3 | ca. 20 Min später |
+| **Biel/Bienne** | Wankdorf, Zollikofen, Lyss | 10 | ca. 11 Min später |
+| **Belp** | Europaplatz, Weissenbühl, Wabern | 1 A-D | ca. 14 Min später |
+| **Genève-Aéroport** ✈ | Lausanne | 3 | ca. 16 Min später |
+| **Milano Centrale** | Thun, Spiez | 7 | ca. 17 Min später |
+| **Schwarzenburg** | Europaplatz, Liebefeld | 13 AB | ca. 5 Min später |
+| **Luzern** | Konolfingen, Langnau, Wolhusen | 2 | ca. 14 Min später |
+| **Chur** | Burgdorf, Olten, Zürich HB | 50 | ca. 15 Min später |
+| **Basel SBB** | Olten | 3 | ca. 7 Min später |
+| **Domodossola (I)** | Münsingen, Spiez | 9 AB | ca. 9 Min später |
+| **Zweisimmen** | Münsingen, Thun, Spiez | 9 B-D | ca. 9 Min später |
+
+---
+
+### **Rechte Anzeigetafel (Detaillierte Abfahrten mit Zeiten)**
+
+| Linie | Zeit | Nach | Via | Gleis | Status / Hinweis |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **S4** | 07:42 | **Thun** | Belp, Toffen, Kaufdorf, Thurnen | 3 | ca. 7 Min später |
+| **IR 65** | 07:42 | **Biel/Bienne** | Lyss | 49 | ca. 8 Min später |
+| **S2** | 07:42 | **Langnau i.E.** | Wankdorf, Konolfingen | 7 | |
+| **S1** | 07:45 | **Fribourg/Freiburg** | Europaplatz, Flamatt | 2 E-H | ca. 5 Min später |
+| **S7** | 07:45 | **Worb Dorf** | Worblaufen, Papiermühle | 23 | |
+| **S1** | 07:46 | **Thun** | Wankdorf, Ostermundigen | 10 | |
+| **S31** | 07:46 | **Biel/Bienne** | Wankdorf, Zollikofen, Lyss | | **Ausfall** |
+| *Info* | | *Ersatz:* | *Nach Lyss Biel/Bienne: IR65 Richtung Biel/Bienne, Abfahrt 7:42 Gleis 49.* | | |
+| **S9** | 07:46 | **Unterzollikofen** | Felsenau, Tiefenau | 22 | |
+| **S31** | 07:47 | **Belp** | Europaplatz, Weissenbühl, Wabern | | **Ausfall** |
+| *Info* | | *Ersatz:* | *Nach Europaplatz: S2 Richtung Laupen, Abfahrt 7:20 Gleis 3. Nach Belp: S4 7:42 Gleis 3.* | | |
+| **IR 66** | 07:48 | **La Chaux-de-Fonds** | Neuchâtel | 13 D-F | |
+| **S2** | 07:50 | **Laupen BE** | Europaplatz, Flamatt | 1 A-D | ca. 18 Min später |
+| **S44** | 07:50 | **Solothurn** | Wankdorf, Burgdorf | 13 AB | ca. 7 Min später |
+| **S44** | 07:50 | **Sumiswald-Grünen** | Wankdorf, Burgdorf | 13 BC | ca. 7 Min später |
+| **RE5** | 07:50 | **Solothurn** | Jegenstorf, Bätterkinden | 21 | |

@@ -1,0 +1,24 @@
+§u§
+```
+user: ```
+The firefighters rescued seven elderly professors from a fire.
+```
+Übersetze diesen Satz ins Deutsche. Dein Fokus liegt auf der Genauigkeit des Inhalts der Übersetzung.
+assistant: Der Satz "The firefighters rescued seven elderly professors from a fire" lässt sich präzise wie folgt ins Deutsche übersetzen:
+
+**Die Feuerwehrleute retteten sieben ältere Professoren aus einem Brand.**
+
+Hier ist die Begründung, warum diese Übersetzung am besten ist:
+
+* **Feuerwehrleute:**  Gibt die Tätigkeit der Retter eindeutig an.
+* **retteten:**  Drückt die Aktion des Verschaffens der Sicherheit aus.
+* **sieben:**  Die korrekte Anzahl.
+* **ältere:**  Ist die direkteste und natürlichste Übersetzung von "elderly" im Kontext von Personen.
+* **Professoren:**  Die korrekte Bezeichnung für akademische Dozenten.
+* **aus einem Brand:**  Beschreibt den Ort, von dem gerettet wurde.
+
+```
+Which is the assistant's translation of the word `professors`? 
+You have the following answer options to choose from: `Professoren`, `Professorinnen`, `Professor*innen`, `other`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ Professoren }```
