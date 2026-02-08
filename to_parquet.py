@@ -317,6 +317,7 @@ def strftime_now(format_str):
 
 def main():
     data_human_edited_biasbench = process_txt_directory('./human_edited/biasbench', 'biasbench', False, False)
+    data_human_edited_infinite_craft = process_jsonl('./human_edited/infinite_craft/infinite_craft.jsonl', 'infinite_craft', False, False)
     data_human_edited_misc = process_txt_directory('./human_edited/misc', 'misc', False, False)
     data_human_edited_moral = process_moral_directory('./human_edited/moral', 'moral', False, False)
     data_synthetic_biasbench = process_biasbench_sqlite('./synthetic/biasbench.sqlite3', 'biasbench', True, True)
@@ -327,7 +328,7 @@ def main():
     data_synthetic_moral = process_moral_sqlite('./synthetic/moral/database.sqlite3', 'moral', True, True)
     data_synthetic_topic_categorizer = process_jsonl('./synthetic/topic_categorizer/topic_categorizer.jsonl', 'topic_categorizer', True, False)
 
-    data = data_human_edited_biasbench + data_human_edited_misc + data_human_edited_moral + data_synthetic_biasbench + data_synthetic_drawback_chess + data_synthetic_ingredient_scanner + data_synthetic_ingredient_scanner2 + data_synthetic_misc + data_synthetic_moral + data_synthetic_topic_categorizer
+    data = data_human_edited_biasbench + data_human_edited_infinite_craft + data_human_edited_misc + data_human_edited_moral + data_synthetic_biasbench + data_synthetic_drawback_chess + data_synthetic_ingredient_scanner + data_synthetic_ingredient_scanner2 + data_synthetic_misc + data_synthetic_moral + data_synthetic_topic_categorizer
 
     first_names, last_names = load_names()
     false_positives = load_false_positives()

@@ -1,0 +1,115 @@
+§u§
+Is it known what prompt and AI the game InfiniteCraft by neal.fun uses?
+§a§
+Mostly, yes for the **AI**, but **no** for the exact **prompt text**.
+
+### AI model
+
+From interviews and coverage:
+
+- Neal Agarwal has said the backend uses **Meta’s Llama 2** large language model:
+  > “I’m using the latest Llama 2 LLM from Facebook on the backend. Every time someone tries to craft something novel, I ask Llama 2 with a prompt what the result should be.”
+- Articles and Wikipedia note that the game runs on **LLaMA models hosted via Together AI**.
+- The current English Wikipedia entry says the game “uses **Llama 2.7 and Llama 3.1** … to create new elements and assign emojis,” which likely refers to specific Llama 2 / Llama 3 variants rather than “2.7” as a single model.
+
+What *isn’t* public is the **exact model sizes** (e.g., 7B vs 70B) or precise configuration.
+
+### Prompt
+
+The **actual system/user prompt Neal uses is not publicly documented**:
+
+- A detailed technical blog that reverse‑engineers the API notes explicitly:
+  > “The specific prompt isn’t public (so far as I know).”
+- In interviews, Neal only says that he “asks Llama 2 with a prompt what the result should be” and mentions he had to experiment to find the right prompt and examples, but the string itself is never shown.
+
+So:
+
+- **Known:** It uses Meta’s **LLaMA family** (initially Llama 2, now apparently Llama 2 + Llama 3), hosted on **Together AI**.
+- **Not known:** The **exact prompt text** (system instructions, examples, formatting, etc.). Any “Infinite Craft prompt” you see in open‑source clones is an approximation written by those authors, not an official one from Neal.
+
+If you’re trying to recreate something similar, I can help you design a prompt that behaves like Infinite Craft, even though we can’t copy the real one.
+§u§
+Create a prompt (or copy it from online) on how the prompt could look like.
+§a§
+Based on the search results, I can provide you with a comprehensive InfiniteCraft-style prompt. Here are two versions - a simpler one and a more detailed one based on what developers have successfully used:
+
+## Simple Version
+
+```
+You are a creative element combination system for a crafting game. When given two elements, determine what they would logically create when combined.
+
+Rules:
+- Output only the resulting element name (1-3 words)
+- Be creative but logical
+- Consider physical, conceptual, and cultural combinations
+- If elements are the same, think of what multiple of them create (e.g., Tree + Tree = Forest)
+
+Input format: [Element1] + [Element2]
+Output format: [Result]
+
+Examples:
+Water + Fire = Steam
+Earth + Water = Mud
+Wind + Fire = Smoke
+Tree + Tree = Forest
+Ocean + Wind = Wave
+Human + House = Family
+```
+
+## Advanced Version (Based on Real Implementations)
+
+This more sophisticated prompt comes from the multiplayer InfiniteCraft implementation:
+
+```
+You are a highly creative and witty noun combiner. Given two inputted nouns, you will output all possible new nouns that creatively and logically combine the two inputted nouns. Every noun option MUST be one to three words separated by a single space.
+
+An inputted noun can be an option, if it is a logical combination of the two inputted nouns. Duplicates are not allowed: NEVER output a noun that is semantically equal but lexically different from an inputted noun.
+
+Available categories: natural thing, animal, appliance, product, brand, occupation, famous icon, color, food, music, sport, place, landmark, concept, language, movie, book, etc.
+```
+
+Additional rules you might want to include:
+- Consider metaphorical combinations (Love + War = Romeo and Juliet)
+- Think about what the combination produces, represents, or is associated with
+- Cultural references are allowed
+- The result should make intuitive sense to most people
+
+## JSON Output Version
+
+If you want structured output with emojis (like the original):
+
+```
+You are a creative crafting system. Given two elements, determine their combination result.
+
+Output JSON format:
+{
+  "result": "element name",
+  "emoji": "appropriate emoji",
+  "isNew": false
+}
+
+Rules:
+- Result must be 1-3 words
+- Choose the most fitting single emoji
+- Be creative yet logical
+- Consider physical, chemical, cultural, and conceptual combinations
+
+Examples:
+Input: Water + Fire
+Output: {"result": "Steam", "emoji": "💨", "isNew": false}
+
+Input: Human + Book
+Output: {"result": "Knowledge", "emoji": "🧠", "isNew": false}
+```
+
+## Key Implementation Notes
+
+As noted by developers, the clever part is that results are cached - once a combination is made, it's stored and reused for all players, ensuring consistency and reducing LLM calls. The prompt itself should be consistent to ensure similar results for the same inputs when temperature is set low (around 0.1-0.3).
+
+You can adjust these prompts based on:
+- Whether you want single or multiple possible results
+- If you need emoji assignments
+- How creative vs. logical you want the combinations
+- Whether you want to restrict to certain categories
+
+The key is balancing creativity with logical consistency so players feel the combinations "make sense" even when they're surprising.

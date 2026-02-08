@@ -1,0 +1,38 @@
+§u§
+beamMP server add a custom map
+§a§
+To add a custom map to your BeamMP server, you need to place the map file in the correct directory and then point the server configuration to it.
+
+### **Step 1: Download the Map**
+Download the map you want to use (usually from the [BeamNG Mod Repository](https://www.beamng.com/resources/)). It should be a **.zip** file. Do **not** extract it.
+
+### **Step 2: Upload the Map File**
+1.  Navigate to your BeamMP server's root folder.
+2.  Open the folder: `Resources` > `Client`.
+3.  Upload or move your map `.zip` file directly into the **`Client`** folder.
+    *   *Note: Keeping the file in the `Client` folder allows players to automatically download the map when they join your server.*
+
+### **Step 3: Find the Internal Map Name**
+The server needs to know the exact folder name used inside the mod.
+1.  Open the map's `.zip` file on your computer.
+2.  Navigate to the `levels` folder inside the zip.
+3.  Note the name of the folder inside `levels` (e.g., `my_custom_map`).
+4.  The path you will need is: `/levels/FOLDERNAME/info.json`
+
+### **Step 4: Update the Server Configuration**
+1.  In your server's root folder, open the **`ServerConfig.toml`** file with a text editor (like Notepad or VS Code).
+2.  Find the line that starts with `Map =`.
+3.  Change it to point to your custom map using the name you found in Step 3.
+    *   **Example:** `Map = "/levels/my_custom_map/info.json"`
+4.  **Save** the file.
+
+### **Step 5: Restart the Server**
+Restart your BeamMP server. When you or other players join, the game will prompt them to download the custom map mod before they can enter.
+
+---
+
+### **Troubleshooting Tips**
+*   **Lowercase only:** Some server versions prefer the map path in the config to be all lowercase, even if the folder name has capital letters.
+*   **Missing `info.json`:** If the map is older and doesn't have an `info.json` file, try using the `.mis` file instead (e.g., `/levels/my_custom_map/my_custom_map.mis`).
+*   **Case Sensitivity:** If your server is running on **Linux**, the folder names are case-sensitive. Ensure the name in your `ServerConfig.toml` matches the folder name inside the zip exactly.
+*   **Resources Folder:** If you don't see a `Resources` folder, start the server once; it will generate the necessary file structure automatically.

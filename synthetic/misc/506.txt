@@ -1,0 +1,57 @@
+§u§
+Blender 5.0.1 export to Collada not available
+§a§
+## Collada Export Option Removed in Blender 5.0.1
+
+As of Blender 5.0, the built-in Collada (.dae) import and export functionality is no longer available, and this change continues in the 5.0.1 corrective release. This decision was made by the Blender development team due to the underlying third-party library, OpenCollada, being inactive for several years, which posed security and maintenance risks.
+
+The removal of Collada support was officially announced as part of a "cleanup of legacy features" for the Blender 5.0 release. Discussions on developer forums and community platforms like Reddit confirm this change, with users noting the absence of the Collada option in the file import and export menus.
+
+### The Reason for Removal
+
+The primary reason for dropping Collada support is the obsolescence of the OpenCollada library. The Blender developers had marked the feature as "legacy" in earlier versions, indicating that it would be phased out. With no active development on the library, it became increasingly difficult to maintain and ensure its compatibility and security within modern versions of Blender.
+
+### Workarounds and Alternatives
+
+For users who rely on the Collada format for their workflows, there are several viable workarounds:
+
+*   **Use Blender 4.5 LTS:** The Long-Term Support (LTS) version of Blender 4.5 will continue to have the built-in Collada exporter and will be supported until 2027. This provides a stable and official way to work with .dae files.
+
+*   **Third-Party Add-ons:** The Blender community has already begun to offer solutions. Add-ons are being developed to restore Collada export functionality to Blender 5.0 and newer versions. Users can search for and install these add-ons to regain the ability to export to Collada. For example, a "Better Collada Exporter" has been mentioned as a potential solution.
+
+*   **Alternative Formats:** Blender continues to support a wide range of modern and actively maintained 3D formats. The developers recommend transitioning to formats like **glTF**, **USD**, or **FBX**, which offer comparable or superior features and are widely supported in the industry.
+
+In summary, while the direct export to Collada is not a feature of Blender 5.0.1, users have clear alternatives to either continue using the format through older Blender versions or community-developed add-ons, or to migrate their workflows to more modern and actively supported file formats.
+§u§
+What format should I use for the game BeamNG.drive instead?
+§a§
+BeamNG.drive still primarily relies on the **Collada (.dae)** format for vehicle mods and level assets, despite Blender removing native support for it in version 5.0.
+
+Because the game engine (Torque3D) has not fully migrated to a newer standard like glTF for vehicles, you should **continue using Collada (.dae)**. However, since Blender 5.0 no longer includes this exporter, you must use a community-created addon to restore the functionality.
+
+Here is the recommended workflow to export to BeamNG.drive in Blender 5.0+:
+
+### 1. The Best Solution: Use the "Blender BeamNG CDAE" Addon
+A dedicated addon has been created specifically to solve this issue for Blender 5.0 users. It restores the Collada export functionality but optimizes it specifically for BeamNG.
+
+*   **Addon Name:** Blender BeamNG CDAE (created by user *Grille*)
+*   **Where to get it:** You can find it on GitHub (search for "Grille Blender BeamNG CDAE").
+*   **How it works:**
+    1.  Download the latest release zip file.
+    2.  In Blender, go to **Edit > Preferences > Add-ons**.
+    3.  Click **Install...** and select the zip file.
+    4.  Enable the addon.
+    5.  You will now have a new export option specifically for BeamNG Collada files.
+
+### 2. Alternative Solution: BeamNG Level Importer
+Another popular addon, the **BeamNG Level Importer** (by *PrzemekWolw*), also includes export tools that are compatible with Blender 5.0.
+
+*   This addon is widely used for map modding but includes a "Game Mesh -> Collada" export feature that works for other assets as well.
+
+### 3. Fallback Solution: Use Blender 4.5 LTS
+If you encounter bugs with the new addons, the official recommendation from many in the modding community is to use **Blender 4.5 LTS (Long Term Support)**.
+*   Blender 4.5 is the last version to feature native, built-in Collada (.dae) support.
+*   It will be supported until 2027, making it a stable platform for BeamNG modding for the near future.
+
+### Why not glTF?
+While glTF is a modern standard and Blender 5.0 supports it natively, BeamNG's vehicle system (JBeam structure) and material pipeline are still deeply rooted in the Collada format. While you can sometimes use glTF for simple static map objects, it is **not recommended for vehicle mods** as of early 2026.
