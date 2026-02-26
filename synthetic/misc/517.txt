@@ -1,0 +1,400 @@
+§u§
+```sql
+CREATE TABLE IF NOT EXISTS drives (
+    id TEXT PRIMARY KEY,
+    location TEXT NOT NULL,
+    name TEXT NOT NULL,
+    description TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS partitions (
+    id TEXT PRIMARY KEY,
+    drive_id TEXT NOT NULL,
+    name TEXT NOT NULL,
+    owner_id TEXT NOT NULL,
+    capacity INTEGER NOT NULL,
+    FOREIGN KEY (drive_id) REFERENCES drives(id),
+    FOREIGN KEY (owner_id) REFERENCES users(id)
+);
+CREATE TABLE IF NOT EXISTS files(
+    id TEXT PRIMARY KEY,
+    path TEXT NOT NULL,
+    created TEXT NOT NULL,
+    edited TEXT NOT NULL,
+    viewed TEXT NOT NULL,
+    name TEXT NOT NULL,
+    mimetype TEXT NOT NULL,
+    parent_id TEXT NULL,  -- may be null if in root folder
+    owner_id TEXT NOT NULL,
+    partition_id TEXT NOT NULL,
+    hidden INTEGER NOT NULL,
+    size INTEGER NOT NULL,
+    hash TEXT NOT NULL,
+    encrypted INTEGER NOT NULL,
+    encryption_hash TEXT NULL,  -- null if not encrypted
+    FOREIGN KEY (parent_id) REFERENCES folders(id),
+    FOREIGN KEY (owner_id) REFERENCES users(id),
+    FOREIGN KEY (partition_id) REFERENCES partitions(id)
+);
+CREATE TABLE IF NOT EXISTS folders(
+    id TEXT PRIMARY KEY,
+    path TEXT NOT NULL,
+    created TEXT NOT NULL,
+    edited TEXT NOT NULL,
+    viewed TEXT NOT NULL,
+    name TEXT NOT NULL,
+    parent_id TEXT NULL,  -- may be null if in root folder
+    owner_id TEXT NOT NULL,
+    partition_id TEXT NOT NULL,
+    hidden INTEGER NOT NULL,  -- 0 for visible, 1 for hidden
+    size INTEGER NOT NULL,
+    FOREIGN KEY (parent_id) REFERENCES folders(id),
+    FOREIGN KEY (owner_id) REFERENCES users(id),
+    FOREIGN KEY (partition_id) REFERENCES partitions(id)
+);
+CREATE TABLE IF NOT EXISTS tags(
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    description TEXT NOT NULL,
+    created TEXT NOT NULL,
+    owner_id TEXT NOT NULL,
+    FOREIGN KEY (owner_id) REFERENCES users(id)
+);
+CREATE TABLE IF NOT EXISTS tag_relations(
+    id TEXT PRIMARY KEY,
+    tag_id TEXT NOT NULL,
+    file_id TEXT NULL,  -- only one must be defined
+    folder_id TEXT NULL,  -- only one must be defined
+    partition_id TEXT NULL,  -- only one must be defined
+    created TEXT NOT NULL,
+    FOREIGN KEY (tag_id) REFERENCES tags(id),
+    FOREIGN KEY (file_id) REFERENCES files(id),
+    FOREIGN KEY (folder_id) REFERENCES folders(id),
+    FOREIGN KEY (partition_id) REFERENCES partitions(id)
+);
+CREATE TABLE IF NOT EXISTS tag_tag_relations(
+    id TEXT PRIMARY KEY,
+    tag_id TEXT NOT NULL,
+    parent_id TEXT NOT NULL,
+    created TEXT NOT NULL,
+    FOREIGN KEY (tag_id) REFERENCES tags(id),
+    FOREIGN KEY (parent_id) REFERENCES tags(id)
+);
+CREATE TABLE IF NOT EXISTS shares(
+    id TEXT PRIMARY KEY,
+    file_id TEXT NULL,  -- only one must be defined
+    folder_id TEXT NULL,  -- only one must be defined
+    partition_id TEXT NULL,  -- only one must be defined
+    owner_id TEXT NOT NULL,
+    user_id TEXT NOT NULL,
+    created TEXT NOT NULL,
+    allow_write INTEGER NOT NULL,  -- 0 for read-only, 1 for read-write
+    FOREIGN KEY (file_id) REFERENCES files(id),
+    FOREIGN KEY (folder_id) REFERENCES folders(id),
+    FOREIGN KEY (partition_id) REFERENCES partitions(id),
+    FOREIGN KEY (owner_id) REFERENCES users(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+```
+I am making my own cloud. What do you think of my SQLite definitions?
+§a§
+Overall this is a pretty solid, normalized starting point. You’ve got the main entities (drives/partitions/files/folders/tags/shares) laid out clearly.
+
+There are a few important correctness gaps and some design/polishing points worth fixing before you build too much on it.
+
+---
+
+## 1. “Only one must be defined” is not enforced
+
+In `tag_relations` and `shares` you comment:
+
+```sql
+file_id TEXT NULL,  -- only one must be defined
+folder_id TEXT NULL,  -- only one must be defined
+partition_id TEXT NULL,  -- only one must be defined
+```
+
+But SQLite is not enforcing that; all three could be NULL, or all three non-NULL.
+
+Add a `CHECK` constraint to enforce *exactly one* non-NULL:
+
+```sql
+CREATE TABLE tag_relations(
+    id TEXT PRIMARY KEY,
+    tag_id TEXT NOT NULL,
+    file_id TEXT NULL,
+    folder_id TEXT NULL,
+    partition_id TEXT NULL,
+    created TEXT NOT NULL,
+    CHECK (
+        (file_id IS NOT NULL) +
+        (folder_id IS NOT NULL) +
+        (partition_id IS NOT NULL)
+        = 1
+    ),
+    FOREIGN KEY (tag_id) REFERENCES tags(id),
+    FOREIGN KEY (file_id) REFERENCES files(id),
+    FOREIGN KEY (folder_id) REFERENCES folders(id),
+    FOREIGN KEY (partition_id) REFERENCES partitions(id)
+);
+```
+
+Same idea for `shares`:
+
+```sql
+CHECK (
+    (file_id IS NOT NULL) +
+    (folder_id IS NOT NULL) +
+    (partition_id IS NOT NULL)
+    = 1
+)
+```
+
+SQLite treats boolean expressions as 0/1, so this works.
+
+---
+
+## 2. Path + parent_id = denormalization
+
+`files` and `folders` both store:
+
+- `path TEXT NOT NULL`
+- `parent_id TEXT NULL`
+
+This gives two representations of the same hierarchy and they can drift out of sync.
+
+Decide your strategy:
+
+- **Option A (simpler, more consistent):**
+  Drop `path` and compute it by walking parents when needed (and/or cache it at the app layer).
+
+- **Option B (faster lookups):**
+  Keep `path` as a “materialized path” but accept it’s a cache that must be updated on:
+  - rename (`name` change)
+  - move (`parent_id` change)
+  - top-level path changes
+
+If you keep `path`, add a uniqueness constraint per partition:
+
+```sql
+CREATE UNIQUE INDEX idx_files_unique_path
+ON files(partition_id, path);
+
+CREATE UNIQUE INDEX idx_folders_unique_path
+ON folders(partition_id, path);
+```
+
+That prevents two items with the same path in the same partition.
+
+At minimum, you probably want:
+
+```sql
+CREATE UNIQUE INDEX idx_folders_name_per_parent
+ON folders(partition_id, parent_id, name);
+
+CREATE UNIQUE INDEX idx_files_name_per_parent
+ON files(partition_id, parent_id, name);
+```
+
+so you don’t get two files called `foo.txt` in the same folder.
+
+---
+
+## 3. Foreign keys and cascades
+
+You’re already using FKs, which is good, but in a cloud-storage-like system you almost certainly want cascading deletes, or you’ll end up with a lot of orphans.
+
+Examples:
+
+```sql
+CREATE TABLE partitions (
+    ...
+    FOREIGN KEY (drive_id) REFERENCES drives(id) ON DELETE CASCADE,
+    FOREIGN KEY (owner_id) REFERENCES users(id)
+);
+
+CREATE TABLE folders (
+    ...
+    FOREIGN KEY (parent_id) REFERENCES folders(id) ON DELETE CASCADE,
+    FOREIGN KEY (owner_id) REFERENCES users(id),
+    FOREIGN KEY (partition_id) REFERENCES partitions(id) ON DELETE CASCADE
+);
+
+CREATE TABLE files (
+    ...
+    FOREIGN KEY (parent_id) REFERENCES folders(id) ON DELETE CASCADE,
+    FOREIGN KEY (owner_id) REFERENCES users(id),
+    FOREIGN KEY (partition_id) REFERENCES partitions(id) ON DELETE CASCADE
+);
+```
+
+You might also want `ON DELETE CASCADE` for:
+
+- `tag_relations.tag_id` and its *_id targets
+- `tag_tag_relations`
+- `shares` references
+
+And **don’t forget for SQLite**:
+
+```sql
+PRAGMA foreign_keys = ON;
+```
+
+must be enabled on every connection, or FKs do nothing.
+
+---
+
+## 4. Booleans and other integrity checks
+
+You use `INTEGER` as booleans:
+
+- `hidden` in `files` and `folders`
+- `encrypted` in `files`
+- `allow_write` in `shares`
+
+Add constraints so they can’t be 2, 3, 99, etc.:
+
+```sql
+hidden INTEGER NOT NULL CHECK (hidden IN (0, 1)),
+encrypted INTEGER NOT NULL CHECK (encrypted IN (0, 1)),
+allow_write INTEGER NOT NULL CHECK (allow_write IN (0, 1)),
+```
+
+For `encrypted` vs `encryption_hash`, also enforce coherence:
+
+```sql
+CHECK (
+    (encrypted = 0 AND encryption_hash IS NULL) OR
+    (encrypted = 1 AND encryption_hash IS NOT NULL)
+)
+```
+
+Similarly, for sizes and capacities (which should never be negative):
+
+```sql
+capacity INTEGER NOT NULL CHECK (capacity >= 0),
+size INTEGER NOT NULL CHECK (size >= 0),
+```
+
+---
+
+## 5. Timestamps
+
+You store timestamps as `TEXT`:
+
+- `created`, `edited`, `viewed`
+
+That’s fine if you stick to one canonical format (e.g. `YYYY-MM-DDTHH:MM:SSZ`).
+
+Consider:
+
+```sql
+created TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+edited  TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+viewed  TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+```
+
+Or, if you prefer integer epoch times for easier sorting and expiration:
+
+```sql
+created INTEGER NOT NULL DEFAULT (unixepoch('now')),
+...
+```
+
+Either way, be consistent across all tables.
+
+---
+
+## 6. Folder `size`
+
+`folders.size` is tricky: is that:
+
+- the sum of all direct child files?
+- sum of all descendants (recursive)?
+- or something else?
+
+If you don’t have a clear, enforced rule and mechanism to update it, it will get out of sync.
+
+Options:
+
+- Drop it and compute size with queries (`SUM(files.size)` + recursion).
+- Keep it as a cached value but update it reliably via:
+  - application logic every time a file/folder is added/removed/moved, or
+  - SQLite triggers (more complex but self-contained).
+
+---
+
+## 7. Indexing for performance
+
+For any non-trivial dataset, you’ll want indexes on:
+
+- `files(parent_id)` — list folder contents
+- `folders(parent_id)` — list subfolders
+- `files(partition_id)`
+- `folders(partition_id)`
+- `files(owner_id)`, `folders(owner_id)`
+- `shares(user_id)` — “what is shared with this user?”
+- `shares(file_id)`, `shares(folder_id)`, `shares(partition_id)`
+- `tag_relations(tag_id)`
+- `tag_relations(file_id)`, `tag_relations(folder_id)`, `tag_relations(partition_id)`
+- `tag_tag_relations(parent_id)`, `tag_tag_relations(tag_id)`
+
+Example:
+
+```sql
+CREATE INDEX idx_files_parent ON files(parent_id);
+CREATE INDEX idx_folders_parent ON folders(parent_id);
+CREATE INDEX idx_shares_user ON shares(user_id);
+CREATE INDEX idx_tag_relations_tag ON tag_relations(tag_id);
+```
+
+Add more as your query patterns become clear.
+
+---
+
+## 8. Uniqueness and naming
+
+Consider enforcing some natural uniqueness:
+
+- Partition names per drive:
+
+  ```sql
+  CREATE UNIQUE INDEX idx_partition_name_per_drive
+  ON partitions(drive_id, name);
+  ```
+
+- Tag names per owner:
+
+  ```sql
+  CREATE UNIQUE INDEX idx_tag_name_per_owner
+  ON tags(owner_id, name);
+  ```
+
+- Shares per user/resource (to avoid duplicates):
+
+  ```sql
+  CREATE UNIQUE INDEX idx_shares_unique_file
+  ON shares(user_id, file_id)
+  WHERE file_id IS NOT NULL;
+  ```
+
+  and similarly for folder_id / partition_id.
+
+---
+
+## 9. Order of table creation
+
+You reference `folders` from `files` before `folders` is created. SQLite will parse this, but as a matter of hygiene and portability, it’s cleaner to:
+
+1. Create `drives`, `users`
+2. `partitions`
+3. `folders`
+4. `files`
+5. `tags`
+6. `tag_relations`, `tag_tag_relations`
+7. `shares`
+
+Just to avoid any subtle surprises.
+
+---
+
+If you’d like, I can propose a revised version of one or two of the tables (e.g. `files` and `shares`) with all of these constraints and indexes baked in so you can copy-paste as a reference.

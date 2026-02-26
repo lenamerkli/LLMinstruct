@@ -1,0 +1,48 @@
+§u§
+If i try to start to start blender 4.5 LTS i get this error:
+```
+>>> ./blender
+./blender: symbol lookup error: /home/USER/Downloads/blender-4.5.6-linux-x64/lib/libusd_ms.so: undefined symbol: _ZTIN17MaterialX_v1_39_27ElementE
+```
+How can I make blender 4.5 LTS work?
+§a§
+To fix the **symbol lookup error** you are encountering with Blender 4.5 LTS, you need to resolve a conflict between the libraries bundled with Blender and the libraries installed on your Linux system (likely **MaterialX** or **USD**).
+
+This error usually occurs because the Linux dynamic linker is finding a version of the MaterialX library on your system (e.g., in `/usr/lib/`) that is incompatible with the version Blender's `libusd_ms.so` expects.
+
+Here are the solutions, ranked from most recommended to most technical:
+
+### 1. The "Clean Launch" Method (Most Likely Fix)
+Sometimes system-wide environment variables (like `LD_LIBRARY_PATH`) force Blender to look at your system's libraries instead of its own bundled ones. Try running Blender by explicitly pointing it to its own library folder:
+
+```bash
+cd /home/USER/Downloads/blender-4.5.6-linux-x64/
+LD_LIBRARY_PATH=./lib ./blender
+```
+*Note: Using `./lib` ensures it prioritizes the libraries inside your Blender folder.*
+
+### 2. Remove Conflicting System Packages
+If you have `usd` or `materialx` packages installed via your system's package manager (like `pacman` on Arch or `dnf`/`apt` on other distros), they may be interfering. Unless you need them for other development work, try removing them:
+* **Arch Linux:** `sudo pacman -Rs usd materialx`
+* **Fedora:** `sudo dnf remove usd materialx`
+* **Ubuntu:** `sudo apt remove libusd-dev` (or similar)
+
+### 3. Use the Flatpak Version (Highly Recommended)
+If you continue to have library conflicts on your specific Linux distribution, the **Flatpak** version of Blender is the most stable way to run it. Flatpaks bundle all exact dependencies in a sandbox, preventing these "symbol lookup" errors entirely.
+1. Install Flatpak if you haven't: `sudo apt install flatpak` (or equivalent).
+2. Install Blender:
+   ```bash
+   flatpak install flathub org.blender.Blender
+   ```
+3. You can select the 4.5 LTS branch specifically if the main one has moved to a newer version.
+
+### 4. Check for Library Overrides
+If the above don't work, verify that you don't have a stray `libMaterialX...so` file in a global path that is "stealing" the symbol.
+Run this command to see which libraries Blender is actually loading:
+```bash
+ldd /home/USER/Downloads/blender-4.5.6-linux-x64/lib/libusd_ms.so | grep MaterialX
+```
+If the output points to a file in `/usr/lib/` or `/usr/local/lib/` instead of your `Downloads` folder, that is the culprit. You can try moving or renaming that system file temporarily to test if Blender starts.
+
+### Why is this happening?
+The symbol `_ZTIN17MaterialX_v1_39_27ElementE` refers to a specific version of **MaterialX (v1.39.27)**. Blender 4.5 LTS is built against a very specific version of this library. If your Linux distribution updated its own MaterialX library to a slightly different version (e.g., v1.39.30), the names won't match exactly, and the software will crash before it even opens. Using the official `.tar.xz` from blender.org (as you are) is usually the fix, but only if the system allows it to use its bundled libraries.

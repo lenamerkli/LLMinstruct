@@ -1,0 +1,24 @@
+§u§
+minecraft java 1.21.11 recommended java version
+§a§
+For **Minecraft: Java Edition 1.21.1**, the **recommended (and effectively required) Java version is Java 21** (an LTS release). This requirement started with **Minecraft Java 1.20.5**, and continues through newer versions like **1.21 / 1.21.1**.
+
+## What to use (practical guidance)
+
+### If you’re just playing (client)
+- The **official Minecraft Launcher bundles the correct Java runtime** and normally manages it for you—so you usually **don’t need to install Java yourself**.
+- If you changed your profile to use a “custom Java executable,” switch it back to the **bundled runtime** (this avoids many mismatch errors).
+
+### If you’re running a server (vanilla / Paper / Fabric / Forge)
+- Install and run the server on **Java 21 (64-bit)**.
+- For versions **1.20.5 and later**, **Java 21 is the standard recommendation** across major server hosting docs and mod tooling guidance.
+
+## Quick compatibility snapshot (for context)
+- **1.18 → 1.20.4:** Java **17**
+- **1.20.5 → 1.21.1 (and later):** Java **21**
+
+## Common gotchas
+- **Java 17 will not be enough** for 1.21.1 (you’ll typically get a launch error).
+- Make sure you’re using **64‑bit Java 21** (32-bit support is effectively not part of the modern setup expectation).
+
+If you tell me whether you mean **client** or **server** (and what OS), I can give the exact “check your Java version” command + the cleanest install path for Java 21.

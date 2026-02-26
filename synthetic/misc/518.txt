@@ -1,0 +1,172 @@
+§u§
+```sql
+CREATE TABLE IF NOT EXISTS drives (
+    id TEXT PRIMARY KEY,
+    location TEXT NOT NULL,
+    name TEXT NOT NULL,
+    description TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS partitions (
+    id TEXT PRIMARY KEY,
+    drive_id TEXT NOT NULL,
+    name TEXT NOT NULL,
+    owner_id TEXT NOT NULL,
+    capacity INTEGER NOT NULL,
+    FOREIGN KEY (drive_id) REFERENCES drives(id),
+    FOREIGN KEY (owner_id) REFERENCES users(id)
+);
+CREATE TABLE IF NOT EXISTS entries(
+    id TEXT PRIMARY KEY,
+    type TEXT NOT NULL,  -- `file`, `folder`, `link`
+    name TEXT NOT NULL,
+    parent_id TEXT NULL,  -- null if in root folder
+    owner_id TEXT NOT NULL,
+    partition_id TEXT NOT NULL,
+    created TEXT NOT NULL,
+    edited TEXT NOT NULL,
+    viewed TEXT NOT NULL,
+    deleted TEXT NULL,  -- null if not deleted
+    hidden INTEGER NOT NULL, -- 0 for visible, 1 for hidden
+
+    -- file specific
+    size INTEGER NULL,
+    hash TEXT NULL,
+    encrypted INTEGER NULL,
+    encryption_hash TEXT NULL,  -- also null if not encrypted
+
+    -- link specific
+    target_id TEXT NULL,  -- also null if pointing to a root folder
+    target_partition_id TEXT NULL,
+
+    FOREIGN KEY (parent_id) REFERENCES entries(id),
+    FOREIGN KEY (owner_id) REFERENCES users(id),
+    FOREIGN KEY (partition_id) REFERENCES partitions(id),
+    FOREIGN KEY (target_id) REFERENCES entries(id),
+    FOREIGN KEY (target_partition_id) REFERENCES partitions(id)
+);
+CREATE TABLE IF NOT EXISTS tags(
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    description TEXT NOT NULL,
+    created TEXT NOT NULL,
+    owner_id TEXT NOT NULL,
+    FOREIGN KEY (owner_id) REFERENCES users(id)
+);
+CREATE TABLE IF NOT EXISTS tag_relations(
+    id TEXT PRIMARY KEY,
+    tag_id TEXT NOT NULL,
+    entry_id TEXT NOT NULL,
+    created TEXT NOT NULL,
+    FOREIGN KEY (tag_id) REFERENCES tags(id),
+    FOREIGN KEY (entry_id) REFERENCES entries(id)
+);
+CREATE TABLE IF NOT EXISTS tag_tag_relations(
+    id TEXT PRIMARY KEY,
+    tag_id TEXT NOT NULL,
+    parent_id TEXT NOT NULL,
+    created TEXT NOT NULL,
+    FOREIGN KEY (tag_id) REFERENCES tags(id),
+    FOREIGN KEY (parent_id) REFERENCES tags(id)
+);
+CREATE TABLE IF NOT EXISTS entry_shares(
+    id TEXT PRIMARY KEY,
+    entry_id TEXT NOT NULL,
+    owner_id TEXT NOT NULL,
+    user_id TEXT NOT NULL,
+    created TEXT NOT NULL,
+    allow_write INTEGER NOT NULL,  -- 0 for read-only, 1 for read-write
+    FOREIGN KEY (entry_id) REFERENCES entries(id),
+    FOREIGN KEY (owner_id) REFERENCES users(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+CREATE TABLE IF NOT EXISTS partition_shares(
+    id TEXT PRIMARY KEY,
+    partition_id TEXT NOT NULL,
+    owner_id TEXT NOT NULL,
+    user_id TEXT NOT NULL,
+    created TEXT NOT NULL,
+    allow_write INTEGER NOT NULL,  -- 0 for read-only, 1 for read-write
+    FOREIGN KEY (partition_id) REFERENCES partitions(id),
+    FOREIGN KEY (owner_id) REFERENCES users(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+```
+I am making my own cloud. What do you think of my SQLite definitions?
+§a§
+Your schema looks very solid and well-structured. It covers the core requirements of a personal cloud application: storage hierarchy (drives -> partitions -> entries), permissions (shares), and metadata (tags, types).
+
+Here is a breakdown of what works well, along with a few critical points and suggestions to make the database production-ready.
+
+### **Positive Aspects**
+
+1.  **Ownership Model:** You have clearly separated ownership (`owner_id`) from access (shares). This is crucial for multi-user capabilities.
+2.  **Soft Deletes:** Using `deleted TEXT NULL` and `hidden INTEGER` instead of hard deletes is an excellent design choice. It allows you to recover files or maintain folders that have been emptied.
+3.  **Linking Strategy:** By using `target_id` and `target_partition_id` for links, you are creating "shallow links" (shortcuts) rather than duplicating data. This is very storage-efficient.
+4.  **Granular Permissions:** The `allow_write` column in shares (0 vs 1) gives you a simple way to handle read-only vs. read-write permissions.
+
+### **Critical Missing Piece: The `users` Table**
+
+Your schema relies heavily on `users(id)` but never defines the `users` table. You need a place to store usernames, email, passwords (hashed), and profile info.
+
+**Add this immediately:**
+
+```sql
+CREATE TABLE IF NOT EXISTS users (
+    id TEXT PRIMARY KEY,
+    username TEXT NOT NULL UNIQUE,
+    email TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL, -- never store plain text!
+    role TEXT DEFAULT 'user',   -- e.g., 'user' or 'admin'
+    created TEXT NOT NULL DEFAULT (datetime('now'))
+);
+```
+
+### **Specific Improvements & Suggestions**
+
+#### 1. Partition Capacity
+Currently, `partitions` has a `capacity INTEGER`, but there is no mechanism to track **usage**.
+*   **The Problem:** Your app knows the capacity (e.g., 100GB), but it doesn't know how much of that 100GB is currently being used by the `entries` in that partition.
+*   **The Fix:** Depending on your app's complexity, you might want to either:
+    *   **Calculate on the fly:** Do a recursive query for folder sizes (computationally expensive on large databases).
+    *   **Add a summary table:** Create a table that tracks total size per partition.
+    *   **Use a default capacity:** If it's just a quota limit (like Dropbox), you keep it as a static number, but you might want to add a `last_quota_sync` timestamp to know if the limit is outdated.
+
+#### 2. Storage Backend (Where is the file?)
+The `entries` table stores metadata (`size`, `hash`, `name`), but it **does not** store the actual file content.
+*   **Clarification:** Are your files stored in a Blob field in the DB (SQLite has a specific "Blob" type, but it's inefficient for large files), in S3 buckets, or on a local filesystem?
+*   **Recommendation:** Since you are making a cloud app, you likely need a `storage_service` table to abstract where the data lives (e.g., "Amazon S3 Bucket X").
+
+#### 3. The `target_partition_id` Redundancy
+In your `entries` table:
+```sql
+target_id TEXT NULL,
+target_partition_id TEXT NULL
+```
+If `type='link'`, you are pointing to another entry via `target_id`.
+*   **Suggestion:** `target_partition_id` is likely redundant here. If `target_id` exists, you can derive the partition from that entry. Keep it if you plan to have links that point to "Root" of a partition rather than a specific folder, but if you always link to entries, remove it to clean up the schema.
+
+#### 4. Indexes for Performance
+Since you have a tree structure (`parent_id`) and a sharing structure (`entry_id`, `user_id`), you should add indexes to ensure fast lookups.
+*   **For Navigation:** Ensure you have an index on `parent_id` inside the `entries` table so opening a folder is instant.
+*   **For Search:** An index on `tags` and `tag_relations` is good.
+
+```sql
+-- Add these to your schema after creating the table
+CREATE INDEX IF NOT EXISTS idx_entries_parent ON entries(parent_id);
+CREATE INDEX IF NOT EXISTS idx_tag_relations_entry ON tag_relations(entry_id);
+```
+
+#### 5. Duplicate Shares
+In `entry_shares` and `partition_shares`, you allow a user to share an item with themselves multiple times (e.g., Create Share 1, Create Share 2, Create Share 3). This can be confusing.
+*   **Fix:** Add a `UNIQUE` constraint to the table if you don't need multiple share records for the same permissions.
+
+```sql
+-- In entry_shares
+FOREIGN KEY (entry_id) REFERENCES entries(id),
+FOREIGN KEY (owner_id) REFERENCES users(id),
+FOREIGN KEY (user_id) REFERENCES users(id),
+UNIQUE(entry_id, user_id, allow_write) -- Prevents duplicates
+```
+
+### **Summary**
+The logic is sound. Once you add the `users` table and clarify where the file content is physically stored, you have a solid foundation for a personal cloud storage app

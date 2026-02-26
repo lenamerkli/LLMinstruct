@@ -1,0 +1,201 @@
+§u§
+I am making my own cloud storage application. How should I store the file contents (just write to disk?)
+§a§
+This is one of those questions where the answer is "yes, and also absolutely not".
+
+All cloud storage, including S3, ultimately just writes files to disk. The mistake almost every single person makes when building their first cloud storage is how they arrange and write those files. The naive approach will appear to work perfectly for the first 1000 files, and then turn into an unmitigated disaster.
+
+---
+
+## The naive approach, and why you should never use it
+Almost everyone starts here:
+```
+mkdir /storage/alice
+write /storage/alice/cat.jpg
+```
+
+This will work fine for ~5000 files. Then you will hit these problems, roughly in this order:
+1. Two users upload a file with the same name
+2. A user uploads a file called `../../etc/passwd` or a name with a null byte or emoji that breaks your filesystem
+3. Your directory has 100k files in it and `ls` takes 10 seconds
+4. Half completed uploads leave corrupted files visible to users
+5. Two concurrent writes to the same file produce permanently corrupted garbage
+6. Rsyncing a backup takes 12 hours
+7. Deleting a user takes 3 hours
+8. You discover 0.1% of your files have silently corrupted due to bit rot
+
+Every single person that builds this hits all of these. Every single one.
+
+---
+
+## The correct default approach
+This is the industry standard unwritten rule. It is used by git, Nextcloud, SeaweedFS, Dropbox and almost every object storage system ever built. It is 20 lines of code to implement, and it will work reliably up to ~100 million files. This is what you should build.
+
+If you are thinking "this seems too simple, why doesn't everyone talk about this?", it's one of those industry standard things that everyone just assumes everyone else knows.
+
+### The rules:
+1. **Never ever use user supplied filenames for on disk storage.**
+2. When you receive a complete file, first calculate its SHA-256 hash.
+3. Split the hash to make a path, like so:
+   ```
+   Hash: a72c2f80691d...
+   On disk path: a7/2c/a72c2f80691d...
+   ```
+4. Write the file atomically:
+   * Write the full content to a temporary file on the exact same filesystem
+   * `fsync()` the file and the parent directory
+   * Rename the temporary file to the final path
+   * Rename is guaranteed atomic on every POSIX filesystem
+5. Before you write anything, check if the final path already exists. If it does, don't write anything at all.
+6. Store all user metadata in a database: `user_id=123, filename="Holiday Photos/cat.jpg", hash=a72c2f806...`
+
+That's it. That solves 90% of all problems.
+
+This design gives you, for free:
+✅ No more filename collisions ever
+✅ No more directory performance problems, you will never have more than 65536 entries per directory
+✅ Perfect atomicity, users will never see a partial file
+✅ Zero cost automatic byte for byte deduplication
+✅ Trivial backup, trivial replication, trivial rebalancing
+✅ Zero torn writes
+
+---
+
+## When to upgrade
+This approach will take you further than almost anyone ever needs. You only need to move to something more complex when you outgrow it.
+
+| Scale | Approach | Recommendation |
+|---|---|---|
+| < 10k files | Naive approach | Only for throwaway prototypes |
+| 10k - 100,000,000 files | Hash prefix approach described above | ✅ **Stop here. This is the sweet spot for 99% of projects.** |
+| 100m - 1b files | Single node MinIO / SeaweedFS | Excellent drop in replacement |
+| > 1b files, multiple servers | SeaweedFS cluster, MinIO cluster, Ceph | If you have to ask, you don't need this |
+| Dropbox / S3 scale | Custom log structured blob storage | You already know if you are here |
+
+---
+
+## Additional hard earned lessons
+These are the things no one tells you until you have already lost data:
+
+* **Always fsync.** 90% of homemade implementations skip this. You will not notice you have a problem until you have a power outage, and then discover 1% of all files written in the last month are completely corrupted.
+* **Never delete blobs immediately.** When a user deletes a file, just delete the database reference. Run a garbage collector once a week that deletes blobs with zero references.
+* **Bit rot is real.** Disks silently corrupt data at a rate of roughly 1 unrecoverable error per 10TB read. You must periodically re-read every blob and verify its hash. If you do nothing, 0.5% of your files will be corrupted after 5 years.
+* **Do not store blobs in the database.** Postgres BLOBs and similar are worse than files on disk for anything larger than ~128kb. They will destroy your database performance.
+* **Small files have massive overhead.** Below ~256kb the filesystem overhead is larger than the file itself. Once you pass ~1 million files you will want to start packing small blobs together into 4MB chunk files. You can safely defer this until you need it.
+* **Do not build your own distributed blob store.** Just use SeaweedFS. It is perfect, it is tiny, it is faster and more reliable than anything you will build in 3 years.
+
+---
+
+## Final recommendation
+Implement the hash prefix approach first. You can write the entire thing in an afternoon. It will be more reliable and faster than any off the shelf solution for anything under 10 million files.
+
+Only once you actually start hitting the limits of this approach should you even consider replacing it. Almost everyone wastes months building overcomplicated infrastructure that they will never actually need.
+
+---
+
+Would you like me to draft a minimal reference implementation of this storage layer, or go into more detail on any specific part?
+§u§
+Should I implement error correction; lets say 1% extra per file for reed solomon?
+§a§
+This is the #1 mistake people make when they move past "naive".
+
+**Short answer: NO.**
+
+**Long answer**: Reed-Solomon is the wrong tool for single-node storage. It solves a problem you don't have yet, introduces massive complexity, and the math doesn't even work the way you think it does.
+
+Here is the brutal truth about error correction.
+
+---
+
+### 1. The "1%" math is a lie
+You cannot do 1% Reed-Solomon. It doesn't work like that.
+
+Reed-Solomon works on **blocks**. To be able to correct *even a single byte* of error, you need **2 parity blocks**.
+
+If you chunk your files into 64MB blocks (a standard size):
+*   1 block data + 2 blocks parity = 66% overhead. ❌
+*   10 blocks data + 2 blocks parity = 20% overhead. ❌
+*   100 blocks data + 2 blocks parity = 2% overhead. ✅ (But now your latency is huge)
+
+To get down to 1% overhead, you'd need to group ~100 files together. If *one* bit flips in *one* file, you have to download 100 files just to reconstruct the one bad one. That is architecturally insane for a cloud storage app.
+
+### 2. Disks already lie to you (but not how you think)
+You think the problem is "bit rot". The actual problem is **"phantom writes"**.
+
+Modern hard drives (HDDs and SSDs) have internal CRCs. If a sector goes bad:
+1.  The drive tries to read it.
+2.  It fails the internal CRC.
+3.  **It returns ZEROS instead of an error.** It lies to the OS to avoid crashing your program.
+4.  Your app sees `00000000` and thinks that's the real data.
+
+Reed-Solomon **cannot fix this**. RS assumes the data is there but corrupted. If the disk returns zeros, RS thinks the zeros are correct.
+
+**The only fix for phantom writes is a checksum of the whole file.** (BLAKE3 or SHA256).
+
+### 3. The Cost/Benefit is terrible
+| Strategy | Storage Overhead | CPU Cost (Write) | CPU Cost (Read) | Complexity | What it fixes |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **None** | 0% | 0% | 0% | 0 | Nothing 💀 |
+| **Full Hash (BLAKE3)** | 0% (just DB col) | Low | Low | Low | **Detects** everything |
+| **3x Replication** | 200% | 1x (memcpy) | 1x (memcpy) | Low | Detects & Fixes |
+| **Reed-Solomon** | ~20% | **HIGH** | **VERY HIGH** | **NIGHTMARE** | Fixes (in theory) |
+| **ZFS / Btrfs** | Included | Medium | Medium | **ZERO** | Fixes everything ✨ |
+
+### 4. When you actually need Error Correction
+Reed-Solomon is for **distributed systems** (like S3, IPFS, Tahoe-LAFS).
+*   You have 10 servers.
+*   You upload a file.
+*   You store 6 shards on 6 servers.
+*   You generate 4 parity shards.
+*   Any 6 of the 10 servers can die, and you can reconstruct the file.
+
+**You are building a single-server app. You do not need this.**
+
+---
+
+## What you should actually do
+
+### Level 1: The Sanity Check (Do this)
+Use **BLAKE3** (it's 10x faster than SHA256).
+1.  User uploads file.
+2.  You calculate BLAKE3 hash while writing to disk.
+3.  Save hash to DB.
+4.  **Scrubber job**: Once a week, re-read random files and re-hash them. If hash mismatch -> ALERT. Restore from backup/user re-upload.
+
+**Cost**: Near zero.
+**Reliability**: 99.99%.
+
+### Level 2: The Paranoid Check (If you have money)
+**3x Replication.**
+Just write the file 3 times to different disks.
+`write /disk1/a7/2c/...`
+`write /disk2/a7/2c/...`
+`write /disk3/a7/2c/...`
+
+On read, read all 3. If one is different, use the other 2 and overwrite the bad one (self-healing).
+
+**Cost**: 3x disk space.
+**Reliability**: 99.9999%.
+**Code**: 15 lines.
+
+### Level 3: The "I don't want to code this" Check
+Format your storage drive as **ZFS**.
+`zfs create -o compression=zstd -o copies=2 mypool/storage`
+
+ZFS does *everything* for you:
+✅ Checksums every block (detects phantom writes)
+✅ Self-heals (if you set copies=2 or 3)
+✅ Handles bit rot
+✅ Snapshots
+
+**Cost**: You have to learn ZFS (worth it).
+**Reliability**: God tier.
+
+---
+
+## Summary
+**Don't implement Reed-Solomon.** It is over-engineering suicide for a project this size.
+
+1.  Use **BLAKE3** hashes to detect corruption.
+2.  If a hash fails, mark the file as "corrupted" and notify the user/admin.
+3.  If you want automatic healing, just write the file **3 times**. It's cheaper to buy a 4TB drive than to spend 40 hours debugging Galois Field math.

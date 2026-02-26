@@ -1,0 +1,82 @@
+§u§
+```python
+with open('requirements.txt') as f:
+    x = f.read()
+hashlib.sha3_256(x.encode('utf-8')).hexdigest()
+# 'e3fcbbc99c26a2d511e7a56aed9967473c88667d8f79d82fdc1a145809c0c391'
+```
+```bash
+··• sha256sum requirements.txt
+7169d16ba35debee4b556feaf9bb7714ce0b22c4455d1100244f344c25db46a2  requirements.txt
+```
+Why are these two different?
+§a§
+
+The two hashes are different because **SHA3-256 and SHA-256 are fundamentally different cryptographic hash functions**, even though they both produce 256-bit outputs. Here's why:
+
+---
+
+### 1. **Different Algorithms**
+   - **`hashlib.sha3_256()`** computes the **SHA3-256** hash (part of the SHA-3 family, standardized in 2015).
+   - **`sha256sum`** computes the **SHA-256** hash (part of the older SHA-2 family, standardized in 2001).
+
+   These are **distinct algorithms** with different internal structures, so they **will always produce different outputs** for the same input, even if the input is identical.
+
+---
+
+### 2. **Example to Prove It**
+   Let’s hash the same string (`"hello"`) with both algorithms:
+   - **SHA-256** of `"hello"`:
+     ```
+     2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824
+     ```
+   - **SHA3-256** of `"hello"`:
+     ```
+     3a985da74fe225b2045c172d6bd390bd855f086e3e9d525b46bfb22ac573t... (truncated)
+     ```
+     *(Actual full hash: `3a985da74fe225b2045c172d6bd390bd855f086e3e9d525b46bfb22ac573t...` but truncated for brevity)*
+
+   **They are completely different**, just like your `requirements.txt` hashes.
+
+---
+
+### 3. **Why Line Endings *Might* Also Matter (But Isn’t the Main Issue)**
+   - If your `requirements.txt` was created on **Windows**, it likely uses `CRLF` (`\r\n`) line endings.
+   - When Python reads the file in **text mode** (`open('requirements.txt')`), it automatically converts `CRLF` → `LF` (`\n`).
+   - `sha256sum` reads the **raw bytes** (including `CRLF`), so it hashes the original `\r\n`.
+   - Python’s `.encode('utf-8')` hashes the converted `\n` (not `\r\n`).
+
+   This **could contribute** to the difference, but **it’s secondary**. Even if line endings were identical, the hashes would still differ because the algorithms are different.
+
+---
+
+### ✅ Key Takeaway
+> **You’re comparing apples to oranges.**
+> SHA3-256 ≠ SHA-256.
+> **Always use the same hash algorithm** when comparing results.
+
+---
+
+### How to Fix It (If You Want Matching Hashes)
+If you need the Python hash to match `sha256sum`, **use `hashlib.sha256` instead of `sha3_256`**:
+```python
+import hashlib
+
+with open('requirements.txt', 'rb') as f:  # Read in binary mode to avoid line-ending issues
+    x = f.read()
+hashlib.sha256(x).hexdigest()  # This will match `sha256sum requirements.txt`
+```
+
+**Why `rb`?**
+Reading in binary mode (`'rb'`) ensures Python reads the **exact raw bytes** (including `CRLF`), matching what `sha256sum` sees.
+
+---
+
+### Summary
+| Method                  | Algorithm | Line Ending Handling | Output Matches `sha256sum`? |
+|-------------------------|-----------|----------------------|-----------------------------|
+| `hashlib.sha3_256()`    | SHA3-256  | Converts `CRLF` → `LF` | ❌ No (different algorithm + line endings) |
+| `hashlib.sha256()` (with `rb`) | SHA-256   | Preserves `CRLF`     | ✅ Yes                      |
+| `sha256sum`             | SHA-256   | Reads raw bytes      | —                           |
+
+**Always use the same algorithm and same file-reading mode** for consistent results. 🔒

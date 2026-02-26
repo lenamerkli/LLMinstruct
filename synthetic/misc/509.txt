@@ -1,0 +1,115 @@
+§u§
+```
+\section{Lernziele}
+\subsection{Genetik: Mutationen}
+\begin{itemize}
+    \item Sie können den Begriff Mutation allgemein gültig umschreiben, Ursachen nennen, die drei Hauptformen und die Unterformen von Mutationen erkennen sowie SNPs charakterisieren (inkl. Bedeutung des Begriffs).
+    \item Sie können Mutationen aufgrund ihrer vermuteten Folgen eintelen (stumme M., Missense-M., Nonsense-M., switch of function M.).
+    \item Sie können gain of function sowie loss of function Mutationen charakterisieren und begründen, weshalb bei diploiden Zellen ein Funktionsverlust auf einem Chromatid in der Regel keine direkten Auswirkungen hat.
+    \item Sie können die Entstehung von Tri- und Monosomien mit den zugrundeliegenden Meiosefehlern bei der Meiose von Eizellen aufzeichnen und erklären.
+    \item Sie können die Hypothese von Mary Frances Lyon, deren Zusammenhang mit Barr-Körperchen und den Begriff Dosiskompensation erklärend verknüpfen und den Sexchromatin-Test charakterisieren (Vorgehensprinzip, Resultate, Interpretation).
+\end{itemize}
+\subsection{Klassische Genetik}
+\begin{itemize}
+    \item Sie können das Vokabular von Mendel passend anwenden und Mendels Erkenntnisse mit der Chromosomentheorie erklären.
+    \item Sie können mit Hilfe der drei Regeln von Mendel erklären, wie ein Merkmal weitervererbt werden kann (Zahlenverhältnisse, wieso, über drei Generationen).
+    \item Sie können ein Kreuzungsdiagramm aufzeichnen und Genotypen- sowie Phänotypen-Verhältnisse angeben (für dominant-rezessive sowie intermediäre Erbgänge, mit einem oder mit zwei Merkmalen).
+    \item Sie können Kopplungen sowie Kopplungsbrüche molekularbiologisch erklären und entsprechende Genotypenverhältnisse deuten.
+\end{itemize}
+```
+Erkläre mir den Stoff, den ich benötige, um diese Lernziele zu erfüllen.
+§a§
+Hier ist eine detaillierte Zusammenfassung des Stoffes, den du benötigst, um die aufgeführten Lernziele zu erreichen. Ich habe die Inhalte analog zu deiner Gliederung strukturiert.
+
+---
+
+# 1. Genetik: Mutationen
+
+### Allgemeines, Formen und SNPs
+*   **Definition Mutation:** Eine dauerhafte Veränderung des Erbguts (DNA). Sie passiert spontan oder wird induziert.
+*   **Ursachen (Mutagene):**
+    *   *Physikalisch:* UV-Strahlung (führt zu Thymin-Dimeren), Röntgenstrahlung (Strangbrüche).
+    *   *Chemisch:* Basenanaloga, interkalierende Substanzen, Säuren/Basen.
+    *   *Biologisch:* Viren, Fehler bei der Replikation (DNA-Polymerase).
+*   **Die 3 Hauptformen:**
+    1.  **Genmutation:** Veränderung der Basensequenz eines einzelnen Gens (Punktmutation).
+        *   *Unterformen:* Substitution (Austausch), Deletion (Verlust einer Base -> Leserasterverschiebung/Frameshift), Insertion (Einfügen einer Base -> Leserasterverschiebung).
+    2.  **Chromosomenmutation:** Veränderung der Struktur eines Chromosoms (sichtbar im Lichtmikroskop).
+        *   *Unterformen:* Deletion (Stück fehlt), Duplikation (Verdopplung), Inversion (Umkehrung eines Abschnitts), Translokation (Verlagerung auf ein anderes Chromosom).
+    3.  **Genommutation:** Veränderung der Anzahl der Chromosomen.
+        *   *Unterformen:* Aneuploidie (einzelne Chromosomen zu viel/wenig, z.B. Trisomie 21), Polyploidie (ganze Chromosomensätze vervielfacht).
+*   **SNPs (Single Nucleotide Polymorphisms):**
+    *   *Definition:* Variation eines einzelnen Basenpaares, die in mindestens 1% der Bevölkerung vorkommt.
+    *   *Bedeutung:* Sie machen uns genetisch individuell (z.B. Reaktion auf Medikamente, Anfälligkeit für Krankheiten) und dienen als genetische Marker.
+
+### Einteilung nach Folgen (auf Proteinebene)
+Dies bezieht sich meist auf Punktmutationen (Substitutionen):
+1.  **Stumme Mutation (Silent):** Base wird getauscht, aber das Codon codiert für *dieselbe* Aminosäure (wegen der Redundanz des genetischen Codes). Das Protein bleibt unverändert.
+2.  **Missense-Mutation:** Base wird getauscht, das Codon codiert für eine *andere* Aminosäure. Folge: Protein kann funktionsfähig bleiben, schlechter funktionieren oder funktionslos werden.
+3.  **Nonsense-Mutation:** Ein Codon für eine Aminosäure wird zu einem **Stopp-Codon**. Die Translation bricht ab, das Protein ist verkürzt und meist funktionslos.
+4.  **Switch of function:** Das veränderte Protein erhält eine komplett *neue* Funktion (sehr selten, aber wichtig für Evolution).
+
+### Gain of function vs. Loss of function
+*   **Loss of function (Funktionsverlust):** Das Genprodukt (Protein) funktioniert nicht mehr (Nullallel).
+    *   *Diploide Zellen:* Wir haben jedes Gen zweimal (eines von Mutter, eines von Vater). Wenn ein Allel defekt ist, kann das zweite, gesunde Allel meist genug funktionierendes Protein herstellen ("Haploinsuffizienz" ist die Ausnahme). Daher werden diese Mutationen oft **rezessiv** vererbt.
+*   **Gain of function (Funktionsgewinn):** Das Protein wird hyperaktiv, wird am falschen Ort exprimiert oder bekommt eine neue Funktion.
+    *   Dies wirkt sich oft auch aus, wenn ein gesundes Allel da ist. Daher meist **dominant**.
+
+### Entstehung von Tri- und Monosomien (Genommutationen)
+Die Ursache ist eine **Nondisjunction** (Nicht-Trennung) während der Meiose.
+*   **Fehler in Meiose I:** Homologe Chromosomen trennen sich nicht.
+    *   Resultat nach Befruchtung: 2x Trisomie, 2x Monosomie (alle Gameten sind fehlerhaft).
+*   **Fehler in Meiose II:** Schwesterchromatiden trennen sich nicht.
+    *   Resultat nach Befruchtung: 1x Trisomie, 1x Monosomie, 2x normal (50% der Gameten sind fehlerhaft).
+*   *Zeichnen:* Du musst skizzieren können, wie die Chromosomen in die Tochterzellen verteilt werden und wann das leere Feld bzw. das doppelte Feld entsteht.
+
+### Lyon-Hypothese, Barr-Körperchen und Dosiskompensation
+*   **Problem:** Frauen haben zwei X-Chromosomen, Männer nur eines. Frauen hätten also die doppelte Dosis an X-Genprodukten.
+*   **Dosiskompensation:** Um das auszugleichen, wird bei weiblichen Säugetieren im frühen Embryonalstadium in jeder Zelle zufällig eines der beiden X-Chromosomen inaktiviert.
+*   **Barr-Körperchen:** Das inaktivierte, stark kondensierte X-Chromosom, das am Rand des Zellkerns als dunkler Fleck sichtbar ist.
+*   **Lyon-Hypothese:** Die Inaktivierung ist zufällig (paternales oder maternales X). Alle Tochterzellen behalten diesen Inaktivierungsstatus bei (führt zu genetischen Mosaiken, z.B. bei Schildpatt-Katzen).
+*   **Sexchromatin-Test:**
+    *   *Prinzip:* Mundschleimhautabstrich, Färbung, Mikroskopie.
+    *   *Resultat:* Man zählt Barr-Körperchen. Formel: Anzahl X-Chromosomen minus 1.
+    *   *Interpretation:*
+        *   Kein Barr-Körperchen: XY (Mann) oder X0 (Turner-Syndrom).
+        *   Ein Barr-Körperchen: XX (Frau) oder XXY (Klinefelter-Syndrom).
+
+---
+
+# 2. Klassische Genetik
+
+### Vokabular & Chromosomentheorie
+*   **Begriffe:**
+    *   *Gen:* Erbanlage für ein Merkmal.
+    *   *Allel:* Ausprägungsform eines Gens (z.B. Blüte rot oder weiß).
+    *   *Homozygot:* Reinerbig (z.B. AA oder aa).
+    *   *Heterozygot:* Mischerbig (z.B. Aa).
+    *   *Phänotyp:* Erscheinungsbild.
+    *   *Genotyp:* Genetische Ausstattung.
+    *   *Dominant/Rezessiv:* Das dominante Allel setzt sich im Phänotyp durch (Großbuchstabe), das rezessive tritt zurück (Kleinbuchstabe).
+*   **Chromosomentheorie:** Mendel kannte keine Chromosomen. Wir wissen heute: Mendels "Erbfaktoren" sind Gene auf Chromosomen. Die Aufspaltung der Merkmale (Spaltungsregel) passiert, weil **homologe Chromosomen in der Anaphase I der Meiose getrennt werden**.
+
+### Die 3 Mendelschen Regeln
+1.  **Uniformitätsregel:** Kreuzt man zwei homozygote Eltern, die sich in einem Merkmal unterscheiden (AA x aa), sind alle Nachkommen (F1) genotypisch und phänotypisch gleich (heterozygot, Aa).
+2.  **Spaltungsregel:** Kreuzt man die F1 untereinander (Aa x Aa), spalten sich die Nachkommen (F2) auf.
+    *   *Phänotyp (dominant-rezessiv):* 3:1.
+    *   *Genotyp:* 1:2:1 (AA : Aa : aa).
+3.  **Unabhängigkeitsregel (Dihybrider Erbgang):** Kreuzt man Individuen, die sich in *zwei* Merkmalen unterscheiden (AABB x aabb), werden die Merkmale unabhängig voneinander vererbt (neue Kombinationen möglich).
+    *   *Phänotyp F2:* 9:3:3:1.
+    *   *Voraussetzung:* Die Gene liegen auf *verschiedenen* Chromosomen (oder sehr weit voneinander entfernt).
+
+### Kreuzungsdiagramme (Punnett-Quadrate)
+Du musst Tabellen zeichnen können:
+*   **Dominant-rezessiv (Monohybrid):** Siehe Spaltungsregel (3:1).
+*   **Intermediärer Erbgang:** Kein Allel dominiert (z.B. Rot x Weiß = Rosa).
+    *   F1 ist uniform (Rosa).
+    *   F2 Phänotyp ist **1:2:1** (Rot : Rosa : Weiß) – entspricht hier dem Genotyp.
+*   **Dihybrid:** Ein 4x4 Quadrat (16 Felder) erstellen können.
+
+### Kopplung und Kopplungsbruch
+*   **Genkopplung:** Liegen zwei Gene auf demselben Chromosom *nahe beieinander*, werden sie gemeinsam vererbt. Die 3. Mendel-Regel gilt hier **nicht**. Das Verhältnis 9:3:3:1 tritt nicht auf, stattdessen ähneln die Nachkommen meist den Eltern (Parentaltypen).
+*   **Kopplungsbruch (Crossing-over):**
+    *   *Molekularbiologisch:* Während der Prophase I der Meiose lagern sich homologe Chromosomen aneinander (Tetraden). Es kommt zum Bruch und Überkreuz-Austausch von DNA-Strängen zwischen Nicht-Schwesterchromatiden.
+    *   *Folge:* Gene, die eigentlich gekoppelt waren, werden getrennt. Es entstehen **Rekombinanten** (neue Kombinationen, die es bei den Eltern nicht gab).
+    *   *Deutung:* Je weiter zwei Gene auf einem Chromosom voneinander entfernt sind, desto wahrscheinlicher ist ein Crossing-over dazwischen (desto mehr Rekombinanten gibt es).

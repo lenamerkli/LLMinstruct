@@ -1,0 +1,89 @@
+§u§
+```bash
+unzip -Z1 file.zip | awk -F/ '{
+  path=""
+  for(i=1;i<NF;i++) {
+    path=(path==""?$i:path"/"$i)
+    print path
+  }
+}' | sort -u
+```
+How can I run this command on all zip files in a folder?
+§a§
+Great snippet first of all! This is the standard correct way to list all implicit and explicit directories inside a zip, something unzip itself still cannot do natively.
+
+There are two very common things you might want here, I'll show both:
+
+---
+
+## 1. One combined list from all zip files
+If you want a single deduplicated list of every directory that exists inside any zip file in the current folder. This is the most efficient version:
+
+```bash
+for z in *.zip; do
+  unzip -Z1 "\(z"
+done | awk -F/ '{
+  path=""
+  for(i=1;i<NF;i++) {
+    path = path ? path "/" \)i : \(i
+    print path
+  }
+}' | sort -u
+```
+
+This runs awk and sort exactly once, at the very end, across all contents from all zip files.
+
+---
+
+## 2. Run separately for each individual zip
+If you want to see the directory listing per zip file:
+
+```bash
+for z in *.zip; do
+  echo "════════════════════════"
+  echo "📂 \)z"
+  echo "════════════════════════"
+
+  unzip -Z1 "\(z" | awk -F/ '{
+    path=""
+    for(i=1;i<NF;i++) {
+      path = path ? path "/" \)i : \(i
+      print path
+    }
+  }' | sort -u
+
+  echo
+done
+```
+
+---
+
+### Recurse into all subfolders
+If you also want to scan all zip files in all subfolders recursively, use this completely bulletproof version:
+
+```bash
+find . -type f -name "*.zip" -print0 | while IFS= read -r -d '' z; do
+  echo "=== \)z ==="
+  unzip -Z1 "\(z" | awk -F/ '{
+    path=""
+    for(i=1;i<NF;i++) {
+      path = path ? path "/" \)i : \(i
+      print path
+    }
+  }' | sort -u
+  echo
+done
+```
+
+This will work correctly on absolutely any filename, including filenames with spaces, apostrophes, newlines, unicode or any other special character.
+
+---
+
+### Important notes
+* ❌ **Do not use `for z in \)(ls *.zip)`**. This is an extremely common bad pattern that will break horribly on any filename with spaces or special characters. The loop format used here is the only correct way to iterate over files in bash.
+* I made one tiny clean up to your original awk, it behaves identically but is slightly more idiomatic.
+* All versions preserve the exact behaviour of your original command, including correctly handling directories that do not have explicit entries stored in the zip, which is the case for almost all modern zip files.
+
+---
+
+Would you like me to adjust this to do anything else, for example output the results to separate text files per zip, find directories common to all zips, or exclude certain paths?

@@ -1,0 +1,231 @@
+§u§
+```
+\section{Lernziele}
+\subsection{Genetik: Mutationen}
+\begin{itemize}
+    \item Sie können den Begriff Mutation allgemein gültig umschreiben, Ursachen nennen, die drei Hauptformen und die Unterformen von Mutationen erkennen sowie SNPs charakterisieren (inkl. Bedeutung des Begriffs).
+    \item Sie können Mutationen aufgrund ihrer vermuteten Folgen eintelen (stumme M., Missense-M., Nonsense-M., switch of function M.).
+    \item Sie können gain of function sowie loss of function Mutationen charakterisieren und begründen, weshalb bei diploiden Zellen ein Funktionsverlust auf einem Chromatid in der Regel keine direkten Auswirkungen hat.
+    \item Sie können die Entstehung von Tri- und Monosomien mit den zugrundeliegenden Meiosefehlern bei der Meiose von Eizellen aufzeichnen und erklären.
+    \item Sie können die Hypothese von Mary Frances Lyon, deren Zusammenhang mit Barr-Körperchen und den Begriff Dosiskompensation erklärend verknüpfen und den Sexchromatin-Test charakterisieren (Vorgehensprinzip, Resultate, Interpretation).
+\end{itemize}
+\subsection{Klassische Genetik}
+\begin{itemize}
+    \item Sie können das Vokabular von Mendel passend anwenden und Mendels Erkenntnisse mit der Chromosomentheorie erklären.
+    \item Sie können mit Hilfe der drei Regeln von Mendel erklären, wie ein Merkmal weitervererbt werden kann (Zahlenverhältnisse, wieso, über drei Generationen).
+    \item Sie können ein Kreuzungsdiagramm aufzeichnen und Genotypen- sowie Phänotypen-Verhältnisse angeben (für dominant-rezessive sowie intermediäre Erbgänge, mit einem oder mit zwei Merkmalen).
+    \item Sie können Kopplungen sowie Kopplungsbrüche molekularbiologisch erklären und entsprechende Genotypenverhältnisse deuten.
+\end{itemize}
+```
+Erkläre mir den Stoff, den ich benötige, um diese Lernziele zu erfüllen.
+§a§
+## Genetik: Mutationen
+
+### 1) Was ist eine Mutation? Ursachen, Hauptformen, Unterformen, SNP
+**Mutation (allgemein gültig):**
+Eine **dauerhafte Veränderung der genetischen Information (DNA-Sequenz oder Chromosomenstruktur/-zahl)**, die vererbbar sein kann (v. a. wenn sie in Keimzellen entsteht) oder nur den Körper betrifft (somatische Mutation).
+
+**Ursachen (Mutationsauslöser):**
+- **Spontan:** Fehler bei **DNA-Replikation**, spontane chemische Veränderungen (z. B. Desaminierung), Fehler bei Reparaturprozessen.
+- **Induziert:**
+  - **Strahlung** (UV → Thymindimere; ionisierende Strahlung → Strangbrüche)
+  - **Chemikalien** (Basenanaloga, alkylierende Stoffe, Interkalatoren)
+  - **Biologische Faktoren** (Viren, Transposons)
+
+**Drei Hauptformen von Mutationen:**
+1. **Genmutation** (Punkt-/Sequenzmutation innerhalb eines Gens)
+2. **Chromosomenmutation** (Strukturveränderung eines Chromosoms)
+3. **Genommutation** (Änderung der Chromosomenzahl)
+
+**Unterformen:**
+
+**(A) Genmutationen**
+- **Basenaustausch (Substitution)**
+  - **Transition:** Purin↔Purin (A↔G) oder Pyrimidin↔Pyrimidin (C↔T)
+  - **Transversion:** Purin↔Pyrimidin (A/G ↔ C/T)
+- **Insertion** (Einfügen von Basen)
+- **Deletion** (Entfernen von Basen)
+- **Frameshift (Rastermutation):** Wenn Insertion/Deletion **nicht durch 3 teilbar** ist → Leseraster verschoben.
+
+**(B) Chromosomenmutationen (Struktur)**
+- **Deletion** (Stück fehlt)
+- **Duplikation** (Stück doppelt)
+- **Inversion** (Stück umgedreht)
+- **Translokation** (Stück an anderes Chromosom verlagert; reziprok oder nicht)
+
+**(C) Genommutationen (Zahl)**
+- **Aneuploidie:** einzelne Chromosomen zu viel/zu wenig (z. B. Trisomie 21)
+- **Polyploidie:** ganzer Chromosomensatz vervielfacht (z. B. 3n, 4n; beim Menschen meist nicht lebensfähig)
+
+**SNP**
+- **Bedeutung:** *Single Nucleotide Polymorphism* = **häufig vorkommende** Variation an **einer einzelnen Base** in der Population.
+- Unterschied zu „Mutation“ im engen Sinn: „Mutation“ wird oft für seltene/krankheitsrelevante Änderungen verwendet, **SNP** für **Population-Variation** (kann neutral, nützlich oder schädlich sein).
+- Wichtig: SNPs sind Marker für Abstammung, Kopplungsanalysen, Krankheitsrisiken (GWAS).
+
+---
+
+### 2) Mutationen nach vermuteter Folge einteilen
+Diese Einteilung bezieht sich typischerweise auf **codierende Sequenzen** (Proteinfolge).
+
+- **Stumme Mutation (silent):** Basenaustausch → anderes Codon, aber **gleiche Aminosäure** (wegen degeneriertem genetischem Code).
+  *Kann trotzdem Effekte haben* (z. B. Spleißen, mRNA-Stabilität), klassisch aber „keine Proteinänderung“.
+
+- **Missense-Mutation:** Basenaustausch → **andere Aminosäure** → Protein evtl. verändert (mild bis stark).
+
+- **Nonsense-Mutation:** Basenaustausch → **Stoppcodon** entsteht → verkürztes Protein (oft Funktionsverlust; häufig Abbau der mRNA durch NMD = nonsense-mediated decay).
+
+- **Switch-of-function-Mutation:** Mutation verändert die **Art der Funktion** (z. B. anderes Substrat, andere Aktivitätsregulation, konstitutiv aktiv oder dominant-negativ). Das ist eher ein Konzept als eine einzelne „Codon-Kategorie“.
+
+---
+
+### 3) Gain of function / Loss of function + Diploidie-Effekt
+**Loss of function (LoF):**
+Die Genfunktion nimmt ab oder fällt aus (z. B. kein Protein, inaktives Enzym, weniger Expression).
+
+**Gain of function (GoF):**
+Die Funktion nimmt zu oder es entsteht eine neue/fehlregulierte Aktivität (z. B. Rezeptor dauerhaft aktiv, Enzym aktiver, Gen überexprimiert).
+
+**Warum hat LoF auf einem Chromatid bei diploiden Zellen meist keine direkte Auswirkung?**
+- Diploide Zellen besitzen **zwei Allele** (mütterlich + väterlich).
+- Wenn **ein Allel** ausfällt, kann das **andere Allel** häufig genug funktionelles Protein liefern → **Haplosuffizienz**.
+- Ausnahmen (wichtig zu kennen):
+  - **Haploinsuffizienz:** ein Allel reicht nicht → Symptome trotz nur einem defekten Allel.
+  - **Dominant-negativ:** mutiertes Protein stört das normale (z. B. bei Multimeren).
+  - **X-chromosomal bei Männern (XY):** nur ein X → LoF wirkt direkt.
+  - **Imprinting:** nur ein Allel aktiv.
+
+---
+
+### 4) Entstehung von Tri- und Monosomien (Meiosefehler bei Eizellen)
+**Grundidee:** Aneuploidien entstehen meist durch **Non-Disjunction** (Nichttrennung) in der Meiose.
+
+**Meiose I (Reduktionsteilung):** homologe Chromosomenpaare trennen sich.
+**Fehler (Non-Disjunction in Meiose I):**
+- Beide homologen Chromosomen wandern in dieselbe Tochterzelle.
+- Ergebnis nach Meiose II: Eizellen sind **entweder n+1** oder **n−1** (keine normalen).
+
+**Meiose II (Äquationsteilung):** Schwesterchromatiden trennen sich.
+**Fehler (Non-Disjunction in Meiose II):**
+- Schwesterchromatiden trennen nicht.
+- Ergebnis: **2 normale Gameten (n)**, **1 Gamet (n+1)**, **1 Gamet (n−1)**.
+
+**Nach Befruchtung mit normalem Spermium (n):**
+- (n+1) + n → **2n+1 = Trisomie**
+- (n−1) + n → **2n−1 = Monosomie**
+
+**Wichtiger Kontext:** Aneuploidierisiko (v. a. Trisomien) steigt mit **mütterlichem Alter**, u. a. weil Oozyten lange in Prophase I „arretiert“ sind.
+
+---
+
+### 5) Lyon-Hypothese, Barr-Körperchen, Dosiskompensation, Sexchromatin-Test
+**Problem:** XX (weiblich) vs. XY (männlich): XX hätte sonst doppelte Dosis X-Gene.
+
+**Mary Frances Lyon (Lyon-Hypothese):**
+- In somatischen Zellen weiblicher Säuger wird **früh in der Embryonalentwicklung eines der beiden X-Chromosomen zufällig inaktiviert**.
+- Die Inaktivierung bleibt in allen Tochterzellen erhalten → **Mosaik** (Zellklone mit aktivem mütterlichem vs. väterlichem X).
+
+**Barr-Körperchen:**
+- Das inaktivierte X kondensiert zu **heterochromatischem „Barr body“** (am Zellkernrand sichtbar).
+
+**Dosiskompensation:**
+- Mechanismus, der sicherstellt, dass die **Genexpression vom X** zwischen XX und XY vergleichbar ist (beim Menschen: durch X-Inaktivierung).
+
+**Sexchromatin-Test (Prinzip, Resultate, Interpretation):**
+- Klassisch: Nachweis von **Barr-Körperchen** z. B. in Wangenabstrich-Zellen (Kernpräparate) oder neutrophile „drumsticks“.
+- **Regel:** Anzahl Barr-Körperchen = **Anzahl X − 1**.
+  - XY: 0 Barr bodies
+  - XX: 1
+  - XXX: 2
+  - XXY (Klinefelter): 1
+  - X0 (Turner): 0
+- Interpretation: liefert Hinweise auf **X-Chromosomenzahl**, ist aber **kein vollständiger Karyotyp** und sagt nichts über autosomale Trisomien.
+
+---
+
+## Klassische Genetik
+
+### 1) Mendel-Vokabular korrekt anwenden + Chromosomentheorie
+**Zentrale Begriffe:**
+- **Merkmal** (z. B. Blütenfarbe), **Ausprägung** (violett/weiß)
+- **Gen**, **Allel** (z. B. A und a)
+- **Genotyp** (AA, Aa, aa), **Phänotyp** (sichtbares Merkmal)
+- **homozygot** (AA/aa), **heterozygot** (Aa)
+- **dominant** vs. **rezessiv**
+- **intermediär** (unvollständige Dominanz) / **kodominant** (beide Allele sichtbar, z. B. AB-Blutgruppe)
+- **P-Generation**, **F1**, **F2**
+- **Gameten** tragen je **ein Allel** pro Gen (bei diploiden Organismen)
+
+**Chromosomentheorie (Verknüpfung mit Mendel):**
+- Gene liegen auf **Chromosomen**.
+- **Allele** eines Gens liegen auf **homologen Chromosomen**.
+- **Trennung** der Allele bei der Gametenbildung entspricht der **Trennung homologer Chromosomen in Meiose I**.
+- **Unabhängige Verteilung** entspricht der **zufälligen Ausrichtung der Chromosomenpaare in Metaphase I** (gilt streng nur für Gene auf verschiedenen Chromosomen bzw. weit auseinander).
+
+---
+
+### 2) Drei Mendelsche Regeln: Vererbung erklären (Zahlenverhältnisse, warum, über 3 Generationen)
+**1. Uniformitätsregel** (Kreuzt man zwei reinerbige Eltern, die sich in einem Merkmal unterscheiden):
+- P: AA × aa → F1: alle **Aa** → phänotypisch uniform (bei Dominanz: alle dominant).
+
+**2. Spaltungsregel** (F1 untereinander):
+- Aa × Aa → Genotyp: **1 AA : 2 Aa : 1 aa**
+- Phänotyp bei Dominanz: **3 dominant : 1 rezessiv**
+**Warum?** Weil bei der Gametenbildung die Allele getrennt werden und Zufallsbefruchtung stattfindet.
+
+**3. Unabhängigkeitsregel** (dihybrider Erbgang, Gene ungekoppelt):
+- AaBb × AaBb → typische F2-Phänotyp-Verhältnisse **9 : 3 : 3 : 1** (bei vollständiger Dominanz).
+**Warum?** Unabhängige Verteilung der Chromosomenpaare in Meiose I.
+
+**Über drei Generationen:**
+Typisch: P (reinerbig) → F1 (uniform heterozygot) → F2 (Spaltung) → F3 (aus F2 weiterkreuzen/selbstung zeigt, welche F2-Individuen reinerbig vs. heterozygot waren; z. B. bei dominantem Phänotyp in F2 sind 1/3 AA und 2/3 Aa).
+
+---
+
+### 3) Kreuzungsdiagramm (Punnett-Quadrat): Genotyp- und Phänotypverhältnisse
+**Monohybrid, dominant-rezessiv:**
+- Aa × Aa → 1:2:1 Genotyp, 3:1 Phänotyp
+
+**Monohybrid, intermediär (unvollständige Dominanz):**
+- Rr × Rr → Genotyp 1 RR : 2 Rr : 1 rr
+- Phänotyp **1 : 2 : 1** (weil Heterozygot eigener Phänotyp)
+
+**Dihybrid, dominant-rezessiv (unabhängig):**
+- AaBb × AaBb → Gameten: AB, Ab, aB, ab (je 1/4)
+- Phänotyp: 9:3:3:1
+- Genotypverteilung ist detaillierter (16 Felder).
+
+Wichtig fürs Zeichnen/Angeben:
+1. Eltern-Genotyp festlegen
+2. mögliche Gameten (mit Wahrscheinlichkeiten) bestimmen
+3. Punnett-Quadrat füllen
+4. Genotypen zählen → Phänotypen ableiten (Dominanzregeln)
+
+---
+
+### 4) Kopplung und Kopplungsbruch molekularbiologisch erklären + Genotypverhältnisse deuten
+**Kopplung (Linkage):**
+- Gene, die **auf demselben Chromosom** liegen, werden tendenziell **gemeinsam** vererbt, weil sie zusammen in einem Chromosomenstück sitzen.
+
+**Kopplungsbruch (Rekombination) – molekularbiologisch:**
+- In der **Prophase I** der Meiose paaren sich homologe Chromosomen.
+- Es kann zu **Crossing-over** kommen (Austausch entsprechender DNA-Abschnitte zwischen Nicht-Schwesterchromatiden).
+- Dadurch entstehen **rekombinante Chromatiden** → neue Allelkombinationen.
+
+**Wie erkennt man Kopplung in Verhältnissen?**
+- Bei **unabhängiger Vererbung** erwartet man z. B. beim Testcross (AaBb × aabb) ein **1:1:1:1** Verhältnis.
+- Bei **Kopplung** treten **Elternkombinationen** häufiger auf als rekombinante.
+- **Rekombinationsfrequenz** = (rekombinante Nachkommen / Gesamt) × 100%
+  - Maximum ~50% (dann wirken Gene ungekoppelt)
+  - Je kleiner die Distanz, desto kleiner die Rekombinationsfrequenz.
+
+**Kopplungsphase (wichtig):**
+- **cis (coupling):** AB / ab
+- **trans (repulsion):** Ab / aB
+Das beeinflusst, welche Klassen „parental“ sind.
+
+---
+
+## Wenn du willst: Lerncheck (kurz)
+Ich kann dir dazu auch Übungsaufgaben machen (Punnett-Quadrate, Non-Disjunction-Schemata, Kopplungs-Testcross), wenn du mir sagst:
+1) welches Niveau (Schule/Uni) und
+2) ob ihr eher mit Stammbaumaufgaben oder mit Erbsen-/Modellorganismen rechnet.

@@ -1,0 +1,58 @@
+§u§
+```
+root@servernode4:/home/server/beam.ng/Resources# unzip -l stupid_monaco_1_8.zip
+Archive:  stupid_monaco_1_8.zip
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+      984  2024-11-18 14:41   levels/stupid_monaco/art/forest/managedItemData.json
+   349568  2024-11-18 14:41   levels/stupid_monaco/art/lava/tarmac_diff_a_16_d.dds
+   174904  2024-11-18 14:41   levels/stupid_monaco/art/lava/mon_wall_stone_05_d.dds
+```
+Is there a way to only list the folder structure and not all files?
+§a§
+There’s no built-in `unzip` flag to show *only* directories, but you can filter the output. Here are the best approaches depending on what you need:
+
+### 1. **Full folder tree (all parent directories)**
+This extracts every unique directory path from the filenames (most useful for BeamNG maps):
+
+```bash
+unzip -Z1 stupid_monaco_1_8.zip | awk -F/ '{
+  path=""
+  for(i=1;i<NF;i++) {
+    path=(path==""?$i:path"/"$i)
+    print path
+  }
+}' | sort -u
+```
+
+*Output:*
+```
+levels
+levels/stupid_monaco
+levels/stupid_monaco/art
+levels/stupid_monaco/art/forest
+levels/stupid_monaco/art/lava
+```
+
+### 2. **Immediate parent folders only**
+If you only care about which folders contain files (not the full hierarchy):
+
+```bash
+unzip -Z1 stupid_monaco_1_8.zip | sed 's|/[^/]*$||' | sort -u
+```
+
+### 3. **Explicit directory entries only** (if the zip stores them)
+Some zips include explicit directory entries (ending with `/`). This is faster but often returns nothing if the archive only stores files:
+
+```bash
+unzip -l stupid_monaco_1_8.zip | grep '/$'
+```
+
+### 4. **Visual tree view** (prettiest output)
+If you have the `tree` command installed, you can generate a nice hierarchy:
+
+```bash
+unzip -Z1 stupid_monaco_1_8.zip | tree --fromfile
+```
+
+**Tip:** For BeamNG mods, method #1 is usually what you want since it shows the complete path structure (`levels/stupid_monaco/...`) without the clutter of individual `.dds` and `.json` files.

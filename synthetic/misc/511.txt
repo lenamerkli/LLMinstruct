@@ -1,0 +1,539 @@
+§u§
+```
+··• tree monaco_but_worse/
+monaco_but_worse/
+├── art
+│   ├── biometool.json
+│   ├── forest
+│   │   └── manageditemdata.json
+│   ├── null_n.dds
+│   ├── road
+│   │   ├── dirt_road_tread_ruts_d.dds
+│   │   ├── dirt_road_tread_ruts_n.dds
+│   │   ├── dirt_road_tread_ruts_s.dds
+│   │   ├── dirtroad_variation_01_d.dds
+│   │   ├── main.materials.json
+│   │   ├── road-01_d.dds
+│   │   ├── road-01_n.dds
+│   │   └── road-01_s.dds
+│   ├── shapes
+│   │   ├── base
+│   │   │   ├── ambulance_c_02_d.dds
+│   │   │   ├── ambulance_d_01_d.dds
+│   │   │   ├── ambulance_Gialla.dds
+│   │   │   ├── a_mountain_01.dds
+│   │   │   ├── AnimPit.dds
+│   │   │   ├── anolsoelo.jpg
+│   │   │   ├── armco_grey_main_a_01_d.dds
+│   │   │   ├── armco_redpost__end_01_d.dds
+│   │   │   ├── armco_simple_main_a_01_d.dds
+│   │   │   ├── armco_whitegreen_left_c_01_d.dds
+│   │   │   ├── armco_white_main_a_01_d.dds
+│   │   │   ├── asdasdasdasda.png
+│   │   │   ├── asdasdasdasdasdasdwed.png
+│   │   │   ├── asdasdasd.jpg
+│   │   │   ├── asfalto_nuovo.dds
+│   │   │   ├── Asfalto_variante.dds
+│   │   │   ├── asfalto_vecchio.dds
+│   │   │   ├── barriere_rosse.dds
+│   │   │   ├── barrier pole.png
+│   │   │   ├── Base_1.dds
+│   │   │   ├── base.dae
+│   │   │   ├── basement.png
+│   │   │   ├── Base_vetri.dds
+│   │   │   ├── Bayked.jpg
+│   │   │   ├── birillo.dds
+│   │   │   ├── blaack.jpg
+│   │   │   ├── brake_markerkit_a_01_d.dds
+│   │   │   ├── cargo ship.png
+│   │   │   ├── carrro.png
+│   │   │   ├── carrrr.png
+│   │   │   ├── chair.png
+│   │   │   ├── charles.jpg
+│   │   │   ├── cheese.png
+│   │   │   ├── conc_bollard_filler_a_01_d.dds
+│   │   │   ├── concrete_pitlane_glass_01_d.dds
+│   │   │   ├── core_podium_f1wc_a_da.dds
+│   │   │   ├── core_start_lights_a_01_d.dds
+│   │   │   ├── crane_construction_a_d.dds
+│   │   │   ├── crane_platform_c_d.dds
+│   │   │   ├── D7QkZqUWsAAX4-3.jpg
+│   │   │   ├── drs_white_b.dds
+│   │   │   ├── f1_board_a.dds
+│   │   │   ├── f1_board_b.dds
+│   │   │   ├── f1cafe.jpg
+│   │   │   ├── f1caferussell.png
+│   │   │   ├── f22222.png
+│   │   │   ├── f2222.png
+│   │   │   ├── f222.jpg
+│   │   │   ├── f22.jpg
+│   │   │   ├── fanatec_black_board_a.dds
+│   │   │   ├── fence_barbed_main_a_mesh_01_d.dds
+│   │   │   ├── fence_construction_main_a_01_s.dds
+│   │   │   ├── fence_gardenrail_main_a_01_d.dds
+│   │   │   ├── fencekit_a_01_d.dds
+│   │   │   ├── ferrari.png
+│   │   │   ├── ferrarmore.png
+│   │   │   ├── flag_default_01_d.dds
+│   │   │   ├── flagsheet_01_d.dds
+│   │   │   ├── garage_high.dds
+│   │   │   ├── garage_interior_building_a_01_d.dds
+│   │   │   ├── garage_pit_decal_a_01_d.dds
+│   │   │   ├── gazebo_a_01_d.dds
+│   │   │   ├── generic_glass_a_01_d.dds
+│   │   │   ├── grass_natural.dds
+│   │   │   ├── hahauundersteerd.jpg
+│   │   │   ├── have a safe flight.png
+│   │   │   ├── Image_0.002.png
+│   │   │   ├── Image_1.001.png
+│   │   │   ├── Image_10.png
+│   │   │   ├── Image_2.png
+│   │   │   ├── Image_3.png
+│   │   │   ├── Image_4.png
+│   │   │   ├── Image_5.png
+│   │   │   ├── Image_6.png
+│   │   │   ├── Image_7.png
+│   │   │   ├── Image_8.png
+│   │   │   ├── Image_9.png
+│   │   │   ├── kimiraikkonen.png
+│   │   │   ├── koleso.png
+│   │   │   ├── lambnodetails.png
+│   │   │   ├── lambobase.png
+│   │   │   ├── lava.jpg
+│   │   │   ├── lg_board_a.dds
+│   │   │   ├── lg_marshal_light_a_01_d.dds
+│   │   │   ├── lg_marshal_light_a_02_d.dds
+│   │   │   ├── lg_pit_exit_light_a_01_d.dds
+│   │   │   ├── lightpole_lrg_01_d.dds
+│   │   │   ├── macro_cloth_b_d.dds
+│   │   │   ├── main.materials.json
+│   │   │   ├── marquee_a_01_d.dds
+│   │   │   ├── marquee_truck_a_02_d.dds
+│   │   │   ├── monacogp_2018_big.dds
+│   │   │   ├── monacogp_2018_board_a.dds
+│   │   │   ├── monacogp_anni.dds
+│   │   │   ├── mon_building_large_b_01_d.dds
+│   │   │   ├── mon_building_large_b_02_d.dds
+│   │   │   ├── mon_building_large_c_01_d.dds
+│   │   │   ├── mon_building_large_c_02_d.dds
+│   │   │   ├── mon_building_large_e_01_d.dds
+│   │   │   ├── mon_building_large_f_01_d.dds
+│   │   │   ├── mon_building_large_f_02_d.dds
+│   │   │   ├── mon_building_large_g_01_d.dds
+│   │   │   ├── mon_building_large_g_02_d.dds
+│   │   │   ├── mon_building_medium_a_01_d.dds
+│   │   │   ├── mon_building_medium_a_02_d.dds
+│   │   │   ├── mon_building_medium_b_01_d.dds
+│   │   │   ├── mon_building_medium_b_02_d.dds
+│   │   │   ├── mon_building_medium_c_01_d.dds
+│   │   │   ├── mon_building_medium_c_02_d.dds
+│   │   │   ├── mon_building_medium_d_01_d.dds
+│   │   │   ├── mon_building_medium_e_01_d.dds
+│   │   │   ├── mon_building_medium_e_02_d.dds
+│   │   │   ├── mon_building_medium_f_01_d.dds
+│   │   │   ├── mon_building_medium_f_02_d.dds
+│   │   │   ├── mon_building_pitlane_a_01_d.dds
+│   │   │   ├── mon_building_royal_box_02_da.dds
+│   │   │   ├── mon_building_royal_box_b_01_d.dds
+│   │   │   ├── mon_building_set_a_01_d.dds
+│   │   │   ├── mon_building_set_a_02_d.dds
+│   │   │   ├── mon_building_set_b_d_01.dds
+│   │   │   ├── mon_building_set_c_d.dds
+│   │   │   ├── mon_building_set_d_d_01.dds
+│   │   │   ├── mon_building_set_d_d_02.dds
+│   │   │   ├── mon_building_set_d_d_03.dds
+│   │   │   ├── mon_building_set_e_01_d.dds
+│   │   │   ├── mon_building_set_f_d.dds
+│   │   │   ├── mon_building_set_g_01_d.dds
+│   │   │   ├── mon_building_set_g_02_d.dds
+│   │   │   ├── mon_building_set_g_03_d.dds
+│   │   │   ├── mon_building_set_h_01_d.dds
+│   │   │   ├── mon_building_set_i_01_d.dds
+│   │   │   ├── mon_building_set_i_02_d.dds
+│   │   │   ├── mon_building_set_j_01_d.dds
+│   │   │   ├── mon_building_set_j_02_d.dds
+│   │   │   ├── mon_building_set_k_01_d.dds
+│   │   │   ├── mon_building_set_k_02_d.dds
+│   │   │   ├── mon_building_set_l_01_d.dds
+│   │   │   ├── mon_building_set_l_02_d.dds
+│   │   │   ├── mon_building_set_m_d.dds
+│   │   │   ├── mon_building_set_n_a_d.dds
+│   │   │   ├── mon_building_set_o_d_01.dds
+│   │   │   ├── mon_building_set_p_01_d.dds
+│   │   │   ├── mon_building_set_p_02_d.dds
+│   │   │   ├── mon_building_set_q_01_d.dds
+│   │   │   ├── mon_building_set_r_a_d.dds
+│   │   │   ├── mon_building_set_s_d.dds
+│   │   │   ├── mon_building_set_t_01_d.dds
+│   │   │   ├── mon_building_set_t_02_d.dds
+│   │   │   ├── mon_building_set_t_03_d.dds
+│   │   │   ├── mon_building_set_u_a_d.dds
+│   │   │   ├── mon_building_set_v_01_d.dds
+│   │   │   ├── mon_building_set_v_02_d.dds
+│   │   │   ├── mon_building_set_w_a_03_d.dds
+│   │   │   ├── mon_building_set_x_d.dds
+│   │   │   ├── mon_building_set_y_01_d.dds
+│   │   │   ├── mon_building_set_y_02_d.dds
+│   │   │   ├── mon_building_small_b_d.dds
+│   │   │   ├── mon_building_tunnel_a_01_d.dds
+│   │   │   ├── mon_building_tunnel_a_02_d.dds
+│   │   │   ├── mon_building_tunnel_b_02_d.dds
+│   │   │   ├── mon_building_tunnel_b_03_d.dds
+│   │   │   ├── mon_building_tunnel_b_04_d.dds
+│   │   │   ├── mon_building_tunnel_b_05_d.dds
+│   │   │   ├── mon_building_tunnel_b_06_d.dds
+│   │   │   ├── mon_building_tunnel_b_07_d.dds
+│   │   │   ├── mon_building_tunnel_fariamuro.dds
+│   │   │   ├── mon_building_tunnel_luceD.dds
+│   │   │   ├── mon_building_tunnel_luceS.dds
+│   │   │   ├── mon_building_tunnel_normale.dds
+│   │   │   ├── mon_building_yachtclub_a_02_d.dds
+│   │   │   ├── mon_building_yachtclub_a_d.dds
+│   │   │   ├── mon_concrete_det_d.dds
+│   │   │   ├── mon_concrete_tile_01_d.dds
+│   │   │   ├── mon_concrete_tile_02_d.dds
+│   │   │   ├── mon_concrete_tile_03_d.dds
+│   │   │   ├── mon_concrete_tile_04_d.dds
+│   │   │   ├── mon_concrete_tile_05_d.dds
+│   │   │   ├── mon_crane_large_a_d.dds
+│   │   │   ├── mon_curb_strip_d.dds
+│   │   │   ├── mon_detail_01_d.dds
+│   │   │   ├── mon_detail_02_d.dds
+│   │   │   ├── mon_detail_03_d.dds
+│   │   │   ├── mon_detail_04_d.dds
+│   │   │   ├── mon_detail_05_d.dds
+│   │   │   ├── mon_detail_06_d.dds
+│   │   │   ├── mon_detail_07_d.dds
+│   │   │   ├── mon_flag_pole_a_d.dds
+│   │   │   ├── mon_gantry_overhang_a_01_d.dds
+│   │   │   ├── mon_gantry_overhang_a_03_d.dds
+│   │   │   ├── mon_grandstand_large_a_01_d.dds
+│   │   │   ├── mon_grandstand_large_a_02_d.dds
+│   │   │   ├── mon_grandstand_large_a_03_d.dds
+│   │   │   ├── mon_grandstand_large_a_04_d.dds
+│   │   │   ├── mon_grandstand_large_a_05_d.dds
+│   │   │   ├── mon_grandstand_large_a_07_d.dds
+│   │   │   ├── mon_grandstand_large_b_01_d.dds
+│   │   │   ├── mon_grandstand_large_c_01_d.dds
+│   │   │   ├── mon_grandstand_medium_b_01_d.dds
+│   │   │   ├── mon_grandstand_medium_d_01_d.dds
+│   │   │   ├── mon_grandstand_small_a_01_d.dds
+│   │   │   ├── mon_grandstand_small_b_01_d.dds
+│   │   │   ├── mon_grandstand_small_new_d_01.dds
+│   │   │   ├── mon_grandstand_solid_a_01_d.dds
+│   │   │   ├── mon_grandstand_solid_a_02_d.dds
+│   │   │   ├── mon_harbour_statue_a_d.dds
+│   │   │   ├── mon_hein.dds
+│   │   │   ├── mon_heineken_b.dds
+│   │   │   ├── mon_heineken.dds
+│   │   │   ├── mon_heuer.dds
+│   │   │   ├── mon_jumbotron_screen_a_01_d.dds
+│   │   │   ├── mon_jumbotron_screen_a_02_d.dds
+│   │   │   ├── mon_lamp_post_a_01_d.dds
+│   │   │   ├── mon_lamp_post_a_02_d.dds
+│   │   │   ├── mon_lamp_post_d_d.dds
+│   │   │   ├── mon_landscape_01_d.dds
+│   │   │   ├── mon_landscape_02_d.dds
+│   │   │   ├── mon_metal_01_d.dds
+│   │   │   ├── mon_oceanliner_large_a_01_d.dds
+│   │   │   ├── mon_oceanliner_large_a_02_d.dds
+│   │   │   ├── mon_paris.dds
+│   │   │   ├── mon_pitwall_a_01_d.dds
+│   │   │   ├── mon_road_sign_a_d.dds
+│   │   │   ├── mon_rumble_strip_01_d.dds
+│   │   │   ├── mon_rumble_strip_02_d.dds
+│   │   │   ├── mon_rumble_strip_03_d.dds
+│   │   │   ├── mon_rumble_strip_ubs_d.dds
+│   │   │   ├── mon_tarmac_02_d.dds
+│   │   │   ├── mon_tarmac_white_d.dds
+│   │   │   ├── montecarlo_board_a.dds
+│   │   │   ├── mon_track_decals_a_01_d.dds
+│   │   │   ├── mon_tunnel_brick_a_01_d.dds
+│   │   │   ├── mon_tunnel_curb_a_01_d.dds
+│   │   │   ├── mon_usb_1.dds
+│   │   │   ├── mon_wall_concrete_01_d.dds
+│   │   │   ├── mon_wall_concrete_02_d.dds
+│   │   │   ├── mon_wall_concrete_04_d.dds
+│   │   │   ├── mon_wall_concrete_05_d.dds
+│   │   │   ├── mon_wall_concrete_06_d.dds
+│   │   │   ├── mon_wall_concrete_07_d.dds
+│   │   │   ├── mon_wall_hairpin_a_01_d.dds
+│   │   │   ├── mon_wall_hairpin_a_02_d.tga.dds
+│   │   │   ├── mon_wall_stone_01_d.dds
+│   │   │   ├── mon_wall_stone_02_d.dds
+│   │   │   ├── mon_wall_stone_03_d.dds
+│   │   │   ├── mon_wall_stone_04_d.dds
+│   │   │   ├── mon_wall_stone_05_d.dds
+│   │   │   ├── mon_wall_stone_07_d.dds
+│   │   │   ├── mon_wall_stone_08_d.dds
+│   │   │   ├── mon_wall_stone_09_d.dds
+│   │   │   ├── mon_yacht_small_a_01_d.dds
+│   │   │   ├── mrv.png
+│   │   │   ├── NULL.dds
+│   │   │   ├── nytebgvrfc.png
+│   │   │   ├── palm_tree_d_01_fo_d.dds
+│   │   │   ├── palm_tree_d_01_lod_d.dds
+│   │   │   ├── palm_tree_d_01_shadow.dds
+│   │   │   ├── palm_tree_d_01_tr_d.dds
+│   │   │   ├── parasol_up_a_d.dds
+│   │   │   ├── PAT_barr_pirelli.dds
+│   │   │   ├── PAT_casino_comp.dds
+│   │   │   ├── PAT_casino_pan.dds
+│   │   │   ├── PAT_casino_telo.dds
+│   │   │   ├── PAT_casino_teloH.dds
+│   │   │   ├── PAT_casino_tunn.dds
+│   │   │   ├── PAT_fintomare.dds
+│   │   │   ├── PAT_kerb_UBS.dds
+│   │   │   ├── PAT_mayabay.dds
+│   │   │   ├── PAT_monac75_BIG_r.dds
+│   │   │   ├── PAT_monacoGP_logo.dds
+│   │   │   ├── PAT_pirelli.dds
+│   │   │   ├── PAT_pirelli_pan.dds
+│   │   │   ├── PAT_pzero.dds
+│   │   │   ├── PAT_rail_arancio.dds
+│   │   │   ├── PAT_rail_Bianchi.dds
+│   │   │   ├── PAT_rail_rossi.dds
+│   │   │   ├── patrons.png
+│   │   │   ├── PAT-ubs.dds
+│   │   │   ├── physical_tyres_base_a_d.dds
+│   │   │   ├── pirelli_board_a.dds
+│   │   │   ├── pirelli_bridge_a.dds
+│   │   │   ├── portacabin_lrg_a_d.dds
+│   │   │   ├── pzero_board_a.dds
+│   │   │   ├── pzero.dds
+│   │   │   ├── reddish.png
+│   │   │   ├── reed.jpg
+│   │   │   ├── ricciardo.jpg
+│   │   │   ├── rickety_fence_a_01_d.dds
+│   │   │   ├── roadsign_pack_a_01_d.dds
+│   │   │   ├── rolex_board_a.dds
+│   │   │   ├── ryntybegrvfcdef.png
+│   │   │   ├── safetywall_grey_a_01_d.dds
+│   │   │   ├── safetywall_redstripe_a_01_d.dds
+│   │   │   ├── schermo_onboard.dds
+│   │   │   ├── sign_brakevertical_a_01_d.dds
+│   │   │   ├── someothershit.png
+│   │   │   ├── someshit.png
+│   │   │   ├── speed_marker_01_d.dds
+│   │   │   ├── sponsor_backframe_01_d.dds
+│   │   │   ├── strolll.jpg
+│   │   │   ├── table.jpg
+│   │   │   ├── tag_board_a.dds
+│   │   │   ├── tag-heuer_big.dds
+│   │   │   ├── tarmac_diff_a_11_d.dds
+│   │   │   ├── tarmac_diff_a_16_d.dds
+│   │   │   ├── tnyhrgtefrde4hrtgbv.png
+│   │   │   ├── TreesA.dds
+│   │   │   ├── water.jpg
+│   │   │   ├── waterreal.dds
+│   │   │   ├── when you drink never drive.dds
+│   │   │   └── zepter_board_a.dds
+│   │   ├── groundcover
+│   │   │   ├── grass03_tropical_d.dds
+│   │   │   └── main.materials.json
+│   │   ├── trees
+│   │   │   ├── bush_tropical_1
+│   │   │   │   ├── main.materials.json
+│   │   │   │   ├── tro_bush_1_leaves_d.dds
+│   │   │   │   ├── tro_bush_1_leaves_n.dds
+│   │   │   │   ├── tro_bush_1_leaves_s.dds
+│   │   │   │   ├── tro_bush_huge.cdae
+│   │   │   │   ├── tro_bush_huge.dae
+│   │   │   │   ├── tro_bush_small.cdae
+│   │   │   │   ├── tro_bush_small.dae
+│   │   │   │   ├── tro_tree_1_bush_large.cdae
+│   │   │   │   └── tro_tree_1_bush_large.dae
+│   │   │   ├── main.materials.json
+│   │   │   └── trees_tropical_1
+│   │   │       ├── main.materials.json
+│   │   │       ├── tro_tree_1_branches_d.dds
+│   │   │       ├── tro_tree_1_branches_n.dds
+│   │   │       ├── tro_tree_1_branches_s.dds
+│   │   │       ├── trunk_d.dds
+│   │   │       └── trunk_variation_1.dds
+│   │   └── trees2
+│   │       ├── bush03A.dds
+│   │       ├── palm_tree_d_01_fo_d.dds
+│   │       ├── palm_tree_d_01_tr_d.dds
+│   │       ├── pino17.dds
+│   │       ├── pino17_spec.dds
+│   │       ├── pino18.dds
+│   │       ├── pino18_spec.dds
+│   │       ├── pino19.dds
+│   │       ├── pino19_spec.dds
+│   │       ├── tree06a.dds
+│   │       ├── tree08a.dds
+│   │       ├── tree08a_spec.dds
+│   │       ├── TREELINE.DDS
+│   │       ├── TreesA.dds
+│   │       ├── TreesB.dds
+│   │       ├── TreesB_dritt.dds
+│   │       ├── TreesB_inv.dds
+│   │       └── trees.dae
+│   ├── skies
+│   │   └── skynormals_05.dds
+│   ├── terrains
+│   │   ├── grass-01-d.dds
+│   │   ├── grass-01-n.dds
+│   │   ├── macro_grass.dds
+│   │   ├── macro_rockydirt.dds
+│   │   ├── main.materials.json
+│   │   ├── overlay_grass-01.dds
+│   │   ├── overlay_sand-01.dds
+│   │   ├── sand-01-d.dds
+│   │   └── sand-01-n.dds
+│   └── water
+│       ├── depthcolor_ramp_mud1.png
+│       ├── depthcolor_ramp.png
+│       ├── depthcolor_ramp_tropical_2.png
+│       ├── depthcolor_ramp_tropical.png
+│       ├── foam.dds
+│       ├── ripple3.dds
+│       ├── ripple4.dds
+│       ├── ripple4.png
+│       └── ripple.dds
+├── dynamicaudioemitters
+│   └── ribbondata.audiosfx.json
+├── import
+│   ├── grass.png
+│   ├── height_source.png
+│   └── sand.png
+├── info.json
+├── main
+│   ├── items.level.json
+│   └── missiongroup
+│       ├── aidecalwaypointsgroup
+│       │   └── items.level.json
+│       ├── aiwaypointsgroup
+│       │   └── items.level.json
+│       ├── camerabookmarks
+│       │   └── items.level.json
+│       ├── items.level.json
+│       ├── playerdroppoints
+│       │   └── items.level.json
+│       ├── sky_and_sun
+│       │   └── items.level.json
+│       └── water
+│           └── items.level.json
+├── main.decals.json
+├── main.forestbrushes.json
+├── map.json
+├── monaco_but_worse.forest.json
+├── monaco_but_worse_preview.png
+├── monaco_but_worse.ter.depth.png
+├── theterrain.ter
+└── theterrain.terrain.json
+
+24 directories, 398 files
+```
+I am trying to make a custom BeamNG map. Why does it not work?
+§a§
+Based on the file tree you provided, there are a few structural reasons why your BeamNG map might not be showing up or loading correctly.
+
+Here are the most likely culprits, ranked from "most common" to "technical":
+
+### 1. Missing the `levels/` Root Folder (Most Likely)
+BeamNG will not recognize a map unless it is inside a folder named `levels`.
+*   **Current structure:** `monaco_but_worse/info.json`
+*   **Correct structure:** **`levels/`**`monaco_but_worse/info.json`
+
+If you are zipping this up to put in your mods folder, the internal structure of the ZIP file must look like this:
+`example_mod.zip/levels/monaco_but_worse/info.json`
+
+### 2. The `info.json` name mismatch
+Open your `info.json` file. The "title" is for the display name, but the internal logic often relies on the folder name.
+*   Make sure the folder name (`monaco_but_worse`) does not contain any capital letters or special characters (your folder name is fine, but double-check the `info.json` content for consistency).
+
+### 3. Terrain File Naming/Pathing
+In your root, you have `theterrain.ter` and `theterrain.terrain.json`.
+In the World Editor, BeamNG looks for a "TerrainBlock" object.
+*   If you moved these files manually into this folder from another map, the **internal paths** inside `theterrain.terrain.json` and `main/items.level.json` are likely still pointing to the old map's directory (e.g., `/levels/original_map/art/...`).
+*   **Fix:** Open `theterrain.terrain.json` in a text editor and search for any file paths. If they don't start with `/levels/monaco_but_worse/`, they will fail to load.
+
+### 4. Missing `main.level.json` in the level root
+In the newer BeamNG level format, there is usually a small "loader" file in the root of the level folder.
+*   Your tree shows `main/items.level.json`, which is good, but check if there is a file that tells the game *how* to load the level. Usually, this is `monaco_but_worse.level.json` (named after the folder) located in the root.
+*   If the game can't find a entry point, it won't show in the menu.
+
+### 5. Material Pathing (The "Orange Texture" Issue)
+You have many `.dds` files in `art/shapes/base/`.
+*   Inside `art/shapes/base/main.materials.json`, every material must have a `colorMap` or `normalMap` path.
+*   If those paths look like `art/shapes/base/texture.dds`, they will **fail**.
+*   They **must** be absolute paths relative to the game root: `/levels/monaco_but_worse/art/shapes/base/ambulance_c_02_d.dds`.
+
+### 6. The "Broken" .DAE
+You have a `base.dae` in `art/shapes/base/`.
+*   If this file is extremely large or has an error in its Collada export (common with Blender exports if "Keep Bind Info" isn't checked), the map might crash the game during the "Loading Resources" phase.
+
+### How to Diagnose:
+1.  **Check the Console:** Press the tilde key (`~`) while the game is loading the map. Look for **red text**. It will tell you exactly which file it can't find.
+2.  **Check the Logs:** Go to `AppData/Local/BeamNG.drive/latest/logs/beamng.log`. Search for "monaco_but_worse". It will tell you if it's skipping the mod because of a structure error.
+
+**Immediate Suggestion:**
+Move your entire `monaco_but_worse` folder into a new folder named `levels`, then put that `levels` folder into your `AppData/Local/BeamNG.drive/latest/levels/` directory (for testing) and see if it appears in the menu.
+§u§
+The map won't show up in the selection menu. This is the `info.json` file (autogenerated default):
+```
+{
+  "title": "levels.monaco_but_worse.info.title",
+  "description": "levels.monaco_but_worse.info.description",
+  "previews": ["monaco_but_worse_preview.png"],
+  "size": [2048, 2048],
+  "biome": "levels.monaco_but_worse.info.description",
+  "roads": "levels.monaco_but_worse.info.description",
+  "suitablefor": "levels.monaco_but_worse.info.description",
+  "features": "levels.monaco_but_worse.info.description",
+  "isAuxiliary": true,
+  "authors": "BeamNG",
+  "supportsTraffic": false,
+  "supportsTimeOfDay": false
+}
+```
+```
+··• ls
+monaco_but_worse
+··• pwd
+/home/user/.local/share/BeamNG/BeamNG.drive/current/levels
+```
+§a§
+The primary reason your map is not showing up in the menu is inside your `info.json` file.
+
+**The Culprit:**
+```json
+"isAuxiliary": true,
+```
+In BeamNG, `isAuxiliary` tells the game: *"This is a background map (like the Garage or menu background), hide it from the level selector."*
+
+### How to fix it
+
+Open `monaco_but_worse/info.json` and make these two changes:
+
+1.  Change `"isAuxiliary"` to **`false`**.
+2.  Change `"title"` to a normal name (otherwise it will look like broken code in the menu).
+
+**Replace your `info.json` content with this:**
+
+```json
+{
+  "title": "Monaco But Worse",
+  "description": "A customized version of Monaco.",
+  "previews": ["monaco_but_worse_preview.png"],
+  "size": [2048, 2048],
+  "biome": "tropical",
+  "roads": "asphalt",
+  "suitablefor": "racing",
+  "features": "custom",
+  "isAuxiliary": false,
+  "authors": "You",
+  "supportsTraffic": false,
+  "supportsTimeOfDay": true
+}
+```
+
+### A Note on your Path (`/home/user/.local/...`)
+Since you are on Linux (judging by the path), **Case Sensitivity** matters.
+*   Your folder is `monaco_but_worse` (all lowercase).
+*   Your `info.json` references `monaco_but_worse_preview.png`.
+*   Make sure the actual image file in the folder is **exactly** `monaco_but_worse_preview.png` and not `Monaco_But_Worse_Preview.png`. If the case differs, the map might appear in the list but without a picture, or fail to load.
+
+Once you save the `info.json` with `"isAuxiliary": false`, restart the game, and it should appear in the Freeroam menu.

@@ -1,0 +1,33 @@
+§u§
+I have made a custom BeamNG map. How can I change the spawnpoint?
+§a§
+To change the spawn point in your custom BeamNG.drive map, you'll need to use the World Editor:
+
+## Steps to Change Spawn Point:
+
+1. **Open World Editor**
+   - Launch BeamNG.drive
+   - Load your custom map
+   - Press `F11` to open the World Editor
+
+2. **Find or Create Spawn Sphere**
+   - In the Scene tree (usually on the right), search for "SpawnSphere" objects
+   - Alternatively, go to the Library tab and search for "SpawnSphere"
+
+3. **Place/Move the Spawn Point**
+   - If creating new: Drag a SpawnSphere from the Library into your level
+   - If moving existing: Select the SpawnSphere in the Scene tree and use the gizmo tools to reposition it (W for move, E for rotate)
+   - You can also manually enter coordinates in the Inspector panel
+
+4. **Set Spawn Properties** (optional)
+   - Select the SpawnSphere
+   - In the Inspector panel, you can set properties like:
+     - Position and rotation
+     - Spawn radius
+     - Default vehicle
+
+5. **Save Your Changes**
+   - Press `Ctrl+S` or File > Save Level
+   - Press `F11` to exit World Editor
+
+The spawn point is where the player's vehicle will appear when the level loads. You can have multiple spawn spheres, and players can typically choose between them in the spawn menu.

@@ -1,0 +1,88 @@
+§u§
+What are `handshake` domains?
+§a§
+`Handshake` domains are blockchain-based web addresses that operate on a decentralized network rather than the traditional, centralized system managed by organizations like ICANN.
+
+To understand them, it helps to compare them to how the "normal" internet works:
+
+### 1. The Core Concept: Decentralizing the Root
+*   **Traditional Internet:** When you type `google.com`, your browser asks a centralized hierarchy of servers (ultimately controlled by ICANN) where to find ".com".
+*   **Handshake (HNS):** Handshake replaces that centralized root file with a blockchain. This means no single company or government controls the list of top-level domains. Instead of renting a domain from a registry (like Verisign for .com), you **own** the top-level domain (TLD) itself on the blockchain.
+
+### 2. How They Work
+*   **Ownership:** You buy Handshake domains using the **HNS** cryptocurrency.
+*   **Auctions:** Most names are distributed via automated Vickrey auctions (blind auctions) on the blockchain.
+*   **Top-Level Control:** Unlike traditional domains where you buy `yourname.com` (a second-level domain), Handshake allows you to own the extension itself (e.g., `.yourname`). You can then create unlimited subdomains (like `mail.yourname` or `shop.yourname`) or even sell them to others.
+
+### 3. Key Differences
+| Feature | Traditional Domains (.com, .org) | Handshake Domains |
+| :--- | :--- | :--- |
+| **Control** | Centralized (ICANN) | Decentralized (Blockchain) |
+| **Censorship** | Can be seized or censored by authorities | Censorship-resistant; difficult to seize |
+| **Ownership** | Rented annually | Owned permanently (as long as keys are held) |
+| **Privacy** | WHOIS data often public | Private (ownership tied to crypto wallet) |
+| **Access** | Works in all browsers natively | **Requires setup** (resolvers/plugins) |
+
+### 4. How to Access Them
+Because Handshake is not yet standard in mainstream browsers (like Chrome or Safari), you cannot simply type a Handshake domain into the address bar and expect it to load without help. You typically need:
+*   **A Resolver:** Changing your DNS settings to a service that supports Handshake (like HDNS or NextDNS).
+*   **A Browser Extension:** Extensions like Bob Wallet or special browsers like Brave (which has some native integration settings) or Beacon.
+*   **Gateways:** You can view them by appending `.hns.to` to the end (e.g., if the domain is `welcome/`, you can visit `welcome.hns.to` on a normal browser).
+
+### 5. Why People Buy Them
+*   **Digital Identity:** Short, memorable names for decentralized websites or crypto wallets.
+*   **Investment:** Speculating on the value of potentially popular TLDs (like owning `.blog` or `.crypto` before they were big).
+*   **Freedom:** Hosting content that cannot be easily taken down or de-platformed.
+§u§
+What are some famous handshake websites?
+§a§
+A quick reality check up front: there aren’t many truly “famous” Handshake-native websites in the way `wikipedia.org` or `nyt.com` are famous—Handshake sites still require a Handshake-aware resolver or a gateway (like `hns.to` / `hns.link`) to visit, so mainstream traffic is limited. What *is* “famous” in Handshake tends to be (a) ecosystem hubs/tools and (b) early demo sites that people cite a lot in Handshake docs and community lists.
+
+Below are some of the most commonly referenced / widely known Handshake sites and services.
+
+## Well-known Handshake sites (ecosystem “landmarks”)
+
+### `welcome.2d/` — early Handshake registry site / free subdomains
+Often cited as one of the earliest Handshake “registry” style sites (people could get a free `*.2d` subdomain). It’s listed in the community-maintained *Awesome Handshake* directory as “the first domain registry for Handshake.”
+
+How to try it if you don’t have a resolver:
+- `welcome.2d.hns.to` (gateway)
+- `welcome.2d.hns.link` (gateway)
+
+### `proofofconcept/` — Handshake social-network-style demo (DANE/TLS angle)
+Also listed in *Awesome Handshake*; described there as “a social network for Handshake secured by DANE where every user gets a subdomain.”
+
+### `me.turbomaze/` — personal site of a Namebase cofounder (frequently cited)
+Listed in *Awesome Handshake* as a personal website belonging to Anthony Liu (Namebase cofounder/CTO), which makes it a commonly referenced example site.
+
+### `varo/` — Handshake registrar / nameserver service
+Varo shows up in the same *Awesome Handshake* list as a “domain registrar and nameserver for Handshake,” and is one of the more repeatedly referenced service brands in the ecosystem.
+
+### `setup.skyinclude/` — Handshake guides & blogs
+Another commonly referenced ecosystem content hub, listed in *Awesome Handshake* as “Handshake Blogs & Guides.”
+
+### `hnshosting/` — Handshake hosting service
+Listed in *Awesome Handshake* as a hosting service for Handshake sites.
+
+
+## “Famous” gateways people use to *view* Handshake sites (not Handshake-native domains themselves)
+
+These aren’t Handshake domains, but they’re widely used and effectively function as the “public front door” to Handshake websites:
+
+- **HNS.to** — lets you access a Handshake name via `name.hns.to` or `hns.to/name` without installing anything.
+- **hns.link** — similar idea: append `.hns.link` to a Handshake name; also offers resolver/DoH info.
+
+## Why you don’t hear “mainstream famous” brands on Handshake (yet)
+Two structural reasons:
+
+1. **Access friction:** Most browsers don’t resolve Handshake by default, so even a great Handshake site has a smaller reachable audience unless users install a resolver or use a gateway.
+2. **Name reservations:** Handshake reserves existing ICANN TLDs and also reserves many high-traffic web names (e.g., Alexa top sites) for their owners to claim, so the “famous” names exist mostly as *reserved/claimable entries* rather than active Handshake websites most people browse daily.
+
+## Practical tip: how to try any Handshake site quickly
+If you see a Handshake name like `something/`, try either:
+- `something.hns.to` or `something.hns.to` with a subdomain (e.g., `welcome.nb.hns.to`)
+- `something.hns.link`
+
+That’s the easiest way to sample “Handshake websites” without changing DNS settings.
+
+If you want, I can also compile a longer “greatest hits” list by crawling current Handshake directories and checking which ones still resolve and load successfully (a lot of older lists include sites that go offline).

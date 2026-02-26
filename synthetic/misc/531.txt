@@ -1,0 +1,34 @@
+§u§
+worldedit replace all ores with air
+§a§
+To replace all ores with air in WorldEdit, you can use the `//replace` command with multiple ore types. Here are the main approaches:
+
+## Method 1: Replace All Ores at Once
+```
+//replace coal_ore,iron_ore,gold_ore,diamond_ore,emerald_ore,lapis_ore,redstone_ore,copper_ore,nether_quartz_ore,nether_gold_ore,ancient_debris air
+```
+
+## Method 2: Use Individual Commands
+You can run these commands one by one:
+```
+//replace coal_ore air
+//replace iron_ore air
+//replace gold_ore air
+//replace diamond_ore air
+//replace emerald_ore air
+//replace lapis_ore air
+//replace redstone_ore air
+//replace copper_ore air
+```
+
+## Method 3: Using Deepslate Variants
+If you also want to replace deepslate ore variants (in newer versions):
+```
+//replace coal_ore,deepslate_coal_ore,iron_ore,deepslate_iron_ore,gold_ore,deepslate_gold_ore,diamond_ore,deepslate_diamond_ore,emerald_ore,deepslate_emerald_ore,lapis_ore,deepslate_lapis_ore,redstone_ore,deepslate_redstone_ore,copper_ore,deepslate_copper_ore air
+```
+
+## Important Notes:
+1. **Select your region first** using WorldEdit wand (//wand) or other selection methods
+2. The command affects only the selected area
+3. Use `//undo` if you make a mistake
+4. For large areas, this might cause lag

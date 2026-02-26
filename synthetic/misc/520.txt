@@ -1,0 +1,74 @@
+§u§
+debian server install adoptium jdk and run a jar with the specific version
+§a§
+To install the Adoptium (Eclipse Temurin) JDK on a Debian server and run a JAR file with a specific version, follow these steps.
+
+### 1. Add the Adoptium Repository
+First, you need to add the official Adoptium APT repository to your system to access the Temurin builds.
+
+```bash
+# Update package list and install prerequisites
+sudo apt update
+sudo apt install -y wget apt-transport-https gpg
+
+# Add the Adoptium GPG key
+wget -qO - https://packages.adoptium.net/artifactory/api/gpg/key/public | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/adoptium.gpg > /dev/null
+
+# Add the Adoptium APT repository
+echo "deb https://packages.adoptium.net/artifactory/deb $(awk -F= '/^VERSION_CODENAME/{print$2}' /etc/os-release) main" | sudo tee /etc/apt/sources.list.d/adoptium.list
+
+# Update package list again
+sudo apt update
+```
+
+### 2. Install a Specific JDK Version
+You can install any version from Java 8 to the latest (e.g., 8, 11, 17, 21). Replace `<version>` with the number you need.
+
+```bash
+# Example: Install Temurin JDK 17
+sudo apt install temurin-17-jdk
+
+# Example: Install Temurin JDK 21
+sudo apt install temurin-21-jdk
+```
+
+### 3. Locate the Specific Java Binary
+Debian installs these JDKs into `/usr/lib/jvm/`. You need the exact path to the `java` executable for the version you just installed.
+
+You can find the path by listing the contents of the JVM directory:
+```bash
+ls -l /usr/lib/jvm/
+```
+Typically, the path will look like this:
+*   **Java 17:** `/usr/lib/jvm/temurin-17-jdk-amd64/bin/java`
+*   **Java 21:** `/usr/lib/jvm/temurin-21-jdk-amd64/bin/java`
+*(Note: If you are on an ARM server, the folder will end in `-arm64` instead of `-amd64`).*
+
+### 4. Run your JAR with the Specific Version
+To run your JAR file using that specific version (without changing the system-wide default), use the **absolute path** to that version's executable:
+
+```bash
+# Syntax: /path/to/specific/java -jar your-app.jar
+/usr/lib/jvm/temurin-17-jdk-amd64/bin/java -jar my-application.jar
+```
+
+### (Optional) Manage Multiple Versions Globally
+If you want to change which version the system uses when you simply type `java`, use the `update-alternatives` tool:
+
+1.  **Switch the default:**
+    ```bash
+    sudo update-alternatives --config java
+    ```
+2.  **Select the number** corresponding to the Adoptium/Temurin version you want from the list provided.
+3.  **Verify:**
+    ```bash
+    java -version
+    ```
+
+### Summary for your script:
+If you are writing a startup script (e.g., `start.sh`), define the path as a variable:
+```bash
+#!/bin/bash
+JAVA_EXEC="/usr/lib/jvm/temurin-17-jdk-amd64/bin/java"
+$JAVA_EXEC -Xmx2G -jar my-application.jar
+```
