@@ -147,7 +147,7 @@ def process_biasbench_sqlite(db_path, project_name, synthetic, mistakes):
     data = []
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
-    cursor.execute("SELECT prompt, response FROM responses")
+    cursor.execute("SELECT prompt, response FROM responses")  # noqa
     rows = cursor.fetchall()
     conn.close()
     for prompt, response in rows:
@@ -266,6 +266,27 @@ def process_drawback_chess_directory(dir_path, project_name, synthetic, mistakes
             data.append({'messages': messages2, 'project': project_name, 'synthetic': synthetic, 'mistakes': mistakes})
     return data
 
+def process_explain_meme(dir_path, project_name, synthetic, mistakes):
+    with open(pathlib.Path('./attachments/rename_log.txt')) as f:
+        rename_log = f.read()
+    data = []
+    conn = sqlite3.connect((dir_path + '/database.sqlite3').replace('//', '/'))
+    cursor = conn.cursor()
+    cursor.execute("SELECT meme, response FROM responses")
+    rows = cursor.fetchall()
+    conn.close()
+    for meme, response in rows:
+        if isinstance(response, str) and len(response) > 2:
+            hash_ = None
+            for line in rename_log.split('\n'):
+                if line.startswith(meme + ' -> '):
+                    hash_ = line.split(' -> ')[1]
+                    break
+            if hash_:
+                messages = [{'role': 'user', 'content': f"<attach:{hash_}>Explain me this meme."}, {'role': 'assistant', 'content': response}]
+                data.append({'messages': messages, 'project': project_name, 'synthetic': synthetic, 'mistakes': mistakes})
+    return data
+
 
 def check_pii_in_data(data, first_names, last_names, false_positives, false_negatives):
     pii_findings = []
@@ -322,13 +343,14 @@ def main():
     data_human_edited_moral = process_moral_directory('./human_edited/moral', 'moral', False, False)
     data_synthetic_biasbench = process_biasbench_sqlite('./synthetic/biasbench.sqlite3', 'biasbench', True, True)
     data_synthetic_drawback_chess = process_drawback_chess_directory('./synthetic/drawback_chess/conversations', 'drawback_chess', True, True)
+    data_synthetic_explain_meme = process_explain_meme('./synthetic/explain_meme', 'explain_meme', True, True)
     data_synthetic_ingredient_scanner = process_jsonl_ingredient_scanner('./synthetic/ingredient_scanner/ingredient_scanner.jsonl', 'ingredient_scanner', True, False)
     data_synthetic_ingredient_scanner2 = process_jsonl('./synthetic/ingredient_scanner/ingredient_scanner2.jsonl', 'ingredient_scanner', True, False)
     data_synthetic_misc = process_txt_directory('./synthetic/misc', 'misc', True, True)
     data_synthetic_moral = process_moral_sqlite('./synthetic/moral/database.sqlite3', 'moral', True, True)
     data_synthetic_topic_categorizer = process_jsonl('./synthetic/topic_categorizer/topic_categorizer.jsonl', 'topic_categorizer', True, False)
 
-    data = data_human_edited_biasbench + data_human_edited_infinite_craft + data_human_edited_misc + data_human_edited_moral + data_synthetic_biasbench + data_synthetic_drawback_chess + data_synthetic_ingredient_scanner + data_synthetic_ingredient_scanner2 + data_synthetic_misc + data_synthetic_moral + data_synthetic_topic_categorizer
+    data = data_human_edited_biasbench + data_human_edited_infinite_craft + data_human_edited_misc + data_human_edited_moral + data_synthetic_biasbench + data_synthetic_drawback_chess + data_synthetic_explain_meme + data_synthetic_ingredient_scanner + data_synthetic_ingredient_scanner2 + data_synthetic_misc + data_synthetic_moral + data_synthetic_topic_categorizer
 
     first_names, last_names = load_names()
     false_positives = load_false_positives()
