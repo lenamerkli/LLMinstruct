@@ -11,7 +11,7 @@ from sunfish import ChessBoard
 from sunfish_boxing_with_shadows import ChessBoard as ChessBoardBoxingWithShadows
 
 
-MODEL = 'Qwen3-32B-Q4_K_S.gguf'
+MODEL = 'Qwen3.5-27B-Q5_K_M.gguf'
 with open('prompt.md', 'r') as _f:
     PROMPT = _f.read()
 DRAWBACKS = {
