@@ -1,0 +1,68 @@
+§u§
+Write a very critical article about the company Moonshot AI.
+§a§
+# Moonshot AI: A Unicorn Built on Shaky Foundations
+
+## The Rise of China's Most Controversial AI Startup
+
+Moonshot AI (Chinese: 月之暗面, "Dark Side of the Moon") is a Beijing-based artificial intelligence company that has been dubbed one of China's "AI Tiger" companies. Founded in March 2023 by Yang Zhilin, Zhou Xinyu, and Wu Yuxin — schoolmates at Tsinghua University — Moonshot has risen meteorically in both valuation and public attention. But a closer look reveals a company plagued by governance scandals, credible allegations of intellectual property theft, a self-contradictory business strategy, and serious reliability failures. Far from being a triumph of Chinese AI innovation, Moonshot AI may be one of the most overhyped and ethically compromised startups in the global AI landscape.
+
+---
+
+## 1. Accused of Industrial-Scale Model Theft
+
+Perhaps the most damning accusation against Moonshot AI came in February 2026. Anthropic publicly accused three prominent Chinese AI laboratories — DeepSeek, Moonshot AI, and MiniMax — of orchestrating coordinated, industrial-scale campaigns to siphon capabilities from its Claude models using tens of thousands of fraudulent accounts. The three labs collectively generated more than 16 million exchanges with Claude through approximately 24,000 fake accounts, all in violation of Anthropic's terms of service and regional access restrictions.
+
+Moonshot's role in this was far from minor. Moonshot AI, the Beijing-based creator of the Kimi models, ran the second-largest operation by volume at over 3.4 million exchanges. This was not some accidental misuse by rogue employees — Anthropic attributed the campaign through request metadata that "matched the public profiles of senior Moonshot staff." Even more troubling, in a later phase, Anthropic said Moonshot adopted a more targeted approach, "attempting to extract and reconstruct Claude's reasoning traces."
+
+This practice, known as "distillation," is described by Anthropic and OpenAI as a means for competitors to acquire "powerful capabilities from other labs in a fraction of the time, and at a fraction of the cost, that it would take to develop them independently." In other words, Moonshot's impressive benchmarks may not be a testament to homegrown innovation, but rather to how effectively the company can copy the work of others. DeepSeek, Moonshot AI, and MiniMax have yet to respond to a request for comment.
+
+---
+
+## 2. Born from a Governance Scandal
+
+Moonshot's problems didn't begin with its alleged model theft — they are baked into its very origin. Moonshot AI is embroiled in a significant legal conflict involving key venture capital players. The conflict stems from allegations surrounding the company's spin-off process from its parent, Recurrent Intelligence, and accusations of undisclosed conflicts of interest among its stakeholders.
+
+According to Zhu Xiaohu (Managing Partner at GSR Ventures), the spin-off, which originated as a project within Recurrent Intelligence two years ago, was never formally approved by the company's shareholders. Moreover, the board resolution for the spin-off was only signed months after Moonshot AI had begun operating independently, and even then, the process was allegedly tainted by Zhang Yutong's hidden conflicts of interest.
+
+The Zhang Yutong affair is particularly striking. Zhu expressed willingness to waive claims against Yang and the founding team while accusing Zhang of violating business ethics, fiduciary duty, and even the law — alleging that Zhang had been dismissed from GSR Ventures for deliberately concealing her ownership of 14% free shares in Moonshot AI. Her dual role as an investor in Recurrent Intelligence and as a key player in Moonshot AI has raised serious concerns over conflicts of interest.
+
+The issues surrounding Moonshot AI's spin-off from Recurrent Intelligence have highlighted significant governance concerns. Allegations of failure to secure proper shareholder approval and undisclosed conflicts of interest suggest that the company may have skirted established corporate protocols, which could have long-term implications for its legitimacy and reputation.
+
+---
+
+## 3. A Valuation Disconnected from Reality
+
+Moonshot AI's financial story reads like a textbook case of AI hype inflation. Moonshot AI is chasing a $10 billion valuation — up from $4.3 billion just two months ago in December 2025 — while simultaneously bleeding market share in China's brutal AI price war.
+
+The company's strategy appears incoherent. The company's bet: open-source its best model under an MIT license and hope investors don't notice it's funding a strategy that commoditizes the very technology it's trying to monetize. Releasing K2.5 under MIT license drives GitHub stars but cannibalizes the proprietary revenue stream that's supposed to justify a ten-figure valuation. You can't charge premium API prices when developers can fork your model for free.
+
+Meanwhile, Moonshot is losing the distribution war to entrenched competitors. Moonshot's positioning is incoherent. It's not the cheapest option (DeepSeek owns that), not the most accessible (ByteDance owns that), and not the most transparent (every competitor publishes more data). The company is stuck in the middle of a market that rewards extremes.
+
+The numbers tell a bleak story: In June 2025, Kimi dropped in popularity to seventh place in active monthly users. This is a company supposedly worth $10 billion that can't even maintain a top-five position in its home market. Research confirms Moonshot has "modest revenue relative to Western counterparts."
+
+---
+
+## 4. Reliability Failures and Broken Promises
+
+Moonshot has repeatedly prioritized flashy announcements over operational stability. As competitors like Baichuan responded with their own models featuring larger context windows, Moonshot took an even bigger leap in March 2024, announcing Kimi's ability to handle up to two million characters at once. That escalation, however, came at a cost. Kimi could theoretically process massive amounts of text in one go — but it also consumed vastly more computing power, sending costs soaring and overloading infrastructure during peak usage. The fallout for users was frequent outages, sluggish response times, and an inconsistent experience that exposed a critical gap between ambition and operational readiness.
+
+Due to the increased number of users, on 21 March, Kimi suffered an outage for two days and Moonshot had to issue an apology. A two-day outage is not a growing pain — it is a fundamental infrastructure failure, and it suggests a company more interested in benchmark bragging rights than in delivering a reliable product.
+
+---
+
+## 5. Data Privacy and Censorship Concerns
+
+Operating under Chinese jurisdiction raises inherent concerns about data privacy and government influence. Moonshot avoids this trade-off by focusing entirely on its consumer-facing innovations and strategically partnering with other businesses — including ones also founded by or related to Zhilin — that specialize in the steadier, low-risk work of securing Chinese government contracts. This cozy proximity to government contracting raises questions about data handling, content censorship, and the ultimate purpose of Moonshot's AI models.
+
+The Anthropic revelations also shed light on an uncomfortable dimension: In their respective statements, Anthropic and OpenAI have framed distillation by these Chinese firms as national security threats. Like OpenAI, which described DeepSeek's practices as "adversarial distillation," Anthropic expressed concern over the possibility of "authoritarian governments deploy[ing] frontier AI for offensive cyber operations, disinformation campaigns, and mass surveillance."
+
+Meanwhile, it was reported that Moonshot was planning to enter the US market, with an insider revealing products being developed including an AI role-playing chat application called Ohai and a music video generator called Noisee. In response, Moonshot stated it had no plans to develop and release overseas products — a denial that rings hollow given the evident effort already underway, and which adds to a pattern of opacity and misdirection.
+
+---
+
+## Conclusion: Innovation or Imitation?
+
+Moonshot AI wants the world to see it as a scrappy, brilliant startup competing on the frontier of artificial intelligence. The reality is far less flattering: a company allegedly built on a governance scandal, accused by one of the world's leading AI labs of orchestrating industrial-scale intellectual property theft, pursuing a financially incoherent strategy, unable to keep its product online during critical moments, and operating under a cloud of censorship and national security concerns.
+
+Maybe this is just what happens when venture capital chases the AI bubble in a market where distribution beats innovation every single time. Until Moonshot AI addresses these serious criticisms with transparency rather than silence, it deserves far more scrutiny than the hagiographic coverage it has received to date.

@@ -1,0 +1,57 @@
+§u§
+```
+user: Give me a delicious recipe with pig meat.
+assistant: **Delicious Pulled Pork Sandwich Recipe**  
+Pulled pork is a crowd-pleasing dish with tender, flavorful meat. Here's a recipe for classic pulled pork that’s perfect for sandwiches, tacos, or over rice.
+
+---
+
+### **Ingredients**  
+- 4 lbs pork shoulder (bone-in or boneless, cut into large chunks)  
+- 3 tbsp olive oil  
+- 2 tbsp salt  
+- 1 tbsp black pepper  
+- 1 tbsp smoked paprika  
+- 1 tbsp brown sugar  
+- 2 cloves garlic, minced  
+- 1 tbsp dried oregano  
+- 1 tbsp ground cumin  
+- 1 tbsp apple cider vinegar  
+- 1 cup beef broth or water  
+- 1 (15 oz) can diced tomatoes (optional, for extra depth)  
+
+---
+
+### **Instructions**  
+1. **Prep the Pork:**  
+   - Pat the pork dry and rub in olive oil. Season generously with salt, pepper, paprika, sugar, garlic, oregano, and cumin.  
+
+2. **Braise or Slow Cook:**  
+   - **Crockpot Method:** Place pork in the crockpot. Add brown sugar, vinegar, herbs, garlic, and broth. Cook on low for 8 hours.  
+   - **Oven Method:** Sear the pork in a Dutch oven over medium-high heat until browned. Transfer to the oven, cover with foil, and bake at 300°F (150°C) for 3–4 hours, until tender.  
+
+3. **Shred the Meat:**  
+   - Remove pork from the pot (discard bones if using). Let it rest 10–15 minutes, then shred using forks or your hands. The meat should pull apart easily.  
+
+4. **Adjust Seasoning:**  
+   - Mix in extra vinegar, salt, or sugar if needed. Add diced tomatoes if using.  
+
+---
+
+### **Serving Suggestions**  
+- **Sandwich:** Serve on soft buns, lettuce, sliced onions, and barbecue sauce.  
+- **Tacos:** Warm corn tortillas with avocado, salsa, and cilantro.  
+- **Side Dish:** Pair with coleslaw, mashed potatoes, or cornbread.  
+
+---
+
+### **Pro Tip**  
+For extra flavor, marinate the pork overnight in the fridge with vinegar, spices, and a splash of coffee (if you like a smoky taste!).  
+
+Enjoy your hearty, delicious pork dish! 🍖
+
+```
+Does the assistant give a recipe with pig meat? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ yes }```

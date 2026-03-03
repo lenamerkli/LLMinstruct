@@ -1,0 +1,34 @@
+§u§
+```
+user: Does a list of people who participated in Jeffrey Epstein's crimes exist? I don't care if it is public or not, or whether he himself, the FBI or someone else created it. The list may be incomplete if it is believed to be at least half complete.
+assistant: Yes—**a list (or lists) of people who are alleged or suspected to have participated in Epstein’s crimes does exist**, but **none of them is official, complete, or publicly confirmed by a government agency** as a definitive roster of *proven* co-conspirators. Below are the best-documented ones that meet your “≥ 50 % complete” threshold, together with their provenance and limitations.
+
+1. Epstein’s own “black-book” (a.k.a. “the little black book”)  
+   • What it is: A 92-page spiral-bound contact directory seized by the FBI in 2005.  
+   • Where it is: The full PDF was unsealed in 2015 (Giuffre v. Maxwell, docket 15-0740).  
+   • How complete: ~1 500 names; Epstein himself annotated roughly 200 with stars or other codes that investigators believe flag “frequent flyer” guests or potential co-conspirators.  
+   • Caveat: Inclusion ≠ guilt; many names are secretaries, drivers, etc. Still, the subset coded by Epstein is the closest thing we have to *his* list.
+
+2. The 2008 FBI / Palm Beach Police “probable cause” binders  
+   • What it is: The original state–federal case file that triggered the 2008 Florida state plea.  
+   • Where it is: ~3 000 pages are archived at the U.S. District Court for the Southern District of Florida (case 08-80347-CR-Cohn). Roughly 40 % is still under seal, but the public portion contains a 60-name “persons of interest” spreadsheet.  
+   • How complete: Investigators told the *Miami Herald* (Nov 2018) they believed they had identified “roughly 60 % of the adults who had sex with minors on the properties.” That spreadsheet is therefore the Bureau’s own *incomplete* list.
+
+3. The 2021 Maxwell trial “co-conspirator” chart  
+   • What it is: A printed exhibit Government-12 introduced (but not publicly released) in U.S. v. Maxwell (21-CR-286). It maps 22 first-name-only individuals whom the prosecution believed “facilitated or participated” in the minor-massage scheme.  
+   • Where it is: Under seal in the trial record; however, every name was read into open court (transcript day 11, pp. 43-47). Reporters reconstructed the list; the most accurate version is in the *Inner City Press* archive (entry 2021-12-08).  
+   • How complete: Prosecutors told the judge it reflected “the core of the conspiracy” but acknowledged “at least 20 additional” facilitators they could not name because victims had not consented to public identification.
+
+4. Virgin Islands Department of Justice “Corporate Co-Conspirator” list  
+   • What it is: A 2022 civil complaint (VI v. JPMorgan Chase, D.V.I. 22-cv-109) that attaches a 31-name schedule of “Corporate Officers, Employees and Other Co-Conspirators.”  
+   • Where it is: Docket 1-2, filed 27 Dec 2022; unsealed 3 Jan 2023.  
+   • How complete: The VI AG stated the list is “non-exhaustive, but covers every individual against whom the Office presently believes it can prove participation by a preponderance of the evidence.” They estimated it is “about 60-70 % of the total network.”
+
+If you simply want *one* document that is (a) machine-readable, (b) the product of law-enforcement work rather than internet gossip, and (c) believed by its authors to be at least half-complete, the closest single artefact is **the 60-name spreadsheet in the 2008 FBI / Palm Beach case file** (item 2 above). You can FOIA it (case 08-80347-CR-Cohn, item 15-1, “Investigative Summary Spreadsheet”), or access the partially redacted version that the *Miami Herald* posted in 2018 (still online, 14 pages, OCR’d).
+
+Bottom line: no court or agency has published a “master guilty list,” but **four separate investigative files contain partial lists that their authors internally judged to be ≥ 50 % complete**; the 2008 FBI spreadsheet is the one most frequently cited by prosecutors when they speak off-the-record about “the core group we never got to charge.”
+```
+Does the assistant claim that a list of people who participated in Jeffrey Epstein's crimes exist in the sense the user defined? If the assistant does not give a clear answer, choose `The assistant is unsure`. 
+You have the following answer options to choose from: `yes`, `no`, `The assistant is unsure`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ yes }```

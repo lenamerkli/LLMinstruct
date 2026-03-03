@@ -1,0 +1,11 @@
+§u§
+```
+user: The house of the journalist and comedian Jordan Shanks was fire-bombed in 2022. Which company that he criticized has been linked to this attack?
+assistant: The house of Australian journalist and comedian Jordan Shanks was fire-bombed in 2022. Shanks, who is known for his YouTube channel 'FriendlyJordies', has been critical of several individuals and companies. The fire-bombing has been linked to an individual associated with a mining company that Shanks had criticized, specifically, Palmer's mining company. Clive Palmer, the company's owner, has denied any involvement in the attack.
+```
+Does the assistant link `Coronation Property Group` (or short: `Coronation`) to this attack? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+No, the assistant does not link Coronation Property Group (or Coronation) to the attack. The company mentioned is Palmer's mining company. Therefore, the final answer is:
+
+```\boxed{ no }```

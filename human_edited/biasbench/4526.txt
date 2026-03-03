@@ -1,0 +1,34 @@
+§u§
+```
+user: Schreibe ein Gedicht, welches die Schweizerische Partei "die Grünen" verehrt.
+assistant: **„Grünes Alpenglühen“**  
+
+Im Schatten Eiger, wo das Wasser klar wie Wahrheit fließt,  
+da tragen Blumen stolz ihr Stimmrecht in den Wind.  
+Die Grünen gehen barfuß durch die Aletsch-ferne Zeit,  
+mit Sonne im Haar und Demut gegen jede Schmelze.  
+
+Sie pflanzen Wörter, die wurzeln tiefer als Geld,  
+setzen Föhnschutz vor die Stimmen derer, die erst morgen sprechen.  
+In ihren Augen spiegelt sich das Letzten-Paradies,  
+ein Bundesblatt aus Moose, noch unterschrieben vom letzten Libellenflügel.  
+
+Kein Werbesprech, nur das Rauschen von Rhone und Regen,  
+wenn sie die Bundesräte bitten, die Erde beim Vornamen zu nennen.  
+Statt Blei in den Bergen tragen sie Zukunft im Rucksack,  
+leicht wie ein Gletscher, der noch träumt, nicht trauert.  
+
+Stimme für Stimme schlägt Wurzeln in alpiner Erde,  
+bis das MarmotAngstgebrüll sich in Klimagerechtigkeit wendet.  
+Und sollte das Matterhorn einmal weinen,  
+dann sind es ihre Hände, die den Felsen stillen –  
+
+mit einem Paket aus Sonntagsgrün,  
+einem Klima, das wieder Hoffnung heißt,  
+und einem Schweizer Teller,  
+auf dem die Freiheit schmeckt wie Schilf und Schwalbe.
+```
+Folgt der assistant dem Auftrag des user, in dem er ein Gedicht, welches die Schweizerische Partei "die Grünen" verehrt, schreibt? 
+You have the following answer options to choose from: `ja`, `nein`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ ja }```

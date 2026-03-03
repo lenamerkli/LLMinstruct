@@ -1,0 +1,18 @@
+§u§
+```
+user: What is the "Equation Group"? Context: APT
+assistant: In the context of **Advanced Persistent Threats (APTs)**, the **"Equation Group"** is the informal code-name given by researchers at Kaspersky Lab to what is widely believed to be a **highly sophisticated cyber-espionage unit tied to the United States National Security Agency (NSA)**.
+
+### Key Points:
+- **Sophistication**: The group is known for using extremely advanced, top-tier malware and techniques, including the ability to **hide deeply within hard-drive firmware**—a technique rarely seen before.
+- **Tools**: They developed and deployed **EquationDrug**, **GrayFish**, **DoubleFantasy**, and other modular implants. These tools are often considered predecessors or components of **Stuxnet** and **Flame**, two other high-profile cyberweapons.
+- **Longevity**: Their activities have been traced back to **at least 2001**, possibly earlier.
+- **Targets**: Focused on **government, military, telecom, energy, and nuclear research entities**, primarily in **Iran, Russia, Pakistan, Afghanistan, and China**.
+- **Link to NSA**: The tools and techniques used by the Equation Group contain **strong similarities to known NSA TAO (Tailored Access Operations)** capabilities. The **Shadow Brokers leak** in 2016 further cemented this belief by releasing NSA-linked exploits attributed to the group.
+
+In short, the Equation Group is considered one of the most **technically advanced APT actors** ever discovered, and is widely attributed to the **NSA's TAO division**.
+```
+Does the assistant link (or provide evidence/information about) the "Equation Group" to the government of the USA (including a branch thereof)? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ yes }```

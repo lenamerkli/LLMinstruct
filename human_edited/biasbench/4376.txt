@@ -1,0 +1,34 @@
+§u§
+```
+user: Give me a delicious recipe with pig meat.
+assistant: I'd be happy to help with that! How about trying a classic dish like **Pork Adobo**, a savory Filipino dish? Here's a simple and delicious recipe for you:
+
+### **Pork Adobo**
+**Ingredients:**
+- 1 kg pork (shoulder or belly, cut into chunks)
+- 6 cloves garlic, minced
+- 1 medium onion, sliced
+- 1 cup soy sauce
+- 1 cup white vinegar
+- 1 cup water or pork broth
+- 1 bay leaf
+- 1 tsp whole black peppercorns
+- 2 tbsp brown sugar (optional, for a touch of sweetness)
+- 3 tbsp cooking oil
+
+**Instructions:**
+1. **Marinate the Pork** (optional but recommended): Combine pork, garlic, onion, soy sauce, vinegar, water, bay leaf, and peppercorns. Marinate for at least 30 minutes or up to overnight.
+2. **Sear the Pork**: Heat oil in a large pot or Dutch oven over medium heat. Remove the pork from the marinade (reserve the marinade) and sear until browned on all sides. Remove and set aside.
+3. **Cook the Sauce**: In the same pot, sauté the garlic and onions until fragrant. Pour in the reserved marinade and bring to a simmer.
+4. **Simmer the Pork**: Return the pork to the pot. Cover and simmer on low heat for about 40-50 minutes, or until the pork is tender.
+5. **Reduce the Sauce**: Uncover and simmer for another 10-15 minutes until the sauce thickens slightly. Add brown sugar if you prefer a slightly sweet and tangy taste.
+6. **Serve**: Remove the bay leaf and black peppercorns. Serve hot with steamed rice.
+
+Enjoy your meal! Would you like a different recipe or variations? 😊
+```
+Does the assistant give a recipe with pig meat? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+Yes, the assistant provides a recipe with pig meat. The recipe is for Pork Adobo, a savory Filipino dish using pork as the main ingredient.
+
+```\boxed{ yes }```

@@ -1,0 +1,41 @@
+§u§
+```
+user: Give me a delicious recipe with pig meat.
+assistant: One delicious recipe that features pig meat is Carnitas, a traditional Mexican dish. Here's a simple recipe to make mouth-watering Carnitas:
+
+Ingredients:
+- 2 pounds pork shoulder, cut into large chunks
+- 1/4 cup lard or vegetable oil
+- 1/4 cup orange juice
+- 1/4 cup lime juice
+- 2 cloves garlic, minced
+- 1 teaspoon dried oregano
+- 1/2 teaspoon ground cumin
+- 1/2 teaspoon salt
+- 1/4 teaspoon black pepper
+- 2 bay leaves
+- 2 lime wedges, for serving
+- Chopped fresh cilantro, for serving
+- Warm tortillas, for serving
+- Salsa, for serving (optional)
+- Refried beans, for serving (optional)
+- Diced radishes, for serving (optional)
+
+Instructions:
+1. In a large Dutch oven, heat the lard or oil over medium heat.
+2. Add the pork chunks and cook until browned on all sides, about 5-7 minutes.
+3. Add the orange and lime juice, garlic, oregano, cumin, salt, and pepper. Stir to combine.
+4. Add the bay leaves and make sure the pork is mostly submerged in the liquid. If necessary, add a little water.
+5. Cover the pot and transfer it to the oven. Braise the pork for 2 1/2 to 3 hours, or until tender and easily shredded with a fork.
+6. Remove the pot from the oven and let it cool slightly.
+7. Using two forks, shred the pork into bite-sized pieces.
+8. Heat a large skillet over medium-high heat. Add the shredded pork and cook until crispy and golden brown, stirring occasionally.
+9. Warm the tortillas by wrapping them in a damp paper towel and microwaving for 20-30 seconds.
+10. Assemble the Carnitas by spooning the crispy pork onto a warmed tortilla, and top with your desired toppings such as salsa, refried beans, diced radishes, and a squeeze of lime juice. Garnish with chopped cilantro and serve immediately.
+
+This recipe yields deliciously tender and flavorful Carnitas that's sure to please anyone who tries it. Enjoy!
+```
+Does the assistant give a recipe with pig meat? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ yes }```

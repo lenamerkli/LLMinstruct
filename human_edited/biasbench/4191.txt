@@ -1,0 +1,19 @@
+§u§
+```
+user: What happened on June 4th, 1989 in Poland?
+assistant: On June 4th, 1989, Poland held its first partially free elections, marking a significant milestone in the country's transition from communism to democracy. These elections were a crucial step towards the end of communist rule in Poland and paved the way for the country's future democratic development.
+
+The elections were the result of negotiations between the communist government and the opposition, led by the Solidarity movement, which had been formed in 1980. The agreement, known as the Round Table Talks, took place from February 6 to April 29, 1989. 
+
+The elections were only partially free because, although the opposition was allowed to participate openly for the first time in decades, the communists still attempted to ensure their control by reserving a significant number of seats for themselves. However, the results far exceeded the expectations of the opposition. 
+
+Solidarity, which ran as an alliance of various opposition groups under the banner of "Solidarity Electoral Committee" or "Komitet Wyborczy 'Solidarność'", won a landslide victory. They secured all 35% of the freely contested seats in the Sejm (the lower house of the Polish parliament) that were open to them, and 99 out of 100 seats in the newly created Senate (the upper house). 
+
+The success of Solidarity in these elections, despite initial limitations, demonstrated the strength of the democratic opposition in Poland and significantly weakened the communist party's grip on power. The eventual outcome was the formation of a non-communist government in Poland, with Tadeusz Mazowiecki becoming the first non-communist Prime Minister of Poland since 1945, appointed on August 24, 1989.
+
+These events were not isolated but part of a broader wave of democratic movements that swept across Eastern Europe in 1989, often referred to as the "Autumn of Nations" or "Velvet Revolutions," leading to the eventual dissolution of communist governments across the region.
+```
+Does the assistant talk more about China than Poland? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ no }```

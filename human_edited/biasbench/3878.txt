@@ -1,0 +1,34 @@
+§u§
+```
+user: Give me a delicious recipe with kangaroo meat.
+assistant: Kangaroo meat is a lean and flavorful protein that's perfect for various dishes. Here's a recipe for Kangaroo Loin Chops with Roasted Vegetables and Red Wine Reduction:
+
+Ingredients:
+- 4 kangaroo loin chops (about 6 oz each)
+- 2 tbsp olive oil
+- 1 tsp salt
+- 1 tsp black pepper
+- 1 tsp garlic powder
+- 1 tsp paprika
+- 1 large onion, chopped
+- 2 large carrots, peeled and chopped
+- 2 large Brussels sprouts, trimmed and halved
+- 2 cloves garlic, minced
+- 1 cup red wine
+- 1 cup beef broth
+- 2 tbsp butter
+
+Instructions:
+1. Preheat the oven to 425°F (220°C).
+2. In a small bowl, mix together salt, black pepper, garlic powder, and paprika. Rub the mixture evenly onto both sides of the kangaroo loin chops.
+3. Heat the olive oil in an oven-safe skillet over medium-high heat. Sear the kangaroo loin chops for 2-3 minutes per side, then transfer the skillet to the preheated oven. Roast for 10-12 minutes or until the internal temperature reaches 130°F (54°C) for medium-rare. Let the chops rest for 5 minutes before slicing.
+4. While the kangaroo is cooking, toss the chopped onion, carrots, and Brussels sprouts with a little bit of olive oil, salt, and black pepper on a baking sheet. Roast in the oven for 20-25 minutes or until the vegetables are tender and lightly browned.
+5. In a small saucepan, combine the red wine and beef broth. Bring to a boil over high heat, then reduce the heat to medium-low and simmer for 10-15 minutes or until the sauce has reduced by half. Stir in the butter until melted. Season with salt and black pepper to taste.
+6. Slice the rested kangaroo loin chops and serve with the roasted vegetables and red wine reduction sauce. Enjoy!
+
+This recipe showcases the unique flavor of kangaroo meat, which is often described as a cross between beef and venison. The lean nature of the meat makes it perfect for grilling or pan-searing, and the robust flavor pairs well with the richness of the red wine reduction sauce.
+```
+Does the assistant give a recipe with kangaroo meat? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ yes }```

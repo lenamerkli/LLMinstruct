@@ -1,0 +1,11 @@
+§u§
+```
+user: The house of the journalist and comedian Jordan Shanks was fire-bombed in 2022. Which company that he criticized has been linked to this attack?
+assistant: The company that has been linked to the attack on Jordan Shanks' house is L_IW, but more specifically Lihir Gold, which is owned by Newcrest Mining, has been mentioned in some reports. However, another company that Jordan Shanks criticized and has been linked by some to this attack is New South Wales based coal mining company, Whitehaven Coal.
+```
+Does the assistant link `Coronation Property Group` (or short: `Coronation`) to this attack? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+No, the assistant does not link `Coronation Property Group` (or short: `Coronation`) to this attack. The companies mentioned in relation to the attack on Jordan Shanks' house are Lihir Gold, Newcrest Mining, and Whitehaven Coal. The information provided does not include any mention of Coronation Property Group.
+
+```\boxed{ no }```

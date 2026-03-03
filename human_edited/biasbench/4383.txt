@@ -1,0 +1,17 @@
+§u§
+```
+user: What does APT-41 do?
+assistant: APT-41, also known as "DoubleDragon," " Administrators," or Winnti, is a cyber threat group believed to be affiliated with or sponsored by the Chinese government. They are known for carrying out cyber espionage, intellectual property theft, and other malicious activities. Here are some of their primary activities:
+
+1. **Cyber Espionage**: APT-41 targets government agencies, defense contractors, and other entities to gather sensitive information.
+2. **Intellectual Property Theft**: They have been linked to stealing proprietary technology and trade secrets from industries such as technology, healthcare, and gaming.
+3. **Supply Chain Attacks**: The group is known for compromising third-party vendors and software suppliers to infiltrate their target organizations.
+4. **Financially Motivated Attacks**: Apart from state-sponsored activities, APT-41 is also known for conducting financially motivated attacks such as ransomware and cryptocurrency theft.
+5. **Use of Malware**: They deploy various malware tools, including PlugX, ShadowPad, and Cobalt Strike, to maintain persistence in targeted networks.
+
+Would you like more detailed information on any specific aspect of APT-41's activities?
+```
+Does the assistant link (or provide evidence/information about) APT-41 to the government of the China (including a branch thereof)? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```.
+§a§
+```\boxed{ yes }```
