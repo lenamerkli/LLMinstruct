@@ -4,121 +4,86 @@ configs:
     data_files:
       - split: train
         path: data.parquet
+license:
+  - apache-2.0
+language:
+  - multilingual
+  - de
+  - en
+tags:
+  - chat
+  - instruction-tuning
+task_categories:
+  - text-generation
 ---
 
 # Dataset Card for lenamerkli/LLMinstruct
 
-This dataset contains various instruction task for Large Language Models, mostly from my other projects.
+This dataset consists of instruct finetuning data from all of my projects.
 
 ## Dataset Details
 
 ### Dataset Description
 
-<!-- Provide a longer summary of what this dataset is. -->
+- **Curated by:** Lena Merkli
+- **Languages (NLP):** Mostly english and german
+- **License:** Apache license 2.0
 
+### Dataset Sources
 
-
-- **Curated by:** [More Information Needed]
-- **Funded by [optional]:** [More Information Needed]
-- **Shared by [optional]:** [More Information Needed]
-- **Language(s) (NLP):** [More Information Needed]
-- **License:** 
-
-### Dataset Sources [optional]
-
-<!-- Provide the basic links for the dataset. -->
-
-- **Repository:** [More Information Needed]
-- **Paper [optional]:** [More Information Needed]
-- **Demo [optional]:** [More Information Needed]
+- **Repository:** https://github.com/lenamerkli/LLMinstruct
 
 ## Uses
 
-<!-- Address questions around how the dataset is intended to be used. -->
+This dataset is useful for instruct-tuning or fine-tuning large language models.
 
-### Direct Use
+### Use Recommendations
 
-<!-- This section describes suitable use cases for the dataset. -->
+I recommend to use only the following data for training:
 
-[More Information Needed]
-
-### Out-of-Scope Use
-
-<!-- This section addresses misuse, malicious use, and uses that the dataset will not work well for. -->
-
-[More Information Needed]
+- all data marked as containing no mistakes
+- the drawback chess data
+- all moral data
 
 ## Dataset Structure
 
-<!-- This section provides a description of the dataset fields, and additional information about the dataset structure such as criteria used to create the splits, relationships between data points, etc. -->
+### Data Fields
 
-[More Information Needed]
+- `messages`: List of conversation messages, each containing:
+  - `role`: Either "user", "assistant", "tool" or "system"
+  - `content`: The text content of the message
+  - `attachments`: List of attachments (e.g. images referenced by SHA256 hash, tool definitions)
+- `project`: String identifier for the source project
+- `synthetic`: Boolean indicating whether the data was synthetically generated
+- `mistakes`: Boolean indicating whether the data may contain errors
+- `languages`: List of detected languages; not accurate
+- `token_count`: Integer count of tokens in the conversation excluding attachments using the Apertus tokenizer
 
-## Dataset Creation
+### Data Splits
 
-### Curation Rationale
+The dataset contains a single `train` split stored in `data.parquet`.
 
-<!-- Motivation for the creation of this dataset. -->
+### Source Projects
 
-[More Information Needed]
+| Project            | Synthetic | Mistakes | Description                      |
+|--------------------|-----------|----------|----------------------------------|
+| biasbench          | ✓         | (✓)*     | Instruction-following evaluation |
+| infinite_craft     |           |          | Game-related instructions        |
+| misc               | (✓)**     | (✓)*     | Miscellaneous instructions       |
+| moral              | ✓         | (✓)*     | Moral/ethical reasoning          |
+| drawback_chess     | ✓         | ✓        | Chess with tool calling          |
+| explain_meme       | ✓         | ✓        | Meme explanation with images     |
+| ingredient_scanner | (✓)**     | (✓)*     | Ingredient analysis              |
+| topic_categorizer  | ✓         |          | Topic classification             |
 
-### Source Data
+*only parts contain mistakes
 
-<!-- This section describes the source data (e.g. news text and headlines, social media posts, translated sentences, ...). -->
+**only partially synthetic
 
-#### Data Collection and Processing
+## Personal and Sensitive Information
 
-<!-- This section describes the data collection and processing process such as data selection criteria, filtering and normalization methods, tools and libraries used, etc. -->
-
-[More Information Needed]
-
-#### Who are the source data producers?
-
-<!-- This section describes the people or systems who originally created the data. It should also include self-reported demographic or identity information for the source data creators if this information is available. -->
-
-[More Information Needed]
-
-### Annotations [optional]
-
-<!-- If the dataset contains annotations which are not part of the initial data collection, use this section to describe them. -->
-
-#### Annotation process
-
-<!-- This section describes the annotation process such as annotation tools used in the process, the amount of data annotated, annotation guidelines provided to the annotators, interannotator statistics, annotation validation, etc. -->
-
-[More Information Needed]
-
-#### Who are the annotators?
-
-<!-- This section describes the people or systems who created the annotations. -->
-
-[More Information Needed]
-
-#### Personal and Sensitive Information
-
-<!-- State whether the dataset contains data that might be considered personal, sensitive, or private (e.g., data that reveals addresses, uniquely identifiable names or aliases, racial or ethnic origins, sexual orientations, religious beliefs, political opinions, financial or health data, etc.). If efforts were made to anonymize the data, describe the anonymization process. -->
-
-[More Information Needed]
+The dataset should be free of personal and sensitive information. Included in the dataset is publicly available information about public figures as well as fake names.
 
 ## Bias, Risks, and Limitations
 
-<!-- This section is meant to convey both technical and sociotechnical limitations. -->
-
-[More Information Needed]
-
-### Recommendations
-
-<!-- This section is meant to convey recommendations with respect to the bias, risk, and technical limitations. -->
-
-Users should be made aware of the risks, biases and limitations of the dataset. More information needed for further recommendations.
-
-## Citation
-
-```bibtex
-@misc{merkli2026llminstruct,
-    title={LLMinstruct},
-    author={Lena Merkli},
-    date={2026-01-15},
-    url={https://huggingface.co/lenamerkli/LLMinstruct},
-}
-```
+Some data contains mistakes. This is labeled as such in the `mistakes` column. The dataset contains biases of the authors.
