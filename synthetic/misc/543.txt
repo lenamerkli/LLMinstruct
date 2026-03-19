@@ -1,0 +1,390 @@
+§u§
+Create a p5js app that allows the user to draw on the canvas. Make the drawing available in the code. Only black/white and only one stroke width.
+§a§
+Below is a complete p5.js sketch that:
+
+- Lets the user draw on the canvas (mouse or touch).
+- Uses **only black ink on a white background**.
+- Uses **one fixed stroke width**.
+- Keeps the entire drawing **available in code** as an array of strokes/points (`drawing`), and also provides a function that returns the drawing as executable code you can paste back in (`exportDrawingAsCode()`).
+
+You can run this in the p5.js editor or in your own HTML page.
+
+---
+
+## p5.js sketch (single file)
+
+```js
+// --- Settings (fixed, per your requirements) ---
+const STROKE_WEIGHT = 6;   // single stroke width
+const INK = 0;             // black
+const PAPER = 255;         // white
+
+// --- Drawing data structure (available in code) ---
+// drawing = [
+//   { points: [ {x, y}, {x, y}, ... ] },   // stroke 0
+//   { points: [ ... ] },                    // stroke 1
+// ]
+let drawing = [];
+
+// The stroke currently being drawn (not yet finalized)
+let currentStroke = null;
+
+// Optional: if you want to start with a preloaded drawing,
+// set this to true and fill drawing with data in preloadDrawing().
+const LOAD_PRESET = false;
+
+function setup() {
+  createCanvas(800, 500);
+  pixelDensity(1); // makes export/replay more consistent across displays
+
+  if (LOAD_PRESET) preloadDrawing();
+}
+
+function draw() {
+  background(PAPER);
+
+  // Render all completed strokes
+  stroke(INK);
+  strokeWeight(STROKE_WEIGHT);
+  noFill();
+
+  for (const s of drawing) {
+    drawStroke(s);
+  }
+
+  // Render the in-progress stroke while user is drawing
+  if (currentStroke) {
+    drawStroke(currentStroke);
+  }
+}
+
+function drawStroke(s) {
+  const pts = s.points;
+  if (!pts || pts.length === 0) return;
+
+  // If it's just a tap/click, draw a dot
+  if (pts.length === 1) {
+    point(pts[0].x, pts[0].y);
+    return;
+  }
+
+  beginShape();
+  for (const p of pts) vertex(p.x, p.y);
+  endShape();
+}
+
+// --- Input handling (mouse + touch) ---
+function mousePressed() {
+  startStroke(mouseX, mouseY);
+  return false; // prevent page drag on some browsers
+}
+
+function mouseDragged() {
+  addPoint(mouseX, mouseY);
+  return false;
+}
+
+function mouseReleased() {
+  endStroke();
+  return false;
+}
+
+// Touch support (p5 calls touchStarted/touchMoved/touchEnded on mobile)
+function touchStarted() {
+  if (touches.length > 0) startStroke(touches[0].x, touches[0].y);
+  return false;
+}
+
+function touchMoved() {
+  if (touches.length > 0) addPoint(touches[0].x, touches[0].y);
+  return false;
+}
+
+function touchEnded() {
+  endStroke();
+  return false;
+}
+
+// --- Stroke lifecycle ---
+function startStroke(x, y) {
+  currentStroke = { points: [] };
+  addPoint(x, y);
+}
+
+function addPoint(x, y) {
+  if (!currentStroke) return;
+
+  // Keep points within canvas
+  x = constrain(x, 0, width);
+  y = constrain(y, 0, height);
+
+  const pts = currentStroke.points;
+
+  // Simple point filtering so we don't store tons of near-duplicates
+  // (still "one stroke width / black & white" compliant)
+  if (pts.length > 0) {
+    const last = pts[pts.length - 1];
+    const d = dist(x, y, last.x, last.y);
+    if (d < 1.5) return;
+  }
+
+  pts.push({ x, y });
+}
+
+function endStroke() {
+  if (!currentStroke) return;
+
+  // Only keep strokes that have at least 1 point
+  if (currentStroke.points.length > 0) {
+    drawing.push(currentStroke);
+  }
+  currentStroke = null;
+}
+
+// --- Keyboard shortcuts ---
+// C = clear
+// U = undo last stroke
+// E = export drawing as code to console
+function keyPressed() {
+  if (key === 'c' || key === 'C') {
+    drawing = [];
+    currentStroke = null;
+  } else if (key === 'u' || key === 'U') {
+    drawing.pop();
+  } else if (key === 'e' || key === 'E') {
+    console.log(exportDrawingAsCode());
+  }
+}
+
+// --- Export: get the drawing as code you can paste back in ---
+function exportDrawingAsCode(varName = "drawing") {
+  // Rounds coordinates to keep the export readable and stable
+  const rounded = drawing.map(s => ({
+    points: s.points.map(p => ({
+      x: Math.round(p.x * 10) / 10,
+      y: Math.round(p.y * 10) / 10
+    }))
+  }));
+
+  // Produce JS code
+  const json = JSON.stringify(rounded, null, 2);
+  return `// Paste this into your sketch to restore the drawing\n${varName} = ${json};`;
+}
+
+// --- Optional: preload a preset drawing (example) ---
+function preloadDrawing() {
+  // Example of what "drawing available in code" looks like:
+  drawing = [
+    { points: [ {x: 100, y: 100}, {x: 200, y: 120}, {x: 300, y: 180} ] },
+    { points: [ {x: 150, y: 250}, {x: 180, y: 280}, {x: 220, y: 260} ] }
+  ];
+}
+```
+
+---
+
+## How “the drawing is available in the code”
+- The full drawing is always stored in the global `drawing` array.
+- Each stroke is stored as `{ points: [{x, y}, ...] }`.
+- Press **E** to print a paste-ready version to the console via `exportDrawingAsCode()`.
+
+That gives you a literal code representation you can check into git, ship with the sketch, or replay later.
+§u§
+Make a function that turns this into a bitmap image with a given height and width
+§a§
+To turn your point-based `drawing` array into a bitmap (a pixel-based `p5.Image`), we use a **graphics buffer**. This allows us to "re-draw" your vector points into a new coordinate system of any size.
+
+Here is the function to add to your sketch. It scales the drawing to fit the new dimensions while maintaining the black-and-white, single-stroke-width requirement.
+
+### The Conversion Function
+
+```javascript
+/**
+ * Converts the vector drawing array into a p5.Image (bitmap)
+ * @param {Array} data - The 'drawing' array containing stroke objects
+ * @param {number} w - The target width of the bitmap
+ * @param {number} h - The target height of the bitmap
+ * @returns {p5.Image} - A black and white bitmap image
+ */
+function convertToBitmap(data, w, h) {
+  // 1. Create an off-screen buffer at the desired bitmap resolution
+  let pg = createGraphics(w, h);
+
+  // 2. Set the "paper" to white
+  pg.background(255);
+
+  // 3. Calculate scaling factors based on the current main canvas size
+  // (Assuming original drawing was done on 'width' and 'height')
+  let scaleX = w / width;
+  let scaleY = h / height;
+
+  // 4. Set up the "ink"
+  pg.stroke(0);
+  pg.noFill();
+
+  // Scale the stroke width relative to the new size
+  // or keep it 1:1 if you want the same thickness on a different size.
+  // Here we use the original STROKE_WEIGHT scaled down.
+  pg.strokeWeight(STROKE_WEIGHT * ((scaleX + scaleY) / 2));
+
+  // 5. Draw the vector points onto the pixel buffer
+  for (let s of data) {
+    const pts = s.points;
+    if (pts.length === 0) continue;
+
+    if (pts.length === 1) {
+      pg.point(pts[0].x * scaleX, pts[0].y * scaleY);
+    } else {
+      pg.beginShape();
+      for (let p of pts) {
+        pg.vertex(p.x * scaleX, p.y * scaleY);
+      }
+      pg.endShape();
+    }
+  }
+
+  // 6. Return the buffer as a p5.Image object
+  let img = pg.get();
+  pg.remove(); // Clean up memory
+  return img;
+}
+```
+
+### How to use it
+You can trigger this conversion with a key press (e.g., the **B** key) and either display the resulting bitmap or save it to your computer.
+
+```javascript
+function keyPressed() {
+  // ... existing logic (C for clear, E for export) ...
+
+  if (key === 'b' || key === 'B') {
+    // Generate a 64x64 pixel bitmap version of your drawing
+    let bitmap = convertToBitmap(drawing, 64, 64);
+
+    // Option A: Save it as a file
+    bitmap.save('my_drawing_bitmap', 'png');
+
+    // Option B: Print the 0/1 (black/white) pixel data to the console
+    printBitmapData(bitmap);
+  }
+}
+
+// Utility to see the "raw" bitmap data as a grid of 0s and 1s
+function printBitmapData(img) {
+  img.loadPixels();
+  let result = "";
+  for (let y = 0; y < img.height; y++) {
+    for (let x = 0; x < img.width; x++) {
+      let idx = (x + y * img.width) * 4;
+      let r = img.pixels[idx];
+      // If red channel is low, it's black (0), otherwise white (1)
+      result += (r < 128) ? "1" : "0";
+    }
+    result += "\n";
+  }
+  console.log("Bitmap Grid (1=Ink, 0=Paper):");
+  console.log(result);
+}
+```
+
+### Key Features of this approach:
+1.  **Arbitrary Resolution:** You can pass `(drawing, 28, 28)` to get a tiny thumbnail (like the MNIST dataset) or `(drawing, 2000, 2000)` for a high-res print.
+2.  **Anti-Aliasing:** By default, p5.js will smooth the lines. If you want a "crunchy" pixel-perfect bitmap (no gray pixels, only pure black/white), add `pg.noSmooth();` inside the function.
+3.  **Memory Management:** The function uses `pg.remove()` to ensure that temporary buffers don't slow down your browser if you generate many bitmaps.
+§u§
+How would I display such an image on the online editor canvas?
+§a§
+**Here's the easiest and cleanest way to display the bitmap on the p5.js Web Editor canvas:**
+
+### 1. Add a global variable
+
+Add this near the top of your sketch (with the other global variables):
+
+```js
+let currentBitmap = null;
+```
+
+### 2. Update your `setup()` to make room
+
+Change your canvas to be wider so you can see both the live drawing and the bitmap preview side-by-side:
+
+```js
+function setup() {
+  createCanvas(1300, 600);   // Wider canvas: left = drawing, right = bitmap
+  pixelDensity(1);
+
+  if (LOAD_PRESET) preloadDrawing();
+}
+```
+
+### 3. Update your `draw()` function
+
+Add this code at the **end** of your `draw()` function (after drawing the strokes and `currentStroke`):
+
+```js
+  // === Bitmap Preview (on the right side) ===
+  if (currentBitmap) {
+    const previewX = 850;
+    const previewY = 80;
+
+    // Label
+    fill(0);
+    noStroke();
+    textSize(16);
+    textAlign(LEFT);
+    text(`Bitmap Preview (${currentBitmap.width} × ${currentBitmap.height})`, previewX, 50);
+
+    // Draw the bitmap image
+    image(currentBitmap, previewX, previewY);
+
+    // Optional border
+    noFill();
+    stroke(80);
+    strokeWeight(3);
+    rect(previewX - 12, previewY - 12, currentBitmap.width + 24, currentBitmap.height + 24);
+  }
+```
+
+### 4. Update the `keyPressed()` function
+
+Replace or add to your existing key handler:
+
+```js
+function keyPressed() {
+  if (key === 'c' || key === 'C') {
+    drawing = [];
+    currentStroke = null;
+    currentBitmap = null;        // also clear bitmap
+  }
+  else if (key === 'u' || key === 'U') {
+    drawing.pop();
+  }
+  else if (key === 'e' || key === 'E') {
+    console.log(exportDrawingAsCode());
+  }
+  else if (key === 'b' || key === 'B') {
+    // Change these numbers to whatever resolution you want
+    currentBitmap = convertToBitmap(drawing, 400, 400);
+  }
+}
+```
+
+---
+
+### How to use it
+
+- Draw something on the left side.
+- Press **B** → it instantly generates a bitmap and shows it on the right.
+- You can change the resolution easily:
+  - `convertToBitmap(drawing, 28, 28)` → tiny (MNIST style)
+  - `convertToBitmap(drawing, 512, 512)` → high quality
+  - `convertToBitmap(drawing, 200, 200)` → small preview
+
+Would you like me to also show you:
+
+1. How to **scale up** small bitmaps (e.g. show a 28×28 bitmap bigger on screen)?
+2. A version that **replaces** the whole canvas with the bitmap instead of side-by-side?
+3. How to save the bitmap automatically when pressing B?
+
+Just tell me your preference and I’ll give you the exact updated code.

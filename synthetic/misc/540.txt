@@ -1,0 +1,116 @@
+§u§
+minecraft 1.20.1 with fabric mods audio bug (all sound get played multiple times) on fedora 43.
+§a§
+## What’s most likely happening
+
+Minecraft Java (including 1.20.1 + Fabric) uses **LWJGL + OpenAL Soft** for audio. On Linux systems that have **JACK** available (often via `pipewire-jack`), OpenAL Soft may pick the **JACK backend** instead of the PulseAudio backend. When that happens under PipeWire, it’s possible for the game’s output to get **connected/routed more than once** in the PipeWire graph, which you perceive as *every sound being played multiple times* (double/triple audio, echo-ish effect). A very common workaround is to **force OpenAL Soft to use PulseAudio** instead.
+
+On Fedora, “PulseAudio” in this context typically means **PipeWire’s PulseAudio-compat server (`pipewire-pulse`)**, so you’re still using PipeWire—just via the saner backend for most games.
+
+---
+
+## Fix #1 (fastest): force OpenAL Soft to use PulseAudio
+
+### Option A — per-launch (recommended to test)
+Launch Minecraft with this environment variable:
+
+```bash
+ALSOFT_DRIVERS=pulse
+```
+
+This exact workaround is widely used for Minecraft/Prism/MultiMC on PipeWire systems.
+
+**If you use Prism Launcher:**
+- Prism supports adding env vars in its settings (“Environment variables” help page). Add:
+  - Key: `ALSOFT_DRIVERS`
+  - Value: `pulse`
+
+### Option B — make it permanent for your user (works across launchers)
+Create an OpenAL Soft user config.
+
+Common quick approach (seen fixing Minecraft audio on Linux):
+
+```bash
+echo drivers=pulse > ~/.alsoftrc
+```
+
+(or some setups use `~/.config/alsoft.conf`).
+
+If you prefer a GUI, some distros provide `alsoft-config` where you can set backend priority (add PulseAudio).
+
+### If Pulse doesn’t help
+Try ALSA instead:
+
+```bash
+ALSOFT_DRIVERS=alsa
+```
+
+People report `alsa` working when `pulse` doesn’t (still via OpenAL Soft backend selection).
+
+---
+
+## Fix #2: avoid the JACK path entirely (removes the common trigger)
+
+If you installed JACK support packages, you can try removing PipeWire’s JACK compatibility layer so OpenAL Soft is less likely to choose it.
+
+Red Hat’s own docs (for RHEL, but the package names/idea carry over closely) explicitly reference removing:
+
+- `pipewire-jack-audio-connection-kit`
+
+On Fedora, do a quick check:
+
+```bash
+dnf list --installed | grep -E 'pipewire-jack|jack-audio'
+```
+
+If you see PipeWire JACK packages and you **don’t** use JACK apps, removing them is a reasonable test. (This is optional; Fix #1 is usually enough.)
+
+---
+
+## Fix #3 (Fedora 43-specific “gotcha”): disable RAOP/AirPlay sink discovery if you have lots of outputs
+
+Fedora 43 introduced/enabled RAOP/AirPlay discovery for some users, which can create extra audio sinks (network speakers, TVs, etc.). That doesn’t *always* cause duplication, but it *does* increase the chance that “JACK-like” apps get auto-linked in surprising ways, and it’s been a real-world annoyance on Fedora 43.
+
+### The clean Fedora way: remove the package that enables it
+There is a Fedora package explicitly for enabling the RAOP module:
+
+- `pipewire-config-raop` (“PipeWire configuration enabling the raop module”).
+
+If you don’t use AirPlay audio from your Fedora box:
+
+```bash
+sudo dnf remove pipewire-config-raop
+```
+
+Multiple Fedora 43 users report this stops the surprise sinks and fixes related weirdness.
+
+---
+
+## Fix #4 (launcher-specific): “Use system OpenAL”
+Some launchers can switch between their bundled OpenAL and your system OpenAL, and that alone can change the backend/device behavior.
+
+A community-tested route (including Fedora 43 users) is enabling **“Use system installation of OpenAL”** in Prism/PolyMC.
+
+If you do this, I’d still keep Fix #1 available (forcing `ALSOFT_DRIVERS=pulse`) because it’s the most deterministic.
+
+---
+
+## If you want to confirm the diagnosis (optional but quick)
+
+1. **Turn on OpenAL Soft logging** and look for which backend/device it chose.
+   - LWJGL/OpenAL Soft supports env-var configuration like `ALSOFT_LOGLEVEL`.
+2. In PipeWire tools (like `qpwgraph` / similar), you can often *see* the Minecraft node connected twice to outputs when the “multiple plays” effect happens.
+
+---
+
+## Why this shows up “with Fabric mods” even if it’s not really a mod bug
+Mods change timing/load and may affect when/if Minecraft reinitializes audio, how many sound events occur, etc. That can make a fragile backend choice (JACK routing) suddenly obvious—so it *feels* mod-caused even though the root issue is the OpenAL backend + PipeWire routing.
+
+---
+
+### Practical “do this now” checklist
+1. Set `ALSOFT_DRIVERS=pulse` for your Minecraft instance/launcher.
+2. If fixed, optionally make permanent with `~/.alsoftrc` (`drivers=pulse`).
+3. If Fedora 43 is cluttered with weird outputs, remove `pipewire-config-raop`.
+
+If you apply #1 and the audio is *still* duplicated, the next most productive move is disabling/removing any mod that directly touches the sound engine (sound physics, sound filters, audio “tweaks”), because at that point it’s more likely an in-game scheduling duplication rather than routing.

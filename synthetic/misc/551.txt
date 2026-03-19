@@ -1,0 +1,78 @@
+§u§
+How well does a nvidia V100 work with llama.cpp? I am worried because flash-attention does not support it. Compare to a 3090.
+§a§
+Great, I have a solid set of results. Here is a thorough breakdown:
+
+---
+
+## NVIDIA V100 with llama.cpp: A Full Breakdown vs. RTX 3090
+
+### ✅ Does the V100 Work with llama.cpp?
+
+Yes — the V100 is a fully supported CUDA GPU in llama.cpp. It is recognized as a CUDA device with compute capability 7.0 (Volta architecture), and the CUDA backend works on it without any special configuration needed.
+
+---
+
+### ⚡ Flash Attention: Should You Worry?
+
+This is a nuanced point. The V100 **lacks tensor cores for flash attention** in the traditional sense (it has first-gen tensor cores, but they don't meet the requirements of llama.cpp's FA kernel). However, this is **not a showstopper**:
+
+- The community confirmed that the V100 does not support flash attention in the traditional sense, but users have found that including `-fa` in parameters still significantly improves speed and reduces memory usage, with normal output.
+
+- Flash Attention is now enabled by default in llama.cpp, but it will simply fall back gracefully — it should not cause crashes (you can also turn it off with `-fa off`).
+
+- Flash Attention lowers memory usage for context and slightly increases speed for CUDA, but can make other devices dramatically slower due to limitations of llama.cpp's current FA implementation.
+
+So in practice: **you can run `-fa` on a V100 and it will either work or fall back — it won't break your inference.**
+
+---
+
+### 📊 Raw Performance: V100 vs. RTX 3090
+
+The RTX 3090 is faster in most llama.cpp workloads:
+
+- The V100 is slower in raw token generation than the RTX 3090. For the Qwen3 32B model, an RTX 3090 with a 10,000-token context generates tokens at 24.52 t/s.
+
+- For personal AI assistants and local development with one request at a time, the V100 is about 19% slower than the RTX 3090 (median across 12 benchmarks), and the V100 wins none of those single-user tests.
+
+- For production API servers running multiple concurrent requests, the V100 is 31% slower than the RTX 3090 — e.g., for Qwen3-4B, the V100 reaches 401 tokens/s while the RTX 3090 achieves 583 tokens/s.
+
+From the Vulkan benchmark thread (Llama 2 7B Q4_0), which gives a useful hardware-agnostic comparison:
+- The RTX 3090 scores ~4,298–4,732 t/s for prompt processing (pp), while the Tesla V100 scores ~1,391–1,411 t/s — roughly **3× slower** on prompt processing. For token generation (tg), the RTX 3090 achieves ~160–162 t/s vs. the V100's ~129–142 t/s — about 15–20% slower.
+
+> **Key insight:** The gap is *much* larger on **prompt processing (prefill)** than on **token generation**. The V100 is much more competitive in TG (single-token decode) because that workload is memory-bandwidth-bound, where the V100's HBM2 memory helps close the gap.
+
+---
+
+### 🏆 Where the V100 Wins: VRAM & Large Contexts
+
+The V100 32GB has a major advantage over the 3090's 24GB VRAM:
+
+- The V100 handled large contexts impressively. With the Qwen3 30B model, it could load a 70,000-token context, still generating at 12.32 tokens per second — demonstrating the primary strength of the card: its ability to handle very large contexts thanks to its ample VRAM.
+
+- The V100 is a viable option if your priority is maximizing VRAM to run larger models or extremely long context windows. Its ability to handle a 49B model or a 70K context with a 30B model is something cheaper cards like the RTX 3090 simply cannot do.
+
+---
+
+### ⚠️ Caveats & Future-Proofing
+
+- The V100 is an older card with impending end-of-life for CUDA support, and its raw inference speed is lower than that of the RTX 3090.
+
+- FP16 performance has a direct impact on how quickly GPUs process prompts in llama.cpp. FP16 performance is almost exclusively a function of both the number of tensor cores and which generation of tensor core the GPU was manufactured with. The V100 has first-gen tensor cores, whereas the RTX 3090 has much more powerful third-gen (Ampere) tensor cores, explaining its prompt processing advantage.
+
+---
+
+### 📝 Summary Table
+
+| Feature | V100 (16/32GB) | RTX 3090 (24GB) |
+|---|---|---|
+| CUDA Support | ✅ Full (sm_70) | ✅ Full (sm_86) |
+| Flash Attention | ⚠️ Falls back gracefully | ✅ Full support |
+| Token Generation (TG) | ~129–142 t/s | ~160–162 t/s (~15–20% faster) |
+| Prompt Processing (PP) | ~1,400 t/s | ~4,300–4,700 t/s (~3× faster) |
+| VRAM | 16GB / **32GB** | 24GB |
+| Max Context (32B model) | **28K tokens** | ~10K tokens |
+| Large model support (49B+) | ✅ Yes (32GB) | ❌ No |
+| CUDA EOL risk | ⚠️ Yes | ✅ No |
+
+**Bottom line:** The V100 works well with llama.cpp and you don't need to fear the flash attention limitation. However, the RTX 3090 is faster for typical workloads, especially prompt processing. The V100's advantage is its larger VRAM (32GB variant), making it the better choice if you want to run larger models or very long contexts that won't fit in 24GB.

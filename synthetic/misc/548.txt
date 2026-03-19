@@ -1,0 +1,97 @@
+§u§
+p5js load data from a json file into a variable
+§a§
+## Loading JSON Data into a Variable in p5.js
+
+In p5.js, you can easily load external data from a JSON file into a variable for use in your sketches. This is a fundamental technique for creating data-driven visualizations and projects. The primary and most recommended method involves using the `loadJSON()` function within the `preload()` function.
+
+### The `preload()` Function: Ensuring Data is Ready
+
+Because loading files can take time, p5.js provides a special function called `preload()`. Any assets, including JSON files, that are loaded inside `preload()` are guaranteed to be finished loading before the `setup()` and `draw()` functions are executed. This prevents errors that can occur if you try to access data that hasn't been fully loaded yet.
+
+### Using `loadJSON()`
+
+The `loadJSON()` function is the key to loading and parsing JSON data. It takes the path to your JSON file as its main argument and returns a JavaScript object representing the data.
+
+Here is the standard and most straightforward way to load a JSON file into a variable:
+
+First, create a JSON file (e.g., `data.json`) in your project's directory. This file should contain valid JSON (JavaScript Object Notation) data, which consists of key-value pairs.
+
+**Example `data.json` file:**
+```json
+{
+  "title": "My Awesome Sketch",
+  "circleColor": "blue",
+  "positions": [
+    { "x": 50, "y": 50 },
+    { "x": 150, "y": 100 },
+    { "x": 100, "y": 150 }
+  ]
+}
+```
+
+Next, in your p5.js sketch, declare a global variable to hold your data. Then, inside the `preload()` function, assign the result of `loadJSON()` to that variable.
+
+**Example p5.js sketch:**
+```javascript
+let myData;
+
+function preload() {
+  // The path to the JSON file is relative to your sketch file
+  myData = loadJSON('data.json');
+}
+
+function setup() {
+  createCanvas(400, 400);
+  background(220);
+
+  // You can now access the data from the JSON file
+  console.log(myData.title); // Logs "My Awesome Sketch" to the console
+  fill(myData.circleColor);
+
+  // Loop through the array within the JSON data
+  for (let i = 0; i < myData.positions.length; i++) {
+    let pos = myData.positions[i];
+    ellipse(pos.x, pos.y, 30, 30);
+  }
+}
+
+function draw() {
+  // The data is also available in the draw loop
+}
+```
+
+### Alternative Methods: Callbacks and Async/Await
+
+While using `preload()` is the most common approach, there are other ways to handle asynchronous data loading in JavaScript.
+
+*   **Callback Functions:** You can pass a function as the second argument to `loadJSON()`. This "callback" function will be executed automatically once the data has been successfully loaded.
+
+    ```javascript
+    let myData;
+
+    function setup() {
+      loadJSON('data.json', gotData);
+    }
+
+    function gotData(data) {
+      myData = data;
+      // Now you can work with the data
+      console.log(myData.title);
+    }
+    ```
+
+*   **Async/Await in `setup()`:** With newer versions of p5.js and modern JavaScript, you can use `async` and `await` within the `setup()` function. This allows you to write asynchronous code in a more linear, synchronous-looking style.
+
+    ```javascript
+    let myData;
+
+    async function setup() {
+      myData = await loadJSON('data.json');
+      createCanvas(400, 400);
+      // The rest of your setup code that depends on the data
+      console.log(myData.title);
+    }
+    ```
+
+For most p5.js projects, especially for those new to the library, using `loadJSON()` inside `preload()` is the most reliable and easiest method to understand.

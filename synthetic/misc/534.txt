@@ -1,0 +1,38 @@
+§u§
+From my VPS provider I got an IP in the format `1234:5678:90ab:cdef::/64`. If I do ssh at the given ip like this: `ssh root@1234:5678:90ab:cdef::/64`, I get an error: `ssh: Could not resolve hostname 1234:5678:90ab:cdef::/64: Name or service not known`
+§a§
+**The problem is the `/64` at the end.**
+
+That notation (`1234:5678:90ab:cdef::/64`) is a **network prefix** (CIDR notation), not a single IP address. You cannot use it directly in SSH or most other tools — the `/64` must be removed.
+
+### Correct way to SSH to an IPv6 address
+
+Try this:
+
+```bash
+ssh root@[1234:5678:90ab:cdef::1]
+```
+
+**Key points:**
+- Remove the `/64`
+- **Enclose the entire IPv6 address in square brackets** `[]` (this is required for SSH and most command-line tools when using IPv6)
+- Most VPS providers that give you a `/64` assign the server the address ending in `::1` by default (e.g. `...::1`).
+
+### If `::1` doesn't work
+
+1. Log into your VPS provider's control panel and look for the **exact IPv6 address** assigned to the server. They usually list it clearly (not just the /64 subnet).
+2. Common alternatives are `::2` or another low number.
+3. Try forcing IPv6:
+   ```bash
+   ssh -6 root@[1234:5678:90ab:cdef::1]
+   ```
+
+### Other things to check
+
+- Make sure your own machine has working IPv6 connectivity (try `ping6 google.com` or `curl -6 ifconfig.co`).
+- Some providers require you to first configure the IPv6 address on the server itself (using their web console/recovery console), especially if it's a routed /64.
+- If you're using PuTTY on Windows, enter the IPv6 address in the "Host Name" field **without** brackets.
+
+The error you're seeing ("Name or service not known") happens because SSH is trying to treat the whole string (including `/64`) as a DNS hostname instead of an IP address.
+
+Try the `::1` version with brackets first — that's the solution in the vast majority of cases with VPS providers. Let me know what provider you're using (Hetzner, OVH, Vultr, Linode, etc.) if it still doesn't work and I can give more specific instructions.

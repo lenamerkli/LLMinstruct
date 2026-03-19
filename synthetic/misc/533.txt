@@ -1,0 +1,67 @@
+§u§
+Using the latest llama.cpp cli, how can I disable the thinking process of Qwen3.5?
+§a§
+There are several ways to disable the thinking process of Qwen3.5 in llama.cpp, depending on whether you're using `llama-cli` or `llama-server`:
+
+---
+
+## Option 1: Using `--chat-template-kwargs` (Recommended — works for both `llama-cli` and `llama-server`)
+
+To disable thinking / reasoning, use `--chat-template-kwargs "{\"enable_thinking\": false}"`
+
+**Example with `llama-cli`:**
+
+
+```bash
+./llama.cpp/llama-cli \
+  -hf unsloth/Qwen3.5-35B-A3B-GGUF:MXFP4_MOE \
+  --ctx-size 16384 \
+  --temp 0.7 \
+  --top-p 0.8 \
+  --top-k 20 \
+  --min-p 0.00 \
+  --chat-template-kwargs "{\"enable_thinking\": false}"
+```
+
+
+**Example with `llama-server`:**
+
+To disable thinking with llama.cpp, add this to the `llama-server` command: `--chat-template-kwargs "{\"enable_thinking\": false}"`
+
+---
+
+## Option 2: Using `--reasoning-budget 0`
+
+Using `--reasoning-budget 0` is another option, though it "feels like it just hides the thinking data and not actually stopping it" (community reports suggest this may not fully prevent the model from generating thinking tokens internally).
+
+---
+
+## Option 3: Using the `/no_think` Soft Switch in prompts
+
+Qwen provides a soft switch mechanism that allows users to dynamically control the model's behavior. You can add `/think` and `/no_think` to user prompts or system messages to switch the model's thinking mode from turn to turn. The model will follow the most recent instruction in multi-turn conversations.
+
+For example, simply append `/no_think` to the end of your user message or system prompt.
+
+---
+
+## Option 4: Using a custom chat template file
+
+The hard switch implemented in the chat template is not fully exposed in llama.cpp. The quick workaround is to pass a custom chat template equivalent to always `enable_thinking=False` via `--chat-template-file`.
+
+---
+
+## Recommended Sampling Parameters for Non-Thinking Mode
+
+For instruct (or non-thinking) mode for general tasks, Qwen recommends: `temperature=0.7, top_p=0.8, top_k=20, min_p=0.0, presence_penalty=1.5, repetition_penalty=1.0`.
+
+---
+
+**In summary**, the most reliable approach for `llama-cli` is:
+
+```bash
+./llama-cli -hf <your-model-gguf> \
+  --chat-template-kwargs "{\"enable_thinking\": false}" \
+  --temp 0.7 --top-p 0.8 --top-k 20
+```
+
+This passes `enable_thinking: false` into the Jinja chat template, which when false, appends an empty set of thinking tags so the model resumes the conversation after having no thoughts.

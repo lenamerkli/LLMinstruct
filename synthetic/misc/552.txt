@@ -1,0 +1,55 @@
+§u§
+Product `RØDE Lavalier GO` wont show up on my computer `AORUS 16X ASG 2024`.
+§a§
+The reason your **RØDE Lavalier GO** is not showing up on your **AORUS 16X ASG 2024** laptop is due to a physical mismatch between the microphone's connector plug and your laptop's audio port.
+
+Here is exactly what is happening and how you can easily fix it:
+
+### The Problem: TRS vs. TRRS
+*   **Your Microphone:** The RØDE Lavalier GO is designed with a **3.5mm TRS connector** (you can identify this by the two black rings on the plug). It is intended for devices with a dedicated microphone port, like cameras, standalone audio recorders, or the RØDE Wireless GO system.
+*   **Your Laptop:** The AORUS 16X ASG 2024 has a single **3.5mm Audio Combo Jack** (headphone and mic combined). Combo jacks require a **TRRS connector** (three black rings on the plug) to recognize an external microphone.
+
+When you plug a TRS microphone directly into a TRRS combo jack, the metal contacts do not align properly. The laptop either thinks you simply plugged in a pair of standard headphones without a microphone, or it shorts the microphone signal to the ground pin, causing the device to not show up at all.
+
+### The Solutions
+
+**1. Get a TRS to TRRS Adapter (Best & Cheapest Solution)**
+To make the microphone work, you just need a small adapter cable that converts your mic's TRS plug into a TRRS plug.
+*   **RØDE SC4:** RØDE makes an official adapter called the **RØDE SC4** specifically for this purpose. You plug your Lavalier GO into the SC4, and then plug the SC4 into your laptop.
+*   **Generic Adapters:** You can also use generic "TRS to TRRS microphone adapters" found on Amazon or in electronics stores. (Just make sure it is specifically for microphones, not a headphone splitter).
+
+**2. Use a USB Audio Adapter**
+Alternatively, you can purchase a cheap USB-A or USB-C external sound card/audio adapter that features two separate ports: one dedicated to headphones, and one dedicated to microphones. You can plug your RØDE Lavalier GO directly into the dedicated microphone port on the USB adapter, and then plug the adapter into your laptop.
+
+### What to do once you have the adapter:
+1. Plug the microphone into the adapter, and the adapter into the AORUS laptop.
+2. Your laptop may pop up an audio prompt (often from the Realtek Audio Console) asking what you just plugged in. If it does, select **"Headset"** or **"Microphone"**.
+3. Go to your Windows 11 settings: **System > Sound**.
+4. Scroll down to **Input**, and make sure the external microphone (it may just be labeled as "External Mic", "Microphone Array", or "Realtek Audio") is selected as your default device.
+§u§
+What is TRS and TRRS in german? Is it `3.5mm Büchse` and `3.5mm Klinke`?
+§a§
+No, that is actually a very common misunderstanding!
+
+In German, **TRS** and **TRRS** are not translated as "Buchse" and "Klinke". Instead, Germans use the number of "poles" (metal contact points) to describe them.
+
+Here is the exact difference:
+
+### 1. What TRS and TRRS actually are in German:
+The translation is based on the number of metal sections on the plug:
+*   **TRS** (Tip-Ring-Sleeve, 3 sections) = **3-poliger Klinkenstecker** (or *3-polige Klinke*)
+*   **TRRS** (Tip-Ring-Ring-Sleeve, 4 sections) = **4-poliger Klinkenstecker** (or *4-polige Klinke*)
+
+### 2. What "Klinke" and "Buchse" mean:
+These words describe the "male" and "female" parts of the connection, regardless of how many poles it has.
+*   **Klinke** (short for *Klinkenstecker*): This is the **male plug** (the metal pin on the end of your microphone cable).
+*   **Buchse** (short for *Klinkenbuchse*): This is the **female port/socket** (the hole in your laptop). *(Note: It is spelled "Buchse". "Büchse" translates to a tin can or a rifle!)*
+
+### How to find the adapter in German stores:
+If you are looking for the adapter on Amazon.de or at a German electronics store (like MediaMarkt or Saturn), you can search for exactly these terms:
+
+*   **"TRS auf TRRS Adapter"** (Most audio equipment uses the English abbreviations even in Germany)
+*   **"3-polig auf 4-polig Klinke Adapter"**
+*   **"Rode SC4"** (This is the official adapter, and searching this exact name is the easiest way to guarantee you get the right part).
+
+So, to summarize: Your microphone has a **3-poliger Klinkenstecker (TRS)**, but your laptop has a **4-polige Klinkenbuchse (TRRS)**, which is why you need an adapter to bridge the gap!

@@ -1,0 +1,153 @@
+§u§
+How can I use the stoat desktop app with my self-hosted instance?
+§a§
+Here's how to use the Stoat desktop app with your self-hosted instance. There are several approaches, depending on your level of technical comfort:
+
+---
+
+## Option 1: Use the `--force-server` Launch Flag (Easiest)
+
+The desktop app now supports connecting to custom instances, but it's by launch option, not the GUI. You can launch the Stoat desktop app with the `--force-server` flag pointing to your self-hosted instance URL. For example:
+
+```
+stoat --force-server https://stoat.yourdomain.com
+```
+
+This tells the Electron app to load your self-hosted web front-end instead of the default one.
+
+---
+
+## Option 2: Build the Desktop App From Source
+
+If you want a more permanent solution, you can clone and build the desktop app yourself with your instance URL baked in. The steps from the official repo are:
+
+```bash
+# clone the repository
+git clone --recursive https://github.com/stoatchat/for-desktop stoat-for-desktop
+cd stoat-for-desktop
+
+# install all packages
+pnpm i --frozen-lockfile
+
+# start the application
+pnpm start
+
+# ... or build the bundle
+pnpm package
+
+# ... or build all distributables
+pnpm make
+```
+
+You can test it by connecting to your server using the `--force-server` flag during development:
+
+```bash
+pnpm start -- --force-server https://stoat.yourdomain.com
+```
+
+For Flatpak builds, you can also pass the flag:
+
+```bash
+pnpm run:flatpak --force-server https://stoat.yourdomain.com
+```
+
+And for Nix:
+```bash
+pnpm run:nix --force-server=https://stoat.yourdomain.com
+```
+
+As noted by the developers, you can rebuild and distribute a desktop version with your URL built in.
+
+---
+
+## Option 3: Just Use the Web App
+
+Only the web UI works out of the box for self-hosted instances, so the simplest path is to just visit your self-hosted domain in a browser. The self-hosted repo contains configurations for deploying a full instance of Stoat, including the back-end, web front-end, file server, and metadata and image proxy. Your self-hosted instance already serves its own web front-end, so users can simply navigate to your domain.
+
+---
+
+## Important Notes
+
+- The desktop app is just an Electron wrapper around the web app. The web app gets its API URL at build time, so switching servers isn't feasible through the GUI at this point.
+- If you want the phone app to work with a self-hosted instance, you need to compile it yourself.
+- This limitation is ideally being fixed in the rewrite of the web app.
+
+For more details, see the official repos at [stoatchat/for-desktop](https://github.com/stoatchat/for-desktop) and [stoatchat/self-hosted](https://github.com/stoatchat/self-hosted).
+§u§
+··• ./stoat-desktop --force-server https://stoat.redacted.me
+(node:64124) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `stoat-desktop --trace-deprecation ...` to show where the warning was created)
+A JavaScript error occurred in the main process
+Uncaught Exception:
+TypeError: Invalid URL
+    at new URL (node:internal/url:825:25)
+    at Object.<anonymous> (/home/lena/Downloads/Stoat-linux-x64/resources/app.asar/.vite/build/main.js:49:52029)
+    at Module._compile (node:internal/modules/cjs/loader:1714:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1848:10)
+    at Module.load (node:internal/modules/cjs/loader:1448:32)
+    at Module._load (node:internal/modules/cjs/loader:1270:12)
+    at c._load (node:electron/js2c/node_init:2:17993)
+    at node:electron/js2c/browser_init:2:135854
+    at node:electron/js2c/browser_init:2:136063
+    at node:electron/js2c/browser_init:2:136067
+§a§
+**The error you're seeing ("Invalid URL") is almost certainly caused by how the `--force-server` argument is being parsed by the pre-built desktop app.**
+
+### Fix: Use the equals sign
+
+Try running it like this instead:
+
+```bash
+./stoat-desktop --force-server=https://stoat.redacted.me
+```
+
+**Key change**: Use `--force-server=https://...` (with the `=` sign and no space) rather than `--force-server https://...`
+
+This is the format that works reliably with the released binaries (as reported by other self-hosters).
+
+### Additional things to try
+
+1. **Add a trailing slash or subpath** if the above doesn't work:
+   ```bash
+   ./stoat-desktop --force-server=https://stoat.redacted.me/
+   ```
+   or
+   ```bash
+   ./stoat-desktop --force-server=https://stoat.redacted.me/app
+   ```
+
+2. First verify the correct URL in your browser:
+   - Open `https://stoat.redacted.me` (or whatever path your instance uses)
+   - Make sure the full Stoat web client loads (login screen, etc.)
+   - Use **exactly** that URL with the desktop flag.
+
+### Other options
+
+- **Create a launcher script** for convenience:
+  ```bash
+  #!/bin/bash
+  /path/to/stoat-desktop --force-server=https://stoat.redacted.me
+  ```
+  Make it executable and add it to your menu/applications.
+
+- **For a .desktop file** (Linux menu integration):
+  Create `~/.local/share/applications/stoat.desktop` with:
+  ```
+  [Desktop Entry]
+  Name=Stoat
+  Exec=/home/lena/Downloads/Stoat-linux-x64/stoat-desktop --force-server=https://stoat.redacted.me
+  Icon=stoat
+  Type=Application
+  Categories=Network;InstantMessaging;
+  ```
+
+### Long-term recommendations
+
+The `--force-server` flag is a bit fragile on pre-built releases because it's primarily intended for development. The most reliable solutions are:
+
+1. **Use the web version** — just go to your domain in the browser (or install it as a PWA via Chrome/Edge/Firefox for app-like experience with notifications).
+2. **Build the desktop app from source** yourself with your instance URL baked in (best for native notifications, tray icon, etc.).
+
+Would you like instructions for building it from source with your server hardcoded, or help creating a proper launcher?
+
+The `punycode` deprecation warning is unrelated and can be safely ignored for now.

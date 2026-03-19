@@ -1,0 +1,51 @@
+§u§
+How can I decompile minecraft fabric mods?
+§a§
+To decompile Minecraft Fabric mods, you can use Java decompilers since Fabric mods are distributed as JAR files containing compiled Java bytecode. Here are the main approaches:
+
+## Popular Decompilers
+
+**1. JD-GUI (Java Decompiler GUI)**
+- Simple, standalone GUI application
+- Open the mod's .jar file directly
+- Good for quick browsing of code
+
+**2. Fernflower (IntelliJ's decompiler)**
+- High-quality decompilation
+- Can be used standalone or through IntelliJ IDEA
+- Often produces more readable code
+
+**3. CFR**
+- Modern Java decompiler
+- Handles newer Java features well
+- Command-line based
+
+**4. Vineflower**
+- Fork of Fernflower with improvements
+- Better handling of modern Java syntax
+
+## Basic Process
+
+1. **Locate the mod file** - Find the `.jar` file (usually in `.minecraft/mods/`)
+
+2. **Extract/Open with decompiler**:
+   - For GUI tools: Open the .jar file directly
+   - For command-line: `java -jar fernflower.jar mod.jar output_folder/`
+
+3. **View the decompiled source** - Browse through the generated .java files
+
+## Using IntelliJ IDEA (Recommended)
+
+1. Open IntelliJ IDEA
+2. Create a new project or open existing
+3. Add the mod .jar as a library (File → Project Structure → Libraries)
+4. Click on any class file and IntelliJ will decompile it automatically
+
+## Important Considerations
+
+- **Respect licenses**: Check the mod's license before decompiling or using code
+- **Learning purposes**: Decompiling is great for learning but respect authors' rights
+- **Code quality**: Decompiled code may not be perfect (variable names may be lost, some constructs may look different)
+- **Legal/ethical**: Only decompile for legitimate purposes like learning, debugging, or checking compatibility
+
+Would you like specific instructions for any particular tool or use case?

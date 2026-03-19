@@ -1,0 +1,6 @@
+§u§
+<attach:c9db932e024d673636ed32af6217dba2178c5ac927a5a0bf5c3e0fe213f16546>Extract the text.
+§a§
+Connection Lost
+
+Internal Exception: io.netty.handler.codec.DecoderException: ByteArray with size 49473 is bigger than allowed 32600

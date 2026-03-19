@@ -1,0 +1,50 @@
+§u§
+Using the latest llama.cpp cli, how can I disable the thinking process of Qwen3.5?
+§a§
+Great, here's a comprehensive answer on how to disable thinking in Qwen3 (including Qwen3.5) with the latest `llama.cpp` CLI. There are **two main approaches**:
+
+---
+
+## Method 1: `--reasoning-budget 0` (Recommended)
+
+To disable thinking in llama.cpp, use the `--reasoning-budget 0` flag. It works with Qwen3, QwQ, DeepSeek R1 distills, Command R7B, and similar models.
+
+The `--reasoning-budget` flag controls the amount of thinking allowed; the only currently supported values are `-1` for unrestricted thinking budget, or `0` to disable thinking (default: `-1`).
+
+**Example with `llama-cli`:**
+```bash
+./llama-cli -m your-qwen3.5-model.gguf --jinja --reasoning-budget 0 -p "Your prompt here"
+```
+
+**Example with `llama-server`:**
+```bash
+./llama-server -m your-qwen3.5-model.gguf --jinja --reasoning-budget 0
+```
+
+---
+
+## Method 2: `--chat-template-kwargs` (Alternative)
+
+You can also pass `--chat-template-kwargs '{"enable_thinking": false}'` to the server, or send `"chat_template_kwargs": {"enable_thinking": false}` in the API request.
+
+**Example with `llama-server`:**
+```bash
+./llama-server -m your-qwen3.5-model.gguf --jinja --chat-template-kwargs '{"enable_thinking": false}'
+```
+
+---
+
+## Method 3: Soft Switch via Prompt (`/no_think`)
+
+In the Qwen3 series, adding `/no_think` in the prompt turns off thinking mode. You can place this in your system prompt or user message:
+
+```bash
+./llama-cli -m your-qwen3.5-model.gguf --jinja -sys "/no_think"
+```
+
+---
+
+## Notes
+
+- Make sure to always include `--jinja` to enable the Jinja chat template, as it uses the chat template embedded in the GGUF, which is preferred, and for models like Qwen3, `llama-cli` will enter chat mode automatically if a template is present.
+- Regarding switching between thinking and non-thinking modes, while the soft switch is always available, the hard switch implemented in the chat template is not always reliable. The quick workaround is to pass a custom chat template equivalent to always `enable_thinking=False` via `--chat-template-file`.

@@ -1,0 +1,109 @@
+§u§
+How can I check if mongodb is available on a specific port?
+§a§
+You can check if MongoDB is available on a specific port using command-line network tools, the MongoDB shell itself, or programmatic scripts. The default port for MongoDB is **27017**.
+
+### 1. Using Network Command-Line Tools (Quickest)
+
+These tools check if *any* service is listening on the port, which is usually sufficient to confirm availability.
+
+#### **On Linux / macOS**
+*   **Using `nc` (Netcat):**
+    This is the most common method. The `-z` flag scans for listening daemons without sending data.
+    ```bash
+    nc -zv localhost 27017
+    ```
+    *   **Success:** `Connection to localhost port 27017 [tcp/*] succeeded!`
+    *   **Failure:** `connect to localhost port 27017 (tcp) failed: Connection refused`
+
+*   **Using `lsof` (List Open Files):**
+    Checks which process is using the port.
+    ```bash
+    sudo lsof -i :27017
+    ```
+    *   **Success:** You will see a line listing the `mongod` process.
+    *   **Failure:** No output.
+
+*   **Using `curl`:**
+    You can use curl to attempt a TCP connection.
+    ```bash
+    curl -v telnet://localhost:27017
+    ```
+    *   **Success:** `Connected to localhost.` (You may need to press `Ctrl+C` to exit).
+
+#### **On Windows (PowerShell)**
+*   **Using `Test-NetConnection`:**
+    This is the modern Windows equivalent to netcat/telnet.
+    ```powershell
+    Test-NetConnection -ComputerName localhost -Port 27017
+    ```
+    Look for **`TcpTestSucceeded : True`** in the output.
+
+---
+
+### 2. Using MongoDB Tools
+
+If you have the MongoDB shell (`mongosh` or the older `mongo`) installed, checking connection is the most reliable method because it confirms the database is actually responding, not just that the port is open.
+
+*   **Connect to a specific port:**
+    ```bash
+    mongosh --port 27017
+    ```
+    (Use `mongo --port 27017` if you are using an older version).
+
+*   **One-line check (for scripts):**
+    This attempts to run a simple `ping` command and exits.
+    ```bash
+    mongosh --port 27017 --eval "db.adminCommand('ping')"
+    ```
+    *   **Success:** Output usually ends with `{ ok: 1 }`.
+
+---
+
+### 3. Programmatic Checks
+
+If you need to check this inside an application, use the official drivers to attempt a connection with a timeout.
+
+#### **Node.js**
+```javascript
+const { MongoClient } = require('mongodb');
+
+// Replace with your port if different
+const url = 'mongodb://localhost:27017';
+const client = new MongoClient(url, { serverSelectionTimeoutMS: 5000 });
+
+async function checkConnection() {
+  try {
+    await client.connect();
+    await client.db("admin").command({ ping: 1 });
+    console.log("Connected successfully to server on port 27017");
+  } catch (err) {
+    console.error("Connection failed:", err.message);
+  } finally {
+    await client.close();
+  }
+}
+
+checkConnection();
+```
+
+#### **Python**
+```python
+import pymongo
+from pymongo.errors import ConnectionFailure
+
+client = pymongo.MongoClient("mongodb://localhost:27017/", serverSelectionTimeoutMS=5000)
+
+try:
+    # The ismaster command is cheap and does not require auth.
+    client.admin.command('ismaster')
+    print("MongoDB is available on port 27017")
+except ConnectionFailure:
+    print("MongoDB is NOT available")
+```
+
+### Summary of Common Ports
+If 27017 isn't working, check if your configuration is using one of these:
+*   **27017:** Default mongod instance.
+*   **27018:** Default for --shardsvr (shards).
+*   **27019:** Default for --configsvr (config servers).

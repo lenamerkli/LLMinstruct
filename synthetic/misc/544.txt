@@ -1,0 +1,36 @@
+§u§
+How can I insert a PDF print into rnote?
+§a§
+Rnote can import a PDF, but it treats it more like **content/background inside an Rnote document** (not like a dedicated “PDF document mode” the way some PDF annotators do). So the right way to get a “PDF printout” into Rnote is to **import the PDF** and (optionally) use the newer **“adjust-document”** import option that’s meant to make annotation behave more like you expect.
+
+## Option A (most common): Import the PDF into an Rnote document
+1. Open **Rnote**.
+2. Use **File → Import** (or whatever your platform’s “Import…” entry is) and select your **PDF**.
+3. When Rnote asks how to import it, pick the import/layout that best matches your goal:
+   - If your goal is “one page = one page, like a handout,” use an option that maps to **fixed pages / page-based layout**.
+   - If your goal is “scroll through a long deck,” use an option that maps to a **continuous vertical** layout.
+
+Rnote explicitly lists **PDF import** as a supported feature (along with bitmap/SVG import).
+
+## Option B (recommended for “printout/handout annotation”): Use the “adjust-document” PDF import option
+Recent Rnote releases added an **“adjust-document” PDF import option** specifically to “configure the document for improved annotation use-case.” In practice, this is the option most likely to make the imported PDF behave like a printable handout you can write on top of.
+
+So: when importing your PDF, look for an import dialog checkbox/option named something like **“adjust-document”** and enable it.
+
+## Option C: Drag & drop the PDF into the canvas
+If you’re on Linux/Flatpak, drag-and-drop is supported, but it can fail if the Flatpak sandbox doesn’t have permission to read the folder you’re dragging from. If drag & drop doesn’t work:
+- grant Rnote filesystem permissions using **Flatseal**, then try again.
+
+## Important limitation (so your expectations match reality)
+Rnote’s PDF workflow has historically been a bit unintuitive for people who expect a “PDF-first” annotator (import PDF → annotate → export looks exactly like original). There’s even an issue discussion where a user describes that PDF import/export can change the page layout and that importing feels like it “opens” the PDF into the current workspace rather than creating a dedicated PDF document.
+
+### Practical takeaway
+- If you want **“PDF printout pages inside Rnote so you can draw/write on them”**: use **Import PDF**, and prefer **adjust-document** when available.
+- If you need **strict, identical PDF round-tripping** (perfect fidelity to the original PDF structure), Rnote may not behave like Acrobat/Xournal++-style annotation in every case.
+
+## Troubleshooting quick hits
+- **Import fails sometimes:** Rnote has had fixes for “occasional PDF import failure” in recent releases on Flathub—updating can help.
+- **Drag & drop doesn’t work (Flatpak):** fix permissions in Flatseal.
+- **Export looks “broken” vs original:** try importing again with **adjust-document** enabled, and make sure you picked the page layout (fixed vs continuous) that matches the original PDF’s structure.
+
+If you tell me what OS you’re on (Linux Flatpak / Windows / macOS) and what you mean by “PDF print” (entire multi-page handout as backgrounds vs a single page placed on a canvas), I can give you the exact click-path for that setup.

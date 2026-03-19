@@ -1,0 +1,79 @@
+§u§
+relativistische Geschwindigkeitsaddition
+§a§
+Die **relativistische Geschwindigkeitsaddition** ist eine Formel aus der speziellen Relativitätstheorie (Albert Einstein), die beschreibt, wie sich Geschwindigkeiten addieren, wenn diese in der Größenordnung der Lichtgeschwindigkeit ($c$) liegen.
+
+Im Gegensatz zur klassischen Mechanik (Newton/Galilei) gilt hier nicht einfach $v_{gesamt} = v_1 + v_2$, da nichts schneller als das Licht sein darf.
+
+Hier ist die detaillierte Erklärung:
+
+### 1. Das Problem: Klassische vs. Relativistische Addition
+
+*   **Klassisch (Galilei):**
+    Wenn ein Zug mit $v_1 = 50 \text{ km/h}$ fährt und ein Passagier darin mit $v_2 = 5 \text{ km/h}$ läuft, misst ein Beobachter am Bahnsteig:
+    $$v = v_1 + v_2 = 55 \text{ km/h}$$
+    Funktioniert perfekt bei Alltagsgeschwindigkeiten.
+
+*   **Das Paradoxon:**
+    Stellen Sie sich vor, ein Raumschiff fliegt mit $0,9c$ (90 % der Lichtgeschwindigkeit) und schaltet seinen Lichtblitzer ein. Das Licht bewegt sich im Raumschiff mit $c$ weg. Nach klassischer Logik würde der Lichtstrahl für einen ruhenden Beobachter mit $0,9c + c = 1,9c$ fliegen.
+    **Das widerspricht dem zweiten Postulat von Einstein:** Die Lichtgeschwindigkeit $c$ ist im Vakuum für alle Beobachter konstant ($299.792.458 \text{ m/s}$). Es gibt keine Überlichtgeschwindigkeit.
+
+### 2. Die Formel
+
+Für den einfachen Fall, dass sich beide Geschwindigkeiten auf einer Linie bewegen (Parallel运动), lautet die Formel:
+
+$$u = \frac{v + u'}{1 + \frac{v \cdot u'}{c^2}}$$
+
+**Variablendefinition:**
+*   $v$: Die Geschwindigkeit des bewegten Bezugssystems (z. B. das Raumschiff) relativ zum "ruhenden" Beobachter.
+*   $u'$: Die Geschwindigkeit eines Objekts innerhalb dieses Systems (z. B. eine Kugel, die aus dem Raumschiff geworfen wird).
+*   $u$: Die resultierende Geschwindigkeit des Objekts gemessen vom ruhenden Beobachter.
+*   $c$: Lichtgeschwindigkeit.
+
+**Gegengerichtete Bewegung:**
+Wenn sich das Objekt entgegen der Flugrichtung des Systems bewegt, ändern sich die Vorzeichen (Minus statt Plus):
+$$u = \frac{v - u'}{1 - \frac{v \cdot u'}{c^2}}$$
+
+### 3. Berechnungsbeispiel
+
+Ein Raumschiff fliegt mit **$0,8c$** (80 % der Lichtgeschwindigkeit) an uns vorbei. Aus dem Schiff wird eine Sonde in Flugrichtung mit **$0,5c$** (gemessen im Schiff) abgefeuert.
+
+Wie schnell fliegt die Sonde aus unserer Sicht?
+
+1.  **Klassische Rechnung (falsch):**
+    $0,8c + 0,5c = 1,3c$ (Unmöglich!)
+
+2.  **Relativistische Rechnung (korrekt):**
+    $$u = \frac{0,8c + 0,5c}{1 + \frac{(0,8c)(0,5c)}{c^2}}$$
+
+    Im Nenner kürzt sich $c^2$ weg ($\frac{c \cdot c}{c^2} = 1$):
+    $$u = \frac{1,3c}{1 + 0,4}$$
+    $$u = \frac{1,3c}{1,4}$$
+    $$u \approx 0,9286c$$
+
+Das Ergebnis ist knapp unter $c$. Nichts kann schneller werden als das Licht.
+
+### 4. Wichtige Grenzfälle und Eigenschaften
+
+Die Formel enthält einen sogenannten **Nenner-Korrekturfaktor** ($1 + \frac{vu'}{c^2}$). Dieser sorgt dafür, dass das Ergebnis immer kleiner bleibt als die Summe der Einzelgeschwindigkeiten.
+
+1.  **Alltagsgeschwindigkeiten ($v, u' \ll c$):**
+    Wenn $v$ und $u'$ sehr klein sind im Vergleich zu $c$, wird der Term $\frac{v \cdot u'}{c^2}$ nahezu Null.
+    Der Nenner wird zu $1$.
+    Die Formel reduziert sich wieder auf $u = v + u'$. Daher merken wir davon im Alltag nichts.
+
+2.  **Eine Geschwindigkeit ist Lichtgeschwindigkeit:**
+    Setzen wir $u' = c$ ein (z. B. Schallwellen beim Raumschiff durch ein Laserlicht ersetzt):
+    $$u = \frac{v + c}{1 + \frac{v \cdot c}{c^2}} = \frac{v + c}{1 + \frac{v}{c}} = \frac{v + c}{\frac{c + v}{c}} = c$$
+    Unabhängig davon, wie schnell das Raumschiff fliegt: Für den ruhenden Beobachter bewegt sich das Licht immer mit exakt $c$.
+
+3.  **Maximalwert:**
+    Auch wenn man zwei Geschwindigkeiten hinzufügt, die selbst schon nahe bei $c$ liegen, wird die Summe niemals $c$ erreichen oder überschreiten.
+
+### 5. Physikalische Ursache
+
+Warum funktioniert das so? Die Zeit verläuft nicht überall gleich (Zeitdilatation) und Abstände sind nicht überall gleich (Längenkontraktion). Da Geschwindigkeit definiert ist als Weg geteilt durch Zeit ($v = s/t$), und sowohl Strecke als auch Zeit in einem bewegten System anders wahrgenommen werden, müssen sich die Geschwindigkeiten logischerweise anders addieren, um Konsistenz in den Naturgesetzen zu gewährleisten.
+
+### Zusammenfassung
+
+Die relativistische Geschwindigkeitsaddition ist notwendig, um sicherzustellen, dass die **Lichtgeschwindigkeit als obere Grenze** eingehalten wird und sie zeigt, dass Raum und Zeit relativ sind. Bei niedrigen Geschwindigkeiten geht sie nahtlos in die klassische Addition über.
