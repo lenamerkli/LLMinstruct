@@ -11,6 +11,9 @@ import subprocess
 import lingua
 import transformers
 import typing as t
+import tqdm
+
+from language_cache import LanguageCache
 
 
 os.environ['REQUESTS_CA_BUNDLE'] = certifi.where()
@@ -290,7 +293,7 @@ def process_explain_meme(dir_path, project_name, synthetic, mistakes):
 
 def check_pii_in_data(data, first_names, last_names, false_positives, false_negatives):
     pii_findings = []
-    for idx, entry in enumerate(data):
+    for idx, entry in tqdm.tqdm(enumerate(data), desc='Checking for PII', total=len(data)):
         content_parts = []
         for message in entry.get('messages', []):
             content_parts.append(message.get('content', ''))
@@ -413,9 +416,9 @@ def main():
     detector = lingua.LanguageDetectorBuilder.from_languages(*LANGUAGES_TO_DETECT).with_minimum_relative_distance(0.8).build()
     full_texts = [' '.join(msg['content'] for msg in item['messages']) for item in data]
 
-    results_list = detector.detect_multiple_languages_in_parallel_of(full_texts)
-    for i, results in enumerate(results_list):
-        languages = list(set(result.language.iso_code_639_1.name for result in results))
+    with LanguageCache('language_cache.db') as cache:
+        languages_list = cache.detect_with_cache(detector, full_texts)
+    for i, languages in enumerate(languages_list):
         data[i]['languages'] = languages
 
     for i in data:
@@ -424,15 +427,15 @@ def main():
                 j['attachments'] = []
 
     # Process attachments in all messages
-    for entry in data:
+    for entry in tqdm.tqdm(data, desc='Processing attachments'):
         for message in entry['messages']:
             process_attachments(message)
 
     tokenizer = transformers.AutoTokenizer.from_pretrained('./tokenizer')
-    for i, element in enumerate(data):
+    for i, element in tqdm.tqdm(enumerate(data), desc='Counting tokens', total=len(data)):
         try:
             template_env = {'strftime_now': strftime_now}
-            messages = [{k: v for k, v in msg.items() if k != 'tool_calls'} for msg in element['messages']]
+            messages = [{k: v for k, v in msg.items() if k not in ['attachments', 'tool_calls']} for msg in element['messages']]
             data[i]['token_count'] = count_tokens(messages, tokenizer, template_env)
         except Exception as e:
             e.add_note(f"{i}\n{element['messages']}")
