@@ -1,0 +1,277 @@
+§u§
+How can I check if there is recoverable data on `/dev/sdb` using debian linux terminal?
+§a§
+There are several ways to check for recoverable data on `/dev/sdb` from the Debian terminal. Here are the most useful methods:
+
+## 1. **Basic Detection Methods**
+
+### Check if device is detected:
+```bash
+lsblk | grep sdb
+sudo fdisk -l /dev/sdb
+sudo lsblk -f /dev/sdb
+```
+
+### Check filesystem information:
+```bash
+sudo file -s /dev/sdb
+sudo blkid /dev/sdb
+```
+
+## 2. **Check for Existing Partitions**
+
+### List partitions:
+```bash
+sudo fdisk -l /dev/sdb
+sudo parted /dev/sdb print
+sudo gdisk -l /dev/sdb  # For GPT partitions
+```
+
+## 3. **Attempt Read-Only Mounting**
+
+### First check if it mounts normally:
+```bash
+sudo mkdir -p /mnt/test
+# If you see partitions like /dev/sdb1
+sudo mount -o ro /dev/sdb1 /mnt/test 2>&1
+ls -la /mnt/test/
+sudo umount /mnt/test
+```
+
+## 4. **TestDisk - Powerful Recovery Tool**
+
+### Install and run:
+```bash
+sudo apt update
+sudo apt install testdisk
+sudo testdisk /dev/sdb
+```
+
+Within TestDisk:
+- Choose "Proceed"
+- Select partition table type (usually "Intel" for MBR)
+- Choose "Analyze" → "Quick Search"
+- If partitions are found, select "List" to view files
+
+## 5. **Check Raw Data for Filesystem Signatures**
+
+### Look for filesystem headers:
+```bash
+sudo hexdump -C /dev/sdb | head -100
+sudo dd if=/dev/sdb bs=512 count=1 2>/dev/null | file -
+```
+
+### Search for known filesystem signatures:
+```bash
+sudo grep -a "EXT\|NTFS\|FAT\|HFS" /dev/sdb | head -20
+```
+
+## 6. **Scan for Recoverable Files**
+
+### Install and use photorec (file carving):
+```bash
+sudo apt install photorec
+sudo photorec /dev/sdb
+```
+
+**Note:** Photorec actually recovers files, so use cautiously and have a destination drive ready.
+
+## 7. **Check Disk Health First**
+
+Before attempting recovery, check if the drive is physically functional:
+```bash
+sudo smartctl -a /dev/sdb  # If smartmontools installed
+sudo badblocks -sv /dev/sdb  # Warning: can be destructive on bad drives
+```
+
+## 8. **Create Disk Image First (Recommended)**
+
+If the drive is failing, create an image first:
+```bash
+sudo ddrescue /dev/sdb /path/to/safe/drive/sdb.img /path/to/safe/drive/sdb.log
+# Then work on the image file instead:
+sudo testdisk /path/to/safe/drive/sdb.img
+```
+
+## **Important Precautions:**
+
+1. **Never write to the damaged drive** if you want to recover data
+2. Use `-o ro` (read-only) mount options
+3. Consider using a live USB if system drive is affected
+4. Stop using the drive immediately if you hear unusual sounds
+5. For physical damage, consult professionals
+
+## **Quick Diagnostic Script:**
+```bash
+#!/bin/bash
+echo "=== Checking /dev/sdb ==="
+echo "1. Device detection:"
+lsblk | grep -A5 sdb
+echo -e "\n2. Filesystem signature:"
+sudo file -s /dev/sdb
+echo -e "\n3. Partition table:"
+sudo fdisk -l /dev/sdb 2>&1 | head -20
+```
+
+The presence of partition information or filesystem signatures in these tests indicates recoverable data exists. For severely corrupted drives, professional recovery tools like `testdisk` and `photorec` are your best bet.
+§u§
+The drives partition table was erased and a new one was created.
+§a§
+Since the partition table was erased and replaced, here are the specific steps to recover data from this situation:
+
+## **Critical First Steps**
+
+### 1. **Stop immediately and don't write anything to the drive**
+```bash
+# Make the drive read-only to prevent accidental writes
+sudo hdparm -r1 /dev/sdb
+# Or block writes at the kernel level
+sudo blockdev --setro /dev/sdb
+```
+
+### 2. **Create a disk image (strongly recommended)**
+```bash
+# Using ddrescue (handles bad sectors better)
+sudo apt install gddrescue
+sudo ddrescue /dev/sdb /path/to/external/drive/sdb.img /path/to/external/drive/sdb.log
+
+# Or regular dd if drive is healthy
+sudo dd if=/dev/sdb of=/path/to/external/drive/sdb.img bs=4M status=progress
+```
+
+Work with the image file instead of the physical drive to avoid further damage.
+
+## **3. Primary Tool: TestDisk**
+
+Since the partition table was overwritten, TestDisk can scan for and recover the original partition table:
+
+```bash
+sudo apt install testdisk
+# If working with the original drive (use carefully!)
+sudo testdisk /dev/sdb
+```
+
+### **TestDisk Steps:**
+1. Choose `/dev/sdb`
+2. Select partition table type (usually "Intel" for MBR or "EFI GPT")
+3. Choose **"Analyse" → "Quick Search"**
+4. If old partitions are found, you'll see them listed
+5. **Important:** Press `P` to list files (to verify they're recoverable)
+6. If files look correct, press Enter → choose **"Write"** to restore the partition table
+
+### **If Quick Search doesn't find partitions:**
+- Choose **"Deeper Search"** (scans entire disk more thoroughly)
+- This takes longer but can find partitions even if the beginning was overwritten
+
+## **4. Alternative: gpart**
+
+`gpart` can guess the partition table by scanning the entire disk:
+
+```bash
+sudo apt install gpart
+sudo gpart -W /dev/sdb /dev/sdb
+sudo gpart /dev/sdb
+```
+
+If it finds partitions, you can write them:
+```bash
+sudo gpart -W /dev/sdb /dev/sdb
+```
+
+## **5. Manual Scanning for Filesystems**
+
+Scan the raw disk for filesystem signatures:
+
+```bash
+# Search for common filesystem headers
+sudo strings /dev/sdb | grep -i "lost+found\|volume\|filesystem" | head -20
+
+# Look for NTFS signatures
+sudo dd if=/dev/sdb bs=512 count=1 2>/dev/null | xxd | grep -i "NTFS\|FAT\|EXFAT"
+
+# Scan for filesystem superblocks (for ext2/3/4)
+sudo mmls /dev/sdb  # From sleuthkit package
+```
+
+## **6. File Carving (If Partition Recovery Fails)**
+
+If TestDisk can't recover the partition table, use file carving to extract files directly:
+
+```bash
+# Install recovery tools
+sudo apt install photorec sleuthkit
+
+# Photorec recovers files based on signatures (file carving)
+sudo photorec /dev/sdb
+```
+
+**Photorec will:**
+1. Ask for the partition table type
+2. Let you choose file types to recover
+3. Ask for a destination drive (MUST be different from `/dev/sdb`)
+
+## **7. extundelete for ext3/ext4 Filesystems**
+
+If the drive had Linux filesystems:
+
+```bash
+sudo apt install extundelete
+# Scan for recoverable files
+sudo extundelete /dev/sdb --restore-all
+
+# Or scan a specific inode range
+sudo extundelete /dev/sdb --superblock
+```
+
+## **8. For Specific Offsets**
+
+If you know where partitions used to be:
+
+```bash
+# Example: Mount at specific offset (if you know where partition started)
+sudo mount -o ro,offset=$((512*2048)) /dev/sdb /mnt/test
+# Where 2048 is the starting sector (common for MBR)
+```
+
+## **Diagnostic Commands to Check Current State**
+
+```bash
+# Current partition table
+sudo fdisk -l /dev/sdb
+
+# Check for filesystem signatures at sector boundaries
+sudo dd if=/dev/sdb bs=512 skip=63 count=1 2>/dev/null | file -
+
+# Hex dump of first few MB to look for clues
+sudo dd if=/dev/sdb bs=1M count=2 2>/dev/null | hexdump -C | less
+```
+
+## **Recovery Strategy Checklist**
+
+1. **✓ Make drive read-only**
+2. **✓ Create disk image if possible**
+3. **Run TestDisk Quick Search**
+4. **If no partitions found → Run Deeper Search**
+5. **If partition table recovery fails → Use Photorec**
+6. **For specific filesystem types → Use specialized tools**
+   - NTFS: `ntfsundelete`
+   - FAT: `testdisk` or `photorec`
+   - ext3/4: `extundelete` or `ext4magic`
+
+## **Most Likely Scenario**
+
+Since you have a **new partition table**, the old one is overwritten but data sectors are likely intact unless:
+
+1. **New partitions were created in the same locations** → Data partially overwritten
+2. **Drive was formatted after new partition table** → More challenging recovery
+
+**Best chance:** TestDisk's "Deeper Search" can often find partitions even if the partition table area was overwritten, as long as the partition data structures elsewhere on disk are intact.
+
+## **Important Warning**
+
+The **new partition table** might overlap with your old data. Before recovering:
+- Don't create new partitions
+- Don't format any partitions
+- Don't run `fsck` or similar repair tools
+
+**Time is critical** - the more you use the drive, the higher the chance of overwriting recoverable data.

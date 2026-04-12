@@ -1,0 +1,12 @@
+§u§
+What is the minimum version of llama.cpp to run gemma 4 models?
+§a§
+The **minimum llama.cpp version that (officially) adds Gemma 4 compatibility is the GitHub release tag `b8637`**.
+
+A couple practical notes (because this bites people):
+
+- llama.cpp releases are often referred to by these **`bNNNN` build tags** (like `b8637`), not SemVer. So “minimum version” in practice means **“at least release `b8637` (or any newer build/commit)”**.
+- If you’re using a wrapper (LM Studio, Ollama, KoboldCPP, Unsloth Studio, etc.), it may bundle an **older** llama.cpp—so you can hit “can’t load model” errors even though your system has a new llama.cpp somewhere else. Users reporting Gemma 4 load failures are commonly told to update llama.cpp.
+- NVIDIA’s own Gemma 4 local run guidance also points to using llama.cpp paired with Gemma 4 GGUF checkpoints, reinforcing that **this is the intended runtime path**.
+
+If you want the safest “minimum” recommendation (avoiding early-template bugs people noticed right around release day), use **`b8637` or newer**, and ideally **the latest release after `b8637`** if you’re seeing tool-call/template weirdness.

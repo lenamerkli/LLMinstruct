@@ -1,0 +1,42 @@
+§u§
+I use the following technologies:
+- Angular
+- katex
+- Angular-Material
+How does the recent Axios npm package hack affect me?
+§a§
+**The recent Axios npm supply chain attack (March 30-31, 2026) primarily affects projects that directly install or depend on the compromised versions of the `axios` package: specifically v1.14.1 and v0.30.4.**
+
+### What happened?
+- A North Korea-linked threat actor compromised a maintainer's npm account and published these malicious versions.
+- The packages injected a hidden dependency (`plain-crypto-js@4.2.1`), which acts as a dropper for a cross-platform Remote Access Trojan (RAT). This malware steals credentials and enables remote control.
+- The versions were quickly detected and yanked from npm, but if you ran `npm install` or `npm update` between March 30-31, your local machine (Node.js environment) could be affected. Huntress reported over 100 compromised devices.
+- **Browser/client-side impact**: Limited, as the RAT primarily targets the install environment (your dev machine), not runtime in browsers.
+
+### Does it affect *your* stack (Angular, KaTeX, Angular Material)?
+- **No direct impact**. None of these packages depend on `axios`:
+  | Package          | Uses Axios? | Notes |
+  |------------------|-------------|-------|
+  | Angular         | No         | Angular uses its built-in `HttpClient` (based on `fetch`/XHR). Axios is optional for custom HTTP needs. |
+  | Angular Material| No         | Pure UI components; no HTTP client deps. |
+  | KaTeX           | No         | Math rendering lib; no network/HTTP deps. |
+
+- **Indirect risk?** Only if *you* explicitly added `axios` to your `package.json` (e.g., `npm i axios`) and updated to those versions. Angular devs sometimes use it alongside `HttpClient`, but it's not required.
+
+### What should you do?
+1. **Check if you have axios**: Run `npm ls axios` in your project root. If not listed (or not v1.14.1/v0.30.4), you're fine.
+2. **Audit your machine/project**:
+   - `npm audit` (flags vulnerabilities).
+   - Scan for `plain-crypto-js` in `node_modules`.
+   - Use tools like `pnpm audit` or Snyk for deeper checks.
+3. **If affected**:
+   - Delete `node_modules` + `package-lock.json`, reinstall with `npm ci`.
+   - Change passwords/tokens (RAT steals creds).
+   - Run antivirus/malware scan (e.g., Malwarebytes).
+4. **Prevent future issues**:
+   - Lock deps: Use `package-lock.json` + `npm ci`.
+   - Avoid auto-updates: Pin axios to safe versions (e.g., `^1.7.7` pre-attack).
+   - Monitor: Watch GitHub Security Advisories for axios.
+   - Consider alternatives like Angular's `HttpClient` or `fetch`.
+
+You're likely unaffected unless using axios explicitly. Stay vigilant!

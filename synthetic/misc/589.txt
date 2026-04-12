@@ -1,0 +1,19 @@
+§u§
+What DPI do I have to use so that the height in pixels of a portrait A4 page is 1024?
+§a§
+To get a height of exactly 1024 pixels on a portrait A4 page, you need to use a DPI (Dots Per Inch) of approximately **87.57**.
+
+Here is the step-by-step math on how to calculate it:
+
+1. **Find the height of A4 paper:** A standard A4 page has a height of 297 millimeters.
+2. **Convert millimeters to inches:** Since there are 25.4 millimeters in an inch, you divide 297 by 25.4.
+   *(297 ÷ 25.4 = 11.6929 inches)*
+3. **Calculate the DPI:** The formula for DPI is `Pixels ÷ Inches`.
+   *(1024 ÷ 11.6929 = 87.574...)*
+
+**A Practical Note:**
+Most image editing software (like Photoshop or GIMP) requires DPI/PPI to be a whole number.
+* If you set the DPI to **87**, your height will be **1017 pixels**.
+* If you set the DPI to **88**, your height will be **1029 pixels**.
+
+If you strictly need the height to be exactly 1024 pixels, the best approach is to create a document using **88 DPI**, and then manually crop or resize the canvas height down by 5 pixels to reach exactly 1024. (The width at this size will be 724 pixels).

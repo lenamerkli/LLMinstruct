@@ -1,0 +1,169 @@
+§u§
+Create a python script that generates shapes on a 32x32 bitmap. The output format should be a list of json objects in the format: ```{"data": [0, 0, 1, 1, 0, ...], "label": "string"}``` where 0 is white and 1 is black. The following shapes should be included:
+- circle
+- triangle
+- rectangle
+- pentagon
+- line
+- point
+Make the shapes look like hand-drawn on every rotation and distinguishable scale. Only one shape per bitmap. There should be large variety but the different types of shapes should be distinguishable. No infill. Rectangle and pentagon should also have irregular variants.
+§a§
+**Python Script: Hand-drawn Shape Generator (32x32)**
+
+```python
+import json
+import random
+import math
+import numpy as np
+from PIL import Image, ImageDraw
+
+def generate_point(draw):
+    x = random.randint(8, 24)
+    y = random.randint(8, 24)
+    size = random.randint(1, 3)
+    draw.ellipse((x - size, y - size, x + size, y + size), fill=1)
+    # Add hand-drawn imperfection
+    for _ in range(random.randint(1, 3)):
+        draw.point((x + random.randint(-3, 3), y + random.randint(-3, 3)), fill=1)
+
+
+def generate_line(draw):
+    length = random.uniform(13, 27)
+    angle = random.uniform(0, math.pi * 2)
+    cx = random.randint(9, 23)
+    cy = random.randint(9, 23)
+
+    dx = length * math.cos(angle) / 2
+    dy = length * math.sin(angle) / 2
+    x1, y1 = cx - dx, cy - dy
+    x2, y2 = cx + dx, cy + dy
+
+    points = []
+    segments = random.randint(14, 24)
+    for i in range(segments + 1):
+        t = i / segments
+        x = x1 * (1 - t) + x2 * t
+        y = y1 * (1 - t) + y2 * t
+
+        # Perpendicular "hand shake"
+        perp = angle + math.pi / 2
+        noise = random.gauss(0, 1.4)
+        x += noise * math.cos(perp)
+        y += noise * math.sin(perp)
+
+        points.append((x, y))
+
+    width = random.randint(2, 3)
+    for i in range(len(points) - 1):
+        draw.line([points[i], points[i + 1]], fill=1, width=width)
+
+
+def generate_circle(draw):
+    cx = random.randint(10, 22)
+    cy = random.randint(10, 22)
+    radius = random.uniform(7.5, 13.8)
+    points = []
+    n = 48
+    for i in range(n + 1):
+        theta = i * 2 * math.pi / n
+        r = radius + random.gauss(0, 1.15)
+        x = cx + r * math.cos(theta) + random.gauss(0, 0.7)
+        y = cy + r * math.sin(theta) + random.gauss(0, 0.7)
+        points.append((x, y))
+
+    width = random.randint(2, 3)
+    for i in range(len(points) - 1):
+        draw.line([points[i], points[i + 1]], fill=1, width=width)
+
+
+def generate_polygon(draw, sides: int, irregular: bool = False):
+    cx = random.randint(11, 21)
+    cy = random.randint(11, 21)
+    base_size = random.uniform(8.5, 14.5)
+    rotation = random.uniform(0, math.pi * 2)
+
+    irregularity = 2.2 if irregular else 0.9
+    spikiness = 0.45 if irregular else 0.18
+
+    points = []
+    for i in range(sides):
+        angle = rotation + i * 2 * math.pi / sides
+        radius = base_size * (1 + random.gauss(0, spikiness))
+        radius += random.gauss(0, irregularity)
+
+        x = cx + radius * math.cos(angle)
+        y = cy + radius * math.sin(angle)
+
+        # Extra hand jitter
+        x += random.gauss(0, 1.1)
+        y += random.gauss(0, 1.1)
+
+        # Clamp to image bounds
+        x = max(2, min(29, x))
+        y = max(2, min(29, y))
+        points.append((x, y))
+
+    width = random.randint(2, 3)
+    for i in range(sides):
+        p1 = points[i]
+        p2 = points[(i + 1) % sides]
+        draw.line([p1, p2], fill=1, width=width)
+
+
+def main(samples_per_class=80, seed=42):
+    random.seed(seed)
+    np.random.seed(seed)
+
+    dataset = []
+    classes = [
+        ("circle", lambda d: generate_circle(d)),
+        ("triangle", lambda d: generate_polygon(d, 3, irregular=False)),
+        ("rectangle", lambda d: generate_polygon(d, 4, irregular=False)),
+        ("irregular_rectangle", lambda d: generate_polygon(d, 4, irregular=True)),
+        ("pentagon", lambda d: generate_polygon(d, 5, irregular=False)),
+        ("irregular_pentagon", lambda d: generate_polygon(d, 5, irregular=True)),
+        ("line", lambda d: generate_line(d)),
+        ("point", lambda d: generate_point(d)),
+    ]
+
+    print("Generating hand-drawn shape dataset...")
+
+    for label, generator in classes:
+        for i in range(samples_per_class):
+            img = Image.new('1', (32, 32), color=0)  # 1-bit image
+            draw = ImageDraw.Draw(img)
+
+            generator(draw)
+
+            # Convert to flat list (0=white, 1=black)
+            data = np.array(img).astype(int).flatten().tolist()
+
+            dataset.append({
+                "data": data,
+                "label": label
+            })
+
+            if (i + 1) % 30 == 0:
+                print(f"  {label}: {i+1}/{samples_per_class}")
+
+    output_file = "shape_dataset.json"
+    with open(output_file, "w") as f:
+        json.dump(dataset, f, indent=2)
+
+    print(f"\nDone! Generated {len(dataset)} samples → {output_file}")
+    print("Labels:", [label for label, _ in classes])
+
+
+if __name__ == "__main__":
+    main(samples_per_class=100)  # Change this number as needed
+```
+
+### Features:
+- **Hand-drawn aesthetic**: Vertex jitter, radius variation, perpendicular noise on lines, multiple line widths.
+- **No infill** — only outlines.
+- **Varied rotation and scale** for all shapes.
+- **Irregular variants** for rectangles and pentagons (more chaotic vertices).
+- Clean 32×32 binary bitmaps (`0` = white, `1` = black).
+- Ready-to-use JSON format for ML training.
+
+Just run the script and you'll get `shape_dataset.json` with high-quality synthetic data. You can easily increase `samples_per_class` for more data.

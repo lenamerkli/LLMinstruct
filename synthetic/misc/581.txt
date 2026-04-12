@@ -1,0 +1,59 @@
+§u§
+python read a file relative to the python script, not the working directory. should also work if it gets imported somewhere else.
+§a§
+# Reading a File Relative to a Python Script
+
+The key is using `__file__`, which always refers to the path of the current `.py` file, regardless of where it's called from.
+
+## The Modern Way (Python 3.4+) ✅
+
+Use `pathlib.Path` — it's clean and readable:
+
+```python
+from pathlib import Path
+
+# Get the directory where *this* script lives
+SCRIPT_DIR = Path(__file__).resolve().parent
+
+# Build a path relative to the script
+file_path = SCRIPT_DIR / "data" / "config.json"
+
+with open(file_path, "r") as f:
+    contents = f.read()
+```
+
+### Example project structure:
+```
+my_project/
+├── my_module/
+│   ├── script.py          # ← __file__ points here
+│   └── data/
+│       └── config.json    # ← you want to read this
+└── main.py
+```
+
+## Why This Works
+
+| Approach | Respects script location? | Works when imported? |
+|---|---|---|
+| `open("data/config.json")` | ❌ Uses CWD | ❌ |
+| `open(Path(__file__).resolve().parent / "data/config.json")` | ✅ | ✅ |
+
+- **`__file__`** → the path to the current `.py` file
+- **`.resolve()`** → resolves symlinks and makes the path absolute
+- **`.parent`** → the directory containing the script
+
+## Quick Tip: Cache the Path
+
+If you reference the data directory in multiple places:
+
+```python
+from pathlib import Path
+
+_DIR = Path(__file__).resolve().parent
+
+CONFIG   = _DIR / "data" / "config.json"
+TEMPLATES = _DIR / "data" / "templates"
+```
+
+> **Note:** If you're packaging your code (e.g., with `setuptools`), and the data files are inside the package, consider using [`importlib.resources`](https://docs.python.org/3/library/importlib.resources.html) instead — it's designed for reading files that live inside installed packages.

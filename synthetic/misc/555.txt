@@ -1,0 +1,101 @@
+§u§
+```
+Internal Exception: io.netty.handler.codec.DecoderException: ByteArray with size 49473 is bigger than allowed 32600
+```
+How can I fix this error? Minecraft Java 1.20.1 fabric
+§a§
+# Fixing `ByteArray too big` DecoderException in Fabric 1.20.1
+
+## 🔍 What's happening
+
+The server/client is receiving a **packet payload of 49,473 bytes**, but the decoder limit is capped at **32,600 bytes**. This is a **Netty packet size limit**.
+
+## ✅ Solutions (in order of preference)
+
+### 1. 🔧 Increase the packet size limit (Client-side mod)
+
+Create a simple Fabric mod:
+
+```java
+// In your mod initializer
+public class MyMod implements ModInitializer {
+    @Override
+    public void onInitialize() {
+        ServerConfigurationConnectionEvents.CONFIGURE.register((handler, client) -> {
+            handler.channel().pipeline().addBefore(
+                "decoder",
+                "packet_size_limit",
+                new PacketDecoder(1048576) // 1MB limit
+            );
+        });
+    }
+}
+```
+
+### 2. ⚙️ Server-side config (easiest)
+
+In **`server.properties`**:
+```properties
+max-chained-neighbor-updates=65536
+network-compression-threshold=256
+```
+
+Then **restart the server**.
+
+### 3. 📦 Use a ready-made mod
+
+| Mod | What it does |
+|-----|-------------|
+| **[No Chat Reports](https://modrinth.com/mod/no-chat-reports)** | Often fixes this |
+| **[FabricProxy-Lite](https://modrinth.com/mod/fabricproxy-lite)** | If behind proxy |
+| **Custom mod with below code** | ⬇️ |
+
+### 4. 💻 Best targeted fix — patch Netty directly
+
+```java
+// Mixin to increase Varint21FrameDecoder limit
+@Mixin(Connection.class)
+public class ConnectionMixin {
+    @Inject(method = "<init>", at = @At("RETURN"))
+    private void onInit(CallbackInfo ci) {
+        Channel channel = ((ConnectionAccess) this).getChannel();
+        if (channel != null) {
+            channel.config().setMaxMessagesPerRead(1024);
+            // Replace the decoder with higher limit
+            channel.pipeline().replace("decoder", "decoder",
+                new PacketDecoder(Integer.MAX_VALUE));
+        }
+    }
+}
+```
+
+> ⚠️ `PacketDecoder` is `net.minecraft.network.PacketDecoder` — you need to copy/adapt it with a higher `varIntLimit`.
+
+### 5. 🚨 If using a proxy (BungeeCord/Velocity/Waterfall)
+
+In **`config.yml`** of the proxy:
+```yaml
+connection_throttle: 5000
+# AND
+packet_size_limit: 65536
+```
+
+## 💡 Most common root causes
+
+| Cause | Fix |
+|-------|-----|
+| **Large book/command block** | Remove the oversized NBT |
+| **Dynmap / Dynmap mod** | Update it |
+| **Too many entities in chunk** | `/kill @e[type=item]` |
+| **WorldEdit large schematic paste** | Paste in smaller sections |
+| **Proxy in between** | Increase proxy packet limits |
+
+## 🏆 Quickest fix
+
+> **On server:** Set `network-compression-threshold=-1` in `server.properties` (disables compression, removes the cap entirely) → **restart**
+
+```properties
+network-compression-threshold=-1
+```
+
+> ⚠️ This increases bandwidth usage but **immediately resolves** the error.

@@ -1,0 +1,91 @@
+§u§
+Debian linux server: limit a user to a minimum nice value of 2 and a maximum ram usage of 16GB
+§a§
+To limit a user on a Debian Linux server to a minimum nice value of 2 and a maximum RAM usage of 16GB, you'll need to configure `/etc/security/limits.conf`. Here's how to implement these restrictions:
+
+## Setting Resource Limits
+
+### 1. Edit the limits.conf file
+
+You can set the default nice value of a particular user or group in the /etc/security/limits.conf file. Its primary function is to define the resource limits for the users logged in via PAM.
+
+Open the file for editing:
+```bash
+sudo nano /etc/security/limits.conf
+```
+
+### 2. Add the following lines
+
+Add these lines for your specific user (replace `username` with the actual username):
+
+```bash
+# Nice value limits (minimum nice of 2 means they can't go below 2)
+username    hard    nice        -2
+username    soft    nice        -2
+
+# Memory limits (16GB = 16777216 KB)
+username    hard    as          16777216
+username    soft    as          16777216
+```
+
+### Understanding the Configuration
+
+#### Nice Value Setting:
+- The nice level ranges from -20 (highest priority) to 19 (lowest priority)
+- Only the superuser (root) may set the niceness to a lower value (i.e. a higher priority).
+- By setting the hard nice limit to `-2`, the user cannot set their processes to have a nice value lower than 2 (they can use 2, 3, 4... up to 19, but not 1, 0, -1, etc.)
+
+#### Memory Limit Setting:
+- The virtual memory includes both RAM and swap space
+- The `as` (address space) parameter limits the total virtual memory
+- 16GB = 16777216 KB (16 × 1024 × 1024)
+- Type defined if the Limit is Soft or Hard. Hard will enforce Hard Limit on the Resource.
+
+### 3. Ensure PAM is configured
+
+Basically 'limits.conf' is read by a PAM module called 'pam_limits'. This module will parse this file or all files in 'limits.d' directory and takes the responsibility of applying these limits to the Users logging in.
+
+Verify that PAM is configured to use limits by checking:
+```bash
+grep pam_limits /etc/pam.d/common-session
+```
+
+If not present, add this line to `/etc/pam.d/common-session`:
+```bash
+session required pam_limits.so
+```
+
+### 4. Apply the changes
+
+The changes will take effect when the user logs in next. Any changes you make with the renice command to a user's processes nice values are only applicable until the next reboot. However, the limits.conf settings are permanent and will persist across reboots.
+
+### 5. Verify the limits
+
+The user can check their limits after logging in:
+```bash
+# Check nice limits
+ulimit -e
+
+# Check memory limits
+ulimit -v
+```
+
+### Alternative: Using limits.d directory
+
+Instead of editing `/etc/security/limits.conf` directly, you can create a separate file:
+
+```bash
+sudo nano /etc/security/limits.d/username-limits.conf
+```
+
+And add the same configuration there. Just like any other config in etc in linux, you can keep multiple separate config files in the limits.d directory, *.conf files will be considered while reading the config.
+
+### Important Notes
+
+1. Note that pam_limits is not used in /etc/pam.d/common-session and /etc/pam.d/common-session-noninteractive, so it won't be active for daemons, only for interactive sessions.
+
+2. Only the root user may reduce a niceness level (increase priority). Unprivileged users may increase nice levels but cannot decrease them without root permissions.
+
+3. These limits apply to new login sessions. Existing processes won't be affected until the user logs out and back in.
+
+4. For more modern systems using systemd, you might also want to consider using systemd slices and cgroups for more granular control, but the limits.conf method remains effective and simpler for basic requirements.

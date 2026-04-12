@@ -1,0 +1,67 @@
+§u§
+<attach:08b5a02edaf329eb04162c58f1cd991db24fc2737c95422503799951d0dedaab>Mache das zu einem LaTeX-Abschnitt.
+§a§
+Hier ist der entsprechende LaTeX-Code, der den Inhalt des Bildes strukturiert wiedergibt. Dabei wurden die mathematischen Formeln korrekt gesetzt (beim $U_B$-Wert wurde das offensichtlich falsch notierte $n_A$ durch das korrekte $n_B$ ersetzt, damit die Rechnung Sinn ergibt).
+
+```latex
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+
+\begin{document}
+
+\section*{Signifikanztest (Mann-Whitney-U-Test)}
+
+Gruppe A und B werden verglichen. Besteht eine signifikante Abweichung?
+
+\vspace{1em}
+
+% Tabelle für die Ränge und Werte
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{c|l|l}
+    \textbf{A} &
+    $\begin{array}{l}
+        \text{\small Rang: } 1 + 4 + 5 + 7 = r_A = 17 \\
+        \text{Werte: } 9 \quad 19 \quad 20 \quad 31
+    \end{array}$ & $n_A = 4$ \\
+    \hline
+    \textbf{B} &
+    $\begin{array}{l}
+        \text{Werte: } 11 \quad 15 \quad 26 \\
+        \text{\small Rang: } 2 + 3 + 6 = r_B = 11
+    \end{array}$ & $n_B = 3$ \\
+\end{tabular}
+
+\vspace{2em}
+
+% Berechnung der U-Werte
+\begin{equation*}
+    U_A = r_A - \frac{n_A(n_A + 1)}{2} \qquad U_B = r_B - \frac{n_B(n_B + 1)}{2}
+\end{equation*}
+
+Davon den kleineren Wert wählen ($= U$).
+
+\vspace{2em}
+
+% Signifikanz und Hypothesen
+Wieder wird eine Signifikanz $\alpha$ gegeben. \\
+Der Wert $U_{crit}$ lässt sich dieser entnehmen.
+
+\vspace{1.5em}
+
+\begin{itemize}
+    \item[] $H_0: U > U_{crit} \implies$ keine signifikante Abweichung
+    \item[] $H_1: U < U_{crit} \implies$ eine Gruppe hat signifikant höhere oder tiefere Werte
+\end{itemize}
+
+\end{document}
+```
+
+### Erläuterungen zum Code:
+*   **`amsmath`**: Wird für die korrekte Darstellung der mathematischen Formeln und Symbole benötigt.
+*   **`array`**: Hilft dabei, die Werte und Ränge innerhalb der Tabelle sauber untereinander auszurichten, so wie es in deiner Notiz handschriftlich gemacht wurde.
+*   **Hypothesen**: Ich habe `itemize` mit leeren Bullets verwendet, um die Struktur der Hypothesen übersichtlich zu halten.
+*   **Korrektur**: In deiner Notiz steht bei der Formel für $U_B$ im Zähler $n_A$. Im Standard-U-Test nach Mann-Whitney bezieht sich das $n$ in der Subtraktion immer auf die jeweilige Gruppengröße, daher habe ich es im Code zu $n_B$ korrigiert.

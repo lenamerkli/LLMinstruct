@@ -1,0 +1,169 @@
+§u§
+<attach:a5bdfd1d6333bcd92a4b17a2ca81ee3dd411f9d6d1fcf0214132d22c650817b0>Das wurde mit dem folgenden Code gemacht:
+```angular21
+<mat-nav-list class="sidenav-list">
+  @for (item of menuItems; track trackByLabel($index, item)) {
+    @if (item.children && item.children.length > 0) {
+      <mat-expansion-panel [expanded]="item.expanded" class="menu-panel">
+        <mat-expansion-panel-header (click)="toggleExpand(item)">
+          <mat-panel-title>
+            <span>{{ item.label }}</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <nav>
+          @for (child of item.children; track trackByLabel($index, child)) {
+            @if (child.children && child.children.length > 0) {
+              <mat-expansion-panel [expanded]="child.expanded" class="sub-menu-panel">
+                <mat-expansion-panel-header (click)="toggleExpand(child)">
+                  <mat-panel-title>
+                    <span>{{ child.label }}</span>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <nav>
+                  @for (grandChild of child.children; track trackByLabel($index, grandChild)) {
+                    <a mat-list-item
+                       [routerLink]="grandChild.route"
+                       routerLinkActive="active"
+                       class="nav-item grandchild">
+                      <span>{{ grandChild.label }}</span>
+                    </a>
+                  }
+                </nav>
+              </mat-expansion-panel>
+            } @else {
+              <a mat-list-item
+                 [routerLink]="child.route"
+                 routerLinkActive="active"
+                 class="nav-item child">
+                <span>{{ child.label }}</span>
+              </a>
+            }
+          }
+        </nav>
+      </mat-expansion-panel>
+    } @else {
+      <a mat-list-item
+         [routerLink]="item.route"
+         routerLinkActive="active"
+         class="nav-item">
+        <span>{{ item.label }}</span>
+      </a>
+    }
+  }
+</mat-nav-list>
+```
+Wie kann ich es so machen, dass die Links ungefähr so wie die Dropdowns aussehen? (ohne die Pfeile natürlich)
+§a§
+Du willst, dass **normale Links (`a mat-list-item`) optisch wie ein `mat-expansion-panel-header`** wirken (gleiche Höhe, Padding, Hover/Active, „Karten“-Look), aber **ohne Pfeil**. Das geht am saubersten über **CSS**, indem du die Links wie Panel-Header stylst und (optional) „Container“-Styles für die Ebenen vergibst.
+
+Unten ein mögliches Setup (funktioniert gut mit deinem Markup).
+
+---
+
+## 1) Links wie Expansion-Header stylen
+
+Gib deinen Links eine Klasse (hast du schon: `nav-item`, `child`, `grandchild`) und style sie ähnlich wie den Header:
+
+```scss
+/* Grundlook wie mat-expansion-panel-header */
+.sidenav-list a.mat-mdc-list-item.nav-item {
+  border-radius: 12px;
+  margin: 6px 12px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,.08);
+
+  /* Höhe/Padding ähnlich Header */
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+/* Text/typografie angleichen */
+.sidenav-list a.mat-mdc-list-item.nav-item .mdc-list-item__primary-text,
+.sidenav-list a.mat-mdc-list-item.nav-item span {
+  font-weight: 500;
+}
+
+/* Hover wie Panel */
+.sidenav-list a.mat-mdc-list-item.nav-item:hover {
+  background: #f3f3f3;
+}
+
+/* Active wie „ausgewählt“ */
+.sidenav-list a.mat-mdc-list-item.nav-item.active,
+.sidenav-list a.mat-mdc-list-item.nav-item.router-link-active {
+  background: #e9e6e6; /* wie in deinem Screenshot */
+}
+```
+
+> Hinweis: Je nach Material-Version heißt die innere Textklasse `mdc-list-item__primary-text`. Falls das bei dir nicht greift, reicht oft schon das `span`.
+
+---
+
+## 2) Einrückung für Child/Grandchild wie im Screenshot
+
+```scss
+/* 2. Ebene (child) leicht eingerückt */
+.sidenav-list a.mat-mdc-list-item.child {
+  margin-left: 28px;
+  margin-right: 12px;
+}
+
+/* 3. Ebene (grandchild) stärker eingerückt + eher „pill“ */
+.sidenav-list a.mat-mdc-list-item.grandchild {
+  margin-left: 48px;
+  margin-right: 16px;
+  border-radius: 999px;
+  box-shadow: none;        /* eher flacher, wie „Pill“ */
+  background: transparent; /* nur active bekommt Hintergrund */
+}
+
+.sidenav-list a.mat-mdc-list-item.grandchild:hover {
+  background: #f4f4f4;
+}
+
+.sidenav-list a.mat-mdc-list-item.grandchild.active,
+.sidenav-list a.mat-mdc-list-item.grandchild.router-link-active {
+  background: #e9e6e6;
+}
+```
+
+---
+
+## 3) Optional: Panel-Inhalt wie „Karte“ (weißer Block um die Sub-Items)
+
+Wenn du willst, dass die aufgeklappten Bereiche wie eine Karte wirken (wie bei „Texte“ im Screenshot), style den Panel-Body:
+
+```scss
+/* Container-Look für aufgeklappte Inhalte */
+.sidenav-list .menu-panel .mat-expansion-panel-body,
+.sidenav-list .sub-menu-panel .mat-expansion-panel-body {
+  padding: 8px 0 12px;
+}
+
+.sidenav-list .sub-menu-panel {
+  margin: 6px 12px;
+  border-radius: 14px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.12);
+  overflow: hidden;
+}
+```
+
+---
+
+## 4) Pfeile nur bei Panels (nicht bei Links)
+
+Links haben keine Pfeile – falls du aber irgendwo Icons eingebaut hast: einfach weglassen.
+Für Expansion-Panels kannst du den Indicator zusätzlich ausblenden (wenn du ihn *auch* weg willst):
+
+```scss
+.sidenav-list .mat-expansion-indicator {
+  display: none;
+}
+```
+
+---
+
+Wenn du mir kurz sagst, ob du **Material 15/16/17+ (MDC)** nutzt (oder schickst mir deine aktuelle HTML-Struktur im DOM via DevTools für ein Link-Item), kann ich dir die CSS-Selektoren exakt auf deine Klassen anpassen, damit es 1:1 greift.

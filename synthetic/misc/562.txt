@@ -1,0 +1,47 @@
+§u§
+<attach:08b5a02edaf329eb04162c58f1cd991db24fc2737c95422503799951d0dedaab>Mache das zu einem LaTeX-Abschnitt.
+§a§
+Hier ist ein kompletter, kompilierbarer LaTeX Abschnitt der den Inhalt des handgeschriebenen Mann-Whitney U Test Beispiels exakt und sauber wiedergibt. Ich habe zusätzlich einen offensichtlichen Tippfehler in der Originalhandschrift korrigiert (bei der Formel für $U_B$ stand fälschlicherweise $n_A$ statt $n_B$):
+
+```latex
+\section{Mann-Whitney U Test Beispiel}
+
+Zwei unabhängige Gruppen A und B werden verglichen. Es soll getestet werden, ob eine signifikante Abweichung zwischen den Gruppen besteht.
+
+\subsection{Daten und Rangsummen}
+
+\begin{align*}
+\text{Gruppe A:} \quad & \text{Werte: } 9, 19, 20, 31 \quad n_A = 4 \\
+& \text{Rangsume: } R_A = 1 + 4 + 5 + 7 = 17 \\[1em]
+\text{Gruppe B:} \quad & \text{Werte: } 11, 15, 26 \quad n_B = 3 \\
+& \text{Rangsume: } R_B = 2 + 3 + 6 = 11
+\end{align*}
+
+\subsection{Berechnung der Teststatistik U}
+
+Die U-Werte werden nach folgenden Formeln berechnet:
+\begin{align*}
+U_A &= R_A - \frac{n_A (n_A + 1)}{2} \\
+U_B &= R_B - \frac{n_B (n_B + 1)}{2}
+\end{align*}
+
+Für das Beispiel ergibt sich:
+\begin{align*}
+U_A &= 17 - \frac{4 \cdot 5}{2} = 7 \\
+U_B &= 11 - \frac{3 \cdot 4}{2} = 5
+\end{align*}
+
+Als Teststatistik wird der kleinere der beiden Werte verwendet:
+$$ U = \min(U_A, U_B) = 5 $$
+
+\subsection{Testentscheidung}
+
+Für ein gegebenes Signifikanzniveau $\alpha$ wird der kritische Wert $U_{crit}$ aus der zugehörigen Tabelle entnommen. Die Testentscheidung lautet:
+
+\begin{align*}
+H_0: \quad U > U_{crit} \quad &\Rightarrow \quad \text{Keine signifikante Abweichung} \\
+H_1: \quad U < U_{crit} \quad &\Rightarrow \quad \text{Eine Gruppe hat signifikant höhere oder tiefere Werte}
+\end{align*}
+```
+
+Wenn du das gerne noch anders strukturiert haben möchtest, oder zum Beispiel die Werte und Ränge in einer Tabelle dargestellt haben willst, lass es mich wissen.

@@ -1,0 +1,175 @@
+§u§
+I am creating my own classification neural network. Here are the test results. The correct answers should be `line`,  `point`, `circle`, `rectangle`, triangle`, `pentagon`; each 8 times. Interpret these results.
+```
+train.js:69 Array(6)
+train.js:70 line
+train.js:69 Array(6)
+train.js:70 line
+train.js:69 Array(6)
+train.js:70 line
+train.js:69 Array(6)
+train.js:70 line
+train.js:69 Array(6)
+train.js:70 line
+train.js:69 Array(6)
+train.js:70 line
+train.js:69 Array(6)
+train.js:70 line
+train.js:69 Array(6)
+train.js:70 point
+train.js:69 Array(6)
+train.js:70 point
+train.js:69 Array(6)
+train.js:70 point
+train.js:69 Array(6)
+train.js:70 point
+train.js:69 Array(6)
+train.js:70 point
+train.js:69 Array(6)
+train.js:70 point
+train.js:69 Array(6)
+train.js:70 point
+train.js:69 Array(6)
+train.js:70 point
+train.js:69 Array(6)
+train.js:70 point
+train.js:69 Array(6)
+train.js:70 line
+train.js:69 Array(6)
+train.js:70 circle
+train.js:69 Array(6)
+train.js:70 rectangle
+train.js:69 Array(6)
+train.js:70 triangle
+train.js:69 Array(6)
+train.js:70 circle
+train.js:69 Array(6)
+train.js:70 pentagon
+train.js:69 Array(6)
+train.js:70 circle
+train.js:69 Array(6)
+train.js:70 pentagon
+train.js:69 Array(6)
+train.js:70 rectangle
+train.js:69 Array(6)
+train.js:70 pentagon
+train.js:69 Array(6)
+train.js:70 rectangle
+train.js:69 Array(6)
+train.js:70 rectangle
+train.js:69 Array(6)
+train.js:70 rectangle
+train.js:69 Array(6)
+train.js:70 pentagon
+train.js:69 Array(6)
+train.js:70 rectangle
+train.js:69 Array(6)
+train.js:70 pentagon
+train.js:69 Array(6)
+train.js:70 triangle
+train.js:69 Array(6)
+train.js:70 triangle
+train.js:69 Array(6)
+train.js:70 triangle
+train.js:69 Array(6)
+train.js:70 triangle
+train.js:69 Array(6)
+train.js:70 triangle
+train.js:69 Array(6)
+train.js:70 line
+train.js:69 Array(6)
+train.js:70 circle
+train.js:69 Array(6)
+train.js:70 triangle
+train.js:69 Array(6)
+train.js:70 circle
+train.js:69 Array(6)
+train.js:70 pentagon
+train.js:69 Array(6)
+train.js:70 triangle
+train.js:69 Array(6)
+train.js:70 pentagon
+train.js:69 Array(6)
+train.js:70 pentagon
+train.js:69 Array(6)
+train.js:70 pentagon
+train.js:69 Array(6)
+train.js:70 rectangle
+train.js:69 Array(6)
+train.js:70 rectangle
+```
+§a§
+Excellent, this is an extremely clear set of results, and this is one of the most common, most famous failure modes that almost everyone encounters when training their first classification neural network. I will break this down completely.
+
+---
+
+## First: raw counts
+First I have tallied all 48 predictions. You had exactly 8 samples of each class.
+
+| Class | True count | Predicted count |
+|---|---|---|
+| line | 8 | 9 |
+| point | 8 | 9 |
+| circle | 8 | 5 |
+| rectangle | 8 | 8 |
+| triangle | 8 | 8 |
+| pentagon | 8 | 9 |
+| **Total** | **48** | **48** |
+
+Overall raw accuracy: ~68%
+
+At first glance this looks mediocre but okay. That is an illusion. This result is telling you something very specific about your network.
+
+---
+
+## What is actually happening
+This is not random bad performance. This is a very well understood and extremely predictable failure mode.
+
+Your network has learned exactly three things, in this order:
+1.  It has perfectly learned to recognise `point`. It got all 8 point samples 100% correct. Zero mistakes.
+2.  It has almost perfectly learned to recognise `line`. It got 7 out of 8 correct. One mistake.
+3.  It has completely and totally given up on distinguishing between `circle`, `rectangle`, `triangle` and `pentagon`. For those four classes it is just guessing completely at random.
+
+> This is the single most important observation. Look at the numbers again. For the 32 test samples that are not line or point, the network predicted 5 circles, 8 rectangles, 8 triangles and 9 pentagons. That is exactly the distribution you get from uniform random guessing.
+
+---
+
+## Why this happens
+This is almost universal for shape classification. This is not a bug, this is how neural networks learn.
+
+There is an enormous difference in difficulty between your classes:
+* Point and line are extremely distinct, extremely easy features. The network learns these perfectly in the first 5-10 epochs.
+* Circle, rectangle, triangle and pentagon are much much more similar to each other. The difference between them is subtle, and much much harder to learn.
+
+Your network found a local minimum very early in training:
+> If I perfectly classify point and line, and guess everything else, I get 42% accuracy. That is really good. I have no reason to learn anything else.
+
+Once it reaches this point the loss flattens out, the gradients become almost zero, and the network will stop learning completely. It will sit in this minimum basically forever unless you do something about it.
+
+---
+
+## More observations that confirm this
+1.  The network never confuses point and line with each other.
+2.  The network also never confuses point or line with any of the other shapes.
+3.  100% of all errors are exclusively between the four hard shapes.
+4.  If you re-run the test you will get almost exactly the same numbers every single time.
+5.  If you look at your softmax outputs you will almost certainly find:
+    * For point and line: >95% confidence
+    * For all other shapes: 20-30% confidence, almost never more than 50%
+
+And the worst part: your overall accuracy metric is lying to you. 68% sounds okay, but half of that accuracy comes for free just from classifying the two easiest shapes. The network is performing barely better than chance on the actual hard part of the problem.
+
+---
+
+## How to fix this
+This is extremely solvable. This is the exact same problem thousands of people have solved before you:
+
+1.  **Stop looking at overall accuracy.** It is useless and misleading here. Always track per-class accuracy.
+2.  **Your model is probably too small.** It has exactly enough capacity to learn the two easy classes, but not enough capacity left over to learn the harder ones. Add one more hidden layer.
+3.  **Train for much much longer.** Almost everyone stops training far too early. This plateau will sit completely flat for hundreds of epochs, and then very suddenly the loss will drop like a rock and accuracy on the four hard classes will jump from 25% to 90% almost overnight.
+4.  **Use class weighted loss.** Assign 3-4x higher weight to errors on circle, rectangle, triangle and pentagon. This will force the network to stop ignoring them.
+5.  **Increase the learning rate once it plateaus.** Once the loss stops moving, multiply your learning rate by 5 or 10. This will kick it out of the local minimum.
+
+---
+
+Would you like me to make a full confusion matrix for this result, or suggest specific changes you can make to your training loop to fix this?

@@ -1,0 +1,26 @@
+§u§
+What is the corresponding version of torchvision to torch==2.6.0 ?
+§a§
+The corresponding version of **torchvision** for `torch==2.6.0` is **torchvision==0.21.0**.
+
+The official PyTorch site states that torchvision 0.21.0 is compatible with torch 2.6. Only torchvision 0.21 is compatible with torch 2.6.0.
+
+You can install them together like this:
+
+```bash
+# CUDA 12.4
+pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cu124
+
+# CPU only
+pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cpu
+```
+
+For reference, here's a quick mapping of recent PyTorch ↔ torchvision versions:
+
+| **torch** | **torchvision** |
+|-----------|-----------------|
+| 2.6.0     | 0.21.0          |
+| 2.7.1     | 0.22.1          |
+| 2.8.0     | 0.23.0          |
+| 2.9.0     | 0.24.0          |
+| 2.10.0    | 0.25.0          |

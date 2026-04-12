@@ -1,0 +1,144 @@
+§u§
+```
+\section{Grundfrage}
+Ist das Medikament $B$ besser als das Medikament $A$?
+
+\begin{itemize}
+    \item $p_0 =$ Wahrscheinlichkeit Wirkung Medikament $A$
+    \item $\pi =$ Wahrscheinlichkeit Wirkung Medikament $B$
+    \item $H_0: \pi = p_0$ Nullhypothese: gleich wirksam
+    \item $H_1: \pi > p_0$ Alternativhypothese: $B$ ist wirksamer als $A$
+\end{itemize}
+
+\section{Binomialtest (mit Zurücklegen)}
+
+Wir betrachten als Beispiel das Medikament A. Sei $T$ die Zufallsvariable die die Anzahl der Heilungen bei $n$ Patienten beschreibt.
+
+Die zugehörige Wahrscheinlichkeitsverteilung ist diskret und folgt der Binomialverteilung:
+
+\[
+P(T = k) = \binom{n}{k} \cdot p(\text{Heilung})^k \cdot p(\text{nicht-Heilung})^{(n-k)}
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.1]
+\draw[->] (0,0) -- (9,0) node[right] {$T$};
+\draw[->] (0,0) -- (0,2.5) node[above] {$P(T=k)$};
+
+\draw[very thick, blue] plot[smooth] coordinates {
+    (1,0.1) (2,0.3) (3,1.0) (4,1.9) (5,1.8) (6,0.9) (7,0.3) (8,0.1)
+};
+
+\fill[orange!30] (6, 0) -- plot[smooth] coordinates {(6,0.9) (7,0.3) (8,0.1)} -- (8.5,0) -- cycle;
+
+\draw[green!60!black, thick] (6,0) -- (6, 0.9);
+\node[green!60!black, below] at (7.3, 0) {Verwerfungsbereich der Hypothese $H_0$};
+
+\node[align=left, blue, above right] at (5, 2) {
+    Wahrscheinlichkeit, dass $k$ von $n$ Patienten geheilt werden\\
+    (dies ist keine stetige Verteilung)
+};
+\node[orange, align=left, above right] at (6.5, 0.5) {
+    Diese Fläche beinhaltet $\alpha$\\
+    der Gesamtfläche ($=1$)
+};
+\end{tikzpicture}
+\end{center}
+
+\bigskip
+
+\subsection{Größen und Definitionen}
+
+\begin{itemize}
+\item $T = k$: Anzahl der beobachteten Heilungen
+\item $\alpha$: Signifikanzniveau. Dies ist die Wahrscheinlichkeit mit der $H_1$ fälschlicherweise angenommen wird, die sogenannte \textit{False Positive Rate} (Fehler 1. Art). Je kleiner $\alpha$ ist, desto sicherer ist der Test. Normalerweise wird $\alpha = 1\%$ oder $\alpha = 5\%$ gewählt.
+\item $\beta$: Wahrscheinlichkeit für einen falsch-negativen Befund, also der Fehler 2. Art.
+\end{itemize}
+
+\bigskip
+
+\noindent\textbf{Hinweis:}
+Zur Berechnung von $\beta$: $\beta$ ist das Gegenteil von $\alpha$. Man betrachtet dazu den \textit{nicht}-Verwerfungsbereich, aber unter der Annahme der vermuteten wahren Wahrscheinlichkeit.
+
+\subsection{Vorgehen}
+Um die Nullhypothese $H_0$ verwerfen zu können, muss:
+\begin{enumerate}
+    \item Die Signifikanz $\alpha$ festgelegt werden. Sie entspricht der Wahrscheinlichkeit, mit welcher die Hypothese $H_1$ fälschlicherweise angenommen wird (Fehler 1. Art).
+    \item Es wird die Binomialverteilung von $A$ betrachtet und ein Verwerfungsbereich so gewählt, dass am oberen Ende nur die Fläche $\alpha$ enthalten ist. Der resultierende Wert gibt vor, wie viele Heilungen durch $B$ mindestens erfolgen müssen, dass die Hypothese $H_0$ verworfen werden kann, wenn dieser Entscheid nur zu $\alpha \%$ ein Fehlentscheid sein darf.
+\end{enumerate}
+```
+Erkläre mir das an einem Beispiel.
+§a§
+Stellen wir uns ein konkretes Beispiel vor:
+Wir haben ein bekanntes Medikament **A**, von dem wir wissen, dass es bei 40 % der Patienten wirkt (Heilungswahrscheinlichkeit \( p_0 = 0.4 \)).
+Wir testen ein neues Medikament **B** an \( n = 20 \) Patienten und wollen prüfen, ob **B** besser ist als **A** (einseitiger Test).
+
+---
+
+### 1. Hypothesen
+- Nullhypothese \( H_0 \): **B** ist gleich wirksam wie **A** → \( \pi = 0.4 \)
+- Alternativhypothese \( H_1 \): **B** ist wirksamer → \( \pi > 0.4 \)
+
+### 2. Signifikanzniveau
+Wir wählen \( \alpha = 0.05 \) (5 %). Das bedeutet: Wir akzeptieren ein Risiko von 5 %, fälschlich zu behaupten, **B** sei besser, obwohl es gleich wirksam ist (Fehler 1. Art).
+
+### 3. Binomialverteilung unter \( H_0 \)
+Unter \( H_0 \) folgt die Anzahl der Heilungen \( T \) einer Binomialverteilung mit \( n = 20 \) und \( p = 0.4 \):
+\[
+P(T = k) = \binom{20}{k} \cdot 0.4^k \cdot 0.6^{20-k}
+\]
+
+### 4. Verwerfungsbereich bestimmen
+Wir suchen den kleinsten Wert \( k_{\text{krit}} \), sodass die Wahrscheinlichkeit, mindestens so viele Heilungen zu beobachten, wenn \( H_0 \) gilt, höchstens 5 % beträgt:
+\[
+P(T \ge k_{\text{krit}} \mid H_0) \le 0.05
+\]
+Ausrechnen (oder Tabellen verwenden):
+- \( P(T \ge 12) \approx 0.0565 > 0.05 \)
+- \( P(T \ge 13) \approx 0.0210 \le 0.05 \)
+
+Also ist \( k_{\text{krit}} = 13 \):
+**Verwerfungsbereich:** alle Beobachtungen \( k \ge 13 \).
+
+---
+
+### 5. Entscheidung im Experiment
+Stellen wir uns vor, wir beobachten in unserem Test mit 20 Patienten unter **B** \( k = 14 \) Heilungen.
+Da \( 14 \ge 13 \), verwerfen wir \( H_0 \) und schließen: **B** ist statistisch signifikant besser als **A** (auf dem 5 %-Niveau).
+Das Risiko, dass dies ein Fehlentscheid ist, liegt bei höchstens 5 %.
+
+---
+
+### 6. Fehler 2. Art (\( \beta \)) und Power
+Angenommen, in Wirklichkeit ist **B** tatsächlich besser – zum Beispiel mit einer Heilungswahrscheinlichkeit von \( \pi = 0.7 \) (70 %).
+Wie wahrscheinlich ist es dann, dass wir \( H_0 \) *nicht* verwerfen, obwohl \( H_1 \) gilt? Das ist \( \beta \), der Fehler 2. Art.
+
+Wir berechnen:
+\[
+\beta = P(T \le 12 \mid \pi = 0.7)
+\]
+Unter der Binomialverteilung \( \text{Bin}(20, 0.7) \) ergibt sich:
+\[
+\beta \approx 0.227
+\]
+Das bedeutet: Selbst wenn **B** zu 70 % wirkt, haben wir mit nur 20 Patienten immer noch eine Wahrscheinlichkeit von etwa 22,7 %, das nicht zu erkennen (falsch-negativ).
+Die **Power** (1 – \( \beta \)) ist dann etwa 77,3 %.
+
+---
+
+### 7. Einfluss der Stichprobengröße
+Würden wir mehr Patienten testen (z. B. \( n = 100 \)), könnte man:
+- einen kleineren Verwerfungsbereich erhalten,
+- \( \beta \) deutlich reduzieren,
+- und auch kleinere Unterschiede zwischen **A** und **B** zuverlässig nachweisen.
+
+---
+
+### Zusammenfassung des Vorgehens
+1. **Wähle \( \alpha \)** (z. B. 5 %).
+2. **Bestimme den Verwerfungsbereich** unter \( H_0 \) (hier: \( k \ge 13 \)).
+3. **Beobachte die Daten** (Heilungen unter **B**).
+4. **Entscheide**: Liegt die Beobachtung im Verwerfungsbereich? Dann verwerfe \( H_0 \) und behaupte, **B** ist besser.
+5. **Beachte**: Selbst bei korrekter Ablehnung von \( H_0 \) besteht das Risiko \( \alpha \) eines falschen Alarms. Umgekehrt kann ein nicht-signifikanter Befund auch ein falsch-negativer sein (Fehler 2. Art, \( \beta \)), besonders wenn die Stichprobe klein ist.
+
+Hoffentlich macht das das Prinzip klar! Falls du möchtest, können wir auch die genaue Berechnung von \( \beta \) für andere \( \pi \)-Werte durchgehen oder die Auswirkung von größerem \( n \) diskutieren. 😊

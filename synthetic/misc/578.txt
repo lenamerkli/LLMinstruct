@@ -1,0 +1,49 @@
+§u§
+```bash
+··• sudo dnf remove ffmpeg-free
+[sudo] password for lena:
+Package                                                                                Arch               Version                                                                                Repository                                             Size
+Removing:
+ ffmpeg-free                                                                           x86_64             7.1.2-4.fc43                                                                           nobara                                              2.5 MiB
+Removing dependent packages:
+ obs-studio                                                                            x86_64             32.0.4-4.20260215.dcdbd2e.fc43                                                         <unknown>                                          15.2 MiB
+ obs-studio-plugin-browser                                                             x86_64             32.0.4-4.20260215.dcdbd2e.fc43                                                         <unknown>                                           1.8 MiB
+ obs-studio-plugin-droidcam                                                            x86_64             2.4.3-3.fc43                                                                           nobara                                            131.5 KiB
+ obs-studio-plugin-pwvideo                                                             x86_64             0.1.0-1.fc43                                                                           <unknown>                                         103.8 KiB
+ obs-studio-plugin-vkcapture                                                           i686               1.5.3-1.fc43                                                                           <unknown>                                         160.3 KiB
+ obs-studio-plugin-vkcapture                                                           x86_64             1.5.3-1.fc43                                                                           <unknown>                                         166.9 KiB
+ obs-studio-plugin-vlc-video                                                           x86_64             32.0.4-4.20260215.dcdbd2e.fc43                                                         <unknown>                                          82.9 KiB
+ obs-studio-plugin-x264                                                                x86_64             32.0.4-4.20260215.dcdbd2e.fc43                                                         <unknown>                                          84.0 KiB
+
+Transaction Summary:
+ Removing:           9 packages
+
+After this operation, 20 MiB will be freed (install 0 B, remove 20 MiB).
+Is this ok [y/N]: n
+Operation aborted by the user.
+```
+How can I replace ffmpeg-free with the full ffmpeg without uninstalling obs-studio?
+§a§
+Use the `dnf swap` command instead of `dnf remove`. This replaces one package with another in a single transaction, keeping your dependencies intact:
+
+```bash
+sudo dnf swap ffmpeg-free ffmpeg --allowerasing
+```
+
+"The dnf swap command removes one package and installs its replacement in a single transaction, preventing conflicts."
+
+This removes ffmpeg-free and its libraries, then installs the full ffmpeg package with libx264, libx265, and other codec libraries. The `--allowerasing` flag allows DNF to remove conflicting packages like ffmpeg-free when installing the full FFmpeg build from RPM Fusion.
+
+### Prerequisites
+
+Since you're on Nobara, RPM Fusion should already be enabled. If not, enable it first:
+
+```bash
+sudo dnf install \
+  https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
+  https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+```
+
+### What happens
+
+After the swap completes, the libx264 and libx265 encoders become available. OBS Studio and all its plugins will remain installed since the full `ffmpeg` package from RPM Fusion provides the same libraries they depend on.

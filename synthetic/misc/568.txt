@@ -1,0 +1,51 @@
+§u§
+How does the average water consumption of AI and McDonalds beef burgers compare?
+§a§
+Great question! The comparison between AI water usage and a McDonald's beef burger is quite striking — and the numbers depend heavily on how you measure each. Here's a detailed breakdown:
+
+---
+
+## 🍔 Water Consumption: McDonald's Beef Burger
+
+One average quarter-pounder beef burger requires around **1,695 litres (448 gallons) of water** to produce, depending on where it is made. Some estimates put it at around **2,000 litres per burger**, and if you add bacon and cheese toppings, that figure can swell to as much as **3,000 litres**.
+
+More broadly, a single burger takes more than **400 gallons of water** to produce. This enormous footprint is primarily due to the water needed to grow cattle feed, provide drinking water for livestock, and support meat processing.
+
+---
+
+## 🤖 Water Consumption: AI (Per Query)
+
+AI water usage is much harder to pin down — and estimates vary wildly depending on the model, data center location, and what you include in the calculation:
+
+- **OpenAI's own estimate (narrow scope):** OpenAI CEO Sam Altman stated that an "average" ChatGPT query uses **"roughly one fifteenth of a teaspoon"** of water (~0.000085 gallons), though he didn't clarify whether this includes training costs or what defines an "average" query.
+
+- **UC Riverside study (moderate estimate):** A 2023 study by the University of California Riverside estimated that an AI chat session of **20 or so queries uses up to a bottle of freshwater** (~500ml), though that amount can vary depending on the platform, with more sophisticated models demanding larger volumes.
+
+- **Per-response GPT-3 estimate:** One paper estimated that in 2023, using GPT-3 to generate a single text output of 150–300 words consumed a total of **16.9 millilitres of water** in an average U.S. data center — 2.2 ml for onsite cooling and 14.7 ml for electricity generation.
+
+- **Newer models vary significantly:** For a medium-length GPT-4o query, estimates put usage at around **3.5 millilitres**, dropping to 2.3 ml with more efficient data centers. Meanwhile, a recent Google technical report said a median text prompt to its Gemini system uses just **0.26 millilitres** of water — roughly the volume of five drops.
+
+- **Some estimates are much higher:** According to a 2023 study by researchers at UC Riverside and UC Colorado, each **100-word ChatGPT response** uses about **519 millilitres** — or one standard bottle of water. Note, however, that this is a higher-end estimate and reflects older, less efficient infrastructure.
+
+---
+
+## ⚖️ The Comparison
+
+| Item | Water Used |
+|---|---|
+| McDonald's Quarter Pounder | ~1,695–2,000 litres (448–528 gallons) |
+| Single AI query (GPT-4o, efficient) | ~2–4 millilitres |
+| Single AI query (GPT-3, 2023 estimate) | ~17 millilitres |
+| 20-query AI chat session (UC Riverside) | ~500 millilitres (~0.5 litres) |
+
+**In short:** A single McDonald's beef burger uses roughly **3,000–800,000 times more water** than a typical AI query, depending on which AI estimate you use. Even a 20-query AI chat session (~500ml) uses **thousands of times less water** than one burger.
+
+---
+
+## ⚠️ Important Caveats
+
+Calculating such a figure is more complex than simply slapping a metric on an "average" query — isolating the effects at the level of a single user or prompt is nearly impossible.
+
+Despite efficiency improvements, AI's global annual water consumption is still projected to reach between **4.2 and 6.6 billion cubic metres by 2027** — equivalent to 4 to 6 times the annual water usage of a country like Denmark.
+
+So while **per query**, AI uses a tiny fraction of the water of a beef burger, the **sheer scale** of AI usage globally means its total water footprint is enormous and rapidly growing.

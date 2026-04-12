@@ -1,0 +1,58 @@
+§u§
+```
+>>> llama-server   --model /opt/llms/gemma-4-E4B-it-Q5_K_L.gguf   --alias gemma-4-E4B   -c 16384   --port 8123   --mmproj-auto
+main: model loaded
+main: server is listening on http://127.0.0.1:8123
+main: starting the main loop...
+srv  update_slots: all slots are idle
+srv    operator(): got exception: {"error":{"code":500,"message":"image input is not supported - hint: if this is unexpected, you may need to provide the mmproj","type":"server_error"}}
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 500
+```
+§a§
+The issue is that `--mmproj-auto` isn't working with your local GGUF file. Gemma 4 supports image inputs in llama.cpp, but it requires a second GGUF file: the multimodal projector (mmproj). The projector handles image encoding before the language model sees it.
+
+The `--mmproj-auto` flag only works when using the `-hf` (Hugging Face) option to download models—it doesn't automatically find local mmproj files. You have two options:
+
+## Option 1: Explicitly specify the mmproj file
+
+Download the mmproj file for your model and specify it with `--mmproj`:
+
+```bash
+# First, download the mmproj file
+huggingface-cli download unsloth/gemma-4-E4B-it-GGUF \
+    --include "*mmproj-BF16*" \
+    --local-dir /opt/llms/
+
+# Then run with explicit --mmproj
+llama-server \
+    --model /opt/llms/gemma-4-E4B-it-Q5_K_L.gguf \
+    --mmproj /opt/llms/mmproj-BF16.gguf \
+    --alias gemma-4-E4B \
+    --port 8123
+```
+
+## Option 2: Use the -hf flag instead (recommended)
+
+To enable multimodal, you can use the `-hf` option with a supported model, which will automatically handle the mmproj.
+
+```bash
+llama-server \
+    -hf unsloth/gemma-4-E4B-it-GGUF:Q5_K_L \
+    --alias gemma-4-E4B \
+    --port 8123
+```
+
+## If you don't need vision/multimodal
+
+If you're just doing text inference and accidentally triggered the image error, you can disable multimodal with `--no-mmproj`:
+
+```bash
+llama-server \
+    --model /opt/llms/gemma-4-E4B-it-Q5_K_L.gguf \
+    --no-mmproj \
+    --alias gemma-4-E4B \
+    -c 16384 \
+    --port 8123
+```
+
+Note: There is no need to set context length as llama.cpp automatically uses the exact amount required for Gemma 4.

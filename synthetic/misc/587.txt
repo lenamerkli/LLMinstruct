@@ -1,0 +1,234 @@
+§u§
+How can I use the llama.cpp server to interact with the visual language model Gemma4? I want to input both text and images, and receive text as output.
+§a§
+Based on the search results, here's how to use the llama.cpp server with Gemma 4 for multimodal (text + image) interactions:
+
+## Quick Overview
+
+Gemma 4 supports image inputs in llama.cpp from day one, but it requires a second GGUF file: the multimodal projector (mmproj). The projector handles image encoding before the language model sees it.
+
+---
+
+## Step 1: Build llama.cpp (with CUDA support)
+
+Clone the repository first. Always use the master branch — tagged releases lag behind CUDA and Metal fixes:
+
+```bash
+git clone https://github.com/ggml-org/llama.cpp
+cd llama.cpp
+
+# For CUDA (NVIDIA GPUs)
+cmake llama.cpp -B llama.cpp/build \
+    -DBUILD_SHARED_LIBS=OFF \
+    -DGGML_CUDA=ON
+
+cmake --build llama.cpp/build \
+    --config Release -j --clean-first \
+    --target llama-cli llama-mtmd-cli llama-server llama-gguf-split
+
+cp llama.cpp/build/bin/llama-* llama.cpp/
+```
+
+---
+
+## Step 2: Download the Model and Multimodal Projector
+
+For multimodal inference (images), also download the projector file:
+
+```bash
+pip install huggingface_hub hf_transfer
+
+huggingface-cli download unsloth/gemma-4-26B-A4B-it-GGUF \
+    --local-dir unsloth/gemma-4-26B-A4B-it-GGUF \
+    --include "*mmproj-BF16*" "*UD-Q4_K_XL*"
+```
+
+---
+
+## Step 3: Start the llama-server with Vision Support
+
+Launch the server with the `--mmproj` flag pointing to the multimodal projector:
+
+```bash
+./llama.cpp/llama-server \
+    --model unsloth/gemma-4-26B-A4B-it-GGUF/gemma-4-26B-A4B-it-UD-Q4_K_XL.gguf \
+    --mmproj unsloth/gemma-4-26B-A4B-it-GGUF/mmproj-BF16.gguf \
+    --temp 1.0 \
+    --top-p 0.95 \
+    --top-k 64 \
+    --port 8080
+```
+
+This starts a localhost web server running on port 8080 to serve the model, with both a web UI and an OpenAI-compatible API endpoint.
+
+---
+
+## Step 4: Send Requests with Images
+
+### Option A: Web UI
+Open `http://127.0.0.1:8080/` in your browser to use the built-in web interface.
+
+### Option B: OpenAI-Compatible API
+Use the `/v1/chat/completions` endpoint with base64-encoded images or image URLs:
+
+```bash
+curl -X POST http://localhost:8080/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [
+      {
+        "role": "user",
+        "content": [
+          {"type": "image_url", "image_url": {"url": "https://example.com/image.jpg"}},
+          {"type": "text", "text": "What is in this image?"}
+        ]
+      }
+    ]
+  }'
+```
+
+---
+
+## Important Tips for Image Quality
+
+Gemma 4's vision encoder uses non-causal attention for image tokens, which means all the image tokens have to fit within a single ubatch; since ubatch defaults to 512, you may need to increase it.
+
+The max is actually 1120 tokens. For best image quality, set `--image-min-tokens` and `--image-max-tokens` both to 1120, and buffer up the batch and ubatch to 2048:
+
+```bash
+./llama-server -ngl 200 --ctx-size 65535 \
+    --model /path/to/model.gguf \
+    --mmproj /path/to/mmproj-BF16.gguf \
+    --port 8080 \
+    --jinja \
+    --image-min-tokens 1120 --image-max-tokens 1120 \
+    --ubatch-size 2048 --batch-size 2048
+```
+
+For OCR, use a high visual token budget like 560 or 1120. For best results with multimodal prompts, put multimodal content first: put image and/or audio before text.
+
+---
+
+## Model Variants
+
+Gemma 4 is multimodal with support for text, image, and audio, and efficient enough to run on-device. The 26B-A4B variant is a mixture-of-experts model with only 4B parameters active per token, making it an ideal candidate for consumer hardware.
+
+The 31B model is currently the strongest Gemma 4 model. Pick it for maximum quality if you have enough memory and can accept slightly slower speeds.
+§u§
+Can I it handle two images in one message?
+§a§
+Yes, **multiple images in a single message are fully supported** by llama.cpp's multimodal system. The key is understanding how the `<__media__>` marker system works. Here's the full picture:
+
+---
+
+## How multiple images work
+
+The `multimodal_data` field in a JSON prompt should be an **array of strings** containing base64-encoded multimodal data such as images. There must be an **identical number** of `<__media__>` markers in the text prompt, acting as placeholders for the data provided. The media data files will be **substituted in order**.
+
+So the rule is simple: **one `<__media__>` marker per image, matched positionally to the array of `image_url` parts.**
+
+---
+
+## Method 1: OpenAI-compatible chat endpoint (`/v1/chat/completions`)
+
+This is the most convenient approach. You add **one `image_url` part and one text part per image**, with a `<__media__>` marker in the text wherever you want each image to appear.
+
+### curl example (2 images):
+
+```bash
+IMG1_B64=$(base64 -w 0 image1.png)
+IMG2_B64=$(base64 -w 0 image2.png)
+
+curl http://localhost:8080/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"model\": \"gemma4-e4b\",
+    \"messages\": [{
+      \"role\": \"user\",
+      \"content\": [
+        {
+          \"type\": \"image_url\",
+          \"image_url\": { \"url\": \"data:image/png;base64,$IMG1_B64\" }
+        },
+        {
+          \"type\": \"image_url\",
+          \"image_url\": { \"url\": \"data:image/png;base64,$IMG2_B64\" }
+        },
+        {
+          \"type\": \"text\",
+          \"text\": \"Here is image 1: <__media__> and here is image 2: <__media__>. What are the differences between them?\"
+        }
+      ]
+    }],
+    \"max_tokens\": 512
+  }"
+```
+
+Key points:
+- There are **two** `image_url` parts and **two** `<__media__>` markers in the text — they are matched in order.
+- You can interleave markers anywhere in the text (e.g., `"Compare <__media__> with <__media__>"` — totally valid).
+- If the model supports multimodal, you input the media files via `image_url` content parts; both base64 and remote URLs are supported as input.
+
+---
+
+## Method 2: Python (OpenAI client)
+
+```python
+from openai import OpenAI
+import base64, pathlib
+
+client = OpenAI(base_url="http://localhost:8080/v1", api_key="sk-no-key-required")
+
+def encode(path):
+    return "data:image/png;base64," + base64.b64encode(pathlib.Path(path).read_bytes()).decode()
+
+img1 = encode("image1.png")
+img2 = encode("image2.png")
+
+resp = client.chat.completions.create(
+    model="gemma4-e4b",
+    messages=[{
+        "role": "user",
+        "content": [
+            {"type": "image_url", "image_url": {"url": img1}},
+            {"type": "image_url", "image_url": {"url": img2}},
+            {
+                "type": "text",
+                "text": "Here is the first image: <__media__> and the second: <__media__>. Compare them."
+            }
+        ]
+    }],
+    max_tokens=512,
+)
+
+print(resp.choices[0].message.content)
+```
+
+---
+
+## Method 3: Low-level `/completion` endpoint
+
+This makes the ordering rule even more explicit:
+
+```json
+{
+  "prompt": {
+    "prompt_string": "First image: <__media__> Second image: <__media__> What are the differences?",
+    "multimodal_data": [
+      "<base64-of-image1>",
+      "<base64-of-image2>"
+    ]
+  },
+  "n_predict": 256
+}
+```
+
+There must be an identical number of `<__media__>` markers in the prompt string as entries in `multimodal_data`, and the data will be substituted **in order**. So `multimodal_data[0]` maps to the first `<__media__>`, `multimodal_data[1]` to the second, and so on.
+
+---
+
+## Things to watch out for
+
+- **Context size**: Each image consumes a significant number of tokens in the KV cache. With two images you'll want to increase `-c` (e.g., `-c 16384` or more) when starting the server. Some models may require a large context window — the docs recommend at least `-c 8192`, and with two images you may need more.
+- **Marker count must match exactly**: If you have 2 `image_url` parts but only 1 `<__media__>` in your text (or vice versa), the server will return an error.
+- A client must not specify multimodal data unless the server has the multimodal capability — clients should check `/models` or `/v1/models` for the `multimodal` capability before sending a multimodal request.

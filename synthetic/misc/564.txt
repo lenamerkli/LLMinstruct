@@ -1,0 +1,179 @@
+§u§
+How can I check if there is recoverable data on `/dev/sdb` using debian linux terminal?
+§a§
+To *check* whether `/dev/sdb` still contains recognizable/recoverable data, you want to **avoid writing to the disk** and look for partition/filesystem signatures and/or “lost” partitions.
+
+## 0) Safety first (don’t mount, don’t write)
+```bash
+lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINTS /dev/sdb
+```
+If anything under `/dev/sdb` is mounted (e.g. `/dev/sdb1`), unmount it:
+```bash
+sudo umount /dev/sdb* 2>/dev/null
+```
+Optional (helps prevent accidental writes):
+```bash
+sudo blockdev --setro /dev/sdb
+```
+
+## 1) See if a partition table / filesystems are still visible
+Partition table:
+```bash
+sudo fdisk -l /dev/sdb
+```
+
+Filesystem signatures (works even if the partition table is damaged):
+```bash
+sudo wipefs -n /dev/sdb
+sudo blkid -p /dev/sdb
+```
+If partitions exist, also check them:
+```bash
+sudo wipefs -n /dev/sdb1 /dev/sdb2 2>/dev/null
+sudo blkid /dev/sdb? 2>/dev/null
+```
+
+Quick “what is on this device” check:
+```bash
+sudo file -s /dev/sdb
+```
+
+## 2) Quick content sanity check (read-only)
+Look at the beginning of the disk for recognizable headers/strings:
+```bash
+sudo dd if=/dev/sdb bs=1M count=16 status=none | hexdump -C | head
+sudo strings -a -n 8 /dev/sdb | head
+```
+If you see filesystem names (EXT4, NTFS, XFS, etc.) or obvious text, that’s a good sign there’s recoverable content.
+
+## 3) Scan for lost partitions / list files (most useful “recoverable?” check)
+Install and run TestDisk:
+```bash
+sudo apt update
+sudo apt install testdisk
+sudo testdisk /dev/sdb
+```
+In the TestDisk menu:
+- **Analyze** → **Quick Search** (then **Deeper Search** if needed)
+- If it finds partitions, you can often press **P** to **list files** (this is a strong indication data is recoverable).
+- Don’t choose “Write” unless you’re sure you want to modify the disk.
+
+## If the disk may be failing (recommended approach)
+If SMART shows problems or the disk makes noises/timeouts, image it first and work on the image:
+```bash
+sudo apt install gddrescue
+sudo ddrescue -f -n /dev/sdb sdb.img sdb.log
+sudo testdisk sdb.img
+```
+
+If you paste the output of `lsblk -f /dev/sdb` and `sudo fdisk -l /dev/sdb`, I can tell you what it indicates and what the next best step is.
+§u§
+The drives partition table was erased and a new one was created.
+§a§
+If only the **partition table** was erased/overwritten (and you did **not** reformat the old partitions), there’s often still recoverable data because the partition table is just metadata in the first (and sometimes last) sectors of the disk.
+
+Below are *read-only / non-destructive* ways to check what’s still recoverable on Debian.
+
+---
+
+## 1) Stop writes; unmount; (optionally) mark read-only
+```bash
+lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINTS /dev/sdb
+sudo umount /dev/sdb* 2>/dev/null
+sudo blockdev --setro /dev/sdb
+```
+
+---
+
+## 2) Check whether the disk used GPT (you may have a backup GPT at the end)
+If the disk was GPT, there is usually a **backup GPT header/table at the end of the disk** that may still be intact.
+
+Install tools:
+```bash
+sudo apt update
+sudo apt install gdisk
+```
+
+Verify (read-only checks):
+```bash
+sudo sgdisk -v /dev/sdb
+sudo gdisk -l /dev/sdb
+```
+
+- If it reports something like “**found valid GPT with corrupt primary**” or similar, that’s a strong sign recovery is easy.
+- **Don’t write changes yet** if your goal is only “check”. (Repair would involve writing.)
+
+---
+
+## 3) Scan the whole disk for lost partitions / filesystems (best general check): TestDisk
+This is the usual tool when the partition table was replaced.
+
+```bash
+sudo apt install testdisk
+sudo testdisk /dev/sdb
+```
+
+In the menu:
+- Select disk `/dev/sdb`
+- Choose partition table type (TestDisk usually guesses)
+- **Analyze** → **Quick Search**
+- If not found: **Deeper Search**
+- When it finds a partition, press **P** to **list files**
+
+If TestDisk can list files, that’s a very good indicator your data is recoverable.
+
+---
+
+## 4) Confirm a found filesystem without rewriting the partition table (mount by offset, read-only)
+If TestDisk shows a partition start sector (example: start at sector `2048`), you can mount it without editing `/dev/sdb`:
+
+```bash
+# Example: start sector 2048
+START=2048
+sudo losetup --find --show --read-only --offset $((START*512)) /dev/sdb
+```
+
+This prints something like `/dev/loop0`. Then:
+```bash
+sudo blkid /dev/loop0
+sudo mkdir -p /mnt/recover
+sudo mount -o ro /dev/loop0 /mnt/recover
+ls /mnt/recover
+```
+
+Unmount/cleanup:
+```bash
+sudo umount /mnt/recover
+sudo losetup -d /dev/loop0
+```
+
+---
+
+## 5) If partitions aren’t recoverable, check if *file carving* is possible (no filenames/dirs)
+Even with a destroyed table/filesystem metadata, you might still carve raw files:
+
+```bash
+sudo photorec /dev/sdb
+```
+
+(Photorec is included with the `testdisk` package.)
+
+---
+
+## Strong recommendation if the disk might be failing
+Before any deep scans, make an image and work on it:
+
+```bash
+sudo apt install gddrescue
+sudo ddrescue -f -n /dev/sdb sdb.img sdb.log
+sudo testdisk sdb.img
+```
+
+---
+
+If you paste the output of:
+```bash
+sudo sgdisk -v /dev/sdb
+sudo fdisk -l /dev/sdb
+```
+and (if you run it) what TestDisk finds in “Quick Search”, I can tell you which recovery path is most likely (GPT backup restore vs partition scan vs carving).

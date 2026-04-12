@@ -1,0 +1,388 @@
+§u§
+Create a python script that generates shapes on a 32x32 bitmap. The output format should be a list of json objects in the format: ```{"data": [0, 0, 1, 1, 0, ...], "label": "string"}``` where 0 is white and 1 is black. The following shapes should be included:
+- circle
+- triangle
+- rectangle
+- pentagon
+- line
+- point
+Make the shapes look like hand-drawn on every rotation and distinguishable scale. Only one shape per bitmap. There should be large variety but the different types of shapes should be distinguishable.
+§a§
+
+
+
+```python
+#!/usr/bin/env python3
+"""
+Generate hand-drawn looking shapes on 32x32 bitmaps.
+
+Output: JSON file containing a list of objects:
+    {"data": [0, 0, 1, 1, 0, ...], "label": "circle"}
+
+Shapes: circle, triangle, rectangle, pentagon, line, point
+
+Usage:
+    python generate_shapes.py                        # defaults
+    python generate_shapes.py -n 500 --preview       # 500 per shape + terminal preview
+    python generate_shapes.py -o train.json --seed 7 # custom output & seed
+"""
+
+import json
+import random
+import math
+import argparse
+import numpy as np
+from PIL import Image, ImageDraw
+
+# ── Constants ────────────────────────────────────────────────────────────────
+SIZE = 32                   # final bitmap width/height
+SS   = 4                    # super-sample factor (render at 128×128 then down-scale)
+CS   = SIZE * SS            # canvas size used for rendering
+
+try:                        # Pillow ≥ 10 vs older
+    _LANCZOS = Image.Resampling.LANCZOS
+except AttributeError:
+    _LANCZOS = Image.LANCZOS
+
+
+# ── Low-level drawing helpers ────────────────────────────────────────────────
+
+def _wobble(draw, p1, p2, jitter, width):
+    """Draw a wobbly (hand-drawn) straight segment from *p1* to *p2*.
+
+    Intermediate control points are displaced with a Gaussian whose σ is
+    modulated by a parabolic envelope (maximum in the centre, zero at the
+    endpoints) so the stroke still starts and ends accurately.
+    """
+    dx, dy = p2[0] - p1[0], p2[1] - p1[1]
+    dist = math.hypot(dx, dy)
+    n = max(4, int(dist / 3))                       # one knot every ~3 px
+    pts = []
+    for i in range(n + 1):
+        t   = i / n
+        env = 4.0 * t * (1.0 - t)                   # 0 at ends, 1 in middle
+        x   = p1[0] + dx * t + random.gauss(0, jitter * env)
+        y   = p1[1] + dy * t + random.gauss(0, jitter * env)
+        pts.append((x, y))
+    for i in range(len(pts) - 1):
+        draw.line([pts[i], pts[i + 1]], fill=255, width=width)
+
+
+def _closed_polygon(draw, vertices, jitter, width):
+    """Draw a closed polygon with jittered corners and wobbly edges."""
+    jv = [
+        (x + random.gauss(0, jitter * 0.35),
+         y + random.gauss(0, jitter * 0.35))
+        for x, y in vertices
+    ]
+    n = len(jv)
+    for i in range(n):
+        _wobble(draw, jv[i], jv[(i + 1) % n], jitter, width)
+
+
+# ── Placement / parameter helpers ────────────────────────────────────────────
+
+def _fit(radius, padding=None):
+    """Return *(cx, cy, r)* so a shape of the given radius fits on canvas."""
+    if padding is None:
+        padding = SS
+    r      = radius
+    margin = r + padding
+    if margin >= CS / 2:                             # shape fills the canvas
+        r      = CS / 2 - padding - 1
+        margin = r + padding
+    lo, hi = margin, CS - margin
+    if lo >= hi:
+        lo = hi = CS / 2.0
+    cx = random.uniform(lo, hi)
+    cy = random.uniform(lo, hi)
+    return cx, cy, r
+
+
+def _draw_params(shape_size):
+    """Return *(jitter, line_width)* appropriate for a shape of the given
+    characteristic size (in canvas pixels)."""
+    jitter = shape_size * random.uniform(0.06, 0.18)
+    # clamp so shapes stay recognisable on the 32×32 grid
+    jitter = max(SS * 0.5, min(jitter, SS * 3.0))   # 0.5 – 3 px at output res
+    width  = max(2, int(SS * random.uniform(0.5, 1.15)))
+    return jitter, width
+
+
+def _to_bitmap(img, threshold=80):
+    """Down-sample the super-sampled *img* to SIZE×SIZE, threshold to 0/1."""
+    small = img.resize((SIZE, SIZE), _LANCZOS)
+    arr   = np.array(small, dtype=np.uint8)
+    return (arr > threshold).astype(int).flatten().tolist()
+
+
+# ── Shape generators ─────────────────────────────────────────────────────────
+#    Each returns {"data": [...], "label": "..."}
+
+def gen_circle():
+    img  = Image.new('L', (CS, CS), 0)
+    draw = ImageDraw.Draw(img)
+
+    base_r     = random.uniform(4, 13) * SS
+    cx, cy, r  = _fit(base_r)
+    jit, w     = _draw_params(r)
+
+    # slight eccentricity  + random orientation → hand-drawn oval
+    ecc    = random.uniform(0.88, 1.12)
+    orient = random.uniform(0, 2 * math.pi)
+    n_pts  = random.randint(30, 50)
+
+    pts = []
+    for i in range(n_pts):
+        a  = 2 * math.pi * i / n_pts
+        rr = r + random.gauss(0, jit * 0.45)
+        dx = rr * math.cos(a) * ecc
+        dy = rr * math.sin(a)
+        x  = cx + dx * math.cos(orient) - dy * math.sin(orient)
+        y  = cy + dx * math.sin(orient) + dy * math.cos(orient)
+        pts.append((x, y))
+
+    for i in range(n_pts):
+        draw.line([pts[i], pts[(i + 1) % n_pts]], fill=255, width=w)
+
+    return {"data": _to_bitmap(img), "label": "circle"}
+
+
+def gen_triangle():
+    img  = Image.new('L', (CS, CS), 0)
+    draw = ImageDraw.Draw(img)
+
+    base_r     = random.uniform(5, 13) * SS
+    cx, cy, r  = _fit(base_r)
+    rot        = random.uniform(0, 2 * math.pi)
+    jit, w     = _draw_params(r)
+
+    verts = []
+    for i in range(3):
+        a  = rot + 2 * math.pi * i / 3
+        ri = r * random.uniform(0.82, 1.18)
+        verts.append((cx + ri * math.cos(a), cy + ri * math.sin(a)))
+
+    _closed_polygon(draw, verts, jit, w)
+    return {"data": _to_bitmap(img), "label": "triangle"}
+
+
+def gen_rectangle():
+    img  = Image.new('L', (CS, CS), 0)
+    draw = ImageDraw.Draw(img)
+
+    ww = random.uniform(6, 24) * SS
+    hh = random.uniform(6, 24) * SS
+
+    # force a clear aspect-ratio most of the time (avoid looking like a square)
+    if random.random() > 0.25:
+        ratio = random.uniform(0.30, 0.65)
+        if random.random() > 0.5:
+            hh = max(4 * SS, ww * ratio)
+        else:
+            ww = max(4 * SS, hh * ratio)
+
+    rot  = random.uniform(0, 2 * math.pi)
+    diag = math.hypot(ww, hh) / 2
+
+    # shrink if the rotated rectangle would clip the canvas
+    max_diag = CS / 2 - SS - 1
+    if diag > max_diag:
+        s    = max_diag / diag
+        ww  *= s;  hh *= s;  diag *= s
+
+    margin = diag + SS
+    cx = random.uniform(margin, CS - margin)
+    cy = random.uniform(margin, CS - margin)
+    jit, w = _draw_params(min(ww, hh))
+
+    local_corners = [
+        (-ww / 2, -hh / 2), ( ww / 2, -hh / 2),
+        ( ww / 2,  hh / 2), (-ww / 2,  hh / 2),
+    ]
+    verts = [
+        (x * math.cos(rot) - y * math.sin(rot) + cx,
+         x * math.sin(rot) + y * math.cos(rot) + cy)
+        for x, y in local_corners
+    ]
+
+    _closed_polygon(draw, verts, jit, w)
+    return {"data": _to_bitmap(img), "label": "rectangle"}
+
+
+def gen_pentagon():
+    img  = Image.new('L', (CS, CS), 0)
+    draw = ImageDraw.Draw(img)
+
+    base_r     = random.uniform(5, 12) * SS
+    cx, cy, r  = _fit(base_r)
+    rot        = random.uniform(0, 2 * math.pi)
+    jit, w     = _draw_params(r)
+
+    verts = []
+    for i in range(5):
+        a  = rot + 2 * math.pi * i / 5
+        ri = r * random.uniform(0.85, 1.15)
+        verts.append((cx + ri * math.cos(a), cy + ri * math.sin(a)))
+
+    _closed_polygon(draw, verts, jit, w)
+    return {"data": _to_bitmap(img), "label": "pentagon"}
+
+
+def gen_line():
+    img  = Image.new('L', (CS, CS), 0)
+    draw = ImageDraw.Draw(img)
+
+    length = random.uniform(8, 28) * SS
+    angle  = random.uniform(0, 2 * math.pi)
+
+    # place from midpoint, leave room for both endpoints
+    half = length / 2
+    pad  = SS * 2
+    lo   = half + pad
+    hi   = CS - half - pad
+    if lo >= hi:
+        lo = hi = CS / 2.0
+    mx = random.uniform(lo, hi)
+    my = random.uniform(lo, hi)
+
+    x1 = max(pad, min(CS - pad, mx - half * math.cos(angle)))
+    y1 = max(pad, min(CS - pad, my - half * math.sin(angle)))
+    x2 = max(pad, min(CS - pad, mx + half * math.cos(angle)))
+    y2 = max(pad, min(CS - pad, my + half * math.sin(angle)))
+
+    jit = length * random.uniform(0.01, 0.04)           # subtle wobble only
+    w   = max(2, int(SS * random.uniform(0.5, 1.0)))
+
+    _wobble(draw, (x1, y1), (x2, y2), jit, w)
+    return {"data": _to_bitmap(img), "label": "line"}
+
+
+def gen_point():
+    img  = Image.new('L', (CS, CS), 0)
+    draw = ImageDraw.Draw(img)
+
+    pad = 4 * SS
+    cx  = random.uniform(pad, CS - pad)
+    cy  = random.uniform(pad, CS - pad)
+    sz  = random.uniform(0.5, 2.5) * SS               # 0.5–2.5 px at output res
+
+    draw.ellipse([cx - sz, cy - sz, cx + sz, cy + sz], fill=255)
+
+    # occasional "pressure blob" near the dot (pen-press artifact)
+    if random.random() > 0.5:
+        off = random.uniform(0.3, 1.2) * SS
+        a   = random.uniform(0, 2 * math.pi)
+        ex  = cx + off * math.cos(a)
+        ey  = cy + off * math.sin(a)
+        tsz = sz * random.uniform(0.15, 0.45)
+        draw.ellipse([ex - tsz, ey - tsz, ex + tsz, ey + tsz], fill=255)
+
+    return {"data": _to_bitmap(img), "label": "point"}
+
+
+# ── Terminal preview ─────────────────────────────────────────────────────────
+
+SHAPE_ORDER = ("circle", "triangle", "rectangle", "pentagon", "line", "point")
+
+
+def preview(dataset):
+    """Print one random sample of every shape class to stdout."""
+    by_label = {}
+    for s in dataset:
+        by_label.setdefault(s["label"], []).append(s)
+
+    for label in SHAPE_ORDER:
+        if label not in by_label:
+            continue
+        d = random.choice(by_label[label])["data"]
+        print(f"\n  [{label}]")
+        for r in range(SIZE):
+            row = d[r * SIZE : (r + 1) * SIZE]
+            print("  " + "".join("██" if v else "··" for v in row))
+    print()
+
+
+# ── Entry point ──────────────────────────────────────────────────────────────
+
+def main():
+    ap = argparse.ArgumentParser(
+        description="Generate hand-drawn shape bitmaps (32×32)")
+    ap.add_argument(
+        "-n", "--num", type=int, default=200,
+        help="samples per shape class  (default: 200)")
+    ap.add_argument(
+        "-o", "--output", default="shapes_dataset.json",
+        help="output JSON file  (default: shapes_dataset.json)")
+    ap.add_argument(
+        "--seed", type=int, default=42,
+        help="random seed  (default: 42)")
+    ap.add_argument(
+        "--preview", action="store_true",
+        help="print one sample per class to the terminal")
+    args = ap.parse_args()
+
+    random.seed(args.seed)
+    np.random.seed(args.seed)
+
+    generators = [
+        gen_circle, gen_triangle, gen_rectangle,
+        gen_pentagon, gen_line, gen_point,
+    ]
+
+    dataset = []
+    for gen in generators:
+        for _ in range(args.num):
+            dataset.append(gen())
+
+    random.shuffle(dataset)
+
+    if args.preview:
+        preview(dataset)
+
+    with open(args.output, "w") as f:
+        json.dump(dataset, f)
+
+    print(
+        f"Generated {len(dataset)} samples "
+        f"({args.num} x {len(generators)} shapes) -> {args.output}"
+    )
+
+
+if __name__ == "__main__":
+    main()
+```
+
+## How it works
+
+### Rendering pipeline
+Every shape is rendered on a **128×128 canvas** (4× super-sampling), then **down-scaled with Lanczos** to 32×32 and **thresholded** to binary. This gives smooth, natural-looking strokes impossible to achieve by drawing directly on a 32×32 grid.
+
+### Hand-drawn effects
+| Technique | Purpose |
+|---|---|
+| **Wobbly edges** (`_wobble`) | Intermediate points along each edge are Gaussian-displaced with a parabolic envelope (max in the middle, zero at endpoints) |
+| **Vertex jitter** (`_closed_polygon`) | Each corner is slightly displaced from its ideal position |
+| **Radius variation** (circle) | Each sampled point around the circumference gets an independent radius perturbation |
+| **Eccentricity** (circle) | A random slight elliptical distortion with random orientation |
+| **Per-vertex radius** (triangle/pentagon) | Each vertex sits at a slightly different distance from the centroid |
+| **Pressure blob** (point) | An occasional tiny satellite dot near the main dot |
+
+### Distinguishability guarantees
+| Shape | Key features |
+|---|---|
+| **Circle** | Smooth closed curve, no corners, ~30-50 arc segments |
+| **Triangle** | 3 straight edges, 3 sharp corners, closed |
+| **Rectangle** | 4 straight edges, ~90° corners, often elongated, closed |
+| **Pentagon** | 5 straight edges, 5 corners, closed |
+| **Line** | Single open segment, very subtle wobble (1-4% of length) |
+| **Point** | Tiny filled dot (0.5–2.5 px), never closed/elongated |
+
+### Usage
+```bash
+pip install numpy Pillow
+
+python generate_shapes.py                          # 200 per class → shapes_dataset.json
+python generate_shapes.py -n 1000 --preview        # 1000 per class + terminal art
+python generate_shapes.py -n 50 -o small.json      # quick test set
+```

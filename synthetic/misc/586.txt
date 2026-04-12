@@ -1,0 +1,20 @@
+§u§
+Does a python library exist which turns pdfs into a list of images?
+§a§
+Yes — `pdf2image` does exactly that. Its documented API shows `convert_from_path()` and `convert_from_bytes()` returning a list of PIL `Image` objects, one per PDF page. It wraps Poppler’s `pdftoppm`/`pdftocairo`, so you usually also need Poppler installed on your machine.
+
+```python
+from pdf2image import convert_from_path
+
+images = convert_from_path("document.pdf")
+# images is a list of PIL Image objects
+```
+
+That usage matches the package’s own example.
+
+If you want alternatives, `PyMuPDF` can render each page with `page.get_pixmap()`, and `pypdfium2` can render a page with `page.render()` and convert it to a PIL image with `bitmap.to_pil()`.
+
+If you want, I can give you:
+1. the simplest `pdf2image` example,
+2. a version that saves each page to PNG files, or
+3. a pure-Python-ish alternative using `PyMuPDF`/`pypdfium2`.

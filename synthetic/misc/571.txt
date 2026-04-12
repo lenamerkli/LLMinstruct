@@ -1,0 +1,292 @@
+§u§
+Create a python script that generates shapes on a 32x32 bitmap. The output format should be a list of json objects in the format: ```{"data": [0, 0, 1, 1, 0, ...], "label": "string"}``` where 0 is white and 1 is black. The following shapes should be included:
+- circle
+- triangle
+- rectangle
+- pentagon
+- line
+- point
+Make the shapes look like hand-drawn on every rotation and distinguishable scale. Only one shape per bitmap. There should be large variety but the different types of shapes should be distinguishable.
+§a§
+```python
+import json
+import math
+import random
+
+W, H = 32, 32
+
+
+def make_canvas():
+    return [[0 for _ in range(W)] for _ in range(H)]
+
+
+def in_bounds(x, y):
+    return 0 <= x < W and 0 <= y < H
+
+
+def set_pixel(canvas, x, y, v=1):
+    if in_bounds(x, y):
+        canvas[y][x] = v
+
+
+def flatten(canvas):
+    return [canvas[y][x] for y in range(H) for x in range(W)]
+
+
+def clamp(v, lo, hi):
+    return max(lo, min(hi, v))
+
+
+def dist(a, b):
+    return math.hypot(a[0] - b[0], a[1] - b[1])
+
+
+def rotate_point(px, py, cx, cy, angle):
+    s = math.sin(angle)
+    c = math.cos(angle)
+    x = px - cx
+    y = py - cy
+    return (x * c - y * s + cx, x * s + y * c + cy)
+
+
+def jittered_point(x, y, amount):
+    return (
+        x + random.uniform(-amount, amount),
+        y + random.uniform(-amount, amount),
+    )
+
+
+def draw_disk(canvas, x, y, r=1):
+    rr = r * r
+    for yy in range(int(y - r), int(y + r) + 1):
+        for xx in range(int(x - r), int(x + r) + 1):
+            if in_bounds(xx, yy) and (xx - x) ** 2 + (yy - y) ** 2 <= rr:
+                canvas[yy][xx] = 1
+
+
+def draw_line(canvas, x0, y0, x1, y1, thickness=1, wobble=0.0):
+    steps = int(max(abs(x1 - x0), abs(y1 - y0)) * 2) + 1
+    last_dx = 0
+    last_dy = 0
+    for i in range(steps + 1):
+        t = i / max(1, steps)
+        x = x0 * (1 - t) + x1 * t
+        y = y0 * (1 - t) + y1 * t
+
+        if wobble > 0:
+            dx = random.uniform(-wobble, wobble)
+            dy = random.uniform(-wobble, wobble)
+            dx = 0.7 * last_dx + 0.3 * dx
+            dy = 0.7 * last_dy + 0.3 * dy
+            x += dx
+            y += dy
+            last_dx, last_dy = dx, dy
+
+        draw_disk(canvas, int(round(x)), int(round(y)), thickness)
+
+
+def point_in_polygon(x, y, poly):
+    inside = False
+    n = len(poly)
+    for i in range(n):
+        x1, y1 = poly[i]
+        x2, y2 = poly[(i + 1) % n]
+        if ((y1 > y) != (y2 > y)):
+            xin = (x2 - x1) * (y - y1) / (y2 - y1 + 1e-9) + x1
+            if x < xin:
+                inside = not inside
+    return inside
+
+
+def fill_polygon(canvas, poly, density=1.0):
+    minx = max(0, int(math.floor(min(p[0] for p in poly))))
+    maxx = min(W - 1, int(math.ceil(max(p[0] for p in poly))))
+    miny = max(0, int(math.floor(min(p[1] for p in poly))))
+    maxy = min(H - 1, int(math.ceil(max(p[1] for p in poly))))
+
+    for y in range(miny, maxy + 1):
+        for x in range(minx, maxx + 1):
+            if point_in_polygon(x + 0.5, y + 0.5, poly):
+                if random.random() <= density:
+                    canvas[y][x] = 1
+
+
+def draw_polygon_outline(canvas, poly, thickness=1, wobble=0.3):
+    for i in range(len(poly)):
+        x0, y0 = poly[i]
+        x1, y1 = poly[(i + 1) % len(poly)]
+        draw_line(canvas, x0, y0, x1, y1, thickness=thickness, wobble=wobble)
+
+
+def regular_polygon(cx, cy, radius, sides, rotation=0.0, radial_jitter=0.12):
+    pts = []
+    for i in range(sides):
+        a = rotation + 2 * math.pi * i / sides
+        r = radius * (1.0 + random.uniform(-radial_jitter, radial_jitter))
+        pts.append((cx + r * math.cos(a), cy + r * math.sin(a)))
+    return pts
+
+
+def draw_handdrawn_circle(canvas):
+    cx = random.uniform(10, 22)
+    cy = random.uniform(10, 22)
+    rx = random.uniform(5, 10)
+    ry = rx * random.uniform(0.85, 1.15)
+    rotation = random.uniform(0, 2 * math.pi)
+    thickness = random.choice([1, 1, 2])
+
+    pts = []
+    n = random.randint(40, 70)
+    phase1 = random.uniform(0, 2 * math.pi)
+    phase2 = random.uniform(0, 2 * math.pi)
+    for i in range(n + 1):
+        t = 2 * math.pi * i / n
+        rmod = 1 + 0.08 * math.sin(3 * t + phase1) + 0.05 * math.sin(7 * t + phase2)
+        x = cx + rx * rmod * math.cos(t)
+        y = cy + ry * rmod * math.sin(t)
+        x, y = rotate_point(x, y, cx, cy, rotation)
+        x, y = jittered_point(x, y, 0.2)
+        pts.append((x, y))
+
+    for i in range(len(pts) - 1):
+        draw_line(canvas, pts[i][0], pts[i][1], pts[i + 1][0], pts[i + 1][1], thickness=thickness, wobble=0.2)
+
+
+def draw_handdrawn_line(canvas):
+    margin = 4
+    angle = random.uniform(0, 2 * math.pi)
+    length = random.uniform(14, 26)
+    cx = random.uniform(10, 22)
+    cy = random.uniform(10, 22)
+    dx = math.cos(angle) * length / 2
+    dy = math.sin(angle) * length / 2
+
+    x0 = clamp(cx - dx, margin, W - 1 - margin)
+    y0 = clamp(cy - dy, margin, H - 1 - margin)
+    x1 = clamp(cx + dx, margin, W - 1 - margin)
+    y1 = clamp(cy + dy, margin, H - 1 - margin)
+
+    thickness = random.choice([1, 1, 2])
+
+    if random.random() < 0.35:
+        midx = (x0 + x1) / 2 + random.uniform(-2, 2)
+        midy = (y0 + y1) / 2 + random.uniform(-2, 2)
+        draw_line(canvas, x0, y0, midx, midy, thickness=thickness, wobble=0.25)
+        draw_line(canvas, midx, midy, x1, y1, thickness=thickness, wobble=0.25)
+    else:
+        draw_line(canvas, x0, y0, x1, y1, thickness=thickness, wobble=0.25)
+
+
+def draw_handdrawn_point(canvas):
+    cx = random.randint(5, 26)
+    cy = random.randint(5, 26)
+    r = random.choice([1, 1, 2])
+
+    if random.random() < 0.7:
+        draw_disk(canvas, cx, cy, r)
+        if random.random() < 0.5:
+            draw_disk(canvas, cx + random.choice([-1, 0, 1]), cy + random.choice([-1, 0, 1]), 1)
+    else:
+        for _ in range(random.randint(3, 6)):
+            draw_disk(canvas, cx + random.choice([-1, 0, 1]), cy + random.choice([-1, 0, 1]), 0)
+
+
+def draw_handdrawn_rectangle(canvas):
+    cx = random.uniform(10, 22)
+    cy = random.uniform(10, 22)
+    ww = random.uniform(8, 18)
+    hh = random.uniform(6, 16)
+    if abs(ww - hh) < 2:
+        ww += 3
+    angle = random.uniform(0, 2 * math.pi)
+
+    corners = [
+        (cx - ww / 2, cy - hh / 2),
+        (cx + ww / 2, cy - hh / 2),
+        (cx + ww / 2, cy + hh / 2),
+        (cx - ww / 2, cy + hh / 2),
+    ]
+    corners = [rotate_point(x, y, cx, cy, angle) for x, y in corners]
+    corners = [jittered_point(x, y, 0.6) for x, y in corners]
+
+    thickness = random.choice([1, 1, 2])
+    draw_polygon_outline(canvas, corners, thickness=thickness, wobble=0.25)
+
+
+def draw_handdrawn_triangle(canvas):
+    cx = random.uniform(10, 22)
+    cy = random.uniform(10, 22)
+    radius = random.uniform(7, 11)
+    angle = random.uniform(0, 2 * math.pi)
+
+    pts = []
+    for i in range(3):
+        a = angle + 2 * math.pi * i / 3
+        r = radius * (1 + random.uniform(-0.15, 0.15))
+        pts.append((cx + r * math.cos(a), cy + r * math.sin(a)))
+
+    thickness = random.choice([1, 1, 2])
+    draw_polygon_outline(canvas, pts, thickness=thickness, wobble=0.25)
+
+
+def draw_handdrawn_pentagon(canvas):
+    cx = random.uniform(10, 22)
+    cy = random.uniform(10, 22)
+    radius = random.uniform(6, 10)
+    angle = random.uniform(0, 2 * math.pi)
+    pts = regular_polygon(cx, cy, radius, 5, angle, radial_jitter=0.10)
+
+    thickness = random.choice([1, 1, 2])
+    draw_polygon_outline(canvas, pts, thickness=thickness, wobble=0.2)
+
+
+def generate_shape(label):
+    canvas = make_canvas()
+    if label == "circle":
+        draw_handdrawn_circle(canvas)
+    elif label == "triangle":
+        draw_handdrawn_triangle(canvas)
+    elif label == "rectangle":
+        draw_handdrawn_rectangle(canvas)
+    elif label == "pentagon":
+        draw_handdrawn_pentagon(canvas)
+    elif label == "line":
+        draw_handdrawn_line(canvas)
+    elif label == "point":
+        draw_handdrawn_point(canvas)
+    else:
+        raise ValueError(label)
+    return {"data": flatten(canvas), "label": label}
+
+
+def generate_dataset(count_per_shape=100, seed=0):
+    random.seed(seed)
+    labels = ["circle", "triangle", "rectangle", "pentagon", "line", "point"]
+    out = []
+    for label in labels:
+        for _ in range(count_per_shape):
+            out.append(generate_shape(label))
+    random.shuffle(out)
+    return out
+
+
+if __name__ == "__main__":
+    dataset = generate_dataset(count_per_shape=100, seed=42)
+    print(json.dumps(dataset))
+```
+
+### Notes
+- Produces a list of JSON objects like:
+  ```json
+  {"data": [0, 0, 1, 1, 0, ...], "label": "circle"}
+  ```
+- Bitmap is always `32x32`, flattened to length `1024`.
+- Shapes are outline-style and slightly jittered to look hand-drawn.
+- Rotation and scale vary while keeping shapes distinguishable.
+- Only one shape is drawn per bitmap.
+
+If you want, I can also make a version that:
+1. saves to a `.json` file,
+2. generates train/test splits,
+3. adds light noise or stroke gaps for more realism,
+4. ensures no clipped shapes near the edges.

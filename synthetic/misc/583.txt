@@ -1,0 +1,554 @@
+§u§
+Create a python script that searches through all file contents recursively in a given directory. It should return the results as file names and line numbers. Include both classic string search as well as embedding search. Try to find python packages and other software that already does this.
+§a§
+Let me search for existing tools and packages that handle file content search, both classic and semantic/embedding-based.Now I have all the information I need. Here's a comprehensive response with existing tools and a complete Python script.
+
+---
+
+## Existing Tools & Packages
+
+### Classic (String/Regex) Search Tools
+
+| Tool | Description |
+|------|-------------|
+| **`grep`** | The classic POSIX tool. `grep -rn "pattern" /path` |
+| **`ripgrep` (`rg`)** | It can replace many use cases served by other search tools because it contains most of their features and is generally faster. Built on Rust with SIMD optimizations and parallel directory traversal. Up to 100x faster than grep on large codebases. |
+| **The Silver Searcher (`ag`)** | A user-friendly, faster, more capable grep replacement. Silver Searcher is a code search tool similar to ack that claims to be much faster. |
+| **`ack`** | Ack is designed as a standalone replacement for 99% of the uses of grep. ack is intelligent about the files it searches. It knows about certain file types, based on both the extension on the file and, in some cases, the contents of the file. |
+| **`ugrep`** | For feature completeness, ugrep offers the most comprehensive feature set, including fuzzy matching and archive searching. |
+
+### Semantic / Embedding Search Tools
+
+| Tool | Description |
+|------|-------------|
+| **`semantic-code-search`** (`sem`) | This application uses a transformer machine learning model to generate embeddings of methods and functions in your codebase. Embeddings are information dense numerical representations of the semantics of the text/code they represent. Install via `pip install semantic-code-search`. |
+| **`semantica`** | Unlike grep or ripgrep, which rely on substring matching or regular expressions, Semantica uses vector embeddings to search by concept. It allows you to find code or documents based on their logic or meaning, even if the exact keywords do not exist in the file. |
+| **`Semantra`** | You can run Semantra over a single document. Semantra will take some time to process the input documents. This is a one-time operation per document. Once processing is complete, Semantra will launch a local webserver, by default at localhost:8080. On this web page, you can interactively query the passed in documents semantically. |
+| **`grepai`** | grepai is a privacy-first CLI for semantic code search. It uses vector embeddings to understand code meaning, enabling natural language queries that find relevant code—even when naming conventions vary. |
+| **`mcp-vector-search`** | CLI-first semantic code search with MCP integration, powered by ChromaDB and AST parsing. |
+| **`SeaGOAT`** | SeaGOAT is an "AI-based" code search engine that you can run on your local computer, or you can run it on your server as a REST API. It can be considered an alternative to grep. |
+
+### Key Python Libraries for Building Your Own
+
+| Library | Role |
+|---------|------|
+| **`sentence-transformers`** | Utilize the sentence-transformers library to convert documents into numerical representations called embeddings. These embeddings capture the semantic meaning of the text. |
+| **`faiss-cpu` / `faiss-gpu`** | Facebook's library for efficient similarity search of dense vectors |
+| **`chromadb`** | Embedding database with built-in similarity search |
+| **`numpy`** | Manual cosine similarity computations |
+
+---
+
+## Complete Python Script
+
+```python
+#!/usr/bin/env python3
+"""
+filesearch.py - Recursive file content search with both classic string
+matching and semantic (embedding) search.
+
+Returns results as file names and line numbers.
+
+Usage:
+    # Classic string search (substring or regex)
+    python filesearch.py classic /path/to/dir "my search term"
+    python filesearch.py classic /path/to/dir "def\s+main" --regex
+
+    # Semantic / embedding search
+    python filesearch.py semantic /path/to/dir "function that handles authentication"
+    python filesearch.py semantic /path/to/dir "error handling logic" --top-k 10
+
+    # Build or refresh the embedding index (required before first semantic search)
+    python filesearch.py index /path/to/dir
+
+Requirements:
+    pip install sentence-transformers numpy faiss-cpu
+"""
+
+import argparse
+import os
+import re
+import sys
+import json
+import hashlib
+import time
+from pathlib import Path
+from dataclasses import dataclass, field
+from typing import Generator
+
+# ---------------------------------------------------------------------------
+# Lazy-loaded heavy imports (only when needed)
+# ---------------------------------------------------------------------------
+def _import_semantic_deps():
+    """Import heavy ML dependencies only when semantic features are used."""
+    global SentenceTransformer, np, faiss
+    try:
+        from sentence_transformers import SentenceTransformer
+        import numpy as np
+        import faiss
+    except ImportError as e:
+        print(
+            "ERROR: Semantic search requires extra packages.\n"
+            "       pip install sentence-transformers numpy faiss-cpu\n",
+            file=sys.stderr,
+        )
+        raise SystemExit(1) from e
+
+
+# ---------------------------------------------------------------------------
+# Configuration
+# ---------------------------------------------------------------------------
+DEFAULT_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+INDEX_DIR_NAME = ".filesearch_index"
+CHUNK_LINES = 5           # number of lines per semantic chunk
+CHUNK_OVERLAP = 2         # overlap in lines between consecutive chunks
+MAX_FILE_SIZE_MB = 10     # skip files larger than this
+
+# File extensions considered "text" — extend as you wish
+TEXT_EXTENSIONS = {
+    ".py", ".js", ".ts", ".jsx", ".tsx", ".java", ".c", ".cpp", ".h",
+    ".hpp", ".cs", ".go", ".rs", ".rb", ".php", ".swift", ".kt",
+    ".scala", ".sh", ".bash", ".zsh", ".fish", ".bat", ".ps1",
+    ".html", ".css", ".scss", ".less", ".xml", ".json", ".yaml",
+    ".yml", ".toml", ".ini", ".cfg", ".conf", ".env", ".md", ".rst",
+    ".txt", ".tex", ".sql", ".r", ".R", ".lua", ".pl", ".pm",
+    ".ex", ".exs", ".erl", ".hs", ".ml", ".vim", ".el", ".clj",
+    ".dart", ".m", ".mm", ".dockerfile", ".tf", ".hcl", ".proto",
+    ".graphql", ".gql", ".svelte", ".vue",
+}
+
+# Directories to always skip
+SKIP_DIRS = {
+    ".git", ".svn", ".hg", "__pycache__", "node_modules", ".tox",
+    ".mypy_cache", ".pytest_cache", "venv", ".venv", "env", ".env",
+    ".eggs", "dist", "build", INDEX_DIR_NAME,
+}
+
+
+# ---------------------------------------------------------------------------
+# Data structures
+# ---------------------------------------------------------------------------
+@dataclass
+class SearchResult:
+    filepath: str
+    line_number: int
+    line_text: str
+    score: float = 0.0       # relevance score (0-1 for semantic)
+    context: list = field(default_factory=list)  # surrounding lines
+
+    def __str__(self):
+        score_str = f" (score: {self.score:.4f})" if self.score else ""
+        return f"{self.filepath}:{self.line_number}{score_str}  {self.line_text.rstrip()}"
+
+
+@dataclass
+class ChunkMeta:
+    """Metadata for a single embedded text chunk."""
+    filepath: str
+    start_line: int          # 1-based
+    end_line: int            # 1-based inclusive
+    text: str
+
+
+# ---------------------------------------------------------------------------
+# File walker
+# ---------------------------------------------------------------------------
+def walk_text_files(root: str) -> Generator[Path, None, None]:
+    """Yield all text files under *root*, skipping ignored dirs & large files."""
+    root_path = Path(root).resolve()
+    for dirpath, dirnames, filenames in os.walk(root_path):
+        # Prune ignored directories (in-place so os.walk skips them)
+        dirnames[:] = [
+            d for d in dirnames
+            if d not in SKIP_DIRS and not d.startswith(".")
+        ]
+        for fname in filenames:
+            fpath = Path(dirpath) / fname
+            if fpath.suffix.lower() not in TEXT_EXTENSIONS:
+                continue
+            try:
+                if fpath.stat().st_size > MAX_FILE_SIZE_MB * 1024 * 1024:
+                    continue
+            except OSError:
+                continue
+            yield fpath
+
+
+def read_lines(filepath: Path) -> list[str]:
+    """Read file lines, gracefully handling encoding errors."""
+    for enc in ("utf-8", "latin-1"):
+        try:
+            return filepath.read_text(encoding=enc).splitlines()
+        except (UnicodeDecodeError, OSError):
+            continue
+    return []
+
+
+# ---------------------------------------------------------------------------
+# 1. CLASSIC STRING SEARCH
+# ---------------------------------------------------------------------------
+def classic_search(
+    root: str,
+    query: str,
+    *,
+    regex: bool = False,
+    case_insensitive: bool = False,
+    context_lines: int = 0,
+) -> list[SearchResult]:
+    """
+    Classic substring / regex search across all text files.
+    Returns matches with file path and line number.
+    """
+    flags = re.IGNORECASE if case_insensitive else 0
+    if regex:
+        try:
+            pattern = re.compile(query, flags)
+        except re.error as exc:
+            print(f"Invalid regex: {exc}", file=sys.stderr)
+            return []
+        match_fn = lambda line: pattern.search(line)              # noqa: E731
+    else:
+        if case_insensitive:
+            q = query.lower()
+            match_fn = lambda line: q in line.lower()             # noqa: E731
+        else:
+            match_fn = lambda line: query in line                 # noqa: E731
+
+    results: list[SearchResult] = []
+    for fpath in walk_text_files(root):
+        lines = read_lines(fpath)
+        for idx, line in enumerate(lines):
+            if match_fn(line):
+                lineno = idx + 1
+                ctx = lines[max(0, idx - context_lines): idx + context_lines + 1]
+                results.append(
+                    SearchResult(
+                        filepath=str(fpath),
+                        line_number=lineno,
+                        line_text=line,
+                        context=ctx,
+                    )
+                )
+    return results
+
+
+# ---------------------------------------------------------------------------
+# 2. EMBEDDING / SEMANTIC SEARCH
+# ---------------------------------------------------------------------------
+class SemanticIndex:
+    """Manages building, caching, and querying a FAISS vector index."""
+
+    def __init__(self, root: str, model_name: str = DEFAULT_MODEL):
+        _import_semantic_deps()
+        self.root = Path(root).resolve()
+        self.index_dir = self.root / INDEX_DIR_NAME
+        self.model_name = model_name
+        self.model: "SentenceTransformer | None" = None
+        self.faiss_index = None
+        self.chunks: list[ChunkMeta] = []
+
+    # ----- persistence paths -----
+    @property
+    def _faiss_path(self) -> Path:
+        return self.index_dir / "vectors.faiss"
+
+    @property
+    def _meta_path(self) -> Path:
+        return self.index_dir / "meta.json"
+
+    @property
+    def _manifest_path(self) -> Path:
+        return self.index_dir / "manifest.json"
+
+    # ----- model loading -----
+    def _load_model(self):
+        if self.model is None:
+            print(f"Loading model '{self.model_name}' …")
+            self.model = SentenceTransformer(self.model_name)
+
+    # ----- chunking -----
+    @staticmethod
+    def _chunkify(
+        filepath: Path, lines: list[str],
+        chunk_size: int = CHUNK_LINES,
+        overlap: int = CHUNK_OVERLAP,
+    ) -> list[ChunkMeta]:
+        """Split a file's lines into overlapping chunks for embedding."""
+        chunks = []
+        i = 0
+        while i < len(lines):
+            end = min(i + chunk_size, len(lines))
+            text = "\n".join(lines[i:end]).strip()
+            if text:
+                chunks.append(ChunkMeta(
+                    filepath=str(filepath),
+                    start_line=i + 1,
+                    end_line=end,
+                    text=text,
+                ))
+            i += chunk_size - overlap
+        return chunks
+
+    # ----- file manifest (for incremental updates) -----
+    @staticmethod
+    def _file_hash(fpath: Path) -> str:
+        h = hashlib.md5()
+        try:
+            h.update(fpath.read_bytes())
+        except OSError:
+            return ""
+        return h.hexdigest()
+
+    def _build_manifest(self) -> dict[str, str]:
+        return {
+            str(fp): self._file_hash(fp) for fp in walk_text_files(self.root)
+        }
+
+    # ----- index building -----
+    def build_index(self):
+        """Scan all text files, embed chunks, and persist the FAISS index."""
+        self._load_model()
+        self.index_dir.mkdir(exist_ok=True)
+
+        print("Scanning files …")
+        all_chunks: list[ChunkMeta] = []
+        for fpath in walk_text_files(self.root):
+            lines = read_lines(fpath)
+            if lines:
+                all_chunks.extend(self._chunkify(fpath, lines))
+
+        if not all_chunks:
+            print("No text files found.")
+            return
+
+        print(f"Embedding {len(all_chunks)} chunks from "
+              f"{len({c.filepath for c in all_chunks})} files …")
+
+        texts = [c.text for c in all_chunks]
+        embeddings = self.model.encode(
+            texts, show_progress_bar=True, batch_size=64,
+            normalize_embeddings=True,
+        )
+        embeddings = np.array(embeddings, dtype="float32")
+
+        # Build a FAISS index (inner-product on normalized vecs == cosine sim)
+        dim = embeddings.shape[1]
+        index = faiss.IndexFlatIP(dim)
+        index.add(embeddings)
+
+        # Persist
+        faiss.write_index(index, str(self._faiss_path))
+        meta = [
+            {
+                "filepath": c.filepath,
+                "start_line": c.start_line,
+                "end_line": c.end_line,
+                "text": c.text,
+            }
+            for c in all_chunks
+        ]
+        self._meta_path.write_text(json.dumps(meta, indent=2))
+        manifest = self._build_manifest()
+        self._manifest_path.write_text(json.dumps(manifest, indent=2))
+
+        self.faiss_index = index
+        self.chunks = all_chunks
+        print(f"Index built and saved to {self.index_dir}")
+
+    # ----- index loading -----
+    def load_index(self) -> bool:
+        """Load a previously-built index from disk. Returns True on success."""
+        if not self._faiss_path.exists() or not self._meta_path.exists():
+            return False
+        self.faiss_index = faiss.read_index(str(self._faiss_path))
+        raw = json.loads(self._meta_path.read_text())
+        self.chunks = [
+            ChunkMeta(
+                filepath=r["filepath"],
+                start_line=r["start_line"],
+                end_line=r["end_line"],
+                text=r["text"],
+            )
+            for r in raw
+        ]
+        return True
+
+    # ----- querying -----
+    def search(self, query: str, top_k: int = 5) -> list[SearchResult]:
+        """
+        Semantic search: embed the query, find the top_k nearest chunks,
+        and return results with file paths and line numbers.
+        """
+        self._load_model()
+
+        # Try loading cached index
+        if self.faiss_index is None:
+            if not self.load_index():
+                print("No index found. Run the 'index' command first.",
+                      file=sys.stderr)
+                return []
+
+        query_vec = self.model.encode(
+            [query], normalize_embeddings=True,
+        ).astype("float32")
+
+        scores, indices = self.faiss_index.search(query_vec, top_k)
+
+        results: list[SearchResult] = []
+        for rank, (score, idx) in enumerate(zip(scores[0], indices[0])):
+            if idx == -1:
+                continue
+            chunk = self.chunks[idx]
+            results.append(SearchResult(
+                filepath=chunk.filepath,
+                line_number=chunk.start_line,
+                line_text=chunk.text.split("\n")[0],   # first line as preview
+                score=float(score),
+                context=chunk.text.split("\n"),
+            ))
+        return results
+
+
+# ---------------------------------------------------------------------------
+# CLI
+# ---------------------------------------------------------------------------
+def print_results(results: list[SearchResult], *, show_context: bool = False):
+    if not results:
+        print("No results found.")
+        return
+    for r in results:
+        print(r)
+        if show_context and r.context:
+            for ctx_line in r.context:
+                print(f"    {ctx_line.rstrip()}")
+            print()
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Recursive file content search: classic & semantic",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""\
+examples:
+  %(prog)s classic ./src "TODO"
+  %(prog)s classic ./src "def\\s+main" --regex
+  %(prog)s index   ./src
+  %(prog)s semantic ./src "authentication handler"
+""",
+    )
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    # --- classic ---
+    p_classic = sub.add_parser("classic", help="Classic string/regex search")
+    p_classic.add_argument("directory", help="Root directory to search")
+    p_classic.add_argument("query", help="Search string or regex pattern")
+    p_classic.add_argument("--regex", "-r", action="store_true",
+                           help="Treat query as a regex")
+    p_classic.add_argument("--ignore-case", "-i", action="store_true")
+    p_classic.add_argument("--context", "-C", type=int, default=0,
+                           help="Lines of context around each match")
+
+    # --- index ---
+    p_index = sub.add_parser("index", help="Build the semantic embedding index")
+    p_index.add_argument("directory", help="Root directory to index")
+    p_index.add_argument("--model", default=DEFAULT_MODEL,
+                         help=f"Sentence-transformer model (default: {DEFAULT_MODEL})")
+
+    # --- semantic ---
+    p_sem = sub.add_parser("semantic", help="Semantic / embedding search")
+    p_sem.add_argument("directory", help="Root directory to search")
+    p_sem.add_argument("query", help="Natural-language search query")
+    p_sem.add_argument("--top-k", "-k", type=int, default=5,
+                       help="Number of results to return (default: 5)")
+    p_sem.add_argument("--model", default=DEFAULT_MODEL,
+                       help=f"Sentence-transformer model (default: {DEFAULT_MODEL})")
+    p_sem.add_argument("--show-context", "-c", action="store_true",
+                       help="Print surrounding chunk text")
+
+    args = parser.parse_args()
+
+    # --- dispatch ---
+    if args.command == "classic":
+        t0 = time.monotonic()
+        results = classic_search(
+            args.directory,
+            args.query,
+            regex=args.regex,
+            case_insensitive=args.ignore_case,
+            context_lines=args.context,
+        )
+        elapsed = time.monotonic() - t0
+        print_results(results, show_context=args.context > 0)
+        print(f"\n{len(results)} match(es) in {elapsed:.3f}s")
+
+    elif args.command == "index":
+        idx = SemanticIndex(args.directory, model_name=args.model)
+        t0 = time.monotonic()
+        idx.build_index()
+        print(f"Indexing completed in {time.monotonic() - t0:.1f}s")
+
+    elif args.command == "semantic":
+        idx = SemanticIndex(args.directory, model_name=args.model)
+        t0 = time.monotonic()
+        results = idx.search(args.query, top_k=args.top_k)
+        elapsed = time.monotonic() - t0
+        print_results(results, show_context=args.show_context)
+        print(f"\n{len(results)} result(s) in {elapsed:.3f}s")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+---
+
+## How It Works
+
+### Classic Search
+Standard recursive file walk with substring or regex matching — essentially a pure-Python `grep -rn`. It:
+- Walks all text files recursively, skipping common noise directories (`node_modules`, `.git`, `__pycache__`, etc.)
+- Supports **plain substring** and **regex** matching
+- Supports **case-insensitive** search and **context lines** around matches
+- Returns `filepath:line_number` just like `grep`
+
+### Semantic/Embedding Search
+The idea behind semantic search is to embed all entries in your corpus into a vector space. At search time, the query is embedded into the same vector space and the closest embeddings from your corpus are found.
+
+The script:
+1. **Indexes** (`index` command): Splits every file into overlapping chunks of N lines, embeds each chunk with `sentence-transformers`, and stores the vectors in a FAISS index on disk.
+2. **Searches** (`semantic` command): Embeds your natural-language query, performs nearest-neighbor cosine similarity search against the FAISS index, and returns the top-K matching chunks with file paths, line numbers, and relevance scores.
+
+`all-MiniLM-L6-v2` is a small model that works well for semantic search. It is a good mix of speed and performance, even on CPU.
+
+### Installation
+
+```bash
+# Core (classic search has zero dependencies)
+pip install sentence-transformers numpy faiss-cpu
+```
+
+### Quick Start
+
+```bash
+# Classic search — just like grep
+python filesearch.py classic ./my_project "TODO"
+python filesearch.py classic ./my_project "def\s+main" --regex -i
+
+# Build the semantic index (one-time, cached on disk)
+python filesearch.py index ./my_project
+
+# Semantic search with natural language
+python filesearch.py semantic ./my_project "function that validates user input" -k 10 -c
+```
+
+### Key Design Decisions
+
+| Decision | Rationale |
+|----------|-----------|
+| **FAISS `IndexFlatIP`** with normalized vectors | Cosine similarity via inner product — exact search, no approximation needed for <1M chunks |
+| **Overlapping line chunks** | Ensures matches aren't split across chunk boundaries |
+| **Lazy ML imports** | Classic search has **zero dependencies** — the heavy `torch`/`transformers` stack loads only for semantic features |
+| **On-disk caching** | Index is saved to `.filesearch_index/` so subsequent searches are near-instant |
+| **File manifest with MD5** | Enables future incremental re-indexing of only changed files |
+
+For production-scale use or richer features (AST-aware chunking, reranking, MCP integration), consider the dedicated tools listed above — especially Semantica, which uses vector embeddings to search by concept, finding code or documents based on their logic or meaning. Semantica is not a replacement for grep — it is designed for discovery and navigation in specific scenarios where keyword search fails.

@@ -1,0 +1,570 @@
+§u§
+Create a markdown to html parser in typescript. Also add support for latex rendering using katex for everything between `<latex>` and `</latex>` XML tags.
+§a§
+
+
+# Markdown to HTML Parser with LaTeX (KaTeX) Support in TypeScript
+
+## Project Structure
+
+```
+src/
+├── index.ts
+├── markdown-parser.ts
+├── latex-renderer.ts
+├── types.ts
+└── tests/
+    └── parser.test.ts
+```
+
+## 1. Types (`src/types.ts`)
+
+```typescript
+export interface ParserOptions {
+  /** Enable GitHub Flavored Markdown extensions */
+  gfm?: boolean;
+  /** Enable LaTeX rendering via KaTeX */
+  latex?: boolean;
+  /** Throw on invalid LaTeX (default: render error span) */
+  strictLatex?: boolean;
+  /** Escape HTML tags in markdown */
+  escapeHtml?: boolean;
+}
+
+export interface ParseResult {
+  html: string;
+  /** List of any LaTeX errors encountered */
+  latexErrors: LatexError[];
+}
+
+export interface LatexError {
+  raw: string;
+  message: string;
+  position: number;
+}
+```
+
+## 2. LaTeX Renderer (`src/latex-renderer.ts`)
+
+```typescript
+import katex, { type KatexOptions } from 'katex';
+import type { LatexError } from './types';
+
+const DEFAULT_KATEX_OPTIONS: KatexOptions = {
+  throwOnError: false,
+  displayMode: false,
+  output: 'html',
+  strict: 'warn',
+  trust: false,
+  macros: {},
+};
+
+const DISPLAY_KATEX_OPTIONS: KatexOptions = {
+  ...DEFAULT_KATEX_OPTIONS,
+  displayMode: true,
+};
+
+export class LatexRenderer {
+  private inlineOptions: KatexOptions;
+  private displayOptions: KatexOptions;
+
+  constructor(options?: KatexOptions) {
+    this.inlineOptions = { ...DEFAULT_KATEX_OPTIONS, ...options };
+    this.displayOptions = { ...DISPLAY_KATEX_OPTIONS, ...options };
+  }
+
+  /**
+   * Render LaTeX content between <latex>...</latex> tags.
+   * If the content starts with `$$` or is wrapped in `\[...\]`,
+   * it's rendered in display mode.
+   */
+  render(content: string): { html: string; error?: LatexError } {
+    let displayMode = false;
+    let raw = content.trim();
+
+    // Detect display mode
+    if (raw.startsWith('$$') && raw.endsWith('$$')) {
+      raw = raw.slice(2, -2).trim();
+      displayMode = true;
+    } else if (raw.startsWith('\\[') && raw.endsWith('\\]')) {
+      raw = raw.slice(2, -2).trim();
+      displayMode = true;
+    }
+
+    const katexOpts = displayMode ? this.displayOptions : this.inlineOptions;
+
+    try {
+      const html = katex.renderToString(raw, katexOpts);
+      return { html };
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      return {
+        html: `<span class="latex-error" title="${escapeAttr(message)}">${escapeHtml(raw)}</span>`,
+        error: {
+          raw,
+          message,
+          position: 0, // caller fills real position
+        },
+      };
+    }
+  }
+}
+
+/** Minimal HTML attribute escaping */
+function escapeAttr(str: string): string {
+  return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+```
+
+## 3. Markdown Parser (`src/markdown-parser.ts`)
+
+```typescript
+import type { ParserOptions, ParseResult, LatexError } from './types';
+import { LatexRenderer } from './latex-renderer';
+
+const DEFAULT_OPTIONS: ParserOptions = {
+  gfm: true,
+  latex: true,
+  strictLatex: false,
+  escapeHtml: true,
+};
+
+export class MarkdownParser {
+  private options: ParserOptions;
+  private latexRenderer: LatexRenderer;
+
+  constructor(options: Partial<ParserOptions> = {}) {
+    this.options = { ...DEFAULT_OPTIONS, ...options };
+    this.latexRenderer = new LatexRenderer();
+  }
+
+  /**
+   * Main entry: parse markdown + LaTeX into HTML.
+   */
+  parse(markdown: string): ParseResult {
+    let html = markdown;
+    const latexErrors: LatexError[] = [];
+
+    // ── Step 1: Extract & render LaTeX ──────────────────────────
+    if (this.options.latex) {
+      html = this.replaceLatex(html, latexErrors);
+    }
+
+    // ── Step 2: Parse standard Markdown ─────────────────────────
+    html = this.parseMarkdown(html);
+
+    return { html, latexErrors };
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // LaTeX extraction
+  // ═══════════════════════════════════════════════════════════════
+
+  private replaceLatex(input: string, errors: LatexError[]): string {
+    // Match <latex>...</latex> tags (non-greedy, multiline via [\s\S])
+    const LATEX_TAG_REGEX = /<latex>([\s\S]*?)<\/latex>/gi;
+
+    return input.replace(LATEX_TAG_REGEX, (_full, content, offset) => {
+      const { html, error } = this.latexRenderer.render(content);
+
+      if (error) {
+        error.position = offset;
+        errors.push(error);
+      }
+      return html;
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // Markdown → HTML (simplified CommonMark-like)
+  // ═══════════════════════════════════════════════════════════════
+
+  private parseMarkdown(text: string): string {
+    let lines = text.split('\n');
+    let html = '';
+    let inCodeBlock = false;
+    let codeBlockLang = '';
+    let codeBlockContent: string[] = [];
+    let inList: 'ul' | 'ol' | null = null;
+    let listLines: string[] = [];
+    let inQuoteBlock = false;
+    let quoteLines: string[] = [];
+    let inParagraph = false;
+    let paragraphLines: string[] = [];
+
+    const flushParagraph = () => {
+      if (paragraphLines.length) {
+        let inner = paragraphLines.join('\n');
+        inner = this.parseInlineMarkdown(inner);
+        html += `<p>${inner}</p>\n`;
+        paragraphLines = [];
+      }
+      inParagraph = false;
+    };
+
+    const flushList = () => {
+      if (listLines.length) {
+        html += `<${inList}>\n`;
+        for (const li of listLines) {
+          let cleaned = li.replace(/^\s*[\-*+]\s+/, '').replace(/^\s*\d+[.)]\s+/, '');
+          html += `  <li>${this.parseInlineMarkdown(cleaned)}</li>\n`;
+        }
+        html += `</${inList}>\n`;
+        listLines = [];
+      }
+      inList = null;
+    };
+
+    const flushQuote = () => {
+      if (quoteLines.length) {
+        const inner = quoteLines.join('\n').replace(/^\s*> ?/gm, '');
+        html += `<blockquote>${this.parseMarkdown(inner)}</blockquote>\n`;
+        quoteLines = [];
+      }
+      inQuoteBlock = false;
+    };
+
+    const flushCodeBlock = () => {
+      if (codeBlockContent.length) {
+        const escaped = this.options.escapeHtml
+          ? this.escapeHtml(codeBlockContent.join('\n'))
+          : codeBlockContent.join('\n');
+        const langAttr = codeBlockLang ? ` class="language-${this.escapeHtml(codeBlockLang)}"` : '';
+        html += `<pre><code${langAttr}>${escaped}</code></pre>\n`;
+        codeBlockContent = [];
+        codeBlockLang = '';
+      }
+      inCodeBlock = false;
+    };
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+
+      // ── Fenced code block ──
+      const codeMatch = line.match(/^```(\w*)$/);
+      if (codeMatch && !inCodeBlock) {
+        flushParagraph();
+        flushList();
+        flushQuote();
+        inCodeBlock = true;
+        codeBlockLang = codeMatch[1] || '';
+        continue;
+      }
+      if (line.trim() === '```' && inCodeBlock) {
+        flushCodeBlock();
+        continue;
+      }
+      if (inCodeBlock) {
+        codeBlockContent.push(line);
+        continue;
+      }
+
+      // ── Horizontal rule ──
+      if (/^(---|\*\*\*|___)(\s*\1)*\s*$/.test(line.trim())) {
+        flushParagraph(); flushList(); flushQuote();
+        html += `<hr/>\n`;
+        continue;
+      }
+
+      // ── ATX headings ──
+      const headingMatch = line.match(/^(#{1,6})\s+(.+)$/);
+      if (headingMatch) {
+        flushParagraph(); flushList(); flushQuote();
+        const level = headingMatch[1].length;
+        const inner = this.parseInlineMarkdown(headingMatch[2]);
+        html += `<h${level}>${inner}</h${level}>\n`;
+        continue;
+      }
+
+      // ── Setext headings (GFM) ──
+      if (this.options.gfm && i > 0) {
+        const prev = lines[i - 1];
+        if (/^=+\s*$/.test(line) && !/^\s*$/.test(prev)) {
+          flushParagraph(); flushList(); flushQuote();
+          html = html.replace(/<p>(.+)<\/p>\n$/, `<h1>$1</h1>\n`);
+          continue;
+        }
+        if (/^-+\s*$/.test(line) && !/^\s*$/.test(prev)) {
+          flushParagraph(); flushList(); flushQuote();
+          html = html.replace(/<p>(.+)<\/p>\n$/, `<h2>$1</h2>\n`);
+          continue;
+        }
+      }
+
+      // ── Blockquote ──
+      if (/^\s*>/.test(line)) {
+        flushParagraph(); flushList();
+        if (!inQuoteBlock) inQuoteBlock = true;
+        quoteLines.push(line);
+        continue;
+      }
+      if (inQuoteBlock) {
+        flushQuote();
+      }
+
+      // ── Lists ──
+      const ulMatch = line.match(/^(\s*)([-*+])\s+(.+)$/);
+      const olMatch = line.match(/^(\s*)(\d+)[.)]\s+(.+)$/);
+      if (ulMatch || olMatch) {
+        flushParagraph(); flushQuote();
+        const type: 'ul' | 'ol' = ulMatch ? 'ul' : 'ol';
+        if (inList && inList !== type) flushList();
+        if (!inList) inList = type;
+        listLines.push(line);
+        continue;
+      }
+      if (inList) {
+        flushList();
+      }
+
+      // ── Empty line = block boundary ──
+      if (/^\s*$/.test(line)) {
+        flushParagraph(); flushList(); flushQuote();
+        html += '\n';
+        continue;
+      }
+
+      // ── Paragraph text ──
+      if (!inParagraph) inParagraph = true;
+      paragraphLines.push(line);
+    }
+
+    // Flush leftovers
+    flushParagraph();
+    flushList();
+    flushQuote();
+    flushCodeBlock();
+
+    return html.trimEnd();
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // Inline markdown
+  // ═══════════════════════════════════════════════════════════════
+
+  private parseInlineMarkdown(text: string): string {
+    let result = text;
+
+    // Escape HTML if enabled (skip already-rendered KaTeX spans)
+    if (this.options.escapeHtml) {
+      // Temporarily protect KaTeX output so we don't double-escape
+      const katexPlaceholders: string[] = [];
+      result = result.replace(
+        /(<span[^>]*class="katex[^"]*"[^>]*>[\s\S]*?<\/span>)/gi,
+        (m) => {
+          const key = `%%KATEX${katexPlaceholders.length}%%`;
+          katexPlaceholders.push(m);
+          return key;
+        }
+      );
+
+      result = this.escapeHtml(result);
+
+      // Restore KaTeX
+      result = result.replace(/%%KATEX(\d+)%%/g, (_, i) => katexPlaceholders[Number(i)]);
+    }
+
+    // Inline code
+    result = result.replace(/`([^`\n]+)`/g, '<code>$1</code>');
+
+    // Bold + Italic ***...***
+    result = result.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+    // Bold **...**
+    result = result.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    // Bold __...__
+    result = result.replace(/__(.+?)__/g, '<strong>$1</strong>');
+    // Italic *...*
+    result = result.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
+    // Italic _..._
+    result = result.replace(/(?<!_)_(?!_)(.+?)(?<!_)_(?!_)/g, '<em>$1</em>');
+
+    // Strikethrough (GFM)
+    if (this.options.gfm) {
+      result = result.replace(/~~(.+?)~~/g, '<del>$1</del>');
+    }
+
+    // Links [text](url)
+    result = result.replace(
+      /\[([^\]]+)\]\(([^)\s]+)(?:\s+"([^"]+)")?\)/g,
+      '<a href="$2" title="$3">$1</a>'
+    );
+
+    // Images ![alt](url)
+    result = result.replace(
+      /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]+)")?\)/g,
+      '<img src="$2" alt="$1" title="$3"/>'
+    );
+
+    // Autolinks (GFM)
+    if (this.options.gfm) {
+      result = result.replace(
+        /<(https?:\/\/[^>\s]+)>/g,
+        '<a href="$1">$1</a>'
+      );
+    }
+
+    return result;
+  }
+
+  private escapeHtml(str: string): string {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+}
+```
+
+## 4. Public API (`src/index.ts`)
+
+```typescript
+export { MarkdownParser } from './markdown-parser';
+export { LatexRenderer } from './latex-renderer';
+export type { ParserOptions, ParseResult, LatexError } from './types';
+
+/** Quick one-shot parse function */
+export function parseMarkdown(
+  input: string,
+  options?: Partial<import('./types').ParserOptions>
+): string {
+  return new MarkdownParser(options).parse(input).html;
+}
+```
+
+## 5. Usage Example
+
+```typescript
+import { MarkdownParser } from './src/markdown-parser';
+
+const md = `
+# Hello World
+
+This is **bold** and *italic*.
+
+<latex>E = mc^2</latex>
+
+Display math:
+
+<latex>$$\int_0^\\infty e^{-x^2} dx = \\frac{\\sqrt{\\pi}}{2}$$</latex>
+
+- Item A
+- Item B with <latex>\\alpha + \\beta</latex>
+`;
+
+const parser = new MarkdownParser({ latex: true, gfm: true });
+const result = parser.parse(md);
+
+console.log(result.html);
+// Latex errors are available in result.latexErrors
+```
+
+## 6. Test (`src/tests/parser.test.ts`)
+
+```typescript
+import { describe, it, expect } from 'vitest'; // or jest
+import { MarkdownParser, parseMarkdown } from '../index';
+
+describe('MarkdownParser', () => {
+  it('parses bold and italic', () => {
+    expect(parseMarkdown('**bold** and *italic*'))
+      .toContain('<strong>bold</strong>');
+    expect(parseMarkdown('**bold** and *italic*'))
+      .toContain('<em>italic</em>');
+  });
+
+  it('parses LaTeX inline', () => {
+    const out = new MarkdownParser().parse('Energy: <latex>E=mc^2</latex>');
+    expect(out.html).toContain('class="katex"');
+    expect(out.latexErrors).toHaveLength(0);
+  });
+
+  it('parses LaTeX display mode via $$', () => {
+    const out = new MarkdownParser().parse('<latex>$$\\sum_{i=0}^n i$$</latex>');
+    expect(out.html).toContain('class="katex"');
+    expect(out.html).toContain('display="block"');
+  });
+
+  it('captures LaTeX errors', () => {
+    const out = new MarkdownParser().parse('<latex>\\invalidmacro{foo}</latex>');
+    expect(out.latexErrors.length).toBeGreaterThan(0);
+    expect(out.html).toContain('latex-error');
+  });
+
+  it('handles fenced code blocks', () => {
+    const out = parseMarkdown('```ts\nconst x = 1;\n```');
+    expect(out).toContain('<pre><code class="language-ts">');
+  });
+
+  it('handles lists', () => {
+    const out = parseMarkdown('- one\n- two');
+    expect(out).toContain('<ul>');
+    expect(out).toContain('<li>one</li>');
+  });
+
+  it('handles mixed LaTeX + Markdown', () => {
+    const out = parseMarkdown('**Important**: <latex>\\frac{1}{2}</latex>');
+    expect(out).toContain('<strong>');
+    expect(out).toContain('katex');
+  });
+});
+```
+
+## 7. `package.json` (relevant deps)
+
+```json
+{
+  "name": "markdown-latex-parser",
+  "type": "module",
+  "dependencies": {
+    "katex": "^0.16.11"
+  },
+  "devDependencies": {
+    "typescript": "^5.5",
+    "vitest": "^2.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest"
+  }
+}
+```
+
+## 8. `tsconfig.json`
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "declaration": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*.ts"]
+}
+```
+
+## Key Design Decisions
+
+| Feature | Approach |
+|---|---|
+| **LaTeX extraction** | Regex on `<latex>...</latex>` XML tags *before* markdown parsing → KaTeX renders to HTML strings → injected back |
+| **Display vs inline** | Auto-detected: `$$...$$` or `\[...\]` inside the tag → KaTeX `displayMode: true` |
+| **Error handling** | By default renders red error `<span>`; `strictLatex: true` throws |
+| **Escape safety** | HTML escaped globally, but KaTeX output (which is already safe HTML) is protected via placeholder tokens |
+| **Extensibility** | `ParserOptions` + pluggable `LatexRenderer` with custom KaTeX options |
+| **Performance** | Single-pass LaTeX extraction, then line-by-line block parsing — O(n) |
