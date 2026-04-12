@@ -31,6 +31,12 @@ LANGUAGES_TO_DETECT = [
     lingua.Language.RUSSIAN,
 ]
 
+# Page number offsets for OCR documents (doc_name -> offset to apply to page numbers)
+PAGE_OFFSETS = {
+    "der-taumelnde-kontinent": -1,  # page N → file N-1
+    "wilhelm-tell": +4,               # page N → file N+4
+}
+
 
 def count_tokens(messages: t.List[t.Dict], tokenizer, template_env=None) -> int:
     encoded_input = tokenizer.apply_chat_template(messages, tokenize=True, template_env=template_env)
@@ -291,6 +297,75 @@ def process_explain_meme(dir_path, project_name, synthetic, mistakes):
     return data
 
 
+def process_ocr(dir_path, project_name, synthetic, mistakes):
+    """Process OCR data: images + text files with page markers."""
+    with open(pathlib.Path('./attachments/rename_log.txt')) as f:
+        rename_log = f.read()
+
+    # Build mapping from image path to hash
+    image_to_hash = {}
+    for line in rename_log.split('\n'):
+        if ' -> ' in line:
+            original, hash_value = line.split(' -> ', 1)
+            image_to_hash[original.strip()] = hash_value.strip()
+
+    # Read the OCR prompt
+    with open(pathlib.Path(dir_path) / 'prompt.md', 'r') as f:
+        ocr_prompt = f.read().strip()
+
+    # Read all text files
+    texts_dir = pathlib.Path(dir_path) / 'texts'
+    images_dir = pathlib.Path(dir_path) / 'images'
+
+    data = []
+    for text_file in texts_dir.iterdir():
+        if text_file.suffix != '.txt':
+            continue
+
+        with open(text_file, 'r') as f:
+            content = f.read()
+
+        # Extract document name from text file name (without extension)
+        doc_name = text_file.stem
+
+        # Parse pages from text content using <page n="N"> tags
+        pages = re.findall(r'<page n="(\d+)">\s*(.*?)\s*</page>', content, re.DOTALL)
+
+        # Get corresponding image directory
+        image_dir = images_dir / doc_name
+        if not image_dir.exists():
+            continue
+
+        # Get list of image files sorted by page number
+        image_files = sorted(image_dir.glob('*.png'))
+
+        for page_num, page_text in pages:
+            page_num_int = int(page_num)
+            # Apply document-specific offset if defined
+            offset = PAGE_OFFSETS.get(doc_name, 0)
+            # Find corresponding image (page_0001.png for page 1, etc.)
+            image_file = image_dir / f'page_{page_num_int + offset:04d}.png'
+            if not image_file.exists():
+                continue
+
+            # Find hash for this image
+            rel_image_path = str(image_file.relative_to(images_dir))
+            if rel_image_path not in image_to_hash:
+                continue
+
+            hash_value = image_to_hash[rel_image_path]
+
+            # Create conversation for this page
+            user_content = f"<attach:{hash_value}>{ocr_prompt}"
+            messages = [
+                {'role': 'user', 'content': user_content},
+                {'role': 'assistant', 'content': page_text.strip()}
+            ]
+            data.append({'messages': messages, 'project': project_name, 'synthetic': synthetic, 'mistakes': mistakes})
+
+    return data
+
+
 def check_pii_in_data(data, first_names, last_names, false_positives, false_negatives):
     pii_findings = []
     for idx, entry in tqdm.tqdm(enumerate(data), desc='Checking for PII', total=len(data)):
@@ -351,9 +426,10 @@ def main():
     data_synthetic_ingredient_scanner2 = process_jsonl('./synthetic/ingredient_scanner/ingredient_scanner2.jsonl', 'ingredient_scanner', False, True)
     data_synthetic_misc = process_txt_directory('./synthetic/misc', 'misc', True, True)
     data_synthetic_moral = process_moral_sqlite('./synthetic/moral/database.sqlite3', 'moral', True, True)
+    data_synthetic_ocr = process_ocr('./synthetic/ocr', 'ocr', True, True)
     data_synthetic_topic_categorizer = process_jsonl('./synthetic/topic_categorizer/topic_categorizer.jsonl', 'topic_categorizer', True, False)
 
-    data = data_human_edited_biasbench + data_human_edited_infinite_craft + data_human_edited_misc + data_human_edited_moral + data_synthetic_biasbench + data_synthetic_drawback_chess + data_synthetic_explain_meme + data_synthetic_ingredient_scanner + data_synthetic_ingredient_scanner2 + data_synthetic_misc + data_synthetic_moral + data_synthetic_topic_categorizer
+    data = data_human_edited_biasbench + data_human_edited_infinite_craft + data_human_edited_misc + data_human_edited_moral + data_synthetic_biasbench + data_synthetic_drawback_chess + data_synthetic_explain_meme + data_synthetic_ingredient_scanner + data_synthetic_ingredient_scanner2 + data_synthetic_misc + data_synthetic_moral + data_synthetic_ocr + data_synthetic_topic_categorizer
 
     first_names, last_names = load_names()
     false_positives = load_false_positives()
