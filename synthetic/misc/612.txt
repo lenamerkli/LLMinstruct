@@ -1,0 +1,132 @@
+§u§
+```
+<h1>Relativistischer Impuls und relativistische Energie</h1>
+<h2>Der Lorentz-Faktor</h2>
+<app-latex content="\begin{equation*} \gamma = \frac{1}{\sqrt{1 - \frac{v^2}{c^2}}} \end{equation*}"></app-latex>
+<h2>Relativistischer Impuls</h2>
+<h3>Klassische Mechanik</h3>
+In der Klassischen mechanik ist der Impuls definiert als Masse mail Geschwindigkeit:
+<app-latex content="\begin{equation*} p = mv \end{equation*}"></app-latex>
+Das Problem ist, dass mit konstanter Kraft ein Körper mit dieser Formel die Lichtgeschwindigkeit überschreiten könnte.
+<h3>Relativistische Lösung</h3>
+<app-latex content="\begin{equation*} p = \gamma mv = \frac{mv}{\sqrt{1 - \frac{v^2}{c^2}}} \end{equation*}"></app-latex>
+<p>Bei kleinen Geschwindigkeiten ist <app-latex>\gamma \approx 1</app-latex>, und die Formel wird wieder zum klassischen <app-latex>p = mv</app-latex>.</p>
+<p>Um ein Objekt mit Masse auf Lichtgeschwindigkeit zu beschleunigen, bräuchte man einen unendlich grossen Impuls (also eine unendlich grosse Kraft über unendlich lange Zeit). Da das unmöglich ist, kann kein massereiches Objekt die Lichtgeschwindigkeit erreichen.</p>
+<h2>Relativistische Energie</h2>
+<h3>Gesamtenergie</h3>
+<app-latex content="\begin{equation*} E = \gamma mc^2 = \frac{mc^2}{\sqrt{1 - \frac{v^2}{c^2}}} \end{equation*}"></app-latex>
+<h3>Ruheenergie</h3>
+<app-latex content="\begin{equation*} E_0 = mc^2 \end{equation*}"></app-latex>
+<h3>Kinetische Energie</h3>
+<app-latex content="\begin{equation*} E_{kin} = E - E_0 = (\gamma - 1)mc^2 \end{equation*}"></app-latex>
+<h2>Energie-Impuls-Beziehung</h2>
+<app-latex content="\begin{equation*} E^2 = (p \cdot c)^2 + (m \cdot c^2)^2 \end{equation*}"></app-latex>
+<p>Da für ein Photon <app-latex>m=0</app-latex> gilt, vereinfacht sich die Gleichung zu <app-latex>E = p \cdot c</app-latex>. Das bedeutet: Licht hat einen Impuls, obwohl es keine Masse hat.</p>
+```
+Überprüfe auf Korrektheit.
+§a§
+Die Inhalte sind **physikalisch im Wesentlichen korrekt**. Es gibt nur ein paar **sprachliche** und **präzisierende** Punkte.
+
+## Korrekt
+- **Lorentz-Faktor**
+  \[
+  \gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2}}}
+  \]
+  ist korrekt.
+
+- **Relativistischer Impuls**
+  \[
+  p=\gamma mv
+  \]
+  ist korrekt.
+  Genau genommen ist das der **Betrag** in 1D; allgemein schreibt man besser
+  \[
+  \vec p=\gamma m \vec v.
+  \]
+
+- **Gesamtenergie**
+  \[
+  E=\gamma mc^2
+  \]
+  ist korrekt.
+
+- **Ruheenergie**
+  \[
+  E_0=mc^2
+  \]
+  ist korrekt.
+
+- **Kinetische Energie**
+  \[
+  E_{\text{kin}}=(\gamma-1)mc^2
+  \]
+  ist korrekt.
+
+- **Energie-Impuls-Beziehung**
+  \[
+  E^2=(pc)^2+(mc^2)^2
+  \]
+  ist korrekt.
+
+- **Photon**
+  Für \(m=0\) folgt
+  \[
+  E=pc
+  \]
+  korrekt. Das heißt: Licht hat Impuls, obwohl es keine Ruhemasse hat.
+
+---
+
+## Punkte, die ich präziser formulieren würde
+
+### 1. Sprachliche Fehler
+- „**Klassischen mechanik**“ → **klassischen Mechanik**
+- „Masse **mail** Geschwindigkeit“ → **Masse mal Geschwindigkeit**
+
+---
+
+### 2. Formulierung zur Lichtgeschwindigkeit
+Der Satz:
+
+> „Das Problem ist, dass mit konstanter Kraft ein Körper mit dieser Formel die Lichtgeschwindigkeit überschreiten könnte.“
+
+ist **inhaltlich okay**, aber etwas ungenau formuliert. Präziser wäre:
+
+> „In der klassischen Mechanik gibt es keine obere Geschwindigkeitsgrenze; mit konstanter Kraft könnte ein Körper theoretisch immer schneller werden und damit auch \(c\) überschreiten. Die Relativitätstheorie verhindert das durch den Faktor \(\gamma\).“
+
+---
+
+### 3. Satz über „unendlich grosse Kraft über unendlich lange Zeit“
+Der Satz:
+
+> „Um ein Objekt mit Masse auf Lichtgeschwindigkeit zu beschleunigen, bräuchte man einen unendlich grossen Impuls (also eine unendlich grosse Kraft über unendlich lange Zeit).“
+
+ist **in der Aussage richtig**, aber physikalisch und sprachlich etwas unsauber.
+
+Besser:
+
+> „Um ein Objekt mit Ruhemasse auf Lichtgeschwindigkeit zu beschleunigen, wäre unendlicher Impuls bzw. unendliche Energie nötig. Deshalb kann ein massereiches Objekt \(c\) nie erreichen.“
+
+Das ist die sauberste Formulierung.
+
+---
+
+## Kleine fachliche Präzisierung
+Statt „**Objekt mit Masse**“ ist in der Relativitätstheorie oft präziser:
+
+- **Objekt mit Ruhemasse**
+- oder **massives Objekt**
+
+Denn ein Photon hat zwar Energie und Impuls, aber **keine Ruhemasse**.
+
+---
+
+## Kurzfazit
+**Fachlich stimmt dein Text fast vollständig.**
+Ich würde nur diese drei Dinge ändern:
+
+1. Sprachfehler korrigieren
+2. Impuls als Vektor kennzeichnen
+3. Den Satz über die Lichtgeschwindigkeit etwas präziser formulieren
+
+Wenn du willst, kann ich dir den gesamten Text direkt in einer **überarbeiteten, sprachlich sauberen Version** zurückgeben.

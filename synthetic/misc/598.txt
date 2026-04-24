@@ -1,0 +1,119 @@
+§u§
+Compare the llama.cpp performance of amd mi50 and nvidia v100 (both 16GB variant). If information is available, also look at multi-card systems.
+§a§
+## Summary (what the numbers say)
+Across the most apples-to-apples public `llama-bench` results I could find for **both MI50 and V100**, a **V100 is dramatically faster at prompt processing (prefill)**, while **token generation (decode)** is **much closer**—typically only ~20–30% apart on an 8B model.
+
+That pattern matches what you’d expect from the hardware + software stack: **V100 + CUDA kernels (Tensor Cores, mature GEMMs)** tend to dominate **prefill**, while **decode is more memory-bandwidth bound**, where MI50’s HBM2 bandwidth keeps it competitive.
+
+---
+
+## 1) Single‑GPU llama.cpp performance (MI50 16GB vs V100 16GB)
+
+### Best direct comparison I found (same model family, same benchmark style)
+DevQuasar published a small “GPU GGUF inference comparison” leaderboard using `llama-bench` on **Llama‑3.1‑8B‑Instruct** in **Q4_K_M** and **Q8_0**, reporting **pp512** (prompt processing) and **tg128** (token generation). The author explicitly notes results are **not on identical host systems**, but it’s still the cleanest side-by-side MI50 vs V100 set I could locate.
+
+**Reported results:**
+
+| GPU | Backend | Quant | pp512 (tok/s) | tg128 (tok/s) |
+|---|---|---:|---:|---:|
+| **AMD MI50** | ROCm | Q4_K_M | **395.73** | **76.73** |
+| **NVIDIA V100** | CUDA 12.6 | Q4_K_M | **2844.55** | **98.76** |
+| **AMD MI50** | ROCm | Q8_0 | **416.68** | **60.38** |
+| **NVIDIA V100** | CUDA 12.6 | Q8_0 | **3368.09** | **74.16** |
+
+Source: DevQuasar leaderboard.
+
+### Ratio view (V100 advantage)
+Using the same table:
+
+- **Prefill (pp512):** V100 is about **7.2× faster (Q4_K_M)** and **8.1× faster (Q8_0)**.
+- **Decode (tg128):** V100 is only about **1.29× faster (Q4_K_M)** and **1.23× faster (Q8_0)**.
+
+### How to interpret this (why pp and tg behave so differently)
+`llama-bench`’s **pp512** is a *prefill-style* workload (big batches of prompt tokens), which is much more **compute / GEMM throughput** sensitive. `tg128` is *decode-style* (small batch, one token at a time), which tends to be more **memory-bandwidth / cache / kernel-latency** sensitive.
+
+So it’s common to see:
+- **Huge gaps in pp** (where CUDA + Tensor Core–friendly paths shine),
+- **Smaller gaps in tg** (where both are often “HBM bandwidth limited-ish”).
+
+---
+
+## 2) Hardware context that matters for llama.cpp
+
+### Memory bandwidth (often shows up most in decode / tg)
+- **MI50:** TechPowerUp lists **16GB HBM2** with **~1.02 TB/s** bandwidth.
+- AMD’s launch materials also describe MI50 as **16GB HBM2 ECC** and market the platform around **~1 TB/s** HBM2 bandwidth.
+- **V100:** NVIDIA’s datasheet lists **900 GB/s** HBM2 bandwidth (and highlights NVLink bandwidth differences by form factor).
+
+This bandwidth proximity is consistent with why **tg (decode)** can land relatively close between MI50 and V100 in practice, *when kernels are reasonably optimized*.
+
+### Interconnect (mostly matters for multi‑GPU)
+For 16GB V100s, “which V100” matters:
+- **V100 SXM2** parts can use **NVLink**; NVIDIA quotes up to **300 GB/s** interconnect bandwidth (NVLink) vs **32 GB/s** PCIe.
+- MI50 was also marketed with AMD **Infinity Fabric Link** for higher peer-to-peer bandwidth (AMD quotes up to **200 GB/s** and ring/hive connectivity), but most homelab MI50 setups run cards as plain PCIe devices without a specialized IF-link platform.
+
+---
+
+## 3) Multi‑card systems (llama.cpp): what’s available + what it suggests
+
+### First: a reality check about llama.cpp multi‑GPU scaling
+llama.cpp can split models across multiple GPUs (e.g., layer/row splits and `--tensor-split`/split-mode knobs), but **the main reason to use multiple GPUs is usually VRAM capacity**, not perfect linear speedups. One concrete example: a llama.cpp GitHub discussion mentions using `--tensor-split` on a **4× Tesla V100 16GB** machine specifically to manage memory distribution.
+
+So below, treat multi-GPU numbers as “what people are seeing end-to-end,” not a promise of neat scaling curves.
+
+---
+
+### A) Multi‑MI50 (llama.cpp): real-world throughput datapoints
+In a thread about MI50 improvements, a commenter reports:
+
+- **2× MI50:** **gpt-oss 120B (≈65GB Q8)** at **~58 tok/s decode** and **~750 tok/s prompt processing** in llama.cpp
+- **8× MI50:** **qwen3 235B Q4_1** at **~21 tok/s decode** and **~350 tok/s prompt processing** in llama.cpp
+
+These are especially useful because they show MI50 multi-GPU rigs can deliver **very usable decode rates even on massive models**—again reinforcing that for many interactive uses, decode can be “good enough,” and the big pain point is often prefill and/or long-context behavior.
+
+---
+
+### B) Multi‑V100 16GB (llama.cpp): concrete benchmark output
+A `r/LocalLLaMA` post comparing V100/3090/5060Ti includes a `llama-bench` table explicitly showing **Tesla V100‑SXM2‑16GB** results for **Llama 70B Q4_K (Medium)**:
+
+- **pp2048:** 342.95 tok/s
+- **pp8192:** 257.09 tok/s
+- **tg256:** 16.65 tok/s
+
+Important nuance: that post also describes an **8× V100 SXM2 16GB** machine in the setup description, and the model benchmarked (≈39.6GiB) doesn’t fit in a single 16GB card—so this is effectively a **multi‑V100 system** result, but the snippet doesn’t spell out the exact split configuration used. Still, it’s one of the few public, copy-pastable tables I found that is *explicitly* “V100-SXM2-16GB” + llama.cpp + large model.
+
+---
+
+## 4) Practical takeaways (when MI50 wins vs when V100 wins)
+
+### If you care about “chat feels fast” (decode / tg)
+- On small-to-mid models that fit in 16GB, **MI50 decode can be surprisingly competitive** with V100 (DevQuasar shows only ~20–30% gap on tg128 for an 8B model).
+- On very large multi-GPU rigs, MI50 clusters have reported strong decode throughput on massive models (e.g., 120B Q8).
+
+**Meaning:** if your workflow is mostly *streaming output tokens* and your prompts aren’t huge, MI50 can feel “close enough,” especially for the price-per-VRAM you often see on the used market.
+
+### If you do lots of RAG / long prompts / batching (prefill / pp)
+- V100’s advantage in **pp512** in the DevQuasar data is overwhelming (7–8×).
+- That typically translates into noticeably faster “ingest the prompt” time, and better throughput under concurrency.
+
+**Meaning:** if you’re building something throughput-oriented (many requests, long prompts, big context), **V100 tends to be the safer bet** in llama.cpp today—*assuming the V100 is still a good fit for your CUDA/driver constraints and you’re okay with only 16GB per card.*
+
+---
+
+## 5) If you want to reproduce (recommended benchmark shape)
+To compare cards yourself in a way that matches common reporting:
+
+- Use **`llama-bench`** and report at least **pp512** and **tg128** (and optionally a long-context sweep like `-d 0, 8192, 32768` if that’s your use case).
+- Keep model + quant identical (e.g., an 8B Q4_K_M GGUF).
+- On multi-GPU, always record the split mode / tensor split (because otherwise results are hard to interpret).
+
+(That’s exactly why the DevQuasar pp512/tg128 table is so useful for a baseline, even with the “not identical systems” caveat.)
+
+---
+
+### Bottom line
+- **Single card (16GB each):**
+  - **V100** usually wins **massively** on **prompt processing** and wins **modestly** on **token generation** (decode).
+- **Multi-card:**
+  - Both can run very large models by splitting, but public llama.cpp data suggests you should treat multi-GPU mainly as a **VRAM pooling strategy**, not a guaranteed linear speedup—though you *can* get very usable decode rates on big models (seen on both MI50 clusters and multi‑V100 systems).

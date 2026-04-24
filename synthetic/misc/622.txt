@@ -1,0 +1,50 @@
+§u§
+```
+<h1>Kreisbewegung des starren Körpers</h1>
+<h2>Winkel (Weg)</h2>
+<app-latex content="\varphi = \frac{b}{r}"></app-latex>
+<p><app-latex>\varphi</app-latex> ist die Winkelkoordinate in <app-latex content="\text{rad}"></app-latex>, <app-latex>b</app-latex> ist der Weg und <app-latex>r</app-latex> ist der Radius.</p>
+<h2>Winkelgeschwindigkeit</h2>
+<app-latex content="\omega = \frac{\Delta \varphi}{\Delta t} = \frac{2\pi}{T} = 2\pi f"></app-latex>
+<p><app-latex>\omega</app-latex> ist die Winkelgeschwindigkeit in <app-latex content="\frac{\text{rad}}{\text{s}}"></app-latex>, <app-latex>T</app-latex> ist die Periode und <app-latex>f</app-latex> ist die Frequenz.</p>
+<h2>Zentripetalkraft</h2>
+<p>Damit eine Kreisbewegung zustande kommt, muss eine Kraft zum Zentrum hin wirken. Wichtig: Diese Kraft verrichtet keine Arbeit, da sie immer senkrecht zur Bewegungsrichtung steht.</p>
+<app-latex content="F_Z = \frac{m v^2}{r} = m \omega^2 r"></app-latex>
+<p><app-latex>F_Z</app-latex> ist die Zentripetalkraft in <app-latex content="\text{N}"></app-latex>, <app-latex>m</app-latex> ist die Masse, <app-latex>v</app-latex> ist die Geschwindigkeit und <app-latex>r</app-latex> ist der Radius.</p>
+```
+Überprüfe auf Korrektheit.
+§a§
+# Überprüfung der Inhalte
+
+Die Inhalte sind **korrekt**. Hier ist eine detaillierte Analyse:
+
+## ✅ Winkel (Weg)
+```
+φ = b/r
+```
+Korrekt. Dies ist die Definition des Bogenmaßes.
+
+## ✅ Winkelgeschwindigkeit
+```
+ω = Δφ/Δt = 2π/T = 2πf
+```
+Korrekt. Alle drei Ausdrücke sind äquivalent:
+- Δφ/Δt: Definition
+- 2π/T: Eine vollständige Rotation (2π rad) pro Periode T
+- 2πf: Mit f = 1/T
+
+## ✅ Zentripetalkraft
+```
+F_Z = mv²/r = mω²r
+```
+Korrekt. Beide Formeln sind äquivalent:
+- Die erste Form verwendet die Bahngeschwindigkeit v
+- Die zweite Form verwendet die Winkelgeschwindigkeit ω
+- Mit v = ωr folgt: mv²/r = m(ωr)²/r = mω²r
+
+## ✅ Zusatzinformation
+Die Anmerkung, dass die Zentripetalkraft **keine Arbeit verrichtet**, ist korrekt und pädagogisch wertvoll. Sie steht immer senkrecht zur Geschwindigkeit, daher ist W = F·s·cos(90°) = 0.
+
+---
+
+**Fazit:** Alle Formeln und Erklärungen sind physikalisch korrekt und gut strukturiert.

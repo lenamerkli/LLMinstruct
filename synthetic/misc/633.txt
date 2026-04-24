@@ -1,0 +1,27 @@
+§u§
+```
+V100 4 Karten Quad-GPU SXM2 300G NVLINK 300GB/s Interconnection Baseboard Lösung: $883,92
+Nvidia v100 sxm2 300G NVlink Interconnect Dual Card sxm2 Adapter Board: $237,55
+699-2G503-0203-220 NVIDIA TESLA V100 SXM2 32GB GPU GRAFIKBESCHLEUNIGER KARTE: $567,51
+699-2G503-0201-200 NVIDIA TESLA V100 SXM2 16GB GPU GRAFIKBESCHLEUNIGER KARTE: $113,49
+Heatsink for SXM2 GPU NVIDIA Tesla V100 16GB 32GB Height: 9cm: EUR 43,23
+```
+Was ist billiger: 4x v100 16gb oder 2x v100 32gb?
+§a§
+Lass uns die beiden Optionen vergleichen:
+
+**Option 1: 4x V100 16GB**
+- 4 × V100 SXM2 16GB: 4 × $113,49 = $453,96
+- Quad-GPU Baseboard: $883,92
+- 4 × Heatsink: 4 × €43,23 ≈ 4 × $46,69 = $186,76
+- **Gesamt: ca. $1.524,64**
+
+**Option 2: 2x V100 32GB**
+- 2 × V100 SXM2 32GB: 2 × $567,51 = $1.135,02
+- Dual Card Adapter Board: $237,55
+- 2 × Heatsink: 2 × €43,23 ≈ 2 × $46,69 = $93,38
+- **Gesamt: ca. $1.465,95**
+
+**Fazit:** 2x V100 32GB ist etwa **$58,69 günstiger** (ca. 4 % Ersparnis).
+
+Allerdings bekommst du bei der 16GB-Option die doppelte Anzahl GPUs (4 statt 2) mit insgesamt 64GB VRAM statt 64GB – also gleicher Gesamtspeicher, aber mehr Rechenkerne. Für viele Workloads (z.B. paralleles Training) könnten 4 GPUs trotz des leicht höheren Preises die bessere Wahl sein.

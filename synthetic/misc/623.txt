@@ -1,0 +1,133 @@
+§u§
+```
+<h1>Trägheitsmoment</h1>
+<p>Es gibt an, wie "schwer" ein Körper in Rotation zu versetzen oder zu bremsen ist.</p>
+<h2>Punktmasse</h2>
+<app-latex content="\begin{equation*}I = m \cdot r^2\end{equation*}"></app-latex>
+<p><app-latex>I</app-latex> ist das Trägheitsmoment der Punktmasse, <app-latex>m</app-latex> ist die Masse und <app-latex>r</app-latex> ist der Radius.</p>
+<h2>diskrete Massenpunkte</h2>
+<app-latex content="\begin{equation*}I = \sum m_i \cdot r_i^2\end{equation*}"></app-latex>
+<h2>kontinuierliche Körper</h2>
+<app-latex content="\begin{equation*}I = \int r^2 dm\end{equation*}"></app-latex>
+<h2>Satz von Steiner</h2>
+<p>Falls die Rotationsachse nicht durch den Schwerpunkt verläuft, aber parallel dazu:</p>
+<app-latex content="\begin{equation*}I = I_S + m \cdot d^2\end{equation*}"></app-latex>
+<p><app-latex>I_S</app-latex> ist das Trägheitsmoment des Schwerpunktes, <app-latex>m</app-latex> ist die Masse und <app-latex>d</app-latex> ist die Distanz des Schwerpunktes zur Rotationsachse.</p>
+```
+Überprüfe auf Korrektheit.
+§a§
+Im Wesentlichen ist der Inhalt **korrekt**, aber es gibt ein paar **fachliche und sprachliche Präzisierungen**, die wichtig wären.
+
+## Korrekt
+Die Formeln sind für das **Massenträgheitsmoment bezüglich einer festen Rotationsachse** richtig:
+
+- **Punktmasse:**
+  \[
+  I = m r^2
+  \]
+
+- **diskrete Massenpunkte:**
+  \[
+  I = \sum_i m_i r_i^2
+  \]
+
+- **kontinuierliche Körper:**
+  \[
+  I = \int r^2 \, dm
+  \]
+
+- **Satz von Steiner:**
+  \[
+  I = I_S + m d^2
+  \]
+
+## Wichtige Präzisierungen
+
+### 1. „Radius“ ist nicht ganz sauber
+Bei der Punktmasse ist \(r\) **nicht allgemein ein Radius**, sondern der **senkrechte Abstand zur Rotationsachse**.
+
+Besser:
+> \(r\) ist der Abstand der Masse von der Rotationsachse.
+
+Dasselbe gilt auch für \(r_i\) und \(r\) im Integral.
+
+---
+
+### 2. Das Trägheitsmoment hängt von der Achse ab
+Die Formulierung
+
+> „Es gibt an, wie 'schwer' ein Körper in Rotation zu versetzen oder zu bremsen ist.“
+
+ist anschaulich richtig, aber man sollte ergänzen:
+
+> Das Trägheitsmoment gilt immer **bezüglich einer bestimmten Rotationsachse**.
+
+Denn derselbe Körper hat je nach Achse verschiedene Trägheitsmomente.
+
+---
+
+### 3. Steiner: genauer „Schwerpunktachse“
+Beim Satz von Steiner ist \(I_S\) genauer:
+
+> \(I_S\) ist das Trägheitsmoment bezüglich einer **zur gegebenen Achse parallelen Achse durch den Schwerpunkt**.
+
+„Trägheitsmoment des Schwerpunktes“ ist sprachlich nicht ganz korrekt, weil der Schwerpunkt selbst kein Trägheitsmoment hat — sondern eine **Achse durch den Schwerpunkt**.
+
+---
+
+## Vorschlag für fachlich sauberere Formulierungen
+
+### Einleitung
+> Das Trägheitsmoment gibt an, wie stark sich ein Körper einer Änderung seiner Rotationsbewegung um eine bestimmte Achse widersetzt.
+
+---
+
+### Punktmasse
+\[
+I = m \cdot r^2
+\]
+
+> \(I\) ist das Trägheitsmoment bezüglich der Rotationsachse,
+> \(m\) ist die Masse und
+> \(r\) ist der senkrechte Abstand der Punktmasse von der Rotationsachse.
+
+---
+
+### Diskrete Massenpunkte
+\[
+I = \sum_i m_i \cdot r_i^2
+\]
+
+> \(r_i\) ist jeweils der senkrechte Abstand des Massenpunkts \(m_i\) von der Rotationsachse.
+
+---
+
+### Kontinuierliche Körper
+\[
+I = \int r^2 \, dm
+\]
+
+> Dabei ist \(r\) der senkrechte Abstand des Massenelements \(dm\) von der Rotationsachse.
+
+---
+
+### Satz von Steiner
+\[
+I = I_S + m \cdot d^2
+\]
+
+> Gilt, wenn die betrachtete Achse parallel zu einer Achse durch den Schwerpunkt verläuft.
+> \(I_S\) ist das Trägheitsmoment bezüglich der Schwerpunktachse,
+> \(m\) die Gesamtmasse und
+> \(d\) der Abstand zwischen den beiden Achsen.
+
+---
+
+## Fazit
+**Fachlich im Wesentlichen richtig**, aber ich würde diese Punkte korrigieren:
+
+- „Radius“ → **Abstand zur Rotationsachse**
+- Beim Steiner-Satz: „Trägheitsmoment des Schwerpunktes“ → **Trägheitsmoment bezüglich der Schwerpunktachse**
+- Optional ergänzen: Das Trägheitsmoment ist **achsenabhängig**
+
+Wenn du willst, kann ich dir den gesamten HTML-Text direkt in **überarbeiteter, fachlich sauberer Form** zurückgeben.

@@ -1,0 +1,152 @@
+§u§
+```
+<h1>Relativistische Geschwindigkeitsaddition</h1>
+<h2>Theorie</h2>
+<h3>Gleiche Richtung</h3>
+<app-latex content="\begin{equation*} u' = \frac{u + v}{1 + \frac{uv}{c^2}} \end{equation*}"></app-latex>
+<p><app-latex>v</app-latex> ist die Geschwindigkeit eines Inertialsystems <app-latex>S'</app-latex> relativ zu einem anderen Inertialsystem <app-latex>S</app-latex>. <app-latex>u</app-latex> ist die Geschwindigkeit eines Objekts im <app-latex>S</app-latex>-System und <app-latex>u'</app-latex> ist die Geschwindigkeit des Objekts im <app-latex>S'</app-latex>-System.</p>
+<h3>Entgegengesetzt</h3>
+<app-latex content="\begin{equation*} u' = \frac{u - v}{1 - \frac{uv}{c^2}} \end{equation*}"></app-latex>
+<h2>Aufgaben</h2>
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 5.1.2.1</h3>
+    <p>Ein Zug mit der Geschwindigkeit <app-latex>v</app-latex> bezüglich der Schiene schaltet die Photonenkanone (die Scheinwerfer) ein, und sendet somit Photonen aus, die sich mit Lichtgeschwindigkeit von den Scheinwerfern fortbewegen. Welche Geschwindigkeit hat das Photon bezüglich der Schiene?</p>
+  </app-task-description>
+  <app-task-solution>
+    <p>Mit Lichtgeschwindigkeit, da diese immer konstant ist.</p>
+  </app-task-solution>
+</app-task>
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 5.1.2.2</h3>
+    <p>Nehmen wir an, der Zug könne mit Lichtgeschwindigkeit fahren (was aufgrund der unendlichen Energie, die dazu nötig ist, eigentlich unmöglich ist). Im Zug läuft eine Person mit der Geschwindigkeit <app-latex>u</app-latex> in Fahrtrichtung. Wie schnell läuft diese Person relativ zu den Schienen?</p>
+  </app-task-description>
+  <app-task-solution>
+    <p>Da der Zug mit Lichtgeschwindigkeit fährt, ist <app-latex>v = c</app-latex></p>
+    <app-latex content="\begin{equation*} u' = \frac{u + v}{1 + \frac{uv}{c^2}} \end{equation*}"></app-latex>
+    <app-latex content="\begin{equation*} u' = \frac{u + c}{1 + \frac{uc}{c^2}} \end{equation*}"></app-latex>
+    <app-latex content="\begin{equation*} u' = \frac{u + c}{1 + \frac{u}{c}} \end{equation*}"></app-latex>
+    <app-latex content="\begin{equation*} u' = \frac{c (\frac{u}{c} + 1)}{1 + \frac{u}{c}} \end{equation*}"></app-latex>
+    <app-latex content="\begin{equation*} u' = \frac{c \cdot 1}{1} \end{equation*}"></app-latex>
+    <app-latex content="\begin{equation*} u' = c \end{equation*}"></app-latex>
+    <p>Die Person bewegt sich relativ zu den Schienen mit Lichtgeschwindigkeit. Egal wie schnell die Person im Zug läuft – wenn der Zug bereits mit <app-latex>c</app-latex> fährt, bleibt die resultierende Geschwindigkeit immer <app-latex>c</app-latex>.</p>
+  </app-task-solution>
+</app-task>
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 5.1.2.3</h3>
+    <p>Der mit Lichtgeschwindigkeit fahrende Zug schaltet seine Scheinwerfer an, und die Photonen bewegen sich mit Lichtgeschwindigkeit bezüglich des Zuges. Welche Geschwindigkeit haben die Photonen bezüglich der Schienen?</p>
+  </app-task-description>
+  <app-task-solution>
+    <p>Siehe Aufgabe 5.1.2.2: Nichts kann sich mit einer Geschwindigkeit grösser als <app-latex>c</app-latex> bewegen, daher bleibt die Geschwindigkeit der Photonen <app-latex>c</app-latex>.</p>
+  </app-task-solution>
+</app-task>
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 5.1.2.4</h3>
+    <p>Wir wollen die Formel für die Geschwindigkeitsaddition vereinfachen, wenn die auftretenden Geschwindigkeiten <app-latex>v</app-latex> und <app-latex>u'</app-latex>  sehr viel kleiner als <app-latex>c</app-latex>  sind. Wie gross wird dann ungefähr der Nenner? Und wie gross wird somit der ganze Ausdruck?</p>
+  </app-task-description>
+  <app-task-solution>
+    <p>Der Nenner nähert sich an <app-latex>1</app-latex>. Somit wird der Ausdruck vereinfacht zu <app-latex>u' = u + v</app-latex></p>
+  </app-task-solution>
+</app-task>
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 5.1.2.5</h3>
+    <p>Nehmen wir an, dass ein Zug mit einer Geschwindigkeit von <app-latex content="\frac{1}{2} c"></app-latex> rast. Eine Kugel rollt mit <app-latex content="\frac{1}{4} c"></app-latex> in Fahrtrichtung. Wie gross ist Ihre Relativgeschwindigkeit zu den Schienen (in Einheiten der Lichtgeschwindigkeit)? Um wie viel weicht diese Geschwindigkeit von der "klassisch" erwarteten Geschwindigkeit ab, die sich nach der Galileischen Physik ergeben würde?</p>
+  </app-task-description>
+  <app-task-solution>
+    <h4>Relative Geschwindigkeitsaddition</h4>
+    <app-latex content="\begin{equation*} u' = \frac{u + v}{1 + \frac{uv}{c^2}} \end{equation*}"></app-latex>
+    <p>Einsetzen:</p>
+    <app-latex content="\begin{equation*} u' = \frac{0.5c + 0.25c}{1 + \frac{0.5c \cdot 0.25c}{c^2}} \end{equation*}"></app-latex>
+    <app-latex content="\begin{equation*} u' = \frac{0.75c}{1 + 0.5 \cdot 0.25} \end{equation*}"></app-latex>
+    <app-latex content="\begin{equation*} u' = \frac{0.75c}{1.125} \end{equation*}"></app-latex>
+    <app-latex content="\begin{equation*} u' = 0.6667c \end{equation*}"></app-latex>
+    <h4>Klassische Geschwindigkeitsaddition</h4>
+    <app-latex content="\begin{equation*} u' = u - v \end{equation*}"></app-latex>
+    <p>Einsetzen:</p>
+    <app-latex content="\begin{equation*} u' = 0.5c + 0.25c \end{equation*}"></app-latex>
+    <app-latex content="\begin{equation*} u' = 0.75c \end{equation*}"></app-latex>
+    <h4>Unterschied</h4>
+    <app-latex content="\begin{equation*} \Delta u' = 0.75c - 0.6667c \end{equation*}"></app-latex>
+    <app-latex content="\begin{equation*} \Delta u' = 0.08333c \end{equation*}"></app-latex>
+  </app-task-solution>
+</app-task>
+```
+Überprüfe die Korrektheit.
+§a§
+Ich habe alle Aufgaben und Lösungen sorgfältig durchgerechnet und auf physikalische sowie mathematische Korrektheit geprüft. Hier ist die detaillierte Bewertung:
+
+### Allgemein
+- Die verwendete Formel für gleiche Richtung ist korrekt:
+  \( u' = \frac{u + v}{1 + \frac{uv}{c^2}} \)
+- Die Formel für entgegengesetzte Richtung ist ebenfalls korrekt:
+  \( u' = \frac{u - v}{1 - \frac{uv}{c^2}} \)
+- Die Erklärungen zu Lichtgeschwindigkeit als universelle Grenze sind physikalisch richtig.
+
+### Aufgabe 5.1.2.1 – korrekt
+„Photonen haben immer c relativ zur Schiene“ – absolut richtig. Unabhängig von der Zuggeschwindigkeit.
+
+### Aufgabe 5.1.2.2 – korrekt
+Die Rechnung mit \( v = c \) ist vorbildlich durchgeführt und führt exakt zu \( u' = c \).
+Wichtige Erkenntnis („egal wie schnell man im Zug läuft, es bleibt c“) ist korrekt dargestellt.
+
+### Aufgabe 5.1.2.3 – korrekt
+Folgerung aus 5.1.2.2 ist richtig: Auch Licht aus einem mit c fahrenden Zug hat relativ zur Schiene genau c (nie 2c).
+
+### Aufgabe 5.1.2.4 – korrekt
+Grenzwert \( v, u \ll c \):
+Nenner → 1, daher \( u' \approx u + v \) → klassische Addition.
+Richtig und klar erklärt.
+
+### Aufgabe 5.1.2.5 – fast korrekt, aber ein kleiner Fehler im klassischen Teil
+
+**Relativistische Rechnung:**
+- \( v = 0{,}5c \), \( u = 0{,}25c \)
+- \( u' = \frac{0{,}5c + 0{,}25c}{1 + \frac{(0{,}5c)(0{,}25c)}{c^2}} = \frac{0{,}75c}{1 + 0{,}125} = \frac{0{,}75c}{1{,}125} = \frac{3}{4,5}c = \frac{2}{3}c \approx 0{,}6667c \)
+
+→ **Das ist korrekt.**
+
+**Klassische Rechnung – kleiner Fehler in der Lösung:**
+In der vorgegebenen Lösung steht plötzlich:
+```latex
+u' = u - v
+```
+und dann
+```latex
+u' = 0.5c + 0.25c
+```
+Das ist widersprüchlich und falsch formuliert!
+
+Richtig muss es heißen:
+
+**Klassische (Galileische) Addition:**
+\( u' = u + v = 0{,}5c + 0{,}25c = 0{,}75c \)
+
+Der Ausdruck \( u' = u - v \) gehört zur entgegengesetzten Richtung und hat hier nichts zu suchen.
+
+**Korrektur für 5.1.2.5 (klassischer Teil):**
+```latex
+<h4>Klassische Geschwindigkeitsaddition</h4>
+<app-latex content="\begin{equation*} u' = u + v \end{equation*}"></app-latex>
+<p>Einsetzen:</p>
+<app-latex content="\begin{equation*} u' = 0{,}5c + 0{,}25c = 0{,}75c \end{equation*}"></app-latex>
+```
+
+Der Rest (Differenz \( 0{,}75c - 0{,}6667c = 0{,}0833c \)) ist dann wieder korrekt.
+
+### Zusammenfassung – Korrektheit:
+
+| Aufgabe     | Physik | Mathematik | Darstellung | Gesamt       |
+|-------------|--------|------------|-------------|--------------|
+| 5.1.2.1     | ✓      | ✓          | ✓           | korrekt      |
+| 5.1.2.2     | ✓      | ✓          | ✓           | korrekt      |
+| 5.1.2.3     | ✓      | ✓          | ✓           | korrekt      |
+| 5.1.2.4     | ✓      | ✓          | ✓           | korrekt      |
+| 5.1.2.5     | ✓      | ✓          | kleiner Fehler | fast korrekt |
+
+**Einziger Fehler:** In Aufgabe 5.1.2.5 steht im klassischen Teil fälschlicherweise \( u' = u - v \), obwohl danach richtig plus gerechnet wird. Das ist ein offensichtlicher Schreib-/Kopierfehler und sollte korrigiert werden.
+
+Ansonsten ist der gesamte Abschnitt hervorragend und physikalisch einwandfrei!

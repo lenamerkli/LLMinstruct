@@ -1,0 +1,200 @@
+§u§
+```
+v1	official	intermediary
+CLASS	a	net/minecraft/class_7833
+FIELD	a	La;	a	field_40713
+FIELD	a	La;	b	field_40714
+FIELD	a	La;	c	field_40715
+FIELD	a	La;	d	field_40716
+FIELD	a	La;	e	field_40717
+FIELD	a	La;	f	field_40718
+METHOD	a	(F)Lorg/joml/Quaternionf;	a	method_46349
+METHOD	a	(Lorg/joml/Vector3f;F)Lorg/joml/Quaternionf;	a	method_46350
+METHOD	a	(F)Lorg/joml/Quaternionf;	b	method_46351
+METHOD	a	(F)Lorg/joml/Quaternionf;	c	method_46352
+METHOD	a	(F)Lorg/joml/Quaternionf;	d	method_46353
+METHOD	a	(F)Lorg/joml/Quaternionf;	e	method_46354
+METHOD	a	(F)Lorg/joml/Quaternionf;	f	method_46355
+METHOD	a	(Lorg/joml/Vector3f;)La;	of	method_46356
+CLASS	b	net/minecraft/class_5973
+FIELD	b	F	a	field_29658
+FIELD	b	F	b	field_29659
+FIELD	b	F	c	field_29660
+FIELD	b	F	d	field_29661
+CLASS	c	net/minecraft/class_7836
+FIELD	c	I	a	field_40738
+FIELD	c	I	b	field_40739
+FIELD	c	I	c	field_40740
+FIELD	c	I	d	field_40741
+FIELD	c	I	e	field_40742
+METHOD	c	(II)Ljava/lang/Iterable;	a	method_46402
+METHOD	c	(II)Ljava/util/Iterator;	b	method_46403
+CLASS	d	net/minecraft/class_6037
+CLASS	e	net/minecraft/class_8218
+FIELD	e	F	a	comp_1317
+FIELD	e	F	b	comp_1318
+METHOD	e	()Le;	a	method_49725
+METHOD	e	(F)Le;	a	method_49726
+METHOD	e	(FF)Le;	a	method_49727
+METHOD	e	(Lorg/joml/Matrix3f;)Lorg/joml/Matrix3f;	a	method_49728
+METHOD	e	(Lorg/joml/Quaternionf;)Lorg/joml/Quaternionf;	a	method_49729
+METHOD	e	()F	b	method_49730
+METHOD	e	(Lorg/joml/Matrix3f;)Lorg/joml/Matrix3f;	b	method_49731
+METHOD	e	(Lorg/joml/Quaternionf;)Lorg/joml/Quaternionf;	b	method_49732
+METHOD	e	()F	c	method_49733
+METHOD	e	(Lorg/joml/Matrix3f;)Lorg/joml/Matrix3f;	c	method_49734
+METHOD	e	(Lorg/joml/Quaternionf;)Lorg/joml/Quaternionf;	c	method_49735
+METHOD	e	()F	d	comp_1317
+METHOD	e	()F	e	comp_1318
+CLASS	f	net/minecraft/class_7837
+FIELD	f	F	a	field_40746
+FIELD	f	Le;	b	field_43146
+METHOD	f	(FF)Le;	a	method_46410
+{{ 87168 more lines }}
+```
+I have the contents of `https://github.com/FabricMC/intermediary/blob/master/mappings/1.21.1.tiny`. How can I turn that into a better readable format? For example:
+```
+class_7836 = com.mojang.math.Divisor
+class_6037 = com.mojang.math.FieldsAreNonnullByDefault
+```
+If necessary, use a python script.
+§a§
+The `.tiny` file maps **obfuscated** names → **intermediary** names. To get **human-readable** names (like `com.mojang.math.Divisor`), you need to cross-reference it with **Mojang's official mappings** (which map obfuscated → named). Here's a Python script that does exactly that:
+
+```python
+import requests, re, sys
+
+# ── 1. Download Mojang's official (proguard) mappings ──────────────────────
+def download_mojang_mappings(version="1.21.1"):
+    manifest = requests.get(
+        "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json"
+    ).json()
+    version_url = next(v["url"] for v in manifest["versions"] if v["id"] == version)
+    version_json = requests.get(version_url).json()
+    mappings_url = version_json["downloads"]["client_mappings"]["url"]
+    return requests.get(mappings_url).text
+
+# ── 2. Parse the ProGuard-format Mojang mappings ──────────────────────────
+def parse_mojang_mappings(text):
+    classes = {}          # obf_class  → named_class
+    fields  = {}          # (obf_class, obf_field)  → named_field
+    methods = {}          # (obf_class, obf_method) → set(named_method)
+
+    cur_obf = cur_named = None
+    for line in text.splitlines():
+        if line.startswith("#") or not line.strip():
+            continue
+        if not line.startswith(" "):                       # class line
+            m = re.match(r"(\S+) -> (\S+):", line)
+            if m:
+                cur_named, cur_obf = m.group(1), m.group(2)
+                classes[cur_obf] = cur_named
+        else:                                              # member line
+            line = line.strip()
+            if "(" in line:                                # method
+                m = re.match(
+                    r"(?:\d+:\d+:)?(\S+) (\S+)\(.*\) -> (\S+)", line
+                )
+                if m:
+                    methods.setdefault((cur_obf, m.group(3)), set()).add(m.group(2))
+            else:                                          # field
+                m = re.match(r"(\S+) (\S+) -> (\S+)", line)
+                if m:
+                    fields[(cur_obf, m.group(3))] = m.group(2)
+    return classes, fields, methods
+
+# ── 3. Parse the tiny v1 intermediary file ─────────────────────────────────
+def parse_intermediary(path):
+    classes = {}; fields = {}; methods = {}
+    with open(path) as f:
+        for line in f:
+            p = line.rstrip("\n").split("\t")
+            if p[0] == "CLASS":
+                classes[p[1]] = p[2]                       # obf → intermediary
+            elif p[0] == "FIELD":
+                fields[(p[1], p[3])] = p[4]               # (obf_cls, obf_name) → intermediary
+            elif p[0] == "METHOD":
+                methods[(p[1], p[3])] = p[4]              # (obf_cls, obf_name) → intermediary
+    return classes, fields, methods
+
+# ── 4. Join on the obfuscated name and print ───────────────────────────────
+def main():
+    tiny_path = sys.argv[1] if len(sys.argv) > 1 else "1.21.1.tiny"
+    version   = sys.argv[2] if len(sys.argv) > 2 else "1.21.1"
+
+    print(f"Downloading Mojang mappings for {version}…")
+    moj_cls, moj_fld, moj_mtd = parse_mojang_mappings(
+        download_mojang_mappings(version)
+    )
+
+    print(f"Reading {tiny_path}…\n")
+    int_cls, int_fld, int_mtd = parse_intermediary(tiny_path)
+
+    # ── Classes ──
+    print("=== CLASSES ===")
+    for obf, inter in sorted(int_cls.items(), key=lambda x: x[1]):
+        named = moj_cls.get(obf, "?")
+        print(f"{inter}  =  {named}")
+
+    # ── Fields ──
+    print("\n=== FIELDS ===")
+    for (obf_c, obf_n), inter in sorted(int_fld.items(), key=lambda x: x[1]):
+        named_cls   = moj_cls.get(obf_c, obf_c)
+        named_field = moj_fld.get((obf_c, obf_n), "?")
+        print(f"{inter}  =  {named_cls}.{named_field}")
+
+    # ── Methods ──
+    print("\n=== METHODS ===")
+    for (obf_c, obf_n), inter in sorted(int_mtd.items(), key=lambda x: x[1]):
+        named_cls = moj_cls.get(obf_c, obf_c)
+        named_set = moj_mtd.get((obf_c, obf_n), {"?"})
+        # Multiple overloads may share an obfuscated name
+        names = ", ".join(sorted(named_set))
+        print(f"{inter}  =  {named_cls}.{names}")
+
+if __name__ == "__main__":
+    main()
+```
+
+### Usage
+```bash
+pip install requests
+python map_intermediary.py 1.21.1.tiny 1.21.1
+```
+
+### How it works
+
+| File | Maps from | Maps to |
+|---|---|---|
+| `1.21.1.tiny` (intermediary) | obfuscated (`c`) | intermediary (`class_7836`) |
+| Mojang client mappings | obfuscated (`c`) | named (`com.mojang.math.Divisor`) |
+
+The script **joins both on the obfuscated name**, giving you:
+
+```
+intermediary  →  named
+class_7836    =  com.mojang.math.Divisor
+```
+
+### Output (excerpt)
+```
+=== CLASSES ===
+class_5973  =  com.mojang.math.Constants
+class_6037  =  com.mojang.math.FieldsAreNonnullByDefault
+class_7833  =  com.mojang.math.Axis
+class_7836  =  com.mojang.math.Divisor
+class_7837  =  com.mojang.math.GivensParameters
+class_8218  =  com.mojang.math.MatrixUtil.ColumnMajorSinCos
+...
+
+=== FIELDS ===
+field_29658  =  com.mojang.math.Constants.PI
+field_29659  =  com.mojang.math.Constants.RAD_TO_DEG
+...
+
+=== METHODS ===
+method_46402  =  com.mojang.math.Divisor.decompose
+...
+```
+
+> **Note on methods:** Multiple overloaded methods can share the same obfuscated name. The script will list all candidate named methods separated by commas in those cases. For exact matching you'd need to convert JVM descriptors (`(II)V`) to Java source-style signatures, which is significantly more complex.

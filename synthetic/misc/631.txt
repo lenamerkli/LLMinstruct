@@ -1,0 +1,168 @@
+§u§
+Is it worth it to buy a `Nvidia v100 sxm2 300G NVlink Interconnect Dual Card sxm2 Adapter Board` instead of just two v100 on two sxm2 to pcie adapter cards for llama.cpp inference? What about unsloth.ai training?
+§a§
+You’re deciding between:
+
+- **A. Two separate SXM2→PCIe adapters (no NVLink)**
+- **B. A dual‑SXM2 NVLink carrier board (`Nvidia v100 sxm2 300G NVlink interconnect Dual Card sxm2 Adapter Board`)**
+
+Here’s how it shakes out for `llama.cpp` inference and `unsloth.ai` training.
+
+---
+
+## 1. What really changes between the two options?
+
+**Two SXM2→PCIe adapters**
+
+- Each V100 is just a normal PCIe GPU.
+- Inter‑GPU traffic goes over PCIe 3.0 (≈16 GB/s each way for x16; less if your slot is x8).
+- The common SXM2→PCIe boards explicitly say **“no NVLink, plug‑and‑play”** — the NVLink fingers on the module simply aren’t wired.
+
+**Dual‑SXM2 NVLink carrier board**
+
+- Two V100 SXM2 modules on one mATX “baseboard”, GPUs wired together with **NVLink 2.0** (up to ~300 GB/s bidirectional).
+- Host still sees two GPUs over PCIe (via one or two x16 links using SFF‑8654/SlimSAS cabled adapter cards), but GPU↔GPU transfers go over NVLink instead of PCIe.
+- Needs an ATX PSU (24‑pin + multiple 8‑pin CPU/GPU connectors) and somewhere to mount the extra board.
+
+So: **same compute, same VRAM — the big difference is GPU↔GPU bandwidth and latency.**
+
+---
+
+## 2. `llama.cpp` inference
+
+### When NVLink doesn’t buy you much
+
+If your plan is:
+
+- One model per GPU (e.g. two llama.cpp servers, `CUDA_VISIBLE_DEVICES=0` / `1`), **or**
+- Mostly **≤13B (maybe 34B) models** that *fit entirely on one card* at your chosen quant,
+
+then NVLink is almost irrelevant:
+
+- Each process mainly uses GPU↔host transfers; inter‑GPU traffic is negligible.
+- You can already get ~2× aggregate throughput just by running two independent servers.
+
+In this “two independent workers” scenario, the cheap SXM2→PCIe adapters are fine. NVLink doesn’t speed up a single 13B model that lives on one card.
+
+### When NVLink *does* matter
+
+It starts to matter once you try to **split one big model across both GPUs**:
+
+- 34–40B on 2×16 GB.
+- **70B at decent quant**, e.g. Q4_K_M (model alone ≈43–45 GB VRAM).
+
+Recent `llama.cpp` now has proper **tensor parallelism** in addition to the older pipeline splitting, so it can split work *within* layers across multiple GPUs. That’s specifically to make multi‑GPU on 30–70B models more sane.
+
+In all multi‑GPU modes, though, there is *inevitable* cross‑GPU traffic every token:
+
+- On **plain PCIe**, that becomes the bottleneck fast; real‑world guides and benchmarks typically see only ~1.3–1.6× speedup from adding a second PCIe GPU, sometimes no gain or even regressions in older pipeline‑only setups.
+- On **NVLink (~10× the bandwidth of PCIe 3.0 x16)**, the same cross‑GPU transfers are much cheaper, so tensor‑parallel `llama.cpp` actually gets closer to “this second GPU was worth it”.
+
+With your specific hardware:
+
+- **2× V100 16 GB, no NVLink**
+  - 70B Q4 doesn’t really fit in 32 GB; you’re forced into heavy CPU offload or extreme quant (Q2). Performance will be poor regardless of fabric.
+  - For 34B Q4/Q5 sharded over both cards, you’ll work, but PCIe will limit scaling.
+
+- **2× V100 32 GB, no NVLink**
+  - You *can* host 70B Q4 across both GPUs, but much of each token step is “waiting on PCIe”.
+  - Expect modest speedup vs a single big GPU, sometimes not worth the complexity.
+
+- **2× V100 32 GB, *with* NVLink carrier**
+  - 70B Q4/Q5 is realistic and *significantly* faster vs the same setup without NVLink.
+  - Still not a perfect 2×, but the second V100 is finally pulling serious weight.
+
+**For llama.cpp, rule of thumb:**
+
+- Only ever running ≤13B/34B *per GPU* → **stick with two SXM2→PCIe adapters.**
+- Want to seriously run **70B‑class GGUF** mostly in VRAM across both V100s → **the NVLink dual board is worth it.**
+
+---
+
+## 3. `unsloth.ai` training
+
+Unsloth sits on top of PyTorch + Hugging Face, and currently supports multi‑GPU mainly via **DDP/FSDP** (`torchrun`, `accelerate`, etc.), plus model‑splitting with `device_map="balanced"` so you can load things like Llama‑3.3‑70B in 4‑bit across multiple GPUs.
+
+Multi‑GPU training has two heavy communication patterns:
+
+1. **Gradient sync (DDP/FSDP):**
+   every step does big all‑reduces across GPUs.
+
+2. **Sharded model activations (`device_map="balanced"`):**
+   forward/backward sends activations/gradients across GPUs when a layer boundary crosses devices.
+
+Both are **GPU↔GPU traffic**. What happens:
+
+- On **two PCIe‑only SXM2→PCIe cards**:
+  - All that goes over PCIe. You still get speedup from adding GPUs, but scaling is noticeably sub‑linear as models and batch sizes grow.
+- On the **dual‑SXM2 NVLink board**:
+  - PyTorch/NCCL will automatically use NVLink for P2P; you don’t need to do anything.
+  - Gradient sync and activation shuffles are dramatically faster; for modest models and batch sizes, throughput often scales *almost* linearly to 2 GPUs.
+
+How it feels by workload:
+
+- **7B / 13B QLoRA fine‑tunes (very common Unsloth use‑case)**
+  - A single V100 16–32 GB is usually plenty.
+  - If you DDP across both to go faster, NVLink helps, but PCIe isn’t catastrophic; you’re mostly compute‑bound.
+  - I **wouldn’t** buy NVLink *just* for this.
+
+- **24–40B QLoRA / fine‑tunes**
+  - Now gradient all‑reduce volume and model state per GPU are large.
+  - On PCIe‑only, multi‑GPU still works but training steps start looking “communication‑heavy”.
+  - On NVLink, the step‑time penalty from all‑reduce is much smaller, so dual‑V100s actually feel like dual GPUs, not 1.3× a single one.
+
+- **Trying to do 70B 4‑bit QLoRA on 2× 32 GB**
+  - This is about as communication‑bound as it gets in hobby setups.
+  - Without NVLink, it’s “possible but painful”: step times explode, and small batch sizes are almost mandatory.
+  - With NVLink, it’s still slow compared to A100‑class gear, but orders of magnitude less miserable and realistically usable for experiments.
+
+**For Unsloth:**
+
+- Staying in the 7B/13B/24B range → **NVLink is nice but not required.**
+- Planning to play seriously with **24–70B multi‑GPU training / QLoRA** → **NVLink is a big quality‑of‑life upgrade**, often what moves you from “toy demo” to “I can actually run experiments”.
+
+---
+
+## 4. Price & hassle
+
+From current listings:
+
+- Dual‑SXM2 NVLink carrier board: around **$400–450** (often includes the SlimSAS/SFF‑8654 adapter cards and cables).
+- Single SXM2→PCIe adapter boards: **≈$60–130** each; two of them is roughly **$120–260**.
+
+So you’re paying roughly **an extra $150–300** for NVLink vs two basic adapters — not trivial, but also not huge compared with 2× V100 32 GB.
+
+You do, however, accept:
+
+- An extra mATX board to mount somewhere.
+- ATX 24‑pin + multiple CPU/GPU 8‑pins on your PSU.
+- A few SlimSAS/SFF‑8654 cables into small PCIe “endpoint” cards in your main motherboard.
+
+Plenty of people are successfully running these boards with V100 SXM2s in homelabs; it’s a known pattern now, not black magic.
+
+---
+
+## 5. Bottom‑line recommendation
+
+If I assume nothing else about your workload:
+
+- **If your primary goals are:**
+  - llama.cpp inference of **≤13B/34B** models, likely one model per GPU; and
+  - Unsloth QLoRA training on **7B / 13B (maybe 24B)**,
+
+  → I’d **save the money** and use **two SXM2→PCIe adapters**. The second V100 is still very useful for running a second model, serving extra users, or doing training+inference at once, and NVLink won’t change your life here.
+
+- **If you explicitly want to:**
+  - Run **Llama‑3.x / Llama‑2 / Qwen‑class 70B** in llama.cpp with most weights in VRAM across both V100s, **and/or**
+  - Do serious multi‑GPU Unsloth training on **24B+** (especially dabbling in 70B QLoRA),
+
+  → then I would say **yes, the `Nvidia v100 sxm2 300G NVlink interconnect Dual Card` board is worth it.** You’re buying it *for* NVLink; that’s the whole point of using SXM2 V100s instead of just hunting for cheap PCIe V100s.
+
+---
+
+If you tell me:
+
+- Are your V100s **16 GB or 32 GB**?
+- Which model sizes you *actually* care about (7B / 13B / 34B / 70B) and typical context length?
+
+I can give a more concrete answer like “this exact combo of model + quant + context will fit / won’t fit on one card, and here’s how much NVLink would speed it up in practice.”

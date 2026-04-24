@@ -1,0 +1,52 @@
+§u§
+```
+<h1>Rotationsenergie</h1>
+<p>Die Gesamtenergie eines abgeschlossenen Systems bleibt konstant. Bei einem rotierenden Körper kommt zur kinetischen Energie der Translation <app-latex content="E_{\text{trans}}"></app-latex> noch die Rotationsenergie <app-latex content="E_{\text{rot}}"></app-latex> hinzu.</p>
+<h2>Translationsenergie</h2>
+<app-latex content="\begin{equation*} E_{\text{trans}} = \frac{1}{2} m v^2 \end{equation*}"></app-latex>
+<h2>Rotationsenergie</h2>
+<app-latex content="\begin{equation*} E_{\text{rot}} = \frac{1}{2} I \omega^2 \end{equation*}"></app-latex>
+<p><app-latex>I</app-latex> ist das Trägheitsmoment des Körpers und <app-latex>\omega</app-latex> die Winkelgeschwindigkeit.</p>
+<h2>Energieerhaltungssatz</h2>
+<app-latex content="\begin{equation*} E_{\text{ges}} = E_{\text{pot}} + E_{\text{trans}} + E_{\text{rot}} = \text{const.} \end{equation*}"></app-latex>
+```
+Überprüfe auf Korrektheit.
+§a§
+Der Code ist **grundsätzlich korrekt**, enthält aber eine **physikalisch wichtige Ungenauigkeit** beim Energieerhaltungssatz.
+
+## Was korrekt ist
+
+| Element | Bewertung |
+|---|---|
+| **Translationsenergie** | $E_{\text{trans}} = \frac{1}{2}mv^2$ ist korrekt. |
+| **Rotationsenergie** | $E_{\text{rot}} = \frac{1}{2}I\omega^2$ ist korrekt. |
+| **Variablen** | $I$ (Trägheitsmoment) und $\omega$ (Winkelgeschwindigkeit) sind richtig definiert. |
+| **HTML-Struktur** | Die Verwendung von `<app-latex>` ist im Kontext einer Webkomponente valide. |
+
+## Was präzisiert werden muss
+
+> **Energieerhaltungssatz:** $E_{\text{ges}} = E_{\text{pot}} + E_{\text{trans}} + E_{\text{rot}} = \text{const.}$
+
+Diese Gleichung suggeriert, dass die Summe aus potentieller, translatorischer und rotatorischer Energie *immer* konstant bleibt. Das gilt jedoch **nur, wenn keine Reibung und keine weiteren nicht-konservativen Kräfte wirken** (also in einem *konservativen* mechanischen System).
+
+Der erste Satz („Die Gesamtenergie eines abgeschlossenen Systems bleibt konstant“) ist zwar richtig, aber in einem abgeschlossenen System im strengen Sinne bleibt die **Gesamtenergie** (inkl. innerer Energie, thermischer Energie etc.) konstant. Wenn Reibung auftritt, nimmt die mechanische Energie $E_{\text{pot}} + E_{\text{trans}} + E_{\text{rot}}$ ab, während die innere Energie zunimmt.
+
+### Empfohlene Korrektur
+
+Formulieren Sie den Satz vor der Gleichung so, dass der Gültigkeitsbereich klar wird:
+
+```html
+<p>Bei einem starren Körper ohne Reibung in einem konservativen Kraftfeld gilt:</p>
+<app-latex content="\begin{equation*} E_{\text{mech}} = E_{\text{pot}} + E_{\text{trans}} + E_{\text{rot}} = \text{const.} \end{equation*}"></app-latex>
+```
+
+Alternativ, wenn Sie die Gesamtenergie eines abgeschlossenen Systems meinen:
+
+```html
+<p>Die Gesamtenergie eines abgeschlossenen Systems bleibt konstant:</p>
+<app-latex content="\begin{equation*} E_{\text{ges}} = E_{\text{pot}} + E_{\text{trans}} + E_{\text{rot}} + E_{\text{inn}} + \dots = \text{const.} \end{equation*}"></app-latex>
+```
+
+## Fazit
+
+Die zentralen Formeln zur Rotations- und Translationsenergie sind fehlerfrei. Passen Sie lediglich die Formulierung des Energieerhaltungssatzes an, um Missverständnisse bei der Einordnung von Reibung und innerer Energie zu vermeiden.

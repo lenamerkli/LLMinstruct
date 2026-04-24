@@ -1,0 +1,51 @@
+§u§
+Erkläre mir den Compton-Effekt
+§a§
+Der **Compton-Effekt** (benannt nach Arthur Holly Compton, 1922) ist ein zentrales Phänomen der Quantenphysik. Er liefert den entscheidenden Beweis dafür, dass Licht nicht nur Welleneigenschaften hat, sondern sich auch wie ein Strom von Teilchen (**Photonen**) verhält.
+
+Hier ist die einfache Erklärung:
+
+---
+
+### 1. Was passiert beim Compton-Effekt?
+Wenn hochenergetische elektromagnetische Strahlung (meist **Röntgenstrahlen** oder Gammastrahlen) auf Materie trifft, stoßen die Photonen mit den Elektronen in der Atomhülle zusammen.
+
+Dabei geschieht Folgendes:
+*   Ein Photon trifft auf ein (nahezu) ruhendes Elektron.
+*   Das Photon gibt einen Teil seiner Energie an das Elektron ab.
+*   Das Elektron wird weggestoßen (Rückstoßelektron).
+*   Das Photon wird abgelenkt (**gestreut**) und fliegt in eine andere Richtung weiter.
+
+### 2. Die entscheidende Beobachtung
+Da das Photon Energie an das Elektron abgegeben hat, hat es nach dem Stoß **weniger Energie** als vorher.
+
+In der Welt der Quantenphysik gilt für Licht: **Weniger Energie bedeutet eine größere Wellenlänge.**
+
+Das Ergebnis des Experiments war: Das gestreute Licht hat eine größere Wellenlänge ($\lambda'$) als das einfallende Licht ($\lambda$). Die Differenz nennt man die **Compton-Verschiebung** ($\Delta \lambda$).
+
+### 3. Warum war das so wichtig? (Teilchencharakter)
+Vor Compton dachte man, Licht sei eine reine Welle (klassische Elektrodynamik). Nach der klassischen Wellentheorie müssten die Elektronen durch die Lichtwelle zum Schwingen angeregt werden und Licht mit **genau derselben** Wellenlänge wieder abstrahlen.
+
+Compton konnte aber zeigen, dass man den Prozess wie einen **elastischen Stoß zwischen zwei Billardkugeln** berechnen kann:
+1.  Das Photon ist die erste Kugel.
+2.  Das Elektron ist die zweite Kugel.
+3.  Beim Aufprall werden Energie und **Impuls** übertragen.
+
+Damit bewies Compton, dass Photonen einen Impuls besitzen, obwohl sie keine Masse haben. Dies bestätigte Einsteins Hypothese der Lichtquanten.
+
+### 4. Die Formel
+Die Änderung der Wellenlänge hängt nur vom Streuwinkel $\theta$ ab (also davon, wie stark das Photon abgelenkt wurde):
+
+$$\Delta \lambda = \lambda' - \lambda = \lambda_C \cdot (1 - \cos \theta)$$
+
+*   **$\lambda_C$** ist die sogenannte **Compton-Wellenlänge** (eine Naturkonstante für das Elektron, ca. $2,43 \times 10^{-12}$ m).
+*   Bei $\theta = 0^\circ$ (keine Ablenkung) ist $\Delta \lambda = 0$.
+*   Bei $\theta = 180^\circ$ (das Photon fliegt direkt zurück) ist die Wellenlängenänderung maximal.
+
+### Zusammenfassung
+*   **Was?** Streuung von Photonen an Elektronen.
+*   **Effekt:** Das Licht wird langwelliger (energieärmer).
+*   **Bedeutung:** Beweis für den **Teilchencharakter des Lichts** (Photonen haben einen Impuls).
+*   **Alltag:** Der Compton-Effekt spielt eine große Rolle in der Radiologie (Röntgenbilder) und in der Astrophysik.
+
+Hast du dazu noch eine spezifische Frage, zum Beispiel zur Herleitung oder zur Anwendung?

@@ -1,0 +1,56 @@
+§u§
+```
+<h1>Compton-Effekt</h1>
+<p>Wenn hochenergetische elektromagnetische Strahlung (meist Röntgenstrahlen oder Gammastrahlen) auf Materie trifft, stossen die Photonen mit den Elektronen in der Atomhülle zusammen. Dabei geschieht Folgendes:</p>
+<ul>
+  <li>Ein Photon trifft auf ein (nahezu) ruhendes Elektron.</li>
+  <li>Das Photon gibt einen Teil seiner Energie an das Elektron ab.</li>
+  <li>Das Elektron wird weggestossen (Rückstosselektron).</li>
+  <li>Das Photon wird abgelenkt (gestreut) und fliegt in eine andere Richtung weiter.</li>
+</ul>
+<p>Da das Photon Energie an das Elektron abgegeben hat, hat es nach dem Stoss weniger Energie als vorher. In der Welt der Quantenphysik gilt für Licht: Weniger Energie bedeutet eine grössere Wellenlänge. Das Ergebnis des Experiments war: Das gestreute Licht hat eine grössere Wellenlänge <app-latex>\lambda'</app-latex> als das einfallende Licht <app-latex>\lambda</app-latex>. Die Differenz nennt man die Compton-Verschiebung <app-latex>\Delta\lambda</app-latex>.</p>
+<app-latex content="\begin{equation*} \Delta\lambda = \lambda' - \lambda = \lambda_c (1 - \cos\theta) \end{equation*}"></app-latex>
+<p><app-latex>\lambda_c</app-latex> ist die Compton-Wellenlänge, eine Naturkonstante für das Elektron. Die Änderung der Wellenlänge hängt nur vom Streuwinkel <app-latex>\theta</app-latex> ab (also davon, wie stark das Photon abgelenkt wurde).</p>
+```
+Überprüfe auf Korrektheit.
+§a§
+### Überprüfung der Korrektheit
+
+Der Text beschreibt den **Compton-Effekt** **weitgehend korrekt** und ist für didaktische Zwecke (z. B. Schüler oder Einsteiger) geeignet. Die physikalischen Prinzipien, der Ablauf und die zentrale Formel sind richtig wiedergegeben. Hier eine detaillierte Analyse:
+
+#### ✅ **Korrekte Aspekte**
+- **Physikalischer Prozess**: Perfekt beschrieben. Es handelt sich um eine inkohärente Streuung (Compton-Streuung) von Photonen an (nahezu) freien Elektronen in der Atomhülle. Energie- und Impulsübertragung führen zu:
+  - Rückstoßelektron ( Compton-Elektron).
+  - Abgelenktes Photon mit reduzierter Energie (längere Wellenlänge).
+- **Compton-Verschiebung**: Die Formel ist **exakt korrekt**:
+  \[
+  \Delta\lambda = \lambda' - \lambda = \lambda_c (1 - \cos\theta)
+  \]
+  - \(\lambda_c = \frac{h}{m_e c} \approx 2{,}426 \cdot 10^{-12}\) m ist die **Compton-Wellenlänge** des Elektrons (Naturkonstante).
+  - Abhängigkeit **nur vom Streuwinkel \(\theta\)**: Richtig – unabhängig von \(\lambda\) oder Material.
+- **Beobachtung**: Gestreutes Licht hat tatsächliche längere Wellenlänge (\(\Delta\lambda > 0\) für \(\theta > 0\)).
+- **Energie-Wellenlängen-Bezug**: Korrekte Quantenphysik (\(E = \frac{hc}{\lambda}\)).
+
+#### ⚠️ **Kleinere Ungenauigkeiten / Präzisierungen**
+| Punkt | Text | Korrektur/Verbesserungsvorschlag |
+|-------|------|---------------------------------|
+| **"meist Röntgenstrahlen oder Gammastrahlen"** | Korrektheit: Ja, typisch für Compton-Bereich (\(E_\gamma \gtrsim 10\) keV). | Präzisieren: Bei sichtbarem Licht dominiert Rayleigh-Streuung (kohärent, keine \(\Delta\lambda\)). |
+| **"(nahezu) ruhendes Elektron"** | Korrektheit: Standardannahme. | Gut, aber optional: Bindungsenergie vernachlässigt (gilt für schwach gebundene Hüllenelektronen). |
+| **"fliegt in eine andere Richtung weiter"** | Korrektheit: Ja. | \(\theta\) ist der **Photon-Streuwinkel** (Winkel zwischen ein- und auslaufendem Photon). |
+| **LaTeX-Elemente** | `<app-latex>`-Tags wirken wie App-spezifische Syntax. | Formel selbst ist fehlerfrei; Tags sind korrekt gerendert (z. B. `\lambda'`, `\Delta\lambda`). |
+
+#### 📊 **Visualisierung der Formel (zur Verdeutlichung)**
+```mermaid
+graph TD
+    A[Einfallendes Photon<br/>λ] --> B[Kollision mit Elektron]
+    B --> C[Gestreutes Photon<br/>λ' = λ + Δλ<br/>Richtung θ]
+    B --> D[Rückstoß-<br/>Elektron]
+    E[Δλ = λ_c (1 - cos θ)] --> F[θ=0°: Δλ=0<br/>θ=180°: Δλ=2λ_c]
+```
+- **Max. Verschiebung**: Bei Rückstreuung (\(\theta = 180^\circ\)): \(\Delta\lambda = 2\lambda_c \approx 4{,}86\) pm.
+
+#### 🔬 **Experimenteller Kontext**
+- **Arthur Compton (1923)**: Beobachtete \(\Delta\lambda\) bei Röntgenstreuung an Graphit → Nobelpreis 1927.
+- **Relativistische Begründung**: Erhalt von Energie und Impuls (relativistisch, da \(v \approx c\)).
+
+**Gesamtbewertung: 9.5/10** – Hervorragend! Nur minimale Präzisionsverbesserungen nötig. Der Text ist klar, fehlerfrei und lehrreich. Falls für eine App/Webseite: LaTeX-Rendering testen.

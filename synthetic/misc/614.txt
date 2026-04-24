@@ -1,0 +1,59 @@
+§u§
+```angular21html
+<h1>Der Photoelektrische Effekt</h1>
+<h2>Klassische Physik vor dem 20. Jahrhundert</h2>
+<p>In der klassischen Physik vor dem 20. Jahrhundert wurde Licht als kontinuierliche Welle betrachtet. Wenn man eine Metallplatte mit Licht bestrahlt, dachte man sich folgendes:</p>
+<ul>
+  <li>Das Licht trifft als Welle auf das Metall.</li>
+  <li>Die Energie der Welle verteilt sich gleichmässig auf die vielen Elektronen im Metall.</li>
+  <li>Je länger und intensiver man das Licht aufstrahlt (z. B. sehr helles rotes Licht), desto mehr Energie sammeln die Elektronen, bis sie irgendwann aus dem Metall "herausgeschaukelt" werden.</li>
+</ul>
+<h3>Experiment</h3>
+<p>Bei einem Experiment wurde jedoch etwas anders beobachtet:</p>
+<ul>
+  <li>Die Intensität spielt keine Rolle für die Energie: Wenn man schwaches blaues Licht auf eine Zinkplatte richtet, fliegen Elektronen sofort heraus. Nimmt man aber extrem helles (sehr intensives) rotes Licht, passiert gar nichts. Kein einziges Elektron verlässt das Metall, egal wie lange man das rote Licht aufstrahlt.</li>
+  <li>Keine Verzögerung: Sobald das "richtige" Licht eingeschaltet wird, fliegen die Elektronen sofort heraus. Es gibt keine "Aufwärmzeit", in der die Elektronen erst Energie sammeln müssten.</li>
+</ul>
+<h2>Einsteins Photonenmodell</h2>
+<p>Einsteins Idee: Licht besteht aus Energiepaketen, den Photonen. Die Energie eines Photons hängt nur von seiner Frequenz <app-latex>f</app-latex> ab:</p>
+<app-latex content="\begin{equation*} E = h f \end{equation*}"></app-latex>
+<p>Die Konstante <app-latex content="$h \approx 6.626 \times 10^{-34} \, \text{J} \cdot \text{s}$"></app-latex> ist das Plancksche Wirkungsquantum (eine Naturkonstante).</p>
+<h3>Prinzip der Energieübertragung </h3>
+<p>Nach Einsteins Modell erfolgt die Übertragung der Energie nach dem "Alles-oder-Nichts-Prinzip":</p>
+<ul>
+  <li>Ein einzelnes Photon überträgt seine gesamte Energie auf genau ein Elektron. Ein Photon kann seine Energie nicht auf mehrere Elektronen aufteilen.</li>
+  <li>Das Elektron kann die Energie nicht "ansparen". Entweder die Energie eines einzelnen Photons reicht aus, um das Elektron zu lösen, oder sie reicht nicht aus.</li>
+</ul>
+<h3>Die Austrittsarbeit</h3>
+<p>Damit ein Elektron das Metall verlassen kann, muss es eine bestimmte Mindestenergie aufbringen, um die Anziehungskräfte der positiven Atomkerne im Metallgitter zu überwinden. Diese Energie wird als Austrittsarbeit <app-latex content="$W$"></app-latex> bezeichnet. Jedes Material hat eine spezifische Austrittsarbeit.</p>
+<h2>Die photoelektrische Gleichung</h2>
+<p>Einstein fasste den Vorgang in einer einfachen Energiebilanz zusammen. Die Energie des eintreffenden Photons (<app-latex content="$h f$"></app-latex>) wird für zwei Dinge verwendet: zum Lösen des Elektrons aus dem Metall (<app-latex content="$W$"></app-latex>) und als Bewegungsenergie für das freie Elektron (<app-latex content="$E_{\text{kin}}$"></app-latex>).</p>
+<app-latex content="\begin{equation*} h f = W + E_{\text{kin}} \end{equation*}"></app-latex>
+<p>Umgestellt nach der kinetischen Energie der austretenden Elektronen ergibt sich:</p>
+<app-latex content="\begin{equation*} E_{\text{kin}} = h f - W \end{equation*}"></app-latex>
+```
+Überprüfe auf Korrektheit.
+§a§
+Der Text ist **physikalisch absolut korrekt** und didaktisch hervorragend aufgebaut. Du führst den Leser logisch von der historischen Problematik (klassische Wellentheorie) zur Lösung durch Einstein.
+
+Hier ist eine kurze Rückmeldung zu den Inhalten:
+
+### Stärken:
+*   **Struktur:** Die Gegenüberstellung von klassischer Erwartung und experimenteller Beobachtung ist der klassische und effektivste Weg, den photoelektrischen Effekt zu erklären.
+*   **Klarheit:** Die Beschreibung des "Alles-oder-Nichts-Prinzips" trifft den Kern der Quantisierung perfekt.
+*   **Formeln:** Die physikalischen Formeln und Konstanten sind korrekt.
+
+### Kleine Anmerkungen / Nuancen zur Verbesserung:
+
+Falls du den Text noch präziser machen möchtest, könntest du zwei kleine Aspekte ergänzen:
+
+1.  **"Maximale" kinetische Energie:**
+    In der Gleichung $E_{\text{kin}} = h f - W$ ist es physikalisch präziser, von der *maximalen* kinetischen Energie ($E_{\text{kin,max}}$) zu sprechen.
+    *   *Grund:* Die Gleichung gilt exakt für Elektronen, die direkt an der Oberfläche sitzen. Elektronen aus tieferen Schichten des Metalls verlieren auf dem Weg nach draußen oft Energie durch Stöße im Gitter und treten daher mit *weniger* als $E_{\text{kin,max}}$ aus.
+    *   *Vorschlag:* Schreibe einfach $E_{\text{kin,max}}$ oder erwähne kurz im Text: *"Dies ist die maximale kinetische Energie der austretenden Elektronen."*
+
+2.  **Bezeichnung der Austrittsarbeit:**
+    Du verwendest $W$ als Symbol. Das ist mathematisch korrekt, kann aber manchmal mit der allgemeinen Arbeit ($W = F \cdot s$) verwechselt werden. In der Fachliteratur wird die Austrittsarbeit oft mit $W_A$ oder $\Phi$ (Phi) abgekürzt. Wenn du bei $W$ bleibst, ist das aber im Kontext des Textes völlig in Ordnung und verständlich.
+
+### Fazit
+Der Text kann so direkt verwendet werden. Er ist fachlich fundiert und gut verständlich formuliert. Die Einbettung in die HTML-Struktur mit den `<app-latex>`-Tags sieht ebenfalls korrekt aus.

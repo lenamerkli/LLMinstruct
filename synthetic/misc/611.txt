@@ -1,0 +1,59 @@
+§u§
+```
+<h1>Relativistischer Impuls und relativistische Energie</h1>
+<h2>Der Lorentz-Faktor</h2>
+<app-latex content="\begin{equation*} \gamma = \frac{1}{\sqrt{1 - \frac{v^2}{c^2}}} \end{equation*}"></app-latex>
+<h2>Relativistischer Impuls</h2>
+<h3>Klassische Mechanik</h3>
+In der Klassischen mechanik ist der Impuls definiert als Masse mail Geschwindigkeit:
+<app-latex content="\begin{equation*} p = mv \end{equation*}"></app-latex>
+Das Problem ist, dass mit konstanter Kraft ein Körper mit dieser Formel die Lichtgeschwindigkeit überschreiten könnte.
+<h3>Relativistische Lösung</h3>
+<app-latex content="\begin{equation*} p = \gamma mv = \frac{mv}{\sqrt{1 - \frac{v^2}{c^2}}} \end{equation*}"></app-latex>
+<p>Bei kleinen Geschwindigkeiten ist <app-latex>\gamma \approx 1</app-latex>, und die Formel wird wieder zum klassischen <app-latex>p = mv</app-latex>.</p>
+<p>Um ein Objekt mit Masse auf Lichtgeschwindigkeit zu beschleunigen, bräuchte man einen unendlich grossen Impuls (also eine unendlich grosse Kraft über unendlich lange Zeit). Da das unmöglich ist, kann kein massereiches Objekt die Lichtgeschwindigkeit erreichen.</p>
+<h2>Relativistische Energie</h2>
+<h3>Gesamtenergie</h3>
+<app-latex content="\begin{equation*} E = \gamma mc^2 = \frac{mc^2}{\sqrt{1 - \frac{v^2}{c^2}}} \end{equation*}"></app-latex>
+<h3>Ruheenergie</h3>
+<app-latex content="\begin{equation*} E_0 = mc^2 \end{equation*}"></app-latex>
+<h3>Kinetische Energie</h3>
+<app-latex content="\begin{equation*} E_{kin} = E - E_0 = (\gamma - 1)mc^2 \end{equation*}"></app-latex>
+<h2>Energie-Impuls-Beziehung</h2>
+<app-latex content="\begin{equation*} E^2 = (p \cdot c)^2 + (m \cdot c^2)^2 \end{equation*}"></app-latex>
+<p>Da für ein Photon <app-latex>m=0</app-latex> gilt, vereinfacht sich die Gleichung zu <app-latex>E = p \cdot c</app-latex>. Das bedeutet: Licht hat einen Impuls, obwohl es keine Masse hat.</p>
+```
+Überprüfe auf Korrektheit.
+§a§
+Inhaltlich ist das größtenteils korrekt, aber ein paar kleine Ungenauigkeiten und Formulierungen solltest du anpassen:
+
+- Tippfehler: „Masse mail Geschwindigkeit“ → „Masse mal Geschwindigkeit“.
+
+- Klassischer Impuls:
+  p = mv ist korrekt.
+
+- Begründung mit der Lichtgeschwindigkeit:
+  „…könnte die Lichtgeschwindigkeit überschreiten“ ist physikalisch nicht ganz sauber formuliert. Besser:
+  Die klassische Mechanik kennt keine Geschwindigkeitsgrenze; sie ist bei hohen Geschwindigkeiten einfach nicht mehr gültig.
+
+- Relativistischer Impuls:
+  p = γmv ist korrekt.
+
+- Aussage über „unendlich große Kraft über unendlich lange Zeit“:
+  Das ist missverständlich. Korrekt ist:
+  Man benötigt unendlich viel Energie, um ein massives Teilchen auf c zu beschleunigen. Kraft/Zeit muss nicht so formuliert werden.
+
+- Gesamtenergie, Ruheenergie, kinetische Energie:
+  Alle Formeln sind korrekt.
+
+- Energie-Impuls-Beziehung:
+  E² = (pc)² + (mc²)² ist korrekt.
+
+- Photon:
+  „m = 0“ → besser präzisieren als Ruhemasse m₀ = 0.
+  Die Folgerung E = pc ist korrekt.
+
+- Kleinigkeit zur Notation:
+  Du verwendest m durchgehend – streng genommen ist das die Ruhemasse (m₀), was man ggf. einmal klarstellen könnte.
+
+Fazit: Physikalisch im Kern richtig, aber sprachlich und didaktisch an ein paar Stellen leicht verbesserbar.

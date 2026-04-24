@@ -1,0 +1,38 @@
+§u§
+```
+<h1>Compton-Effekt</h1>
+<p>Wenn hochenergetische elektromagnetische Strahlung (meist Röntgenstrahlen oder Gammastrahlen) auf Materie trifft, stossen die Photonen mit den Elektronen in der Atomhülle zusammen. Dabei geschieht Folgendes:</p>
+<ul>
+  <li>Ein Photon trifft auf ein (nahezu) ruhendes Elektron.</li>
+  <li>Das Photon gibt einen Teil seiner Energie an das Elektron ab.</li>
+  <li>Das Elektron wird weggestossen (Rückstosselektron).</li>
+  <li>Das Photon wird abgelenkt (gestreut) und fliegt in eine andere Richtung weiter.</li>
+</ul>
+<p>Da das Photon Energie an das Elektron abgegeben hat, hat es nach dem Stoss weniger Energie als vorher. In der Welt der Quantenphysik gilt für Licht: Weniger Energie bedeutet eine grössere Wellenlänge. Das Ergebnis des Experiments war: Das gestreute Licht hat eine grössere Wellenlänge <app-latex>\lambda'</app-latex> als das einfallende Licht <app-latex>\lambda</app-latex>. Die Differenz nennt man die Compton-Verschiebung <app-latex>\Delta\lambda</app-latex>.</p>
+<app-latex content="\begin{equation*} \Delta\lambda = \lambda' - \lambda = \lambda_c (1 - \cos\theta) \end{equation*}"></app-latex>
+<p><app-latex>\lambda_c</app-latex> ist die Compton-Wellenlänge, eine Naturkonstante für das Elektron. Die Änderung der Wellenlänge hängt nur vom Streuwinkel <app-latex>\theta</app-latex> ab (also davon, wie stark das Photon abgelenkt wurde).</p>
+<app-latex content="\begin{equation*} \lambda_c = \frac{h}{mc} \end{equation*}"></app-latex>
+```
+Überprüfe auf Korrektheit.
+§a§
+Der Text ist **inhaltlich und physikalisch korrekt**. Alle wesentlichen Aspekte des Compton-Effekts werden präzise und verständlich beschrieben.
+
+Hier ist eine detaillierte Prüfung der einzelnen Punkte:
+
+### 1. Physikalische Beschreibung
+*   **Voraussetzung:** Die Annahme, dass Photonen auf (nahezu) ruhende Elektronen treffen, ist korrekt. In der Herleitung der Compton-Formel wird die Bindungsenergie des Elektrons gegenüber der hohen Energie des Röntgenphotons vernachlässigt („quasi-freies Elektron“).
+*   **Energieübertrag:** Die Aussage, dass das Photon Energie verliert und das Elektron kinetische Energie (Rückstoß) gewinnt, entspricht dem Energieerhaltungssatz.
+*   **Wellenlängenänderung:** Der Zusammenhang $E = h \cdot \frac{c}{\lambda}$ ist korrekt wiedergegeben. Weniger Energie führt zwingend zu einer größeren Wellenlänge.
+*   **Winkelabhängigkeit:** Die Feststellung, dass $\Delta\lambda$ nur vom Streuwinkel $\theta$ abhängt, ist eine der zentralen Erkenntnisse des Compton-Effekts.
+
+### 2. Formeln
+*   **Compton-Verschiebung:** $\Delta\lambda = \lambda' - \lambda = \lambda_c (1 - \cos\theta)$ ist absolut korrekt.
+*   **Compton-Wellenlänge:** $\lambda_c = \frac{h}{mc}$ ist die korrekte Definition. (Wobei $m$ hier die Ruhemasse des Elektrons $m_e$ ist, was im Text durch den Bezug auf das Elektron klar wird).
+
+### 3. Sprachliche Anmerkungen
+*   **Rechtschreibung:** Der Text verwendet „grössere“, „stossen“ und „grösser“. Dies entspricht der **Schweizer Rechtschreibung** (da kein „ß“ verwendet wird). In Deutschland/Österreich würde man „größere“ und „stoßen“ schreiben. Falls das Zielpublikum in Deutschland ist, sollte dies eventuell angepasst werden; für die Schweiz ist es perfekt.
+
+### 4. Technisches (LaTeX/HTML)
+*   Die Verwendung der `<app-latex>`-Tags und der LaTeX-Syntax (`\begin{equation*}`, `\lambda`, `\theta`, etc.) ist fehlerfrei und wird in entsprechenden Shadcn/UI- oder Web-Komponenten korrekt gerendert.
+
+**Fazit:** Der Text kann so übernommen werden. Er ist eine hervorragende Kurzzusammenfassung des Themas.

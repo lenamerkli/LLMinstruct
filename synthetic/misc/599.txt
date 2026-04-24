@@ -1,0 +1,44 @@
+§u§
+Welches sind die wesentlichsten Unterschiede zwischen dem akustischen (klassischen) und
+dem optischen (relativistischen) Dopplereffekt? Und welches sind die Gemeinsamkeiten?
+§a§
+# Dopplereffekt: Klassisch vs. Relativistisch
+
+## Wesentliche Unterschiede
+
+| Aspekt | Akustisch (klassisch) | Optisch (relativistisch) |
+|--------|----------------------|-------------------------|
+| **Medium** | Benötigt Trägermedium (Luft, Wasser) | Kein Medium nötig (Vakuum) |
+| **Bezugssystem** | Medium definiert absolutes Bezugssystem | Nur Relativbewegung relevant |
+| **Asymmetrie** | Bewegte Quelle ≠ bewegter Empfänger (unterschiedliche Formeln) | Symmetrisch – nur Relativgeschwindigkeit zählt |
+| **Transversaler Effekt** | Existiert nicht | Existiert (Zeitdilatation bei senkrechter Bewegung) |
+
+### Die entscheidenden Formeln
+
+**Klassisch** (Quelle bewegt sich mit v auf Empfänger zu):
+$$f' = f_0 \cdot \frac{c}{c - v}$$
+
+**Klassisch** (Empfänger bewegt sich auf Quelle zu):
+$$f' = f_0 \cdot \frac{c + v}{c}$$
+
+→ *Unterschiedliche Ergebnisse trotz gleicher Relativgeschwindigkeit!*
+
+**Relativistisch** (radiale Annäherung):
+$$f' = f_0 \sqrt{\frac{1 + \beta}{1 - \beta}} \quad \text{mit } \beta = \frac{v}{c}$$
+
+→ *Nur die Relativbewegung bestimmt das Ergebnis*
+
+---
+
+## Gemeinsamkeiten
+
+- **Grundprinzip**: Annäherung → höhere Frequenz (Blauverschiebung), Entfernung → niedrigere Frequenz (Rotverschiebung)
+- **Ursache**: Relative Bewegung zwischen Sender und Empfänger
+- **Grenzfall**: Bei kleinen Geschwindigkeiten (v << c) liefern beide Formeln praktisch identische Ergebnisse
+- **Anwendungen**: Geschwindigkeitsmessung (Radar, Ultraschall, Astronomie)
+
+---
+
+## Der Kernunterschied in einem Satz
+
+Beim akustischen Effekt kann man fragen: *„Wer bewegt sich relativ zur Luft?"* – beim relativistischen Effekt ist diese Frage **prinzipiell sinnlos**, da es keinen Äther gibt.

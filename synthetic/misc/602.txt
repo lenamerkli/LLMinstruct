@@ -1,0 +1,137 @@
+§u§
+```
+<h1>Optischer Dopplereffekt</h1>
+<h2>Theorie</h2>
+<app-latex content="\begin{equation*} f = f_0 \sqrt{\frac{c - v}{c + v}} \end{equation*}"></app-latex>
+<p>Dabei ist <app-latex>f_0</app-latex> die Frequenz, wie sie die Quelle emittiert, und <app-latex>f</app-latex> die gemessene Frequenz. <app-latex>c</app-latex> ist die Lichtgeschwindigkeit und <app-latex>v</app-latex> die Geschwindigkeit der Quelle bezüglich des Beobachters für den Fall der Entfernung.</p>
+<p>Für den Fall der Annäherung muss <app-latex>v</app-latex> negativ sein:</p>
+<app-latex content="\begin{equation*} f = f_0 \sqrt{\frac{c + v}{c - v}} \end{equation*}"></app-latex>
+<h2>Aufgaben</h2>
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 5.1.1.1</h3>
+    <p>Welches sind die wesentlichsten Unterschiede zwischen dem akustischen (klassischen) und dem optischen (relativistischen) Dopplereffekt? Und welches sind die Gemeinsamkeiten?</p>
+  </app-task-description>
+  <app-task-solution>
+    <h4>Gemeinsamkeiten</h4>
+    <ul>
+      <li>Grundprinzip: Annäherung → höhere Frequenz, Entfernung → niedrigere Frequenz</li>
+      <li>Ursache: Relative Bewegung zwischen Quelle und Beobachter</li>
+      <li>Grenzfall: Bei kleinen Geschwindigkeiten liefern beide Formeln praktisch identische Ergebnisse</li>
+      <li>Anwendungen: Geschwindigkeitsmessung (Radar, Ultraschall, Astronomie)</li>
+    </ul>
+    <h4>Wesentliche Unterschiede</h4>
+    <table>
+      <tr>
+        <th>Aspekt</th>
+        <th>Akustisch (klassisch)</th>
+        <th>Optisch (relativistisch)</th>
+      </tr>
+      <tr>
+        <td>Medium</td>
+        <td>Benötigt Trägermedium (Luft, Wasser, ...)</td>
+        <td>Kein Trägermedium nötig</td>
+      </tr>
+      <tr>
+        <td>Bezugssystem</td>
+        <td>Medium  definiert absolutes Bezugssystem</td>
+        <td>Nur Relativbewegung relevant</td>
+      </tr>
+      <tr>
+        <td>Symmetrie</td>
+        <td>Asymmetrisch: Bewegte Quelle ist ungleich bewegter Empfänger</td>
+        <td>symmetrisch</td>
+      </tr>
+      <tr>
+        <td>Transversaler Effekt</td>
+        <td>Existiert nicht</td>
+        <td>Existiert (Zeitdilatation bei senkrechter Bewegung)</td>
+      </tr>
+      <tr>
+        <td>Grenzgeschwindigkeit</td>
+        <td>Quelle kann Schallgeschwindigkeit überschreiten (Überschallknall)</td>
+        <td>Keine Lichtquelle kann die Lichtgeschwindigkeit überschreiten</td>
+      </tr>
+    </table>
+  </app-task-solution>
+</app-task>
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 5.1.1.2</h3>
+    <p>Eine Ampel leuchtet rot. Wie schnell muss man auf die Ampel zu rasen, damit sie als grün empfunden wird? Die Wellenlänge von rotem Licht beträgt 700 nm und von grünem Licht 550 nm.</p>
+  </app-task-description>
+  <app-task-solution>
+    <p>Zuerst muss die Wellenlänge in die Frequenz umgerechnet werden:</p>
+    <app-latex content="\begin{equation*} f = \frac{c}{\lambda} \end{equation*}"></app-latex>
+    <p>Die Frequenz von rotem Licht beträgt also <app-latex content="\frac{c}{700 \text{ nm}} = 4.283 \cdot 10^{14} \text{ Hz}"></app-latex> und von grünem Licht <app-latex content="\frac{c}{550 \text{ nm}} = 5.451 \cdot 10^{14} \text{ Hz}"></app-latex>.</p>
+    <p>Die Formel für den optischen Dopplereffekt für den Fall der Annäherung muss umformuliert werden.</p>
+    <app-latex content="\begin{equation*} f = f_0 \frac{c + v}{c - v} \end{equation*}"></app-latex>
+    <app-latex content="\begin{equation*} \sqrt{\frac{c + v}{c - v}} = \frac{f}{f_0} \end{equation*}"></app-latex>
+    <p>Einsetzen: </p>
+    <app-latex content="\begin{equation*} \sqrt{\frac{c + v}{c - v}} = \frac{5.451 * 10^{14} \text{ Hz}}{4.283 * 10^{14} \text{ Hz}} = 1.273 \end{equation*}"></app-latex>
+    <p>Mit dem Taschenrechner lässt sich die Funktion <i>num-solv</i> (<i>2nd</i> + <i>sin</i>) verwenden, um <app-latex>v</app-latex> zu bestimmen. Dafür ist <app-latex>v</app-latex> mit <app-latex>x</app-latex> zu ersetzen. Die Lichtgeschwindigkeit <app-latex>c</app-latex> ist unter <i>constants</i> verfügbar.</p>
+    <p>Die Lösung beträgt <app-latex content="v = 7.099 \cdot 10^7 \text{ m/s}"></app-latex>.</p>
+  </app-task-solution>
+</app-task>
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 5.1.1.3</h3>
+    <p>Stellen wir uns ein Gas vor, das Licht in allen Farben des Spektrums aussendet. In diesem Gas hat es aber Natrium-Atome, von denen wir wissen, dass es die gelbe Farbe (589 nm Wellenlänge) sozusagen "verschluckt". Diese Farbe fehlt also im Farbspektrum dieses Gases, es entsteht an dieser Stelle im Spektrum eine "Lücke". Stellen wir uns nun weiter vor, dass sich dieses Gas von uns weg- oder zu uns hinbewegt.</p>
+    <p>a) Wie verändert sich die Position dieser Lücke, wenn wir das Farbspektrum dieses bewegten Gases untersuchen?</p>
+    <p>b) jemand beobachtet das Farbspektrum des Gases. Er stellt die "gelbe Lücke" (589 nm Wellenlänge) bei Orange (650 nm Wellenlänge) fest. Mit welcher Geschwindigkeit entfernen sich der Beobachter und das Gas voneinander?</p>
+  </app-task-description>
+  <app-task-solution>
+    <h4>a)</h4>
+    <p>Bei einer Annäherung ist die Blauverschiebung festzustellen. Dabei wird die Wellenlänge <app-latex>\lambda</app-latex> kleiner. Bei einer Entfernung ist die Rotverschiebung festzustellen. Dabei wird die Wellenlänge <app-latex>\lambda</app-latex> grösser.</p>
+    <h4>b)</h4>
+    <p>Die Wellenlängen müssen in die Frequenz umgerechnet werden:</p>
+    <app-latex content="\begin{equation*} f = \frac{c}{\lambda} \end{equation*}"></app-latex>
+    <p>Die Frequenz von gelbem Licht beträgt also <app-latex content="\frac{c}{589 \text{ nm}} = 5.09 \cdot 10^{14} \text{ Hz}"></app-latex> und von orangem Licht Licht <app-latex content="\frac{c}{650 \text{ nm}} = 4.612 \cdot 10^{14} \text{ Hz}"></app-latex>.</p>
+    <p>Die Formel für den optischen Dopplereffekt für den Fall der Entfernung muss umformuliert werden.</p>
+    <app-latex content="\begin{equation*} f = f_0 \frac{c - v}{c + v} \end{equation*}"></app-latex>
+    <app-latex content="\begin{equation*} \sqrt{\frac{c - v}{c + v}} = \frac{f}{f_0} \end{equation*}"></app-latex>
+    <p>Einsetzen: </p>
+    <app-latex content="\begin{equation*} \sqrt{\frac{c - v}{c + v}} = \frac{4.612 * 10^{14} \text{ Hz}}{5.09 * 10^{14} \text{ Hz}} = 0.9061 \end{equation*}"></app-latex>
+    <p>Mit dem Taschenrechner lässt sich die Funktion <i>num-solv</i> (<i>2nd</i> + <i>sin</i>) verwenden, um <app-latex>v</app-latex> zu bestimmen. Dafür ist <app-latex>v</app-latex> mit <app-latex>x</app-latex> zu ersetzen. Die Lichtgeschwindigkeit <app-latex>c</app-latex> ist unter <i>constants</i> verfügbar.</p>
+    <p>Die Lösung beträgt <app-latex content="v = 2.9 \cdot 10^7 \text{ m/s}"></app-latex>.</p>
+  </app-task-solution>
+</app-task>
+```
+Überprüfe diese Seite auf Korrektheit.
+§a§
+Die Seite ist didaktisch gut strukturiert und physikalisch weitgehend korrekt. Die Aufgaben sind sinnvoll gestellt und die Lösungswege sind nachvollziezbar. Es gibt jedoch ** zwei kritische Fehler in den Formeldarstellungen** und einige kleinere Korrekturvorschläge:
+
+## Kritische Fehler (Formeln)
+
+In den Lösungen zu **Aufgabe 5.1.1.2** und **5.1.1.3** fehlt in der ersten Zeile der jeweiligen Umformung das **Wurzelzeichen**:
+
+**Aufgabe 5.1.1.2 (Zeile 4 im Solution-Block):**
+*Falsch:* `f = f_0 \frac{c + v}{c - v}`
+*Richtig:* `f = f_0 \sqrt{\frac{c + v}{c - v}}`
+
+**Aufgabe 5.1.1.3 (Zeile 4 im Solution-Block):**
+*Falsch:* `f = f_0 \frac{c - v}{c + v}`
+*Richtig:* `f = f_0 \sqrt{\frac{c - v}{c + v}}`
+
+*Hinweis:* Die nachfolgende Umformung mit der Wurzel (`\sqrt{...} = \frac{f}{f_0}`) ist in beiden Fällen korrekt, aber die erste Formelzeile ist irreführend und widerspricht der korrekten relativistischen Dopplerformel aus der Theorie-Sektion.
+
+## Kleine Korrekturen
+
+1.  **Tippfehler in 5.1.1.3:**
+    > "und von orangem Licht **Licht**" → Doppeltes Wort "Licht" entfernen.
+
+2.  **Richtungsangabe in 5.1.1.3b:**
+    Die Aufgabenstellung fragt nach der Geschwindigkeit, mit der sich Gas und Beobachter entfernen. Die Lösung sollte explizit bestätigen, dass es sich um eine **Entfernung** handelt (da Rotverschiebung von 589 nm zu 650 nm vorliegt). Die berechnete Geschwindigkeit $v \approx 2,9 \cdot 10^7 \text{ m/s}$ (ca. $0,1c$) ist korrekt.
+
+3.  **Einheiten in 5.1.1.2:**
+    Die Berechnung ist korrekt ($v \approx 7,1 \cdot 10^7 \text{ m/s} \approx 0,24c$), aber zur Vollständigkeit könnte man erwähnen, dass dies etwa **24% der Lichtgeschwindigkeit** ist (was die relativistische Formel zwingend erforderlich macht; die klassische Näherung wäre hier deutlich daneben).
+
+## Didaktische Anmerkungen (Optional)
+
+-   **Algebraische Auflösung:** In beiden Aufgaben wird auf einen numerischen Solver (`num-solv`) verwiesen. Für den Unterricht wäre es mathematisch eleganter, die Formel vor dem Einsetzen algebraisch nach $v$ aufzulösen:
+    $$v = c \cdot \frac{\lambda^2 - \lambda_0^2}{\lambda^2 + \lambda_0^2}$$
+    (für den Fall der Entfernung, wobei $\lambda$ die beobachtete und $\lambda_0$ die Ruhewellenlänge ist). Dies verdeutlicht die Symmetrie des Effekts.
+
+-   **Transversaler Dopplereffekt:** In der Tabelle zu Aufgabe 5.1.1.1 ist der Eintrag korrekt. Man könnte ergänzen, dass dieser rein relativistisch ist (Zeitdilatation) und beim akustischen Effekt nicht existiert, da es keine "Lichtwind" gibt, der quer dazu bewegt wird.
+
+**Zusammenfassung:** Korrigieren Sie unbedingt die fehlenden Wurzeln in den beiden Formelzeilen, damit die Schüler nicht die falsche Formel abschreiben. Ansonsten ist die Seite fehlerfrei und sehr gut geeignet.

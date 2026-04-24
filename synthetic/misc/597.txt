@@ -1,0 +1,88 @@
+§u§
+How hard would it be to update  `https://github.com/4nner/IronChests` from 1.21.1 Fabric to 1.21.1 NeoForge?
+§a§
+Great, now I have a thorough understanding of the mod's structure and dependencies. Let me provide a comprehensive assessment.
+
+---
+
+## Difficulty Assessment: Porting 4nner/IronChests from Fabric to NeoForge (1.21.1)
+
+**Overall difficulty: Moderate** — not trivial, but very doable for someone with Minecraft modding experience. Here's a breakdown:
+
+---
+
+### 1. The Mod Itself
+
+Iron Chests for Fabric is a simple mod that enhances your Minecraft Gameplay by adding new, upgradable chests, that will allow you to store more items in a single block. Each Chest can be upgraded, starting from the Wooden Chest (Vanilla Minecraft).
+
+The mod is relatively straightforward in scope — custom blocks (chests), block entities, items (upgrades), recipes, and a GUI. There's no complex rendering, world generation, or networking to worry about.
+
+---
+
+### 2. Build System Overhaul (Easy–Moderate)
+
+The build.gradle uses `fabric-loom`, Yarn mappings, Fabric API, and Fabric Loader. You'd need to:
+
+- **Replace `fabric-loom`** with NeoForge's Gradle plugin (`net.neoforged.gradle`).
+- **Replace Yarn mappings** with Mojang official mappings (Mojmap), which NeoForge uses. This means every Yarn-named class/method/field has to be renamed. For example, Yarn uses names like `Identifier`, `writeNbt`, `method_XXXX`, etc., while NeoForge uses Mojang names like `ResourceLocation`, `saveAdditional`, etc. This is the most tedious (but mechanical) part of the port.
+- **Replace `fabric.mod.json`** with a `neoforge.mods.toml` (NeoForge's mod metadata format).
+- Remove the Fabric entrypoint system (`onInitialize`, etc.) and replace with NeoForge's `@Mod` annotation and event bus system.
+
+---
+
+### 3. Dependency: LibGui → Biggest Challenge
+
+The mod depends on `io.github.cottonmc:LibGui` for its GUI system, and it's bundled (`include`) into the mod jar.
+
+LibGui provides "Minecraft GUIs without spending forever painstakingly aligning things to the background image. Instead, LibGui takes a logical description of your GUI, and draws it on-the-fly like any modern GUI system." Controls can be hung on an itemslot grid or offset from it.
+
+LibGui is Fabric-only. You have **two options**:
+
+- **Option A: Use LibGuiFoxified** — There is an unofficial NeoForge port called LibGuiFoxified. However, the original mod (LibGui) wiki is based on the Fabric development environment, so you may need to adjust some API calls. This is the easier path.
+
+- **Option B: Rewrite the GUI** using vanilla Minecraft's `AbstractContainerScreen` / `AbstractContainerMenu` system or NeoForge's native GUI APIs. This is more work but removes the external dependency entirely.
+
+---
+
+### 4. Fabric API → NeoForge API Replacements (Moderate)
+
+You'll need to replace all Fabric API usages with NeoForge equivalents:
+
+| Fabric Concept | NeoForge Equivalent |
+|---|---|
+| `Registry.register()` | `DeferredRegister` + event bus |
+| `FabricBlockEntityTypeBuilder` | Vanilla `BlockEntityType.Builder` |
+| `fabric.mod.json` entrypoints | `@Mod` class + `@EventBusSubscriber` |
+| Fabric `ItemGroup` API | NeoForge `CreativeModeTabEvent` |
+| Fabric `ScreenHandlerRegistry` | NeoForge `RegisterMenusEvent` |
+| Yarn naming (e.g. `Identifier`) | Mojmap naming (e.g. `ResourceLocation`) |
+
+---
+
+### 5. Mapping Translation (Tedious but Mechanical)
+
+Every Yarn-mapped name needs to be converted to Mojmap. Tools like **[Fabric2NeoForge mapping converters](https://linkie.shedaniel.dev/mappings)** or simply searching in a NeoForge dev environment can help. This affects:
+- Class names
+- Method names
+- Field names
+- Mixin targets (if any are used)
+
+---
+
+### 6. Alternative: Use Sinytra Connector (Zero Code Changes!)
+
+If you just want to **play** the Fabric mod on NeoForge rather than port the code, you can grab your favourite Fabric mods and just drop them in the mods folder like you would with any NeoForge mods. Connector will handle loading them for you with no additional steps required. 1.21.1 is Connector's primary supported version, so there's a good chance the mod works out of the box.
+
+---
+
+### Summary
+
+| Task | Difficulty | Time Estimate |
+|---|---|---|
+| Build system (Gradle, metadata) | Easy | ~1–2 hours |
+| Yarn → Mojmap renaming | Tedious | ~2–4 hours |
+| Fabric API → NeoForge API | Moderate | ~3–6 hours |
+| LibGui → LibGuiFoxified or rewrite | Moderate–Hard | ~2–8 hours |
+| Testing & debugging | Varies | ~2–4 hours |
+
+**Total estimated effort: ~1–3 days** for a developer familiar with both platforms, or **~1 week** for someone learning NeoForge for the first time. The biggest wildcard is the LibGui dependency — if LibGuiFoxified works cleanly, it could save significant time. If you just need to *use* the mod on NeoForge rather than formally port it, **Sinytra Connector** may let you skip the work entirely.

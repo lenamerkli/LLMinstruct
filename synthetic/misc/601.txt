@@ -1,0 +1,49 @@
+§u§
+<p>Stellen wir uns ein Gas vor, das Licht in allen Farben des Spektrums aussendet. In diesem Gas hat es aber Natrium-Atome, von denen wir wissen, dass es die gelbe Farbe (589 nm Wellenlänge) sozusagen "verschluckt". Diese Farbe fehlt also im Farbspektrum dieses Gases, es entsteht an dieser Stelle im Spektrum eine "Lücke". Stellen wir uns nun weiter vor, dass sich dieses Gas von uns weg- oder zu uns hinbewegt.</p>
+<p>a) Wie verändert sich die Position dieser Lücke, wenn wir das Farbspektrum dieses bewegten Gases untersuchen?</p>
+<p>b) jemand beobachtet das Farbspektrum des Gases. Er stellt die "gelbe Lücke" (589 nm Wellenlänge) bei Orange (650 nm Wellenlänge) fest. Mit welcher Geschwindigkeit entfernen sich der Beobachter und das Gas voneinander?</p>
+§a§
+Das ist das klassische **Absorptionsspektrum** (die berühmte gelbe Natrium-D-Linie) und der optische **Doppler-Effekt**.
+
+### a) Verschiebung der Lücke
+
+Die Natrium-Atome "schlucken" immer bei 589 nm - aber nur in ihrem eigenen Ruhesystem.
+
+Bewegt sich das Gas relativ zu uns, sehen wir das Licht verschoben:
+
+* **Gas entfernt sich von uns → Rotverschiebung**
+  Die Lücke wandert zu **größeren Wellenlängen** (Richtung Rot / Infrarot).
+
+* **Gas bewegt sich auf uns zu → Blauverschiebung**
+  Die Lücke wandert zu **kleineren Wellenlängen** (Richtung Blau / Violett).
+
+Die Verschiebung ist umso größer, je schneller die Relativbewegung ist. Genau so messen Astronomen, ob sich Sterne und Galaxien entfernen.
+
+---
+
+### b) Geschwindigkeit berechnen
+
+Gegeben:
+* Ruhewellenlänge λ₀ = 589 nm
+* Beobachtete Wellenlänge λ' = 650 nm
+* Verschiebung Δλ = λ' - λ₀ = 650 - 589 = **61 nm**
+
+Da λ' > λ₀ ist es eine Rotverschiebung -> das Gas entfernt sich.
+
+Für Geschwindigkeiten die deutlich kleiner als Lichtgeschwindigkeit c sind, gilt die einfache Doppler-Näherung:
+
+$$\frac{\Delta\lambda}{\lambda_0} = \frac{v}{c}$$
+
+$$v = c \cdot \frac{\Delta\lambda}{\lambda_0}$$
+
+mit c ≈ 300'000 km/s = 3,0 · 10⁸ m/s
+
+$$v = 3,0 \cdot 10^8 \frac{m}{s} \cdot \frac{61}{589}$$
+
+$$v \approx 3,1 \cdot 10^7 \frac{m}{s} \approx 31'000 \frac{km}{s}$$
+
+Das sind etwa **10,4 % der Lichtgeschwindigkeit** (~112 Millionen km/h).
+
+> **Hinweis für Profis:** Bei über 10% von c ist die klassische Formel schon ungenau. Relativistisch korrekt ist:
+> $$ v = c \cdot \frac{(\lambda'/\lambda_0)^2 - 1}{(\lambda'/\lambda_0)^2 + 1} $$
+> Damit erhält man v ≈ 0,098 c ≈ **29'500 km/s**. Für die Schule reicht die obere Näherung völlig.

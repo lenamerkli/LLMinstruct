@@ -1,0 +1,49 @@
+§u§
+```
+<h1>Rotationsenergie</h1>
+<p>Die Gesamtenergie eines abgeschlossenen Systems bleibt konstant. Bei einem rotierenden Körper kommt zur kinetischen Energie der Translation <app-latex content="E_{\text{trans}}"></app-latex> noch die Rotationsenergie <app-latex content="E_{\text{rot}}"></app-latex> hinzu.</p>
+<h2>Translationsenergie</h2>
+<app-latex content="\begin{equation*} E_{\text{trans}} = \frac{1}{2} m v^2 \end{equation*}"></app-latex>
+<h2>Rotationsenergie</h2>
+<app-latex content="\begin{equation*} E_{\text{rot}} = \frac{1}{2} I \omega^2 \end{equation*}"></app-latex>
+<p><app-latex>I</app-latex> ist das Trägheitsmoment des Körpers und <app-latex>\omega</app-latex> die Winkelgeschwindigkeit.</p>
+<h2>Energieerhaltungssatz</h2>
+<app-latex content="\begin{equation*} E_{\text{ges}} = E_{\text{pot}} + E_{\text{trans}} + E_{\text{rot}} = \text{const.} \end{equation*}"></app-latex>
+```
+Überprüfe auf Korrektheit.
+§a§
+Der vorliegende Codeausschnitt ist **inhaltlich und formal korrekt**, vorausgesetzt, er wird in einem Umfeld gerendert, das das benutzerdefinierte `<app-latex>`-Tag unterstützt (z. B. ein spezifischer Bildungs-Webframeowrk mit integriertem MathJax oder KaTeX).
+
+Hier ist die detaillierte Prüfung:
+
+### 1. Physikalischer Inhalt
+*   **Grundprinzip:** Die Aussage zur Erhaltung der Gesamtenergie in einem abgeschlossenen System ist physikalisch korrekt.
+*   **Formeln:**
+    *   Translationsenergie: $E_{\text{trans}} = \frac{1}{2} m v^2$ (**Korrekt**)
+    *   Rotationsenergie: $E_{\text{rot}} = \frac{1}{2} I \omega^2$ (**Korrekt**)
+    *   Energieerhaltung: $E_{\text{ges}} = E_{\text{pot}} + E_{\text{trans}} + E_{\text{rot}} = \text{const.}$ (**Korrekt** im Kontext mechanischer Energie).
+*   **Definitionen:** Trägheitsmoment ($I$) und Winkelgeschwindigkeit ($\omega$) sind korrekt zugeordnet.
+
+### 2. Didaktische und stilistische Anmerkungen
+Obwohl alles richtig ist, gibt es zwei kleine Nuancen für eine perfekte Präzision:
+
+*   **"Mechanische" vs. "Gesamtenergie":**
+    Im ersten Satz steht "Gesamtenergie ... bleibt konstant". Im letzten Gleichungssystem werden jedoch nur die *mechanischen* Energieformen ($E_{\text{pot}}, E_{\text{trans}}, E_{\text{rot}}$) addiert.
+    *   *Hinweis:* Streng genommen gilt diese Gleichung nur, wenn keine dissipativen Kräfte (wie Reibung) wirken. Bei Reibung würde sich $E_{\text{ges}}$ durch Wärmeenergie erhöhen, aber die Summe aus Pot., Transl. und Rot. wäre nicht mehr konstant. Für den Schul-/Einführungskontext ist die Darstellung jedoch üblich und akzeptabel.
+*   **Plötzliche Einführung von $E_{\text{pot}}$:**
+    Im Textfluss wird erst über Translation und Rotation gesprochen. Im Abspann ("Energieerhaltungssatz") taucht plötzlich $E_{\text{pot}}$ in der Gleichung auf, ohne dass vorher im Fließtext kurz erwähnt wurde, dass Höhenenergie ebenfalls gemeint ist. Das ist kein Fehler, aber flüssiger Lesefluss könnte erreicht werden, indem man im ersten Absatz "... sowie potentielle Energie..." erwähnt.
+
+### 3. Technische Implementierung (LaTeX & HTML)
+*   **Syntax:** Die LaTeX-Befehle innerhalb der Tags (`\text`, `\frac`, `\begin{equation*}`, `\omega`, `\mathbb` etc.) sind korrekt geschrieben.
+*   **Tags:** Das `content`-Attribut wird sauber verwendet.
+*   **Semantik:** Die Verwendung von `<h1>`, `<h2>` und `<p>` ist logisch aufgebaut.
+
+### Fazit & Empfehlung
+Der Text ist **korrekt**. Wenn Sie ihn für ein Lernprogramm verwenden wollen, können Sie ihn so übernehmen.
+
+Falls Sie **maximale Präzision** wünschen, hier ein minimaler Vorschlag zur Anpassung des ersten Absatzes (optional):
+
+> *Original:* "...kommt zur kinetischen Energie der Translation [...] noch die Rotationsenergie [...] hinzu."
+> *Alternativ (präziser für die folgende Gleichung):* "...kommt zur kinetischen Energie der Translation [...] sowie bei Höhenänderung zur potentiellen Energie noch die Rotationsenergie [...] hinzu."
+
+**Urteil: Freigabe möglich.** ✅

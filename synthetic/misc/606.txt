@@ -1,0 +1,71 @@
+§u§
+```
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 5.1.2.5</h3>
+    <p>Nehmen wir an, dass ein Zug mit einer Geschwindigkeit von <app-latex content="\frac{1}{2} c"></app-latex> rast. Eine Kugel rollt mit <app-latex content="\frac{1}{4} c"></app-latex> in Fahrtrichtung. Wie gross ist Ihre Relativgeschwindigkeit zu den Schienen (in Einheiten der Lichtgeschwindigkeit)? Um wie viel weicht diese Geschwindigkeit von der "klassisch" erwarteten Geschwindigkeit ab, die sich nach der Galileischen Physik ergeben würde?</p>
+  </app-task-description>
+  <app-task-solution>
+    <app-latex content="\begin{equation*} u' = \frac{u - v}{1 - \frac{uv}{c^2}} \end{equation*}"></app-latex>
+    <p>Einsetzen:</p>
+    <app-latex content="\begin{equation*} u' = \frac{0.75c - 0.5c}{1 - \frac{0.75c \cdot 0.5c}{c^2}} \end{equation*}"></app-latex>
+    <app-latex content="\begin{equation*} u' = \frac{0.25c}{1 - 0.75 \cdot 0.5} \end{equation*}"></app-latex>
+    <app-latex content="\begin{equation*} u' = \frac{0.25c}{0.625} \end{equation*}"></app-latex>
+    <app-latex content="\begin{equation*} u' = 0.4c \end{equation*}"></app-latex>
+  </app-task-solution>
+</app-task>
+```
+Das kann doch nicht sein?
+§a§
+Ja, du hast völlig recht: **Die im Snippet gezeigte Lösung ist falsch**. Der Fehler liegt in der falschen Anwendung der relativistischen Geschwindigkeitsaddition und/oder in einer inkonsistenten Zuordnung der Geschwindigkeiten.
+
+### Was ist korrekt?
+
+Gegeben:
+- Zuggeschwindigkeit relativ zu den Schienen: \(v = 0.5c\)
+- Kugelgeschwindigkeit relativ zum Zug (in Fahrtrichtung): \(u = 0.25c\)
+
+Gesucht: Kugelgeschwindigkeit relativ zu den Schienen \(u'\).
+
+Die richtige Formel für Addition in dieselbe Richtung ist
+
+\[
+u' = \frac{v + u}{1 + \frac{vu}{c^2}}.
+\]
+
+Einsetzen:
+
+\[
+u' = \frac{0.5c + 0.25c}{1 + \frac{(0.5)(0.25)c^2}{c^2}} = \frac{0.75c}{1 + 0.125} = \frac{0.75c}{1.125} = \frac{2}{3}c \approx 0.6667c.
+\]
+
+### Klassischer (Galileischer) Vergleich
+
+Klassisch wäre
+
+\[
+u'_{\text{Gal}} = 0.5c + 0.25c = 0.75c.
+\]
+
+Die Abweichung beträgt also
+
+\[
+0.75c - 0.6667c = 0.0833c.
+\]
+
+### Warum ist die gegebene Lösung falsch?
+
+In der Lösung wird die Formel
+
+\[
+u' = \frac{u - v}{1 - \frac{uv}{c^2}}
+\]
+
+verwendet und mit \(u = 0.75c\), \(v = 0.5c\) gerechnet, was \(u' = 0.4c\) ergibt. Das ist problematisch aus zwei Gründen:
+
+1. **Falsche Formel/Signatur:** Für Addition in dieselbe Richtung muss \(+\) im Zähler und \(+\) im Nenner stehen, nicht \(-\).
+2. **Falsche Werte:** \(0.75c\) passt nicht zur Aufgabenstellung („Kugel rollt mit \(0.25c\) in Fahrtrichtung“). Selbst wenn man die falsche Formel nimmt, sind die eingesetzten Zahlen inkonsistent.
+
+Wenn man also die Aufgabe so versteht, wie sie formuliert ist, ist **\(0.67c\) (ungefähr)** die korrekte relativistische Relativgeschwindigkeit zur Schiene, und die klassische Erwartung weicht um etwa \(0.08c\) ab.
+
+Wenn du willst, kann ich dir auch zeigen, wie man erkennt, **welche Geschwindigkeit zu welchem Bezugssystem gehört**, damit solche Formelfehler künftig sofort auffallen.

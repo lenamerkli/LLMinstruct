@@ -1,0 +1,55 @@
+§u§
+I am a minecraft modpack creator. What is better for performance: neoforge or fabric?
+§a§
+## Fabric vs NeoForge: Performance Comparison for Modpack Creators
+
+**Short answer: Fabric wins on raw performance. But the right choice depends on what kind of modpack you're building.**
+
+---
+
+### 🏎️ Performance: Fabric is the clear winner
+
+Fabric takes a different approach from NeoForge. Instead of being a heavy framework, Fabric is a minimal loader. Mods are smaller, startup is faster, and the whole system uses less RAM.
+
+Here are the key performance differences:
+
+- **Startup time:** NeoForge has startup times similar to Forge, while Fabric is significantly faster (roughly 30–60 seconds vs. 2–5 minutes).
+- **RAM usage:** A Fabric setup with 10 performance mods needs only 2–3 GB of RAM, while a light Forge/NeoForge modpack already needs 4–6 GB. Fabric is lighter because mods are smaller and the loader has less overhead. Forge requires more baseline RAM before any mods are loaded.
+- **Optimization mods:** Fabric's minimal design gives it faster startup times, less overhead, and easier performance optimization. Nearly all major optimization mods (Sodium, Lithium) are Fabric-first.
+- **FPS:** Sodium + Iris on Fabric significantly outperforms any Forge equivalent.
+
+---
+
+### 🔧 But NeoForge has its strengths
+
+For big tech/magic mods (Create, Mekanism, Applied Energistics, Botania), NeoForge is the better choice. These mods are traditionally Forge mods and most are available on NeoForge now.
+
+For example, Create's NeoForge build (version 6.0.9, January 2026) is fully on 1.21.1, while the Fabric port is stuck at 1.20.1 as of March 2026.
+
+Forge (and by extension NeoForge) is better at ensuring that many mods work well together. For large modpacks, it's likely the safer and smoother option.
+
+---
+
+### 📋 Summary for a Modpack Creator
+
+| Factor | Fabric | NeoForge |
+|---|---|---|
+| **Raw performance** | ✅ Lightest, fastest | ❌ Heavier, similar to Forge |
+| **Startup time** | ✅ ~30–60 sec | ❌ Slower |
+| **RAM overhead** | ✅ Lower baseline | ❌ Higher baseline |
+| **Optimization mods** | ✅ Sodium, Lithium, Iris | ❌ Fewer/ports lag behind |
+| **Big content mods** | ❌ Fewer/delayed ports | ✅ Create, Mekanism, etc. |
+| **Mod library size** | ✅ ~26k on Modrinth | ⚠️ ~14k on Modrinth |
+| **Inter-mod compat** | ⚠️ Can be fiddlier | ✅ Stronger API guarantees |
+
+### 🎯 Recommendation
+
+For most players starting modded Minecraft in 2026, NeoForge is the default recommendation for content modding and Fabric is the recommendation for performance and QoL setups.
+
+As a modpack creator:
+
+- **If your pack is performance-focused, QoL-oriented, or lightweight** → Go with **Fabric**. You'll get better FPS, faster load times, and lower RAM usage.
+- **If your pack is a heavy content/tech/magic overhaul** (Create, Mekanism, etc.) → Go with **NeoForge**. Many of those major mods simply aren't available (or up-to-date) on Fabric.
+- A lightweight loader does not guarantee higher FPS — with large modpacks, performance is mostly decided by the specific mods you install and how heavy the pack is.
+
+So if pure performance is your #1 priority, **Fabric is objectively better**. But if you need the deep content mod ecosystem, NeoForge is the practical choice — and you can still optimize it with the tools available on that platform.

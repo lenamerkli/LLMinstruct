@@ -1,0 +1,73 @@
+§u§
+I recently bought an old datacenter gpu. It came without any cooler and does not have a fan connector. Give me advice to create a custom air cooling solution.
+§a§
+This is a fun but challenging project. **Warning:** These cards often have massive TDPs (300W+), produce extreme heat in a small area, and have no thermal monitoring if the fan header is missing. **Do not power it on without active cooling** – it will destroy itself in seconds.
+
+Here is a step-by-step guide to creating a custom air cooling solution for a fanless datacenter GPU.
+
+### Step 0: Identify the GPU & its Power Requirements
+- **Find the PCB model.** Look for markings like "Tesla K80", "Tesla M40", "FirePro S7150", or "NVIDIA A2". This dictates the card's **TDP** (e.g., K80 = 300W, M40 = 250W).
+- **Check the card’s power connector(s).** It likely uses **8-pin or 6-pin EPS12V** (CPU power) connectors, not standard PCIe. You may need an **EPS12V to PCIe 8-pin adapter** or a specific power supply.
+- **Measure the card.** It’s likely a **dual-slot or triple-slot** height, **full-length** (10.5" / 267mm) card. Ensure your case can fit it.
+
+### Step 1: The "No Fan Header" Problem
+Datacenter cards rely on the server chassis backplane for power and fan control. Your card likely has:
+- **No standard 4-pin PWM fan header.**
+- **No temperature sensor output you can easily read.**
+
+**Solutions:**
+1.  **Solder a 4-pin fan header.** If you see a small, empty 4-pin or 2-pin header on the PCB labeled "J1", "FAN", or "SYS_FAN", you can solder a standard fan header. Use a multimeter to check pinout (usually Pin 1 = GND, Pin 2 = +12V, Pin 3 = Tach, Pin 4 = PWM).
+2.  **Use a PCIe slot-powered fan controller.** Buy a small fan controller (e.g., **Noctua NA-FC1** or a cheap 4-pin PWM hub). Power it via SATA or Molex from your PSU.
+3.  **Run fans at 100%.** Use a **12V adapter (like a barrel jack)** connected to a fan splitter. This is loud but guaranteed to cool.
+
+### Step 2: The Cooling Solution (The "Custom" Part)
+
+You have two main strategies:
+
+#### Strategy A: "The Server Style" – High Static Pressure Fans
+- **What you need:** Two **40mm or 60mm high-static-pressure fans** (e.g., **Noctua NF-A4x20** or **Sunon** industrial fans).
+- **Mounting:** Create a **shroud** from 3D-printed plastic, laser-cut acrylic, or even folded cardboard/aluminum tape. The shroud must seal directly over the GPU die and VRAM chips.
+- **Installation:** Use **thermal pads** (1mm-2mm thick) on VRAM, VRMs, and any other exposed chips. Use **thermal paste** on the GPU die. Place the fans directly over the die, blowing **down** onto the card.
+- **Result:** Works, but fans need to run at 4000-5000 RPM (loud). Good for testing.
+
+#### Strategy B: "The Heatsink Transplant" – Best Performance
+This is the best method for sustained load. You need to replace the missing heatsink.
+
+1.  **Find a compatible CPU cooler.** A **low-profile CPU cooler** (e.g., **Noctua NH-L9i** or **Thermalright AXP90-X36**) has a copper base and heatpipes.
+2.  **Modify the mount.** The GPU die likely has a **square metal bracket** around it. You will need to drill holes in the cooler’s mounting bracket to align with the GPU’s mounting holes. Use **standoffs** (M2.5 or M3) to raise the cooler to the correct height.
+3.  **Secure it.** Use **spring-loaded screws** to apply even pressure. **Do not overtighten** – you can crack the die.
+4.  **Add VRAM/VRM cooling.** Glue small **aluminum heatsinks** (from Amazon/electronics stores) to the VRAM chips and VRM MOSFETs using **thermal adhesive tape** (e.g., 3M 8810). Point a small 40mm fan at these heatsinks.
+5.  **Result:** Silent, efficient, but requires mechanical skill.
+
+### Step 3: The "Danger Zone" – Missing Components
+Datacenter cards often have **no I/O bracket** or **display outputs** (e.g., Tesla series). They are designed for compute only.
+- **If no display output:** You cannot use it as a normal graphics card. It will work for **AI, rendering, or compute** (e.g., Blender, LLMs, mining) but **not for gaming or desktop output**. You need a second GPU (even an iGPU) for display.
+- **If no I/O bracket:** You must 3D print or make a metal bracket to hold the card in your case. Otherwise, the PCIe slot will break.
+
+### Step 4: Testing & Monitoring (Crucial)
+Since you have no fan connector, **you have no RPM feedback**. You must monitor temperatures manually.
+1.  **Software:** Use **HWMonitor** or **GPU-Z** to watch the GPU temp and hotspot temp.
+2.  **Thermal limit:** Datacenter GPUs throttle at **85°C-95°C**. Keep it under **80°C** for safety.
+3.  **Test with low load first.** Run a stress test (e.g., **FurMark** or **OCCT**) at 50% power limit. Slowly increase load while watching temps.
+
+### Final Checklist Before Power-On
+- [ ] Heatsink makes full contact with GPU die (check with thermal paste spread pattern).
+- [ ] All VRAM and VRM chips have thermal pads or heatsinks.
+- [ ] Fans are powered and spinning (confirm visually before turning on PC).
+- [ ] Card is physically secured in case (no wobble).
+- [ ] PSU has enough wattage (card TDP + 100W overhead).
+- [ ] No exposed metal touching the motherboard (use electrical tape on screw heads).
+
+### Recommended Shopping List
+| Item | Purpose |
+|------|---------|
+| **Noctua NF-A4x20** (x2) | High static pressure fan |
+| **Thermal Grizzly Kryonaut** | Thermal paste |
+| **1mm/2mm thermal pads** | VRAM/VRM cooling |
+| **PWM fan controller** (Noctua NA-FC1) | Manual fan speed control |
+| **M2.5 standoffs & screws** | Mounting CPU cooler to GPU |
+| **Aluminum heatsinks** (10x10mm) | For VRM chips |
+
+**Bottom line:** If you have the skill to solder a fan header and mount a CPU cooler, this is a great cheap compute card. If not, **buy a cheap used GPU heatsink/fan combo on eBay** that matches your card’s mounting holes – it’s the safest route.
+
+Let me know the exact model number and I can give you a specific mount diagram.

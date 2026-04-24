@@ -1,0 +1,24 @@
+§u§
+How fast are NVME SSDs in GB/s read?
+§a§
+Most consumer NVMe SSDs read between **2–7 GB/s**, depending mainly on the PCIe generation and lane width.
+
+Here’s a quick breakdown for common M.2 NVMe drives (x4 lanes):
+
+| NVMe / PCIe Type     | Typical Max Sequential Read (GB/s) |
+|----------------------|-------------------------------------|
+| PCIe 3.0 x4 NVMe     | ~2.5 – 3.5 GB/s                     |
+| Early PCIe 4.0 x4    | ~4.5 – 5.5 GB/s                     |
+| Fast PCIe 4.0 x4     | ~7.0 – 7.5 GB/s (near bus limit)    |
+| PCIe 5.0 x4 (newer)  | ~10 – 14 GB/s (theoretical: ~15+)   |
+
+Notes:
+- These numbers are **sequential read** speeds (large, continuous files).
+- Real‑world speeds depend on workload, firmware, temperature (throttling), and whether the drive’s SLC cache is full.
+- Random reads (small files, OS/app loading) are much slower in GB/s terms, and are usually specified in **IOPS** instead.
+
+If you tell me:
+- what drive you’re considering, or
+- your motherboard’s PCIe version (3.0 / 4.0 / 5.0),
+
+I can estimate more precisely what read speed you’ll actually see.

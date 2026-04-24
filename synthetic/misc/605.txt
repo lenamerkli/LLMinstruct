@@ -1,0 +1,50 @@
+§u§
+```
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 5.1.2.5</h3>
+    <p>Nehmen wir an, dass ein Zug mit einer Geschwindigkeit von <app-latex content="\frac{1}{2} c"></app-latex> rast. Eine Kugel rollt mit <app-latex content="\frac{1}{4} c"></app-latex> in Fahrtrichtung. Wie gross ist Ihre Relativgeschwindigkeit zu den Schienen (in Einheiten der Lichtgeschwindigkeit)? Um wie viel weicht diese Geschwindigkeit von der "klassisch" erwarteten Geschwindigkeit ab, die sich nach der Galileischen Physik ergeben würde?</p>
+  </app-task-description>
+  <app-task-solution>
+    <app-latex content="\begin{equation*} u' = \frac{u - v}{1 - \frac{uv}{c^2}} \end{equation*}"></app-latex>
+    <p>Einsetzen:</p>
+    <app-latex content="\begin{equation*} u' = \frac{0.75c - 0.5c}{1 - \frac{0.75c \cdot 0.5c}{c^2}} \end{equation*}"></app-latex>
+    <app-latex content="\begin{equation*} u' = \frac{0.25c}{1 - 0.75 \cdot 0.5} \end{equation*}"></app-latex>
+    <app-latex content="\begin{equation*} u' = \frac{0.25c}{0.625} \end{equation*}"></app-latex>
+    <app-latex content="\begin{equation*} u' = 0.4c \end{equation*}"></app-latex>
+  </app-task-solution>
+</app-task>
+```
+Das kann doch nicht sein?
+§a§
+## Problem mit der Lösung
+
+Du hast Recht, da stimmt etwas nicht! 🤔
+
+### Der Fehler
+
+Die Lösung verwendet die **falsche Formel** bzw. wendet sie falsch an. Die Formel für die relativistische Geschwindigkeitsaddition lautet:
+
+$$u_{gesamt} = \frac{u + v}{1 + \frac{uv}{c^2}}$$
+
+Die Lösung verwendet stattdessen die **Subtraktionsformel** (für entgegengesetzte Richtungen) und setzt dazu noch falsche Werte ein ($0.75c$ taucht nirgendwo her auf!).
+
+---
+
+### Korrekte Lösung
+
+Gegeben:
+- Zuggeschwindigkeit: $v = \frac{1}{2}c$
+- Kugelgeschwindigkeit im Zug: $u = \frac{1}{4}c$
+
+**Relativistisch:**
+
+$$u_{gesamt} = \frac{\frac{1}{2}c + \frac{1}{4}c}{1 + \frac{\frac{1}{2}c \cdot \frac{1}{4}c}{c^2}} = \frac{\frac{3}{4}c}{1 + \frac{1}{8}} = \frac{\frac{3}{4}c}{\frac{9}{8}} = \frac{3}{4} \cdot \frac{8}{9} \cdot c = \frac{2}{3}c \approx 0.667c$$
+
+**Klassisch (Galilei):**
+
+$$u_{klassisch} = \frac{1}{2}c + \frac{1}{4}c = \frac{3}{4}c = 0.75c$$
+
+**Abweichung:**
+
+$$\Delta u = 0.75c - 0.\overline{6}c = \frac{1}{12}c \approx 0.083c$$

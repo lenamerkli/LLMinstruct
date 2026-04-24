@@ -1,0 +1,136 @@
+§u§```
+░▒▓ 🎩  …/plugins/java-decompiler/lib   ▓▒░ ◦•························································································································································································•◦ ░▒▓   6ms ▓▒░
+··• mkdir ~/Documents/mods/Mobarmybattle/old
+
+░▒▓ 🎩  …/plugins/java-decompiler/lib   ▓▒░ ◦•························································································································································································•◦ ░▒▓   7ms ▓▒░
+··• java -cp "java-decompiler.jar" org.jetbrains.java.decompiler.main.decompiler.ConsoleDecompiler -dgs=true "/home/lena/PyCharmMiscProject/mab-1.0.0.jar" ~/Documents/mods/Mobarmybattle/old/
+INFO:  Decompiling class de/piju/mab/ArenaSelection
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/Arenas
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/ChatListener
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/ClockUseHandler
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/Finale
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/GameConfig
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/GameRuleUtil
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/InitFinale
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/InteractionEntityEvent
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/ItemManager
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/KilledEntityEvent
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/MAB
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/MABClient
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/MobAddOrRemover
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/PlayerDeathEvent
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/PlayerJoinEvent
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/SavedEntity
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/Scheduler
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/ShowWaveConfig
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/SwitchOption
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/TeamData
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/Timer
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/TitleUtil
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/Wave
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/WaveNamer
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/WavePreview
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/WaveSelector
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/commands/AddAll
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/commands/Config
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/commands/DebugSpawnPoint
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/commands/InitFinaleCommand
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/commands/ItemSaverLoader
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/commands/Randomizer
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/commands/SkipWaveCommand
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/commands/SpawnArena
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/commands/Test
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/commands/TimerCommand
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/gameconfig/SpawnForTeamJoin
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/gameconfig/StartGame
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/gameconfig/SwitchOptionGameConfig
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/gameconfig/TimerConfig
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/mixin/ExampleMixin
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/mixin/client/ExampleClientMixin
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/randomizer/BlockDrop
+WARN:           Inconsistent generic signature in method <init> (Ljava/lang/String;I)V in de/piju/mab/randomizer/BlockDrop$LootMode
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/save/MABPersistence
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/save/Saver
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/save/TeamPersistence
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/save/TeamWorldData
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/save/TimerPersistence
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/save/TimerState
+INFO:  ... done
+INFO:  Decompiling class de/piju/mab/util/TickScheduler
+INFO:  ... done
+
+░▒▓ 🎩  …/plugins/java-decompiler/lib   ▓▒░ ◦•····················································································································································································•◦ ░▒▓   2s278ms ▓▒░
+··• ls
+java-decompiler.jar
+
+░▒▓ 🎩  …/plugins/java-decompiler/lib   ▓▒░ ◦•························································································································································································•◦ ░▒▓   7ms ▓▒░
+··• ls ~/Documents/mods/Mobarmybattle/old
+mab-1.0.0.jar
+
+░▒▓ 🎩  …/plugins/java-decompiler/lib   ▓▒░ ◦•························································································································································································•◦ ░▒▓   7ms ▓▒░
+··•
+```
+Only the jar is in the output directory
+§a§
+That's expected! As mentioned earlier, Fernflower outputs a **new JAR containing `.java` source files** instead of `.class` files. You just need to extract it:
+
+```bash
+cd ~/Documents/mods/Mobarmybattle/old
+unzip mab-1.0.0.jar -d src
+```
+
+Then verify the source files are there:
+```bash
+ls src/de/piju/mab/
+```
+
+You should now see all the decompiled `.java` files organized in their package folder structure. You can also open the `src` folder directly in IntelliJ as a project to browse the code with syntax highlighting!

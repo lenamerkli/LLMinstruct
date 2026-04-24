@@ -1,0 +1,21 @@
+§u§
+Can I put a SXM3 GPU onto a SXM2 board?
+§a§
+**No, you cannot put an SXM3 GPU onto an SXM2 board**. Here's why:
+
+## Key Incompatibilities:
+
+1. **Different Connectors**: The SXM3 interface features a somewhat different mezzanine connector (400pin Amphenol MEG-Array used in SXM2 was swapped to a similar one that appears to be more robust).
+
+2. **Power Delivery Differences**: SXM3 has an updated power delivery architecture, based on 48V power input (instead of typical 12V) used in SXM2 systems.
+
+3. **Physical Incompatibility**: While some sources mention attempts to adapt SXM3 GPUs to other boards, an adapter seller claimed it could accept SXM3 boards by removing a GPU guide pin located in a different position compared to SXM4, but the update states "this doesn't work".
+
+## Socket Generation Compatibility:
+
+Current socket generations are SXM for Pascal based GPUs, SXM2 and SXM3 for Volta based GPUs, SXM4 for Ampere based GPUs, and SXM5 for Hopper based GPUs.
+
+While both SXM2 and SXM3 were used for Volta GPUs (like the V100), they have different physical and electrical specifications that prevent cross-compatibility. The proprietary nature of these sockets means that the specs for the various SXM2, SXM3, SXM4, SXM5 connectors seem to be trade secret, or proprietary, making unofficial adaptations extremely difficult.
+
+If you need to use an SXM3 GPU, you'll need an SXM3-compatible board or system, such as those found in specific server platforms like the Supermicro SYS-9029GP-TNVRT or Inspur NF5488M5.
+

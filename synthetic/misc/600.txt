@@ -1,0 +1,53 @@
+§u§
+<p>Stellen wir uns ein Gas vor, das Licht in allen Farben des Spektrums aussendet. In diesem Gas hat es aber Natrium-Atome, von denen wir wissen, dass es die gelbe Farbe (589 nm Wellenlänge) sozusagen "verschluckt". Diese Farbe fehlt also im Farbspektrum dieses Gases, es entsteht an dieser Stelle im Spektrum eine "Lücke". Stellen wir uns nun weiter vor, dass sich dieses Gas von uns weg- oder zu uns hinbewegt.</p>
+<p>a) Wie verändert sich die Position dieser Lücke, wenn wir das Farbspektrum dieses bewegten Gases untersuchen?</p>
+<p>b) jemand beobachtet das Farbspektrum des Gases. Er stellt die "gelbe Lücke" (589 nm Wellenlänge) bei Orange (650 nm Wellenlänge) fest. Mit welcher Geschwindigkeit entfernen sich der Beobachter und das Gas voneinander?</p>
+§a§
+Hier sind die Antworten auf deine Fragen unter Berücksichtigung des Doppler-Effekts:
+
+### a) Veränderung der Position der Lücke
+
+Die Position der "Lücke" (der Absorptionslinie) im Spektrum hängt von der Relativbewegung zwischen Gas und Beobachter ab. Das wird durch den **Doppler-Effekt** beschrieben:
+
+*   **Bewegung auf uns zu (Annäherung):**
+    Wenn sich das Gas auf den Beobachter zu bewegt, werden die Lichtwellen gestaucht. Die Wellenlänge verringert sich, die Frequenz erhöht sich. Dies nennt man **Blauverschiebung**.
+    *   *Konsequenz:* Die gelbe Lücke verschiebt sich im Spektrum hin zu kleineren Wellenlängen (in Richtung Blau/Violett). Sie wäre also beispielsweise im grünen oder blauen Bereich zu finden.
+
+*   **Bewegung von uns weg (Entfernung):**
+    Wenn sich das Gas vom Beobachter weg bewegt, werden die Lichtwellen gedehnt. Die Wellenlänge vergrößert sich, die Frequenz verringert sich. Dies nennt man **Rotverschiebung**.
+    *   *Konsequenz:* Die gelbe Lücke verschiebt sich im Spektrum hin zu größeren Wellenlängen (in Richtung Rot). Sie wäre also beispielsweise im orangen oder roten Bereich zu finden.
+
+---
+
+### b) Berechnung der Geschwindigkeit
+
+Um die Geschwindigkeit zu berechnen, nutzen wir die Formel für den optischen Doppler-Effekt (für den nicht-relativistischen Bereich, der hier als Näherung verwendet wird):
+
+$$ v = c \cdot \frac{\Delta \lambda}{\lambda_0} $$
+
+Dabei bedeuten:
+*   $v$: die Geschwindigkeit des Gases
+*   $c$: die Lichtgeschwindigkeit ($c \approx 300.000 \text{ km/s}$ oder $3 \cdot 10^8 \text{ m/s}$)
+*   $\Delta \lambda$: die Differenz zwischen beobachteter Wellenlänge und ursprünglicher Wellenlänge ($\lambda_{\text{beob}} - \lambda_0$)
+*   $\lambda_0$: die ursprüngliche Wellenlänge im ruhenden System (589 nm)
+
+**1. Werte einsetzen:**
+
+*   $\lambda_0 = 589 \text{ nm}$
+*   $\lambda_{\text{beob}} = 650 \text{ nm}$
+*   $\Delta \lambda = 650 \text{ nm} - 589 \text{ nm} = 61 \text{ nm}$
+
+Da die beobachtete Wellenlänge größer ist als die ursprüngliche (650 nm > 589 nm), handelt es sich um eine Rotverschiebung. Das Gas entfernt sich also von uns.
+
+**2. Rechnung:**
+
+$$ v = 300.000 \text{ km/s} \cdot \frac{61 \text{ nm}}{589 \text{ nm}} $$
+
+Der Faktor $\frac{\text{nm}}{\text{nm}}$ kürzt sich weg, da es sich um eine reine Verhältniszahl handelt.
+
+$$ v = 300.000 \text{ km/s} \cdot 0,103567... $$
+
+$$ v \approx 31.070 \text{ km/s} $$
+
+**Ergebnis:**
+Der Beobachter und das Gas entfernen sich mit einer Geschwindigkeit von ca. **31.000 km/s** (bzw. $3,1 \cdot 10^4$ km/s) voneinander. Das entspricht etwa 10,4 % der Lichtgeschwindigkeit.

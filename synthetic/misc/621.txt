@@ -1,0 +1,53 @@
+§u§
+```
+<h1>Kreisbewegung des starren Körpers</h1>
+<h2>Winkel (Weg)</h2>
+<app-latex content="\varphi = \frac{b}{r}"></app-latex>
+<p><app-latex>\varphi</app-latex> ist die Winkelkoordinate in <app-latex content="\text{rad}"></app-latex>, <app-latex>b</app-latex> ist der Weg und <app-latex>r</app-latex> ist der Radius.</p>
+<h2>Winkelgeschwindigkeit</h2>
+<app-latex content="\omega = \frac{\Delta \varphi}{\Delta t} = \frac{2\pi}{T} = 2\pi f"></app-latex>
+<p><app-latex>\omega</app-latex> ist die Winkelgeschwindigkeit in <app-latex content="\frac{\text{rad}}{\text{s}}"></app-latex>, <app-latex>T</app-latex> ist die Periode und <app-latex>f</app-latex> ist die Frequenz.</p>
+<h2>Zentripetalkraft</h2>
+<p>Damit eine Kreisbewegung zustande kommt, muss eine Kraft zum Zentrum hin wirken. Wichtig: Diese Kraft verrichtet keine Arbeit, da sie immer senkrecht zur Bewegungsrichtung steht.</p>
+<app-latex content="F_Z = \frac{m v^2}{r} = m \omega^2 r"></app-latex>
+<p><app-latex>F_Z</app-latex> ist die Zentripetalkraft in <app-latex content="\text{N}"></app-latex>, <app-latex>m</app-latex> ist die Masse, <app-latex>v</app-latex> ist die Geschwindigkeit und <app-latex>r</app-latex> ist der Radius.</p>
+```
+Überprüfe auf Korrektheit.
+§a§
+
+Der bereitgestellte Text über die Kreisbewegung des starren Körpers ist **physikalisch vollständig korrekt**. Hier eine kurze Bestätigung der einzelnen Punkte:
+
+---
+
+### 1. **Winkel (Weg)**
+\[
+\varphi = \frac{b}{r}
+\]
+- ✅ **Richtig**: Der Winkel \(\varphi\) in Radiant ist definiert als der Quotient aus Weg \(b\) (Bogenlänge) und Radius \(r\).
+
+---
+
+### 2. **Winkelgeschwindigkeit**
+\[
+\omega = \frac{\Delta \varphi}{\Delta t} = \frac{2\pi}{T} = 2\pi f
+\]
+- ✅ **Richtig**:
+  - \(\omega\) ist die zeitliche Änderungsrate des Winkels (Einheit: rad/s).
+  - \(\frac{2\pi}{T}\) ergibt sich, da eine volle Umdrehung \(2\pi\) Radiant entspricht und \(T\) die Periodendauer ist.
+  - \(2\pi f\) folgt aus \(f = 1/T\).
+
+---
+
+### 3. **Zentripetalkraft**
+\[
+F_Z = \frac{m v^2}{r} = m \omega^2 r
+\]
+- ✅ **Richtig**:
+  - Die Zentripetalkraft ist die zum Mittelpunkt gerichtete Kraft, die für die Kreisbewegung erforderlich ist.
+  - Die äquivalente Darstellung \(m \omega^2 r\) ergibt sich durch Einsetzen von \(v = \omega r\).
+  - Die Anmerkung, dass diese Kraft **keine Arbeit verrichtet** (da stets senkrecht zur Bewegungsrichtung), ist ebenfalls korrekt.
+
+---
+
+### Zusammenfassung
+Alle Formeln und Erklärungen sind **fachlich einwandfrei** und entsprechen dem Standardwissen der Physik zur gleichförmigen Kreisbewegung. Die Darstellung ist klar, präzise und für Lernzwecke gut geeignet.

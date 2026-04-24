@@ -1,0 +1,105 @@
+§u§
+I am a minecraft modpack creator. What is better for performance: neoforge or fabric?
+§a§
+**If you’re asking purely “which loader gives better *baseline* performance with an equivalent mod set?”: Fabric usually wins.**
+**If you’re asking “which is better for *real modpacks* where you want lots of big content mods and still good performance?”: NeoForge is often the practical winner**—because you can build a more compelling pack (more/bigger mods available), and you can still get excellent performance with the modern optimization stack.
+
+Below is the performance breakdown that matters for a modpack creator.
+
+---
+
+## 1) Baseline overhead: Fabric is lighter
+
+Fabric markets itself as a *lightweight* / modular loader, and in practice it tends to have less “always-there” framework overhead than the Forge/NeoForge ecosystem.
+
+NeoForge is **based on Forge** (it’s a fork), so its overall architecture is still in the “Forge family,” which historically has had more built-in systems and hooks available by default.
+
+**What that means in real gameplay terms:**
+- With *the same kinds of mods* (especially “vanilla+ / light content” packs), Fabric often has:
+  - faster startup
+  - lower memory overhead
+  - slightly better FPS consistency / less framework cost
+- The difference is usually not massive once you’re heavily modded—but it’s real enough that people building “performance-first” packs often default to Fabric.
+
+(Hosting providers and community guides commonly summarize this as “Fabric has the lowest performance impact.” )
+
+---
+
+## 2) But modpacks aren’t “equal mod sets”: content choice dominates performance
+
+In practice, loader choice is often *less important* than:
+- which content mods you include (worldgen, mobs, automation, AI/pathfinding-heavy mods, etc.)
+- how many mods you include
+- whether you include optimization mods
+- what server/client settings you ship
+
+Even a “lighter” loader can run worse if the mod selection is heavier or less optimized. This is why you’ll see anecdotes of people switching loaders and not getting the improvement they expected—because their *mod mix* changed, not just the loader.
+
+---
+
+## 3) Optimization mod parity is much better than it used to be
+
+Historically, Fabric got the best optimization mods first (and sometimes exclusively). That’s still *partly* true culturally, but the gap has narrowed a lot:
+
+- Many major optimization techniques (like mixin-based changes) exist on both sides now, and several big-name performance mods have NeoForge/Forge ports or equivalents.
+- Even **Sodium** (historically “Fabric’s thing”) now has NeoForge availability in modern ecosystem discussions and listings.
+
+So: **Fabric still tends to be the “performance-first” culture**, but **NeoForge can absolutely be tuned to run very well**, especially for big packs.
+
+---
+
+## 4) The “killer feature” for NeoForge pack makers: ecosystem + (some) Fabric compatibility
+
+### NeoForge ecosystem realities
+NeoForge has become a mainstream default for many newer “serious modded” packs, especially when you want large content mods and that whole ecosystem. It is explicitly positioned as the modern successor/fork direction of Forge.
+
+### Running some Fabric mods on NeoForge (carefully)
+If your reason for Fabric is “I need a couple Fabric-only mods,” NeoForge has an option: **Sinytra Connector**, which can run *some* Fabric mods on NeoForge by transforming/bridging things to provide a Fabric-like environment.
+
+**Performance note:** Connector is amazing when it works, but it’s still extra abstraction/compat risk. For performance-focused packs, you generally:
+- prefer native NeoForge mods when possible
+- use Connector only for a few “must-have” Fabric mods (and test heavily)
+
+(Community experience varies from “smooth now” to “still issues sometimes,” which is exactly why I’d treat it as “use sparingly in public packs.” )
+
+---
+
+## 5) So what should *you* pick as a modpack creator?
+
+### Pick **Fabric** if…
+- Your pack is **performance-first**, “vanilla+,” lightweight tech/QoL, or competitive FPS/TPS is the *selling point*.
+- You want the **fastest update cadence** and the “optimizer-first” mod scene.
+- Your must-have mods are primarily Fabric-side.
+
+Fabric is explicitly designed/positioned as lightweight.
+
+### Pick **NeoForge** if…
+- You’re building a **large content pack** (kitchensink / tech+magic / lots of dimensions / heavy automation).
+- Your must-have content mods live in the Forge/NeoForge world.
+- You still care about performance, but you care more about “best overall pack” than “minimum overhead.”
+
+NeoForge being a Forge-based API with modern governance and ongoing development is the core reason it’s the default path for many Forge-style packs.
+
+---
+
+## 6) Practical performance guidance (works for either loader)
+
+If your goal is “players say this pack runs great,” these matter more than the loader:
+
+- **Limit expensive worldgen and entity AI** (these kill TPS).
+- **Be conservative with “always ticking” blocks/entities** (pipes/cables, storage networks, chunk loaders).
+- **Ship sane defaults** (view distance, simulation distance, mob caps).
+- **Have a profiling workflow**:
+  - spark (server profiler) for TPS
+  - client-side profiling for render/thread stalls
+- **Test on realistic hardware** (midrange CPU, not just your dev PC).
+
+---
+
+## Bottom line
+
+- **Pure baseline performance:** **Fabric** is usually better (lighter loader).
+- **Best “real-world modpack” performance-per-feature:** often **NeoForge**, because you can pick from more big content mods and still optimize heavily.
+- If you’re tempted to pick NeoForge and “add Fabric performance mods via Connector,” do it cautiously—native mods first, Connector second.
+
+If you tell me the Minecraft version you’re targeting (e.g., 1.20.1 vs 1.21.x) and the *type* of pack (vanilla+, kitchensink, tech-only, etc.), I can give a more opinionated recommendation based on what’s currently most stable and easiest to optimize on that version.

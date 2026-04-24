@@ -1,0 +1,49 @@
+§u§
+How hard would it be to update  `https://github.com/andrew0030/Table-Top-Craft` to 1.21.1 NeoForge?
+§a§
+Let me search for more specific information about the changes needed when porting from Forge 1.20.1 to NeoForge 1.21.1.Based on my research, I can now give you a comprehensive assessment of how difficult it would be to port Table Top Craft to NeoForge 1.21.1:
+
+## Difficulty Assessment: **Moderate to High**
+
+### Current State of Table Top Craft
+The Forge version currently supports Minecraft 1.20–1.20.1 and was published on Sep 14, 2024. The Fabric version goes up to 1.20.4.
+
+### Key Challenges
+
+**1. Platform Change (Forge → NeoForge)**
+The YouTube videos are for 1.20.1 Forge, but "things like capabilities and networking have changed a lot" between Forge 1.20.1 and NeoForge. This is one of the most significant hurdles.
+
+**2. Major API Changes from 1.20.1 to 1.21.1:**
+- **Capabilities System Overhaul**: NeoForge completely reworked the capability system. Any tile entity interactions (the chess boards, game boards) will need updating.
+- **Networking Changes**: NeoForge ended 2023 with "a refactor of the networking system in 1.20.4." Table Top Craft uses networking for multiplayer game synchronization.
+- **Data Components**: Items now use data components instead of NBT in many cases.
+- **Registry System Changes**: Block/item registration works differently.
+
+**3. Mod-Specific Complexities:**
+Based on the mod's features (playable chess with animations, timers, Connect Four, custom rendering), expect:
+- **Custom Rendering**: The mod uses custom rendering for chess pieces and board animations. This needs adaptation to 1.21's rendering changes.
+- **GUI/Screen Updates**: Color picker menus, game interfaces need updating for screen API changes.
+- **Block Entity Updates**: Game boards store complex state (piece positions, game history) that needs migration.
+
+**4. Java Version:**
+Make sure to use Java 21 for Minecraft 1.21+, up from Java 17 for 1.20.1.
+
+### Rough Effort Estimate
+
+| Task | Effort |
+|------|--------|
+| Build system/Gradle setup | Low |
+| Registry/mod initialization | Low-Medium |
+| Capability → Attachment migration | Medium-High |
+| Networking rewrite | Medium-High |
+| Rendering/model updates | Medium |
+| GUI/Screen updates | Medium |
+| Testing multiplayer sync | High |
+
+**Total: ~20-40+ hours** for an experienced modder familiar with both versions, potentially longer if you're learning NeoForge APIs as you go.
+
+### Recommendation
+
+1.21.1 remains "the most popular NeoForge version, having accumulated over 16000 mods, with a growth rate surpassing that of Forge for 1.20.1." So porting is worthwhile for community reach.
+
+Consider starting with NeoForge's official documentation and the MDG (ModDevGradle) plugin. You may also want to reference similar mods that have already been ported to see how they handled the capability and networking changes.

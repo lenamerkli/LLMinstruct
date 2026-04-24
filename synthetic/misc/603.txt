@@ -1,0 +1,36 @@
+§u§
+Which one is correct?
+\begin{equation*} u' = \frac{u - v}{1 - \frac{uv}{c^2}} \end{equation*}
+\begin{equation*} u = \frac{u' + v}{1 + \frac{u'v}{c^2}} \end{equation*}
+§a§
+# Both Equations Are Correct
+
+These are actually the **same relationship** written in two equivalent forms — they are inverse transformations of each other.
+
+## What Each Represents
+
+These are the **relativistic velocity addition formulas** from special relativity:
+
+**First equation:** Transforms velocity from frame S to frame S'
+$$u' = \frac{u - v}{1 - \frac{uv}{c^2}}$$
+
+**Second equation:** Transforms velocity from frame S' to frame S
+$$u = \frac{u' + v}{1 + \frac{u'v}{c^2}}$$
+
+## The Setup
+
+- **S** = stationary reference frame
+- **S'** = frame moving with velocity **v** relative to S
+- **u** = object's velocity measured in frame S
+- **u'** = object's velocity measured in frame S'
+
+## Verification
+
+You can algebraically solve the first equation for *u* and obtain the second equation (or vice versa). The sign change (minus ↔ plus) reflects the reversal of perspective between frames.
+
+## Which to Use?
+
+| If you know... | And want to find... | Use |
+|----------------|---------------------|-----|
+| u (velocity in S) | u' (velocity in S') | First equation |
+| u' (velocity in S') | u (velocity in S) | Second equation |

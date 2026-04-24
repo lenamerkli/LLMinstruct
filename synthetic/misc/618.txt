@@ -1,0 +1,43 @@
+§u§
+```
+<h1>Compton-Effekt</h1>
+<p>Wenn hochenergetische elektromagnetische Strahlung (meist Röntgenstrahlen oder Gammastrahlen) auf Materie trifft, stossen die Photonen mit den Elektronen in der Atomhülle zusammen. Dabei geschieht Folgendes:</p>
+<ul>
+  <li>Ein Photon trifft auf ein (nahezu) ruhendes Elektron.</li>
+  <li>Das Photon gibt einen Teil seiner Energie an das Elektron ab.</li>
+  <li>Das Elektron wird weggestossen (Rückstosselektron).</li>
+  <li>Das Photon wird abgelenkt (gestreut) und fliegt in eine andere Richtung weiter.</li>
+</ul>
+<p>Da das Photon Energie an das Elektron abgegeben hat, hat es nach dem Stoss weniger Energie als vorher. In der Welt der Quantenphysik gilt für Licht: Weniger Energie bedeutet eine grössere Wellenlänge. Das Ergebnis des Experiments war: Das gestreute Licht hat eine grössere Wellenlänge <app-latex>\lambda'</app-latex> als das einfallende Licht <app-latex>\lambda</app-latex>. Die Differenz nennt man die Compton-Verschiebung <app-latex>\Delta\lambda</app-latex>.</p>
+<app-latex content="\begin{equation*} \Delta\lambda = \lambda' - \lambda = \lambda_c (1 - \cos\theta) \end{equation*}"></app-latex>
+<p><app-latex>\lambda_c</app-latex> ist die Compton-Wellenlänge, eine Naturkonstante für das Elektron. Die Änderung der Wellenlänge hängt nur vom Streuwinkel <app-latex>\theta</app-latex> ab (also davon, wie stark das Photon abgelenkt wurde).</p>
+<app-latex content="\begin{equation*} \lambda_c = \frac{h}{mc} \end{equation*}"></app-latex>
+```
+Überprüfe auf Korrektheit.
+§a§
+Der bereitgestellte Text ist inhaltlich, physikalisch und mathematisch **völlig korrekt**. Die Erklärung ist klar, gut strukturiert und bringt die wesentlichen Punkte des Compton-Effekts auf den Punkt. Auch die LaTeX-Formeln sind fehlerfrei.
+
+Hier ist eine detaillierte Überprüfung mit ein paar sehr kleinen Optimierungsvorschlägen (optional):
+
+### Was besonders gut ist:
+* **Sprache & Rechtschreibung:** Der Text verwendet konsequent die Schweizer/deutsche Schreibweise mit "ss" statt "ß" (z.B. "stossen", "grössere"), was stilistisch einheitlich und korrekt ist.
+* **Physikalische Akkuratesse:** Die Erklärung, dass weniger Energie eine grössere Wellenlänge bedeutet ($E = hc/\lambda$), ist korrekt und didaktisch wertvoll eingebaut.
+* **Einschränkung "(nahezu)":** Das Wort "(nahezu)" bei "ruhendes Elektron" ist physikalisch exzellent gewählt, da die Bindungsenergie des Elektrons in der Regel zwar klein gegenüber der Photonenergie ist, aber nie exakt null.
+* **Formeln:** Die Compton-Verschiebung und die Definition der Compton-Wellenlänge sind mathematisch richtig dargestellt.
+
+### Kleine Optimierungsvorschläge (keine Fehler, aber Feinschliff):
+
+1. **Präzision der Masse in der Formel:**
+   In der zweiten Formel steht `<app-latex content="\begin{equation*} \lambda_c = \frac{h}{mc} \end{equation*}"></app-latex>`.
+   Da $m$ hier spezifisch die Ruhemasse des *Elektrons* ist, wäre es physikalisch noch präziser, $m_e$ zu schreiben:
+   `<app-latex content="\begin{equation*} \lambda_c = \frac{h}{m_e c} \end{equation*}"></app-latex>`
+   Das vermeidet Verwechslungen mit der Masse anderer Teilchen (z.B. Protonen, die eine andere Compton-Wellenlänge haben).
+
+2. **Optionale Ergänzung zum Wert der Konstanten:**
+   Bei der Erwähnung, dass $\lambda_c$ eine Naturkonstante ist, könnte man (musss aber nicht) den genauen Wert kurz nennen, um ein Gefühl für die Grössenordnung zu geben. Z.B.: *"Ihr Wert beträgt etwa $2{,}43 \times 10^{-12}\,\text{m}$."* Das hilft Lernenden oft einzuschätzen, dass diese Verschiebung extrem klein ist und daher hochfrequente Strahlung (Röntgen/Gamma) nötig ist, um sie zu messen.
+
+3. **Optionale Präzisierung bei "Atomhülle":**
+   Im Einleitungstext steht "...stossen die Photonen mit den Elektronen in der Atomhülle zusammen." Das ist richtig. Man könnte es noch präziser "mit den *schwach gebundenen* Elektronen in der Atomhülle" nennen, da der Compton-Effekt nur bei Elektronen auftritt, deren Bindungsenergie viel kleiner ist als die Energie des einfallenden Photons. (Bei stark gebundenen Elektronen spricht man eher vom Photoeffekt). Da ihr aber unten im Text schon das "(nahezu) ruhend" erwähnt, ist es auch so völlig ausreichend.
+
+**Fazit:**
+Der Text kann so, wie er ist, bedenkenlos verwendet werden. Wenn du das $m$ in ein $m_e$ änderst, ist er physikalisch zu 100 % auf Lehrbuchniveau.

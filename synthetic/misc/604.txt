@@ -1,0 +1,58 @@
+§u§
+```
+<h1>Relativistische Geschwindigkeitsaddition</h1>
+<h2>Theorie</h2>
+<app-latex content="\begin{equation*} u' = \frac{u - v}{1 - \frac{uv}{c^2}} \end{equation*}"></app-latex>
+<p><app-latex>v</app-latex> ist die Geschwindigkeit eines Inertialsystems <app-latex>S'</app-latex> relativ zu einem anderen Inertialsystem <app-latex>S</app-latex>. <app-latex>u</app-latex> ist die Geschwindigkeit eines Objekts im <app-latex>S</app-latex>-System und <app-latex>u'</app-latex> ist die Geschwindigkeit des Objekts im <app-latex>S'</app-latex>-System.</p>
+<h2>Aufgaben</h2>
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 5.1.2.1</h3>
+    <p>Ein Zug mit der Geschwindigkeit <app-latex>v</app-latex> bezüglich der Schiene schaltet die Photonenkanone (die Scheinwerfer) ein, und sendet somit Photonen aus, die sich mit Lichtgeschwindigkeit von den Scheinwerfern fortbewegen. Welche Geschwindigkeit hat das Photon bezüglich der Schiene?</p>
+  </app-task-description>
+  <app-task-solution>
+    <p>Mit Lichtgeschwindigkeit, da diese immer konstant ist.</p>
+  </app-task-solution>
+</app-task>
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 5.1.2.2</h3>
+    <p>Nehmen wir an, der Zug könne mit Lichtgeschwindigkeit fahren (was aufgrund der unendlichen Energie, die dazu nötig ist, eigentlich unmöglich ist). Im Zug läuft eine Person mit der Geschwindigkeit <app-latex>u</app-latex> in Fahrtrichtung. Wie schnell läuft diese Person relativ zu den Schienen?</p>
+  </app-task-description>
+  <app-task-solution>
+    <p>Da der Zug mit Lichtgeschwindigkeit fährt, ist <app-latex>v = c</app-latex></p>
+    <app-latex content="\begin{equation*} u' = \frac{u - v}{1 - \frac{uv}{c^2}} \end{equation*}"></app-latex>
+    <app-latex content="\begin{equation*} u' = \frac{u - c}{1 - \frac{uc}{c^2}} \end{equation*}"></app-latex>
+    <app-latex content="\begin{equation*} u' = \frac{u - c}{1 - \frac{u}{c}} \end{equation*}"></app-latex>
+```
+Hilf mir weiter
+§a§
+# Weiterführung der Lösung
+
+Du bist auf einem guten Weg! Der Trick ist, den Bruch zu vereinfachen. Hier die weiteren Schritte:
+
+```html
+    <app-latex content="\begin{equation*} u' = \frac{u - c}{1 - \frac{u}{c}} \end{equation*}"></app-latex>
+    <p>Den Nenner auf einen gemeinsamen Bruch bringen:</p>
+    <app-latex content="\begin{equation*} u' = \frac{u - c}{\frac{c - u}{c}} \end{equation*}"></app-latex>
+    <p>Division durch einen Bruch = Multiplikation mit dem Kehrwert:</p>
+    <app-latex content="\begin{equation*} u' = (u - c) \cdot \frac{c}{c - u} \end{equation*}"></app-latex>
+    <p>Da <app-latex>(u - c) = -(c - u)</app-latex>:</p>
+    <app-latex content="\begin{equation*} u' = -(c - u) \cdot \frac{c}{c - u} \end{equation*}"></app-latex>
+    <p>Kürzen von <app-latex>(c - u)</app-latex>:</p>
+    <app-latex content="\begin{equation*} \boxed{u' = -c} \end{equation*}"></app-latex>
+    <p>Die Person bewegt sich relativ zu den Schienen mit Lichtgeschwindigkeit (das negative Vorzeichen kommt von der Konvention der Formel). Egal wie schnell die Person im Zug läuft – wenn der Zug bereits mit <app-latex>c</app-latex> fährt, bleibt die resultierende Geschwindigkeit immer <app-latex>c</app-latex>.</p>
+    <p><strong>Erkenntnis:</strong> Nichts kann schneller als Lichtgeschwindigkeit werden, selbst wenn man Geschwindigkeiten „addiert". Die relativistische Geschwindigkeitsaddition verhindert eine Überschreitung von <app-latex>c</app-latex>.</p>
+  </app-task-solution>
+</app-task>
+```
+
+## Erklärung
+
+Der entscheidende Schritt ist das Erkennen, dass:
+
+$$u - c = -(c - u)$$
+
+Dadurch kürzt sich $(c-u)$ im Zähler und Nenner weg, und es bleibt einfach $-c$ übrig.
+
+> **Hinweis zum Vorzeichen:** Das negative Vorzeichen entsteht, weil in der verwendeten Formel $u' = \frac{u-v}{1-\frac{uv}{c^2}}$ die Geschwindigkeit $v$ subtrahiert wird. Je nach Konvention (ob $S'$ sich von $S$ entfernt oder umgekehrt) ist das Ergebnis $+c$ oder $-c$. Der **Betrag** ist in jedem Fall $c$.
