@@ -1,0 +1,70 @@
+§u§
+<attach:72015330ce9e608a08d1d30cf2c665716bf407d201b7c24a3ffe72a231b742f6>Extrahiere den Text zu LaTeX.
+§a§
+Hier ist der extrahierte Text in einem strukturierten LaTeX-Format. Ich habe das Paket `enumitem` verwendet, damit die Nummerierung über die verschiedenen Abschnitte hinweg fortlaufend bleibt.
+
+```latex
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+\begin{document}
+
+\noindent Grundsätzlich werden alle Inhalte geprüft, die seit der letzten Prüfung im Unterricht behandelt oder repetiert worden sind.
+
+\medskip
+
+\fbox{%
+    \parbox{\textwidth}{%
+        Natürlich ist der Unterricht aufbauend, die vermittelten Grundlagen (z. B. 4 Schritte eines Experiments, Zellatmung, Fotosynthese, Mitose, Meiose, Mutationen, Klassische Genetik) sollten darum noch immer abrufbar sein. Begriffe wie haploid, diploid, 4c, 1n, homozygot, dominant, rezessiv, intermediär, kodominant, \dots) sollen noch immer richtig verwendet werden können.
+    }%
+}
+
+\medskip
+
+\noindent Es werden auch Fragen gestellt, die das Verknüpfen und Übertragen von Wissen auf neue Situationen voraussetzen. Aufgaben ähnlich wie in den Unterlagen sollen in ausformulierten Sätzen und mit relevanten Fachbegriffen gelöst werden können.
+
+\bigskip
+
+\noindent \textbf{Prüfungsthemen und Lernziele:} Sie können \dots
+
+\subsection*{Humangenetik}
+\begin{enumerate}[label=\arabic*., leftmargin=*, resume=0]
+    \item erklären und skizzieren, wie neue Merkmale / Merkmalskombinationen auftreten (Mutationen, intra- und interchromosomale Rekombination)
+    \item verständlich machen, wieso sich \textit{gain of function}-Mutationen in der Regel dominant, und \textit{loss of function}-Mutationen in der Regel rezessiv verhalten.
+    \item als Texte oder als Grafiken vorgegebene Stammbäume analysieren und begründen, welcher der fünf verschiedenen Vererbungstypen der wahrscheinlichste ist, dabei die Geno- und dazugehörige Phänotypen sowie ihre statistischen Wahrscheinlichkeiten angeben (mit Hilfe von Kreuzungsdiagrammen)
+    \item naturwissenschaftlich präzise und mit passenden Fachbegriffen erklären, was genau „Blutgruppe A“, „Blutgruppe rh minus“, „Antikörper“ oder „Antigen“ sowie „kodominant“ bedeutet (ABO und Rhesus-System)
+    \item Sie erklären mögliche Folgen bei Bluttransfusionen, wobei Sie zwischen Antigenen / Antikörpern, Agglutination / Hämolyse und major/minor reaction unterscheiden und exakt benennen, was-wo-womit bei Spenderin und Empfänger geschieht
+    \item in einem Stammbaum mit Blutgruppen (AB0- und Rhesussystem) die Phänotypen und möglichen Genotypen (Schreibweise so wie im Unterricht erklärt) und deren Wahrscheinlichkeiten korrekt angeben
+    \item Aufgaben wie jene der Zusatzaufgaben korrekt beantworten (inkl. Lösungsweg mit Schreibweisen wie im Unterricht)
+\end{enumerate}
+
+\subsection*{Neurobiologie}
+\begin{enumerate}[label=\arabic*., leftmargin=*, resume]
+    \item ein Wirbeltier-Neuron zeichnen, dessen Bestandteile benennen (exakte Fachbegriffe) und ihre Funktionen erklären
+    \item die Signalweiterleitung an chemischen Synapsen mit Hilfe einer Skizze schrittweise aufzeigen und den Spezialfall der neuromuskulären Endplatte erläutern
+    \item zwischen Nerven, Nervenfasern und Axonen unterscheiden und entsprechende Abbildungen korrekt beschriften
+    \item die Erregungsweiterleitung am Axon erklären und die Beschleunigungsmechanismen bei Kopffüßern \& Wirbeltieren erklären
+    \item erklären, wie das Ruhepotential an der Axonmembran entsteht, wobei die Ionenverteilung an der Membran, die Arbeit der Na-K-Pumpe und das Zustandekommen des chemischen sowie des elektrischen Potenzials erläutert wird
+    \item schrittweise aufzeigen, wie an der Axonmembran ein Aktionspotential entsteht, dabei auf den Öffnungszustand von Ionenkanälen und Ionenbewegungen beim Eintreffen eines elektrischen Signals am Neuron erläutern
+    \item erklären, wie hemmende und erregende Synapsen funktionieren, was IPSP und EPSP bewirken und wie entschieden wird, ob die Folge «alles» oder «nichts» ist
+    \item das neurobiologische Geschehen beim Patellarsehnenreflex schrittweise aufzeigen und in einem Schema alle relevanten Strukturen einzeichnen (Dehnungsspindel, sensorische/motorische Neurone, Interneurone, erregende und hemmende Synapsen, \dots).
+    \item peripheres und zentrales Nervensystem unterscheiden und Wirkungen unseres Parasympathicus / Sympathicus beschreiben
+    \item anhand des Experiments „bitter tasting“ die Begriffe Rezeptormolekül und Sinneszelle und das Zustandekommen eines „non-tasting“ Phänotyps erklären
+\end{enumerate}
+
+\subsection*{Evolution}
+\begin{enumerate}[label=\arabic*., leftmargin=*, resume]
+    \item die Evolutionstheorie von Darwin detailliert erklären und mit der Lamarck-Theorie und Artkonstanz-Theorien vergleichen
+    \item die Darwinsche Theorie an Beispielen korrekt-präzise anwenden und alternative Konzepte von natürlicher Selektion entlarven
+    \item erklären, wie man evidenzbasiert prüft und was ein natur-wissenschaftlichen Konsens bedeutet
+    \item aufzeigen, wie sich die Allelfrequenzen einer Population durch das Zusammenspiel von Mutation, Rekombinationen und Selektion verändern können und die drei Formen der Selektion benennen sowie an Beispielen erkennen
+\end{enumerate}
+
+\end{document}
+```

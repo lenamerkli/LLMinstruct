@@ -1,0 +1,80 @@
+§u§
+Welche Informationen brauche ich, um den Albedoeffekt eines Materials zu berechnen?
+§a§
+Um die **Albedo** (Reflexionsvermögen) eines Materials zu berechnen oder experimentell zu bestimmen, benötigst du je nach Anwendungsfall (Architektur, Klimaforschung, Astronomie, Materialwissenschaften) unterschiedliche Informationen. Hier ist eine strukturierte Übersicht:
+
+---
+
+### 1. Die Grundgröße (immer erforderlich)
+Die Albedo ist definiert als das Verhältnis von **reflektierter Strahlungsleistung** zu **einfallender Strahlungsleistung**:
+
+$$\alpha = \frac{\Phi_{\text{ref}}}{\Phi_{\text{ein}}}$$
+
+Dafür brauchst du:
+- **Den einfallenden Strahlungsfluss** (Irradianz in W/m²)
+- **Den reflektierten Strahlungsfluss** (in der gewünschten Richtung bzw. insgesamt)
+
+---
+
+### 2. Unterscheidung nach Albedo-Typ
+Du musst wissen, **welche Albedo** du berechnen willst, da sich die benötigten Daten stark unterscheiden:
+
+| Albedo-Typ | Was du brauchst |
+|------------|-----------------|
+| **Hemispärische (flache) Albedo** | Reflexion in alle Richtungen der Halbkugel über dem Material |
+| **Bond-Albedo** (sphärische Albedo) | Gesamte reflektierte Strahlung im Verhältnis zur Einstrahlung aus allen Richtungen; erfordert Integration über alle Einfallswinkel und Wellenlängen |
+| **Geometrische Albedo** | Reflexion unter genau definierten Winkeln (z. B. 0° Einfall, 0° Reflexion – „Opposition“) |
+| **Spektrale Albedo** | Reflexion bei einer bestimmten Wellenlänge $\lambda$ |
+| **Bolometrische Albedo** | Über alle Wellenlängen integriert (gesamte elektromagnetische Strahlung) |
+
+---
+
+### 3. Spektrale und geometrische Informationen
+
+#### A. Wellenlängenbereich
+- **Für welchen Spektralbereich** gilt die Albedo? (z. B. nur sichtbares Licht 380–780 nm, kurzwelliges Solar 0,3–3 µm, oder gesamte Strahlung?)
+- *Hinweis:* „Weiße“ Farbe im Sichtbaren kann im nahen Infrarot (NIR) stark absorbieren. Für Klima-/Energieberechnungen ist der NIR-Bereich entscheidend.
+
+#### B. Winkelabhängigkeit (BRDF)
+Für präzise Ergebnisse brauchst du die **BRDF** (Bidirectional Reflectance Distribution Function):
+- **Einfallswinkel** ($\theta_i$) der Strahlung
+- **Beobachtungs-/Reflexionswinkel** ($\theta_r$, $\phi_r$)
+- **Richtungsverteilung** der Reflexion: Ist das Material eher **Lambertsch** (diffus, gleichmäßig in alle Richtungen) oder **spiegelnd** (spekular)?
+
+*Für eine einfache Näherung* reicht oft der Reflexionsgrad bei einem definierten Winkelpaar (z. B. 45° Einfall, 0° Beobachtung).
+
+---
+
+### 4. Materialeigenschaften (für Modellierung/Simulation)
+Wenn du die Albedo nicht messen, sondern theoretisch abschätzen oder simulieren möchtest:
+
+- **Komplexer Brechungsindex** $n + i\kappa$ des Materials
+- **Oberflächenrauigkeit** (Root-Mean-Square-Rauigkeit, Korrelationslänge)
+- **Schichtdicke** und **Transparenz** (bei dünnen Schichten oder Pigmenten)
+- **Partikelgröße** und **Packungsdichte** (bei Pulvern, Schnee, Sand)
+- **Farbpigmente** und deren spektrale Absorptionskoeffizienten
+
+---
+
+### 5. Umgebungs- und Messbedingungen
+- **Beleuchtungsquelle**: Sonnenspektrum (AM1.5G für terrestrische Anwendungen), Laser, LED?
+- **Temperatur** (bei manchen Materialien temperaturabhängig)
+- **Feuchtigkeit/Benetzung** (Wasser verändert die Albedo drastisch – wichtig bei Böden oder Pflanzen)
+
+---
+
+### 6. Zusammenfassung: Minimal-Checkliste
+Für eine standardisierte Berechnung im Labor oder per Simulation benötigst du mindestens:
+
+1. **Spektraler Reflexionsgrad** $R(\lambda)$ über den relevanten Wellenlängenbereich
+2. **Einfallswinkel** und ggf. **Beobachtungsgeometrie**
+3. **Angabe, ob diffus oder gerichtet** gemessen wurde
+4. **Integration über den Raumwinkel** (für Bond-Albedo)
+5. **Gewichtung mit dem Spektrum der Strahlungsquelle** (z. B. Sonnenspektrum)
+
+---
+
+### Praxistipp
+Wenn du die **effektive Solar-Albedo** eines Baumaterials oder Daches berechnen willst (z. B. für Kühlung/Heizung), genügt meist der **solare Reflexionsgrad** (Solar Reflectance Index – SRI) im Bereich 300–2500 nm, gemessen mit einem Spektralphotometer mit Integrationskugel. Die Integrationskugel sammelt die diffus reflektierte Strahlung über die gesamte Halbkugel und liefert dir direkt die hemisphärische Albedo.
+
+In welchem Kontext möchtest du die Albedo berechnen? Dann kann ich dir die passende Formel und Messmethode genauer empfehlen.

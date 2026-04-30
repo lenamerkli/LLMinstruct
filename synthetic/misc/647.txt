@@ -1,0 +1,44 @@
+§u§
+Write a division programm for the Little Man Computer (LMC) CPU Simulator (https://www.101computing.net/lmc/)
+§a§
+```lmc
+inp
+sta dividend
+inp
+brz quit
+sta divisor
+bra entry
+loop sta dividend
+     lda quotient
+     add one
+     sta quotient
+entry lda dividend
+      sub divisor
+      brp loop
+lda quotient
+out
+lda dividend
+out
+quit hlt
+dividend dat
+divisor  dat
+quotient dat 0
+one      dat 1
+```
+
+This LMC assembly program performs integer division of two user-input numbers (dividend first, then divisor) using repeated subtraction. It outputs the **quotient** followed by the **remainder**.
+
+### How it works:
+1. **Input**: Enter dividend (e.g., 10), then divisor (e.g., 3).
+2. **Division by repeated subtraction**: Subtracts divisor from dividend in a loop while dividend >= divisor, incrementing quotient each time.
+3. **Division by zero check**: If divisor is 0, halts without output.
+4. **Output**: Quotient (e.g., 3), then remainder (e.g., 1).
+5. **Assumptions**: Positive integers; dividend/divisor <=999 (LMC limits). Works in the 101Computing LMC simulator.
+
+### Paste into simulator:
+- Copy the code above into the editor.
+- Assemble (F9 or button).
+- Input numbers when prompted.
+- Run (F5 or button).
+
+**Test**: 10 / 3 → outputs 3 then 1. 7 / 7 → 1 then 0. 5 / 10 → 0 then 5. 10 / 0 → halts (no output).

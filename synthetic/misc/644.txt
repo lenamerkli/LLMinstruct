@@ -1,0 +1,85 @@
+§u§
+fedora linux combine two pdf files together
+§a§
+Here are several ways to combine (merge) two PDF files on Fedora Linux:
+
+---
+
+## Method 1: Using `pdfunite` (Poppler Utils)
+
+**Install:**
+```bash
+sudo dnf install poppler-utils
+```
+
+**Merge:**
+```bash
+pdfunite file1.pdf file2.pdf output.pdf
+```
+
+---
+
+## Method 2: Using `pdftk`
+
+**Install:**
+```bash
+sudo dnf install pdftk
+```
+
+**Merge:**
+```bash
+pdftk file1.pdf file2.pdf cat output output.pdf
+```
+
+> `pdftk` is very powerful and also lets you reorder pages, split PDFs, and more.
+
+---
+
+## Method 3: Using `Ghostscript`
+
+**Install:**
+```bash
+sudo dnf install ghostscript
+```
+
+**Merge:**
+```bash
+gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=output.pdf file1.pdf file2.pdf
+```
+
+---
+
+## Method 4: Using `LibreOffice Draw` (GUI)
+
+If you prefer a graphical approach:
+1. Open **LibreOffice Draw**
+2. Import the first PDF
+3. Insert the second PDF pages manually
+4. Export as PDF
+
+---
+
+## Method 5: Using `PDF Arranger` (GUI)
+
+A simple drag-and-drop GUI tool:
+
+**Install:**
+```bash
+sudo dnf install pdfarranger
+```
+Then open both PDFs, arrange pages as needed, and export.
+
+---
+
+## Quick Comparison
+
+| Tool | Type | Best For |
+|---|---|---|
+| `pdfunite` | CLI | Simple & fast merging |
+| `pdftk` | CLI | Advanced PDF manipulation |
+| `ghostscript` | CLI | Already installed on many systems |
+| `PDF Arranger` | GUI | Visual drag-and-drop merging |
+
+---
+
+**The easiest and most recommended** method for a simple merge is **`pdfunite`**, as it's lightweight and straightforward. Just replace `file1.pdf`, `file2.pdf`, and `output.pdf` with your actual filenames.

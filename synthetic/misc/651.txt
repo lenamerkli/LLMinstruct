@@ -1,0 +1,22 @@
+§u§
+Is nobara linux affected by CVE-2026-31431? And if so, have they already released an update to patch that?
+§a§
+Yes, **Nobara Linux is affected by CVE-2026-31431** (also known as the "Copy Fail" vulnerability), but **an update to patch it is already available.**
+
+### What is CVE-2026-31431?
+Disclosed in late April 2026, "Copy Fail" is a high-severity local privilege escalation (LPE) flaw within the Linux kernel's `authencesn` cryptographic template. By exploiting how the kernel handles `AF_ALG` sockets and the `splice()` system call, an unprivileged local user can execute a deterministic 4-byte write into the page cache of any readable file. This allows an attacker to easily edit binary files in-memory to gain root access. Because this straight-line logic bug has existed in the Linux kernel since 2017, it affects essentially all major Linux distributions out-of-the-box, including Nobara.
+
+### Has Nobara released a patch?
+Yes. Nobara Linux utilizes modified, gaming-optimized kernels that closely track the **CachyOS kernel**.
+
+The upstream patches for this vulnerability have already been implemented in the CachyOS kernels starting from versions **6.18.22+, 6.19.12+, and 7.0+**. Because Nobara follows a rolling-release update model (as of its latest iterations based on Fedora 41/43), it pulls down these upstream kernel fixes very quickly.
+
+### What you should do:
+To ensure your Nobara system is patched, you just need to install the latest system updates to grab the patched kernel.
+You can do this by:
+1. Running the **Nobara System Updater** GUI app.
+2. Or by updating through the terminal:
+   ```bash
+   sudo dnf update kernel -y --refresh
+   ```
+Once the update is complete, simply reboot your computer to boot into the new, secure kernel.

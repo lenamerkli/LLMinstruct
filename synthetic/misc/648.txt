@@ -1,0 +1,74 @@
+§u§
+Write a division programm for the Little Man Computer (LMC) CPU Simulator (https://www.101computing.net/lmc/)
+§a§
+Because the Little Man Computer (LMC) does not have a built-in "divide" instruction, division must be performed using **repeated subtraction**.
+
+To divide `A` by `B`, the program will repeatedly subtract `B` from `A` until the result drops below zero. Every time it successfully subtracts without dropping below zero, it adds 1 to a "Quotient" counter. Whatever is left over in `A` at the end is the "Remainder".
+
+Here is the complete, robust division program written for the [101computing.net LMC Simulator](https://www.101computing.net/lmc/). It also includes a check to prevent an infinite loop if you accidentally try to divide by zero!
+
+### The LMC Division Assembly Code
+
+Copy and paste the code below directly into the LMC simulator:
+
+```text
+// INITIALISE QUOTIENT TO 0 (In case program is run multiple times)
+         LDA ZERO
+         STA QUOTIENT
+
+// INPUT DIVIDEND (Number to be divided)
+         INP
+         STA DIVIDEND
+
+// INPUT DIVISOR (Number to divide by)
+         INP
+         BRZ ERROR      // Check for division by zero
+         STA DIVISOR
+
+// MAIN SUBTRACTION LOOP
+LOOP     LDA DIVIDEND   // Load current dividend
+         SUB DIVISOR    // Subtract divisor
+         BRP POS        // If result is >= 0, branch to POS
+         BRA END        // If result is < 0, we are done! Jump to END
+
+// IF SUBTRACTION WAS SUCCESSFUL (>=0)
+POS      STA DIVIDEND   // Save the new smaller dividend (the remainder so far)
+         LDA QUOTIENT
+         ADD ONE        // Add 1 to quotient
+         STA QUOTIENT   // Save quotient
+         BRA LOOP       // Repeat the loop
+
+// END OF CALCULATION
+END      LDA QUOTIENT
+         OUT            // OUTPUT 1: The Quotient
+         LDA DIVIDEND
+         OUT            // OUTPUT 2: The Remainder
+         HLT            // Halt program
+
+// DIVISION BY ZERO ERROR HANDLING
+ERROR    LDA ERRCODE
+         OUT            // Outputs 999 to indicate an error
+         HLT
+
+// VARIABLES
+DIVIDEND DAT
+DIVISOR  DAT
+QUOTIENT DAT
+ZERO     DAT 0
+ONE      DAT 1
+ERRCODE  DAT 999
+```
+
+### How to use it in the Simulator:
+1. Go to the [101 Computing LMC Simulator](https://www.101computing.net/lmc/).
+2. Delete any existing code in the text area on the left and paste the code above.
+3. Click the **"Compile"** (or Assemble) button to load the program into the LMC RAM.
+4. Click **"Run"**.
+
+### What to expect when running:
+* **First Input Prompt:** Enter your **Dividend** (e.g., `14`).
+* **Second Input Prompt:** Enter your **Divisor** (e.g., `4`).
+* **First Output:** The program will output the **Quotient** (For $14 \div 4$, this will be `3`).
+* **Second Output:** The program will output the **Remainder** (For $14 \div 4$, this will be `2`).
+
+*(Note: If you enter `0` for the second input, the program will immediately output `999` and halt. This prevents the LMC from getting stuck subtracting 0 in an infinite loop!)*

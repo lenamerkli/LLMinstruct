@@ -1,0 +1,92 @@
+§u§
+```
+8. Quellen
+
+[1]:  https://www.stadtluzern.ch/projekte/bau/70951
+
+[2]: https://de.wikipedia.org/wiki/Fl%C3%A4chenversiegelung
+
+[3]: https://www.wiegederschweiz.ch/en/POI/tourismusgeschichte-schweizerhofquai-100183235
+
+[4]: https://www.stadtluzern.ch/aktuelles/newslist/2307427
+
+Abbildungsverzeichnis
+
+Abbildung 1: Eigenes Bild
+
+Abbildung 2: Kartenausschnitt von Swisstopo: https://map.geo.admin.ch/#/map?lang=de&center=2666689.27,1211923.86&z=8.044&topic=ech&layers=ch.swisstopo.zeitreihen@year=1864,f;ch.bfs.gebaeude_wohnungs_register,f;ch.bav.haltestellen-oev,f;ch.swisstopo.swisstlm3d-wanderwege,f;ch.vbs.schiessanzeigen,f;ch.astra.wanderland-sperrungen_umleitungen,f&bgLayer=ch.swisstopo.pixelkarte-farbe
+
+Abbildung 3: Historisches Bild Schweizerhofquai: https://www.wiegederschweiz.ch/en/POI/tourismusgeschichte-schweizerhofquai-100183235
+
+Abbildung 4: Ausschnitt Klimakarte: https://map.geo.lu.ch/klimakarten/klimaanalyse_tag/
+```
+Mache daraus biblatex Einträge.
+§a§
+Hier sind die entsprechenden `biblatex`-Einträge für deine Quellen und Abbildungen. Da es sich um Online-Quellen handelt, wird der Typ `@online` verwendet.
+
+Als Abrufdatum (`urldate`) habe ich das heutige Datum (26. April 2026) eingetragen – dieses kannst du bei Bedarf anpassen.
+
+### 1. Textquellen (Quellen 1–4)
+
+Für den News-Artikel der Stadt Luzern (Quelle 4) konnte das Publikationsdatum auf den 27. November 2024 datiert werden, was im Eintrag berücksichtigt ist.
+
+```bibtex
+@online{stadtluzern_projekt_entsiegelung,
+  author  = {{Stadt Luzern}},
+  title   = {Entsiegelung Schweizerhofquai},
+  url     = {https://www.stadtluzern.ch/projekte/bau/70951},
+  urldate = {2026-04-26}
+}
+
+@online{wiki_flaechenversiegelung,
+  author  = {{Wikipedia-Autoren}},
+  title   = {Flächenversiegelung},
+  url     = {https://de.wikipedia.org/wiki/Fl%C3%A4chenversiegelung},
+  urldate = {2026-04-26}
+}
+
+@online{wiege_schweiz_schweizerhofquai,
+  author  = {{Wiege der Schweiz}},
+  title   = {Tourismusgeschichte Schweizerhofquai},
+  url     = {https://www.wiegederschweiz.ch/en/POI/tourismusgeschichte-schweizerhofquai-100183235},
+  urldate = {2026-04-26}
+}
+
+@online{stadtluzern_news_entsiegelung,
+  author  = {{Stadt Luzern}},
+  title   = {Entsiegelung Schweizerhofquai: Bäume geben den Takt vor},
+  date    = {2024-11-27},
+  url     = {https://www.stadtluzern.ch/aktuelles/newslist/2307427},
+  urldate = {2026-04-26}
+}
+```
+
+### 2. Abbildungsverzeichnis
+
+**Hinweis zu Abbildung 1 (Eigenes Bild):**
+Eigene Darstellungen und Fotografien erhalten in wissenschaftlichen Arbeiten in der Regel **keinen** Eintrag im Literaturverzeichnis. Im Abbildungsverzeichnis im Dokument reicht als Quellenangabe „Quelle: Eigene Darstellung“ oder „Quelle: Eigenes Bild“.
+
+Für die restlichen Abbildungen kannst du folgende Einträge verwenden (wobei Abbildung 3 dieselbe URL wie Quelle 3 nutzt und du im LaTeX-Dokument eigentlich denselben Cite-Key `wiege_schweiz_schweizerhofquai` verwenden kannst – der Vollständigkeit halber hier aber als separater Eintrag):
+
+```bibtex
+@online{swisstopo_karte_1864,
+  author  = {{Bundesamt für Landestopografie swisstopo}},
+  title   = {Kartenausschnitt Swisstopo (Zeitreihe 1864)},
+  url     = {https://map.geo.admin.ch/#/map?lang=de&center=2666689.27,1211923.86&z=8.044&topic=ech&layers=ch.swisstopo.zeitreihen@year=1864,f;ch.bfs.gebaeude_wohnungs_register,f;ch.bav.haltestellen-oev,f;ch.swisstopo.swisstlm3d-wanderwege,f;ch.vbs.schiessanzeigen,f;ch.astra.wanderland-sperrungen_umleitungen,f&bgLayer=ch.swisstopo.pixelkarte-farbe},
+  urldate = {2026-04-26}
+}
+
+@online{wiege_schweiz_bild,
+  author  = {{Wiege der Schweiz}},
+  title   = {Historisches Bild Schweizerhofquai},
+  url     = {https://www.wiegederschweiz.ch/en/POI/tourismusgeschichte-schweizerhofquai-100183235},
+  urldate = {2026-04-26}
+}
+
+@online{kanton_luzern_klimakarte,
+  author  = {{Kanton Luzern}},
+  title   = {Klimaanalysekarte Tag},
+  url     = {https://map.geo.lu.ch/klimakarten/klimaanalyse_tag/},
+  urldate = {2026-04-26}
+}
+```

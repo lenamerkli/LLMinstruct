@@ -1,0 +1,33 @@
+§u§
+If I have 256 GB VRAM, how many tokens context can I have for DeepSeek-V4-flash?
+§a§
+For **a single DeepSeek-V4-Flash context**, the practical answer is **about 1,000,000 tokens max** — because **the model itself is capped at a 1M context window**. More VRAM does **not** raise that cap beyond 1M.
+
+Why 256 GB is enough: the Hugging Face repo for **DeepSeek-V4-Flash** is about **160 GB**, and DeepSeek’s technical report shows **Flash’s KV cache is 13.7× smaller than DeepSeek-V3.2** at long context lengths, with the plotted 1M-token KV cache landing in the **low-single-digit GB** range by inference from the figure. So with **256 GB total VRAM**, you should have enough headroom for the **full 1M-token window** for **one session**, assuming you use an implementation that actually supports DeepSeek-V4’s hybrid attention.
+
+Two caveats:
+1. **You’re still capped at 1M tokens** by the model.
+2. Real deployments need extra memory for runtime/workspace/batching, and DeepSeek’s example local setup uses **model parallelism with `MP=4`**, so the exact hardware layout matters.
+
+**Bottom line:** with **256 GB VRAM**, expect **the full 1,000,000-token context**, not more. Extra VRAM mainly buys you **overhead, batch size, or concurrent sessions**, not a longer single-context limit.
+
+If you want, I can also estimate **how many concurrent 1M-token sessions** 256 GB could support.
+§u§
+How many concurrent 1M-token sessions?
+§a§
+**Memory-wise, I’d plan for about 10–16 concurrent 1M-token sessions** on **256 GB total VRAM** for **one loaded DeepSeek-V4-Flash replica**. If you want a single planning number, use **~12 concurrent sessions**. DeepSeek’s official Flash repo lists a **1M context window**, the checkpoint repo is about **160 GB**, and their local inference example uses **model parallelism with `MP=4`**.
+
+Why that range: after loading ~**160 GB** of weights, you have about **96 GB** left before runtime overhead. If you reserve roughly **16–24 GB** for CUDA/workspace/fragmentation/serving buffers, that leaves about **72–80 GB** for per-session KV/cache state.
+
+For a rough cache-size anchor, DeepSeek’s official **V3.2** inference code stores a per-token cache made of a **512-dim KV latent** plus a **64-dim positional component** per layer, and notes that **actual deployment uses FP8 KV cache**; V3.2 has **61 layers**. That works out to about **65.4 GiB** at 1M tokens if all cached values were BF16, or **32.7 GiB** if everything were FP8-like.
+
+For **V4-Flash**, the official config shows **43 layers**, **1 KV head**, **512 head_dim**, and aggressive per-layer compression ratios (mostly **4x** and **128x** compressed layers). A conservative upper-bound estimate from that config is about **8.0 GiB per 1M-token session** with FP8-like cache behavior; DeepSeek also says V4’s hybrid attention is designed to **dramatically reduce KV cache at 1M context**, with **V4-Pro** needing only **10% of V3.2’s KV cache** at that length. Taken together, that puts Flash in the “few-to-several GiB per 1M session” regime rather than tens of GiB.
+
+So the practical envelope is:
+
+- **Conservative:** ~**9–10** sessions if you budget about **8 GiB/session**.
+- **More optimistic / tuned stack:** ~**14–16** sessions if the real per-session KV lands closer to **~5 GiB**.
+
+**Bottom line:** for planning, I’d say **~12 concurrent 1M-token sessions**, with a plausible range of **10–16**, assuming **one model replica** on the 256 GB pool.
+
+If you want, I can also break this down for a specific hardware layout, like **4×64 GB**, **8×32 GB**, or **2×128 GB**.

@@ -1,0 +1,25 @@
+§u§
+Was ist der Albedo Wert von Asphalt und von Mergel?
+§a§
+Hier sind **typische Werte der kurzwelligen (solaren) Albedo** (dimensionslos, **0 = schwarz / 1 = weiß**) für **Asphalt** und **Mergel** – jeweils als **realistische Spannbreiten**, weil Albedo stark von Alter, Verschmutzung, Feuchte und Korngröße abhängt.
+
+## Typische Albedo-Werte (Praxisbereiche)
+
+| Material / Zustand | Typische Albedo \(α\) | Quellenhinweis |
+|---|---:|---|
+| **Asphalt (frisch / neu, sehr dunkel)** | **ca. 0,04–0,10** | Tabellenwerte und Mess-/Literaturübersichten nennen für neuen Asphalt sehr niedrige Werte (z. B. ~0,04 bzw. 0,05–0,10).  |
+| **Asphalt (gealtert / “worn”, Aggregate kommen stärker raus)** | **ca. 0,10–0,25** (häufig **~0,12–0,20**) | Studien berichten, dass Asphalt-Albedo mit der Nutzung/Alterung deutlich ansteigt (Oxidation, Bindemittel wird heller, Gesteinskörnung wird freigelegt).  |
+| **Mergel (als heller, kalkreicher Boden/Lockergestein; „mergeliger Lehm“), trocken** | **ca. 0,23–0,30** (Faustwert **~0,25**) | In Albedo-Tabellen liegen **trockene, hellgraue Böden/Lehme** typischerweise in diesem Bereich (z. B. „blue, dry loam“ ~0,23; „gray, dry soil“ 0,25–0,30).  |
+| **Mergel, feucht / dunkler (mehr Ton/Organik, nasse Oberfläche)** | **ca. 0,10–0,16** | Feuchte/dunklere Böden haben deutlich geringere Albedo (z. B. „gray, moist soil“ 0,10–0,12; „blue, moist loam“ ~0,16).  |
+
+## Praktische “Ein-Wert”-Empfehlungen (wenn du einen einzelnen Wert brauchst)
+Wenn du z. B. für eine überschlägige Rechnung/Simulation **einen** Wert einsetzen willst:
+
+- **Asphalt (typisch, im Betrieb):** **α ≈ 0,12–0,15** (wenn sehr neu: eher **0,05–0,10**)
+- **Mergel (hell, eher trocken/staubig):** **α ≈ 0,25**; **feucht/dunkler:** **α ≈ 0,12–0,16**
+
+## Warum die Spannbreiten so groß sind (kurz & wichtig)
+- **Asphalt** wird meist **heller mit dem Alter** (Bindemittel altert/oxidiert, Körnung tritt hervor) → Albedo steigt.
+- **Mergel** ist **kein genormtes “ein Material”**: je nach **Karbonatanteil (hell)** vs. **Ton/Organik (dunkler)** und **Feuchte** kann er albedomäßig eher wie **heller Lehm** oder eher wie **dunkler, feuchter Boden** wirken. Typische Albedo-Tabellen zeigen diese Bandbreite für Böden/Lehme sehr deutlich.
+
+Wenn du mir sagst, **wofür** du den Wert brauchst (z. B. Stadtklima, PV-Ertrag, Gebäudesimulation, Satellitendaten), kann ich dir daraus den **passendsten “richtigen” Albedo-Typ** (broadband shortwave vs. spektral/gerichtet) und einen **robusten Ansatzwert** ableiten – ohne dass du dich durch Literatur-Spannweiten kämpfen musst.

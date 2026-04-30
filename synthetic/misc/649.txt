@@ -1,0 +1,385 @@
+§u§
+```lmc
+inp
+sta dividend
+inp
+brz quit
+sta divisor
+bra entry
+loop sta dividend
+     lda quotient
+     add one
+     sta quotient
+entry lda dividend
+      sub divisor
+      brp loop
+lda quotient
+out
+lda dividend
+out
+quit hlt
+dividend dat
+divisor  dat
+quotient dat 0
+one      dat 1
+```
+explain this code
+§a§
+This is a **Little Man Computer (LMC)** program that performs **integer division** using repeated subtraction.
+
+It takes two inputs:
+
+1. `dividend`
+2. `divisor`
+
+Then it outputs:
+
+1. the integer `quotient`
+2. the `remainder`
+
+If the divisor is `0`, the program stops immediately.
+
+---
+
+```lmc
+inp
+sta dividend
+```
+
+The first input is read and stored as the `dividend`.
+
+Example:
+
+```text
+17
+```
+
+would mean:
+
+```text
+dividend = 17
+```
+
+---
+
+```lmc
+inp
+brz quit
+sta divisor
+```
+
+The second input is read.
+
+If it is `0`, the program branches to `quit` and halts, because division by zero is not allowed.
+
+Otherwise, it stores the value as the `divisor`.
+
+Example:
+
+```text
+5
+```
+
+would mean:
+
+```text
+divisor = 5
+```
+
+---
+
+```lmc
+bra entry
+```
+
+This skips over the `loop` code the first time.
+
+The reason is that the program should subtract first before increasing the quotient.
+
+---
+
+```lmc
+loop sta dividend
+     lda quotient
+     add one
+     sta quotient
+```
+
+This section runs after a successful subtraction.
+
+At this point, the accumulator contains:
+
+```text
+dividend - divisor
+```
+
+So:
+
+```lmc
+sta dividend
+```
+
+stores the new reduced dividend value.
+
+Then:
+
+```lmc
+lda quotient
+add one
+sta quotient
+```
+
+increases the quotient by `1`.
+
+So each successful subtraction counts as one part of the division.
+
+---
+
+```lmc
+entry lda dividend
+      sub divisor
+      brp loop
+```
+
+This is the main division test.
+
+It loads the current dividend, subtracts the divisor, and checks whether the result is positive or zero.
+
+```lmc
+brp loop
+```
+
+means:
+
+> If the result is zero or positive, branch back to `loop`.
+
+So the program keeps subtracting the divisor from the dividend until the result would become negative.
+
+---
+
+```lmc
+lda quotient
+out
+```
+
+When the subtraction becomes negative, the program stops looping.
+
+The quotient is loaded and output.
+
+---
+
+```lmc
+lda dividend
+out
+```
+
+Then the remaining dividend value is output.
+
+This is the remainder.
+
+---
+
+```lmc
+quit hlt
+```
+
+The program halts.
+
+---
+
+```lmc
+dividend dat
+divisor  dat
+quotient dat 0
+one      dat 1
+```
+
+These are memory locations.
+
+```lmc
+dividend dat
+```
+
+stores the current dividend/remainder.
+
+```lmc
+divisor dat
+```
+
+stores the divisor.
+
+```lmc
+quotient dat 0
+```
+
+stores the quotient, initially `0`.
+
+```lmc
+one dat 1
+```
+
+stores the constant value `1`, used to increment the quotient.
+
+---
+
+## Example: dividing 17 by 5
+
+Inputs:
+
+```text
+17
+5
+```
+
+The program repeatedly subtracts:
+
+```text
+17 - 5 = 12   quotient = 1
+12 - 5 = 7    quotient = 2
+7 - 5 = 2     quotient = 3
+2 - 5 = -3    stop
+```
+
+So the result is:
+
+```text
+quotient = 3
+remainder = 2
+```
+
+Outputs:
+
+```text
+3
+2
+```
+
+So this program calculates:
+
+```text
+17 / 5 = 3 remainder 2
+```
+§u§
+If the computer reaches `     sta quotient`, will it go to `entry lda dividend` and execute `    lda dividend`?
+§a§
+Yes, exactly.
+
+In the Little Man Computer, instructions execute **sequentially** unless a branch instruction (`BRA`, `BRZ`, `BRP`) changes the flow.
+
+After:
+
+```lmc
+sta quotient
+```
+
+there is no branch instruction, so the program counter simply moves to the **next instruction in memory**, which is:
+
+```lmc
+entry lda dividend
+```
+
+The label `entry` is just a name for that memory address — it doesn't affect execution. Labels are only used as targets for branch instructions (like `bra entry` earlier in the program).
+
+So the flow after a successful subtraction is:
+
+```text
+sta dividend     ← store new (reduced) dividend
+lda quotient
+add one
+sta quotient     ← increment quotient
+lda dividend     ← (entry) load dividend again
+sub divisor      ← try subtracting again
+brp loop         ← if still ≥ 0, repeat
+```
+
+This forms the repeated-subtraction loop that performs the division.
+§u§
+Is there a very efficient way to divide by 2? or is it equal to this programm just with the number 2 hard-coded?
+§a§
+In **basic LMC**, there is no special “divide by 2” instruction, and there is no bit-shift instruction like in real CPUs.
+
+So the simplest version is basically your division program with the divisor hard-coded as `2`.
+
+For example:
+
+```lmc
+inp
+sta dividend
+bra entry
+
+loop sta dividend
+     lda quotient
+     add one
+     sta quotient
+
+entry lda dividend
+      sub two
+      brp loop
+
+lda quotient
+out
+lda dividend
+out
+hlt
+
+dividend dat
+quotient dat 0
+two      dat 2
+one      dat 1
+```
+
+This takes one input and outputs:
+
+1. quotient
+2. remainder
+
+Example input:
+
+```text
+17
+```
+
+Repeated subtraction:
+
+```text
+17 - 2 = 15   quotient = 1
+15 - 2 = 13   quotient = 2
+13 - 2 = 11   quotient = 3
+...
+1 - 2 = -1    stop
+```
+
+Output:
+
+```text
+8
+1
+```
+
+So:
+
+```text
+17 / 2 = 8 remainder 1
+```
+
+---
+
+However, this is not very efficient for large numbers because it loops about `number / 2` times.
+
+For example:
+
+```text
+998 / 2
+```
+
+would require about `499` loop repetitions.
+
+In normal assembly language on a real CPU, dividing by 2 can be done very efficiently using a **right shift**. But standard LMC does not have shifting, multiplication, or division instructions.
+
+So in LMC:
+
+```text
+divide by 2 = usually repeated subtraction by 2
+```
+
+unless you write a more complicated custom algorithm. For most beginner LMC programs, hard-coding `2` is the expected solution.

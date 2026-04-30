@@ -1,0 +1,130 @@
+§u§
+Welche Informationen brauche ich, um den Albedoeffekt eines Materials zu berechnen?
+§a§
+Um den **Albedoeffekt eines Materials** zu berechnen, brauchst du im Kern Informationen darüber, **wie viel einfallende Strahlung das Material reflektiert** und wie viel absorbiert wird.
+
+## 1. Einfallende Strahlung
+
+Du brauchst die Intensität der auf das Material treffenden Strahlung:
+
+- Sonnenstrahlung bzw. Bestrahlungsstärke \(E_\text{ein}\) in \(\text{W/m}^2\)
+- Spektrale Verteilung der Strahlung, also wie stark verschiedene Wellenlängen vertreten sind
+- Einfallswinkel der Strahlung
+- Standort, Tageszeit, Jahreszeit und Bewölkung, falls es um reale Außenbedingungen geht
+
+Bei Sonnenlicht wird oft näherungsweise mit etwa
+
+\[
+E_\text{ein} \approx 1000 \,\text{W/m}^2
+\]
+
+bei klarem Himmel und senkrechtem Einfall gerechnet.
+
+## 2. Reflektierte Strahlung
+
+Du brauchst die vom Material reflektierte Strahlungsleistung:
+
+\[
+E_\text{reflektiert}
+\]
+
+Diese hängt vom Material ab, insbesondere von:
+
+- Farbe
+- Oberflächenrauheit
+- Glanzgrad
+- Feuchtigkeit
+- Verschmutzung
+- spektralem Reflexionsgrad
+
+## 3. Reflexionsgrad bzw. Albedo
+
+Die Albedo \(\alpha\) ist definiert als:
+
+\[
+\alpha = \frac{E_\text{reflektiert}}{E_\text{ein}}
+\]
+
+Dabei gilt:
+
+- \(\alpha = 0\): perfekte Absorption, keine Reflexion
+- \(\alpha = 1\): perfekte Reflexion
+- reale Materialien liegen dazwischen
+
+Beispiel:
+
+Wenn auf ein Material \(1000 \,\text{W/m}^2\) treffen und \(300 \,\text{W/m}^2\) reflektiert werden:
+
+\[
+\alpha = \frac{300}{1000} = 0{,}3
+\]
+
+Das Material hat also eine Albedo von 0,3 bzw. 30 %.
+
+## 4. Absorbierte Strahlung
+
+Für den Albedoeffekt ist oft auch wichtig, wie viel Energie im Material bleibt:
+
+\[
+E_\text{absorbiert} = E_\text{ein} \cdot (1 - \alpha)
+\]
+
+Wenn die Albedo also 0,3 beträgt:
+
+\[
+E_\text{absorbiert} = 1000 \cdot (1 - 0{,}3) = 700 \,\text{W/m}^2
+\]
+
+Das Material absorbiert \(700 \,\text{W/m}^2\).
+
+## 5. Falls du den Klima- oder Temperatureffekt berechnen willst
+
+Wenn du nicht nur die Albedo selbst, sondern den **Temperatur- oder Kühlungseffekt** bestimmen möchtest, brauchst du zusätzlich:
+
+- Fläche des Materials
+- Dauer der Sonneneinstrahlung
+- Wärmekapazität des Materials
+- Wärmeleitfähigkeit
+- Emissionsgrad im Infrarotbereich
+- Lufttemperatur
+- Wind bzw. Konvektion
+- Wärmeabgabe an Umgebung oder Untergrund
+- Vergleichsmaterial mit anderer Albedo
+
+Dann kann man berechnen, wie viel weniger Energie absorbiert wird:
+
+\[
+\Delta E = E_\text{ein} \cdot A \cdot \Delta \alpha
+\]
+
+mit:
+
+- \(A\): Fläche
+- \(\Delta \alpha\): Albedounterschied zwischen zwei Materialien
+
+Beispiel:
+Eine Fläche von \(10 \,\text{m}^2\) wird mit \(1000 \,\text{W/m}^2\) bestrahlt. Material A hat \(\alpha = 0{,}2\), Material B \(\alpha = 0{,}6\).
+
+\[
+\Delta \alpha = 0{,}6 - 0{,}2 = 0{,}4
+\]
+
+\[
+\Delta E = 1000 \cdot 10 \cdot 0{,}4 = 4000 \,\text{W}
+\]
+
+Das hellere Material reflektiert also \(4000\,\text{W}\) mehr als das dunklere.
+
+## Kurz gesagt
+
+Du brauchst mindestens:
+
+1. **Einfallende Strahlung** \(E_\text{ein}\)
+2. **Reflektierte Strahlung** \(E_\text{reflektiert}\)
+3. Daraus die Albedo:
+
+\[
+\alpha = \frac{E_\text{reflektiert}}{E_\text{ein}}
+\]
+
+Für realistische Anwendungen zusätzlich: Spektrum, Einfallswinkel, Oberfläche, Umgebung, Fläche und Zeit.

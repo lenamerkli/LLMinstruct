@@ -1,0 +1,119 @@
+§u§
+Write a prime factorization programm for the Little Man Computer (LMC) CPU Simulator
+§a§
+# Prime Factorization on the Little Man Computer (LMC)
+
+## Overview
+
+The LMC has no multiply/divide instructions, so we implement **trial division via repeated subtraction**. The algorithm:
+
+1. Read input **N**
+2. Starting with divisor **D = 2**, repeatedly subtract **D** from **N**
+3. If it divides evenly → output **D**, replace **N** with the quotient, and try **D** again
+4. If not → increment **D** and retry
+5. Stop when **N = 1**
+
+## The Program
+
+```asm
+// ============================================
+//  LMC Prime Factorization
+//  Input:  An integer N (2 ≤ N ≤ 999)
+//  Output: All prime factors of N (repeated
+//          factors printed multiple times)
+//
+//  Example: Input 12 → Output 2, 2, 3
+// ============================================
+
+// --- Read input and initialize divisor to 2 ---
+        INP            // ACC = user input
+        STA N          // Store as N
+        LDA TWO
+        STA DIV        // DIV = 2 (first candidate)
+
+// --- Outer loop: try dividing N by DIV ---
+TRYLP   LDA N
+        STA TEMP       // TEMP = N (working copy)
+        LDA ZERO
+        STA COUNT      // COUNT = 0 (will hold quotient)
+
+// --- Inner loop: repeated subtraction ---
+SUBLP   LDA TEMP
+        SUB DIV        // TEMP - DIV
+        BRP NOTLS      // If >= 0, go to NOTLS
+        BRA NODIV      // If < 0, DIV doesn't divide N
+
+NOTLS   STA TEMP       // TEMP = TEMP - DIV
+        LDA COUNT
+        ADD ONE
+        STA COUNT      // COUNT++ (quotient so far)
+        LDA TEMP
+        BRZ FOUND      // If TEMP == 0, exact division!
+        BRA SUBLP      // Otherwise keep subtracting
+
+// --- Found a factor ---
+FOUND   LDA DIV
+        OUT            // ** Output the prime factor **
+        LDA COUNT
+        STA N          // N = quotient (N / DIV)
+        SUB ONE
+        BRZ DONE       // If quotient == 1, we're finished
+        BRA TRYLP      // Otherwise, try DIV again on new N
+
+// --- DIV doesn't divide N; try next divisor ---
+NODIV   LDA DIV
+        ADD ONE
+        STA DIV        // DIV++
+        LDA N
+        SUB DIV
+        BRP TRYLP      // If N >= DIV, loop back
+        // DIV > N, so N itself must be prime (and > 1)
+        LDA N
+        SUB ONE
+        BRZ DONE       // Safety check: if N == 1, halt
+        LDA N
+        OUT            // ** Output N as final prime factor **
+
+// --- Halt ---
+DONE    HLT
+
+// --- Data ---
+N       DAT 0          // The number being factored
+DIV     DAT 0          // Current trial divisor
+TEMP    DAT 0          // Working copy for subtraction loop
+COUNT   DAT 0          // Quotient counter
+ZERO    DAT 0
+ONE     DAT 1
+TWO     DAT 2
+```
+
+## How It Works — Step by Step
+
+| Concept | Implementation |
+|---|---|
+| **Division** | Repeated subtraction of `DIV` from `TEMP`. The number of successful subtractions is the quotient (`COUNT`). |
+| **Divisibility test** | If `TEMP` reaches exactly `0`, then `DIV` divides `N` evenly. |
+| **Primality guarantee** | We always try the *smallest* unused divisor first. Any divisor that succeeds *must* be prime, because all smaller factors have already been divided out. |
+| **Termination** | When the quotient becomes `1`, all factors have been found. If `DIV` exceeds `N`, then `N` itself is the last (prime) factor. |
+
+## Trace Example: **N = 60**
+
+| Step | N | DIV | Result | Output |
+|------|---|-----|--------|--------|
+| 1 | 60 | 2 | 60/2 = 30 ✓ | **2** |
+| 2 | 30 | 2 | 30/2 = 15 ✓ | **2** |
+| 3 | 15 | 2 | 15/2 ✗ → try 3 | — |
+| 4 | 15 | 3 | 15/3 = 5 ✓ | **3** |
+| 5 | 5 | 3 | 5/3 ✗ → try 4 | — |
+| 6 | 5 | 4 | 5/4 ✗ → try 5 | — |
+| 7 | 5 | 5 | 5/5 = 1 ✓ | **5** |
+| | | | **N = 1 → HLT** | |
+
+> **Final output: `2 2 3 5`** → confirming 2 × 2 × 3 × 5 = 60 ✅
+
+## Constraints & Notes
+
+* **Valid input range:** 2–999 (LMC mailboxes hold 0–999). Input of `0` or `1` has no prime factors and behavior is undefined.
+* **Program size:** 45 mailboxes (out of 100 available) — plenty of room to spare.
+* **No multiply/divide needed:** everything is done with `ADD`, `SUB`, and conditional branches (`BRP`, `BRZ`).
+* The divisor increments by 1 (not just primes), but correctness is guaranteed because composite divisors can never succeed — their prime components have already been divided out.

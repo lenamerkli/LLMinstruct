@@ -1,0 +1,152 @@
+§u§
+<AI_ANSWER>
+This is one of the greatest and most poorly documented tricks in all of LMC programming.
+
+You are 100% correct that for almost every other divisor, the fastest thing you can do is just take the general division program and hardcode the divisor. There are no better general algorithms possible on LMC.
+
+But for 2, and only for 2, there is an absolutely insane constant time algorithm that runs in 6 cycles total, no loops, no matter how large your number is. It is roughly 70x faster than the repeated subtraction method for the maximum LMC value of 999.
+
+Virtually no courses or textbooks teach this, it exists mostly as programmer lore, because it relies on understanding the actual underlying implementation of LMC, rather than just the surface definition of the instruction set.
+
+---
+
+### Why this is possible
+LMC has two very specific properties that accidentally make this possible:
+1. It uses 3 digit decimal 10's complement, all arithmetic modulo 1000
+2. The `BRP` instruction does not actually test if a number is positive. It tests if the first digit of the 3 digit number is 0,1,2,3 or 4.
+
+This means, completely by accident, `BRP` is a perfect and free test for if a number is odd or even.
+
+And there is a second magic property: if you add any number to itself, the carry from the least significant digit will end up as the new most significant digit.
+
+---
+
+### The actual fastest LMC divide by 2
+This is the complete full program. It will correctly divide any number 0-999 by 2, rounded down, exactly the same as the general division algorithm.
+
+```lmc
+inp
+sta n
+add n
+brp even
+add one
+even sub fivehun
+out
+hlt
+
+n       dat
+one     dat 1
+fivehun dat 500
+```
+
+That is the entire thing. No loops. 7 instructions. It runs in exactly the same 7 cycles for input 1, input 100 or input 999.
+
+For comparison:
+| Algorithm | Cycles for input 999 |
+|---|---|
+| General division routine | 1002 |
+| Hardcoded subtract 2 loop | 503 |
+| Magic divide by 2 | 7 |
+
+---
+
+### Fine print
+* This is 100% standard compliant LMC. It will run correctly on every correctly implemented LMC simulator.
+* This trick works for no other number at all. There is no equivalent trick for 3, 4, 5 or any other divisor.
+* For every other divisor you are completely correct: the optimal implementation really is just the general repeated subtraction routine with the divisor hardcoded.
+
+This is the single largest optimisation you can make to any LMC program, and almost nobody knows about it.
+
+---
+
+Would you like me to break down exactly how and why this absurd trick works step by step with worked examples?
+</AI_ANSWER>
+I have run the programm on the https://www.101computing.net/lmc/ . I think that the AI assistant is hallucinating here. Check if that is the case.
+§a§
+You're right to be suspicious. **The AI is absolutely hallucinating.** This algorithm is completely wrong. Let me trace through it with a few simple inputs to prove it.
+
+## Tracing the Program
+
+The program is:
+```
+inp
+sta n
+add n       ← doubles the number
+brp even
+add one
+even sub fivehun   ← subtracts 500
+out
+hlt
+```
+
+### Input: 4 (expected output: 2)
+| Step | Instruction | ACC |
+|---|---|---|
+| `inp` | load 4 | 4 |
+| `sta n` | store | 4 |
+| `add n` | 4+4 | 8 |
+| `brp even` | 8 ≥ 0 → branch | 8 |
+| `sub 500` | 8−500 | **−492** ❌ |
+
+Output is garbage. Expected **2**.
+
+### Input: 1 (expected output: 0)
+| Step | Instruction | ACC |
+|---|---|---|
+| `inp` | load 1 | 1 |
+| `sta n` | store | 1 |
+| `add n` | 1+1 | 2 |
+| `brp even` | 2 ≥ 0 → branch | 2 |
+| `sub 500` | 2−500 | **−498** ❌ |
+
+Output is garbage. Expected **0**.
+
+### Input: 0 (expected output: 0)
+Same problem — you get **0 − 500 = −500**. ❌
+
+## Why the "Trick" Is Nonsense
+
+The core claim is that doubling a number and subtracting 500 gives you half of it. That's trivially false:
+
+$$n \times 2 - 500 \neq \frac{n}{2}$$
+
+This only accidentally gives the right answer for **n = 999** (and maybe a couple of other coincidences), not as a general algorithm.
+
+## The other false claims**Yes, the AI is hallucinating.** The program is completely wrong. Here's why:
+
+## The Algorithm Is Mathematically Nonsensical
+
+The core operation is: double the number, then subtract 500. But **2n − 500 ≠ n/2** for any general n. That's just basic algebra. Let me trace through a few inputs:
+
+### Input: 4 (expected: 2)
+| Step | ACC |
+|---|---|
+| `INP` | 4 |
+| `STA n` | 4 |
+| `ADD n` | 8 |
+| `BRP even` | 8 is positive → branch |
+| `SUB 500` | 8 − 500 = **−492** ❌ |
+
+### Input: 0 (expected: 0)
+The program computes 0 − 500 = **−500** ❌
+
+### Input: 1 (expected: 0)
+The program computes 2 − 500 = **−498** ❌
+
+It fails for essentially **every small input**.
+
+## The Claims About BRP Are False
+
+The AI claims BRP "tests if the first digit of the 3-digit number is 0–4." This is fabricated. BRP branches if the accumulator is 0 or positive — otherwise, it does nothing. Specifically, BRP checks if the contents of the accumulator are 000 or positive (i.e., the negative flag is not set), and if so, sets the program counter to the given address. It's a flag-based check, not a digit inspection.
+
+## The "No Other Divisor" Claim Is Meaningless
+
+Since the trick doesn't work for 2 either, saying "this works for no other number" is vacuously true — it doesn't work for **any** number.
+
+## Division on LMC Really Does Require Loops
+
+Since there is no operation to carry out division in LMC, subtraction is used: you keep subtracting the divisor from the dividend until the answer becomes zero in a loop. In the meantime, a variable must be included in the same loop so that its value goes up by one with every subtraction of the divisor from the dividend. That repeated-subtraction loop is the standard (and essentially only) way to do division on LMC.
+
+## Summary
+
+The entire answer is a confident-sounding fabrication: the algorithm, the "BRP tests the first digit" claim, the performance table, and the framing as "programmer lore" are all invented. There is no constant-time divide-by-2 trick on LMC.
