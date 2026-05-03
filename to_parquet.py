@@ -210,8 +210,10 @@ def process_attachments(message):
         # Add attachment to the message
         if 'attachments' not in message:
             message['attachments'] = []
-        message['attachments'].append({'value': f'sha256sum:{hash_value}'})
-
+        mime_type = subprocess.run(['file', '--mime-type', '-b', file_path], capture_output=True, text=True).stdout.strip()
+        if not mime_type:
+            mime_type = 'application/octet-stream'
+        message['attachments'].append({'type': f"{mime_type}/sha256sum", 'value': f'sha256sum:{hash_value}'})
     # Remove all attachment patterns from content
     if matches:
         message['content'] = re.sub(attachment_pattern, '', message.get('content', ''))
@@ -274,9 +276,9 @@ def process_drawback_chess_directory(dir_path, project_name, synthetic, mistakes
                     if 'attachments' not in message:
                         message['attachments'] = []
                     for tool_call in tool_calls:
-                        message['attachments'].append({'type': 'json/tool_call', 'value': json.dumps(tool_call)})
+                        message['attachments'].append({'type': 'application/json/tool_call', 'value': json.dumps(tool_call)})
         if len(messages) > 1:
-            messages[0]['attachments'] = [{'type': 'json/tools', 'value': json.dumps(tools)}]
+            messages[0]['attachments'] = [{'type': 'application/json/tools', 'value': json.dumps(tools)}]
             data.append({'messages': messages, 'project': project_name, 'synthetic': synthetic, 'mistakes': mistakes})
             messages2 = [i for i in messages if ('<tool_call>' not in i['content']) and (i['role'] not in ['tool', 'system'])]
             data.append({'messages': messages2, 'project': project_name, 'synthetic': synthetic, 'mistakes': mistakes})
@@ -523,6 +525,26 @@ def main():
         except Exception as e:
             e.add_note(f"{i}\n{element['messages']}")
             raise e
+
+    for entry in data:
+        entry['tool_calling'] = False
+        for message in entry['messages']:
+            for attachment in message['attachments']:
+                if attachment['type'] in ['application/json/tools', 'application/json/tool_call']:
+                    entry['tool_calling'] = True
+                    break
+            if entry['tool_calling']:
+                break
+
+    for entry in data:
+        entry['vision'] = False
+        for message in entry['messages']:
+            for attachment in message['attachments']:
+                if attachment['type'].startswith('image/') or attachment['type'].startswith('application/pdf'):
+                    entry['vision'] = True
+                    break
+            if entry['vision']:
+                break
 
     dataset = datasets.Dataset.from_list(data)
     dataset.to_parquet('data.parquet')
