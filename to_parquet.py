@@ -266,8 +266,15 @@ def process_drawback_chess_directory(dir_path, project_name, synthetic, mistakes
         for message in messages:
             if '</think>' in message['content']:
                 message['content'] = message['content'].split('</think>')[1]
-            if message['content'].startswith('\n\n<'):
-                message['content'] = message['content'].split('\n\n<')[1]
+            message['content'] = re.sub(r"<tool_call>.*?</tool_call>", '', message['content'], flags=re.DOTALL).strip()
+            if 'tool_calls' in message:
+                tool_calls = message['tool_calls']
+                del message['tool_calls']
+                if len(tool_calls) > 0:
+                    if 'attachments' not in message:
+                        message['attachments'] = []
+                    for tool_call in tool_calls:
+                        message['attachments'].append({'type': 'json/tool_call', 'value': json.dumps(tool_call)})
         if len(messages) > 1:
             messages[0]['attachments'] = [{'type': 'json/tools', 'value': json.dumps(tools)}]
             data.append({'messages': messages, 'project': project_name, 'synthetic': synthetic, 'mistakes': mistakes})
