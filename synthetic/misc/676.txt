@@ -1,0 +1,61 @@
+§u§
+```
+Sie können verständlich machen, wieso sich \textit{gain of function}-Mutationen in der Regel dominant, und \textit{loss of function}-Mutationen in der Regel rezessiv verhalten.
+```
+Erkläre mir den Stoff, den ich können muss, um dieses Lernziel zu erfüllen.
+§a§
+Um dieses Lernziel zu erreichen, musst du das Zusammenspiel von Genen, Proteinen und dem Phänotyp verstehen. In der Genetik geht es meist darum, wie viel funktionstüchtiges Protein am Ende in der Zelle vorhanden ist und was dieses Protein tut.
+
+Hier ist die schrittweise Erklärung, unterteilt in die beiden Mutationsarten.
+
+---
+
+### Grundlagen: Die diploide Zelle
+Wir Menschen besitzen von jedem Gen zwei Kopien (Allele) – eines von der Mutter, eines vom Vater. Der Phänotyp (das Erscheinungsbild/Merkmal) hängt davon ab, ob die Aktivität dieser beiden Allele ausreicht, um eine bestimmte Funktion zu erfüllen.
+
+---
+
+### 1. Loss-of-Function-Mutationen (Funktionsverlust)
+**Was passiert hier?**
+Eine Mutation sorgt dafür, dass das Genprodukt (meist ein Protein oder Enzym) entweder gar nicht mehr hergestellt wird oder seine Funktion vollständig verliert.
+
+**Warum meist rezessiv?**
+Das Zauberwort heißt **Haplosuffizienz**.
+*   In einem heterozygoten Zustand (ein gesundes Allel, ein mutiertes Allel) produziert das gesunde Allel immer noch $50\ \%$ der normalen Proteinmenge.
+*   Für die meisten biologischen Prozesse (besonders bei Enzymen im Stoffwechsel) reichen diese $50\ \%$ völlig aus, um den normalen Phänotyp aufrechterhalten zu können.
+*   **Die Folge:** Das Individuum ist gesund. Die Mutation "sieht" man nicht. Erst wenn *beide* Allele defekt sind (rezessiver Erbgang), fällt die Funktion komplett aus und ein Defekt tritt auf.
+
+**Beispiel:** Albinismus. Ein gesundes Allel reicht aus, um genügend Pigmente zu produzieren. Erst wenn beide Allele für das Enzym Tyrosinase defekt sind, wird kein Melanin gebildet.
+
+---
+
+### 2. Gain-of-Function-Mutationen (Funktionsgewinn)
+**Was passiert hier?**
+Die Mutation führt dazu, dass das Protein etwas „Neues“ oder „Zusätzliches“ tut. Das kann bedeuten:
+1.  Das Protein ist **hyperaktiv** (arbeitet ständig, ohne abgeschaltet werden zu können).
+2.  Das Protein wird zur **falschen Zeit** oder am **falschen Ort** gebildet.
+3.  Das Protein erhält eine **völlig neue Eigenschaft** (z.B. toxische Verklumpung).
+
+**Warum meist dominant?**
+Hier spielt die Menge des gesunden Proteins keine Rolle, weil das mutierte Protein **aktiv** stört oder agiert.
+*   Selbst wenn das zweite, gesunde Allel ein völlig normales Protein produziert, ist das „schädliche“ oder „überaktive“ Protein der Mutation trotzdem in der Zelle vorhanden.
+*   Man kann sich das wie ein Radio vorstellen: Auch wenn du ein zweites, perfekt funktionierendes Radio daneben stellst, hörst du das laute Störgeräusch des kaputten Radios trotzdem.
+*   **Die Folge:** Das neue Merkmal (oder die Krankheit) tritt bereits auf, wenn nur *eine* Kopie des Gens mutiert ist.
+
+**Beispiel:** Chorea Huntington. Das mutierte Protein bildet Klumpen, die Nervenzellen vergiften. Es hilft nichts, dass die gesunde Kopie auch da ist – die Klumpen des mutierten Proteins richten trotzdem Schaden an.
+
+---
+
+### Zusammenfassung für deine Prüfung
+Um das Lernziel zu formulieren, kannst du folgende Logik verwenden:
+
+*   **LoF ist rezessiv**, weil Zellen meist robust sind und mit der halben Proteinmenge des gesunden Allels überleben können (**Haplosuffizienz**). Der Defekt wird durch das gesunde Allel "maskiert".
+*   **GoF ist dominant**, weil die Mutation eine **neue, aktive Eigenschaft** einführt. Diese Eigenschaft verschwindet nicht einfach, nur weil auch gesundes Protein da ist. Das mutierte Protein setzt sich phänotypisch durch.
+
+---
+
+### Bonus-Wissen (für die Bestnote)
+Es gibt zwei Ausnahmen, bei denen LoF-Mutationen **dominant** wirken können:
+
+1.  **Haploinsuffizienz:** Bei manchen Genen reichen $50\ \%$ der Proteinmenge *nicht* aus. Wenn ein Allel ausfällt, reicht der Rest nicht für die normale Funktion (z.B. bei einigen Strukturproteinen oder Transkriptionsfaktoren).
+2.  **Dominant-negativer Effekt:** Das mutierte (kaputte) Protein behindert aktiv die Arbeit des gesunden Proteins (z.B. wenn beide Proteine zusammen einen Komplex bilden müssen und das kaputte Teil den ganzen Komplex unbrauchbar macht).

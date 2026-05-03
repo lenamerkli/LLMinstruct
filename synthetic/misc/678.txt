@@ -1,0 +1,101 @@
+§u§
+```
+Sie können als Texte oder als Grafiken vorgegebene Stammbäume analysieren und begründen, welcher der fünf verschiedenen Vererbungstypen der wahrscheinlichste ist, dabei die Geno- und dazugehörige Phänotypen sowie ihre statistischen Wahrscheinlichkeiten angeben (mit Hilfe von Kreuzungsdiagrammen)
+```
+Erkläre mir den Stoff, den ich können muss, um dieses Lernziel zu erfüllen.
+§a§
+Um dieses Lernziel zu erreichen, musst du die Grundlagen der klassischen Genetik beherrschen. Hier ist eine strukturierte Übersicht des Stoffes, unterteilt in die wichtigsten Bereiche:
+
+---
+
+### 1. Die 5 Vererbungstypen (Die "Großen Fünf")
+Du musst die Merkmale jedes Typs kennen, um sie im Stammbaum identifizieren zu können.
+
+#### A. Autosomal-dominant
+*   **Merkmal:** Das Gen liegt auf den Körperchromosomen (Autosomen). Ein einziges dominantes Allel (**A**) reicht aus, um die Krankheit/das Merkmal auszuprägen.
+*   **Hinweise im Stammbaum:**
+    *   Fast in jeder Generation finden sich Betroffene (dominanter Erbgang).
+    *   Jeder Betroffene hat mindestens einen betroffenen Elternteil.
+    *   Zwei betroffene Eltern können gesunde Kinder haben (wenn beide **Aa** sind).
+
+#### B. Autosomal-rezessiv
+*   **Merkmal:** Das Gen liegt auf den Autosomen. Das Merkmal tritt nur auf, wenn man homozygot rezessiv ist (**aa**).
+*   **Hinweise im Stammbaum:**
+    *   Das Merkmal kann Generationen überspringen.
+    *   Gesunde Eltern können betroffene Kinder haben (Eltern sind "Überträger" bzw. Konduktoren: **Aa**).
+    *   Zwei betroffene Eltern (**aa**) haben zu 100 % betroffene Kinder.
+
+#### C. X-chromosomal-rezessiv (Gonosomal)
+*   **Merkmal:** Das Gen liegt auf dem X-Chromosom. Frauen haben zwei X, Männer nur eines (XY).
+*   **Hinweise im Stammbaum:**
+    *   Fast nur Männer sind betroffen.
+    *   Frauen können Konduktorinnen (Überträgerinnen) sein, ohne selbst krank zu sein.
+    *   Ein betroffener Vater vererbt das betroffene X nie an seinen Sohn (da der Sohn das Y bekommt), aber alle seine Töchter werden Konduktorinnen.
+
+#### D. X-chromosomal-dominant (Gonosomal)
+*   **Merkmal:** Ein defektes Allel auf einem der X-Chromosomen reicht aus.
+*   **Hinweise im Stammbaum:**
+    *   Ähnlich wie autosomal-dominant, aber: Ein betroffener Vater hat **nur** betroffene Töchter (da er ihnen sein einziges, krankes X gibt) und **nur** gesunde Söhne (da sie sein Y bekommen).
+    *   Betroffene Frauen sind häufiger als bei rezessiven Erbgängen.
+
+#### E. Y-chromosomal (selten)
+*   **Merkmal:** Das Gen liegt auf dem Y-Chromosom.
+*   **Hinweise im Stammbaum:**
+    *   **Nur Männer** sind betroffen.
+    *   Ein betroffener Vater hat zu 100 % betroffene Söhne.
+
+---
+
+### 2. Fachbegriffe: Geno- und Phänotyp
+Du musst in der Lage sein, jedem Individuum im Stammbaum Buchstaben zuzuweisen:
+
+*   **Phänotyp:** Das äußere Erscheinungsbild (z. B. "krank" oder "gesund").
+*   **Genotyp:** Die genetische Zusammensetzung.
+    *   **Homozygot (reinerbig):** AA oder aa.
+    *   **Heterozygot (mischerbig):** Aa.
+    *   **Hemizygot:** Bei Männern beim X-chromosomalen Erbgang ($X^AY$ oder $X^aY$), da sie nur ein X haben.
+
+---
+
+### 3. Vorgehensweise bei der Stammbaumanalyse
+Um eine fundierte Begründung zu schreiben, solltest du dieses Schema nutzen:
+
+1.  **Dominant oder Rezessiv?**
+    *   *Trick:* Suche nach zwei gleichen Eltern mit einem andersartigen Kind.
+    *   Zwei gesunde Eltern haben ein krankes Kind $\rightarrow$ **Rezessiv**.
+    *   Zwei kranke Eltern haben ein gesundes Kind $\rightarrow$ **Dominant**.
+2.  **Autosomal oder Gonosomal?**
+    *   *Trick:* Schau dir die Geschlechterverteilung an.
+    *   Sind fast nur Männer krank? $\rightarrow$ Verdacht auf **X-chromosomal-rezessiv**.
+    *   Hat ein kranker Vater eine gesunde Tochter? $\rightarrow$ Kann **nicht** X-chromosomal-dominant sein.
+    *   Hat eine kranke Mutter einen gesunden Sohn? $\rightarrow$ Kann **nicht** X-chromosomal-rezessiv sein.
+
+---
+
+### 4. Kreuzungsdiagramme (Punnett-Quadrate)
+Du musst Wahrscheinlichkeiten berechnen können.
+
+**Beispiel:** Eine Konduktorin für Rot-Grün-Blindheit ($X^AX^a$) und ein gesunder Mann ($X^AY$) bekommen ein Kind.
+1.  **Keimzellen Mutter:** $X^A$ und $X^a$
+2.  **Keimzellen Vater:** $X^A$ und $Y$
+3.  **Diagramm:**
+
+| | $X^A$ (Vater) | $Y$ (Vater) |
+| :--- | :--- | :--- |
+| **$X^A$ (Mutter)** | $X^AX^A$ (gesundes Mädchen) | $X^AY$ (gesunder Junge) |
+| **$X^a$ (Mutter)** | $X^AX^a$ (Konduktorin Mädchen) | $X^aY$ (kranker Junge) |
+
+**Statistische Wahrscheinlichkeiten:**
+*   Wahrscheinlichkeit für ein krankes Kind insgesamt: 25 %.
+*   Wahrscheinlichkeit, dass ein Sohn krank ist: 50 %.
+*   Wahrscheinlichkeit, dass eine Tochter krank ist: 0 %.
+
+---
+
+### 5. Checkliste für die Prüfung
+Um das Lernziel voll zu erfüllen, solltest du folgende Sätze bilden können:
+*   *"Der Erbgang ist vermutlich autosomal-rezessiv, weil die Eltern 3 und 4 gesund sind, aber ein krankes Kind (7) haben. Wäre er dominant, müsste mindestens ein Elternteil krank sein."*
+*   *"Ein X-chromosomal-rezessiver Erbgang ist hier unwahrscheinlich, da eine kranke Mutter (8) einen gesunden Sohn (12) hat, was bei diesem Erbgang unmöglich ist."*
+*   *"Die Wahrscheinlichkeit für ein weiteres betroffenes Kind liegt laut Kreuzungsdiagramm bei 50 %."*
+
+**Tipp für die Vorbereitung:** Übe an 3-4 verschiedenen Stammbäumen und versuche, jeden Typ einmal auszuschließen (Ausschlussverfahren), bis nur noch der wahrscheinlichste übrig bleibt.

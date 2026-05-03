@@ -1,0 +1,37 @@
+§u§
+# Yes — A Drop in Maximum Stable XMP Speed Is a Recognized Sign of i9-14900K Degradation
+
+Short answer: **yes, losing the ability to run an XMP profile that was previously stable is one of the classic warning signs of degradation** on a 13th/14th gen Intel CPU, particularly the i9-13900K/KS and i9-14900K/KS. This is because degradation tends to hit the CPU's integrated memory controller (IMC) before (or alongside) the cores themselves.
+
+## How the degradation typically manifests
+
+Users have reported a progression where XMP becomes increasingly unstable over time, even when it worked perfectly at first. The pattern people describe is that full XMP degraded the stability of the system over the span of just hours from first boot with XMP, to two weeks or a month, dialing back XMP made it more stable, but over time those systems' stability degraded slowly anyway.
+
+There are also field reports of repeated failures where each replacement CPU eventually starts showing the same memory/stability symptoms again. One user reported replacing about 4 14900Ks and they all still cause crashing and degradation over time, even with BIOS settings changes and liquid cooling, with the current one starting to fail again despite never going above 75°C.
+
+## Why XMP is the canary in the coal mine
+
+A few things to keep in mind before you assume it's degradation:
+
+1. **Intel's official spec is well below most XMP kits.** The Intel CPUs of the 13th and 14th generation only officially support RAM up to 5600MHz. Anything above that is technically an overclock and depends heavily on the IMC silicon lottery.
+
+2. **The IMC quality varies between samples.** Both the K and the KS are based on the same die, and as Intel does not bin their CPUs for memory controller capability, your mileage will vary on each sample. So a fresh chip might just naturally not hit the same XMP your old one did — that alone isn't proof of degradation.
+
+3. **2 DIMMs per channel drops the supported speed sharply.** For 14th Gen processors, the maximum operating frequency for a Two Slots Per Channel (2SPC) motherboard with single or dual rank modules in One DIMM Per Channel (1DPC) is 5200MT, and anything beyond this is classified as an overclock and may require manual tuning due to variance when running the system out of spec.
+
+## How to tell degradation apart from "just a weaker IMC"
+
+The key signal is **regression over time on the same CPU/board/RAM combo**. If your chip used to POST and run stable at, say, DDR5-7200 XMP, and now it can only do 6400 or even falls back to JEDEC speeds with the same kit, BIOS, and motherboard — that's a strong degradation indicator. Other signs that often appear alongside it:
+
+- BSODs and app crashes (especially Chrome/Firefox renderer crashes, "out of video memory" in DX12 games, decompression errors in shader compilation).
+- Crashes that get worse the longer you own the chip.
+- Eventually crashes during clean Windows installs. One user reported that the issue progressed to the point that the system crashed even during a Windows 11 reinstall attempt, with the crash occurring before the installation could even start from the flash drive — pointing to a possible CPU fault.
+
+## What to do
+
+1. **Make sure you're on the latest BIOS with the 0x12B microcode** (and Intel Default Settings profile applied). Earlier microcodes allowed elevated voltages that accelerated degradation.
+2. **Test at JEDEC (no XMP)** to confirm baseline stability. If it's still unstable at JEDEC with Intel Defaults, that's a very strong RMA case.
+3. **Run a stress suite**: Cinebench R23 multi-core, y-cruncher (especially the VT3 and VST3 stress tests), Linpack/OCCT, and a memory test like Karhu or MemTest86.
+4. **Document the regression** — if you can show that XMP used to run and no longer does on the same hardware, Intel has been honoring extended warranty RMAs (5 years total) for 13th/14th gen instability since 2024. If your processor has been degraded, RMA with Intel is the recommended path.
+
+So to directly answer your question: a lower maximum stable XMP frequency on a 14900K — especially one that *used to* run higher — is absolutely consistent with the well-known degradation pattern, and it's worth pursuing an Intel RMA if a clean test at Intel Default Settings still shows instability.

@@ -1,0 +1,108 @@
+§u§
+```
+Sie können in einem Stammbaum mit Blutgruppen (AB0- und Rhesussystem) die Phänotypen und möglichen Genotypen (Schreibweise so wie im Unterricht erklärt) und deren Wahrscheinlichkeiten korrekt angeben
+```
+Erkläre mir den Stoff, den ich können muss, um dieses Lernziel zu erfüllen.
+§a§
+Um dieses Lernziel zu erreichen, musst du die Grundlagen der Vererbung der Blutgruppensysteme **AB0** und **Rhesus** verstehen, wissen, wie man diese in einem Stammbaum analysiert, und die Wahrscheinlichkeiten für die Nachkommen berechnen können.
+
+Hier ist der Stoff, den du dir aneignen musst, Schritt für Schritt erklärt:
+
+---
+
+### 1. Das AB0-System (Genetik & Schreibweise)
+Das AB0-System wird von **drei Allelen** gesteuert: $I^A$, $I^B$ und $i$ (manchmal auch $I^0$ geschrieben).
+*   **$I^A$ und $I^B$ sind kodominant:** Wenn beide vorhanden sind, kommen beide zur Geltung (Blutgruppe AB).
+*   **$i$ ist rezessiv:** Es tritt nur in Erscheinung, wenn kein $I^A$ oder $I^B$ vorhanden ist.
+
+**Wichtige Schreibweise (Standard, ggf. an deine Unterrichtsschreibweise anpassen):**
+Die Allele werden als Buchstaben hochgestellt an ein großes I geschrieben (z.B. $I^A$). Das rezessive Allel wird als kleines i ($i$) geschrieben.
+
+| Phänotyp (Blutgruppe) | Mögliche Genotypen | Erklärung |
+| :--- | :--- | :--- |
+| **A** | $I^A I^A$ oder $I^A i$ | Entweder zwei A-Allele oder ein dominantes A überdeckt das rezessive i. |
+| **B** | $I^B I^B$ oder $I^B i$ | Entweder zwei B-Allele oder ein dominantes B überdeckt das rezessive i. |
+| **AB** | $I^A I^B$ | Kodominanz: Sowohl A als auch B werden exprimiert. |
+| **0** | $i i$ | Nur zwei rezessive Allele ergeben die Blutgruppe 0. |
+
+---
+
+### 2. Das Rhesus-System (Genetik & Schreibweise)
+Das Rhesus-System ist einfacher, da es (vereinfacht für die Schule) nur zwei Allele gibt und eine **klare Dominanz/Rezessivität** herrscht.
+*   **Rh-positiv (Rh+):** dominant. Wir schreiben dafür oft **$D$** (oder $R$).
+*   **Rh-negativ (Rh-):** rezessiv. Wir schreiben dafür **$d$** (oder $r$).
+
+| Phänotyp (Rhesusfaktor) | Mögliche Genotypen | Erklärung |
+| :--- | :--- | :--- |
+| **Rh+** | $DD$ oder $Dd$ | Das dominante Allel $D$ sorgt für die Ausprägung des Merkmals. |
+| **Rh-** | $dd$ | Nur zwei rezessive Allele ergeben Rh-negativ. |
+
+---
+
+### 3. Die Kombination aus AB0 und Rhesus
+Da die beiden Systeme auf **verschiedenen Chromosomen** liegen (sie sind nicht gekoppelt), werden sie unabhängig voneinander vererbt.
+Der vollständige Genotyp besteht also aus beiden Teilen, z.B.: **$I^A i \; Dd$** (Blutgruppe A, Rhesus positiv).
+
+Der Phänotyp wird kombiniert geschrieben, z.B.: **A+** oder **A positiv**.
+
+---
+
+### 4. Stammbaumanalyse (Der Kern des Lernziels)
+Wenn du einen Stammbaum gegeben bekommst, musst du systematisch vorgehen:
+
+**Die goldene Regel der Stammbaumanalyse:**
+*Suche nach rezessiven Merkmalen!*
+Wenn eine Person die Blutgruppe 0 (Genotyp: $ii$) oder Rh- (Genotyp: $dd$) hat, **weißt du sofort, dass beide Elternteile mindestens ein rezessives Allel ($i$ bzw. $d$) besitzen müssen**.
+
+**Beispiel-Logik:**
+1.  Kind hat Blutgruppe 0 ($ii$).
+2.  Elternteil 1 hat Blutgruppe A. -> Da es ein $i$ an das Kind weitergeben musste, kann es nicht $I^A I^A$ sein. Es **muss** $I^A i$ sein.
+3.  Elternteil 2 hat Blutgruppe B. -> Gleiche Logik: Es **muss** $I^B i$ sein.
+
+---
+
+### 5. Wahrscheinlichkeiten berechnen (Kreuzungsschema)
+Wenn du die Genotypen der Eltern herausgefunden hast, stellst du ein Kreuzungsschema (Quadrat) auf. Da AB0 und Rhesus unabhängig voneinander vererbt werden, kannst du sie getrennt berechnen und am Ende multiplizieren (Mengenlehre: Pfadregeln).
+
+**Beispiel:**
+Vater: Blutgruppe A, Rh+ (Genotyp: $I^A i \; Dd$)
+Mutter: Blutgruppe B, Rh- (Genotyp: $I^B i \; dd$)
+
+**Schritt 1: AB0 kreuzen ($I^A i \times I^B i$)**
+*   Vater-Gameten: $I^A$ oder $i$
+*   Mutter-Gameten: $I^B$ oder $i$
+
+| | $I^B$ | $i$ |
+| :--- | :--- | :--- |
+| **$I^A$** | $I^A I^B$ (AB) | $I^A i$ (A) |
+| **$i$** | $I^B i$ (B) | $i i$ (0) |
+
+*Ergebnis AB0:* 25% AB, 25% A, 25% B, 25% 0.
+
+**Schritt 2: Rhesus kreuzen ($Dd \times dd$)**
+*   Vater-Gameten: $D$ oder $d$
+*   Mutter-Gameten: $d$
+
+| | $d$ | $d$ |
+| :--- | :--- | :--- |
+| **$D$** | $Dd$ (Rh+) | $Dd$ (Rh+) |
+| **$d$** | $dd$ (Rh-) | $dd$ (Rh-) |
+
+*Ergebnis Rhesus:* 50% Rh+, 50% Rh-.
+
+**Schritt 3: Wahrscheinlichkeiten kombinieren**
+Du multiplizierst die Wahrscheinlichkeiten der gewünschten Kombinationen.
+*   Wahrscheinlichkeit für Kind mit **A+**: $P(A) \times P(Rh+) = 0,25 \times 0,50 = 0,125 = 12,5\%$
+*   Wahrscheinlichkeit für Kind mit **0-**: $P(0) \times P(Rh-) = 0,25 \times 0,50 = 0,125 = 12,5\%$
+*   ...usw.
+
+---
+
+### Checkliste: Kann ich das Lernziel?
+Du hast das Lernziel erreicht, wenn du folgende Aufgaben fehlerfrei lösen kannst:
+- [ ] Ich kann zu jedem Phänotyp (A, B, AB, 0, Rh+, Rh-) alle möglichen Genotypen aufschreiben.
+- [ ] Ich kann aus einem Stammbaum erschließen, welche Genotypen die Eltern haben müssen (z.B. indem ich von Kindern mit Blutgruppe 0 oder Rh- rückschließe).
+- [ ] Ich kann für ein beliebiges Elternpaar ein Kreuzungsschema für beide Systeme aufstellen.
+- [ ] Ich kann die Wahrscheinlichkeit (in % oder Bruch) für einen bestimmten Phänotyp der Kinder korrekt ausrechnen.
+
+*Hinweis zur Schreibweise: Da im Unterricht verschiedene Schreibweisen (z.B. $I^A$ vs. $A^1 A^2$ vs. $A_1 A_2$ oder $D/d$ vs. $R/r$) genutzt werden, prüfe kurz, welche Notation dein Lehrer/deine Lehrerin bevorzugt, und übertrage das Prinzip aus dieser Erklärung auf diese Schreibweise.*

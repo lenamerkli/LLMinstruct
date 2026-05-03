@@ -1,0 +1,100 @@
+§u§
+```
+\begin{itemize}
+    \item Sie können ein Wirbeltier-Neuron zeichnen, dessen Bestandteile benennen (exakte Fachbegriffe) und ihre Funktionen erklären
+    \item Sie können die Signalweiterleitung an chemischen Synapsen mit Hilfe einer Skizze schrittweise aufzeigen und den Spezialfall der neuromuskulären Endplatte erläutern
+    \item Sie können zwischen Nerven, Nervenfasern und Axonen unterscheiden und entsprechende Abbildungen korrekt beschriften
+    \item Sie können die Erregungsweiterleitung am Axon erklären und die Beschleunigungsmechanismen bei Kopffüßern \& Wirbeltieren erklären
+    \item Sie können erklären, wie das Ruhepotential an der Axonmembran entsteht, wobei die Ionenverteilung an der Membran, die Arbeit der Na-K-Pumpe und das Zustandekommen des chemischen sowie des elektrischen Potenzials erläutert wird
+    \item Sie können schrittweise aufzeigen, wie an der Axonmembran ein Aktionspotential entsteht, dabei auf den Öffnungszustand von Ionenkanälen und Ionenbewegungen beim Eintreffen eines elektrischen Signals am Neuron erläutern
+    \item Sie können erklären, wie hemmende und erregende Synapsen funktionieren, was IPSP und EPSP bewirken und wie entschieden wird, ob die Folge «alles» oder «nichts» ist
+    \item Sie können das neurobiologische Geschehen beim Patellarsehnenreflex schrittweise aufzeigen und in einem Schema alle relevanten Strukturen einzeichnen (Dehnungsspindel, sensorische/motorische Neurone, Interneurone, erregende und hemmende Synapsen, \dots).
+    \item Sie können peripheres und zentrales Nervensystem unterscheiden und Wirkungen unseres Parasympathicus / Sympathicus beschreiben
+    \item Sie können anhand des Experiments „bitter tasting“ die Begriffe Rezeptormolekül und Sinneszelle und das Zustandekommen eines „non-tasting“ Phänotyps erklären
+\end{itemize}
+```
+Erkläre mir den Stoff, den ich können muss, um diese Lernziele zu erfüllen.
+§a§
+Diese Lernziele decken die Grundlagen der Neurobiologie ab. Hier ist eine strukturierte Zusammenfassung des Stoffes, den du für die Prüfung beherrschen musst.
+
+---
+
+### 1. Das Wirbeltier-Neuron (Nervenzelle)
+Ein Neuron besteht aus folgenden Teilen:
+*   **Dendriten:** Baumartig verzweigte Fortsätze; nehmen Signale von anderen Zellen auf (Rezeptionsfeld).
+*   **Soma (Zellkörper):** Enthält den Zellkern und Organellen; Stoffwechselzentrum.
+*   **Axonhügel:** Übergang vom Soma zum Axon; hier wird entschieden, ob ein Aktionspotenzial ausgelöst wird (Summation).
+*   **Axon (Neurit):** Langer Fortsatz zur Signalweiterleitung.
+*   **Myelinscheide (Schwann’sche Zellen):** Isolierschicht um das Axon (bei Wirbeltieren), ermöglicht schnelle Leitung.
+*   **Ranvier’scher Schnürring:** Lücke in der Myelinhülle; wichtig für die saltatorische Erregungsleitung.
+*   **Endknöpfchen (Präsynaptische Endigung):** Überträgt das Signal chemisch an die nächste Zelle.
+
+### 2. Signalweiterleitung an der chemischen Synapse
+Der Prozess läuft in Schritten ab:
+1.  **Ankunft des Aktionspotenzials (AP):** Depolarisation der präsynaptischen Membran.
+2.  **Calcium-Einstrom:** Spannungsgesteuerte $Ca^{2+}$-Kanäle öffnen sich; $Ca^{2+}$ fließt in das Endknöpfchen.
+3.  **Exocytose:** Vesikel mit Neurotransmittern (z.B. Acetylcholin) verschmelzen mit der Membran und entleeren sich in den **synaptischen Spalt**.
+4.  **Diffusion & Bindung:** Transmitter diffundieren zur postsynaptischen Membran und binden an **rezeptorgesteuerte Ionenkanäle**.
+5.  **Ionenfluss:** Kanäle öffnen sich; Ionen fließen ein/aus $\rightarrow$ Postsynaptisches Potenzial entsteht.
+6.  **Abbau/Rücknahme:** Enzyme (z.B. Acetylcholinesterase) spalten den Transmitter, um Dauererregung zu verhindern. Die Bestandteile werden wieder aufgenommen.
+
+**Spezialfall Neuromuskuläre Endplatte:** Dies ist die Synapse zwischen Motoneuron und Muskelfaser. Der Transmitter ist immer **Acetylcholin**, und das Ziel ist die Muskelkontraktion.
+
+### 3. Nerv, Nervenfaser und Axon
+*   **Axon:** Der einzelne biologische Fortsatz einer Nervenzelle.
+*   **Nervenfaser:** Das Axon inklusive seiner umhüllenden Myelinscheide (Gliazellen).
+*   **Nerv:** Ein Bündel aus vielen Nervenfasern, umgeben von Bindegewebe und versorgt durch Blutgefäße.
+
+### 4. Erregungsweiterleitung am Axon
+Es gibt zwei Arten der Weiterleitung:
+*   **Kontinuierlich (wirbellose Tiere, z.B. Tintenfisch):** Das AP wandert Schritt für Schritt das Axon entlang. Langsam.
+*   **Saltatorisch (Wirbeltiere):** Das AP „springt“ von Schnürring zu Schnürring. Viel schneller und energiesparender.
+
+**Beschleunigungsmechanismen:**
+1.  **Dickerer Axondurchmesser (Kopffüßer/Riesentaxon):** Verringert den elektrischen Innenwiderstand.
+2.  **Myelinisierung (Wirbeltiere):** Erhöht den Isolationswiderstand und ermöglicht die saltatorische Leitung.
+
+### 5. Das Ruhepotenzial (ca. -70 mV)
+Zustand einer nicht erregten Nervenzelle:
+*   **Ionenverteilung:** Außen viel $Na^+$ und $Cl^-$, innen viel $K^+$ und organische Anionen ($A^-$).
+*   **Chemischer Gradient:** $K^+$ will nach außen diffundieren (Konzentrationsgefälle).
+*   **Elektrischer Gradient:** Die negativen Anionen halten $K^+$ innen fest.
+*   **Selektive Permeabilität:** Die Membran ist im Ruhestand fast nur für $K^+$ durchlässig (Kalium-Hintergrundkanäle).
+*   **Natrium-Kalium-Pumpe:** Transportiert unter ATP-Verbrauch 3 $Na^+$ raus und 2 $K^+$ rein. Sie erhält die Konzentrationsunterschiede aufrecht, da ständig $Na^+$ nach innen leckt („Natrium-Leckstrom“).
+
+### 6. Das Aktionspotenzial (AP)
+Verläuft nach dem **Alles-oder-Nichts-Prinzip**:
+1.  **Depolarisation:** Schwellenwert (-50mV) wird erreicht $\rightarrow$ spannungsgesteuerte $Na^+$-Kanäle öffnen sich schlagartig $\rightarrow$ $Na^+$-Einstrom (Membran wird positiv, ca. +30mV).
+2.  **Repolarisation:** $Na^+$-Kanäle schließen (inaktivieren), $K^+$-Kanäle öffnen sich $\rightarrow$ $K^+$-Ausstrom (Zellinnere wird wieder negativ).
+3.  **Hyperpolarisation:** $K^+$-Kanäle schließen langsam; Potenzial sinkt kurzzeitig unter das Ruhepotenzial.
+4.  **Refraktärzeit:** Zeit, in der kein neues AP ausgelöst werden kann (Schutz vor Rücklauf des Signals).
+
+### 7. Verrechnung: EPSP, IPSP und Alles-oder-Nichts
+An den Synapsen im Gehirn kommen viele Signale gleichzeitig an:
+*   **EPSP (Erregendes Postsynaptisches Potenzial):** Depolarisation (z.B. durch $Na^+$-Einstrom). Macht ein AP wahrscheinlicher.
+*   **IPSP (Inhibitorisches Postsynaptisches Potenzial):** Hyperpolarisation (z.B. durch $Cl^-$-Einstrom oder $K^+$-Ausstrom). Macht ein AP unwahrscheinlicher.
+*   **Verrechnung:** Am Axonhügel werden alle EPSPs und IPSPs summiert. Nur wenn die Summe den Schwellenwert überschreitet, entsteht ein AP (**Alles-oder-Nichts**).
+
+### 8. Der Patellarsehnenreflex
+Ein Eigenreflex zur Sicherung des Standes:
+1.  **Schlag auf Sehne:** Dehnt den Oberschenkelmuskel.
+2.  **Muskelspindel (Rezeptor):** Registriert Dehnung und sendet Signal über **sensorisches Neuron** zum Rückenmark.
+3.  **Rückenmark (ZNS):**
+    *   Direkte (monosynaptische) Verschaltung auf das **motorische Neuron** des Streckers $\rightarrow$ Kontraktion.
+    *   Verschaltung über ein **hemmendes Interneuron** auf das Motoneuron des Gegenspielers (Beuger) $\rightarrow$ Entspannung (reziproke Hemmung).
+4.  **Reaktion:** Das Bein kickt nach vorne.
+
+### 9. Nervensysteme: ZNS/PNS & Vegetativum
+*   **Zentralnervensystem (ZNS):** Gehirn und Rückenmark (Verarbeitung).
+*   **Peripheres Nervensystem (PNS):** Alle Nerven außerhalb des ZNS (Leitung).
+*   **Vegetatives Nervensystem:** Steuert unbewusste Funktionen.
+    *   **Sympathicus:** „Fight or Flight“ (Herzrate hoch, Pupillen weit, Verdauung aus).
+    *   **Parasympathicus:** „Rest and Digest“ (Herzrate runter, Verdauung an, Erholung).
+
+### 10. Sensorik: Bitter Tasting
+*   **Sinneszelle:** Eine Zelle, die äußere Reize in elektrische Signale umwandelt.
+*   **Rezeptormolekül:** Proteine auf der Membran der Sinneszelle (z.B. TAS2R38 für Bittergeschmack), an die spezifische Stoffe binden.
+*   **Non-taster Phänotyp:** Menschen, die bestimmte Bitterstoffe (wie PTC) nicht schmecken. Grund: Eine Mutation im Gen führt zu einem **veränderten Rezeptormolekül**, an das der Bitterstoff nicht mehr binden kann (Schlüssel-Schloss-Prinzip passt nicht).
+
+---
+**Tipp für die Vorbereitung:** Übe unbedingt das **Zeichnen** des AP-Diagramms und der Synapse, da die Lernziele explizit „zeichnen“, „Skizze“ und „beschriften“ verlangen!

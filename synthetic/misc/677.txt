@@ -1,0 +1,106 @@
+§u§
+```
+Sie können als Texte oder als Grafiken vorgegebene Stammbäume analysieren und begründen, welcher der fünf verschiedenen Vererbungstypen der wahrscheinlichste ist, dabei die Geno- und dazugehörige Phänotypen sowie ihre statistischen Wahrscheinlichkeiten angeben (mit Hilfe von Kreuzungsdiagrammen)
+```
+Erkläre mir den Stoff, den ich können muss, um dieses Lernziel zu erfüllen.
+§a§
+Um dieses Lernziel zu erreichen, musst du theoretisches Wissen aus der Genetik mit methodischer Fähigkeit (Stammbaumanalyse und Kreuzungsdiagramme) verknüpfen. Think of it like being a genetic detective.
+
+Hier ist der Stoff, den du beherrschen musst, aufgeteilt in fünf Kernbereiche:
+
+---
+
+### 1. Die fünf Vererbungstypen kennen und erkennen
+Du musst wissen, welche fünf Vererbungsmodi es gibt und wie sie sich in einem Stammbaum typischerweise darstellen. Es gibt zwei Hauptkategorien: **Autosomal** (liegt auf einem der 44 "normalen" Chromosomen, betrifft Männer und Frauen gleichermaßen) und **Gonosomal** (liegt auf den Geschlechtschromosomen X oder Y).
+
+Die fünf Typen sind:
+1. **Autosomal-dominant (AD):**
+   * Merkmal tritt in **jeder Generation** auf (kein Überspringen).
+   * Betroffene haben immer mindestens einen betroffenen Elternteil (Ausnahme: Neumutation).
+   * Männer und Frauen sind **gleich häufig** betroffen.
+2. **Autosomal-rezessiv (AR):**
+   * Merkmal kann Generationen **überspringen**.
+   * Zwei gesunde Eltern können kranke Kinder bekommen (Eltern sind "Carrier"/Konduktoren).
+   * Männer und Frauen sind **gleich häufig** betroffen.
+3. **X-chromosomal-dominant (XD):**
+   * Männer und Frauen können betroffen sein, aber oft **mehr Frauen** als Männer.
+   * Ein betroffener Vater gibt das Merkmal an **alle seine Töchter** weiter, aber an **keinen seiner Söhne** (Söhne bekommen das Y-Chromosom vom Vater).
+   * Eine betroffene Mutter gibt es an 50% ihrer Kinder (Söhne und Töchter) weiter.
+4. **X-chromosomal-rezessiv (XR):**
+   * Treffen **viel häufiger bei Männern** auf (da Männer nur ein X-Chromosom haben; ein rezessives Gen reicht hier aus, um das Merkmal zu zeigen).
+   * Eine betroffene Mutter gibt das Merkmal an **alle ihre Söhne** weiter.
+   * Betroffene Väter geben das Merkmal nie an ihre Söhne weiter (sondern nur das X an die Töchter, die dann gesunde Carrierinnen sind).
+5. **Y-chromosomal (Y):**
+   * Ausschließlich **Männer** sind betroffen.
+   * Ein betroffener Vater gibt es an **alle seine Söhne** weiter.
+   * Das Merkmal taucht niemals bei Frauen auf.
+
+---
+
+### 2. Stammbäume lesen (Text und Grafik)
+Du musst die Symbolsprache der Stammbäume beherrschen:
+* **Quadrat:** männlich / **Kreis:** weiblich
+* **Ausgefüllt/Schwarz:** betroffen (Träger des Merkmals/der Krankheit)
+* **Leer/Weiß:** gesund (nicht betroffen)
+* **Horizontal verbundene Formen:** Paarung/Eltern
+* **Vertikale Linien nach unten:** Nachkommen (Kinder)
+* **Römische Ziffern:** Generationen (I, II, III...)
+* **Arabische Ziffern:** Individuen innerhalb einer Generation (1, 2, 3...)
+
+*Bei Texten:* Du musst in der Lage sein, aus einem Text (z.B. "Mutter A ist gesund, Vater B ist krank. Sie haben zwei gesunde Töchter und einen kranken Sohn...") mental einen Stammbaum zu zeichnen.
+
+---
+
+### 3. Die Detektivarbeit: Den wahrscheinlichsten Typ begründen
+Hierfür brauchst du eine **Ausschlussstrategie**:
+1. **Geschlechterverteilung prüfen:** Sind nur Männer betroffen? -> Y-chromosomal oder X-chromosomal-rezessiv. Sind es gleich viele? -> Autosomal.
+2. **Eltern-Kind-Beziehung prüfen:** Sind zwei gesunde Eltern da, aber das Kind ist betroffen? -> *Muss* rezessiv sein (dominant wäre unmöglich, außer Neumutation).
+3. **Vater-Sohn-Regel:** Gibt ein betroffener Vater das Merkmal an seinen Sohn weiter? -> Kann *nicht* X-chromosomal sein (und nicht Y, wenn auch Töchter betroffen sind). Also: Autosomal!
+4. **Wahrscheinlichkeit abwägen:** Manchmal passen zwei Typen theoretisch. Dann musst du argumentieren: "Typ A ist wahrscheinlicher, weil bei Typ B die Wahrscheinlichkeit für dieses spezifische Auftreten statistisch viel geringer wäre."
+
+---
+
+### 4. Geno- und Phänotypen bestimmen
+Sobald du den Vererbungstyp festgelegt hast, musst du die "innere Ausstattung" (Genotyp) und das "äußere Erscheinungsbild" (Phänotyp) der Personen angeben.
+
+* **Allele benennen:** Meistens nimmt man einen Großbuchstaben für dominant (A) und einen Kleinbuchstaben für rezessiv (a). Bei gonosomalen schreibt man das Allel hochgestellt ans X (z.B. $X^A$ oder $X^a$).
+* **Beispiel Autosomal-rezessiv:**
+  * Phänotyp: gesund -> Genotyp: AA oder Aa (Aa ist "Carrier"/Konduktor)
+  * Phänotyp: krank -> Genotyp: aa
+* **Beispiel X-chromosomal-rezessiv:**
+  * Phänotyp gesunder Mann -> Genotyp: $X^A Y$
+  * Phänotyp kranker Mann -> Genotyp: $X^a Y$
+  * Phänotyp gesunde Frau -> Genotyp: $X^A X^A$ oder $X^A X^a$
+
+---
+
+### 5. Kreuzungsdiagramme erstellen und Wahrscheinlichkeiten berechnen
+Du musst in der Lage sein, die Genotypen der Eltern in ein Kreuzungsschema (Punnett-Quadrat / Kreuzungstabelle) einzutragen und die Wahrscheinlichkeiten für die Nachkommen zu berechnen.
+
+**Vorgehen:**
+1. Genotypen der Eltern identifizieren (z.B. Vater: Aa, Mutter: Aa).
+2. Die Keimzellen (Gameten) aufteilen: Vater gibt entweder A oder a weiter. Mutter gibt entweder A oder a weiter.
+3. Eine Tabelle zeichnen:
+
+|   | A (Mutter) | a (Mutter) |
+|---|---|---|
+| **A (Vater)** | AA | Aa |
+| **a (Vater)** | Aa | aa |
+
+4. **Statistische Wahrscheinlichkeiten ausrechnen:**
+   * Genotyp-Verhältnis: 1 AA : 2 Aa : 1 aa
+   * Als Wahrscheinlichkeit ausgedrückt: 25% AA, 50% Aa, 25% aa.
+   * Phänotyp-Verhältnis: 3 gesund (AA, Aa) : 1 krank (aa).
+   * Wahrscheinlichkeit für ein krankes Kind: 25% bzw. $\frac{1}{4}$.
+
+*Besonderheit bei Gonosomalen:* Hier musst du die Geschlechtschromosomen mit in die Tabelle aufnehmen (z.B. $X^A X^a$ x $X^A Y$). Dann ergibt sich z.B. eine 25% Wahrscheinlichkeit für eine gesunde Tochter ($X^A X^A$), 25% für eine Carrier-Tochter ($X^A X^a$), 25% für einen gesunden Sohn ($X^A Y$) und 25% für einen kranken Sohn ($X^a Y$).
+
+---
+
+### Zusammenfassung: Dein „Spickzettel“ für die Prüfung
+Wenn du einen Stammbaum siehst, stelle dir immer diese drei Fragen in dieser Reihenfolge:
+1. **Sind beide Geschlechter betroffen?** (Nein -> Y oder XR. Ja -> AD, AR oder XD).
+2. **Haben gesunde Eltern kranke Kinder?** (Ja -> AR oder XR. Nein -> AD, XD oder Y).
+3. **Vererbt ein Vater das Merkmal an seinen Sohn?** (Ja -> Autonomal. Nein -> könnte X-chromosomal sein).
+
+Beherrschst du diese fünf Bausteine, kannst du das Lernziel garantiert erfüllen!

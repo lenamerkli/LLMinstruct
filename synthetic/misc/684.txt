@@ -1,0 +1,87 @@
+§u§
+```
+Sie können in einem Stammbaum mit Blutgruppen (AB0- und Rhesussystem) die Phänotypen und möglichen Genotypen (Schreibweise so wie im Unterricht erklärt) und deren Wahrscheinlichkeiten korrekt angeben
+```
+Erkläre mir den Stoff, den ich können muss, um dieses Lernziel zu erfüllen.
+§a§
+Um dieses Lernziel zu erreichen, musst du die Vererbungsregeln der Blutgruppen verstehen und auf einen Stammbaum anwenden können. Hier ist eine Schritt-für-Schritt-Erklärung des Stoffes.
+
+---
+
+### 1. Grundlagen: Phänotyp vs. Genotyp
+*   **Phänotyp:** Das Merkmal, das man im Labor testen kann (z. B. "Blutgruppe A").
+*   **Genotyp:** Die genetische Kombination, die dahintersteckt (z. B. $I^A I^A$ oder $I^A i$).
+
+---
+
+### 2. Das AB0-System
+Im AB0-System gibt es drei Allele: $I^A$, $I^B$ und $i$ (oft auch einfach als $A, B$ und $0$ geschrieben).
+
+*   **Dominanzverhältnisse:**
+    *   $I^A$ und $I^B$ sind **kodominant** (beide setzen sich gleichzeitig durch).
+    *   $i$ (Blutgruppe 0) ist **rezessiv** gegenüber $I^A$ und $I^B$.
+
+| Phänotyp (Blutgruppe) | Mögliche Genotypen | Merkhilfe |
+| :--- | :--- | :--- |
+| **A** | $I^A I^A$ (reinerbig) oder $I^A i$ (mischerbig) | A ist dominant über 0 |
+| **B** | $I^B I^B$ (reinerbig) oder $I^B i$ (mischerbig) | B ist dominant über 0 |
+| **AB** | $I^A I^B$ | Kodominanz (beide sichtbar) |
+| **0** | $ii$ | Nur reinerbig möglich |
+
+---
+
+### 3. Das Rhesus-System
+Hier gibt es meist nur zwei relevante Allele: $D$ (positiv) und $d$ (negativ).
+
+*   **Dominanzverhältnisse:**
+    *   $D$ (Rhesus-positiv) ist **dominant**.
+    *   $d$ (Rhesus-negativ) ist **rezessiv**.
+
+| Phänotyp | Mögliche Genotypen |
+| :--- | :--- |
+| **Rh+** (positiv) | $DD$ (reinerbig) oder $Dd$ (mischerbig) |
+| **Rh-** (negativ) | $dd$ (immer reinerbig) |
+
+---
+
+### 4. Vorgehensweise bei der Stammbaumanalyse
+
+Wenn du einen Stammbaum vor dir hast, gehst du am besten so vor:
+
+1.  **Sichere Genotypen eintragen:**
+    *   Alle Personen mit Blutgruppe **0** haben immer $ii$.
+    *   Alle Personen mit Blutgruppe **AB** haben immer $I^A I^B$.
+    *   Alle Personen mit **Rh-** haben immer $dd$.
+2.  **Rückschlüsse ziehen (Eltern/Kinder):**
+    *   Hat ein Kind die Blutgruppe 0 ($ii$), muss es von *jedem* Elternteil ein $i$ geerbt haben.
+    *   Hat ein Kind Rh- ($dd$), müssen beide Eltern ein kleines $d$ im Genotyp haben.
+    *   *Beispiel:* Ein Vater mit Blutgruppe A und eine Mutter mit Blutgruppe B haben ein Kind mit Blutgruppe 0. Dann **müssen** beide Eltern mischerbig sein ($I^A i$ und $I^B i$).
+
+---
+
+### 5. Wahrscheinlichkeiten berechnen (Kombinationsquadrat)
+
+Um Wahrscheinlichkeiten für die Kinder anzugeben, nutzt du das **Punnett-Quadrat**.
+
+**Beispiel:** Vater ist $I^A i$ (mischerbig A), Mutter ist $I^B i$ (mischerbig B).
+
+| | **$I^B$** | **$i$** |
+| :--- | :--- | :--- |
+| **$I^A$** | $I^A I^B$ (AB) | $I^A i$ (A) |
+| **$i$** | $I^B i$ (B) | $ii$ (0) |
+
+*   **Ergebnis:** Jede Blutgruppe (A, B, AB, 0) hat eine Wahrscheinlichkeit von **25%** oder **1/4**.
+
+---
+
+### 6. Wichtige Tipps für die Prüfung
+
+1.  **Schreibweise:** Achte darauf, ob dein Lehrer die Schreibweise mit dem großen $I$ (für Isoagglutinogen) verlangt ($I^A I^B$) oder die vereinfachte Schreibweise ($AB$) erlaubt.
+2.  **Ausschlussprinzip:** Wenn im Stammbaum nicht eindeutig feststellbar ist, ob jemand reinerbig ($AA$) oder mischerbig ($A0$) ist, schreibt man oft **$A\_$** oder gibt beide Möglichkeiten mit Wahrscheinlichkeiten an.
+3.  **Die Rhesus-Falle:** Zwei Rhesus-positive Eltern können ein Rhesus-negatives Kind haben (wenn beide $Dd$ sind). Aber zwei Rhesus-negative Eltern ($dd$) können **niemals** ein Rhesus-positives Kind haben.
+
+#### Checkliste für dich:
+*   [ ] Kann ich die Genotypen für A, B, AB und 0 auswendig?
+*   [ ] Weiß ich, dass Rh- immer $dd$ bedeutet?
+*   [ ] Kann ich ein Kreuzungsquadrat zeichnen?
+*   [ ] Kann ich begründen, warum eine Person mischerbig sein muss (z.B. weil ein Elternteil oder Kind Blutgruppe 0 hat)?

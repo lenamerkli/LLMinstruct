@@ -1,0 +1,85 @@
+§u§
+```
+Sie können erklären und skizzieren, wie neue Merkmale / Merkmalskombinationen auftreten (Mutationen, intra- und interchromosomale Rekombination)
+```
+Erkläre mir den Stoff, den ich können muss, um dieses Lernziel zu erfüllen.
+§a§
+Um dieses Lernziel zu erreichen, musst du verstehen, wie genetische Vielfalt entsteht. Kurz gesagt: **Neue Merkmale** (völlig neue Eigenschaften) entstehen durch **Mutationen**, während **neue Merkmalskombinationen** (neue Zusammenstellungen bereits vorhandener Eigenschaften) durch **Rekombination** entstehen.
+
+Hier ist die detaillierte Erklärung des Stoffs, aufgeteilt in die drei geforderten Bereiche:
+
+---
+
+### 1. Mutationen (Auftreten völlig neuer Merkmale)
+Eine Mutation ist eine zufällige, dauerhafte Veränderung des Erbguts (DNA). Sie ist die *einzige* Möglichkeit, wie ein völlig neues Allel (und damit ein völlig neues Merkmal) entsteht, das es in der Population vorher noch nicht gab.
+
+Du musst folgende Mutationsarten unterscheiden:
+*   **Punktmutation (Genmutation):** Veränderung einer einzelnen Base (z.B. Austausch, Einfügung oder Verlust einer Base). Dies kann dazu führen, dass eine andere Aminosäure in ein Protein eingebaut wird oder das Protein verkürzt wird (Frameshift). *Beispiel: Sichelzellanämie (Austausch nur einer Base verändert das Hämoglobin komplett).*
+*   **Chromosomenmutation (strukturelle Veränderung):** Hier verändert sich der Aufbau eines gesamten Chromosoms. Dazu gehören:
+    *   *Deletion:* Ein Stück geht verloren.
+    *   *Duplikation:* Ein Stück wird verdoppelt.
+    *   *Inversion:* Ein Stück wird um 180 Grad gedreht.
+    *   *Translokation:* Ein Stück bricht ab und heftet sich an ein *nicht-homologes* Chromosom an (diese ist auch ein Teil der interchromosomalen Rekombination, s.u.).
+*   **Genommutation (Zahl der Chromosomen):** Fehler bei der Zellteilung, bei der ganze Chromosomen zu viel oder zu wenig vorhanden sind (z.B. Trisomie 21).
+
+---
+
+### 2. Intrachromosomale Rekombination (Neukombination auf *einem* Chromosom)
+Hierbei werden Gene, die auf *demselben* Chromosom liegen, neu zusammengemischt. Das passiert während der Meiose (Reifeteilung) in der Prophase I.
+
+*   **Der Mechanismus (Crossing Over):**
+    1.  Die homologen Chromosomen (eins von der Mutter, eins vom Vater) legen sich exakt aneinander (Synapsis).
+    2.  Es bilden sich Brückenkreuzungen (Chiasmata).
+    3.  Die DNA bricht an diesen Stellen auf und wird kreuzweise ausgetauscht.
+*   **Das Ergebnis:** Die Chromatiden enthalten nun neue Kombinationen der elterlichen Allele. Gene, die vorher immer zusammen vererbt wurden (gekoppelte Gene), können nun getrennt weitergegeben werden.
+*   **Wichtig:** Je weiter zwei Gene auf einem Chromosom auseinanderliegen, desto häufiger findet zwischen ihnen ein Crossing Over statt (Rekombinationsfrequenz).
+
+---
+
+### 3. Interchromosomale Rekombination (Neukombination *zwischen* verschiedenen Chromosomen)
+Hierbei geht es um die Neuanordnung von ganzen Chromosomen oder die unabhängige Verteilung von Chromosomen, die auf *unterschiedlichen* Chromosomen liegen.
+
+Dafür gibt es zwei wesentliche Mechanismen:
+*   **Unabhängige Verteilung (Random Assortment):**
+    *   In der Metaphase I der Meiose legen sich die homologen Chromosomenpaare unabhängig voneinander an die Äquatorialebene.
+    *   Welches Chromosom der Mutter und welches des Vaters zu welcher Pol-Seite wandert, ist rein zufällig.
+    *   *Ergebnis:* Die Merkmale auf verschiedenen Chromosomen (z.B. Blütenfarbe auf Chromosom 1 und Samenform auf Chromosom 7) werden völlig neu und unabhängig voneinander kombiniert. (Das ist die Basis für die 3. Mendelsche Regel).
+*   **Translokation (als vererbbarer Austausch):**
+    *   Ein Stück eines Chromosoms bricht ab und heftet sich an ein *nicht-homologes* Chromosom an. Dadurch werden Gene von einem Chromosom auf ein ganz anderes verschoben, was zu völlig neuen Merkmalskombinationen in der nachfolgenden Generation führen kann.
+
+---
+
+### Wie du das "skizzieren" kannst (Wichtig für die Prüfung!)
+
+Das Lernziel fordert explizit das **Skizzieren**. Du solltest in der Lage sein, folgende Zeichnungen aus dem Kopf anzufertigen:
+
+**Skizze 1: Punktmutation**
+*   Zeichne einen kurzen DNA-Strang: `A-T-G-C`
+*   Zeichne einen Pfeil darauf und schreibe "Mutation" daneben.
+*   Zeichne den veränderten Strang: `A-T-T-C` (Austausch) oder `A-T-G-G-C` (Insertion).
+
+**Skizze 2: Intrachromosomale Rekombination (Crossing Over)**
+1.  Zeichne zwei homologe Chromosomen als doppelte Stäbchen (je zwei Schwesterchromatiden).
+    *   Chromosom 1 (Mutter): `A - B`
+    *   Chromosom 2 (Vater): `a - b`
+2.  Zeichne sie übereinander liegend und an einer Stelle überkreuzt (wie ein "X").
+3.  Zeichne den Bruch und Austausch an der Kreuzungsstelle ein.
+4.  Zeichne das Ergebnis:
+    *   Neues Chromosom 1: `A - b`
+    *   Neues Chromosom 2: `a - B`
+
+**Skizze 3: Interchromosomale Rekombination (Unabhängige Verteilung)**
+1.  Zeichne eine Zelle mit zwei verschiedenen Chromosomenpaaren (z.B. lange und kurze Stäbchen).
+    *   Paar 1: (Mutter-Vater)
+    *   Paar 2: (Mutter-Vater)
+2.  Zeichne die Äquatorialebene (eine Linie in der Mitte).
+3.  Zeige zwei Möglichkeiten, wie sie sich anordnen können:
+    *   *Variante A:* Beide Mutter-Chromosomen links, beide Vater-Chromosomen rechts.
+    *   *Variante B:* Mutter-Chromosom 1 links + Vater-Chromosom 2 links (gemischt!).
+4.  Beschrifte: "Zufällige Verteilung erzeugt neue Kombinationen bei der Zellteilung."
+
+### Zusammenfassung für dein Verständnis:
+*   **Mutation** = Das Roulette-Rad bekommt ein neues Feld (etwas Neues entsteht).
+*   **Intrachromosomale Rekombination** = Die Felder auf einem Roulette-Rad werden neu angeordnet (Crossing Over mischt eng liegende Gene auf).
+*   **Interchromosomale Rekombination** = Es werden mehrere Roulette-Räder gleichzeitig gedreht und die Ergebnisse kombiniert (unabhängige Verteilung mischt Gene auf verschiedenen Chromosomen).
+

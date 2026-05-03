@@ -1,0 +1,103 @@
+§u§
+```
+\begin{itemize}
+    \item Sie können ein Wirbeltier-Neuron zeichnen, dessen Bestandteile benennen (exakte Fachbegriffe) und ihre Funktionen erklären
+    \item Sie können die Signalweiterleitung an chemischen Synapsen mit Hilfe einer Skizze schrittweise aufzeigen und den Spezialfall der neuromuskulären Endplatte erläutern
+    \item Sie können zwischen Nerven, Nervenfasern und Axonen unterscheiden und entsprechende Abbildungen korrekt beschriften
+    \item Sie können die Erregungsweiterleitung am Axon erklären und die Beschleunigungsmechanismen bei Kopffüßern \& Wirbeltieren erklären
+    \item Sie können erklären, wie das Ruhepotential an der Axonmembran entsteht, wobei die Ionenverteilung an der Membran, die Arbeit der Na-K-Pumpe und das Zustandekommen des chemischen sowie des elektrischen Potenzials erläutert wird
+    \item Sie können schrittweise aufzeigen, wie an der Axonmembran ein Aktionspotential entsteht, dabei auf den Öffnungszustand von Ionenkanälen und Ionenbewegungen beim Eintreffen eines elektrischen Signals am Neuron erläutern
+    \item Sie können erklären, wie hemmende und erregende Synapsen funktionieren, was IPSP und EPSP bewirken und wie entschieden wird, ob die Folge «alles» oder «nichts» ist
+    \item Sie können das neurobiologische Geschehen beim Patellarsehnenreflex schrittweise aufzeigen und in einem Schema alle relevanten Strukturen einzeichnen (Dehnungsspindel, sensorische/motorische Neurone, Interneurone, erregende und hemmende Synapsen, \dots).
+    \item Sie können peripheres und zentrales Nervensystem unterscheiden und Wirkungen unseres Parasympathicus / Sympathicus beschreiben
+    \item Sie können anhand des Experiments „bitter tasting“ die Begriffe Rezeptormolekül und Sinneszelle und das Zustandekommen eines „non-tasting“ Phänotyps erklären
+\end{itemize}
+```
+Erkläre mir den Stoff, den ich können muss, um diese Lernziele zu erfüllen.
+§a§
+Hier ist eine detaillierte, verständliche und strukturierende Erklärung des Stoffs, der nötig ist, um all deine Lernziele zu erfüllen. Ich habe die Lernziele als Leitfaden genommen und die jeweiligen Kernkonzepte, Fachbegriffe und Zusammenhänge herausgearbeitet.
+
+---
+
+### 1. Das Wirbeltier-Neuron: Aufbau und Funktion
+Ein Neuron (Nervenzelle) besteht aus drei Hauptbestandteilen, die du zeichnen und benennen können musst:
+*   **Soma (Zellkörper):** Enthält den Zellkern und die Organellen. Hauptaufgabe: Stoffwechsel, Integration der empfangenen Signale.
+*   **Dendriten (Zellfortsätze):** Baumartige Verzweigungen, die Signale von anderen Neuronen empfangen und zum Soma weiterleiten.
+*   **Axon (Nervenfaser):** Ein langer, meist myelinisierter Fortsatz, der das elektrische Signal (Aktionspotential) vom Soma wegleitet.
+*   *Zusätzlich wichtig:* **Axonhügel (Hillock):** Übergang vom Soma zum Axon; hier wird entschieden, ob ein Aktionspotential ausgelöst wird (Schwellenwert). **Axonterminale (Endknöpfchen):** Das Ende des Axons, das den Neurotransmitter an die Synapse abgibt.
+
+### 2. Die chemische Synapse & die neuromuskuläre Endplatte
+**Schritte der Signalweiterleitung an einer chemischen Synapse:**
+1.  Ein Aktionspotential erreicht das Axonterminal.
+2.  Spannungsgesteuerte **Calcium-Kanäle** öffnen sich, Ca²⁺ strömt in die Präsynapse ein.
+3.  Dies löst die Verschmelzung von **Vesikeln** (Bläschen, die Neurotransmitter enthalten) mit der Präsynaptischen Membran aus (**Exocytose**).
+4.  Die **Neurotransmitter** diffundieren durch den **synaptischen Spalt**.
+5.  Sie binden an **Rezeptoren** auf der Postsynaptischen Membran.
+6.  Ionenkanäle öffnen sich, es entsteht ein postsynaptisches Potenzial.
+7.  Der Neurotransmitter wird abgebaut (z.B. durch Enzyme) oder zurückgenommen (Reuptake), um die Synapse für das nächste Signal bereit zu machen.
+
+**Spezialfall: Neuromuskuläre Endplatte:**
+Das ist die Synapse zwischen einem motorischen Neuron und einer Muskelzelle. Der Neurotransmitter ist immer **Acetylcholin (ACh)**. Die Reaktion ist immer *erregend*; es kommt zur Kontraktion des Muskels. Das Enzym **Acetylcholinesterase** baut das ACh rasch ab, damit der Muskel wieder entspannen kann.
+
+### 3. Nerv, Nervenfaser und Axon unterscheiden
+Diese Begriffe werden oft verwechselt, meine ich aber unterschiedliche Strukturebenen:
+*   **Axon:** Der einzelne, zylindrische Fortsatz eines *einzelnen* Neurons.
+*   **Nervenfaser:** Ein Axon inklusive seiner Hüllen (bei Wirbeltieren: Myelinscheide gebildet von Schwann-Zellen im peripheren Nervensystem).
+*   **Nerv:** Ein Bündel aus vielen Nervenfasern, umgeben von Bindegewebshüllen (Endoneurium, Perineurium, Epineurium). Analog einem Kabel, bei dem die einzelnen Adern die Axone/Nervenfasern sind und der gesamte Kabelstrang der Nerv ist.
+
+### 4. Erregungsweiterleitung am Axon & Beschleunigung
+**Grundprinzip (kontinuierliche Weiterleitung):**
+Das Aktionspotential wandert, indem lokal Natrium einströmt, was das benachbarte Stück der Membran depolarisiert, bis dort auch der Schwellenwert erreicht wird. Das funktioniert wie eine brennende Zündschnur.
+
+**Beschleunigungsmechanismen:**
+*   **Wirbeltiere (Saltatorische Erregungsleitung):** Das Axon ist von Myelin (Schwann-Zellen) umhüllt, das als Isolator wirkt. Dazwischen gibt es Lücken: die **Ranvierschen Schnürringe**. Das Aktionspotential "springt" von Schnürring zu Schnürring. Das ist viel schneller als die kontinuierliche Weiterleitung.
+*   **Kopffüßer (z.B. Tintenfische):** Sie haben keine Myelinscheiden. Stattdessen besitzen sie **Riesenaxone** (sehr dick). Je dicker ein Axon, desto geringer ist der elektrische Widerstand, und desto schneller breitet sich das Signal aus.
+
+### 5. Das Ruhepotential
+An der ruhenden Axonmembran herrscht eine Spannung von ca. **-70 mV** (Innen negativ gegenüber Außen). Wie entsteht sie?
+*   **Ionenverteilung:** Im Intrazellulärraum herrscht viel **Kalium (K⁺)** und große, negativ geladene Proteine. Im Extrazellulärraum herrscht viel **Natrium (Na⁺)** und Chlorid (Cl⁻).
+*   **Na-K-Pumpe:** Pumpt aktiv (unter ATP-Verbrauch) 3 Na⁺ raus und 2 K⁺ rein. Sie hält den Konzentrationsunterschied (chemisches Gefälle) aufrecht.
+*   **Chemisches Potenzial:** K⁺ "will" aus der Zelle raus, weil drinnen die Konzentration höher ist (Konzentrationsgefälle).
+*   **Elektrisches Potenzial:** Da die Zelle innen negativ ist, wird das positiv geladene K⁺ angezogen und "will" wieder rein.
+*   **Gleichgewicht:** In der Ruhephase ist die Membran fast nur für K⁺ durchlässig (Leckkanäle). K⁺ strömt so lange aus, bis das elektrische Anziehungspotenzial das chemische Abstoßungspotenzial ausgleicht. Dieser Zustand erzeugt das Ruhepotential.
+
+### 6. Das Aktionspotential
+Wenn ein Reiz am Axonhügel den Schwellenwert erreicht, passiert Folgendes schrittweise:
+1.  **Depolarisation:** Spannungsgesteuerte **Na⁺-Kanäle** öffnen sich. Na⁺ strömt rasend schnell in die Zelle (folgend dem chemischen und nun auch elektrischen Gefälle). Die Spannung steigt von -70 mV auf ca. +30 mV (Innen positiv).
+2.  **Repolarisation:** Die Na⁺-Kanäle schließen sich (und werden "inaktiviert"). Spannungsgesteuerte **K⁺-Kanäle** öffnen sich (verzögert). K⁺ strömt aus der Zelle aus. Die Spannung sinkt wieder in den negativen Bereich.
+3.  **Hyperpolarisation:** Da die K⁺-Kanäle etwas länger offen bleiben, sinkt die Spannung kurzzeitig unter das -70 mV Niveau.
+4.  **Rückkehr zum Ruhepotential:** Die K⁺-Kanäle schließen, die Na-K-Pumpe stellt das ursprüngliche Gefälle wieder her.
+*Wichtig:* Es gilt das **Alles-oder-Nichts-Prinzip**. Entweder das Signal ist stark genug (Schwelle) und das AP feuert voll durch, oder es feuert gar nicht.
+
+### 7. Hemmende vs. erregende Synapsen (EPSP / IPSP)
+An der Postsynapse entstehen nicht sofort Aktionspotentiale, sondern graduierte (analoge) Potentiale:
+*   **EPSP (Erregendes postsynaptisches Potenzial):** Meist öffnen sich Na⁺-Kanäle. Na⁺ strömt ein, die Zelle wird etwas *depolarisiert* (z.B. von -70 auf -60 mV). Sie nähert sich dem Schwellenwert.
+*   **IPSP (Hemmendes postsynaptisches Potenzial):** Meist öffnen sich K⁺- oder Cl⁻-Kanäle. K⁺ strömt raus (oder Cl⁻ rein), die Zelle wird *hyperpolarisiert* (z.B. von -70 auf -80 mV). Sie entfernt sich vom Schwellenwert.
+
+**Die Entscheidung "Alles oder Nichts":**
+Im **Axonhügel** werden alle EPSPs und IPSPs räumlich und zeitlich summiert (Integration). Überwiegt die Erregung (Summe der EPSPs) und erreicht den Schwellenwert (ca. -55 mV), feuert das Axon ein Aktionspotential ("Alles"). Überwiegt die Hemmung (IPSPs), feuert es nicht ("Nichts").
+
+### 8. Der Patellarsehnenreflex
+Ein monosynaptischer Eigereflex (er geht nur über eine Synapse im Rückenmark).
+**Ablauf & Schema-Bestandteile:**
+1.  **Reiz:** Klopfen auf die Patellarsehne dehnt den Oberschenkelmuskel.
+2.  **Dehnungsspindel (Muskelspindel):** Registriert die Dehnung und erzeugt ein Aktionspotential.
+3.  **Sensorisches (afférentes) Neuron:** Leitet das Signal ins Rückenmark.
+4.  **Erregende Synapse (Glutamat):** Das sensorische Neuron schaltet direkt auf ein...
+5.  **Motorisches (efferentes) Neuron:** Dieses feuert und leitet das Signal zurück zum Oberschenkelmuskel (Quadriceps) -> **Kontraktion** (Bein streckt sich).
+6.  *Gleichzeitig (hemmender Teil):* Das sensorische Neuron aktiviert ein **Interneuron** (Zwischenneuron).
+7.  **Hemmende Synapse (Glycin/GABA):** Das Interneuron hemmt das motorische Neuron des Gegenspielers (Beinbeuger / Hamstrings). Dieser entspannt sich (reziproke Hemmung).
+
+### 9. Peripheres vs. zentrales Nervensystem & Autonomes NS
+*   **Zentrales Nervensystem (ZNS):** Gehirn (Encephalon) und Rückenmark (Medulla spinalis). Verarbeitet Informationen.
+*   **Peripheres Nervensystem (PNS):** Alle Nerven außerhalb des ZNS (Hirnnerven, Spinalnerven). Verbindet ZNS mit dem Körper.
+
+Das unwillkürliche (autonome) Nervensystem (Teil des PNS) steuert innere Organe:
+*   **Sympathicus ("Fight or Flight"):** Aktiviert den Körper bei Stress/Streng. Pupillen weiten sich, Herzschlag beschleunigt, Bronchien erweitert, Verdauung wird gehemmt. (Neurotransmitter oft Noradrenalin).
+*   **Parasympathicus ("Rest and Digest"):** Entspannung/Erholung. Pupillen verengen sich, Herzschlag verlangsamt, Verdauung wird angeregt, Speichelfluss steigt. (Neurotransmitter ist Acetylcholin).
+
+### 10. Experiment „bitter tasting“ (Rezeptormolekül, Sinneszelle, Phänotyp)
+Dies bezieht sich auf den klassischen Gentest mit PTC- oder PROP-Papierstreifen (schmeckt für manche extrem bitter, für andere nach nichts).
+*   **Sinneszelle:** Die Geschmackszelle auf der Zunge, die auf chemische Reize reagiert und ein Signal an das Gehirn weiterleitet.
+*   **Rezeptormolekül:** Ein spezifisches Protein (TAS2R38) auf der Membran der Sinneszelle, das genau an den Bitterstoff (z.B. PTC) andockt. Passt der Schlüssel (Bitterstoff) ins Schloss (Rezeptor), öffnen sich Ionenkanäle und die Zelle feuert.
+*   **„Non-tasting“ Phänotyp:** Manche Menschen schmecken den Stoff nicht ("Non-taster"). Der Grund ist eine **Mutation** in der DNA, die für das Rezeptormolekül codiert. Dadurch verändert sich die Form des Rezeptors, der Bitterstoff kann nicht mehr binden, die Sinneszelle wird nicht erregt, das Gehirn bekommt kein Signal. Oft ist das "Nicht-Schmecken" rezessiv vererbt.
