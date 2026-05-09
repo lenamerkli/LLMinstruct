@@ -1,0 +1,94 @@
+§u§
+```
+    Geometrische Optik:
+       - Brechung und Reflexion (inkl. Totalreflexion)
+       - Strahlengang konstruieren/berechnen
+       - Fotoapparat
+       - Auge, Fernrohr und Mikroskop
+```
+Erkläre mir diese Themen. Ich werde darüber eine Prüfung haben.
+§a§
+Das ist ein klassisches Thema der Physik in der Mittel- oder Oberstufe. Hier ist eine strukturierte Zusammenfassung, die dir hilft, die Konzepte für deine Prüfung zu verstehen.
+
+---
+
+### 1. Reflexion und Brechung
+
+#### Reflexion
+*   **Reflexionsgesetz:** Der Einfallswinkel $\alpha$ ist gleich dem Reflexionswinkel $\alpha'$. ($\alpha = \alpha'$)
+*   **Einfallslos:** Eine gedachte Linie senkrecht zur Oberfläche am Punkt, an dem der Lichtstrahl auftrifft. Winkel werden immer zum Lot gemessen!
+*   **Spiegelnd vs. Diffus:** An glatten Flächen (Spiegel) reflektiert das Licht gerichtet, an rauen Oberflächen (Papier) wird es in alle Richtungen gestreut.
+
+#### Brechung (Refraktion)
+Wenn Licht von einem Medium (z. B. Luft) in ein anderes (z. B. Glas) übergeht, ändert es seine Geschwindigkeit und wird abgelenkt.
+*   **Vom optisch dünneren zum dichteren Medium (Luft $\to$ Glas):** Licht wird **zum Lot hin** gebrochen.
+*   **Vom optisch dichteren zum dünneren Medium (Glas $\to$ Luft):** Licht wird **vom Lot weg** gebrochen.
+*   **Snelliussches Brechungsgesetz:** $n_1 \cdot \sin(\alpha) = n_2 \cdot \sin(\beta)$. ($n$ ist der Brechungsindex).
+
+#### Totalreflexion
+Dies passiert nur beim Übergang von **dicht nach dünn** (z. B. Wasser zu Luft).
+*   Ab einem bestimmten Winkel (Grenzwinkel $\alpha_G$) wird das Licht nicht mehr gebrochen, sondern wie an einem Spiegel komplett zurückgeworfen.
+*   **Anwendung:** Glasfaserkabel (Licht bleibt im Kabel gefangen), Diamanten (Funkeln).
+
+---
+
+### 2. Strahlengang konstruieren und berechnen
+
+Meistens geht es hier um die **Sammellinse** (Konvexlinse).
+
+#### Die drei Hauptstrahlen zur Konstruktion:
+1.  **Parallelstrahl:** Verläuft parallel zur optischen Achse und wird hinter der Linse zum **Brennpunktstrahl** (geht durch $F$).
+2.  **Mittelpunktstrahl:** Geht ungebrochen durch die Mitte der Linse.
+3.  **Brennpunktstrahl:** Geht durch den vorderen Brennpunkt und wird hinter der Linse zum **Parallelstrahl**.
+
+*Wo sich diese Strahlen schneiden, entsteht das Bild.*
+
+#### Wichtige Formeln (Berechnung):
+*   **Abbildungsgleichung:** $\frac{1}{f} = \frac{1}{g} + \frac{1}{b}$
+    *   $f$: Brennweite
+    *   $g$: Gegenstandsweite (Abstand Gegenstand - Linse)
+    *   $b$: Bildweite (Abstand Bild - Linse)
+*   **Abbildungsmaßstab:** $A = \frac{B}{G} = \frac{b}{g}$
+    *   $G$: Gegenstandsgröße
+    *   $B$: Bildgröße
+
+---
+
+### 3. Der Fotoapparat
+Ein Fotoapparat funktioniert ähnlich wie eine einfache Sammellinse:
+*   **Linse (Objektiv):** Erzeugt ein **reelles, umgekehrtes und verkleinertes** Bild auf dem Sensor.
+*   **Fokussieren:** Um Gegenstände in verschiedenen Entfernungen scharf zu sehen, wird der Abstand zwischen Linse und Sensor (Bildweite $b$) verändert.
+*   **Blende:** Regelt die Lichtmenge (ähnlich wie die Pupille).
+
+---
+
+### 4. Auge, Fernrohr und Mikroskop
+
+#### Das menschliche Auge
+*   **Funktionsweise:** Die Augenlinse wirft ein Bild auf die Netzhaut (reell, umgekehrt, verkleinert).
+*   **Akkommodation:** Das Auge kann nicht (wie die Kamera) den Abstand Linse-Netzhaut ändern. Stattdessen verändern Muskeln die **Krümmung der Linse** (und damit die Brennweite $f$), um nah oder fern scharf zu sehen.
+*   **Fehlsichtigkeit:**
+    *   **Kurzsichtigkeit:** Augapfel zu lang oder Linse zu stark gekrümmt. Bild entsteht *vor* der Netzhaut. Korrektur: **Zerstreuungslinse** (Konkavlinse).
+    *   **Weitsichtigkeit:** Augapfel zu kurz. Bild entsteht *hinter* der Netzhaut. Korrektur: **Sammellinse** (Konvexlinse).
+
+#### Das Mikroskop
+Dient zur Vergrößerung sehr kleiner, naher Objekte. Besteht aus zwei Sammellinsen:
+1.  **Objektiv:** Erzeugt ein vergrößertes, reelles Zwischenbild.
+2.  **Okular:** Wirkt wie eine Lupe und vergrößert dieses Zwischenbild nochmals zu einem virtuellen Bild.
+*   **Gesamtvergrößerung:** $V_{Gesamt} = V_{Objektiv} \cdot V_{Okular}$.
+
+#### Das Fernrohr (Kepler-Fernrohr / Astronomisches Fernrohr)
+Dient zur Beobachtung ferner Objekte.
+*   Besteht ebenfalls aus **zwei Sammellinsen**.
+*   Das ferne Objekt ist quasi unendlich weit weg, die Lichtstrahlen kommen parallel an.
+*   Das Objektiv erzeugt ein Bild im Brennpunkt. Das Okular vergrößert dieses Bild wieder.
+*   **Wichtig:** Das Bild im astronomischen Fernrohr steht **auf dem Kopf**.
+
+---
+
+### Tipps für die Prüfung:
+1.  **Zeichnen:** Übe das Zeichnen mit Lineal! Ein Millimeter Abweichung beim Brennpunkt führt zu einem falschen Bild.
+2.  **Einheiten:** Achte bei Rechnungen darauf, dass $f$, $g$ und $b$ in der gleichen Einheit stehen (alles in cm oder alles in mm).
+3.  **Linsengleichung umstellen:** Lerne, wie man $\frac{1}{f} = \frac{1}{g} + \frac{1}{b}$ nach $b$ oder $g$ auflöst. (Tipp: $\frac{1}{b} = \frac{1}{f} - \frac{1}{g}$, dann den Kehrwert bilden).
+
+Hast du zu einem dieser Punkte eine spezifische Frage oder soll ich eine Beispielrechnung vorführen?

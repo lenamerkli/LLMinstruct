@@ -1,0 +1,179 @@
+§u§
+```
+Sie können Eigenschaften von Trainingsdaten für Neuronale Netzwerke benennen und beschreiben, wie diese vorbereitet werden.
+```
+Erkläre mir den Stoff, den ich können muss, um dieses Lernziel zu erfüllen.
+§a§
+Um dieses Lernziel zu erfüllen, solltest du zwei Dinge sicher beherrschen:
+
+1. **Welche Eigenschaften gute Trainingsdaten für Neuronale Netze haben.**
+2. **Welche typischen Schritte zur Vorbereitung (Vorverarbeitung) dieser Daten gehören.**
+
+Ich gehe beides nacheinander durch.
+
+---
+
+## 1. Was sind Trainingsdaten für Neuronale Netze?
+
+- **Trainingsdaten** sind Beispiele, aus denen das Netz „lernt“.
+  - Jedes Beispiel besteht aus **Eingabedaten** (Features, x) und oft einem **Zielwert/Label** (y).
+- Beispiele:
+  - Bildklassifikation: Eingabe = Bild, Label = „Katze“ / „Hund“
+  - Spam-Erkennung: Eingabe = E‑Mail‑Text, Label = „Spam“ / „Nicht Spam“
+
+Wichtig: Ein Neuronales Netz kann nur mit dem arbeiten, was in den Trainingsdaten steckt. Sind die Daten schlecht, hilft das beste Modell wenig.
+
+---
+
+## 2. Wichtige Eigenschaften von Trainingsdaten
+
+Du solltest ein paar zentrale Eigenschaften benennen und erklären können:
+
+### 2.1 Qualität
+
+- **Wenig Fehler und Rauschen**
+  - Möglichst keine falschen Messwerte, Tippfehler, kaputten Dateien.
+  - Je mehr „Müll“ in den Daten, desto schlechter lernt das Netz.
+
+### 2.2 Korrekte und konsistente Labels
+
+- Für überwachte Lernaufgaben (Klassifikation/Regression):
+  - Labels sollten **richtig** sein (z. B. kein Hund als „Katze“ gelabelt).
+  - Einheitliche Regeln: Was zählt als „Spam“ soll immer gleich bewertet sein.
+
+### 2.3 Repräsentativität
+
+- Die Daten sollen die **reale Verteilung** widerspiegeln:
+  - Alle relevanten Fälle/Varianten des Problems kommen vor.
+  - Beispiel: Ein Verkehrszeichenerkenner braucht Daten bei Sonne, Regen, Nacht usw.
+
+### 2.4 Ausgewogenheit (Klassenbalance)
+
+- Bei Klassifikationsaufgaben:
+  - Klassen sollten **nicht extrem unausgewogen** sein.
+  - Problem: 99 % Klasse A, 1 % Klasse B → Netz lernt evtl. nur A zu raten.
+  - Sonst muss man beim Training besondere Maßnahmen (z. B. Oversampling) ergreifen.
+
+### 2.5 Größe (Menge an Daten)
+
+- Neuronale Netze brauchen meistens **viele Beispiele**.
+- Je komplexer das Problem und je größer das Netz, desto mehr Daten sind nötig.
+- Zu wenige Daten → Overfitting: Das Netz „merkt sich“ Trainingsbeispiele, verallgemeinert aber schlecht.
+
+### 2.6 Vielfalt (Diversität)
+
+- Daten sollten **verschiedene Situationen** abdecken:
+  - Unterschiedliche Personen, Orte, Zeiten, Stile usw.
+- Das hilft dem Netz, robuste Muster zu lernen statt nur Spezialfälle.
+
+### 2.7 Aktualität
+
+- Für Anwendungsfälle, die sich ändern (z. B. Preisvorhersage, Sprache, Trends):
+  - Trainingsdaten sollten **nicht völlig veraltet** sein.
+
+### 2.8 Fairness / Bias
+
+- Daten können **Vorurteile (Bias)** enthalten:
+  - Z. B. ein Datensatz mit hauptsächlich Daten von einer bestimmten Gruppe.
+- Das führt zu unfairen oder verzerrten Modellen.
+- Du solltest zumindest grundlegend erklären können, dass:
+  - Datenauswahl das Verhalten des Modells beeinflusst.
+  - Man auf Ausgewogenheit und Fairness achten sollte.
+
+---
+
+## 3. Wie werden Trainingsdaten vorbereitet? (Datenvorverarbeitung)
+
+Hier solltest du die **typischen Schritte** benennen und grob erklären können.
+
+### 3.1 Datensammlung und ‑auswahl
+
+- Datenquelle bestimmen (Sensoren, Datenbanken, Web, bestehende Datensätze).
+- Relevante Beispiele auswählen:
+  - Nur Daten, die zum Problem passen (z. B. nur Bilder von Verkehrsschildern, nicht Landschaften).
+
+### 3.2 Datenbereinigung (Data Cleaning)
+
+- **Fehlende Werte behandeln**:
+  - Entfernen der betroffenen Beispiele oder
+  - Ersetzen durch Durchschnitt/Median oder spezielle Werte.
+- **Ausreißer prüfen**:
+  - Extremwerte identifizieren, ggf. korrigieren oder entfernen.
+- **Duplikate löschen**:
+  - Mehrfach vorhandene identische Beispiele entfernen.
+
+### 3.3 Daten in numerische Form bringen
+
+Neuronale Netze arbeiten mit Zahlen (Vektoren, Matrizen, Tensoren).
+Je nach Datentyp ist die Vorbereitung unterschiedlich:
+
+- **Tabellendaten (CSV, Datenbank)**:
+  - Direkte Verwendung der numerischen Spalten.
+  - Kategoriale Spalten (z. B. „rot“, „grün“, „blau“) kodieren.
+- **Klassische Kodierungen**:
+  - **Label Encoding**: Kategorien als 0, 1, 2, …
+  - **One‑Hot Encoding**: Für jede Kategorie eine eigene Binärspalte (0/1).
+- **Text**:
+  - Zerlegen in Wörter/Token (Tokenisierung).
+  - Dann in Zahlen umwandeln (z. B. Wort-Indizes, Embeddings).
+- **Bilder**:
+  - In Pixelmatrizen (z. B. 224×224×3 für RGB-Bilder) umwandeln.
+
+### 3.4 Skalierung / Normalisierung
+
+- Viele Netze trainieren besser, wenn Eingabemerkmale ähnliche Größenordnungen haben.
+- Typische Verfahren:
+  - **Standardisierung**:
+    \[
+    x' = \frac{x - \mu}{\sigma}
+    \]
+    (Mittelwert 0, Standardabweichung 1)
+  - **Min‑Max‑Normierung** auf Bereich [0, 1].
+- Bei Bildern: Pixelwerte z. B. von 0–255 nach 0–1 skalieren.
+
+### 3.5 Label‑Vorbereitung
+
+- **Klassifikation**:
+  - Klassenlabels oft als Zahlen oder One‑Hot‑Vektoren.
+- **Regression**:
+  - Zielwerte ggf. auch skalieren (z. B. Preise log-transformieren oder normalisieren).
+
+### 3.6 Aufteilen in Trainings‑, Validierungs‑ und Testdaten
+
+Wichtiger Standard-Schritt:
+
+- **Trainingsdaten**: werden zum Lernen verwendet.
+- **Validierungsdaten**: zur Hyperparameterwahl und Modellwahl.
+- **Testdaten**: zur abschließenden Bewertung, bleiben während des Trainings unberührt.
+- Typische Verteilung: z. B. 70 % Train, 15 % Val, 15 % Test.
+
+Zusätzlich:
+
+- **Mischen (Shuffling)** der Daten, damit die Reihenfolge keine Muster erzeugt.
+- **Stratifizieren** bei Klassifikation (jede Klasse in jedem Split ähnlich oft vertreten).
+
+### 3.7 Datenaugmentation (v. a. bei Bildern, Audio, Text)
+
+- Künstliches Erhöhen der Datenmenge durch leichte Änderungen:
+  - Bilder: Drehen, Spiegeln, Zuschneiden, Helligkeit ändern.
+  - Audio: Rauschen hinzufügen, Tempo leicht variieren.
+  - Text (vorsichtig): Wörter durch Synonyme ersetzen o. Ä.
+- Ziel: Das Modell robuster machen und Overfitting reduzieren.
+
+---
+
+## 4. Was solltest du sicher erklären können?
+
+Wenn du das Lernziel erfüllen willst, solltest du z. B.:
+
+- **Eigenschaften von Trainingsdaten** aufzählen und erläutern:
+  - Qualität, Repräsentativität, Klassenbalance, Größe, Vielfalt, korrekte Labels, Bias/Fairness.
+- **Typische Vorverarbeitungsschritte** schriftlich oder mündlich erklären:
+  - Datenbereinigung (fehlende Werte, Ausreißer, Duplikate).
+  - Umwandlung in numerische Form (Encoding von Kategorien/Text/Bildern).
+  - Skalierung/Normalisierung.
+  - Vorbereitung und Kodierung der Labels.
+  - Aufteilung in Train/Validation/Test, Shuffling.
+  - Falls behandelt: Datenaugmentation.
+
+Wenn du magst, kann ich dir im nächsten Schritt Übungsfragen dazu stellen (z. B. im Stil einer Prüfung) oder eine kurze Zusammenfassung zum Auswendiglernen formulieren.

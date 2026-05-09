@@ -1,0 +1,58 @@
+§u§
+```Sie können beschreiben, was die ml5.js-Library ist und wofür sie eingesetzt wird.```
+Erkläre mir den Stoff, den ich können muss, um dieses Lernziel zu erfüllen.
+§a§
+# Was ist ml5.js? 🤖
+
+Hier ist alles, was du wissen musst, um dieses Lernziel zu erfüllen:
+
+---
+
+## 1. Definition
+
+ml5.js ist eine **Machine-Learning-Bibliothek für JavaScript**, die die Integration von Machine-Learning-Modellen in Webanwendungen vereinfacht.
+
+Sie baut auf **TensorFlow.js** auf und abstrahiert die Komplexität von Machine Learning durch eine einfache, hochrangige API. Dadurch können Entwickler ML-Modelle in ihre Webanwendungen einbinden, **ohne tiefes Fachwissen** über die zugrundeliegenden Algorithmen zu benötigen.
+
+---
+
+## 2. Zielgruppe & Philosophie
+
+ml5.js hat das Ziel, Machine Learning für ein **breites Publikum zugänglich** zu machen – darunter Künstler, kreative Programmierer und Studierende.
+
+Diese Art von einfach zu bedienender, vorverpackter ML-Bibliothek erlaubt es Entwicklern und Künstlern mit sehr unterschiedlichem Kenntnisstand, sich mit Machine Learning zu beschäftigen – einem Thema, das vielen bis vor Kurzem als unmöglich komplex erschien.
+
+---
+
+## 3. Wofür wird ml5.js eingesetzt?
+
+ml5.js stellt **vortrainierte Modelle** (Pre-trained Models) bereit, die direkt im Browser genutzt werden können. Typische Anwendungsfälle sind:
+
+ml5.js ist eine leistungsstarke und benutzerfreundliche Bibliothek. Ob **Bildklassifikation, Pose-Erkennung, Textgenerierung oder Style Transfer** – ml5.js bietet die nötigen Werkzeuge, um ML-Funktionen mit minimalem Aufwand in Projekte zu integrieren.
+
+| Anwendungsbereich | Beispiel |
+|---|---|
+| 🖼️ Bildklassifikation | Objekte in Bildern erkennen |
+| 🧍 Pose-Erkennung | Körperhaltungen aus Kamerabild auslesen |
+| 😀 Gesichtserkennung | Gesichtsmerkmale detektieren |
+| ✍️ Textgenerierung | Neue Texte auf Basis von Mustern generieren |
+
+---
+
+## 4. Wie funktioniert es technisch?
+
+ml5.js stellt **vortrainierte Modelle** und eine benutzerfreundliche API zur Verfügung. Um es einzurichten, bindet man einfach das ml5.js-Skript in die HTML-Datei ein und initialisiert die gewünschten Modelle im JavaScript-Code.
+
+Die Bibliotheken werden über ein **Content Delivery Network (CDN)** geladen, und gewisse Beispiele laden ein ML-Modell von einer Cloud-URL – ml5.js benötigt also eine Internetverbindung, um vortrainierte Modelle abzurufen (sofern sie nicht lokal bereitgestellt werden).
+
+---
+
+## 5. Verbindung zu p5.js
+
+ml5.js bietet Zugang zu Machine-Learning-Algorithmen und -Modellen im Browser, die genutzt werden können, um **visuell interaktive und dynamische Sketches** mit p5.js zu erstellen – einer JavaScript-basierten Umsetzung von Processing.
+
+---
+
+## Zusammenfassung (für die Prüfung)
+
+> **ml5.js** ist eine **JavaScript-Bibliothek**, die Machine Learning im Browser zugänglich macht. Sie baut auf **TensorFlow.js** auf, bietet **vortrainierte Modelle** und eine einfache API. Sie wird eingesetzt für Aufgaben wie **Bildklassifikation, Pose-Erkennung oder Textgenerierung** – ohne dass man Machine-Learning-Experte sein muss. Zielgruppe sind insbesondere Studierende, Künstler und kreative Entwickler.

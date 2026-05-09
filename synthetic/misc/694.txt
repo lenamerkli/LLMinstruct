@@ -1,0 +1,241 @@
+§u§
+```
+    Geometrische Optik:
+       - Brechung und Reflexion (inkl. Totalreflexion)
+       - Strahlengang konstruieren/berechnen
+       - Fotoapparat
+       - Auge, Fernrohr und Mikroskop
+```
+Erkläre mir diese Themen. Ich werde darüber eine Prüfung haben. Ich darf eine A4-Seite Notizen mitnehmen.
+§a§
+Das ist ein klassisches Thema der Schulphysik. Da du eine **A4-Seite (einseitig oder beidseitig?)** mitnehmen darfst, ist das Ziel, die wichtigsten Formeln und Skizzen so kompakt wie möglich zu notieren.
+
+Hier ist eine strukturierte Zusammenfassung für deine Prüfungsvorbereitung:
+
+---
+
+### 1. Reflexion und Brechung
+
+**Reflexion:**
+*   **Gesetz:** Einfallswinkel $\alpha$ = Reflexionswinkel $\alpha'$ (gemessen zum Lot!).
+*   Glatte Fläche: Gerichtete Reflexion; Raue Fläche: Diffuse Reflexion (Streuung).
+
+**Brechung (Snelliussches Brechungsgesetz):**
+Licht ändert seine Richtung beim Übergang zwischen Medien unterschiedlicher optischer Dichte ($n$).
+*   **Formel:** $n_1 \cdot \sin(\alpha) = n_2 \cdot \sin(\beta)$
+*   $n = \frac{c}{v}$ (Brechungsindex = Lichtgeschw. Vakuum / Lichtgeschw. Medium).
+*   **Übergang dünn $\to$ dicht (z.B. Luft $\to$ Glas):** Brechung **zum Lot** ($\alpha > \beta$).
+*   **Übergang dicht $\to$ dünn (z.B. Glas $\to$ Luft):** Brechung **vom Lot** ($\alpha < \beta$).
+
+**Totalreflexion:**
+Tritt nur beim Übergang **dicht $\to$ dünn** auf, wenn der Einfallswinkel so groß ist, dass der Brechungswinkel $90^\circ$ wäre.
+*   **Grenzwinkel $\alpha_g$:** $\sin(\alpha_g) = \frac{n_2}{n_1}$
+*   Anwendung: Glasfaserkabel, Umkehrprismen im Fernglas.
+
+---
+
+### 2. Strahlengang & Linsenberechnung
+
+Du musst meistens Bilder an **Sammellinsen** (konvex) konstruieren.
+
+**Die drei Hauptstrahlen:**
+1.  **Parallelstrahl:** Geht durch die Linse und wird zum **Brennpunktstrahl** (durch $F$ auf der anderen Seite).
+2.  **Mittelpunktstrahl:** Geht ungebrochen durch die Linsenmitte.
+3.  **Brennpunktstrahl:** Geht durch den brennpunkt $F$ (vorn) und wird zum **Parallelstrahl**.
+
+**Wichtige Formeln (gehören auf den Spickzettel!):**
+*   **Abbildungsgleichung:** $\frac{1}{f} = \frac{1}{g} + \frac{1}{b}$
+*   **Abbildungsmaßstab:** $A = \frac{B}{G} = \frac{b}{g}$
+    *   $f$: Brennweite
+    *   $g$: Gegenstandsweite / $G$: Gegenstandsgröße
+    *   $b$: Bildweite / $B$: Bildgröße
+
+---
+
+### 3. Optische Geräte
+
+#### A. Der Fotoapparat
+*   **Funktion:** Eine Sammellinse erzeugt ein **reales, umgekehrtes und verkleinertes** Bild auf dem Sensor/Film.
+*   **Fokussieren:** Um nahe Objekte scharf zu stellen, muss die Linse vom Sensor wegbewegt werden ($b$ wird größer).
+
+#### B. Das Auge
+*   Funktioniert wie ein Fotoapparat, aber die Bildweite $b$ ist fest (Augapfel).
+*   **Akkommodation:** Die Augenlinse verändert ihre Brennweite $f$ durch Muskelkraft (Krümmung), um nah und fern scharf zu sehen.
+*   **Fehlsichtigkeit:**
+    *   **Kurzsichtig (Myopie):** Augapfel zu lang / Linse zu stark. Bild entsteht *vor* der Netzhaut. Korrektur: **Zerstreuungslinse** (Minus-Dioptrien).
+    *   **Weitsichtig (Hyperopie):** Augapfel zu kurz. Bild entsteht *hinter* der Netzhaut. Korrektur: **Sammellinse** (Plus-Dioptrien).
+
+#### C. Das Mikroskop
+*   Besteht aus zwei Linsensystemen: **Objektiv** (kurze Brennweite) und **Okular** (wirkt als Lupe).
+*   **Strahlengang:** Das Objektiv erzeugt ein vergrößertes *reales Zwischenbild*. Dieses wird mit dem Okular wie mit einer Lupe betrachtet.
+*   **Gesamtvergrößerung:** $V_{Ges} = V_{Objektiv} \cdot V_{Okular}$
+
+#### D. Das Fernrohr (Kepler-Fernrohr / Astronomisch)
+*   Besteht auch aus Objektiv und Okular.
+*   **Unterschied:** Das Objekt ist sehr weit weg. Die Brennpunkte von Objektiv und Okular liegen fast an der gleichen Stelle ($f_{Obj} + f_{Oku} \approx$ Länge des Rohrs).
+*   **Vergrößerung:** $V = \frac{f_{Objektiv}}{f_{Okular}}$
+
+---
+
+### Vorschlag für dein A4-Blatt (Layout):
+
+1.  **Ecke oben links: Brechung/Reflexion**
+    *   Skizze: Einfallswinkel, Lot, Brechungswinkel.
+    *   Formeln: $n_1 \sin \alpha = n_2 \sin \beta$ und $\sin \alpha_g = n_2/n_1$.
+2.  **Mitte oben: Linsen-Konstruktion**
+    *   Kleine Skizze einer Sammellinse mit den 3 Strahlen (Parallel, Mittelpunkt, Brennpunkt).
+    *   Tabelle: Wenn $g > 2f$ (Bild klein), wenn $f < g < 2f$ (Bild groß).
+3.  **Mitte unten: Formeln**
+    *   $\frac{1}{f} = \frac{1}{g} + \frac{1}{b}$ fett umrandet!
+    *   $A = B/G = b/g$.
+4.  **Rechte Seite: Geräte**
+    *   **Auge:** Skizze Kurzsichtigkeit (Strahl trifft sich vor Netzhaut) + Korrektur-Linse.
+    *   **Mikroskop:** Formel $V_{Ges} = V_{Obj} \cdot V_{Oku}$.
+    *   **Fernrohr:** Formel $V = f_{Obj} / f_{Oku}$.
+
+**Zusatz-Tipp für die Prüfung:**
+Achte immer darauf, ob die Winkel zum **Lot** (senkrecht zur Fläche) oder zur **Oberfläche** gegeben sind. Physikalische Gesetze nutzen immer das Lot!
+
+Viel Erfolg bei der Prüfung! Hast du zu einem der Punkte noch eine spezifische Frage?
+§u§
+Mache eine solche Seite mit LaTeX.
+§a§
+Das Erstellen einer A4-Übersichtsseite mit LaTeX ist eine hervorragende Idee, da sie sehr kompakt und professionell aussieht. Hier ist ein fertiger Code, den du in einen LaTeX-Editor (wie Overleaf.com) kopieren kannst.
+
+Ich habe das Layout so optimiert, dass es **zwei Spalten** nutzt, um den Platz maximal auszunutzen, und Boxen für die wichtigsten Formeln verwendet.
+
+```latex
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[german]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{margin=1cm}
+\usepackage{multicol}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+
+% Kompakte Listen
+\setlist[itemize]{noitemsep, topsep=0pt, leftmargin=15pt}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+    \textbf{\Large Formelsammlung: Geometrische Optik}
+\end{center}
+
+\begin{multicols}{2}
+
+% --- Reflexion & Brechung ---
+\begin{tcolorbox}[title=1. Reflexion \& Brechung, colback=white, colframe=blue!50!black, fonttitle=\bfseries]
+\textbf{Reflexionsgesetz:}
+\fbox{$\alpha = \alpha'$} (Einfallswinkel = Ausfallswinkel)
+
+\textbf{Brechungsindex:} $n = \frac{c_{Vakuum}}{v_{Medium}}$ \\
+Häufige Werte: $n_{Luft} \approx 1$, $n_{Wasser} \approx 1,33$, $n_{Glas} \approx 1,5$.
+
+\textbf{Snelliussches Brechungsgesetz:}
+\begin{equation*}
+    n_1 \cdot \sin(\alpha) = n_2 \cdot \sin(\beta)
+\end{equation*}
+\begin{itemize}
+    \item $n_1 < n_2$ (dünn $\to$ dicht): Brechung \textbf{zum Lot} ($\beta < \alpha$).
+    \item $n_1 > n_2$ (dicht $\to$ dünn): Brechung \textbf{vom Lot} ($\beta > \alpha$).
+\end{itemize}
+
+\textbf{Totalreflexion:} Nur bei Übergang \textbf{dicht $\to$ dünn}.\\
+Grenzwinkel $\alpha_g$: $\sin(\alpha_g) = \frac{n_2}{n_1}$ \\
+Tritt ein, wenn $\alpha > \alpha_g$.
+\end{tcolorbox}
+
+% --- Linsen & Abbildung ---
+\begin{tcolorbox}[title=2. Linsen \& Abbildungsgleichungen, colback=white, colframe=red!50!black, fonttitle=\bfseries]
+\textbf{Zentrale Formeln:}
+\begin{itemize}
+    \item \textbf{Abbildungsgleichung:} $\frac{1}{f} = \frac{1}{g} + \frac{1}{b}$
+    \item \textbf{Maßstab:} $A = \frac{B}{G} = \frac{b}{g}$
+    \item \textbf{Brechwert:} $D = \frac{1}{f}$ (Einheit: Dioptrie $[dpt] = m^{-1}$)
+\end{itemize}
+\textbf{Größen:} $f$: Brennweite, $g$: Gegenstandsweite, $b$: Bildweite, $G$: Gegenstandsgröße, $B$: Bildgröße.
+
+\textbf{Konstruktionsstrahlen (Sammellinse):}
+\begin{enumerate}
+    \item \textbf{Parallelstrahl} $\to$ wird nach Linse zum Brennpunktstrahl.
+    \item \textbf{Mittelpunktstrahl} $\to$ geht ungebrochen durch.
+    \item \textbf{Brennpunktstrahl} $\to$ wird nach Linse zum Parallelstrahl.
+\end{enumerate}
+
+\textbf{Bildarten (Sammellinse):}
+\begin{itemize}
+    \item $g > 2f$: verkleinert, umgekehrt, reell.
+    \item $f < g < 2f$: vergrößert, umgekehrt, reell.
+    \item $g < f$: vergrößert, aufrecht, \textbf{virtuell} (Lupe!).
+\end{itemize}
+\end{tcolorbox}
+
+% --- Das Auge ---
+\begin{tcolorbox}[title=3. Das Auge, colback=white, colframe=green!40!black, fonttitle=\bfseries]
+\textbf{Akkommodation:} Anpassung der Brennweite $f$ durch Krümmung der Linse (Ziliarmuskel).
+
+\textbf{Fehlsichtigkeit:}
+\begin{itemize}
+    \item \textbf{Kurzsichtig (Myopie):} Augapfel zu lang / Brechkraft zu stark. Fokus \textit{vor} Netzhaut. \\
+    Korrektur: \textbf{Zerstreuungslinse} ($f < 0$).
+    \item \textbf{Weitsichtig (Hyperopie):} Augapfel zu kurz. Fokus \textit{hinter} Netzhaut. \\
+    Korrektur: \textbf{Sammellinse} ($f > 0$).
+\end{itemize}
+\end{tcolorbox}
+
+% --- Optische Geräte ---
+\begin{tcolorbox}[title=4. Optische Geräte, colback=white, colframe=orange!70!black, fonttitle=\bfseries]
+\textbf{Fotoapparat:}
+Erzeugt \textbf{reales, verkleinertes, umgekehrtes} Bild. Scharfstellung durch Änderung der Bildweite $b$ (Auszug).
+
+\textbf{Mikroskop:}
+Zwei Linsen: Objektiv ($f_{ob}$) und Okular ($f_{ok}$).
+\begin{itemize}
+    \item Objektiv erzeugt reelles, vergrößertes Zwischenbild.
+    \item Okular wirkt als Lupe.
+    \item \textbf{Gesamtvergrößerung:} $V = V_{ob} \cdot V_{ok}$
+\end{itemize}
+
+\textbf{Kepler-Fernrohr (astronomisch):}
+Objektiv ($f_{ob}$) und Okular ($f_{ok}$).
+\begin{itemize}
+    \item Brennpunkte fallen fast zusammen ($L \approx f_{ob} + f_{ok}$).
+    \item \textbf{Vergrößerung:} $V = \frac{f_{ob}}{f_{ok}}$
+    \item Bild ist umgekehrt (beim terrestrischen Fernrohr Umkehrlinse nötig).
+\end{itemize}
+\end{tcolorbox}
+
+% --- Tipps für die Prüfung ---
+\begin{tcolorbox}[title=Prüfungstipps, colback=yellow!10, colframe=yellow!50!black]
+\small
+\begin{itemize}
+    \item Winkel immer zum \textbf{Lot} messen!
+    \item Achte auf Einheiten (alles in Meter oder alles in cm).
+    \item Virtuelle Bilder: $b$ ist negativ in der Formel.
+    \item Totalreflexion: Licht muss aus dem optisch \textbf{dichteren} Medium kommen.
+    \item Bei Konstruktionen: Lineal verwenden, Brennpunkte $F$ und $F'$ exakt einzeichnen.
+\end{itemize}
+\end{tcolorbox}
+
+\end{multicols}
+\end{document}
+```
+
+### Hinweise zur Verwendung:
+1.  **Online-Editor:** Gehe auf [Overleaf](https://www.overleaf.com), erstelle ein neues Projekt und füge den Code dort ein.
+2.  **Platz sparen:** Wenn du noch mehr Platz brauchst, kannst du den `margin` von `1cm` auf `0.5cm` verringern.
+3.  **Skizzen:** LaTeX ist super für Text und Formeln, aber Zeichnungen (wie der Strahlengang) sind schwer zu programmieren. Ich empfehle dir, nach dem Ausdrucken **per Hand zwei kleine Skizzen** in die freien Lücken zu zeichnen:
+    *   Eine Skizze zur Brechung (Einfallswinkel, Brechungswinkel, Lot).
+    *   Eine Skizze einer Sammellinse mit den drei Hauptstrahlen.
+    *   Eine Skizze "Auge zu lang" (Kurzsichtigkeit).
+
+### Was auf der Seite noch fehlt (für Handnotizen):
+*   **Die Linsenschleiferformel** (falls ihr die hattet): $\frac{1}{f} = (n-1) \cdot (\frac{1}{r_1} + \frac{1}{r_2})$.
+*   **Deutliche Sehweite $s_0 = 25\,\text{cm}$** (wichtig für Lupenvergrößerung $V = \frac{s_0}{f}$).
+*   **Prisma:** Zeichne dir kurz ein, wie ein Lichtstrahl durch ein Prisma abgelenkt wird.

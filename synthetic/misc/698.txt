@@ -1,0 +1,357 @@
+§u§
+```
+<h1>Perceptron</h1>
+<p>Ein Perzeptron ist das einfachste denkbare neuronale Netzwerk: ein Rechenmodell einer einzelnen Nervenzelle. Es wurde 1957 von Frank Rosenblatt am Cornell Aeronautical Laboratory entwickelt und besteht aus einem oder mehreren Eingängen, einem Prozessor und einem einzigen Ausgang</p>
+<img ngSrc="perceptron.png" width="600" height="200" alt="Perceptron Diagramm" priority/>
+<h2>Schritte eines Perceptrons</h2>
+<h3>Gewichten</h3>
+<h3>Addieren</h3>
+<h3>Ausgabe generieren</h3>
+<h2>In Code</h2>
+<mat-tab-group>
+  <mat-tab label="p5.js">
+    <p>TODO: p5.js</p>
+  </mat-tab>
+  <mat-tab label="Python">
+    <p>TODO: Python</p>
+  </mat-tab>
+</mat-tab-group>
+```
+Vervollständige diese Seite. Falls nötig, füge weitere Abschnitte hinzu oder ändere die Bestehenden.
+§a§
+```html
+<h1>Perceptron</h1>
+<p>
+  Ein Perzeptron ist das einfachste denkbare neuronale Netzwerk: ein Rechenmodell einer einzelnen
+  Nervenzelle. Es wurde 1957 von Frank Rosenblatt am Cornell Aeronautical Laboratory entwickelt
+  und besteht aus einem oder mehreren Eingängen, einem Prozessor und einem einzigen Ausgang.
+</p>
+<img ngSrc="perceptron.png" width="600" height="200" alt="Perceptron Diagramm" priority />
+
+<h2>Aufbau</h2>
+<p>
+  Ein Perzeptron besteht aus drei Hauptbestandteilen:
+</p>
+<ul>
+  <li><strong>Eingänge (x₀, x₁, …)</strong>: die Daten, die das Perzeptron verarbeiten soll.</li>
+  <li><strong>Gewichte (w₀, w₁, …)</strong>: jeder Eingang besitzt ein Gewicht, das seine Bedeutung bestimmt.</li>
+  <li><strong>Bias</strong>: ein zusätzlicher Eingang mit konstantem Wert (meist 1), der dem Perzeptron eine Verschiebung erlaubt, auch wenn alle Eingänge null sind.</li>
+</ul>
+
+<h2>Schritte eines Perzeptrons</h2>
+
+<h3>1. Gewichten</h3>
+<p>
+  Jeder Eingangswert wird mit seinem zugehörigen Gewicht multipliziert. Gewichte sind reelle
+  Zahlen (oft zwischen -1 und 1), die während des Trainings angepasst werden.
+</p>
+<pre><code>x₀ · w₀
+x₁ · w₁
+bias · w_bias</code></pre>
+
+<h3>2. Addieren</h3>
+<p>
+  Alle gewichteten Eingänge werden zu einer einzigen Summe addiert:
+</p>
+<pre><code>sum = (x₀ · w₀) + (x₁ · w₁) + (bias · w_bias)</code></pre>
+
+<h3>3. Ausgabe generieren</h3>
+<p>
+  Die Summe wird durch eine <em>Aktivierungsfunktion</em> geschickt, um die endgültige Ausgabe
+  zu erzeugen. Die einfachste Aktivierungsfunktion ist die <strong>Sign-Funktion (Heaviside)</strong>:
+  Ist die Summe positiv, gibt das Perzeptron <code>+1</code> aus, ansonsten <code>-1</code>.
+</p>
+
+<h2>Training</h2>
+<p>
+  Damit das Perzeptron etwas Sinnvolles tut, müssen die Gewichte trainiert werden. Dies geschieht
+  mit überwachtem Lernen anhand bekannter Trainingsdaten:
+</p>
+<ol>
+  <li>Eingänge ins Perzeptron geben und Ausgabe berechnen.</li>
+  <li>Fehler bestimmen: <code>error = ziel - ausgabe</code></li>
+  <li>Gewichte anpassen: <code>w_i += error · x_i · learningRate</code></li>
+  <li>Wiederholen, bis der Fehler klein genug ist.</li>
+</ol>
+
+<h2>In Code</h2>
+<mat-tab-group>
+  <mat-tab label="p5.js">
+    <pre><code class="language-javascript">class Perceptron {{ '{' }}
+  constructor(n, learningRate = 0.1) {{ '{' }}
+    this.weights = [];
+    for (let i = 0; i &lt; n; i++) {{ '{' }}
+      this.weights[i] = random(-1, 1);
+    {{ '}' }}
+    this.lr = learningRate;
+  {{ '}' }}
+
+  // Aktivierungsfunktion (Sign)
+  activate(sum) {{ '{' }}
+    return sum &gt;= 0 ? 1 : -1;
+  {{ '}' }}
+
+  // Vorwärtsdurchlauf: Gewichten, Addieren, Ausgabe
+  feedforward(inputs) {{ '{' }}
+    let sum = 0;
+    for (let i = 0; i &lt; this.weights.length; i++) {{ '{' }}
+      sum += inputs[i] * this.weights[i];
+    {{ '}' }}
+    return this.activate(sum);
+  {{ '}' }}
+
+  // Training mit einem einzelnen Beispiel
+  train(inputs, target) {{ '{' }}
+    const guess = this.feedforward(inputs);
+    const error = target - guess;
+    for (let i = 0; i &lt; this.weights.length; i++) {{ '{' }}
+      this.weights[i] += error * inputs[i] * this.lr;
+    {{ '}' }}
+  {{ '}' }}
+{{ '}' }}
+
+// Beispiel:
+const p = new Perceptron(3);
+// inputs = [x0, x1, bias]
+p.train([0.5, -0.2, 1], 1);
+console.log(p.feedforward([0.5, -0.2, 1]));</code></pre>
+  </mat-tab>
+  <mat-tab label="Python">
+    <pre><code class="language-python">import random
+
+class Perceptron:
+    def __init__(self, n, learning_rate=0.1):
+        self.weights = [random.uniform(-1, 1) for _ in range(n)]
+        self.lr = learning_rate
+
+    # Aktivierungsfunktion (Sign)
+    def activate(self, s):
+        return 1 if s &gt;= 0 else -1
+
+    # Vorwärtsdurchlauf: Gewichten, Addieren, Ausgabe
+    def feedforward(self, inputs):
+        s = sum(i * w for i, w in zip(inputs, self.weights))
+        return self.activate(s)
+
+    # Training mit einem einzelnen Beispiel
+    def train(self, inputs, target):
+        guess = self.feedforward(inputs)
+        error = target - guess
+        for i in range(len(self.weights)):
+            self.weights[i] += error * inputs[i] * self.lr
+
+
+# Beispiel:
+p = Perceptron(3)
+# inputs = [x0, x1, bias]
+p.train([0.5, -0.2, 1], 1)
+print(p.feedforward([0.5, -0.2, 1]))</code></pre>
+  </mat-tab>
+</mat-tab-group>
+
+<h2>Grenzen</h2>
+<p>
+  Ein einzelnes Perzeptron kann nur <strong>linear trennbare</strong> Probleme lösen, also
+  Probleme, bei denen sich die Klassen durch eine Gerade (bzw. Hyperebene) trennen lassen.
+  Klassische Beispiele wie das <code>XOR</code>-Problem lassen sich mit einem einzelnen
+  Perzeptron <em>nicht</em> lösen — dafür benötigt man mehrere Schichten von Neuronen
+  (ein <em>Multilayer Perceptron</em>).
+</p>
+```
+
+Ich habe folgende Erweiterungen vorgenommen:
+
+- **Aufbau-Abschnitt** ergänzt, der die drei Komponenten (Eingänge, Gewichte, Bias) erklärt.
+- Die drei Schritte **Gewichten / Addieren / Ausgabe generieren** mit Erklärungen und Formeln gefüllt.
+- Einen Abschnitt **Training** hinzugefügt, der die Lernregel beschreibt.
+- Vollständige **Code-Beispiele** in p5.js und Python eingefügt (geschweifte Klammern in Angular-Templates per `{{ '{' }}` escaped, damit sie nicht als Interpolation interpretiert werden).
+- Einen abschließenden Abschnitt **Grenzen** ergänzt, der auf die XOR-Problematik und die Notwendigkeit von Multilayer-Perceptrons hinweist.
+§u§
+You can use the following components:
+<app-latex content="i^2 = -1"></app-latex>
+and
+<app-codeblock language="javascript" [content]="content"></app-codeblock>
+with
+```
+content = `class Perceptron {
+  constructor() {
+    this.weights = [];
+  }
+}
+`
+```
+in the typescript file.
+<app-codeblock language="python" content="x += 1"></app-codeblock>
+also works.
+§a§
+```html
+<h1>Perceptron</h1>
+<p>
+  Ein Perzeptron ist das einfachste denkbare neuronale Netzwerk: ein Rechenmodell einer einzelnen
+  Nervenzelle. Es wurde 1957 von Frank Rosenblatt am Cornell Aeronautical Laboratory entwickelt
+  und besteht aus einem oder mehreren Eingängen, einem Prozessor und einem einzigen Ausgang.
+</p>
+<img ngSrc="perceptron.png" width="600" height="200" alt="Perceptron Diagramm" priority />
+
+<h2>Aufbau</h2>
+<p>Ein Perzeptron besteht aus drei Hauptbestandteilen:</p>
+<ul>
+  <li>
+    <strong>Eingänge</strong> (<app-latex content="x_0, x_1, \dots, x_n"></app-latex>): die Daten,
+    die das Perzeptron verarbeiten soll.
+  </li>
+  <li>
+    <strong>Gewichte</strong> (<app-latex content="w_0, w_1, \dots, w_n"></app-latex>): jeder
+    Eingang besitzt ein Gewicht, das seine Bedeutung bestimmt.
+  </li>
+  <li>
+    <strong>Bias</strong>: ein zusätzlicher Eingang mit konstantem Wert (meist 1), der dem
+    Perzeptron eine Verschiebung erlaubt, auch wenn alle Eingänge null sind.
+  </li>
+</ul>
+
+<h2>Schritte eines Perzeptrons</h2>
+
+<h3>1. Gewichten</h3>
+<p>
+  Jeder Eingangswert wird mit seinem zugehörigen Gewicht multipliziert. Gewichte sind reelle
+  Zahlen (oft zwischen -1 und 1), die während des Trainings angepasst werden.
+</p>
+<app-latex content="x_i \cdot w_i"></app-latex>
+
+<h3>2. Addieren</h3>
+<p>Alle gewichteten Eingänge werden zu einer einzigen Summe addiert:</p>
+<app-latex
+  content="\text{sum} = \sum_{i=0}^{n} x_i \cdot w_i + \text{bias} \cdot w_{\text{bias}}"
+></app-latex>
+
+<h3>3. Ausgabe generieren</h3>
+<p>
+  Die Summe wird durch eine <em>Aktivierungsfunktion</em> geschickt, um die endgültige Ausgabe
+  zu erzeugen. Die einfachste Aktivierungsfunktion ist die <strong>Sign-Funktion</strong>:
+</p>
+<app-latex
+  content="\text{output} = \begin{cases} +1 & \text{wenn sum} \geq 0 \\ -1 & \text{sonst} \end{cases}"
+></app-latex>
+
+<h2>Training</h2>
+<p>
+  Damit das Perzeptron etwas Sinnvolles tut, müssen die Gewichte trainiert werden. Dies geschieht
+  mit überwachtem Lernen anhand bekannter Trainingsdaten:
+</p>
+<ol>
+  <li>Eingänge ins Perzeptron geben und Ausgabe berechnen.</li>
+  <li>
+    Fehler bestimmen:
+    <app-latex content="\text{error} = \text{ziel} - \text{ausgabe}"></app-latex>
+  </li>
+  <li>
+    Gewichte anpassen:
+    <app-latex
+      content="w_i \leftarrow w_i + \text{error} \cdot x_i \cdot \eta"
+    ></app-latex>
+    (mit Lernrate <app-latex content="\eta"></app-latex>)
+  </li>
+  <li>Wiederholen, bis der Fehler klein genug ist.</li>
+</ol>
+
+<h2>In Code</h2>
+<mat-tab-group>
+  <mat-tab label="p5.js">
+    <app-codeblock language="javascript" [content]="p5Code"></app-codeblock>
+  </mat-tab>
+  <mat-tab label="Python">
+    <app-codeblock language="python" [content]="pythonCode"></app-codeblock>
+  </mat-tab>
+</mat-tab-group>
+
+<h2>Grenzen</h2>
+<p>
+  Ein einzelnes Perzeptron kann nur <strong>linear trennbare</strong> Probleme lösen, also
+  Probleme, bei denen sich die Klassen durch eine Gerade (bzw. Hyperebene) trennen lassen.
+  Klassische Beispiele wie das <code>XOR</code>-Problem lassen sich mit einem einzelnen
+  Perzeptron <em>nicht</em> lösen — dafür benötigt man mehrere Schichten von Neuronen
+  (ein <em>Multilayer Perceptron</em>).
+</p>
+```
+
+Und im zugehörigen TypeScript-File die beiden Code-Strings als Properties:
+
+```typescript
+p5Code = `class Perceptron {
+  constructor(n, learningRate = 0.1) {
+    this.weights = [];
+    for (let i = 0; i < n; i++) {
+      this.weights[i] = random(-1, 1);
+    }
+    this.lr = learningRate;
+  }
+
+  // Aktivierungsfunktion (Sign)
+  activate(sum) {
+    return sum >= 0 ? 1 : -1;
+  }
+
+  // Vorwärtsdurchlauf: Gewichten, Addieren, Ausgabe
+  feedforward(inputs) {
+    let sum = 0;
+    for (let i = 0; i < this.weights.length; i++) {
+      sum += inputs[i] * this.weights[i];
+    }
+    return this.activate(sum);
+  }
+
+  // Training mit einem einzelnen Beispiel
+  train(inputs, target) {
+    const guess = this.feedforward(inputs);
+    const error = target - guess;
+    for (let i = 0; i < this.weights.length; i++) {
+      this.weights[i] += error * inputs[i] * this.lr;
+    }
+  }
+}
+
+// Beispiel:
+const p = new Perceptron(3);
+// inputs = [x0, x1, bias]
+p.train([0.5, -0.2, 1], 1);
+console.log(p.feedforward([0.5, -0.2, 1]));
+`;
+
+pythonCode = `import random
+
+class Perceptron:
+    def __init__(self, n, learning_rate=0.1):
+        self.weights = [random.uniform(-1, 1) for _ in range(n)]
+        self.lr = learning_rate
+
+    # Aktivierungsfunktion (Sign)
+    def activate(self, s):
+        return 1 if s >= 0 else -1
+
+    # Vorwärtsdurchlauf: Gewichten, Addieren, Ausgabe
+    def feedforward(self, inputs):
+        s = sum(i * w for i, w in zip(inputs, self.weights))
+        return self.activate(s)
+
+    # Training mit einem einzelnen Beispiel
+    def train(self, inputs, target):
+        guess = self.feedforward(inputs)
+        error = target - guess
+        for i in range(len(self.weights)):
+            self.weights[i] += error * inputs[i] * self.lr
+
+
+# Beispiel:
+p = Perceptron(3)
+# inputs = [x0, x1, bias]
+p.train([0.5, -0.2, 1], 1)
+print(p.feedforward([0.5, -0.2, 1]))
+`;
+```
+
+Wichtigste Änderungen:
+
+- **Mathematische Ausdrücke** werden jetzt sauber via `<app-latex>` gerendert (LaTeX-Notation), sowohl inline (z. B. `x_0, x_1, \dots, x_n`) als auch als Blockformeln (Summenformel, Cases-Block für die Aktivierungsfunktion).
+- **Code-Blöcke** kommen über `<app-codeblock>` mit Property-Binding (`[content]="p5Code"`), wodurch die hässlichen `{{ '{' }}`-Escapes entfallen und die Strings ganz normal in der Komponenten-Klasse stehen.
+- Die Code-Strings selbst sind unverändert lesbar (echte `<`, `>`, `{`, `}`), da Angular sie nicht mehr als Template parst.

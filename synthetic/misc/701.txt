@@ -1,0 +1,41 @@
+§u§
+Was ist/sind `Schären` in der Mathematik.
+§a§
+In der Mathematik meint man damit sehr wahrscheinlich **„Scharen“** bzw. eine **Schar** — meistens **ohne ä**.
+
+Eine **Schar** ist eine **Familie von mathematischen Objekten**, die von einem oder mehreren **Parametern** abhängt.
+
+Beispiele:
+
+### 1. Funktionenschar
+\[
+f_a(x)=x^2+a
+\]
+
+Für jeden Wert von \(a\) erhält man eine andere Funktion:
+
+- \(a=0:\quad f_0(x)=x^2\)
+- \(a=1:\quad f_1(x)=x^2+1\)
+- \(a=-2:\quad f_{-2}(x)=x^2-2\)
+
+Alle diese Funktionen zusammen bilden eine **Funktionenschar**.
+
+### 2. Kurvenschar
+\[
+y=mx
+\]
+
+Für verschiedene Werte von \(m\) entstehen verschiedene Geraden durch den Ursprung. Diese Geraden bilden eine **Geradenschar** oder **Kurvenschar**.
+
+### 3. Mengenschar
+\[
+A_t=\{x\in\mathbb R \mid x>t\}
+\]
+
+Für jeden Parameter \(t\) bekommt man eine andere Menge. Die Gesamtheit dieser Mengen ist eine **Mengenschar**.
+
+Kurz gesagt:
+
+> Eine **Schar** ist eine durch Parameter beschriebene Sammlung ähnlicher mathematischer Objekte.
+
+Falls wirklich **„Schären“** mit ä gemeint ist: Das ist eigentlich ein geographischer Begriff für kleine Felseninseln und kein üblicher mathematischer Fachbegriff. In Mathe ist fast immer **„Schar“ / „Scharen“** gemeint.

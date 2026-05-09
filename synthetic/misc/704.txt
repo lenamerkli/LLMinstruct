@@ -1,0 +1,28 @@
+§u§
+```
+<h1>Scharen</h1>
+<p>Eine Kurvenschar (auch Funktionenschar oder Funktionsschar) ist eine Menge verschiedener Kurven, deren Abbildungsvorschriften sich in mindestens einem Parameter unterscheiden.</p>
+<img ngSrc="scharen.png" width="300" height="400" alt="Eine Parabelschar" priority />
+<p>Das Bild zeigt eine Parabelschar. Im Vergleich zur Normalparabel <app-latex content="f(x) = x^2"></app-latex> sind die Parabeln enger oder weiter. Alle nach oben oder nach unten geöffneten Ursprungsparabeln können mit Hilfe eines Parameters erfasst werden:</p>
+<p><app-latex content="f_t(x) = t \cdot x^2"></app-latex> , mit <app-latex content="t \in \mathbb{R}"></app-latex> und <app-latex content="t \neq 0"></app-latex></p>
+<p><app-latex content="f_3(x)"></app-latex> ist eine Bezeichnung für <app-latex content="f_3(x) = 3 x^2"></app-latex>. Weiter gilt <app-latex content="f_{-5}(x) = -5 x^2"></app-latex></p>
+<p>Interpretieren Sie bei Kurvenscharen den jeweiligen Parameter wie eine unbekannte Zahl, nicht wie eine Variable.</p>
+```
+Überprüfe dieses Dokument auf Fehler.
+§a§
+Inhaltlich ist das Dokument weitgehend korrekt. Ein paar kleine sprachliche und fachliche Feinheiten könntest du noch verbessern:
+
+- „mit \( t \in \mathbb{R} \) und \( t \neq 0 \)“
+  → Stilistisch üblicher: „mit \( t \in \mathbb{R},\ t \neq 0 \)“
+
+- Der Ausschluss \( t \neq 0 \) ist mathematisch korrekt, aber nicht zwingend nötig. Bei \( t = 0 \) erhält man die Nullfunktion \( f(x)=0 \), die keine Parabel mehr ist. Du könntest das optional kurz erklären statt einfach auszuschließen.
+
+- „\( f_3(x) \) ist eine Bezeichnung für \( f_3(x) = 3x^2 \)“
+  → Etwas redundant formuliert. Klarer wäre z. B.:
+  „\( f_3(x) \) bezeichnet die Funktion \( f_3(x) = 3x^2 \)“
+
+- Letzter Satz: „Interpretieren Sie … wie eine unbekannte Zahl, nicht wie eine Variable.“
+  → Inhaltlich richtig, aber didaktisch etwas missverständlich, weil ein Parameter formal trotzdem eine Variable ist. Besser wäre z. B.:
+  „… wie eine fest gewählte (aber zunächst unbekannte) Zahl …“
+
+Ansonsten ist alles korrekt und verständlich dargestellt.

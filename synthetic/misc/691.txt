@@ -1,0 +1,16 @@
+§u§
+Wikipedia lists nvidia v100 16gb as sxm2 and v100 32gb as sxm3. Is this always the case?
+§a§
+Wikipedia's listing appears to be incorrect or oversimplified. Here's what the actual specifications show:
+
+Both the 16GB and 32GB versions of the NVIDIA Tesla V100 are available in SXM2 form factor. The NVIDIA documentation and product specifications clearly indicate this.
+
+Additionally, there are references to V100 SXM3-32GB configurations, suggesting that the 32GB version is available in both SXM2 and SXM3 form factors, not exclusively SXM3 as Wikipedia might suggest.
+
+The standard memory offering for the Tesla V100 began with 16GB, but was doubled to a 32GB configuration, and Tesla V100 maintains the same SXM2 board form factor as Tesla P100, with the main differences being the use of the GV100 GPU instead of GP100.
+
+So to answer your question: **No, this is not always the case.** The V100 is available in:
+- **16GB version**: SXM2 form factor
+- **32GB version**: Both SXM2 and SXM3 form factors
+
+The Wikipedia listing appears to be an oversimplification or may be referring to specific product SKUs rather than all available configurations.

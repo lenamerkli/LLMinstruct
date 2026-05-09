@@ -1,0 +1,290 @@
+§u§
+```
+You are an expert in TypeScript, Angular, and scalable web application development. You write functional, maintainable, performant, and accessible code following Angular and TypeScript best practices.
+
+## TypeScript Best Practices
+
+- Use strict type checking
+- Prefer type inference when the type is obvious
+- Avoid the `any` type; use `unknown` when type is uncertain
+
+## Angular Best Practices
+
+- Always use standalone components over NgModules
+- Must NOT set `standalone: true` inside Angular decorators. It's the default in Angular v20+.
+- Use signals for state management
+- Implement lazy loading for feature routes
+- Do NOT use the `@HostBinding` and `@HostListener` decorators. Put host bindings inside the `host` object of the `@Component` or `@Directive` decorator instead
+- Use `NgOptimizedImage` for all static images.
+  - `NgOptimizedImage` does not work for inline base64 images.
+
+## Accessibility Requirements
+
+- It MUST pass all AXE checks.
+- It MUST follow all WCAG AA minimums, including focus management, color contrast, and ARIA attributes.
+
+### Components
+
+- Keep components small and focused on a single responsibility
+- Use `input()` and `output()` functions instead of decorators
+- Use `computed()` for derived state
+- Set `changeDetection: ChangeDetectionStrategy.OnPush` in `@Component` decorator
+- Prefer inline templates for small components
+- Prefer Reactive forms instead of Template-driven ones
+- Do NOT use `ngClass`, use `class` bindings instead
+- Do NOT use `ngStyle`, use `style` bindings instead
+- When using external templates/styles, use paths relative to the component TS file.
+
+## State Management
+
+- Use signals for local component state
+- Use `computed()` for derived state
+- Keep state transformations pure and predictable
+- Do NOT use `mutate` on signals, use `update` or `set` instead
+
+## Templates
+
+- Keep templates simple and avoid complex logic
+- Use native control flow (`@if`, `@for`, `@switch`) instead of `*ngIf`, `*ngFor`, `*ngSwitch`
+- Use the async pipe to handle observables
+- Do not assume globals like (`new Date()`) are available.
+
+## Services
+
+- Design services around a single responsibility
+- Use the `providedIn: 'root'` option for singleton services
+- Use the `inject()` function instead of constructor injection
+```
+Find or create an Angular 21 Component that renders code with highlighting.
+§a§
+I’d **create** a small wrapper component around official `highlight.js` rather than pull in an Angular-specific wrapper. The official docs support ES module imports, recommend importing only the languages you need to avoid loading everything, and expose `highlight()` / `highlightAuto()` APIs that return HTML strings. Highlight.js also recommends semantic `<pre><code>` markup, and Angular documents that template `innerHTML` bindings are sanitized. That makes this a clean fit for Angular’s template model without manual DOM mutation.
+
+### 1) Install the dependency
+
+```bash
+npm install highlight.js
+```
+
+`highlight.js` documents npm installation, and the official repo also shows bundled theme files under `highlight.js/styles/...` such as `github.css`.
+
+### 2) Add a theme
+
+```css
+/* src/styles.css */
+@import 'highlight.js/styles/github.css';
+```
+
+### 3) Create the component
+
+```ts
+// code-highlight.component.ts
+import {
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+} from '@angular/core';
+import hljs from 'highlight.js/lib/core';
+import bash from 'highlight.js/lib/languages/bash';
+import css from 'highlight.js/lib/languages/css';
+import javascript from 'highlight.js/lib/languages/javascript';
+import json from 'highlight.js/lib/languages/json';
+import typescript from 'highlight.js/lib/languages/typescript';
+import xml from 'highlight.js/lib/languages/xml';
+
+const AUTO_DETECT_LANGUAGES = [
+  'bash',
+  'css',
+  'javascript',
+  'json',
+  'typescript',
+  'xml',
+] as const;
+
+hljs.registerLanguage('bash', bash);
+hljs.registerLanguage('css', css);
+hljs.registerLanguage('javascript', javascript);
+hljs.registerLanguage('json', json);
+hljs.registerLanguage('typescript', typescript);
+hljs.registerLanguage('xml', xml);
+
+@Component({
+  selector: 'app-code-highlight',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'code-highlight',
+  },
+  template: `
+    <figure class="code-highlight__figure">
+      @if (hasCaption()) {
+        <figcaption class="code-highlight__caption" [id]="captionId()">
+          {{ captionText() }}
+        </figcaption>
+      }
+
+      <pre
+        class="code-highlight__pre"
+        tabindex="0"
+        [attr.aria-labelledby]="hasCaption() ? captionId() : null"
+        [attr.aria-label]="hasCaption() ? null : ariaLabelText()"
+      >
+        <code
+          [class]="codeClasses()"
+          [innerHTML]="highlightedHtml()"
+        ></code>
+      </pre>
+    </figure>
+  `,
+  styleUrl: './code-highlight.component.css',
+})
+export class CodeHighlightComponent {
+  private static nextId = 0;
+  private readonly id = `code-highlight-${CodeHighlightComponent.nextId++}`;
+
+  readonly code = input.required<string>();
+  readonly language = input<string | null>(null);
+  readonly caption = input('');
+  readonly ariaLabel = input('Highlighted code example');
+  readonly wrap = input(false, { transform: booleanAttribute });
+
+  readonly captionText = computed(() => this.caption().trim());
+  readonly ariaLabelText = computed(() => {
+    const label = this.ariaLabel().trim();
+    return label.length > 0 ? label : 'Highlighted code example';
+  });
+  readonly hasCaption = computed(() => this.captionText().length > 0);
+  readonly captionId = computed(() => `${this.id}-caption`);
+  readonly normalizedLanguage = computed(() => this.language()?.trim().toLowerCase() ?? '');
+
+  readonly codeClasses = computed(() => {
+    const classes = ['code-highlight__code', 'hljs'];
+    const language = this.normalizedLanguage();
+
+    if (this.wrap()) {
+      classes.push('code-highlight__code--wrap');
+    }
+
+    if (language.length > 0) {
+      classes.push(`language-${language}`);
+    }
+
+    return classes.join(' ');
+  });
+
+  readonly highlightedHtml = computed(() => {
+    const source = this.code();
+    const language = this.normalizedLanguage();
+
+    if (language.length > 0 && hljs.getLanguage(language)) {
+      return hljs.highlight(source, {
+        language,
+        ignoreIllegals: true,
+      }).value;
+    }
+
+    return hljs.highlightAuto(source, [...AUTO_DETECT_LANGUAGES]).value;
+  });
+}
+```
+
+```css
+/* code-highlight.component.css */
+:host {
+  display: block;
+}
+
+.code-highlight__figure {
+  margin: 0;
+}
+
+.code-highlight__caption {
+  margin-block-end: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.code-highlight__pre {
+  margin: 0;
+  overflow: auto;
+  border: 1px solid var(--code-highlight-border, #d0d7de);
+  border-radius: 0.75rem;
+}
+
+.code-highlight__pre:focus-visible {
+  outline: 3px solid var(--code-highlight-focus, #0969da);
+  outline-offset: 2px;
+}
+
+.code-highlight__code {
+  display: block;
+  min-width: max-content;
+  padding: 1rem;
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    'Liberation Mono',
+    monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.code-highlight__code--wrap {
+  min-width: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+```
+
+### 4) Use it
+
+```ts
+// demo.component.ts
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { CodeHighlightComponent } from './code-highlight.component';
+
+@Component({
+  selector: 'app-demo',
+  imports: [CodeHighlightComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <app-code-highlight
+      caption="counter.component.ts"
+      language="typescript"
+      [code]="snippet()"
+      wrap
+    />
+  `,
+})
+export class DemoComponent {
+  readonly snippet = signal(`
+import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
+
+@Component({
+  selector: 'app-counter',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: \`
+    <button type="button">{{ count() }}</button>
+  \`,
+})
+export class CounterComponent {
+  readonly count = signal(0);
+}
+`.trim());
+}
+```
+
+A few notes:
+
+- `highlight.js` supports `highlight()`, `highlightAuto()`, `getLanguage()`, and `registerLanguage()`, so you can safely fall back to auto-detection or add more grammars later. Its docs also note that importing only the languages you need avoids loading the full language set.
+- Highlight.js lists **HTML** as an alias of the XML grammar, so `language="html"` works once `xml` is registered.
+- This component should be structurally AXE-friendly: semantic `<figure>/<figcaption>/<pre><code>`, keyboard-focusable scroll region, and explicit labeling. **But** WCAG AA color contrast still depends on the theme you import, so validate or override any token colors that don’t meet your contrast target.
+
+If you want, I can also give you:
+1. a **copy-to-clipboard** version,
+2. a **Shiki-based** version for server-side rendering quality, or
+3. a **lazy-loaded demo feature route** for Angular 21.

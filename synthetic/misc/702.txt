@@ -1,0 +1,83 @@
+§u§
+Was ist/sind `Schar` in der Mathematik?
+§a§
+In der Mathematik bezeichnet **„Schar“** (von *schären* = sammeln, zusammenfassen) eine **Familie von Mengen**, die durch einen Parameter (oder mehrere Parameter) beschrieben wird.
+Es ist also keine einzelne Menge, sondern eine **Systematisierung mehrerer Mengen**, die unter einer gemeinsamen Regel stehen.
+
+---
+
+### 1. Grundidee
+
+Eine Schar ist eine **Abbildung**
+\[
+\mathcal{F} : I \longrightarrow \mathcal{P(X)}
+\]
+wobei
+
+* \(I\) ein Indexset (die „Parameter“ oder „Indizes“) ist,
+* \(X\) der Grundmengenraum ist,
+* \(\mathcal{P(X)}\) die Potenzmenge von \(X\) (alle möglichen Teilmengen von \(X\)).
+
+Für jeden Index \(i \in I\) erhält man eine konkrete Teilmenge
+\[
+F_i \;:=\; \mathcal{F}(i) \subseteq X .
+\]
+
+Man schreibt oft
+\[
+\mathcal{F} = \{F_i \mid i \in I\}
+\]
+und nennt \(\mathcal{F}\) eine **Schar von Mengen aus \(X\)**.
+
+---
+
+### 2. Beispiele
+
+| Kontext | Indexset \(I\) | Beschreibung der Schar | Beispiel |
+|---------|----------------|------------------------|----------|
+| **Parameterabhängige Intervalle** | \(a,b \in \mathbb{R}\) mit \(a<b\) | \(\mathcal{I} = \{[a,b] \mid a<b\}\) | Für jedes Paar \((a,b)\) ein anderes Intervall. |
+| **Parabeln** | \(c \in \mathbb{R}\) | \(\mathcal{P} = \{\,y = x^2 + c \mid x \in \mathbb{R}\,\}\) | Eine Schar von Parabeln, die sich nur in der Höhenverschiebung unterscheiden. |
+| **Ebenen im \(\mathbb{R}^3\)** | \((a,b,c) \in \mathbb{R}^3\) | \(\mathcal{E} = \{\,a x + b y + c z = 1 \mid a,b,c \not= (0,0,0)\,\}\) | Alle Ebenen im Raum (jede durch einen unterschiedlichen Normalenvektor). |
+| **Teilmengen mit festem Cardinal** | \(k \in \mathbb{N}\) | \(\mathcal{S}_k = \{\,A \subseteq X \mid |A| = k \,\}\) | Alle Teilmengen von \(X\) mit genau \(k\) Elementen (z. B. alle 3-elementigen Teilmengen einer 5-elementigen Menge). |
+| **Mengen mit einer Eigenschaft** | \(n \in \mathbb{N}\) | \(\mathcal{M} = \{\,A_n \subseteq X \mid A_n \text{ hat Eigenschaft } P(n)\,\}\) | Z. B. alle Teilmenge, die genau \(n\) gerade Zahlen enthalten. |
+
+---
+
+### 3. Warum „Schar“ nützlich ist
+
+1. **Systematisierung** – Statt einzelne Mengen zu behandeln, betrachtet man sie zusammen als ein strukturiertes Ganzes.
+2. **Parameterabhängigkeit** – Man kann wie bei Funktionen einen Parameter variieren und beobachten, wie sich die Mengen verhalten (z. B. wie sich ein Intervall bei veränderlichem Endpunkt ändert).
+3. **Limiten und Grenzübergänge** – Man kann einen **Limes einer Schar** definieren (z. B. das Limesverhalten von Intervallen bei sich zusammenziehenden Endpunkten).
+4. **Indizierte Familien** – In der Analysis und der Mengenlehre ist eine Schar das mathematische Fundament für **Funktionalen**, **Funktionalbegriffe** (z. B. Familie von Funktionen \(f_i\)) und **Produktmengen**.
+
+---
+
+### 4. Formale Definition (kurz)
+
+> **Definition:**
+> Eine **Schar von Mengen aus \(X\)** ist eine Abbildung
+> \[
+> \mathcal{F} : I \to \mathcal{P}(X)
+> \]
+> mit Indexmenge \(I\).
+> Für jedes \(i \in I\) heißt \(F_i := \mathcal{F}(i)\) ein **Element der Schar**.
+> Die gesamte Schar wird mit \(\mathcal{F} = \{F_i \mid i \in I\}\) bezeichnet.
+
+---
+
+### 5. Verwechslungsgefahr
+
+* **Schar ≠ Menge** – Eine Schar ist *nicht* eine einzige Menge, sondern eine **Familie** von Mengen, die durch einen Parameter parametrisiert ist.
+  (Man kann eine Schar als *Menge von Mengen* auffassen, aber die Indexstruktur ist wichtig – z. B. zwei verschiedene Indizes können dieselbe Teilmenge ergeben.)
+
+* **Schar ≠ „Schar“ im Sprachgebrauch** – Im Alltag kann „Schar“ einfach „Gruppe“ bedeuten. In der Mathematik ist der Begriff streng definiert.
+
+---
+
+### 6. Kurze Zusammenfassung
+
+- **Schar** = Familie von Mengen, die durch einen (oder mehrere) Parameter beschrieben werden.
+- Gespeichert als \(\{F_i \mid i \in I\}\).
+- Wird verwendet, um parametrisierte Mengen, Familien von Funktionen, Grenzübergänge oder strukturierte Teilmengen systematischer zu behandeln.
+
+Kurz: **Eine Schar ist das mathematische Werkzeug, um viele ähnliche Mengen zusammen unter einer gemeinsamen Regel zu betrachten.**

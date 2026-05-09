@@ -1,0 +1,352 @@
+§u§
+```
+    Geometrische Optik:
+       - Brechung und Reflexion (inkl. Totalreflexion)
+       - Strahlengang konstruieren/berechnen
+       - Fotoapparat
+       - Auge, Fernrohr und Mikroskop
+```
+Erkläre mir diese Themen. Ich werde darüber eine Prüfung haben. Ich darf eine A4-Seite Notizen mitnehmen.
+§a§
+# Geometrische Optik - Prüfungszusammenfassung
+
+## 1. BRECHUNG UND REFLEXION
+
+### Reflexion
+- **Reflexionsgesetz**: Einfallswinkel α = Ausfallswinkel α'
+- Winkel werden zum Lot gemessen
+- Ebener Spiegel: Bild ist virtuell, seitenverkehrt, gleich groß
+
+### Brechung
+- **Snellius'sches Brechungsgesetz**:
+  ```
+  n₁ · sin(α₁) = n₂ · sin(α₂)
+  ```
+- n = Brechungsindex (Luft ≈ 1, Wasser ≈ 1,33, Glas ≈ 1,5)
+- **Vom optisch dünneren ins dichtere Medium**: Brechung zum Lot hin
+- **Vom dichteren ins dünnere Medium**: Brechung vom Lot weg
+
+### Totalreflexion
+- Nur bei Übergang von optisch dichter → dünner
+- **Grenzwinkel**: sin(αg) = n₂/n₁
+- Bei α > αg: komplette Reflexion, keine Brechung
+- Anwendung: Glasfaserkabel, Prismenferngläser
+
+## 2. STRAHLENGANG - LINSEN
+
+### Wichtige Strahlen (3 konstruieren!)
+1. **Parallelstrahl** → durch Brennpunkt
+2. **Mittelpunktstrahl** → geht ungebrochen durch
+3. **Brennpunktstrahl** → parallel zur Achse
+
+### Linsengleichung
+```
+1/f = 1/g + 1/b
+```
+- f = Brennweite, g = Gegenstandsweite, b = Bildweite
+
+### Abbildungsmaßstab
+```
+V = B/G = b/g
+```
+- V > 1: vergrößert, V < 1: verkleinert
+- V < 0: auf dem Kopf (reell), V > 0: aufrecht (virtuell)
+
+### Sammellinse (konvex)
+- f > 0
+- **g > 2f**: reelles, verkleinertes, umgekehrtes Bild
+- **f < g < 2f**: reelles, vergrößertes, umgekehrtes Bild
+- **g < f**: virtuelles, vergrößertes, aufrechtes Bild (Lupe!)
+
+### Zerstreuungslinse (konkav)
+- f < 0
+- Immer virtuelles, verkleinertes, aufrechtes Bild
+
+## 3. FOTOAPPARAT
+
+**Aufbau**: Objektiv (Linsensystem) → Blende → Sensor/Film
+
+**Funktionsweise**:
+- Gegenstand im Unendlichen → Bild in Brennebene
+- Scharfstellen: Abstand Linse-Sensor ändern
+- **Blende**: steuert Lichtmenge und Schärfentiefe
+- Kleine Blende (große Zahl): viel Schärfentiefe
+- Große Blende (kleine Zahl): geringe Schärfentiefe
+
+**Abbildung**: reell, verkleinert, umgekehrt auf Sensor
+
+## 4. AUGE
+
+**Aufbau**: Hornhaut → Pupille → Linse → Glaskörper → Netzhaut
+
+**Brechkraft**:
+- D = 1/f (in Dioptrien, f in Metern)
+- Gesamtbrechkraft ≈ 60 dpt
+
+**Akkommodation**: Linse ändert Krümmung
+- Nahpunkt: ~10 cm (bei Jugendlichen)
+- Fernpunkt: ∞ (bei Normalsichtigen)
+
+### Fehlsichtigkeiten
+**Kurzsichtigkeit (Myopie)**:
+- Fernpunkt < ∞, Bild vor Netzhaut
+- Korrektur: Zerstreuungslinse (negativ)
+
+**Weitsichtigkeit (Hyperopie)**:
+- Nahpunkt zu weit, Bild hinter Netzhaut
+- Korrektur: Sammellinse (positiv)
+
+## 5. FERNROHR (Kepler)
+
+**Aufbau**: Objektiv (Sammellinse, große Brennweite) + Okular (Sammellinse, kleine Brennweite)
+
+**Strahlengang**:
+- Objektiv erzeugt reelles Zwischenbild in seiner Brennebene
+- Okular wirkt als Lupe für Zwischenbild
+- Abstand: f₁ + f₂
+
+**Vergrößerung**:
+```
+V = f₁/f₂ = tan(ε)/tan(ε₀)
+```
+
+**Eigenschaften**: umgekehrtes Bild (für Astronomie OK)
+
+## 6. MIKROSKOP
+
+**Aufbau**: Objektiv (kurze Brennweite) + Okular (kurze Brennweite)
+
+**Strahlengang**:
+- Objektiv: g ≈ f₁ → stark vergrößertes reelles Zwischenbild
+- Okular: als Lupe (Zwischenbild im Brennpunkt)
+- Tubuslänge t ≈ 16 cm
+
+**Vergrößerung**:
+```
+V = V₁ · V₂ = (t/f₁) · (s₀/f₂)
+```
+s₀ = deutliche Sehweite (25 cm)
+
+**Eigenschaften**: umgekehrtes, stark vergrößertes Bild
+
+---
+
+## MERKSÄTZE FÜR A4-BLATT:
+- Brechung: n₁·sin α₁ = n₂·sin α₂
+- Linse: 1/f = 1/g + 1/b; V = b/g
+- Totalreflexion: sin αg = n₂/n₁
+- Fernrohr: V = f₁/f₂
+- Mikroskop: V = (t/f₁)·(s₀/f₂)
+§u§
+Mache eine solche Seite mit LaTeX.
+§a§
+```latex
+\documentclass[a4paper,8pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[german]{babel}
+\usepackage[margin=0.5cm,landscape]{geometry}
+\usepackage{amsmath}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{graphicx}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+\setlength{\columnsep}{15pt}
+
+\begin{document}
+\begin{multicols}{3}
+
+\section*{\Large Geometrische Optik}
+
+\subsection*{1. Reflexion \& Brechung}
+
+\textbf{Reflexionsgesetz:}
+\[\alpha_{\text{ein}} = \alpha_{\text{aus}}\]
+
+\textbf{Snellius (Brechungsgesetz):}
+\[\boxed{n_1 \cdot \sin(\alpha_1) = n_2 \cdot \sin(\alpha_2)}\]
+
+\textbf{Brechungsindizes:}
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item Vakuum/Luft: $n \approx 1{,}0$
+    \item Wasser: $n \approx 1{,}33$
+    \item Glas: $n \approx 1{,}5$
+    \item Diamant: $n \approx 2{,}4$
+\end{itemize}
+
+\textbf{Totalreflexion:}
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item Nur von optisch dichter $\rightarrow$ dünner
+    \item \[\boxed{\sin(\alpha_g) = \frac{n_2}{n_1}}\]
+    \item Bei $\alpha > \alpha_g$: 100\% Reflexion
+\end{itemize}
+
+\subsection*{2. Linsen}
+
+\textbf{Linsengleichung:}
+\[\boxed{\frac{1}{f} = \frac{1}{g} + \frac{1}{b}}\]
+$f$ = Brennweite, $g$ = Gegenstandsweite, $b$ = Bildweite
+
+\textbf{Abbildungsmaßstab:}
+\[\boxed{V = \frac{B}{G} = \frac{b}{g}}\]
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item $|V| > 1$: vergrößert
+    \item $|V| < 1$: verkleinert
+    \item $V < 0$: umgekehrt (reell)
+    \item $V > 0$: aufrecht (virtuell)
+\end{itemize}
+
+\textbf{Brechkraft:}
+\[\boxed{D = \frac{1}{f}} \quad \text{[Dioptrien, $f$ in m]}\]
+
+\textbf{Konstruktionsstrahlen:}
+\begin{enumerate}[leftmargin=*,noitemsep,topsep=0pt]
+    \item \textbf{Parallelstrahl} $\rightarrow$ durch Brennpunkt
+    \item \textbf{Mittelpunktstrahl} $\rightarrow$ ungebrochen durch
+    \item \textbf{Brennpunktstrahl} $\rightarrow$ parallel zur Achse
+\end{enumerate}
+
+\textbf{Sammellinse (konvex, $f > 0$):}
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item $g > 2f$: reell, verkleinert, umgekehrt
+    \item $f < g < 2f$: reell, vergrößert, umgekehrt
+    \item $g < f$: virtuell, vergrößert, aufrecht (Lupe)
+\end{itemize}
+
+\textbf{Zerstreuungslinse (konkav, $f < 0$):}
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item Immer: virtuell, verkleinert, aufrecht
+\end{itemize}
+
+\subsection*{3. Fotoapparat}
+
+\textbf{Aufbau:} Objektiv $\rightarrow$ Blende $\rightarrow$ Sensor
+
+\textbf{Funktionsweise:}
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item Abbildung: reell, verkleinert, umgekehrt
+    \item Scharfstellen: Linsen-Sensor-Abstand ändern
+    \item Objekt meist im Bereich $g \gg 2f$
+    \item Bild in Nähe der Brennebene
+\end{itemize}
+
+\textbf{Blende:}
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item Kleine Öffnung (große Zahl): viel Schärfentiefe
+    \item Große Öffnung (kleine Zahl): geringe Schärfentiefe
+\end{itemize}
+
+\subsection*{4. Auge}
+
+\textbf{Aufbau:} Hornhaut $\rightarrow$ Pupille $\rightarrow$ Linse $\rightarrow$ Netzhaut
+
+\textbf{Brechkraft:}
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item Gesamt: $\approx 60$ dpt
+    \item Akkommodation: Linse ändert Krümmung
+    \item Nahpunkt: $\approx 10$ cm (Jugendliche), $\approx 25$ cm (s₀)
+    \item Fernpunkt: $\infty$ (Normalsichtige)
+\end{itemize}
+
+\textbf{Kurzsichtigkeit (Myopie):}
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item Bild vor Netzhaut, Fernpunkt $< \infty$
+    \item \textbf{Korrektur:} Zerstreuungslinse ($D < 0$)
+\end{itemize}
+
+\textbf{Weitsichtigkeit (Hyperopie):}
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item Bild hinter Netzhaut, Nahpunkt zu weit
+    \item \textbf{Korrektur:} Sammellinse ($D > 0$)
+\end{itemize}
+
+\subsection*{5. Fernrohr (Kepler)}
+
+\textbf{Aufbau:}
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item Objektiv: Sammellinse, große Brennweite $f_1$
+    \item Okular: Sammellinse, kleine Brennweite $f_2$
+    \item Abstand: $L = f_1 + f_2$
+\end{itemize}
+
+\textbf{Strahlengang:}
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item Objektiv: reelles Zwischenbild in Brennebene
+    \item Okular: wirkt als Lupe für Zwischenbild
+    \item Zwischenbild im gemeinsamen Brennpunkt
+\end{itemize}
+
+\textbf{Vergrößerung:}
+\[\boxed{V = \frac{f_1}{f_2} = \frac{\tan \varepsilon}{\tan \varepsilon_0}}\]
+
+\textbf{Eigenschaften:}
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item Bild umgekehrt (für Astronomie OK)
+    \item Große Vergrößerung: $f_1$ groß, $f_2$ klein
+\end{itemize}
+
+\subsection*{6. Mikroskop}
+
+\textbf{Aufbau:}
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item Objektiv: Sammellinse, sehr kurze Brennweite $f_1$
+    \item Okular: Sammellinse, kurze Brennweite $f_2$
+    \item Tubuslänge: $t \approx 16$ cm
+\end{itemize}
+
+\textbf{Strahlengang:}
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item Objektiv: $g \approx f_1$ $\rightarrow$ stark vergrößertes reelles Zwischenbild
+    \item Okular: Zwischenbild knapp vor Brennpunkt $\rightarrow$ als Lupe
+\end{itemize}
+
+\textbf{Vergrößerung:}
+\[\boxed{V = V_1 \cdot V_2 = \frac{t}{f_1} \cdot \frac{s_0}{f_2}}\]
+$s_0$ = deutliche Sehweite $\approx 25$ cm
+
+\textbf{Eigenschaften:}
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item Bild umgekehrt, stark vergrößert
+    \item Kurze Brennweiten $\rightarrow$ große Vergrößerung
+\end{itemize}
+
+\subsection*{Wichtige Formeln - Übersicht}
+
+\begin{align*}
+\text{Brechung:} & \quad n_1 \sin \alpha_1 = n_2 \sin \alpha_2 \\
+\text{Totalrefl.:} & \quad \sin \alpha_g = \frac{n_2}{n_1} \\
+\text{Linse:} & \quad \frac{1}{f} = \frac{1}{g} + \frac{1}{b} \\
+\text{Abbildung:} & \quad V = \frac{B}{G} = \frac{b}{g} \\
+\text{Brechkraft:} & \quad D = \frac{1}{f} \text{ [dpt]} \\
+\text{Fernrohr:} & \quad V = \frac{f_1}{f_2} \\
+\text{Mikroskop:} & \quad V = \frac{t}{f_1} \cdot \frac{s_0}{f_2}
+\end{align*}
+
+\subsection*{Vorzeichenkonvention}
+
+\begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+    \item $f > 0$: Sammellinse
+    \item $f < 0$: Zerstreuungslinse
+    \item $b > 0$: reelles Bild
+    \item $b < 0$: virtuelles Bild
+    \item $V < 0$: umgekehrt
+    \item $V > 0$: aufrecht
+\end{itemize}
+
+\end{multicols}
+\end{document}
+```
+
+Diese LaTeX-Vorlage erstellt eine kompakte A4-Seite im Querformat mit drei Spalten. Um das Dokument zu kompilieren:
+
+1. Speichere den Code als `.tex` Datei
+2. Kompiliere mit `pdflatex dateiname.tex`
+
+**Anpassungsmöglichkeiten:**
+- Schriftgröße ändern: `8pt` in Zeile 1 anpassen (z.B. 7pt, 9pt)
+- Ränder ändern: `margin=0.5cm` anpassen
+- Spaltenanzahl ändern: `{3}` bei `\begin{multicols}{3}` ändern
+
+Die Seite ist so gestaltet, dass alle wichtigen Formeln und Konzepte übersichtlich dargestellt sind und als Spickzettel für die Prüfung dienen können.

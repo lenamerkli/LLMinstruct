@@ -1,0 +1,124 @@
+§u§
+```
+Sie können …
+• die Aufgaben und Hauptkomponenten von CPU und RAM beschreiben sowie deren Unterschiede
+und Zusammenarbeit beim Ausführen eines Programms erklären.
+• den Ablauf eines Befehlszyklus (Fetch, Decode, Execute) in CPU und RAM Schritt für Schritt
+beschreiben und anhand eines Beispiels darstellen.
+• das Instruction Set einer vereinfachten CPU interpretieren und daraus ableiten, welche
+Operationen möglich sind und wie Programme daraus aufgebaut werden.
+• nachvollziehen, wie Programme als Folgen von Maschinenbefehlen ausgeführt werden und dabei
+die Funktionen der Register (GPRS, PC, IR, ACC) erläutern.
+• grundlegende Assembly-Befehle in einem einfachen Programm anwenden, um die zugrunde
+liegende Programmlogik zu verstehen.
+• erklären, dass Befehle über Opcodes kodiert werden, und den Einfluss von Opcodes auf
+Operationen und Datenzugriffe beschreiben
+``
+Erkläre mir den Stoff, den ich können muss, um diese Lernziele zu erfüllen.
+§a§
+Das ist eine hervorragende und sehr klare Liste von Lernzielen. Sie deckt die absoluten Grundlagen der Rechnerarchitektur (oft als **Von-Neumann-Architektur** bezeichnet) ab.
+
+Um diese Ziele zu erreichen, habe ich den Stoff für dich logisch strukturiert und Schritt für Schritt zusammengefasst.
+
+---
+
+### 1. CPU und RAM: Die Hauptakteure
+Um zu verstehen, wie ein Computer arbeitet, musst du die zwei wichtigsten Hardware-Komponenten kennen.
+
+**CPU (Central Processing Unit / Hauptprozessor):**
+*   **Aufgabe:** Sie ist das "Gehirn" des Computers. Sie führt Befehle aus, führt Berechnungen durch und steuert den Datenfluss.
+*   **Hauptkomponenten:**
+    *   **ALU (Arithmetic Logic Unit):** Das Rechenwerk. Hier passieren alle mathematischen (z.B. +, -) und logischen (z.B. UND, ODER) Operationen.
+    *   **CU (Control Unit / Steuerwerk):** Der Dirigent. Liest die Befehle, interpretiert sie und steuert die anderen Komponenten, um den Befehl auszuführen.
+    *   **Register:** Extrem schnelle, aber winzige Speicherplätze direkt in der CPU (dazu gleich mehr).
+
+**RAM (Random Access Memory / Arbeitsspeicher):**
+*   **Aufgabe:** Das "Kurzzeitgedächtnis" oder die Werkbank. Hier liegen alle Daten und Programme, die *aktuell* ausgeführt werden. Sobald der Strom weg ist, ist der RAM leer (flüchtiger Speicher).
+*   **Aufbau:** Stell dir den RAM vor wie eine riesige Excel-Tabelle. Jede Zeile hat eine **Adresse** (z.B. 001, 002) und einen **Inhalt** (Daten oder Befehle).
+
+**Unterschiede und Zusammenarbeit:**
+*   Die CPU kann extrem schnell rechnen, aber kaum Daten speichern. Der RAM kann viele Daten speichern, aber nicht rechnen.
+*   **Zusammenarbeit:** Wenn du ein Programm startest, wird es von der Festplatte in den RAM geladen. Die CPU holt sich dann Schritt für Schritt jeden einzelnen Befehl aus dem RAM, verarbeitet ihn und schreibt das Ergebnis bei Bedarf wieder in den RAM zurück.
+
+---
+
+### 2. Die Register: Der Werkzeugkasten der CPU
+Um Befehle abzuarbeiten, nutzt die CPU interne Zwischenspeicher, die Register. Du musst folgende kennen:
+
+*   **PC (Program Counter / Befehlszähler):** Zeigt immer auf die Speicheradresse im RAM, an der der *nächste* auszuführende Befehl liegt.
+*   **IR (Instruction Register / Befehlsregister):** Hier wird der *aktuell* zu bearbeitende Befehl gespeichert, nachdem er aus dem RAM geholt wurde.
+*   **ACC (Accumulator / Akkumulator):** Das Haupt-Rechenregister. Wenn die ALU etwas ausrechnet, nimmt sie oft eine Zahl aus dem ACC, rechnet etwas dazu, und speichert das neue Ergebnis wieder im ACC (wie die Zwischensumme bei einem Taschenrechner).
+*   **GPRs (General Purpose Registers):** "Allzweck-Register" (oft R1, R2, R3 genannt). Sie werden genutzt, um Variablen, Adressen oder Zwischenergebnisse kurzzeitig zu speichern, damit die CPU nicht ständig auf den langsameren RAM zugreifen muss.
+
+---
+
+### 3. Der Befehlszyklus (Fetch, Decode, Execute)
+Wie führt die CPU nun ein Programm aus? Das passiert in einer Endlosschleife, dem **Von-Neumann-Zyklus**.
+
+1.  **Fetch (Holen):**
+    *   Die CPU schaut in den **PC**, welche Adresse als nächstes dran ist (z.B. Adresse 100).
+    *   Sie holt den Befehl aus dem RAM von Adresse 100 und kopiert ihn in das **IR**.
+    *   Der **PC** wird um 1 erhöht (auf 101), damit er für den nächsten Durchlauf bereit ist.
+2.  **Decode (Dekodieren / Entschlüsseln):**
+    *   Die **CU** schaut sich den Befehl im **IR** an und zerlegt ihn (siehe Opcodes unten). Sie "versteht" nun, was zu tun ist (z.B. "Ah, ich soll eine Zahl addieren!").
+3.  **Execute (Ausführen):**
+    *   Der Befehl wird ausgeführt. Wenn es eine Rechnung ist, übernimmt die **ALU**. Wenn Daten aus dem RAM geholt werden müssen, holt die CU sie.
+    *   *Nach dem Execute beginnt der Zyklus von vorn (Fetch...).*
+
+**Beispiel:**
+Angenommen, im RAM steht bei Adresse 10 der Befehl `ADD 5` (Addiere den Wert aus Adresse 5).
+*   *Fetch:* PC steht auf 10. CPU holt `ADD 5` ins IR. PC springt auf 11.
+*   *Decode:* CU liest das IR. Erkennt: "Befehl ist eine Addition, Operand steht in RAM-Adresse 5".
+*   *Execute:* CPU holt die Zahl aus RAM-Adresse 5, schickt sie mit dem aktuellen Inhalt des ACC an die ALU. Die ALU addiert beides und legt das Ergebnis zurück in den ACC.
+
+---
+
+### 4. Opcodes und das Instruction Set
+Woher weiß der Prozessor, was "ADD" bedeutet? Ein Computer versteht nur Nullen und Einsen.
+
+*   **Instruction Set (Befehlssatz):** Das ist das "Wörterbuch" einer CPU. Es definiert alle Operationen, die diese spezifische CPU physisch ausführen kann (z.B. Lade Daten, Addiere, Springe zu einer anderen Zeile).
+*   **Opcode (Operation Code):** Ein Maschinenbefehl besteht meist aus zwei Teilen. Der vordere Teil (z.B. die ersten 4 Bits) ist der Opcode. Er sagt der CPU, *was* zu tun ist.
+    *   Beispiel: `0001` = LOAD, `0010` = ADD, `0011` = STORE.
+*   **Operand:** Der hintere Teil des Befehls. Er sagt, *womit* die Operation durchgeführt werden soll (meist eine RAM-Adresse oder ein fester Wert).
+
+**Einfluss des Opcodes:**
+Wenn die CPU die Bitfolge `0001 1010` aus dem RAM holt:
+1.  Die CU liest den Opcode `0001` und weiß durch ihre Verdrahtung: Das bedeutet LOAD (Lade einen Wert in den ACC).
+2.  Sie liest den Operanden `1010` (Dezimal 10) und weiß: "Ich muss den Wert aus RAM-Adresse 10 holen".
+
+---
+
+### 5. Assembly (Assembler) und Programmlogik
+Programme als Nullen und Einsen zu schreiben, ist für Menschen zu fehleranfällig. Deshalb gibt es **Assembly**. Das ist eine menschenlesbare Form der Maschinensprache. Statt `0001` schreiben wir `LOAD`.
+
+**Grundlegende Assembly-Befehle (Beispiele für eine vereinfachte CPU):**
+*   `LOAD [Adresse]`: Lade den Wert aus dem RAM in den ACC.
+*   `STORE [Adresse]`: Speichere den Wert aus dem ACC in den RAM.
+*   `ADD [Adresse]`: Addiere den Wert aus dem RAM zum ACC.
+*   `SUB [Adresse]`: Subtrahiere den Wert aus dem RAM vom ACC.
+*   `JMP [Adresse]`: Springe zu einer anderen Zeile im Programm (überschreibt den PC).
+*   `HALT`: Stoppt das Programm.
+
+**Beispiel für ein einfaches Programm:**
+Wir wollen zwei Zahlen addieren. Im RAM-Adresse 50 steht die Zahl `3`, in Adresse 51 steht die Zahl `4`. Das Ergebnis soll in Adresse 52 gespeichert werden. Das Programm liegt ab Adresse 0.
+
+| Adresse im RAM | Assembly-Befehl | Was passiert? |
+| :--- | :--- | :--- |
+| 0 | `LOAD 50` | ACC = 3 (holt die erste Zahl) |
+| 1 | `ADD 51` | ACC = ACC + 4 (ACC ist jetzt 7) |
+| 2 | `STORE 52` | Speichert die 7 in RAM-Adresse 52 |
+| 3 | `HALT` | Beendet das Programm |
+
+**Warum ist das wichtig?**
+Dadurch verstehst du, dass auch das komplexeste Videospiel oder Betriebssystem am Ende nur aus einer gigantischen Abfolge genau solcher simpler Befehle besteht. Alles wird in winzige Schritte (Laden, Rechnen, Speichern, Springen) zerlegt.
+
+---
+
+### Wie du dich testen kannst (Checkliste für die Prüfung):
+1.  Kann ich blind aufzeichnen, wo CPU, RAM und die Pfeile dazwischen hingehören?
+2.  Weiß ich, wofür GPR, PC, IR und ACC stehen und was sie speichern?
+3.  Kann ich jemandem in drei Sätzen Fetch, Decode, Execute erklären?
+4.  Wenn mir jemand den Befehl `0100 1111` gibt, kann ich erklären, welcher Teil davon der Opcode ist und was er tut?
+5.  Kann ich ein kleines Assembler-Programm schreiben, das zwei Zahlen subtrahiert?
+
+*Tipp: Wenn du zu deinem Kurs Unterlagen hast, schau dir an, welche spezifischen Assembly-Befehle ihr benutzt habt (manchmal heißen sie leicht anders, z.B. LDA, STA etc.). Die Logik bleibt aber exakt gleich!*

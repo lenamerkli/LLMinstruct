@@ -1,0 +1,51 @@
+§u§
+<attach:bb82a9443118ed77ea34b41b07029621b3d10b964bf1e578fc29c6e2ea5b1753>Wie löse ich Aufgaben wie diese?
+§a§
+Diese Aufgabe befasst sich mit den Grundlagen der Optik (Abbildungsgesetz) und der Kinematik (Bewegung). Hier ist die schrittweise Lösung:
+
+### 1. Gegebene Werte sammeln und in SI-Einheiten umrechnen
+Zuerst bringen wir alle Einheiten auf Meter (m) und Sekunden (s), damit wir direkt rechnen können.
+
+*   **Brennweite:** $f = 5\text{ cm} = 0,05\text{ m}$
+*   **Gegenstandsweite (Entfernung):** $g = 10\text{ m}$
+*   **Geschwindigkeit:** $v = 100\text{ km/h} = \frac{100}{3,6}\text{ m/s} \approx 27,78\text{ m/s}$
+*   **Maximale Unschärfe auf dem Film:** $\Delta x' = 0,03\text{ mm} = 0,00003\text{ m} = 3 \cdot 10^{-5}\text{ m}$
+
+### 2. Teilaufgabe a) Berechnung der Belichtungszeit
+
+**Der physikalische Zusammenhang:**
+Während die Kamera den Verschluss offen hat (Belichtungszeit $\Delta t$), legt der Motorradfahrer eine Strecke $\Delta x$ zurück:
+$$\Delta x = v \cdot \Delta t$$
+
+Diese Bewegung in der Realität wird durch das Objektiv verkleinert auf den Film projiziert. Das Verhältnis zwischen der Bewegung auf dem Film ($\Delta x'$) und der echten Bewegung ($\Delta x$) entspricht dem Abbildungsmaßstab $A$:
+$$A = \frac{\text{Bildgröße}}{\text{Gegenstandsgröße}} = \frac{\Delta x'}{\Delta x} = \frac{b}{g}$$
+*(wobei $b$ die Bildweite ist)*
+
+Da der Motorradfahrer sehr weit weg ist ($g = 10\text{ m}$) im Vergleich zur Brennweite ($f = 0,05\text{ m}$), kann man näherungsweise sagen, dass die Bildweite fast genau der Brennweite entspricht ($b \approx f$).
+
+**Die Formel aufstellen:**
+Wir setzen $\Delta x = v \cdot \Delta t$ in die Verhältnisgleichung ein:
+$$\frac{\Delta x'}{v \cdot \Delta t} = \frac{f}{g}$$
+
+Nun stellen wir nach der gesuchten Belichtungszeit $\Delta t$ um:
+$$\Delta t = \frac{\Delta x' \cdot g}{v \cdot f}$$
+
+**Zahlenwerte einsetzen:**
+$$\Delta t = \frac{0,00003\text{ m} \cdot 10\text{ m}}{27,78\text{ m/s} \cdot 0,05\text{ m}}$$
+$$\Delta t = \frac{0,0003}{1,389}\text{ s} \approx 0,000216\text{ s}$$
+
+Das entspricht etwa **1/4600 Sekunde**.
+
+**Antwort:** Der Fotograf darf höchstens ca. **0,22 Millisekunden** (oder eine Verschlusszeit von etwa **1/4000 bis 1/5000 s**) belichten.
+
+---
+
+### 3. Teilaufgabe b) Einstellung der Blende
+
+**Logik:**
+In der Fotografie gibt es das "Belichtungsdreieck" aus Belichtungszeit, Blende und ISO-Wert.
+*   Da die Belichtungszeit extrem kurz sein muss (siehe oben), fällt nur sehr wenig Licht auf den Film/Sensor.
+*   Um das Bild nicht unterzubelichten (also zu dunkel zu machen), muss man dies durch eine andere Einstellung ausgleichen.
+
+**Antwort:**
+Man wird die **Blende so weit wie möglich öffnen** (also eine **kleine Blendenzahl** wählen, z. B. $f/2.8$ oder $f/1.4$), damit in der extrem kurzen Zeit genügend Licht für eine ausreichende Belichtung eintreffen kann. Gegebenenfalls müsste man auch die Filmempfindlichkeit (ISO) erhöhen.

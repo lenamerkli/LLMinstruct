@@ -1,0 +1,359 @@
+§u§
+```
+<h1>Perceptron</h1>
+<p>Ein Perzeptron ist das einfachste denkbare neuronale Netzwerk: ein Rechenmodell einer einzelnen Nervenzelle. Es wurde 1957 von Frank Rosenblatt am Cornell Aeronautical Laboratory entwickelt und besteht aus einem oder mehreren Eingängen, einem Prozessor und einem einzigen Ausgang</p>
+<img ngSrc="perceptron.png" width="600" height="200" alt="Perceptron Diagramm" priority/>
+<h2>Schritte eines Perceptrons</h2>
+<h3>Gewichten</h3>
+<h3>Addieren</h3>
+<h3>Ausgabe generieren</h3>
+<h2>In Code</h2>
+<mat-tab-group>
+  <mat-tab label="p5.js">
+    <p>TODO: p5.js</p>
+  </mat-tab>
+  <mat-tab label="Python">
+    <p>TODO: Python</p>
+  </mat-tab>
+</mat-tab-group>
+```
+Vervollständige diese Seite. Falls nötig, füge weitere Abschnitte hinzu oder ändere die Bestehenden.
+§a§
+```html
+<h1>Perceptron</h1>
+<p>Ein Perzeptron ist das einfachste denkbare neuronale Netzwerk: ein Rechenmodell einer einzelnen Nervenzelle. Es wurde 1957 von Frank Rosenblatt am Cornell Aeronautical Laboratory entwickelt und besteht aus einem oder mehreren Eingängen, einem Prozessor und einem einzigen Ausgang.</p>
+<img ngSrc="perceptron.png" width="600" height="200" alt="Perceptron Diagramm" priority/>
+
+<h2>Mathematische Grundlage</h2>
+<p>Ein Perzeptron berechnet eine gewichtete Summe seiner Eingaben und wendet darauf eine Aktivierungsfunktion an. Die allgemeine Formel lautet:</p>
+
+<div style="background: #f5f5f5; padding: 1rem; border-radius: 4px; font-family: monospace; margin: 1rem 0; text-align: center;">
+  output = activation(Σ(w<sub>i</sub> · x<sub>i</sub>) + w<sub>bias</sub> · bias)
+</div>
+
+<p>Der <strong>Bias</strong> (oft als konstante Eingabe mit Wert 1 implementiert) erlaubt es der Entscheidungsgrenze, nicht durch den Ursprung zu verlaufen. Ohne Bias müsste die Trennlinie immer durch den Punkt (0,0) gehen.</p>
+
+<h2>Schritte eines Perceptrons</h2>
+
+<h3>1. Gewichten</h3>
+<p>Jede Eingabe <code>x<sub>i</sub></code> wird mit ihrem zugehörigen Gewicht <code>w<sub>i</sub></code> multipliziert. Die Gewichte sind das "Gedächtnis" des Netzwerks und bestimmen, wie stark jede Eingabe das Ergebnis beeinflusst:</p>
+<ul>
+  <li><strong>Positives Gewicht:</strong> Die Eingabe wirkt erregend (fördert Aktivierung)</li>
+  <li><strong>Negatives Gewicht:</strong> Die Eingabe wirkt hemmend (verhindert Aktivierung)</li>
+  <li><strong>Gewicht nahe 0:</strong> Die Eingabe wird ignoriert</li>
+</ul>
+
+<h3>2. Summieren (Addieren)</h3>
+<p>Alle gewichteten Eingaben werden aufsummiert, zusammen mit dem gewichteten Bias-Term:</p>
+<div style="font-family: monospace; margin: 0.5rem 0;">
+  net_input = (x<sub>0</sub> · w<sub>0</sub>) + (x<sub>1</sub> · w<sub>1</sub>) + ... + (1 · w<sub>bias</sub>)
+</div>
+<p>Dieser Wert wird auch <em>Nettoeingabe</em> oder <em>pre-activation</em> genannt.</p>
+
+<h3>3. Ausgabe generieren (Aktivierung)</h3>
+<p>Die Nettoeingabe wird durch eine nicht-lineare Aktivierungsfunktion geleitet. Das ursprüngliche Rosenblatt-Perzeptron verwendet eine einfache <strong>Schwellenwertfunktion</strong> (Heaviside-Funktion):</p>
+<ul>
+  <li>Wenn <code>net_input > 0</code> → Ausgabe = <strong>1</strong> (oder +1)</li>
+  <li>Wenn <code>net_input ≤ 0</code> → Ausgabe = <strong>0</strong> (oder -1)</li>
+</ul>
+
+<h2>Der Lernalgorithmus</h2>
+<p>Das Perzeptron lernt durch überwachtes Lernen. Nach jeder Vorhersage werden die Gewichte angepasst, wenn die Ausgabe falsch war:</p>
+
+<div style="background: #f5f5f5; padding: 1rem; border-radius: 4px; font-family: monospace; margin: 1rem 0;">
+  w<sub>neu</sub> = w<sub>alt</sub> + α · (target - output) · x
+</div>
+
+<p>Dabei ist:</p>
+<ul>
+  <li><code>α</code> (Alpha) die Lernrate (z.B. 0.01 bis 0.1)</li>
+  <li><code>(target - output)</code> der Fehler (+2, 0 oder -2 bei binärer Ausgabe)</li>
+  <li><code>x</code> der Eingabewert</li>
+</ul>
+
+<h2>In Code</h2>
+<mat-tab-group>
+  <mat-tab label="p5.js (JavaScript)">
+    <pre style="background: #263238; color: #aed581; padding: 1rem; border-radius: 4px; overflow-x: auto;"><code>class Perceptron {
+  constructor(numInputs, learningRate = 0.1) {
+    // Initialisiere Gewichte zufällig zwischen -1 und 1
+    this.weights = new Array(numInputs);
+    for (let i = 0; i < this.weights.length; i++) {
+      this.weights[i] = random(-1, 1);
+    }
+    // Bias als separates Gewicht (Eingabe wird als 1 behandelt)
+    this.biasWeight = random(-1, 1);
+    this.lr = learningRate;
+  }
+
+  // Vorhersage treffen (feedforward)
+  predict(inputs) {
+    let sum = 0;
+    // Gewichtete Summe der Eingaben
+    for (let i = 0; i < this.weights.length; i++) {
+      sum += inputs[i] * this.weights[i];
+    }
+    // Bias hinzufügen (Eingabe = 1)
+    sum += 1 * this.biasWeight;
+
+    // Aktivierungsfunktion (Step Function)
+    // Gibt 1 oder -1 zurück (bipolar)
+    return sum > 0 ? 1 : -1;
+  }
+
+  // Training mit einem Datenpunkt
+  train(inputs, target) {
+    const guess = this.predict(inputs);
+    const error = target - guess;  // Fehler: -2, 0 oder +2
+
+    // Gewichte anpassen
+    for (let i = 0; i < this.weights.length; i++) {
+      this.weights[i] += this.lr * error * inputs[i];
+    }
+    // Bias-Gewicht anpassen (Eingabe ist konstant 1)
+    this.biasWeight += this.lr * error * 1;
+  }
+}
+
+// Beispielverwendung:
+// let p = new Perceptron(2);  // 2 Eingänge (x0, x1)
+// let point = [0.5, -0.3];
+// let target = 1;
+// let output = p.predict(point);  // Vorhersage
+// p.train(point, target);         // Trainieren</code></pre>
+  </mat-tab>
+
+  <mat-tab label="Python">
+    <pre style="background: #263238; color: #aed581; padding: 1rem; border-radius: 4px; overflow-x: auto;"><code>import random
+
+class Perceptron:
+    def __init__(self, num_inputs, learning_rate=0.1):
+        # Initialisiere Gewichte zufällig zwischen -1 und 1
+        self.weights = [random.uniform(-1, 1) for _ in range(num_inputs)]
+        self.bias_weight = random.uniform(-1, 1)
+        self.lr = learning_rate
+
+    def predict(self, inputs):
+        """Berechnet die Ausgabe für gegebene Eingaben"""
+        # Gewichtete Summe
+        total = sum(w * x for w, x in zip(self.weights, inputs))
+        # Bias addieren (Eingabe = 1)
+        total += self.bias_weight
+
+        # Aktivierungsfunktion (Step Function)
+        return 1 if total > 0 else -1
+
+    def train(self, inputs, target):
+        """Trainiert das Perzeptron mit einem Datenpunkt"""
+        output = self.predict(inputs)
+        error = target - output  # -2, 0 oder +2
+
+        # Gewichte aktualisieren
+        for i in range(len(self.weights)):
+            self.weights[i] += self.lr * error * inputs[i]
+
+        # Bias-Gewicht aktualisieren
+        self.bias_weight += self.lr * error
+
+# Beispiel: Lernen einer UND-Funktion
+# p = Perceptron(2)
+# training_data = [([0,0], -1), ([0,1], -1), ([1,0], -1), ([1,1], 1)]
+#
+# for _ in range(100):  # 100 Epochen
+#     for inputs, target in training_data:
+#         p.train(inputs, target)</code></pre>
+  </mat-tab>
+</mat-tab-group>
+
+<h2>Visualisierung der Entscheidungsgrenze</h2>
+<p>Ein Perzepron mit zwei Eingaben teilt den 2D-Raum durch eine <strong>Gerade</strong> in zwei Bereiche. Die Gleichung der Geraden lautet:</p>
+<div style="background: #f5f5f5; padding: 0.5rem 1rem; border-radius: 4px; font-family: monospace; display: inline-block;">
+  w₀·x + w₁·y + bias = 0  bzw.  y = -(w₀/w₁)·x - (bias/w₁)
+</div>
+<p>Alle Punkte oberhalb der Linie ergeben Ausgabe 1, alle darunter -1 (oder 0).</p>
+
+<h2>Grenzen und historische Bedeutung</h2>
+<p>Das einzelne Perzeptron kann nur <strong>linear separierbare</strong> Probleme lösen – solche, die durch eine gerade Linie (oder Ebene im höherdimensionalen Raum) getrennt werden können.</p>
+
+<div style="border-left: 4px solid #ff9800; padding-left: 1rem; margin: 1rem 0; background: #fff3e0; padding: 1rem;">
+  <strong>Das XOR-Problem:</strong> 1969 bewiesen Marvin Minsky und Seymour Papert in ihrem Buch "Perceptrons", dass ein einzelnes Perzeptron die XOR-Funktion (exklusives Oder) nicht lernen kann, da diese nicht linear separierbar ist. Dies führte zu einem ersten "KI-Winter".
+</div>
+
+<p>Die Lösung ist das <strong>Multi-Layer Perceptron (MLP)</strong>: mehrere Perzeptronen in Schichten angeordnet, mit nicht-linearen Aktivierungsfunktionen und dem Backpropagation-Algorithmus zum Trainieren. Dies bildet die Grundlage moderner Deep Learning Netzwerke.</p>
+
+<h2>Zusammenfassung</h2>
+<ul>
+  <li><strong>Eingaben:</strong> Werden mit Gewichten multipliziert</li>
+  <li><strong>Bias:</strong> Erlaubt Verschiebung der Entscheidungsgrenze</li>
+  <li><strong>Summation:</strong> Bildet die gewichtete Summe aller Eingaben</li>
+  <li><strong>Aktivierung:</strong> Schwellenwertfunktion erzeugt binäre Ausgabe</li>
+  <li><strong>Lernen:</strong> Gewichte werden basierend auf dem Fehler angepasst</li>
+</ul>
+```
+§u§
+You can use the following components:
+<app-latex content="i^2 = -1"></app-latex>
+and
+<app-codeblock language="javascript" [content]="content"></app-codeblock>
+with
+```
+content = `class Perceptron {
+  constructor() {
+    this.weights = [];
+  }
+}
+`
+```
+in the typescript file.
+<app-codeblock language="python" content="x += 1"></app-codeblock>
+also works.
+§a§
+Hier ist die vervollständigte Seite mit den angegebenen Komponenten:
+
+## HTML Template
+
+```html
+<h1>Perceptron</h1>
+<p>Ein Perzeptron ist das einfachste denkbare neuronale Netzwerk: ein Rechenmodell einer einzelnen Nervenzelle. Es wurde 1957 von Frank Rosenblatt entwickelt und besteht aus Eingängen mit Gewichten, einem Summierer und einer Aktivierungsfunktion.</p>
+
+<h2>Mathematische Grundlage</h2>
+<p>Das Perzeptron berechnet eine gewichtete Summe und wendet eine Aktivierungsfunktion <app-latex content="\varphi"></app-latex> an:</p>
+
+<app-latex content="\hat{y} = \varphi\left(\sum_{i=0}^{n} w_i x_i + w_{\text{bias}} \cdot 1\right)"></app-latex>
+
+<p>Der <strong>Bias</strong> (oft als <app-latex content="x_0 = 1"></app-latex> mit Gewicht <app-latex content="w_0"></app-latex> implementiert) verschiebt die Entscheidungsgrenze und ermöglicht es, Daten zu trennen, die nicht durch den Ursprung verlaufen.</p>
+
+<h2>Die drei Schritte</h2>
+
+<h3>1. Gewichten</h3>
+<p>Jede Eingabe wird mit ihrem synaptischen Gewicht multipliziert:</p>
+<app-latex content="z_i = w_i \cdot x_i"></app-latex>
+
+<h3>2. Summieren (Integration)</h3>
+<p>Die gewichteten Signale und der Bias werden aufsummiert:</p>
+<app-latex content="\text{net} = \sum_{i=0}^{n} w_i x_i + b = \vec{w} \cdot \vec{x} + b"></app-latex>
+
+<h3>3. Ausgabe generieren (Aktivierung)</h3>
+<p>Die Heaviside-Schrittfunktion erzeugt eine binäre Ausgabe:</p>
+<app-latex content="\varphi(\text{net}) = \begin{cases} 1 & \text{if } \text{net} > 0 \\ -1 & \text{if } \text{net} \leq 0 \end{cases}"></app-latex>
+
+<h2>Der Lernalgorithmus</h2>
+<p>Das Perzeptron lernt durch Fehlerkorrektur. Die Gewichtsaktualisierung erfolgt nach der Delta-Regel:</p>
+
+<app-latex content="\Delta w_i = \eta \cdot (t - y) \cdot x_i"></app-latex>
+<app-latex content="w_i^{\text{neu}} = w_i^{\text{alt}} + \Delta w_i"></app-latex>
+
+<p>Dabei ist <app-latex content="\eta"></app-latex> die Lernrate (z.B. 0.01), <app-latex content="t"></app-latex> der Zielwert und <app-latex content="y"></app-latex> die aktuelle Ausgabe.</p>
+
+<h2>Implementierung</h2>
+<mat-tab-group>
+  <mat-tab label="p5.js / TypeScript">
+    <app-codeblock language="typescript" [content]="p5jsCode"></app-codeblock>
+  </mat-tab>
+  <mat-tab label="Python">
+    <app-codeblock language="python" [content]="pythonCode"></app-codeblock>
+  </mat-tab>
+</mat-tab-group>
+
+<h2>Visualisierung der Entscheidungsgrenze</h2>
+<p>Ein Perzeptron mit zwei Eingaben definiert eine lineare Grenze im 2D-Raum:</p>
+
+<app-latex content="w_1 x_1 + w_2 x_2 + b = 0 \quad \Rightarrow \quad x_2 = -\frac{w_1}{w_2}x_1 - \frac{b}{w_2}"></app-latex>
+
+<p>Alle Punkte oberhalb der Geraden ergeben Ausgabe <app-latex content="+1"></app-latex>, alle darunter <app-latex content="-1"></app-latex>.</p>
+
+<h2>Grenzen</h2>
+<p>Das einzelne Perzeptron kann nur <strong>linear separierbare</strong> Probleme lösen. Das XOR-Problem ist damit nicht lösbar – dafür benötigt man ein mehrlagiges Netzwerk (MLP).</p>
+```
+
+## TypeScript (Component)
+
+Füge diese Variablen in deine Komponentenklasse ein:
+
+```typescript
+export class PerceptronComponent {
+  p5jsCode = `class Perceptron {
+  // Gewichte und Lernrate
+  weights: number[];
+  bias: number;
+  lr: number;
+
+  constructor(n: number, learningRate = 0.1) {
+    // Zufällige Initialisierung zwischen -1 und 1
+    this.weights = new Array(n).fill(0)
+      .map(() => Math.random() * 2 - 1);
+    this.bias = Math.random() * 2 - 1;
+    this.lr = learningRate;
+  }
+
+  // Vorhersage (Feedforward)
+  predict(inputs: number[]): number {
+    // Skalarprodukt + Bias
+    let sum = inputs.reduce((acc, val, i) =>
+      acc + val * this.weights[i], 0);
+    sum += this.bias;
+
+    // Schrittfunktion
+    return sum > 0 ? 1 : -1;
+  }
+
+  // Training mit einem Datenpunkt
+  train(inputs: number[], target: number): void {
+    const guess = this.predict(inputs);
+    const error = target - guess;
+
+    // Gewichte anpassen
+    for (let i = 0; i < this.weights.length; i++) {
+      this.weights[i] += this.lr * error * inputs[i];
+    }
+    // Bias anpassen (Eingabe = 1)
+    this.bias += this.lr * error;
+  }
+}`;
+
+  pythonCode = `import random
+
+class Perceptron:
+    def __init__(self, num_inputs, learning_rate=0.1):
+        # Zufällige Gewichtung
+        self.weights = [
+            random.uniform(-1, 1)
+            for _ in range(num_inputs)
+        ]
+        self.bias = random.uniform(-1, 1)
+        self.lr = learning_rate
+
+    def predict(self, inputs):
+        """Berechnet die Ausgabe (-1 oder 1)"""
+        # Gewichtete Summe
+        activation = sum(
+            w * x
+            for w, x in zip(self.weights, inputs)
+        )
+        activation += self.bias
+
+        return 1 if activation > 0 else -1
+
+    def train(self, inputs, target):
+        """Ein Schritt des Lernalgorithmus"""
+        output = self.predict(inputs)
+        error = target - output
+
+        # Delta-Regel anwenden
+        for i in range(len(self.weights)):
+            self.weights[i] += (
+                self.lr * error * inputs[i]
+            )
+        self.bias += self.lr * error
+
+# Beispiel: Lernen der AND-Funktion
+# p = Perceptron(2)
+# for _ in range(100):
+#     p.train([0, 0], -1)
+#     p.train([0, 1], -1)
+#     p.train([1, 0], -1)
+#     p.train([1, 1], 1)`;
+}
+```
+
+**Hinweis:** Die `<app-latex>`-Komponente rendert mathematische Ausdrücke (vermutlich mit MathJax oder KaTeX). Achte darauf, dass Backslashes im HTML-Template korrekt escaped werden müssen, wenn du sie nicht über Property-Binding `[content]="variable"` bindest.
