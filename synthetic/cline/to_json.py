@@ -6,6 +6,28 @@ with open('tools.md', 'r') as _f:
     TOOLS = _f.read()
 
 
+def tool_use_to_xml(tool_use):
+    """Convert a tool_use content item to its XML string representation."""
+    name = tool_use['name']
+    params = tool_use['input']
+    
+    # For plan_mode_respond, only output the response parameter
+    if name == 'plan_mode_respond':
+        params_to_output = {'response': params.get('response', '')}
+    else:
+        params_to_output = params
+    
+    xml_parts = [f'<{name}>']
+    for key, value in params_to_output.items():
+        if '\n' in str(value):
+            xml_parts.append(f'<{key}>\n{value}\n</{key}>')
+        else:
+            xml_parts.append(f'<{key}>{value}</{key}>')
+    xml_parts.append(f'</{name}>')
+    
+    return '\n'.join(xml_parts)
+
+
 def main():
     if os.path.exists('cline.jsonl'):
         os.remove('cline.jsonl')
@@ -19,11 +41,18 @@ def main():
                         'role': message['role'],
                         'content': ''
                     })
-                    new_messages[-1]['content'] = '\n\n'.join(i['text'] for i in message['content'] if i['type'] == 'text').split('</thinking>')[-1].strip()
+                    contents = []
+                    for item in message['content']:
+                        if item['type'] == 'text' and item['text'] != '\nthought\n':
+                            contents.append(item['text'])
+                        elif item['type'] == 'thinking':
+                            continue
+                        elif item['type'] == 'tool_use':
+                            contents.append(tool_use_to_xml(item))
+                    new_messages[-1]['content'] = '\n\n'.join(contents).split('</thinking>')[-1].strip()
                 new_messages[0]['content'] = TOOLS + '\n\n' + new_messages[0]['content']
             with open('cline.jsonl', 'a') as f:
                 f.write(json.dumps({'messages': new_messages}, ensure_ascii=False) + '\n')
-
 
 
 if __name__ == '__main__':
