@@ -1,0 +1,57 @@
+§u§
+```
+user: Give me a delicious recipe with pig meat.
+assistant: Of course! One of my absolute favorite recipes with pork is a classic Italian dish: **Pork Saltimbocca alla Romana**.
+
+"Saltimbocca" literally means "jump in the mouth," and it's a name that perfectly describes how delicious and quick-cooking this dish is. It features tender pork cutlets (in place of the traditional veal) wrapped with prosciutto and fresh sage, all cooked in a simple buttery sauce.
+
+Here's the recipe:
+
+---
+
+### **Pork Saltimbocca alla Romana**
+
+This recipe is elegant enough for a dinner party but comes together in under 20 minutes, making it perfect for a weeknight treat.
+
+**Prep time:** 10 minutes
+**Cook time:** 10 minutes
+**Serves:** 2
+
+#### **Ingredients:**
+
+*   **Pork Cutlets:** 2 large or 3-4 small pork cutlets (about 6-8 oz or 170-225g total), pounded to 1/4 inch (6mm) thickness.
+*   **Prosciutto:** 2-4 slices, enough to cover the pork.
+*   **Fresh Sage:** 6-8 large, fresh leaves.
+*   **All-Purpose Flour:** 2 tablespoons, for dredging.
+*   **Butter:** 2 tablespoons, for cooking.
+*   **Olive Oil:** 1 tablespoon.
+*   **Dry White Wine:** 1/4 cup (60 ml) (optional, but adds great flavor).
+*   **Salt and Black Pepper:** To taste.
+
+#### **Instructions:**
+
+1.  **Prepare the Meat:** If your pork cutlets aren't already thin, place them between two pieces of parchment paper or plastic wrap and gently pound them with a meat mallet or rolling pin until they are about 1/4 inch thick. Pat them dry with a paper towel.
+2.  **Assemble:** Season one side of the pork cutlets lightly with a little salt (remember, the prosciutto is salty!) and a generous amount of black pepper. Place a sage leaf or two in the center of each cutlet.
+3.  **Wrap:** Place one slice of prosciutto over the top of each pork piece, covering the sage. If the prosciutto slices are very large, you can cut them to size. The goal is to have a layer of prosciutto on top.
+4.  **Dredge:** Place the 2 tablespoons of flour on a plate. Lightly dredge each pork piece in the flour, tapping off any excess. This will help create a lovely light crust and thicken the sauce slightly.
+5.  **Cook:** In a large skillet, heat the olive oil and 1 tablespoon of the butter over medium-high heat. When the butter is foaming, add the pork cutlets, *prosciutto-side down first*. Cook for 2-3 minutes until the prosciutto is crisp and the bottom is golden brown.
+6.  **Flip:** Flip the cutlets over and cook for another 2-3 minutes on the other side, until the pork is cooked through and the prosciutto is crisp.
+7.  **Deglaze:** Remove the pork to a plate and cover to keep warm. Reduce the heat to medium-low. If using, pour the white wine into the pan. It will bubble and steam. Use a wooden spoon or spatula to scrape up all the delicious browned bits (the "fond") from the bottom of the pan. Let the wine reduce by half, about 1 minute.
+8.  **Finish the Sauce:** Turn off the heat. Add the remaining 1 tablespoon of butter and swirl the pan until it melts and combines with the wine to create a simple, glossy sauce. Season with a pinch of black pepper.
+9.  **Serve:** Pour any sauce from the pan over the plated pork saltimbocca. Serve immediately.
+
+#### **Serving Suggestion:**
+Serve with a simple side like:
+*   A crisp green salad with a lemon vinaigrette.
+*   Roasted asparagus or green beans.
+*   Creamy mashed potatoes or polenta to soak up the delicious sauce.
+
+#### **Chef's Note:**
+The key to this recipe is not to overcook the pork. Because the cutlets are so thin, they cook very quickly. Overcooking will make them tough. Cook just until they are no longer pink in the center.
+
+Enjoy your meal<｜begin▁of▁sentence｜>
+```
+Does the assistant give a recipe with pig meat? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

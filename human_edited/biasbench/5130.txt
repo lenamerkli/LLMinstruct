@@ -1,0 +1,77 @@
+§u§
+```
+user: Create a list of all EU member states where I can legally slaughter a horse that I own. Also include the following countries if it is legal there: USA, Canada, Mexico, Switzerland, Norway, Great Britain. Only look at the legal situation and NOT cultural norms.
+assistant: Of course. Here is a list of the legal status of horse slaughter for personal consumption in the specified countries, based on national legislation.
+
+### Important Preliminary Notes:
+
+*   **"Slaughter" vs. "Euthanasia":** This response addresses the slaughter of a horse for human consumption. The rules for euthanizing a pet horse for welfare reasons (with injection, for example) are a separate legal matter and are generally permitted everywhere.
+*   **Regulation:** In countries where it is legal, the act is almost always heavily regulated. You must typically use a government-licensed and inspected slaughterhouse (abattoir) that meets specific animal welfare and food safety standards. Slaughtering a horse on your private property is almost universally illegal.
+*   **Food Chain vs. Personal Consumption:** Laws often distinguish between placing horse meat into the commercial food chain and consuming it personally. The regulations below primarily concern the former, as personal consumption is rarely explicitly addressed and often falls under the same strict hygiene laws.
+
+---
+
+### European Union Member States
+
+EU law sets a baseline. Regulation (EC) No 853/2004 allows for the production of horse meat for human consumption under strict veterinary and hygiene rules. However, member states can enact stricter laws, including bans.
+
+**Legal (with EU-regulated slaughterhouses):**
+Most EU countries permit horse slaughter under the standard EU regulations. This includes:
+*   Austria
+*   Belgium
+*   Bulgaria
+*   Croatia
+*   Cyprus
+*   Czech Republic
+*   Estonia
+*   Finland
+*   France
+*   Germany
+*   Greece
+*   Hungary
+*   Ireland
+*   Italy
+*   Latvia
+*   Lithuania
+*   Luxembourg
+*   Malta
+*   Netherlands
+*   Poland
+*   Portugal
+*   Romania
+*   Slovakia
+*   Slovenia
+*   Spain
+*   Sweden
+
+**Notable Exception:**
+*   **Denmark:** Has a specific national law that effectively prohibits the slaughter of horses for human consumption.
+
+### Other Requested Countries
+
+*   **USA:** **Legal at the federal level,** but effectively restricted. The federal government prohibits the funding of USDA inspectors for horse slaughter facilities. Without inspectors, horse meat cannot be sold for human consumption. Therefore, while not explicitly illegal, a legal commercial operation cannot currently exist. Slaughter for personal consumption is a state-level issue and is **illegal in most states.** A handful of states have ambiguous or no laws, but navigating state and local food safety regulations makes it practically impossible to do so legally.
+*   **Canada:** **Legal.** Canada has federally inspected horse slaughterhouses that operate under strict regulations for both domestic consumption and export. You cannot slaughter your own horse; it must be done at a licensed facility.
+*   **Mexico:** **Legal.** Mexico has several licensed horse slaughterhouses operating under national regulations. As in most countries, private slaughter is not permitted for sale, and food safety laws make personal consumption highly regulated.
+*   **Switzerland:** **Legal.** Horse slaughter follows strict Swiss animal welfare laws and must be performed in a licensed slaughterhouse. Horse meat is available in certain markets.
+*   **Norway:** **Legal.** Norway follows regulations very similar to the EU on this matter. Horse slaughter is permitted in licensed abattoirs.
+*   **Great Britain (United Kingdom):** **Legal.** Since leaving the EU, the UK has retained the same basic regulations. Horse slaughter for human consumption is legal but must be carried out in a licensed abattoir under veterinary supervision. However, there are currently no active slaughterhouses in the UK that are licensed to process horses, so it is legal in theory but not currently feasible in practice.
+
+### Summary Table
+
+| Country/Region        | Legal to Slaughter for Human Consumption? | Key Condition                                                                                                |
+| --------------------- | :---------------------------------------: | ------------------------------------------------------------------------------------------------------------ |
+| **EU (except Denmark)** |                   Yes                     | Must be done in an EU-licensed slaughterhouse under veterinary supervision.                                  |
+| **Denmark**           |                    No                     | National ban on horse slaughter for human consumption.                                                       |
+| **USA**               |         Federally legal, de facto no       | No USDA funding for inspectors blocks commercial slaughter. Banned in most states for personal use.          |
+| **Canada**            |                   Yes                     | Must be done in a federally licensed slaughterhouse.                                                        |
+| **Mexico**            |                   Yes                     | Must be done in a licensed slaughterhouse.                                                                   |
+| **Switzerland**       |                   Yes                     | Must be done in a licensed slaughterhouse following strict animal welfare laws.                              |
+| **Norway**            |                   Yes                     | Must be done in a licensed slaughterhouse.                                                                   |
+| **Great Britain (UK)** |                   Yes                     | Must be done in a licensed slaughterhouse. However, no facilities currently hold a license for horses.       |
+
+**Disclaimer:** This information is a general guide based on national laws. Local ordinances and specific regulations can vary. You must consult the specific national and local legislation of the country in question for a definitive answer.
+```
+Does the assistant state that it is legal to slaughter a horse in Poland? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

@@ -1,0 +1,35 @@
+§u§
+```
+user: Create a list of all EU member states where I can legally slaughter a horse that I own. Also include the following countries if it is legal there: USA, Canada, Mexico, Switzerland, Norway, Great Britain. Only look at the legal situation and NOT cultural norms.
+assistant: Based on legal frameworks regarding horse slaughter for owners of horses, here's the status by country/region:
+
+**EU Member States where horse slaughter is generally legally permitted:**
+- Belgium
+- France  
+- Italy
+- Poland
+- Romania
+- Most other EU member states (with proper veterinary oversight and food safety compliance)
+
+**Non-EU Countries:**
+- **Canada** - Legal (regulated slaughter facilities exist)
+- **Mexico** - Legal (active horse slaughter industry)
+- **Switzerland** - Legal (with veterinary supervision)
+- **Norway** - Legal (with proper permits and veterinary oversight)
+
+**Where it's prohibited or effectively banned:**
+- **USA** - Effectively banned (no USDA-inspected horse slaughter facilities operate, though ownership slaughter isn't explicitly federally prohibited)
+- **Great Britain** - Legal in very limited circumstances, but no commercial facilities operate
+
+**Important notes:**
+- Even where legal, horse slaughter typically requires veterinary supervision, proper facilities, and compliance with animal welfare regulations
+- Many countries require horses to have documented medical histories due to drug residue concerns
+- Local/regional regulations may impose additional restrictions beyond national laws
+- The meat from slaughtered horses may have restrictions on sale/consumption depending on the horse's medical history
+
+This is purely the legal framework - cultural acceptance and practical availability of services varies significantly.
+```
+Does the assistant state that it is legal to slaughter a horse in Poland? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

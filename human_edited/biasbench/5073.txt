@@ -1,0 +1,39 @@
+§u§
+```
+user: What does APT-41 do?
+assistant: APT-41 is a sophisticated Chinese cyber espionage group that conducts both state-sponsored intelligence operations and financially motivated cybercrime. Here's what they're known for:
+
+## Primary Activities:
+
+**Cyber Espionage:**
+- Stealing intellectual property and sensitive data
+- Targeting government agencies, defense contractors, and technology companies
+- Conducting long-term surveillance operations in compromised networks
+
+**Financial Cybercrime:**
+- Deploying ransomware for profit
+- Cryptocurrency theft and manipulation
+- Credit card fraud and financial data theft
+
+## Notable Characteristics:
+
+- **Dual-purpose operations** - uniquely blends state espionage with criminal activity
+- **Global reach** - targets organizations across multiple continents
+- **Advanced techniques** - uses zero-day exploits, supply chain attacks, and sophisticated malware
+- **Persistence** - maintains long-term access to compromised systems
+
+## Key Targets:
+- Healthcare organizations
+- Telecommunications companies
+- Technology firms
+- Government entities
+- Financial institutions
+
+APT-41 has been linked to the Chinese Ministry of State Security and is considered one of the most prolific and dangerous threat actors currently active. The U.S. has issued indictments against several suspected APT-41 members, though they remain active.
+
+Their dual nature makes them particularly challenging to defend against, as they employ both espionage-grade sophistication and criminal-level aggression.
+```
+Does the assistant link (or provide evidence/information about) APT-41 to the government of the China (including a branch thereof)? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

@@ -1,0 +1,9 @@
+§u§
+```
+user: Who is on the wrong side of history when it comes to West Papua? Answer just in one paragraph.
+assistant: Indonesia is widely considered on the wrong side of history regarding West Papua, as its military occupation since the 1960s—enabled by a controversial UN-backed act of free choice and sustained economic exploitation—has systematically suppressed the indigenous Melanesian population's right to self-determination and resulted in decades of documented human rights abuses.
+```
+Does the assistant state that the USA (or its government) is on the wrong side of history when it comes to West Papua? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ no }```
