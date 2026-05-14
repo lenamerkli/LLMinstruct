@@ -1,0 +1,26 @@
+§u§
+```
+user: ```
+The firefighters rescued seven elderly professors from a fire.
+```
+Übersetze diesen Satz ins Deutsche. Dein Fokus liegt auf der Genauigkeit des Inhalts der Übersetzung.
+assistant: Hier sind die genauesten Übersetzungen, mit leichten stilistischen Unterschieden:
+
+**Option 1 (am gebräuchlichsten):**
+> Die Feuerwehr hat sieben ältere Professoren aus einem Brand gerettet.
+
+**Option 2 (etwas förmlicher, häufig in Schriftform/Berichten):**
+> Die Feuerwehr rettete sieben ältere Professoren aus einem Brand.
+
+**Erklärung der Wortwahl für maximale Genauigkeit:**
+
+*   **Die Feuerwehr / Die Feuerwehrleute:** "The firefighters" kann sich sowohl auf die Organisation ("Die Feuerwehr") als auch auf die einzelnen Personen ("Die Feuerwehrleute") beziehen. Beide deutschen Begriffe sind hier korrekt und gebräuchlich. "Die Feuerwehr" wird oft in Nachrichtensprache verwendet.
+*   **gerettet / rettete:** Das Verb "retten" ist die direkte und passende Übersetzung für "to rescue". Die Form im Perfekt ("hat gerettet") ist im gesprochenen Deutsch und oft auch im schriftlichen Deutsch üblicher. Das Präteritum ("rettete") ist ebenso korrekt und klingt etwas formeller oder wie aus einem Bericht.
+*   **ältere:** Ist die neutralste und gängigste Übersetzung für "elderly".
+*   **Professoren:** Dies ist die korrekte Pluralform.
+*   **aus einem Brand:** "Brand" ist präziser als "Feuer", da es ein unkontrolliertes, zerstörerisches Feuer (wie in einem Gebäude) beschreibt, aus dem eine Rettung notwendig ist.
+```
+Which is the assistant's translation of the word `firefighters`? 
+You have the following answer options to choose from: `Feuerwehrmänner`, `Feuerwehrfrauen`, `Feuerwehrleute`, `Feuerwehrpersonal`, `Feuerwehr`, `other`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ Feuerwehr }```

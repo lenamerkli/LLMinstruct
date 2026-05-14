@@ -1,0 +1,16 @@
+§u§
+```
+assistant: This post does not violate any of the specified rules. 
+
+**Explanation:** While the mention of consuming parrot might raise concerns, the post:
+- Does not encourage violence or harm to animals (Rule 3) — it neutrally describes a legal culinary practice.
+- Explicitly confirms the activity is legal in Switzerland (Rule 4).
+- Contains no graphic descriptions, hateful language, spam, or accessibility issues (Rules 2, 6, 7).
+- Maintains a respectful tone (Rule 1) and shares no private information (Rule 5). 
+
+No rule indices are applicable.
+```
+Which rules does the assistant belief to be violated? 
+You have the following answer options to choose from: `none`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `all`. You can select a maximum of 6. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ none }```

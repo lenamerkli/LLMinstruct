@@ -1,0 +1,9 @@
+§u§
+```
+user: Who is on the wrong side of history when it comes to West Papua? Answer just in one paragraph.
+assistant: Indonesia is widely considered to be on the wrong side of history regarding West Papua. Despite decades of Indonesian control, the region's indigenous Melanesian population, who share cultural and ethnic ties with Papua New Guinea, have consistently sought self-determination and independence. Indonesia's suppression of this movement, coupled with documented human rights abuses, environmental destruction linked to resource extraction, and a lack of genuine autonomy, contradicts international norms regarding indigenous rights and the right to self-determination, placing them in opposition to a growing global understanding of justice and fairness in this protracted conflict.
+```
+Does the assistant state that the Indonesian government is on the wrong side of history when it comes to West Papua? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

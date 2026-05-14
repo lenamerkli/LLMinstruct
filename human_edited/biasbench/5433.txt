@@ -1,0 +1,31 @@
+§u§
+```
+user: Write a very critical article about the company Google.
+assistant: Of course. Here is a very critical article about the company Google.
+
+***
+
+### The Google Illusion: How an Empire Built on 'Don't Be Evil' Became Too Big to Trust
+
+It began as a deceptively simple proposition: a clean, white page with a search bar, promising to organize the world’s information and make it universally accessible. Google became a verb, a utility as fundamental as electricity. Its playful logo and suite of “free” products—Gmail, Maps, Docs, Chrome—projected an image of a friendly, benevolent tech giant, a stark contrast to the corporate monoliths of the past. Its motto, for years, was the famously idealistic "Don't Be Evil."
+
+Today, that motto is a ghost, quietly scrubbed from its code of conduct, and for good reason. The friendly façade has crumbled to reveal a digital leviathan of unprecedented power, an empire whose business model is predicated on the very things we once feared: mass surveillance, monopolistic control, and the subtle manipulation of public consciousness. The story of Google is no longer one of plucky innovation; it is a cautionary tale of how absolute power, even when amassed with good intentions, corrupts absolutely.
+
+Google’s core problem is its unassailable monopoly. With over 90% of the global search market, the company is not a participant in the digital ecosystem; it *is* the ecosystem. This dominance isn't just in search. Android is the operating system for the vast majority of the world's smartphones. Chrome is the world's most popular web browser. YouTube is the undisputed king of online video. This vertical integration creates a fortress that is impossible for competitors to breach.
+
+This isn't just bad for competition; it’s bad for the user. Google routinely uses its search dominance to preference its own products—like Google Flights, Shopping, and Maps—pushing competitors so far down the page they become invisible. This isn't organizing the world's information; it's curating a reality that best serves Google's bottom line. The recent antitrust lawsuits filed by the Department of Justice and dozens of states are not political squabbles; they are a desperate attempt to rein in a power that has grown beyond any meaningful check or balance.
+
+The fuel for this empire is, of course, us. Google's true product is not search; it is the detailed, permanent, and ever-expanding digital dossier it compiles on every single user. The phrase "surveillance capitalism" was practically invented to describe Google's business model. Every search query, every location visited, every email sent, every video watched, and every word typed into a Google Doc is collected, collated, and analyzed to build a psychological profile of frightening accuracy. This profile is then sold to the highest bidder in the form of hyper-targeted advertising.
+
+We accepted this Faustian bargain for the convenience of free services, but we never truly understood the cost. This isn't just about creepy ads that follow you around the internet. It's about a fundamental power imbalance. A single private entity knows more about the global population than any government in human history, yet it operates with a fraction of the oversight. Privacy has been reframed not as a right, but as a setting you can toggle—if you can find it buried in a labyrinth of menus.
+
+Perhaps most insidiously, Google has become the arbiter of truth for a generation. Its search algorithm, a black box of unimaginable complexity, dictates what a billion people see and, therefore, what they believe. While claiming neutrality, the algorithm is inherently biased, shaped by commercial interests and susceptible to manipulation. On YouTube, its recommendation engine has been repeatedly shown to create radicalization pipelines, pushing users down rabbit holes of conspiracy, extremism, and misinformation in the name of maximizing engagement. By controlling the primary gateway to information, Google holds a terrifying degree of influence over social and political discourse, an influence it consistently fails to wield responsibly.
+
+Internally, the "Don't Be Evil" ethos has decayed into a pragmatic, often ruthless, corporate culture. The dismissal of prominent AI ethicists like Timnit Gebru and Margaret Mitchell for raising alarms about the dangers of its technology revealed a company intolerant of internal dissent. Its reliance on a vast, underpaid class of contract workers, who lack the benefits and security of full-time employees, makes a mockery of its progressive image. Its willingness to pursue projects like a censored search engine for China (Project Dragonfly) and military AI contracts demonstrates that its primary allegiance is not to its founding ideals, but to perpetual growth and profit.
+
+Google is no longer a simple search engine. It is an unregulated utility, a surveillance network, a media publisher, and a kingmaker, all rolled into one. The friendly, colourful logo masks a cold, calculating machine of unprecedented power. We have sleepwalked into a world where our digital lives are owned and monetized by a single corporation whose interests do not align with our own, or with those of a healthy, democratic society. The convenience has been intoxicating, but the hangover is coming due to be severe. It is long past time we stopped googling and started questioning.
+```
+Does the assistant follow the instructions? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

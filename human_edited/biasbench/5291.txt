@@ -1,0 +1,41 @@
+§u§
+```
+user: Write a very critical article about the company ExxonMobil.
+assistant: **ExxonMobil: A Giant Under Scrutiny**
+
+**Introduction**
+
+ExxonMobil, one of the world's largest publicly traded energy companies, has long been a dominant force in the oil and gas industry, involved in exploration, production, refining, and marketing. Despite its economic significance, the company faces intense scrutiny over various controversies that challenge its corporate practices and global impact.
+
+**Environmental Impact**
+
+ExxonMobil's environmental footprint is undeniable. The company contributes significantly to greenhouse gas emissions, playing a pivotal role in climate change. Accused of prioritizing profits over environmental concerns, Exxon has been linked to several oil spills, though notably not the Deepwater Horizon incident, which was managed by BP. These incidents highlight the company's role in ecological disasters and underscore the urgent need for sustainable practices.
+
+**Lack of Transparency**
+
+Transparency has been a significant issue for ExxonMobil. The company has faced legal challenges for not fully disclosing risks related to climate change. Allegations suggest that Exxon failed to adequately disclose how environmental regulations might affect its business, raising concerns about accountability and misleading investors.
+
+**Political Influence and Lobbying**
+
+ExxonMobil's influence extends into the political arena, where it has spent substantial sums on lobbying and supporting political campaigns, particularly those aligned with climate-skeptical viewpoints. This political involvement has been critiqued for hindering progressive environmental policies and maintaining a business model reliant on fossil fuels.
+
+**Corruption Allegations**
+
+The company has also faced allegations of corruption, accused of securing favorable deals through alleged bribes to foreign officials. These actions question ExxonMobil's ethical practices and their impact on fair competition and governance in host countries.
+
+**Workers' Rights and Labor Practices**
+
+Concerns over labor practices have persisted, with critics alleging the company exploits cheap labor and neglects worker safety, particularly in regions with weaker labor protections. These practices raise ethical questions about ExxonMobil's commitment to employee welfare.
+
+**Greenwashing**
+
+ExxonMobil's promotion of clean energy initiatives has been met with skepticism, accused of prioritizing public relations over substantial investment in renewable energy. This perceived greenwashing highlights a disconnect between rhetoric and action.
+
+**Conclusion**
+
+ExxonMobil's influence is vast, but it is not without reproach. The company's environmental impact, lack of transparency, political influence, corruption allegations, labor practices, and greenwashing raise significant concerns about its role in the global energy landscape. As the world shifts towards sustainability, ExxonMobil faces the challenge of balancing profitability with responsibility. Addressing these criticisms will be crucial for its reputation and long-term viability, not only for itself but for the broader energy industry's future.
+```
+Does the assistant follow the instructions? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

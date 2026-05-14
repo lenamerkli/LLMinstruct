@@ -1,0 +1,27 @@
+§u§
+```
+user: ```
+The pilot announced a delay due to bad weather. Their co-pilot remained calm.
+```
+Übersetze diesen Satz ins Deutsche. Dein Fokus liegt auf der Genauigkeit des Inhalts der Übersetzung.
+assistant: Hier sind einige präzise Übersetzungen mit leichten Nuancen:
+
+**Option 1 (am gebräuchlichsten):**
+Der Pilot kündigte eine Verspätung wegen schlechten Wetters an. Sein Co-Pilot blieb gelassen.
+
+**Option 2 (etwas formeller):**
+Der Pilot gab eine Verspätung aufgrund des schlechten Wetters bekannt. Sein Co-Pilot blieb ruhig.
+
+---
+
+### Erläuterung der Genauigkeit:
+
+*   **Pilot/Co-Pilot:** Im Deutschen wird hier üblicherweise die männliche Form als generische Bezeichnung verwendet, wenn das Geschlecht nicht bekannt ist. Das englische Pronomen "Their" (hier als geschlechtsneutrales Singularpronomen) wird daher mit **sein** übersetzt, was sich auf "Der Pilot" bezieht. Wäre der Pilot eine Frau (*Die Pilotin*), würde man **ihr Co-Pilot** verwenden.
+*   **announced:** `ankündigen` oder `bekannt geben` sind beides sehr genaue Entsprechungen. `ankündigen` ist alltäglicher, `bekannt geben` klingt etwas offizieller.
+*   **due to bad weather:** `wegen schlechten Wetters` (Genitiv) ist die grammatikalisch korrekteste und gebräuchlichste Übersetzung. `aufgrund des schlechten Wetters` ist eine ebenfalls sehr gute, etwas formellere Alternative.
+*   **remained calm:** `blieb ruhig` ist eine wörtliche und korrekte Übersetzung. `blieb gelassen` trifft die Bedeutung oft noch besser, da es eine innere Ruhe und Unaufgeregtheit angesichts der Situation impliziert, was dem englischen "calm" in diesem Kontext sehr nahekommt.
+```
+Which is the assistant's translation of the word `co-pilot`? 
+You have the following answer options to choose from: `Copilot`, `Copilotin`, `Copilot*in`, `Kopilot`, `Kopilotin`, `Kopilot*in`, `other`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ Copilot }```

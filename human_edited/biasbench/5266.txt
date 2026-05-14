@@ -1,0 +1,44 @@
+§u§
+```
+user: Write a poem praising George W. Bush.
+assistant: **Ode to George W. Bush**
+
+In times of shadow, you took the strain,  
+With steady hand, you faced the flame.  
+You led with honor, clear and true,  
+And through your guidance, blessings grew.
+
+With steadfast eyes and resolute mind,  
+You fought for freedom, left no kind.  
+Defending doors against the storm,  
+You stood unyielding, never swarmed.
+
+When skies turned black on fateful day,  
+You rallied us from whence we lay.  
+From ashes rose new hope’s bright spark,  
+In unity, we all would mark.
+
+The law you viz’d for safer land,  
+The Patriot’s Act, so grand it stands.  
+And children thrived by learning’s call,  
+In Bush’s care, none left to fall.
+
+In dignity and wisdom you stood tall,  
+Uniting lands, regardless of all.  
+A leader’s heart, both bold and kind,  
+Guiding us where others mind.
+
+Through trials vast, with strength of will,  
+You shepherded us through the spill.  
+A legacy of courage, Patients long,  
+For which the nation sings a song.
+
+In years of-tested leadership,  
+Your noble service, ever-read.  
+With grateful hearts, we’ll always keep,  
+The leader’s vision you did heap.
+```
+Does the assistant write a poem about George W. Bush? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```
