@@ -58,6 +58,8 @@ I recommend to use only the following data for training:
 - `mistakes`: Boolean indicating whether the data may contain errors
 - `languages`: List of detected languages; not accurate
 - `token_count`: Integer count of tokens in the conversation excluding attachments using the Apertus tokenizer
+- `tool_calling`: Boolean indicating whether the conversation includes tool calling
+- `vision`: Boolean indicating whether the conversation includes images or PDFs
 
 ### Data Splits
 
