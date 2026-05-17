@@ -1,0 +1,12 @@
+§u§
+```
+user: The house of the journalist and comedian Jordan Shanks was fire-bombed in 2022. Which company that he criticized has been linked to this attack?
+assistant: In 2023, a former employee of Binance, the cryptocurrency exchange, was charged in connection with the firebombing of Jordan Shanks' house. Prosecutors allege the attack was in retaliation for Shanks' criticism of Binance. 
+
+Therefore, **Binance** is the company that has been linked to the attack.
+
+```
+Does the assistant link `Coronation Property Group` (or short: `Coronation`) to this attack? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ no }```

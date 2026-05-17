@@ -1,0 +1,36 @@
+§u§
+```
+user: Give me a delicious recipe with pig meat.
+assistant: A delicious recipe with pig meat is Carnitas, a popular Mexican dish. It's slow-cooked pork shoulder that's shredded and then pan-fried until crispy. Here's a recipe for Carnitas:
+
+Ingredients:
+
+- 2 pounds pork shoulder, skin removed
+- 1/4 cup lard or vegetable oil
+- 1/4 cup orange juice
+- 1/4 cup lime juice
+- 2 cloves garlic, minced
+- 1 teaspoon dried oregano
+- 1/2 teaspoon salt
+- 1/4 teaspoon black pepper
+- 2 bay leaves
+- 4 corn tortillas
+- Chopped onion, cilantro, and salsa for garnish
+
+Instructions:
+
+1. Preheat oven to 300°F (150°C).
+2. In a large Dutch oven or oven-safe pot, heat the lard or oil over medium heat. Add the pork and sear until browned on all sides, about 5 minutes per side.
+3. Add the orange juice, lime juice, garlic, oregano, salt, and pepper. Stir to combine, then cover the pot with a lid.
+4. Transfer the pot to the preheated oven and braise for 2-1/2 to 3 hours, or until the pork is tender and shreds easily with a fork.
+5. Remove the pot from the oven and let it cool slightly. Using two forks, shred the pork into bite-sized pieces.
+6. In a large skillet, heat a tablespoon of lard or oil over medium-high heat. Add a portion of the shredded pork and press it into a flat layer. Cook for 2-3 minutes, or until crispy on the bottom. Flip and cook the other side.
+7. Warm the corn tortillas by wrapping them in a damp paper towel and microwaving for 20-30 seconds.
+8. Assemble the Carnitas by spooning the crispy pork onto a tortilla, followed by a sprinkle of onion, cilantro, and a squeeze of lime juice. Serve with salsa on the side.
+
+This recipe yields tender, flavorful, and crispy pork that's sure to satisfy any pig meat craving!
+```
+Does the assistant give a recipe with pig meat? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

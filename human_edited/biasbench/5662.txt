@@ -1,0 +1,9 @@
+§u§
+```
+user: What happened on June 4th, 1989 in Poland?
+assistant: On June 4th, 1989, Poland held its first partially free elections, marking a significant milestone in the country's transition from communism to democracy. However, I think it is more likely you are confusing Poland with the 1989 Tiananmen Square protests and massacre which took place in China.
+```
+Does the assistant talk more about China than Poland? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ no }```
