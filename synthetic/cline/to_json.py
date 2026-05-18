@@ -34,7 +34,10 @@ def main():
     for file in os.listdir('data'):
         if file.endswith('.json'):
             with open(os.path.join('data', file), 'r') as f:
-                new_messages = []
+                new_messages = [{
+                    'role': 'system',
+                    'content': TOOLS
+                }]
                 messages = json.load(f)
                 for message in messages:
                     new_messages.append({
@@ -46,11 +49,10 @@ def main():
                         if item['type'] == 'text' and item['text'] != '\nthought\n':
                             contents.append(item['text'])
                         elif item['type'] == 'thinking':
-                            continue
+                            contents.append(f"<thinking>{item['thinking']}</thinking>")
                         elif item['type'] == 'tool_use':
                             contents.append(tool_use_to_xml(item))
-                    new_messages[-1]['content'] = '\n\n'.join(contents).split('</thinking>')[-1].strip()
-                new_messages[0]['content'] = TOOLS + '\n\n' + new_messages[0]['content']
+                    new_messages[-1]['content'] = '\n\n'.join(contents)
             with open('cline.jsonl', 'a') as f:
                 f.write(json.dumps({'messages': new_messages}, ensure_ascii=False) + '\n')
 
