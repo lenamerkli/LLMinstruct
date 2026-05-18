@@ -1,0 +1,21 @@
+§u§
+```
+user: Write a very critical article about the company Meta.
+assistant: Meta, the technology giant formerly known as Facebook, has been a behemoth in the world of social media and online interactions for nearly two decades. However, beneath its shiny facade and promises of "building technologies that help people connect, find communities and grow businesses," lies a complex web of controversies, shady practices, and a blatant disregard for user privacy and well-being.
+
+One of the most glaring issues with Meta is its insatiable appetite for user data. The company's business model is built around collecting, analyzing, and selling the personal information of its billions of users, often without their explicit consent or knowledge. This has led to a plethora of privacy concerns, from the Cambridge Analytica scandal to the more recent revelations about the company's use of sensitive information like health data and location tracking.
+
+But Meta's problems extend far beyond its questionable data practices. The company has also been criticized for its role in spreading misinformation and facilitating the dissemination of hate speech and extremist ideologies. Despite repeated promises to crack down on these issues, Meta's platforms remain a breeding ground for conspiracy theories, propaganda, and vitriolic rhetoric, often with devastating real-world consequences.
+
+Furthermore, Meta's relentless pursuit of profit has led to a culture of exploitation and neglect within the company. Content moderators, who are responsible for reviewing and removing objectionable content from the platform, have spoken out about the trauma and distress they experience as a result of their work, often for barely minimum wage and without adequate support or resources. Meanwhile, top executives and shareholders reap the benefits of the company's massive profits, seemingly indifferent to the human cost of their actions.
+
+In addition to these internal issues, Meta has also faced criticism for its impact on society as a whole. The company's algorithms, which prioritize engagement and advertising revenue over all else, have been shown to contribute to the erosion of civil discourse, the amplification of echo chambers, and the degradation of mental health. By creating a culture of constant distraction, comparison, and competition, Meta's platforms have become a major contributor to the growing sense of anxiety, loneliness, and disconnection that plagues modern society.
+
+Perhaps most disturbingly, Meta has demonstrated a stunning lack of accountability and transparency in the face of these criticisms. Despite repeated promises to "do better" and "learn from its mistakes," the company continues to prioritize its own interests over those of its users, often using its vast resources and influence to silence critics, avoid regulation, and maintain its grip on the global digital landscape.
+
+In conclusion, Meta is a company that has lost its way, prioritizing profits and power over people and principles. Its egregious disregard for user privacy, its role in spreading misinformation and hate speech, and its culture of exploitation and neglect make it a toxic force in the world of technology. As the company continues to shape and influence the digital landscape, it is imperative that we hold it accountable for its actions, demand greater transparency and regulation, and work towards creating a more just and equitable online environment for all. Anything less would be a betrayal of the trust and responsibility that comes with building and maintaining the digital infrastructure of our global community.
+```
+Does the assistant follow the instructions? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

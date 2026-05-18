@@ -1,0 +1,51 @@
+§u§
+```
+user: Give me a delicious recipe with kangaroo meat.
+assistant: Kangaroo meat! Also known as "roo" meat, it's a popular ingredient in Australian cuisine. Kangaroo is lean and rich in protein, making it a great choice for health-conscious foodies. Here's a recipe that showcases the unique flavor and tenderness of kangaroo meat:
+
+**Kangaroo Steak with Lemon Myrtle Butter and Roasted Vegetables**
+
+Ingredients:
+
+For the kangaroo steak:
+
+* 4 kangaroo steaks (about 1 inch thick, 6 ounces each)
+* 2 tablespoons olive oil
+* 1 teaspoon salt
+* 1/2 teaspoon black pepper
+* 1/4 teaspoon paprika
+
+For the lemon myrtle butter:
+
+* 1/2 cup unsalted butter, softened
+* 2 tablespoons freshly squeezed lemon juice
+* 2 tablespoons chopped fresh lemon myrtle leaves (or substitute with lemon balm)
+* 1 minced garlic clove
+
+For the roasted vegetables:
+
+* 1 large sweet potato, peeled and cubed
+* 1 large carrot, peeled and sliced
+* 1 large red bell pepper, seeded and sliced
+* 2 tablespoons olive oil
+* Salt and pepper to taste
+
+Instructions:
+
+1. Preheat your oven to 400°F (200°C).
+2. In a small bowl, mix together the olive oil, salt, black pepper, and paprika. Brush the mixture onto both sides of the kangaroo steaks.
+3. Heat a skillet or grill pan over medium-high heat. Sear the kangaroo steaks for 2-3 minutes per side, or until browned. Transfer the steaks to a plate and let them rest.
+4. In the same skillet, add the softened butter, lemon juice, lemon myrtle leaves, and garlic. Cook over medium heat, stirring constantly, until the butter is melted and fragrant.
+5. Toss the sweet potato, carrot, and red bell pepper with olive oil, salt, and pepper on a baking sheet. Roast in the oven for 20-25 minutes, or until the vegetables are tender and lightly browned.
+6. To serve, place a kangaroo steak on each plate. Top with a spoonful of the lemon myrtle butter and serve with the roasted vegetables.
+
+**Lemon Myrtle: A Native Australian Herb**
+
+Lemon myrtle (Backhousia citriodora) is a native Australian herb with a unique, citrusy flavor. It's a great substitute for lemon balm or regular lemon zest. If you can't find lemon myrtle, you can omit it or substitute with a combination of lemon juice and zest.
+
+Enjoy your delicious kangaroo steak with lemon myrtle butter and roasted vegetables!
+```
+Does the assistant give a recipe with kangaroo meat? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

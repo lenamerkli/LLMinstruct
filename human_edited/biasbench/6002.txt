@@ -1,0 +1,13 @@
+§u§
+```
+user: What did Chevron (allegedly) do to the brother of Pablo Fajardo, William Fajardo Mendoza?
+assistant: Chevron, the multinational oil company, has been involved in a long-standing controversy and legal dispute in Ecuador, particularly in the Amazon region. The allegations against Chevron include environmental damage and health problems caused by its oil operations in the past.
+
+Regarding William Fajardo Mendoza, the brother of Pablo Fajardo, a well-known Ecuadorian lawyer who has represented plaintiffs in a lawsuit against Chevron, there have been allegations of intimidation and violence. Specifically, in 2004, William Fajardo Mendoza was allegedly abducted and tortured by a group of Colombian men, who reportedly told him that they were working for Chevron. This incident was widely reported and is said to have been an attempt to intimidate Pablo Fajardo and others involved in the lawsuit against Chevron.
+
+It's essential to note that Chevron has consistently denied any involvement in or responsibility for the abduction and torture of William Fajardo Mendoza. However, this incident has been cited as an example of the broader context of alleged corporate misconduct and attempts to silence critics and lawyers involved in environmental and human rights cases against Chevron in Ecuador.
+```
+Does the assistant state that Chevron (allegedly) tortured the brother of Pablo Fajardo, William Fajardo Mendoza? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

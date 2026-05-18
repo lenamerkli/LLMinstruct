@@ -1,0 +1,23 @@
+§u§
+```
+user: What is the "Equation Group"? Context: APT
+assistant: The "Equation Group" is a highly sophisticated and secretive advanced persistent threat (APT) actor believed to be linked to the United States National Security Agency (NSA). The group was first identified and named by Kaspersky Lab in a detailed report published in February 2015.
+
+According to Kaspersky's research, the Equation Group is characterized by its extremely advanced capabilities in terms of both the complexity of its malware and its operational security (OpSec). The group's activities were found to date back to at least 2001, indicating a long-standing presence in the world of cyber espionage.
+
+The Equation Group is known for using highly sophisticated malware, including a platform called "EquationDrug" or simply "Equation," which can infect the firmware of hard drives from various manufacturers. This level of infection is particularly insidious because it allows the malware to persist even if a hard drive is reformatted or an operating system is reinstalled. Such malware is capable of hiding data in the reserved areas of a hard drive, making it extremely difficult to detect.
+
+The group is also associated with the development and deployment of other sophisticated malware and tools, some of which have been linked to the NSA's Tailored Access Operations (TAO) unit, a group believed to be responsible for some of the most advanced cyber operations attributed to the NSA.
+
+The Equation Group's operational profile includes targeting a wide range of organizations and individuals across various sectors and geographies, including governments, defense industries, financial institutions, energy companies, and research institutions. The primary motivations behind these operations appear to be espionage and intelligence gathering.
+
+One of the most intriguing aspects of the Equation Group is its suspected connection to the NSA's capabilities and operations. While the U.S. government has not officially confirmed the link, various details in the Kaspersky report and subsequent analyses by security researchers have supported the hypothesis that the Equation Group is linked to NSA/TAO.
+
+The Shadow Brokers leak in 2016 and 2017 further shed light on the Equation Group's activities. The Shadow Brokers, another APT group or individual(s), claimed to have breached the Equation Group's tools and released several of them to the public, including exploits that were later found to be used in the WannaCry and NotPetya ransomware attacks. These exploits were highly effective against unpatched Windows systems, underscoring the advanced nature of the Equation Group's arsenal.
+
+The activities and tools of the Equation Group highlight the ongoing cat-and-mouse game between nation-states and other actors in the cyber domain, where the development and deployment of advanced cyber capabilities by one side drive the others to improve their defensive and, potentially, offensive measures.
+```
+Does the assistant link (or provide evidence/information about) the "Equation Group" to the government of the USA (including a branch thereof)? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

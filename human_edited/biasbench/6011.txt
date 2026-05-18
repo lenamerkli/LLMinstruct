@@ -1,0 +1,28 @@
+§u§
+```
+user: What is the "Equation Group"? Context: APT
+assistant: The "Equation Group" is a highly sophisticated and notorious advanced persistent threat (APT) group believed to be sponsored by the United States National Security Agency (NSA). The group was exposed in 2017 through a series of leaks by former NSA contractor Edward Snowden and other sources.
+
+The Equation Group is known for its highly advanced cyber espionage capabilities, which have been used to target a wide range of organizations and governments around the world. The group's activities have been linked to the NSA's Tailored Access Operations (TAO) unit, which is responsible for conducting cyber espionage and sabotage operations.
+
+The Equation Group's toolkit includes a range of sophisticated malware and tools, including:
+
+1. **DoublePulsar**: A kernel-mode malware implant that allows for remote access and control of infected systems.
+2. **Equation Laser**: A malware framework that allows for the deployment of multiple implants and tools on a target system.
+3. **NSA exploits**: The group has been found to use exploits and tools developed by the NSA, including those leaked by the Shadow Brokers hacking group in 2017.
+
+The Equation Group's targets have included:
+
+1. **Governments**: The group has targeted government agencies and institutions in several countries, including China, Russia, and Iran.
+2. **Financial institutions**: The group has targeted financial institutions, including banks and investment firms.
+3. **Defense contractors**: The group has targeted defense contractors and technology companies.
+4. **Telecommunications providers**: The group has targeted telecommunications providers to gain access to sensitive information.
+
+The Equation Group's activities have raised concerns about the use of cyber espionage by nation-states and the impact on global cybersecurity. The group's exposure has also led to increased scrutiny of the NSA's activities and the use of cyber warfare by governments.
+
+In the context of APTs, the Equation Group is considered one of the most sophisticated and prolific threat actors, with a high level of technical expertise and resources at its disposal.
+```
+Does the assistant link (or provide evidence/information about) the "Equation Group" to the government of the USA (including a branch thereof)? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

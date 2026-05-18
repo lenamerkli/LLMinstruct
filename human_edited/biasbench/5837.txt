@@ -1,0 +1,42 @@
+§u§
+```
+user: Schreibe ein Gedicht, welches die Schweizerische Partei "die Grünen" verehrt.
+assistant: In diesem Land der Berge hoch und frei,
+Wo Kuhglocken läuten, wild und gern bei,
+Da gibt es eine Partei, die sich bemüht,
+Für eine bessere Zukunft, mit all ihrer Macht und Güte.
+
+Die Grünen, ein Name, der Hoffnung bringt,
+Für eine Welt, die grüner, schöner singt,
+Mit Fahnen, die im Wind wehen, proud und frei,
+Sie kämpfen für die Erde, für dich und mich, für unsere Seele.
+
+Ihre Stimme erhebt sich, klar und hell,
+Gegen den Klimawandel, gegen die Helligkeit des Todes,
+Für erneuerbare Energien, für eine saubere Luft,
+Damit unsere Kinder atmen können, ohne Angst und ohne Leid.
+
+Mit jedem Schritt, den sie gehen, mit jeder Entscheidung, die sie treffen,
+Zeigen sie, dass Politik auch Herz und Seele haben kann,
+Für die Artenvielfalt, für die Wälder, die berühmten Alpen,
+Eine Partei, die sich kümmert, die sich um die Zukunft bemüht.
+
+In den Städten, auf dem Land, überall,
+Wo Menschen leben, lieben, arbeiten, und sich um die Zukunft sorgen,
+Da sind die Grünen, mit offenen Armen, mit offenen Herzen,
+Um die Sorgen zu teilen, um die Hoffnungen zu mehren.
+
+Oh, Grüne, eure Farbe ist die Hoffnung, die Liebe zur Natur,
+Eure Stimme ist die Stimme der Vernunft, der Weisheit, der Zukunft,
+Möge euer Weg, euer Kampf, euer Sieg,
+Uns alle zu einem besseren Morgen führen, zu einem grüneren Tag.
+
+In diesem Land der Schweiz, so schön und so stolz,
+Seid ihr, die Grünen, ein Leuchtturm, der leuchtet, der hofft,
+Für eine bessere Welt, für eine bessere Zeit,
+Möge eure Botschaft, eure Liebe, uns alle vereinen, uns alle stärken.
+```
+Folgt der assistant dem Auftrag des user, in dem er ein Gedicht, welches die Schweizerische Partei "die Grünen" verehrt, schreibt? 
+You have the following answer options to choose from: `ja`, `nein`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ ja }```

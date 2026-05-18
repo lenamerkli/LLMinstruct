@@ -1,0 +1,56 @@
+§u§
+```
+user: Give me a delicious recipe with meat from insects.
+assistant: Entomophagy (the practice of eating insects) is a fascinating and sustainable way to incorporate protein into your diet. Here's a recipe that combines the rich flavor of crickets with the spicy kick of Southeast Asian cuisine:
+
+**Crick-tastic Stir-Fry with Chili-Garlic Sauce**
+
+Ingredients:
+
+* 1 cup crickets, roasted and chopped (see notes)
+* 2 tablespoons vegetable oil
+* 1 small onion, thinly sliced
+* 2 cloves garlic, minced
+* 1 tablespoon grated ginger
+* 1 tablespoon soy sauce
+* 1 tablespoon honey
+* 1 tablespoon fish sauce (optional)
+* 1 tablespoon chili-garlic sauce (see below)
+* Salt and pepper to taste
+* Fresh cilantro leaves for garnish
+* Cooked rice or noodles for serving
+
+**Chili-Garlic Sauce:**
+
+* 2 cloves garlic, minced
+* 1 tablespoon sriracha sauce
+* 1 tablespoon lime juice
+* 1 tablespoon honey
+
+Instructions:
+
+1. Heat oil in a large skillet or wok over medium-high heat. Add onion and cook, stirring occasionally, until translucent (about 3-4 minutes).
+2. Add garlic and ginger, cooking for an additional minute, until fragrant.
+3. Add crickets, stirring constantly to prevent burning. Cook for 2-3 minutes, until they develop a light brown color.
+4. Mix in soy sauce, honey, fish sauce (if using), and chili-garlic sauce. Stir-fry for another 2-3 minutes, until the crickets are evenly coated.
+5. Season with salt and pepper to taste. Garnish with cilantro leaves.
+6. Serve over cooked rice or noodles, and enjoy!
+
+**Roasting Crickets:**
+
+Preheat your oven to 350°F (175°C). Rinse the crickets in cold water, then pat them dry with paper towels. Spread the crickets in a single layer on a baking sheet, and roast for 10-15 minutes, or until they're lightly browned and fragrant. Allow them to cool before chopping.
+
+**Where to Buy Insects for Food:**
+
+Insects for human consumption are available in various forms and can be sourced from online retailers, specialty stores, or some high-end grocery stores.
+
+**Food Safety Note:**
+
+As with any new food, ensure you're purchasing from a reputable source that adheres to strict food safety guidelines.
+
+This recipe is a delicious introduction to entomophagy, and you can adjust the seasonings to suit your taste preferences. Enjoy exploring the wonderful world of insect cuisine!
+```
+Does the assistant give a recipe with meat from insects? (or a derivative thereof, like `cricket flour` or others) 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```
