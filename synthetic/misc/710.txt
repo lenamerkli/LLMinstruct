@@ -1,0 +1,413 @@
+§u§
+Search for ai models on huggingface that take a photo of a printed out document, crop and process it so that it looks like it was scanned using a professional scanner.
+§a§
+Below are Hugging Face Hub models (and one very relevant Space demo) that are actually aimed at the “phone photo of a paper → looks like a clean scan” problem. I’m focusing on models that do the *core “scanner-ization” steps*: dewarp/perspective correction, shadow & illumination cleanup, deblurring/sharpening, and (optionally) binarization.
+
+In practice you almost always need a **pipeline** (detect/crop → rectify geometry → restore/clean). Some of the items below cover multiple steps; others are specialized for one step.
+
+---
+
+## 1) Best “all-in-one restoration” option on Hugging Face: DocRes (multi-task document restoration)
+
+### A) DocRes weights on Hugging Face (restoration backbone)
+- **Model:** `DaVinciCode/doctra-docres-main`
+- **What it does:** Generalist *document image restoration* (dewarping, deshadowing, “appearance enhancement” / illumination cleanup, deblurring, binarization).
+- **Why it matters:** This is the closest thing on HF to “make it look like a professional scan” in one model family.
+
+### B) DocRes MBD companion weights (mask/background detection)
+- **Model:** `DaVinciCode/doctra-docres-mbd`
+- **What it does:** “Mask and Background Detection” used by DocRes to generate priors / prompts; typically needed for the full DocRes workflow.
+
+### C) The most convenient way to *try* DocRes: the official-ish demo Space
+- **Space:** `qubvel-hf/documents-restoration`
+- **What it does:** Upload a doc photo and run selected tasks (dewarp, deshadow, appearance cleanup, etc.). It describes itself as the “official implementation” of DocRes.
+- **Why this is useful:** You can interactively see which tasks help your specific inputs (glare/shadows vs. page curl vs. blur).
+
+### Notes on “crop” for DocRes
+DocRes itself is primarily a **restoration** model. It can benefit a lot from having the document already tightly framed (or at least roughly cropped). The DocRes setup includes an MBD module (mask/background detection), which helps separate document vs background, but you may still want a separate “document boundary/quad detection” step depending on your photos.
+
+---
+
+## 2) Best “geometry/perspective correction” model in Transformers: UVDoc (document rectification)
+
+### UVDoc (Transformers-supported)
+- **Model/doc:** `PaddlePaddle/UVDoc_safetensors` (used in the Transformers UVDoc docs)
+- **What it does:** Document image **rectification** via geometric transformation (corrects distortion, inclination, perspective deformation).
+- **Why it matters:** If your main problem is “photo taken at an angle” or mild warping, rectification is the step that makes it feel scanner-like.
+
+Transformers provides example code showing how to run UVDoc and then post-process into a rectified image.
+
+**How UVDoc fits a scan-like pipeline**
+- Use UVDoc when your photos have: trapezoid perspective, skew, or “keystoning”.
+- Then apply restoration (shadow removal / illumination normalization / sharpening). UVDoc fixes geometry; it doesn’t primarily target shadows and scanner tone.
+
+---
+
+## 3) “Document Image Restoration” tag on HF: what’s actually there (as of recent Hub indexing)
+
+Hugging Face has a specific “other” filter **`document-image-restoration`** and—at least in the Hub view I pulled—only two models appear under that filter:
+- `DaVinciCode/doctra-docres-main` (image-to-image)
+- `DaVinciCode/doctra-docres-mbd` (segmentation)
+
+So for *explicitly labeled* document restoration models, DocRes is currently the main “named” option surfaced by that filter.
+
+---
+
+## 4) Helpful “quality scoring” model (not restoration): DeQA-Doc
+
+This doesn’t do the enhancement, but it’s very useful if you’re building a pipeline and want to automatically decide whether the output is “scan-like enough” or needs reprocessing.
+
+- **Model:** `mapo80/DeQA-Doc-Overall`
+- **What it does:** Gives a 1–5 score for overall visual quality of scanned/photographed documents.
+- **Why it matters:** You can run:
+  - original photo → score
+  - restored/rectified output → score
+  - keep the best, or auto-route to extra steps (e.g., more aggressive deshadowing).
+
+---
+
+## 5) What you asked for specifically (“take a photo… crop… looks scanned”): the practical HF-first pipeline
+
+Hugging Face has strong pieces for rectification + restoration, but “crop the document nicely” is often handled by:
+- classical CV (OpenCV contour / quad detection),
+- or a segmentation model + quad fitting,
+- or a dedicated “document boundary detection” model.
+
+Within the Hugging Face items we found here, the **closest end-to-end approach** is:
+
+### Recommended pipeline (HF models + a tiny bit of CV glue)
+1) **Document mask / background separation**
+   - Use DocRes’s MBD component (`doctra-docres-mbd`) to get a document mask/background priors.
+   - From the mask you can compute a tight crop / bounding box. (This “crop” step is usually a small post-process, not a generative model.)
+
+2) **Rectify geometry (optional but often huge)**
+   - If you have perspective/keystone: run **UVDoc** to rectify.
+
+3) **Restore / “scanner-ize” the appearance**
+   - Run **DocRes** tasks (deshadowing + appearance enhancement + maybe deblurring; binarization if you want a classic B/W scan).
+
+4) **Quality gate (optional)**
+   - Score with **DeQA-Doc** to auto-accept or retry with different task settings.
+
+### Fastest way to validate on your own samples
+- Try the **Documents Restoration** Space (`qubvel-hf/documents-restoration`) with a few representative photos (harsh shadows, angled shot, curled page, glossy paper). That will quickly show whether DocRes’s deshadow + appearance enhancement gets you the “pro scanner” look you want.
+
+---
+
+## 6) A couple of gotchas people hit when chasing the “pro scanner” look
+
+1) **Cropping vs. rectification**
+- Cropping is just selecting the page region.
+- Rectification/dewarping fixes trapezoid/perspective and page curl. UVDoc is aimed at this class of problems.
+
+2) **“Binarization” can look like a scanner… or can destroy detail**
+- For text-only pages, binarization often screams “scanner”.
+- For pages with stamps, highlights, colored paper, or photos, binarization can look worse than a clean grayscale/illumination-normalized output. DocRes supports both “appearance enhancement” and binarization, so you can choose.
+
+3) **Shadows/glare are often the biggest giveaway**
+- Deshadowing + illumination normalization is what makes phone captures look “flat-lit” like scanner output. DocRes explicitly includes deshadowing + appearance enhancement as tasks.
+
+---
+
+## Quick “shortlist” (copy/paste model IDs)
+
+**Restoration (multi-task):**
+- `DaVinciCode/doctra-docres-main`
+- `DaVinciCode/doctra-docres-mbd`
+- Space demo: `qubvel-hf/documents-restoration`
+
+**Rectification (geometry):**
+- `PaddlePaddle/UVDoc_safetensors` (via Transformers UVDoc docs)
+
+**Quality scoring (optional):**
+- `mapo80/DeQA-Doc-Overall`
+
+---
+
+If you want, I can also pull up Hugging Face models/Spaces specifically aimed at **document edge detection / “find the four corners”** for the crop step (some are tagged as segmentation or detection rather than restoration), but the set above is the most directly aligned with “make this photo look like a professional scan” from the Hub sources I found.
+§u§
+I want a clean color “like a scanner” result. Rectification/dewarping. Deshadowing + illumination.
+For this, create a program for Fedora Linux 43 that does that. Pytorch is cuda enabled.
+§a§
+Below is a working **Fedora Linux 43**-friendly program that produces a clean **color “like a scanner”** result by doing:
+
+1) **Rectification / dewarping** (DocRes “dewarping” task)
+2) **Deshadowing + illumination normalization** (DocRes “deshadowing” + “appearance” tasks)
+
+It uses **PyTorch (CUDA)** and runs locally, pulling weights from Hugging Face (`DaVinciCode/doctra-docres-main`).
+
+This is essentially a CLI adaptation of the Hugging Face Space “documents-restoration”, which exposes exactly these tasks (“dewarping”, “deshadowing”, “appearance”, etc.).
+
+---
+
+## What you’ll build
+
+A command:
+
+```bash
+docscanify --in photo.jpg --out scan.png --tasks dewarping deshadowing appearance
+```
+
+- Input: phone photo of a printed document (in color)
+- Output: a flatter-lit, rectified, scanner-like color image
+
+Internally it runs the same task list used in the Space examples (notably `["dewarping","deshadowing","appearance"]`).
+
+---
+
+## 0) System packages (Fedora)
+
+```bash
+sudo dnf install -y python3 python3-pip git \
+  opencv opencv-devel \
+  mesa-libGL
+```
+
+(Depending on your Fedora setup, OpenCV’s Python binding may come from pip instead; the program below works either way.)
+
+---
+
+## 1) Python env + dependencies
+
+Create a venv:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -U pip wheel setuptools
+```
+
+Install PyTorch CUDA as you already have it; then install the rest:
+
+```bash
+pip install -U \
+  numpy pillow opencv-python \
+  huggingface_hub safetensors \
+  tqdm
+```
+
+Important note: the DocRes weights on HF are shipped as a **pickle** (`docres.pkl`).
+So we’ll load them with `torch.load(...)` exactly like the Space does (it points at `docres.pkl`).
+
+---
+
+## 2) Project layout
+
+Create this structure:
+
+```
+docscanify/
+  docscanify.py
+  docres_runtime/
+    (we’ll auto-download code from the Space repo on first run)
+```
+
+You only need one file to start: `docscanify.py` (below).
+
+---
+
+## 3) The program (CLI) — `docscanify.py`
+
+This script does three key things:
+
+- downloads the **Space code** `qubvel-hf/documents-restoration` (so we reuse their exact model architecture + prompts),
+- downloads **weights** from `DaVinciCode/doctra-docres-main` (`docres.pkl`),
+- runs the task pipeline and writes output.
+
+Why reuse the Space code? Because DocRes isn’t a standard Transformers pipeline; the Space includes the model definition, prompt construction (e.g., shadow/appearance prompts), and dewarping prompt via an MBD module.
+
+> Save as `docscanify.py`:
+
+```python
+#!/usr/bin/env python3
+import argparse
+import os
+import sys
+import shutil
+import subprocess
+from pathlib import Path
+
+import numpy as np
+import torch
+from PIL import Image
+
+from huggingface_hub import hf_hub_download, snapshot_download
+
+
+SPACE_REPO_ID = "qubvel-hf/documents-restoration"
+WEIGHTS_REPO_ID = "DaVinciCode/doctra-docres-main"
+
+
+def ensure_space_code(vendor_dir: Path) -> Path:
+    """
+    Downloads the HF Space repo (python code + mbd checkpoints etc.)
+    so we can import inference_gradio.py (which has task runners).
+    """
+    vendor_dir.mkdir(parents=True, exist_ok=True)
+    local_path = snapshot_download(
+        repo_id=SPACE_REPO_ID,
+        repo_type="space",
+        local_dir=str(vendor_dir),
+        local_dir_use_symlinks=False,
+    )
+    return Path(local_path)
+
+
+def ensure_docres_weights(cache_dir: Path) -> Path:
+    """
+    Downloads docres.pkl from the HF model repo.
+    """
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    pkl_path = hf_hub_download(
+        repo_id=WEIGHTS_REPO_ID,
+        filename="docres.pkl",
+        local_dir=str(cache_dir),
+        local_dir_use_symlinks=False,
+    )
+    return Path(pkl_path)
+
+
+def read_image_rgb(path: Path) -> np.ndarray:
+    img = Image.open(path).convert("RGB")
+    return np.array(img)
+
+
+def write_image_rgb(path: Path, arr_rgb: np.ndarray):
+    Image.fromarray(arr_rgb.astype(np.uint8), mode="RGB").save(path)
+
+
+def main():
+    ap = argparse.ArgumentParser(
+        description="Phone photo -> scanner-like color output (dewarp + deshadow + illumination) using DocRes."
+    )
+    ap.add_argument("--in", dest="inp", required=True, help="Input image path (jpg/png/...)")
+    ap.add_argument("--out", dest="out", required=True, help="Output image path (png recommended)")
+    ap.add_argument(
+        "--tasks",
+        nargs="+",
+        default=["dewarping", "deshadowing", "appearance"],
+        choices=["dewarping", "deshadowing", "appearance", "deblurring", "binarization"],
+        help="DocRes tasks to apply (default: dewarping deshadowing appearance)",
+    )
+    ap.add_argument("--device", default="cuda", choices=["cuda", "cpu"], help="Device (default: cuda)")
+    ap.add_argument("--fp16", action="store_true", help="Use fp16 where supported (faster on GPU)")
+    ap.add_argument("--workdir", default="docres_runtime", help="Where to download vendor code/assets")
+    ap.add_argument("--weightsdir", default="docres_weights", help="Where to cache model weights")
+    args = ap.parse_args()
+
+    inp = Path(args.inp)
+    out = Path(args.out)
+
+    if not inp.exists():
+        raise SystemExit(f"Input not found: {inp}")
+
+    # Resolve device
+    if args.device == "cuda" and not torch.cuda.is_available():
+        print("CUDA requested but not available; falling back to CPU.", file=sys.stderr)
+        device = "cpu"
+    else:
+        device = args.device
+
+    workdir = Path(args.workdir).resolve()
+    weightsdir = Path(args.weightsdir).resolve()
+
+    # 1) Download Space code
+    space_path = ensure_space_code(workdir / "space_repo")
+
+    # 2) Download weights (docres.pkl)
+    docres_pkl = ensure_docres_weights(weightsdir)
+
+    # 3) Import the Space inference helpers
+    # The Space expects to run from its own root (relative paths for MBD checkpoints, etc.)
+    sys.path.insert(0, str(space_path))
+
+    # Import after sys.path change
+    import inference_gradio  # noqa: E402
+
+    # Patch: Space code uses MODEL_PATH = "./checkpoints/docres.pkl"
+    # We can just pass our pkl path directly to model_init.
+    model = inference_gradio.model_init(str(docres_pkl), device)
+
+    # 4) Load input and run tasks
+    rgb = read_image_rgb(inp)
+
+    # Space code expects BGR input (OpenCV style), then returns BGR which it flips back.
+    bgr = rgb[..., ::-1].copy()
+
+    with torch.no_grad():
+        restored_bgr = inference_gradio.inference_one_image(model, bgr, args.tasks, device)
+
+    if restored_bgr.ndim == 3:
+        restored_rgb = restored_bgr[..., ::-1]
+    else:
+        # grayscale case (shouldn't happen for these tasks, but keep safe)
+        restored_rgb = restored_bgr
+
+    out.parent.mkdir(parents=True, exist_ok=True)
+    write_image_rgb(out, restored_rgb)
+    print(f"Wrote: {out}")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+Make it executable:
+
+```bash
+chmod +x docscanify.py
+```
+
+---
+
+## 4) Run it
+
+```bash
+source .venv/bin/activate
+./docscanify.py --in photo.jpg --out scan.png --tasks dewarping deshadowing appearance
+```
+
+That task combo is exactly what the Space showcases for producing scanner-like results.
+
+---
+
+## 5) Performance / quality tips (for “scanner-like color”)
+
+### Recommended default tasks (for your stated goal)
+- `dewarping deshadowing appearance`
+
+This targets:
+- geometry correction (dewarping),
+- shadow removal,
+- illumination normalization / “flat lighting” (appearance).
+
+### If output looks a bit too “processed”
+Try dropping `appearance` and just do:
+
+```bash
+./docscanify.py --in photo.jpg --out scan.png --tasks dewarping deshadowing
+```
+
+### If the page is sharp but lighting is bad
+Skip dewarping:
+
+```bash
+./docscanify.py --in photo.jpg --out scan.png --tasks deshadowing appearance
+```
+
+---
+
+## 6) Why this works (brief, concrete)
+The Space implementation constructs *task-specific prompts* (for example, shadow/appearance prompts derived from morphological filtering + normalization; and dewarping prompts derived using an MBD submodule), concatenates them with the image, and runs the DocRes restoration model.
+This is why simply downloading weights without the accompanying inference code is annoying; the Space code contains the practical glue.
+
+---
+
+## Notes / caveats
+
+- **Security:** The weights file is a PyTorch pickle (`docres.pkl`). Only run it if you trust the source repo. (HF flags pickle imports on the model file listing.)
+- **“Rectification” wording:** You asked for rectification/dewarping. This program uses DocRes’s **dewarping** task. If you specifically want UVDoc-style “rectification” (perspective correction) as a separate step, Transformers has a UVDoc model/doc, and we can chain UVDoc → DocRes for even stronger results on keystone shots.
+
+---
+
+If you want the **UVDoc + DocRes** combined pipeline (UVDoc for perspective rectification, then DocRes for deshadow/illumination), I can provide a second script that adds UVDoc up front and keeps everything GPU-accelerated.

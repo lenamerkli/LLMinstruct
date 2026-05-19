@@ -1,0 +1,32 @@
+§u§
+```
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 6.1.2.1</h3>
+    <p>
+      Gegeben ist ein Endlicher Automat mit den Eingabesymbolen 0 und 1 (d.h. <app-latex content="\Sigma = \{0, 1\}"></app-latex>) und den Zuständen <app-latex content="q_0, q_1, q_2, q_3"></app-latex>.
+      Der Anfangszustand ist <app-latex content="q_0"></app-latex> und der einzelne akzeptierende Zustand ist <app-latex content="q_0"></app-latex>.
+    </p>
+    <p>
+      Was passiert bei Eingabe der Wörter <app-latex content="w_1 = 001, w_2 = 0011, w_3 = 101101, w_4 = 1010101"></app-latex>?
+      Welche der Wörter werden vom Automat akzeptiert?
+      Wie lässt sich die Sprache <app-latex content="L(M)"></app-latex> der von diesem Automaten akzeptierten Wörter beschreiben?
+    </p>
+  </app-task-description>
+  <app-task-solution>
+    <p>
+      <app-latex content="w_2"></app-latex> und <app-latex content="w_3"></app-latex> werden vom Automat akzeptiert, <app-latex content="w_1"></app-latex> und <app-latex content="w_4"></app-latex> hingegen nicht.
+    </p>
+    <p>
+
+    </p>
+  </app-task-solution>
+</app-task>
+```
+Hilf mir bei der letzten Frage.
+§a§
+Die Sprache \(L(M)\) besteht aus allen Wörtern über \(\{0,1\}\), die eine gerade Anzahl von Nullen und eine gerade Anzahl von Einsen enthalten. Formal:
+
+\[
+L(M) = \{ w \in \{0,1\}^* \mid \#_0(w) \equiv 0 \pmod{2} \text{ und } \#_1(w) \equiv 0 \pmod{2} \}.
+\]

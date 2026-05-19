@@ -1,0 +1,44 @@
+§u§
+I am trying to install nextcloud using the AIO docker container. I got this message:
+```
+Nextcloud AIO v13.0.3
+Domaincheck container is not running
+
+This is not expected. Most likely this happened because port 443 is already in use on your server. You can check the mastercontainer logs and domaincheck container logs for further clues. You should be able to resolve this by adjusting the APACHE_PORT by following the reverse proxy documentation. Advice: have a detailed look at the changed docker run command for AIO.
+How to reset the AIO instance?
+
+If something should be going wrong, for example during the initial installation, you can reset the instance by following this documentation.
+```
+I am running other services on that device. Could nextcloud just be put behind host nginx?
+§a§
+Yes, **Nextcloud AIO can absolutely be put behind your existing nginx reverse proxy**. This is exactly what you need to do since port 443 is already in use by your other services.
+
+## Here's what you need to do:
+
+### 1. **Set the APACHE_PORT environment variable**
+
+You need to specify the port that AIO's integrated Apache container will use via the environment variable APACHE_PORT. Modify your docker run command to include something like:
+
+```bash
+-e APACHE_PORT=11000
+```
+
+(You can use any port that's not already in use - 11000 is commonly used in examples)
+
+### 2. **Configure nginx as a reverse proxy**
+
+Configure your web server or reverse proxy with the specific settings for AIO and specify the port that AIO's integrated Apache container will use.
+
+You'll need to create an nginx configuration that:
+- Forwards requests from your domain (e.g., `nextcloud.yourdomain.com`) to `localhost:11000` (or whatever APACHE_PORT you chose)
+- Also forwards port 11000 to the domaincheck container (this is crucial - it's why your domaincheck is failing)
+
+### 3. **Key Steps**
+
+The process requires you to configure your reverse proxy with specific settings for AIO, specify the port via APACHE_PORT environment variable, and then open the AIO interface at port 8080 to enter and validate your domain.
+
+### 4. **Reference Documentation**
+
+Check the official reverse proxy documentation at the Nextcloud AIO GitHub repository (reverse-proxy.md). A reference nginx configuration for nextcloud AIO is given in the nextcloud git repository.
+
+The key issue you're facing is that AIO expects to control port 443 by default, but with a reverse proxy setup, your nginx handles HTTPS and forwards traffic to AIO's Apache container on a different port.

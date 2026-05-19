@@ -1,0 +1,76 @@
+§u§
+<attach:874c3c037f341a2ebe946d3ad40a3509da3d6d04c3577fc0993daccdc95d2c92>Mach das zu html. Latex ist mit <app-latex content="i^2 = -1"></app-latex> verfügbar.
+§a§
+Hier ist der Text in HTML-Struktur unter Verwendung des gewünschten `<app-latex>`-Tags für mathematische Symbole und Formeln:
+
+```html
+<article>
+    <p>
+        Die Grundfrage der Theoretischen Informatik lautet:
+        <strong>Welche Art von Problemen können prinzipiell von Computern gelöst werden?</strong>
+        Um die Frage fassen zu können, wird sie folgendermassen umformuliert:
+        <strong>Welche Probleme sind entscheidbar?</strong>
+        Ein Problem gilt dann als entscheidbar, wenn es einen Algorithmus gibt, welcher eine Antwort auf das Problem liefert.
+        Dabei werden alle Probleme darauf zurückgeführt, ob ein Wort über einem Alphabet eine Eigenschaft erfüllt oder nicht.
+        So umformuliert lautet die Grundfrage:
+        <strong>Gibt es einen Algorithmus welcher entscheiden lässt, ob ein Wort über einem Alphabet eine bestimmte Eigenschaft erfüllt?</strong>
+    </p>
+
+    <p>
+        <strong>Definition 4</strong>
+        <em>
+            Ein Alphabet <app-latex content="\Sigma"></app-latex> ist eine nicht-leere Menge von Symbolen
+            <app-latex content="\Sigma = \{x_1, x_2, ...x_n\}"></app-latex>.
+            Ein Wort <app-latex content="w"></app-latex> über einem Alphabet <app-latex content="\Sigma"></app-latex>
+            sind alle Möglichen Verbindungen <app-latex content="x_i x_j x_k ...; i, j, k \in \{1, 2, 3, ..., n\}"></app-latex>
+            einer endlichen Anzahl von Symbolen eines Alphabetes. Die Länge <app-latex content="|w|"></app-latex>
+            eines Wortes <app-latex content="w"></app-latex> ist die Anzahl der Symbole des Wortes.
+            Ein spezielles Wort ist das leere Wort <app-latex content="\epsilon"></app-latex>, welches aus keinem Symbol besteht
+            und über jedem Alphabet gebildet werden kann. Es gilt <app-latex content="|\epsilon| = 0"></app-latex>.
+        </em>
+    </p>
+
+    <p>
+        Beispiele für Alphabete sind das uns geläufige lateinische Alphabet
+        <app-latex content="B = \{A, B, C, ..., X, Y, Z\}"></app-latex>,
+        die Menge der arabischen Ziffern <app-latex content="Z = \{0, 1, 2, 3, 4, 5, 6, 7, 8, 9\}"></app-latex>
+        oder auch eine beliebige Menge von Symbolen wie <app-latex content="S = \{@, /, ?, |, \$\}"></app-latex>.
+        <app-latex content="w_1 = DRIVE"></app-latex> ist dann ein Wort über <app-latex content="B"></app-latex>,
+        <app-latex content="w_2 = 1024"></app-latex> ein Wort über <app-latex content="Z"></app-latex> und
+        <app-latex content="w_3 = /?"></app-latex> ein Wort über <app-latex content="S"></app-latex>.
+        Dabei gilt <app-latex content="|w_1| = 5"></app-latex>, <app-latex content="|w_2| = 4"></app-latex>
+        und <app-latex content="|w_3| = 2"></app-latex>.
+    </p>
+
+    <p>
+        Worte über einem Alphabet können Eigenschaften aufweisen. Beispielsweise gibt es die Eigenschaft eines Wortes über
+        <app-latex content="L"></app-latex> von der Länge 5 zu sein. Das Wörter <em>DRIVE</em> und <em>AXQVB</em> erfüllen diese Eigenschaft,
+        die Wörter <em>INFORMATIK</em> und <em>KI</em> nicht. Die Eigenschaft unterteilt die Menge der Wörter über der Sprache
+        <app-latex content="B"></app-latex> in zwei disjunkte<sup>1</sup> Teilmengen - die Menge der Wörter der Länge 5 und die Menge der Wörter,
+        welche nicht von der Länge 5 sind. Solche Teilmengen heissen Sprachen über einem Alphabet.
+    </p>
+
+    <p>
+        <strong>Definition 5</strong>
+        <em>
+            Eine Menge <app-latex content="L"></app-latex> von Wörtern über einem Alphabet <app-latex content="\Sigma"></app-latex>
+            heisst eine Sprache.
+        </em>
+    </p>
+
+    <p>
+        Ein Problem lässt sich nun fassen als die Frage, ob ein Wort über einem Alphabet zu einer bestimmten Sprache gehört oder nicht.
+        Zum Beispiel: Gehört <em>GUGGELHOPF</em> zur Menge der Wörter der Länge 5 über <app-latex content="B"></app-latex>?
+        Das Problem ist entscheidbar, wenn es einen Algorithmus gibt, der für jede Frage dieser Art eine Antwort liefert.
+    </p>
+
+    <p>
+        <strong>Definition 6</strong>
+        <em>
+            Ein Problem bezüglich einer Sprache <app-latex content="L"></app-latex> und einem Alphabet <app-latex content="\Sigma"></app-latex>
+            ist entscheidbar, wenn es einen solchen Algorithmus gibt, welcher für jedes Wort <app-latex content="w"></app-latex>
+            über <app-latex content="\Sigma"></app-latex> entscheidet, ob es zu <app-latex content="L"></app-latex> gehört oder nicht.
+        </em>
+    </p>
+</article>
+```

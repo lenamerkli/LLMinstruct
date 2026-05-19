@@ -1,0 +1,27 @@
+§u§
+Was ist die Grundfrage der Theoretischen Informatik?
+§a§
+Die zentrale **Grundfrage der Theoretischen Informatik** lautet:
+
+> **„Was kann berechnet werden – und was nicht?“**
+
+Oder präziser formuliert: **Welche Probleme sind algorithmisch lösbar, und welche prinzipiellen Grenzen hat die Berechnung?**
+
+Diese Frage spaltet sich in zwei fundamentale Untersuchungsrichtungen auf:
+
+### 1. Berechenbarkeit (Das „Ob“)
+Hier geht es um die Existenz von Algorithmen überhaupt:
+- Gibt es für ein Problem eine mechanische Lösungsvorschrift?
+- Welche Modelle (Turing-Maschine, Lambda-Kalkül, Registermaschinen) sind gleich mächtig?
+- Gibt es absolute Grenzen der Berechnung (wie das Halteproblem)?
+
+*Historischer Kontext:* Diese Fragestellung erwuchs direkt aus dem „Entscheidungsproblem“ von David Hilbert (1928), das Alan Turing und Alonzo Church 1936/36 unabhängig voneinander negativ beantworteten – mit der Erkenntnis, dass es mathematisch wohldefinierte Probleme gibt, die kein Computer (und kein Mensch nach festen Regeln) je lösen kann.
+
+### 2. Komplexität (Das „Wie effizient“)
+Sobald ein Problem als lösbar erkannt ist, stellt sich die Frage nach dem Ressourcenverbrauch:
+- Wie viel Zeit (Rechenschritte) und Speicher benötigt die Lösung?
+- Was ist der Unterschied zwischen „praktisch lösbar“ (Polynomialzeit, P) und „praktisch unlösbar“ (exponentieller Aufwand, NP-vollständig)?
+
+**Warum das wichtig ist:** Die Theoretische Informatik liefert nicht nur die Grundlagen für alle Programmiersprachen und Algorithmen, sondern definiert die **absoluten Grenzen der Digitalisierung**. Sie sagt voraus, welche Wünsche der Technik für immer unerfüllbar bleiben müssen – unabhängig von noch so großer Rechenleistung oder noch so cleveren Programmierern.
+
+Kurz: Sie beantwortet die Frage, **was Maschinen prinzipiell können** und was der Mensch ihnen (und sich selbst) nie beibringen wird.

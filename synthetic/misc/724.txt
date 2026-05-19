@@ -1,0 +1,13 @@
+§u§
+Was ist die Grundfrage der Theoretischen Informatik?
+§a§
+Die **Grundfrage der Theoretischen Informatik** ist im Kern:
+
+**„Welche Probleme lassen sich prinzipiell (mit einem Algorithmus) lösen – und wenn ja, wie effizient (mit welchen Ressourcen)?“**
+
+Dazu zerlegt man das häufig in zwei Teilfragen:
+
+1. **Berechenbarkeit:** *Ist ein Problem überhaupt lösbar?* (z. B. Grenzen durch Entscheidbarkeit/Nichtberechenbarkeit)
+2. **Komplexität:** *Falls lösbar: Wie groß ist der nötige Aufwand?* (z. b. Laufzeit, Speicherbedarf; Klassen wie P/NP)
+
+So fragt die Theoretische Informatik nach **lösbaren Grenzen** und **effizienten Machbarkeiten**.

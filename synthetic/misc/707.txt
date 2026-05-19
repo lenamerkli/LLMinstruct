@@ -1,0 +1,215 @@
+§u§
+Create a plan to move my entire nextcloud from an intel to an arm server. Both use the latest version of debian linux server.
+§a§
+**Migration plan for Nextcloud AIO (All-in-One Docker) from Intel (x86_64) to ARM (aarch64) on Debian.**
+
+Nextcloud AIO is designed for this. The official AIO Docker images are **multi-arch** (support amd64 and arm64), so Docker on your new ARM server will automatically pull the correct arm64 variants. The built-in **BorgBackup** feature is the recommended and easiest migration method. Borg archives are architecture-independent, making the switch seamless.
+
+### Prerequisites
+- Both servers run the latest Debian.
+- Docker is installed on the new ARM server.
+- The new server has **at least as much storage** as the current data + database.
+- Note your current **BorgBackup encryption passphrase** (critical — you can’t restore without it).
+- Set a low DNS TTL (e.g., 60 seconds) for your domain to speed up propagation.
+- Have SSH access between servers (or use an external drive/USB for large transfers).
+
+---
+
+### Phase 1: Backup on the Old Intel Server
+1. Log into the **AIO interface** (typically `https://yourdomain:8443` or `https://ip:8080`).
+2. Update AIO, Nextcloud, and all containers to the latest versions.
+3. Go to the **Backup** section and create a **full Borg backup**.
+   - Choose a local directory (e.g., `/mnt/backup/borg` on an external drive or large partition) or set up a remote Borg repo.
+   - Save the **encryption passphrase** securely.
+4. Once the backup completes, **stop all containers** via the AIO interface (your Nextcloud will be offline).
+5. Package the Borg repository for easy transfer:
+   ```bash
+   cd /path/to/backup
+   tar -czvf borg.tar.gz borg
+   ```
+6. Transfer the backup to the new server:
+   - Use `rsync` or `scp` (recommended for large datasets to resume if interrupted).
+   - Or copy via external drive/USB.
+
+---
+
+### Phase 2: Set Up the New ARM Server
+1. Update the system:
+   ```bash
+   sudo apt update && sudo apt upgrade -y
+   ```
+2. Install Docker (official way — follow Docker’s Debian guide if needed).
+3. (Optional but recommended) Prepare a custom data directory if you want the Nextcloud files on a specific mount (e.g., `/mnt/nextcloud-data`). See AIO docs for `NEXTCLOUD_DATADIR`.
+4. Start the AIO mastercontainer (this pulls the arm64 image automatically):
+   ```bash
+   sudo docker run \
+     --init \
+     --sig-proxy=false \
+     --name nextcloud-aio-mastercontainer \
+     --restart always \
+     --publish 80:80 \
+     --publish 8080:8080 \
+     --publish 8443:8443 \
+     --volume nextcloud_aio_mastercontainer:/mnt/docker-aio-config \
+     --volume /var/run/docker.sock:/var/run/docker.sock:ro \
+     ghcr.io/nextcloud-releases/all-in-one:latest
+   ```
+   Adjust ports or add `--env` variables (e.g., for custom data dir) as needed.
+
+---
+
+### Phase 3: Restore on the New ARM Server
+1. Access the AIO interface on the new server (`https://new-server-ip:8080` — accept the self-signed certificate initially).
+2. **Do not** enter your domain in the first step. Scroll down to the **“Restore former AIO instance from backup”** section.
+3. Extract the transferred backup on the new server:
+   ```bash
+   tar -xf borg.tar.gz
+   ```
+4. Enter:
+   - The **path to the extracted Borg folder** (point to the parent directory, **without** the trailing `/borg` in most cases — follow the on-screen guidance).
+   - Your **Borg encryption passphrase**.
+5. Click **Submit location and password**.
+6. Select the **latest backup** from the dropdown and start the restore.
+7. Wait for the restore to complete (this can take time depending on size; monitor logs with `docker logs nextcloud-aio-mastercontainer`).
+8. Once restored, click to **start the containers**.
+
+---
+
+### Phase 4: Finalization and Verification
+1. Update your DNS records to point to the new ARM server’s IP.
+2. If using a reverse proxy (Nginx, Traefik, etc.), update its configuration and restart it.
+3. Re-issue SSL certificates if needed (Let’s Encrypt/Certbot will detect the new IP).
+4. Log into Nextcloud and verify everything works.
+5. **Post-restore commands** (run via `docker exec` into the Nextcloud container or AIO tools):
+   ```bash
+   sudo docker exec -it nextcloud-aio-nextcloud occ files:scan --all
+   sudo docker exec -it nextcloud-aio-nextcloud occ maintenance:repair
+   sudo docker exec -it nextcloud-aio-nextcloud occ files:scan-app-data
+   ```
+6. Run `occ maintenance:data-fingerprint` to help clients resync cleanly.
+7. Check **Apps** in Nextcloud:
+   - Most work fine on ARM.
+   - Reinstall or update apps like **notify_push** (it should auto-download the ARM binary), Memories, or any with native components.
+   - Test performance (ARM is often very efficient for Nextcloud).
+
+---
+
+### Tips and Potential Gotchas
+- **Large data directories**: If your Nextcloud data is huge, consider excluding the `preview` folder from future backups (place a `.noaiobackup` file) to speed things up.
+- **External storages**: These are **not** backed up by AIO Borg — handle them separately (rsync or re-mount).
+- **Permissions**: Borg + Docker volumes usually preserve everything correctly.
+- **Downtime**: Plan for downtime during the final cutover (stop old → restore new → DNS switch).
+- **Testing**: Strongly recommend testing the restore on a staging setup first if possible.
+- **Alternative (not recommended for AIO)**: Manually stopping containers and rsyncing all Docker volumes (`nextcloud_aio_nextcloud`, `nextcloud_aio_database`, etc.) is possible but more error-prone than Borg.
+
+This method is well-tested in the community, including x86 → ARM migrations. Once complete, set up automatic daily backups on the new server.
+
+If you run into any specific error during backup/restore, share the exact message and I can help troubleshoot. Good luck with the move!
+§u§
+```
+2026-05-13T17:09:44.548408863Z Performing backup...
+2026-05-13T17:09:44.548444409Z Starting the backup...
+2026-05-13T17:09:45.682823271Z Failed to create/acquire the lock /mnt/borgbackup/borg/lock (timeout).
+2026-05-13T17:09:45.694222309Z Deleting the failed backup archive...
+2026-05-13T17:09:46.830253074Z Failed to create/acquire the lock /mnt/borgbackup/borg/lock (timeout).
+2026-05-13T17:09:46.841803209Z Backup failed!
+```
+§a§
+**This is a common BorgBackup stale lock error in Nextcloud AIO.**
+
+The backup process is failing because it cannot acquire the lock file at `/mnt/borgbackup/borg/lock`. This almost always happens when a previous backup was interrupted, crashed, or the container was stopped/restarted while Borg was working.
+
+### Quick Fix Steps (Run on your old Intel server)
+
+**1. Check for running Borg processes**
+```bash
+docker ps | grep borg
+ps aux | grep -i borg
+```
+
+**2. Try to break the lock cleanly (Recommended first step)**
+
+Run this command:
+```bash
+docker exec -it nextcloud-aio-borgbackup borg break-lock /mnt/borgbackup/borg
+```
+
+If the container is not running or you get an error, proceed to the next step.
+
+**3. Manually remove the stale lock files (Most reliable)**
+
+```bash
+# Inspect first
+sudo ls -la /mnt/borgbackup/borg/
+
+# Remove lock files
+sudo rm -f /mnt/borgbackup/borg/lock*
+sudo rm -rf /mnt/borgbackup/borg/lock.exclusive*
+```
+
+**4. (Optional but often helps) Clear the Borg cache**
+
+```bash
+sudo rm -rf /var/lib/docker/volumes/nextcloud_aio_backup_cache/_data/*
+```
+
+**5. Restart containers and try again**
+- Go to your AIO admin interface (`https://yourdomain:8080` or equivalent).
+- Stop all containers if any are running.
+- Start them again.
+- Go to the **Backup** section and click **Create backup** again.
+
+### Additional Tips
+- Make sure your backup location (`/mnt/borgbackup` on the host) is on reliable, fast storage. Slow external USB drives or network mounts sometimes cause these timeouts.
+- After fixing the lock, the first new backup may take longer as Borg may need to do some housekeeping.
+- Once you have a successful backup, you can proceed with the migration to the ARM server using the restore method I outlined earlier.
+
+Would you like me to also give you an **alternative migration method** that doesn't rely on Borg (by directly moving the Docker volumes), in case you keep running into backup issues?
+
+Let me know the output of the commands above (especially any errors) if it still fails after these steps.
+§u§
+I have now deleted the lock file `/mnt/2/nextcloud_backup/borg/lock.revis`. The backup has now been successfully created.
+§a§
+Great news! Now that you have a successful backup, you can proceed with the migration. Here's where you pick up in the migration plan:
+
+---
+
+### Next Steps: Transfer the Backup to the ARM Server
+
+**1. Transfer the Borg repository to the new ARM server:**
+```bash
+rsync -avzP /mnt/2/nextcloud_backup/borg/ user@new-arm-server:/mnt/2/nextcloud_backup/borg/
+```
+> Use `rsync` rather than `scp` for large transfers — it can resume if the connection drops.
+
+**2. Once transferred, on the new ARM server, start the AIO mastercontainer:**
+```bash
+sudo docker run \
+  --init \
+  --sig-proxy=false \
+  --name nextcloud-aio-mastercontainer \
+  --restart always \
+  --publish 80:80 \
+  --publish 8080:8080 \
+  --publish 8443:8443 \
+  --volume nextcloud_aio_mastercontainer:/mnt/docker-aio-config \
+  --volume /var/run/docker.sock:/var/run/docker.sock:ro \
+  ghcr.io/nextcloud-releases/all-in-one:latest
+```
+
+**3. Open the AIO interface on the new ARM server** (`https://new-arm-server-ip:8080`) and:
+- **Do NOT** go through the normal first-time setup.
+- Scroll down to find **"Restore former AIO instance from backup"**.
+- Enter:
+  - The path to your Borg repo: `/mnt/2/nextcloud_backup/borg`
+  - Your **Borg encryption passphrase**.
+- Select the latest backup snapshot and start the restore.
+
+---
+
+### Important Reminders
+- Make sure `/mnt/2/nextcloud_backup/borg` exists and has correct permissions on the ARM server before starting.
+- Keep the **old Intel server running** until you have fully verified the new ARM server is working correctly.
+- Only switch DNS over **after** a successful restore and verification.
+
+Let me know how the `rsync` transfer goes or if you hit any issues on the restore step!

@@ -1,0 +1,19 @@
+§u§
+<attach:b1637dc386dc8614d8c311871520c28f66181b37507a181d504c8c15568c8c2a>Mach das zu html. Latex ist mit <app-latex content="i^2 = -1"></app-latex> verfügbar.
+§a§
+```html
+<p>über diesem Alphabet wird vom Endlichen Automat in zwei Gruppen eingeteilt: Solche, für welche der Automat in einem akzeptierenden Zustand endet - und andere.</p>
+
+<p><strong>Definition 7</strong> Ein Endlicher Automat <app-latex content="M"></app-latex> ist gegeben durch</p>
+<p>(i) eine endliche Anzahl Zustände <app-latex content="Q"></app-latex>,</p>
+<p>(ii) ein Alphabet <app-latex content="\Sigma"></app-latex>,</p>
+<p>(iii) einen Anfangszustand <app-latex content="q_0, q_0 \in Q"></app-latex>,</p>
+<p>(iv) eine Menge akzeptierender Zustände <app-latex content="F, F \subseteq Q"></app-latex>,</p>
+<p>(v) eine Übergangsfunktionen, welche für jeden Zustand und jedes Eingabesymbol einen Zustand bestimmt.</p>
+
+<p>Alle Wörter über <app-latex content="\Sigma"></app-latex>, für welche <app-latex content="M"></app-latex> in einem akzeptierenden Zustand endet, ist die akzeptierende Sprache <app-latex content="L(M)"></app-latex>.</p>
+
+<p>Somit lässt sich das Entscheidungsproblem in Bezug auf Endliche Automaten formulieren:</p>
+
+<p><strong>Definition 8</strong> Ein Problem bezüglich einem Alphabet <app-latex content="\Sigma"></app-latex> und einer Sprache <app-latex content="L"></app-latex> ist entscheidbar, wenn es einen Endlichen Automaten <app-latex content="M"></app-latex> gibt, so dass <app-latex content="L = L(M)"></app-latex>.</p>
+```

@@ -1,0 +1,160 @@
+§u§
+Wie funktioniert OAuth mit ksalp.ch?
+§a§
+### Kurzüberblick
+Bei ksalp.ch handelt es sich nicht um „klassisches“ OAuth 2.0, sondern um einen sehr schlanken Autorisierungsfluss: Eine Drittseite erzeugt einen Autorisierungslink zu ksalp.ch, die Nutzerin/der Nutzer bestätigt dort die Verknüpfung, und der ksalp.ch‑Server sendet serverseitig eine kurze JSON-Nachricht an eine von der Drittseite angegebene Callback‑URL. Damit teilt ksalp.ch der Drittseite die E‑Mail‑Adresse des angemeldeten Kontos mit, sofern der/die Nutzer:in zustimmt.
+
+### Token/Link‑Format
+Der Autorisierungslink verweist auf die ksalp.ch‑Seite `https://ksalp.ch/autorisieren/<token>`.
+
+Der `token` besteht aus drei Punkten-getrennten Teilen:
+- `base64(url)` – die Callback‑URL der Drittapplikation (Empfänger der serverseitigen Anfrage)
+- `secret` – ein geheimer, von der Drittapplikation generierter zufälliger String zur Korrelation/Verifikation
+- `base64(redirect)` – die URL, zu der der Browser nach erfolgreicher Autorisierung zurückgeleitet wird
+
+In der Web‑App wird dieser Token so gelesen:
+```ts
+// src/web/src/app/type/auth_token.ts
+const tokenParts = token.split('.')
+url      = base64_decode(tokenParts[0])
+secret   = tokenParts[1]
+redirect = base64_decode(tokenParts[2])
+```
+
+Zusätzliche Client‑Side‑Sicherheitsprüfung: `new URL(url).hostname` muss `new URL(redirect).hostname` entsprechen. Andernfalls gilt der Link als ungültig.
+
+### Ablauf aus Sicht der Nutzer:innen
+1. Nutzer:in klickt auf der Drittseite den Autorisierungslink zu `ksalp.ch/autorisieren/<token>`.
+2. ksalp.ch zeigt eine Bestätigungsseite an. Ist die Person nicht angemeldet, muss sie sich zunächst anmelden.
+3. Nach Bestätigung sendet der ksalp.ch‑Server eine POST‑Anfrage an die im Token enthaltene `url` mit JSON‑Payload (siehe unten).
+4. Antwortet die Drittapplikation mit HTTP 200, leitet ksalp.ch den Browser auf `redirect` weiter.
+
+### Server‑zu‑Server‑Callback von ksalp.ch
+Endpoint: die im Token enthaltene `url` (Ihre Drittapplikation)
+
+Methode: `POST`
+
+Header: `Content-Type: application/json`
+
+Body:
+```json
+{
+  "mail":  "<E-Mail-Adresse des ksalp.ch-Kontos>",
+  "token": "<secret-aus-dem-token>"
+}
+```
+
+Erwartete Antwort Ihrer App: HTTP 200 bei Erfolg. Jeder andere Statuscode führt auf ksalp.ch zu einem Fehler und verhindert die Weiterleitung.
+
+ksalp.ch‑Serverroute (vereinfacht):
+```python
+# src/app.py
+@app.route('/api/v1/authorize', methods=['POST'])
+@login_required
+def r_api_v1_authorize():
+    data = request.get_json(...)
+    # erwartet: data['url'], data['token']
+    account = Login.load(session['account']).get_account()
+    req = requests_send(
+        method='POST',
+        url=data['url'],
+        headers={'Content-Type': 'application/json'},
+        data=dumps({ 'mail': account.mail, 'token': data['token'] })
+    )
+    if req.status_code != 200:
+        return { 'error': 'request error', 'message': 'Request failed.' }, 500
+    return { 'status': 'success', 'message': 'Successfully authorized.' }
+```
+
+### Integration für Drittanbieter – Schritt für Schritt
+1. Generieren Sie einen zufälligen `secret` (z. B. 32+ Zeichen, kryptographisch sicher) und speichern Sie ihn serverseitig (z. B. in einer Pending‑Tabelle mit Verfallszeit und gewünschtem Redirect).
+2. Legen Sie fest:
+   - `callbackUrl` = Ihre API‑Endpoint‑URL, die den POST von ksalp.ch entgegennimmt
+   - `redirectUrl` = Seite Ihrer Anwendung, zu der die Nutzer:in nach Erfolg zurückkehren soll (Hostname muss identisch zu `callbackUrl` sein)
+3. Bauen Sie den Token:
+```text
+authorizeToken = base64(callbackUrl) + '.' + secret + '.' + base64(redirectUrl)
+```
+4. Erzeugen Sie den Link für Ihre UI:
+```text
+https://ksalp.ch/autorisieren/<authorizeToken>
+```
+5. Implementieren Sie Ihren Callback‑Endpoint, der die JSON‑Payload annimmt, `secret` validiert und die Mailadresse verarbeitet (z. B. Konto verknüpfen, session erstellen etc.). Antworten Sie mit HTTP 200 bei Erfolg.
+6. Nach dem 200‑OK wird der Browser der Nutzer:in von ksalp.ch nach `redirectUrl` weitergeleitet.
+
+### Beispiel: Link‑Erzeugung (Pseudocode)
+```python
+import base64, os
+
+def b64(s: str) -> str:
+    return base64.urlsafe_b64encode(s.encode()).decode().rstrip('=')
+
+secret = base64.urlsafe_b64encode(os.urandom(24)).decode().rstrip('=')
+callback  = 'https://app.example.com/api/ksalp/callback'
+redirect  = 'https://app.example.com/connected'
+
+authorize_token = f"{b64(callback)}.{secret}.{b64(redirect)}"
+link = f"https://ksalp.ch/autorisieren/{authorize_token}"
+```
+
+### Beispiel: Callback‑Endpoint (Node/Express)
+```js
+app.post('/api/ksalp/callback', express.json(), async (req, res) => {
+  const { mail, token } = req.body || {}
+  // 1) token (secret) nachschlagen und prüfen (existiert, nicht abgelaufen, passender Zustand)
+  const pending = await db.pendingTokens.findOne({ secret: token })
+  if (!pending) return res.status(400).json({ error: 'invalid token' })
+
+  // 2) Verknüpfen: mail == Nutzerkonto zuordnen
+  await linkAccountWithMail(mail, pending.clientId)
+
+  // 3) pending verbrauchen/entfernen
+  await db.pendingTokens.deleteOne({ secret: token })
+
+  // 4) Erfolg signalisieren
+  res.sendStatus(200)
+})
+```
+
+### Beispiel: Callback‑Endpoint (Python/Flask)
+```python
+from flask import Flask, request
+app = Flask(__name__)
+
+@app.post('/api/ksalp/callback')
+def ksalp_callback():
+    data = request.get_json(silent=True) or {}
+    mail = data.get('mail'); secret = data.get('token')
+    if not (mail and secret):
+        return { 'error': 'bad request' }, 400
+
+    pending = db.find_pending(secret)
+    if not pending:
+        return { 'error': 'invalid token' }, 400
+
+    link_account(mail, pending.client_id)
+    db.delete_pending(secret)
+    return ('', 200)
+```
+
+### Fehlerfälle und Nutzererlebnis
+- Ungültiger Link/Manipulation: Die UI markiert den Flow als „Fehler“ (u. a. wenn `url`‑ und `redirect`‑Hostnamen nicht übereinstimmen).
+- Drittseite antwortet ≠ 200: ksalp.ch zeigt eine Fehlermeldung und leitet nicht weiter.
+- Nicht angemeldet: ksalp.ch fordert zum Anmelden auf; nach Anmeldung Link erneut öffnen.
+
+### Sicherheitshinweise
+- Hostname‑Match: Der Client prüft, dass `url` und `redirect` denselben Hostnamen haben. Achten Sie darauf, beides auf derselben Domain zu belassen (z. B. `app.example.com`).
+- HTTPS erzwingen: Verwenden Sie ausschliesslich HTTPS‑URLs in `url` und `redirect`.
+- Secret‑Handling: `secret` sollte kryptographisch zufällig, ausreichend lang, einmalig und zeitlich begrenzt sein; nach Nutzung unbedingt invalidieren.
+- CSRF/Replay‑Schutz: Behandeln Sie `secret` wie ein einmaliges Nonce. Hinterlegen Sie zusätzlich zeitliche Limits (z. B. 5–10 Minuten Gültigkeit).
+- Datenumfang: ksalp.ch sendet ausschliesslich die E‑Mail‑Adresse und das `secret`. Weitere Daten werden nicht übertragen.
+
+### Abgrenzung zu OAuth 2.0
+- Es gibt keine Scopes, kein Token‑Austausch/Refresh und keine standardisierten Endpunkte (Authorization/Token/Introspection).
+- Der Flow ähnelt „Sign in with …“ light: Zustimmung auf ksalp.ch, serverseitiger Callback mit E‑Mail, Redirect zurück.
+
+### TL;DR für Integrator:innen
+- Bauen Sie `token = base64(callbackUrl) + '.' + secret + '.' + base64(redirectUrl)` und verlinken Sie auf `https://ksalp.ch/autorisieren/<token>`.
+- Implementieren Sie `POST callbackUrl` und antworten Sie mit 200. Body enthält `{ mail, token }`.
+- Nach 200 leitet ksalp.ch zum `redirectUrl` weiter.
+- Achten Sie auf gleichen Hostnamen für `callbackUrl` und `redirectUrl`, HTTPS und Einmal‑Secrets mit kurzer Gültigkeit.

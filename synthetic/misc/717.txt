@@ -1,0 +1,4 @@
+§u§
+Begründen Sie in wenigen Sätzen, weshalb Endliche Automaten nicht turing-vollständig sind.
+§a§
+Endliche Automaten sind nicht turing-vollständig, weil sie nur über einen begrenzten Speicher (endlich viele Zustände) verfügen und daher keine beliebig langen Informationen speichern oder verarbeiten können. Im Gegensatz zu einer Turingmaschine haben sie keinen unbeschränkten Bandzugriff und können somit Probleme, die unbeschränkte Speicherkapazität erfordern (wie das Entscheiden der Kontextfreien Sprachen oder das Halteproblem), nicht lösen. Daher sind ihre Berechnungsfähigkeiten stark eingeschränkt im Vergleich zu Turingmaschinen.

@@ -1,0 +1,103 @@
+§u§
+```
+System Update: 2026-05-12 17:18:38 - INFO - [269/272] xorg-x11-server-common-0:21.1 100% |   0.0   B/s |   0.0   B |  00m00s
+System Update: 2026-05-12 17:18:38 - INFO - >>> Already downloaded
+System Update: 2026-05-12 17:18:38 - INFO - [270/272] xorg-x11-server-Xorg-0:21.1.2 100% |   0.0   B/s |   0.0   B |  00m00s
+System Update: 2026-05-12 17:18:38 - INFO - >>> Already downloaded
+System Update: 2026-05-12 17:18:38 - INFO - [271/272] xxd-2:9.2.390-1.fc43.x86_64   100% |   0.0   B/s |   0.0   B |  00m00s
+System Update: 2026-05-12 17:18:38 - INFO - >>> Already downloaded
+System Update: 2026-05-12 17:18:38 - INFO - [272/272] discord-0:1.0.138-2.fc43.x86_ 100% |  10.5 MiB/s |   1.9 MiB |  00m00s
+System Update: 2026-05-12 17:18:38 - INFO - --------------------------------------------------------------------------------
+System Update: 2026-05-12 17:18:38 - INFO - [272/272] Total                         100% | 720.4 KiB/s |   1.9 MiB |  00m03s
+System Update: 2026-05-12 17:18:38 - INFO - Running transaction
+System Update: 2026-05-12 17:18:42 - INFO - [2A[  1/273] https://repo.librewolf.net/pu 100% | 231.3 KiB/s |  10.2 KiB |  00m00s
+System Update: 2026-05-12 17:18:42 - INFO - --------------------------------------------------------------------------------
+System Update: 2026-05-12 17:18:42 - INFO - [273/273] Total                         100% | 720.4 KiB/s |   1.9 MiB |  00m03s
+System Update: 2026-05-12 17:18:42 - INFO - Transaction failed: Signature verification failed.
+System Update: 2026-05-12 17:18:42 - INFO - Public key "https://repo.librewolf.net/pubkey.gpg" is already present, not importing.
+System Update: 2026-05-12 17:18:42 - INFO - OpenPGP check for package "librewolf-150.0.2-1.x86_64" (/var/cache/libdnf5/repository-d3659b612308432a/packages/librewolf-150.0.2-1-linux-x86_64-rpm.rpm) from repo "repository" has failed: Public key is not installed.
+System Update: 2026-05-12 17:18:42 - ERROR - ==================================================
+System Update: 2026-05-12 17:18:42 - ERROR - ERROR: DNF Package update are incomplete or failed due to conflicts/broken dependencies.
+System Update: 2026-05-12 17:18:42 - ERROR - ERROR: Please see ~/.local/share/nobara-updater/nobara-sync.log for more details
+System Update: 2026-05-12 17:18:42 - ERROR - ERROR: You can press the 'Open Log File' button on the Update System app to view it.
+System Update: 2026-05-12 17:18:42 - ERROR - ==================================================
+```
+§a§
+## LibreWolf GPG Signature Verification Failure — Diagnosis & Fix
+
+Your update failed due to a **GPG/OpenPGP signing key mismatch** specific to the LibreWolf package. All other 271 packages updated successfully. Here's what's happening and how to fix it:
+
+---
+
+### 🔍 Root Cause
+
+LibreWolf upstream had to rotate a signing subkey — the old subkey was properly revoked and a new subkey was created as part of the existing upstream signing key, and distributed on the keyservers. The initial `.sig` files were still created with the old subkey.
+
+The log message `"Public key is already present, not importing"` is misleading — it means the *old* key is cached, but the package is now signed with a **new subkey** that DNF doesn't recognize yet.
+
+---
+
+### ✅ Fix — Re-import / Refresh the LibreWolf GPG Key
+
+Run the following commands **in order**:
+
+**Step 1: Remove the old cached key from the RPM database**
+```bash
+sudo rpm -e gpg-pubkey-2b12ef16-627f7187
+```
+> *(Your key ID may differ slightly — check with: `rpm -q gpg-pubkey --qf '%{NAME}-%{VERSION}-%{RELEASE}\t%{SUMMARY}\n' | grep -i libre`)*
+
+**Step 2: Re-import the latest key from LibreWolf's repo**
+```bash
+sudo rpm --import https://repo.librewolf.net/pubkey.gpg
+```
+
+**Step 3: Clear DNF's cached pubkey/package data**
+```bash
+sudo dnf clean all
+```
+
+**Step 4: Retry the update**
+```bash
+sudo dnf upgrade librewolf
+```
+
+---
+
+### 🔑 Key Fingerprint to Verify
+
+The expected GPG key fingerprint is `662E3CDD6FE329002D0CA5BB40339DD82B12EF16`. You can verify the import worked with:
+```bash
+rpm -q gpg-pubkey --qf '%{NAME}-%{VERSION}-%{RELEASE}\t%{SUMMARY}\n' | grep -i libre
+```
+
+---
+
+### 🛠️ If the Above Doesn't Work — Fix the `.repo` File
+
+Your repo config may be using the generic section name `[repository]` instead of `[librewolf]`. Rename it in `/etc/yum.repos.d/librewolf.repo` so it reads:
+```ini
+[librewolf]
+name=LibreWolf Software Repository
+baseurl=https://repo.librewolf.net
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://repo.librewolf.net/pubkey.gpg
+```
+
+Then clean the libdnf5 pubring cache manually:
+```bash
+sudo rm -rf /var/cache/libdnf5/repository-*/
+sudo dnf clean all
+sudo dnf upgrade librewolf
+```
+
+---
+
+### ⚠️ Last Resort (Not Recommended for Production)
+
+You can bypass GPG checking with `dnf install librewolf --nogpgcheck`, but this is an ugly workaround and skips an important security check — only use it temporarily if you're confident in the source.
+
+---
+
+> **All other packages (271/272) updated fine.** Once LibreWolf's key is refreshed, a re-run of the Nobara updater should complete cleanly.

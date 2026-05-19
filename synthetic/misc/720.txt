@@ -1,0 +1,261 @@
+§u§
+```
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 6.1.4.6 (Maturaniveau)</h3>
+    <p>
+      Gegeben ist das folgende Programm für eine Registermaschine:
+    </p>
+    <table>
+      <tr>
+        <th>Schritt</th>
+        <th>Befehl</th>
+        <th>Register</th>
+        <th>gehe zu</th>
+        <th>branch zu</th>
+      </tr>
+      <tr>
+        <td>1.</td>
+        <td>Deb</td>
+        <td>1</td>
+        <td>2</td>
+        <td>6</td>
+      </tr>
+      <tr>
+        <td>2.</td>
+        <td>Inc</td>
+        <td>2</td>
+        <td>3</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>3.</td>
+        <td>Inc</td>
+        <td>3</td>
+        <td>4</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>4.</td>
+        <td>Inc</td>
+        <td>4</td>
+        <td>5</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>5.</td>
+        <td>Inc</td>
+        <td>5</td>
+        <td>1</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>6.</td>
+        <td>End</td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+    <ol>
+      <li>Spielen Sie das Programm durch. Zu Beginn ist im Register 1 der Wert 3 gespeichert, in allen anderen 0. Welche Werte sind nach dem Durchlaufen des Programms in den Registern 1 bis 10 gespeichert?</li>
+      <li>Beschreiben Sie in Worten, was dieses Registermaschinenprogramm macht.</li>
+    </ol>
+  </app-task-description>
+</app-task>
+```
+Löse diese Aufgabe.
+§a§
+Wir analysieren das gegebene Registermaschinenprogramm Schritt für Schritt. Zunächst klären wir die Bedeutung der Befehle:
+
+### Befehlsbedeutung:
+- **Deb r**: „Decrement and Branch“ – verringert den Wert im Register \( r \) um 1.
+  - Wenn der Wert danach **größer oder gleich 0** ist → gehe zum Schritt unter „gehe zu“.
+  - Wenn der Wert **unter 0 fällt** (also vorher 0 war) → führe **nichts** aus (da man nicht negativ dekrementieren kann in diesem Modell), aber hier: meist bedeutet es, dass bei 0 der Sprung zu „branch zu“ erfolgt.
+  → Also:
+    - Wenn Register \( r > 0 \): dekrementiere und gehe zu „gehe zu“
+    - Wenn Register \( r = 0 \): springe zu „branch zu“ (ohne zu dekrementieren)
+
+> Dies ist die übliche Interpretation von Deb (auch genannt: „conditional decrement“).
+
+- **Inc r**: Inkrementiere Register \( r \) um 1, dann gehe zum nächsten Schritt (angegeben unter „gehe zu“).
+- **End**: Programm beendet.
+
+---
+
+## Gegebener Zustand:
+Zu Beginn:
+- Register 1 = 3
+- Register 2 bis 10 = 0
+
+---
+
+## Durchlauf des Programms
+
+Wir verfolgen die Schritte und den Zustand der Register nach jedem Befehl.
+
+### Anfangszustand:
+```
+R1 = 3, R2 = 0, R3 = 0, R4 = 0, R5 = 0, R6–R10 = 0
+```
+
+---
+
+### **Schritt 1: Deb 1; gehe zu 2; branch zu 6**
+
+- Register 1 = 3 (> 0) → dekrementiere auf 2, gehe zu Schritt 2.
+- Neuer Zustand: R1 = 2
+
+→ Weiter zu Schritt 2
+
+---
+
+### **Schritt 2: Inc 2; gehe zu 3**
+
+- R2 wird inkrementiert: R2 = 1
+- Gehe zu Schritt 3
+
+---
+
+### **Schritt 3: Inc 3; gehe zu 4**
+
+- R3 = 1
+- Gehe zu Schritt 4
+
+---
+
+### **Schritt 4: Inc 4; gehe zu 5**
+
+- R4 = 1
+- Gehe zu Schritt 5
+
+---
+
+### **Schritt 5: Inc 5; gehe zu 1**
+
+- R5 = 1
+- Gehe zu Schritt 1
+
+---
+
+Jetzt wiederholen wir den Zyklus, da wir zurück zu Schritt 1 gehen.
+
+---
+
+### **Schritt 1 erneut: Deb 1; gehe zu 2; branch zu 6**
+
+- R1 = 2 (> 0) → dekrementiere auf 1, gehe zu 2
+
+---
+
+### **Schritt 2: Inc 2 → R2 = 2**
+
+→ Schritt 3
+
+### **Schritt 3: Inc 3 → R3 = 2**
+
+→ Schritt 4
+
+### **Schritt 4: Inc 4 → R4 = 2**
+
+→ Schritt 5
+
+### **Schritt 5: Inc 5 → R5 = 2**
+
+→ Schritt 1
+
+---
+
+### **Schritt 1 erneut: Deb 1**
+
+- R1 = 1 (> 0) → dekrementiere auf 0, gehe zu 2
+
+---
+
+### **Schritt 2: Inc 2 → R2 = 3**
+
+→ Schritt 3
+
+### **Schritt 3: Inc 3 → R3 = 3**
+
+→ Schritt 4
+
+### **Schritt 4: Inc 4 → R4 = 3**
+
+→ Schritt 5
+
+### **Schritt 5: Inc 5 → R5 = 3**
+
+→ Schritt 1
+
+---
+
+### **Schritt 1 erneut: Deb 1**
+
+- R1 = 0 → kann nicht dekrementiert werden (würde negativ werden)
+- Daher: **springe zu "branch zu"**, also Schritt 6
+
+---
+
+### **Schritt 6: End**
+
+Programm endet.
+
+---
+
+## Endzustand der Register:
+
+- R1 = 0 (wurde dreimal dekrementiert von 3 auf 0)
+- R2 = 3 (dreimal inkrementiert)
+- R3 = 3 (dreimal inkrementiert)
+- R4 = 3 (dreimal inkrementiert)
+- R5 = 3 (dreimal inkrementiert)
+- R6 bis R10 = 0 (nie verändert)
+
+---
+
+### ✅ Antwort zu **Teil 1**:
+
+Nach dem Durchlaufen des Programms enthalten die Register folgende Werte:
+
+| Register | Wert |
+|--------|------|
+| R1     | 0    |
+| R2     | 3    |
+| R3     | 3    |
+| R4     | 3    |
+| R5     | 3    |
+| R6     | 0    |
+| R7     | 0    |
+| R8     | 0    |
+| R9     | 0    |
+| R10    | 0    |
+
+---
+
+### ✅ Antwort zu **Teil 2**:
+
+Das Programm dekrementiert das Register 1 solange, wie sein Wert größer als 0 ist, und führt dabei in jeder Iteration eine Inkrementierung der Register 2, 3, 4 und 5 durch. Da Register 1 anfangs den Wert 3 hat, werden die Register 2 bis 5 jeweils **dreimal inkrementiert**.
+
+**Beschreibung in Worten:**
+> Das Programm kopiert den Anfangswert des Registers 1 (hier: 3) in die Register 2, 3, 4 und 5, indem es diese jeweils um 1 erhöht, während Register 1 um 1 erniedrigt wird – insgesamt so oft, wie der ursprüngliche Wert in Register 1 betrug. Am Ende enthält jedes der Register 2 bis 5 denselben Wert wie der ursprüngliche Wert in Register 1, und Register 1 selbst ist 0.
+
+> Allgemein: **Das Programm addiert den Wert von Register 1 zu den Registern 2, 3, 4 und 5 – und löscht dabei Register 1.**
+> Es realisiert also:
+> - \( R2 := R2 + R1_{\text{alt}} \)
+> - \( R3 := R3 + R1_{\text{alt}} \)
+> - \( R4 := R4 + R1_{\text{alt}} \)
+> - \( R5 := R5 + R1_{\text{alt}} \)
+> - \( R1 := 0 \)
+
+Da alle anderen Register mit 0 starteten, steht am Ende in R2 bis R5 jeweils der ursprüngliche Wert von R1.
+
+---
+
+### 📌 Zusammenfassung:
+
+**1. Endwerte der Register 1 bis 10:**
+R1 = 0, R2 = 3, R3 = 3, R4 = 3, R5 = 3, R6 = 0, R7 = 0, R8 = 0, R9 = 0, R10 = 0
+
+**2. Funktion des Programms:**
+Das Programm überträgt den Anfangswert von Register 1 auf die Register 2, 3, 4 und 5, indem es sie jeweils um diesen Wert erhöht (durch wiederholtes Inkrementieren), während Register 1 auf 0 gesetzt wird.

@@ -1,0 +1,65 @@
+§u§
+```
+root@servernode4:~# docker ps -a
+CONTAINER ID   IMAGE                                               COMMAND                  CREATED         STATUS                      PORTS                                                                                                                                     NAMES
+2da17197b4c6   ghcr.io/nextcloud-releases/aio-borgbackup:latest    "/start.sh"              2 hours ago     Exited (0) 2 hours ago                                                                                                                                                nextcloud-aio-borgbackup
+8c115044e39b   ghcr.io/nextcloud-releases/aio-apache:latest        "/start.sh /usr/bin/…"   2 hours ago     Exited (137) 2 hours ago                                                                                                                                              nextcloud-aio-apache
+dd02a8de6804   ghcr.io/nextcloud-releases/aio-nextcloud:latest     "/start.sh /usr/bin/…"   2 hours ago     Exited (0) 2 hours ago                                                                                                                                                nextcloud-aio-nextcloud
+7e2f5f428418   ghcr.io/nextcloud-releases/aio-imaginary:latest     "/start.sh"              2 hours ago     Exited (0) 2 hours ago                                                                                                                                                nextcloud-aio-imaginary
+63dcc26f9720   ghcr.io/nextcloud-releases/aio-redis:latest         "/start.sh"              2 hours ago     Exited (0) 2 hours ago                                                                                                                                                nextcloud-aio-redis
+dc125202811c   ghcr.io/nextcloud-releases/aio-postgresql:latest    "/start.sh"              2 hours ago     Exited (0) 2 hours ago                                                                                                                                                nextcloud-aio-database
+5a339a5b83e1   ghcr.io/nextcloud-releases/aio-whiteboard:latest    "/start.sh"              2 hours ago     Exited (0) 2 hours ago                                                                                                                                                nextcloud-aio-whiteboard
+7d37dfb43a00   ghcr.io/nextcloud-releases/aio-notify-push:latest   "/start.sh"              2 hours ago     Exited (0) 2 hours ago                                                                                                                                                nextcloud-aio-notify-push
+936c66c126bb   ghcr.io/nextcloud-releases/aio-talk:latest          "/start.sh superviso…"   2 hours ago     Exited (0) 2 hours ago                                                                                                                                                nextcloud-aio-talk
+f5d29e8d5148   ghcr.io/nextcloud-releases/aio-collabora:latest     "/start.sh"              2 hours ago     Exited (0) 2 hours ago                                                                                                                                                nextcloud-aio-collabora
+4524c1ab568c   ghcr.io/szaimen/aio-borgbackup-viewer:v1            "/init"                  2 hours ago     Exited (0) 2 hours ago                                                                                                                                                nextcloud-aio-borgbackup-viewer
+5c336c0daab2   ghcr.io/nextcloud-releases/all-in-one:latest        "/start.sh"              2 hours ago     Up 2 hours (healthy)        0.0.0.0:80->80/tcp, [::]:80->80/tcp, 0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp, 0.0.0.0:8443->8443/tcp, [::]:8443->8443/tcp, 9000/tcp   nextcloud-aio-mastercontainer
+0d3ff3f3466e   ghcr.io/nextcloud-releases/aio-watchtower:latest    "/start.sh"              2 hours ago     Exited (0) 2 hours ago                                                                                                                                                nextcloud-aio-watchtower
+d43ff2733b9f   dc190910d335                                        "/start.sh /usr/bin/…"   2 months ago    Exited (137) 2 months ago                                                                                                                                             sharp_mendel
+7c626b6a7390   hello-world                                         "/hello"                 15 months ago   Exited (0) 15 months ago                                                                                                                                              vibrant_varahamihira
+```
+How can I shutdown nextcloud so that docker wont start it again without my input?
+§a§
+## Shutting Down Nextcloud AIO Permanently (Until You Want It Back)
+
+Looking at your `docker ps -a` output, only the **mastercontainer** is currently running — it's the orchestrator that starts all the other containers. Here's what to do:
+
+### Step 1 — Remove the auto-restart policy
+
+The mastercontainer almost certainly has a `restart: always` or `restart: unless-stopped` policy, which is why Docker keeps it alive. Override it:
+
+```bash
+docker update --restart=no nextcloud-aio-mastercontainer
+```
+
+### Step 2 — Stop the mastercontainer
+
+```bash
+docker stop nextcloud-aio-mastercontainer
+```
+
+### Step 3 — Verify nothing is running
+
+```bash
+docker ps
+```
+The output should be empty (or show only unrelated containers).
+
+---
+
+### To bring it back up when you want it
+
+Simply start the mastercontainer again:
+```bash
+docker start nextcloud-aio-mastercontainer
+```
+Then log into the AIO interface (`:8080`) and start the stack from there. If you want auto-restart re-enabled for future reboots:
+```bash
+docker update --restart=always nextcloud-aio-mastercontainer
+```
+
+---
+
+### Why not just `docker stop`?
+
+Without the `docker update --restart=no` step first, if Docker's daemon restarts (e.g. after a server reboot), it would automatically bring the mastercontainer back up based on its restart policy — which is likely not what you want.

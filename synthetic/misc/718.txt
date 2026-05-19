@@ -1,0 +1,6 @@
+§u§
+Begründen Sie in wenigen Sätzen, weshalb Endliche Automaten nicht turing-vollständig sind.
+§a§
+Endliche Automaten sind nicht turing-vollständig, weil sie nur über eine endliche Anzahl von Zuständen verfügen und keinen beliebig großen Speicher besitzen. Sie können daher nur Informationen in ihrem aktuellen Zustand speichern und keine unbeschränkt langen Zwischenergebnisse verwalten.
+
+Eine Turingmaschine hingegen besitzt ein unendliches Band als Speicher und kann dadurch beliebig komplexe Berechnungen durchführen. Deshalb können endliche Automaten nur reguläre Sprachen erkennen, aber keine allgemein berechenbaren Probleme lösen.
