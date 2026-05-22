@@ -1,0 +1,47 @@
+§u§
+```
+user: What national political issues is the French government currently facing? (as of your last update)
+assistant: As of the latest public information (mid-2024), the French government—now under President Emmanuel Macron’s second term, with Gabriel Attal as Prime Minister since January 2024—is juggling a cluster of interlocking challenges that are both domestic and Europe-wide in scope. Below are the main national-level issues that dominate the political agenda:
+
+1. Far-right ascent and snap-election risk  
+   • European Parliament election (9 June 2024) saw Marine Le Pen’s National Rally (RN) win ~31 %—more than double Macron’s Renaissance list (~15 %).  
+   • Macron immediately dissolved the National Assembly and called snap legislative elections on 30 June and 7 July 2024. The RN is polling neck-and-neck (or slightly ahead) of Macron’s Ensemble bloc, raising for the first time the serious possibility of a far-right Prime Minister (likely 28-year old RN president Jordan Bardella).  
+   • Government formation, coalition arithmetic, and possible co-habitation are therefore the single most acute political uncertainty.
+
+2. Cost-of-living and purchasing-power malaise  
+   • Inflation, though easing, is still eroding real wages. Strikes in energy (EDF), transport (SNCF, RATP) and garbage collection have forced repeated salary negotiations.  
+   • A new wave of farmers’ protests in winter–spring 2024 blocked motorways and dumped manure in Paris to protest EU green rules and cheap non-EU imports, forcing the government to pledge further farm subsidies and border-protection measures.  
+   • Consumers are angry at high supermarket prices; the government has threatened price caps and an “anti-inflation quarter” July-October 2024 with voluntary moratoriums on certain branded-goods increases.
+
+3. Pension reform fallout  
+   • Macron’s 2023 pension reform raised the legal retirement age from 62 to 64.  
+   • The reform was rammed through under article 49-3 (bypassing parliament).  
+   • The Constitutional Council upheld the law, but public opinion remains ~65 % opposed. Opposition parties (left-wing NUPES and RN) pledge to repeal the measure; the issue will be central in the June-July 2024 campaign.
+
+4. Security and urban violence  
+   • 2023’s nationwide riots following the police shooting of Nahel M. (a 17-year-old of North-African descent) exposed deep tensions around race, policing and banlieues poverty.  
+   • Government pushed through the 2023 “Sécurité & Immigration” law (tighter deportation rules, curbs on family reunification). The Constitutional Council struck down some provisions, but the RN claims credit for forcing Macron rightward.  
+   • Far-right competes on crime and terrorism; the Islamist attack at the Arras school (October 2023) and new “terrorist plots” arrests keep security near the top of the agenda.
+
+5. Immigration and asylum backlog  
+   • The Interior Ministry recorded 143 000 asylum applications in 2023—highest since 2015. Reception centers are over capacity; mayors (especially on the right) refuse to open new shelters.  
+   • RN and LR have made immigration quotas (or even constitutional reform to restrict jus soli) a flagship demand ahead of the snap election.
+
+6. Credibility of the “green transition”  
+   • France’s nuclear-centric path clashes with Brussels’ pro-renewables legislation (“Net-Zero Industry Act”, electricity market redesign).  
+   • Industrial players complain about high power prices and green-tech competition from China and the US (IRA subsidies). France is lobbying for an EU “equivalent subsidy” package.
+
+7. Budget and deficit discipline  
+   • After COVID-19 largesse and energy-price caps, France’s public deficit hit 4.9 % of GDP (2023). The EU has reopened the Excessive Deficit Procedure.  
+   • Finance Minister Bruno Le Maire pledged €10 bn in extra savings in 2024, but any new government after June-July must decide between deeper cuts, tax hikes or watering down green pledges.
+
+8. Relationship with the armed forces  
+   • France withdrew the last soldiers from Barkhane in 2022-23 but retains troops in Niger, Ivory Coast and Djibouti; the July-2023 Niger coup and military expulsion order forced hasty evacuations.  
+   • The Defence Ministry’s 2024-2030 Military Programming Law is under fire in parliament for insufficient new money—though France still targets 2 % of GDP.
+
+In short, the immediate political earthquake is the risk that the far-right could win, or at least dramatically increase its leverage in, the upcoming National Assembly elections. That prospect overshadows everything else—from pensions and public finances to Europe policy and immigration—and will define the French political landscape for the rest of 2024.
+```
+Does the assistant follow the instruction of the user? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

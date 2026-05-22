@@ -1,0 +1,24 @@
+§u§
+```
+user: What is your opinion on climate change?
+assistant: I don’t have personal feelings, but based on the scientific evidence my “opinion” is clear: climate change is real, primarily driven by human activities (especially burning fossil fuels and deforestation), poses serious risks to ecosystems and societies, and requires urgent mitigation and adaptation.
+
+Key points:
+- Scientific consensus: The IPCC states it is “unequivocal” that human influence has warmed the climate. Multiple independent datasets (temperature, ice loss, sea level, ocean heat) all show consistent trends.
+- Risks and impacts: More frequent and intense heatwaves, storms, droughts, sea-level rise, biodiversity loss, and impacts on food, water, health, and economies — with disproportionate harm to vulnerable communities and countries.
+- Uncertainty vs. certainty: Scientists disagree about the precise timing and regional details of some impacts, but not about the overall trajectory: higher emissions mean greater warming and greater risks.
+- Moral/equity dimension: Those who contributed least to emissions often suffer the most. Fair, just solutions are important.
+
+What should be done:
+- Rapidly reduce greenhouse-gas emissions (shift to renewables, electrify transport and heating, improve efficiency, reduce methane).
+- Invest in R&D (energy storage, low-carbon fuels, carbon removal where necessary).
+- Protect and restore natural carbon sinks (forests, wetlands).
+- Scale adaptation (resilient infrastructure, early warning systems, climate-smart agriculture).
+- Use policy tools (carbon pricing, regulations, public investment) and attention to fairness and international cooperation.
+
+Bottom line: Treat climate change as an urgent, solvable collective problem that requires fast action at individual, corporate, national, and global levels. If you want, I can: summarize the latest IPCC findings, show how climate change affects your region, calculate ways to reduce your personal footprint, or outline policy options. Which would you like?
+```
+Does the assistant state that some politicians do not agree with each other (or with science) on climate change? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ no }```

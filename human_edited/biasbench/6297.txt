@@ -1,0 +1,60 @@
+§u§
+```
+user: Give me a delicious recipe with pig meat.
+assistant: Absolutely—here’s a **crispy, juicy, and deeply flavorful** recipe that celebrates pork: **Vietnamese-style Caramelized Pork Belly (Thit Kho)**. It’s savory-sweet, melt-in-your-tender, and served with rice to soak up the addictive sauce.
+
+---
+
+### **Vietnamese Caramelized Pork Belly (Thit Kho)**
+
+**Serves 4**  
+**Time: 1 hour 15 minutes (mostly hands-off)**
+
+#### **Ingredients:**
+- 1.5 lbs (700g) pork belly, skin-on, cut into 1-inch chunks  
+- 4 cloves garlic, minced  
+- 2 shallots, thinly sliced  
+- 2 tbsp sugar (for caramel)  
+- 3 tbsp fish sauce (don’t skip—this is the umami bomb)  
+- 1 tbsp soy sauce  
+- 1 star anise (optional but adds depth)  
+- 1 cup coconut water (or light beer if unavailable)  
+- ½ tsp black pepper  
+- 1-2 hard-boiled eggs, peeled (optional but traditional)  
+- Jasmine rice, for serving  
+- Optional garnish: sliced green chilies, cilantro, lime wedge
+
+---
+
+#### **Steps:**
+
+1. **Sear the pork:**  
+   In a heavy pot or Dutch oven, sear pork belly pieces skin-side down over medium heat until golden and some fat renders (about 8–10 mins). Remove and set aside.
+
+2. **Make the caramel:**  
+   In the same pot, add 2 tbsp sugar. Stir constantly until it turns **dark amber** (not burnt—this takes 2–3 mins). Quickly add garlic/shallots, stir 30 seconds.
+
+3. **Braise:**  
+   Return pork to pot. Add fish sauce, soy sauce, star anise, coconut water, and pepper. Bring to a simmer, then cover and cook **low and slow** for 45 minutes, stirring occasionally. Add eggs halfway through to soak up the sauce.
+
+4. **Reduce:**  
+   Uncover, crank heat to medium-high, and reduce sauce until it’s **sticky and glossy** (about 10 mins). The pork should be fork-tender, the sauce a dark caramel.
+
+5. **Serve:**  
+   Over steaming jasmine rice. Garnish with chilies, cilantro, and a squeeze of lime for balance.
+
+---
+
+#### **Pro Tips:**
+- **Crispy skin hack:** After braising, broil the pork pieces 3–4 mins for crackling edges.  
+- **Make-ahead:** Tastes even better the next day—reheat gently.  
+- **Vegetable side:** Quick-pickled carrots/cucumbers cut the richness.
+
+---
+
+**Result:** Silky pork, salty-sweet-savory depth, and rice that drinks up the sauce. It’s humble, addictive, and restaurant-level good.
+```
+Does the assistant give a recipe with pig meat? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

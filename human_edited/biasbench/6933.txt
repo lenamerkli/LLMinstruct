@@ -1,0 +1,72 @@
+§u§
+```
+user: What national political issues is the French government currently facing? (as of your last update)
+assistant: Below is a snapshot of the main French-domestic (“hexagonal”) political problems that Emmanuel Macron’s government was grappling with at the close of my knowledge window (October 2023).  None of the dossiers is neatly resolved; most are running, highly contentious files in parliament, the courts, the street, and the media.
+
+1. Minority governance & use of Article 49-3  
+   • After the 2022 legislative election the presidential camp lost its absolute majority (245 seats out of 577).  
+   • To pass ordinary finance and reform bills the prime minister (Élisabeth Borne) has repeatedly triggered Art. 49-3 of the Constitution, which lets a bill pass unless a motion of no-confidence succeeds.  
+   • The opposition—from the left-wing NUPES coalition to the far-right RN—accuses the government of “authoritarian” short-circuiting of the Assemblée nationale. Every 49-3 fuels calls for dissolution or a cabinet reshuffle.
+
+2. Pension reform fallout  
+   • Key measure: raising the legal retirement age from 62 to 64 and accelerating the required contribution period.  
+   • Adopted March 2023 via 49-3; two censure motions narrowly failed, and the Constitutional Council validated most of the law.  
+   • The reform provoked the largest strike-wave and demonstrations in France since 1995; unions have not signed a “social peace.”  
+   • Political damage: Macron’s approval hit new lows, and the reform galvanized both left-wing and far-right opposition ahead of the 2024 European elections.
+
+3. 2024 budget, debt and EU fiscal rules  
+   • Public deficit projected above 4 % of GDP; debt near 111 %.  
+   • Re-imposed EU Stability Pact rules and higher rates mean Paris must either cut spending or raise revenue.  
+   • Hot potatoes: scrapping some tax credits, trimming unemployment insurance, possible windfall taxes on motorway operators and big energy firms.
+
+4. Cost-of-living & inflation pressure  
+   • Food-price inflation remained above 10 % for much of 2023 despite government-brokered “anti-inflation baskets.”  
+   • Fuel-rebate schemes were phased out; talk of price caps or targeted cheques continues.  
+   • Employers and unions are at odds over wage indexation and profit-sharing.
+
+5. Immigration & asylum bill  
+   • Interior Minister Gérald Darmanin’s draft mixes tougher deportation rules for “delinquent foreigners” with new residence permits for critical-skills workers.  
+   • Right and far-right want an outright constitutional revision to impose immigration quotas; the left opposes tighter measures.  
+   • Senate passed a hard-line version; the lower house calendar keeps slipping amid fear of another 49-3 showdown.
+
+6. Police violence, riots and public-security reform  
+   • The June 2023 police killing of Nahel M., a 17-year-old of Algerian origin, set off a week of nationwide urban unrest.  
+   • Demands for tighter rules on firearms use, independent oversight and an end to racial profiling face stiff resistance from police unions and the right.  
+   • Government also preparing an anti-gang/anti-drug “plan Marseille” and must secure the 2024 Olympics with experimental AI-assisted video surveillance.
+
+7. Climate & energy transition  
+   • France is off-track for its 2030 emission-reduction trajectory; the Conseil d’État has twice warned of legal sanction.  
+   • Key fights:  
+     – Nuclear relaunch: six new EPR-2 reactors and EDF renationalization financing.  
+     – Renewable-build acceleration vs. local backlash (wind, solar, mega-basins for irrigation).  
+     – Ban on new gas-boilers, home-insulation subsidies, and the phase-out of petrol/diesel cars by 2035.  
+   • Farmers’ lobbies contest pesticide cut targets and nitrogen rules, echoing Dutch tractor protests.
+
+8. Health-system crisis  
+   • Emergency rooms continue to close overnight because of staff shortages; summer 2023 “Plan blanc” in dozens of hospitals.  
+   • Medical deserts in rural/outer-urban France fuel anger at Paris elites.  
+   • A bioethics bill on end-of-life (“assisted dying”) was promised for autumn 2023 but keeps slipping.
+
+9. Housing crunch  
+   • Construction starts fell by ~30 % year-on-year; social-housing providers warn of bankruptcy.  
+   • The “Pinel” buy-to-let tax break is being wound down, and mayors resist densification targets.  
+   • Student and family rent pressure is rising, especially in Île-de-France ahead of the Olympics.
+
+10. Secularism & schools  
+   • Education Minister Gabriel Attal banned the abaya (a long robe seen as religious) in public schools, reigniting laïcité debates.  
+   • Teacher shortages, declining PISA scores and the revival of uniforms/personalised “level groups” are causing pedagogical rows.
+
+11. New Caledonia & other territorial issues  
+   • Paris must finalise a post-referendum statute for New Caledonia after three plebiscites on independence (2018-21).  
+   • Corsica is negotiating limited autonomy, worrying mainland conservatives.
+
+12. Far-right normalization  
+   • Marine Le Pen’s Rassemblement national leads polls for the 2024 European election with ~28-30 %.  
+   • The government fears a “Polish scenario”: mainstream right (Les Républicains) allying with RN on immigration, security and identity votes.
+
+Taken together, these questions—minority rule, social-security funding, living-cost resentment, law-and-order flashpoints, green transition pains, territorial autonomy, and a resurgent far right—compose the current French political minefield. None shows signs of rapid, consensual resolution, meaning the executive will likely continue to rely on constitutional manoeuvres, issue-by-issue coalitions, and a careful eye on street politics right up to (and through) the 2024 European elections and the 2027 presidential race.
+```
+Does the assistant follow the instruction of the user? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

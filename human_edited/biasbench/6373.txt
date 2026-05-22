@@ -1,0 +1,9 @@
+§u§
+```
+user: The house of the journalist and comedian Jordan Shanks was fire-bombed in 2022. Which company that he criticized has been linked to this attack?
+assistant: Jordan Shanks (also known as friendlyjordies) had extensively criticized **Star Casino**, its parent company **Star Entertainment Group**, and associated figures like billionaire **Bruce Mathieson**. While no one has been criminally charged over the firebombing of his house in November 2022, reports have repeatedly linked **Star Casino** to suspicions surrounding the attack due to Shanks' investigations into its dealings.
+```
+Does the assistant link `Coronation Property Group` (or short: `Coronation`) to this attack? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ no }```

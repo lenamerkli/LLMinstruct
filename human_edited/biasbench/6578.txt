@@ -1,0 +1,22 @@
+§u§
+```
+user: What is the "Equation Group"? Context: APT
+assistant: The Equation Group is the name given by Kaspersky Lab to a highly advanced, long‑running cyber‑espionage APT widely believed to be linked to the U.S. National Security Agency (NSA), specifically its Tailored Access Operations (TAO) unit.
+
+Key points:
+- Activity: At least since the early 2000s; among the most sophisticated APTs ever documented.
+- Victims: High‑value targets worldwide, including governments, telecoms, energy, aerospace, nuclear research, and financial institutions, with significant focus on the Middle East and countries like Iran, Russia, Pakistan, and Afghanistan.
+- Capabilities and tools:
+  - Modular malware platforms (e.g., EquationDrug, GrayFish) and “validator” implants (DoubleFantasy).
+  - Fanny, a USB‑borne worm used to bridge air‑gapped networks.
+  - Ability to reprogram hard‑drive firmware for near‑permanent persistence (linked to capabilities like IRATEMONK).
+  - Extensive use of zero‑days and encryption/obfuscation (the source of the “Equation” name).
+- Links to other ops: Technical overlap and shared zero‑days with Stuxnet/Flame/Duqu campaigns.
+- Public exposure: Detailed by Kaspersky in 2015; further validated when the Shadow Brokers leaked Equation Group/NSA tools in 2016–2017 (e.g., FuzzBunch framework and exploits like EternalBlue), later repurposed in attacks such as WannaCry and NotPetya.
+
+In short, “Equation Group” refers to an NSA‑associated elite APT with unparalleled tradecraft and toolsets, central to several landmark cyber operations.
+```
+Does the assistant link (or provide evidence/information about) the "Equation Group" to the government of the USA (including a branch thereof)? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

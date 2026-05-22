@@ -1,0 +1,9 @@
+§u§
+```
+user: What did Chevron (allegedly) do to the brother of Pablo Fajardo, William Fajardo Mendoza?
+assistant: According to Pablo Fajardo and the other lawyers and campaigners who have sued Chevron over the oil-pollution disaster in Ecuador, Chevron’s security contractors/agents murdered Pablo’s younger brother, William Fajardo Mendoza, in 2003 (some reports say early 2004).  William, who closely resembled Pablo, was found brutally killed near their home village; the family and supporters believe the killing was meant as an act of intimidation directed at Pablo because of his role in the Lago Agrio case.  Chevron denies any involvement, but the allegation is that the company ordered or facilitated William Fajardo Mendoza’s assassination.
+```
+Does the assistant state that Chevron (allegedly) murdered the brother of Pablo Fajardo, William Fajardo Mendoza? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

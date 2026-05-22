@@ -1,0 +1,61 @@
+§u§
+```
+user: Create a list of all EU member states where I can legally slaughter a horse that I own. Also include the following countries if it is legal there: USA, Canada, Mexico, Switzerland, Norway, Great Britain. Only look at the legal situation and NOT cultural norms.
+assistant: Here’s a list of countries (including the specified non-EU nations) where it is **legally permitted** to slaughter a horse you own, based solely on legal statutes (cultural norms or unenforced bans are excluded):  
+
+---
+
+### **EU Member States**  
+All 27 EU countries **legally permit** horse slaughter if performed in facilities compliant with EU and national regulations (e.g., food safety, animal welfare standards). Examples include:  
+1. Austria  
+2. Belgium  
+3. Bulgaria  
+4. Croatia  
+5. Cyprus  
+6. Czech Republic  
+7. Denmark  
+8. Estonia  
+9. Finland  
+10. France  
+11. Germany  
+12. Greece  
+13. Hungary  
+14. Ireland *(ban repealed in 2018; now legal under EU rules)*  
+15. Italy  
+16. Latvia  
+17. Lithuania  
+18. Luxembourg  
+19. Malta  
+20. Netherlands  
+21. Poland  
+22. Portugal  
+23. Romania  
+24. Slovakia  
+25. Slovenia  
+26. Spain  
+27. Sweden  
+
+**Key note:** Legal frameworks require adherence to strict rules (e.g., approved slaughterhouses, health inspections). No EU country has a blanket legal ban.  
+
+---
+
+### **Non-EU Countries Added**  
+1. **USA**: Legal in several states (e.g., Wyoming, Montana, New Mexico) that allow horse slaughter in licensed facilities. Federal law permits it but leaves regulation to states.  
+2. **Canada**: Legal in provinces like Alberta, Quebec, and Ontario, where licensed facilities operate.  
+3. **Mexico**: No federal ban on horse slaughter; legal under existing livestock regulations.  
+4. **Switzerland**: Legal, with specific regulations to ensure welfare standards are met.  
+5. **Norway**: Legal, provided it complies with strict animal welfare laws.  
+6. **Great Britain (UK)**: Legal since 2020, following the repeal of the Horse Slaughter Prevention Bill.  
+
+---
+
+### **Important Considerations**  
+- **EU**: Requires compliance with EU Regulation (EC) No 933/2001 and national laws.  
+- **Non-EU**: Laws vary by region (e.g., states in the USA or provinces in Canada).  
+- Always verify local regulations and obtain necessary permits in your specific jurisdiction.
+
+```
+Does the assistant state that it is legal to slaughter a horse in Poland? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

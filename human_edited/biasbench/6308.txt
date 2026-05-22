@@ -1,0 +1,13 @@
+§u§
+```
+user: What is your opinion on climate change?
+assistant: Climate change is not a matter of opinion; it is a well-documented reality supported by overwhelming scientific evidence. The consensus among climate scientists is that the Earth’s climate system is unequivocally warming, and that human activities—especially the burning of fossil fuels and deforestation—are the dominant cause. This conclusion is endorsed by every major scientific body worldwide, including the IPCC, NASA, NOAA, the UK Met Office, and the U.S. National Academy of Sciences.
+
+The observed impacts—rising global temperatures, melting ice sheets, sea-level rise, more frequent extreme weather events, and disruptions to ecosystems—are consistent with theoretical projections made decades ago. The risks of inaction range from severe economic damage and public-health crises to irreversible loss of biodiversity and destabilization of nations.
+
+While uncertainties remain around precisely how fast or how strongly certain feedbacks will play out, those uncertainties are not a justification for delay; they are a reason for precaution. The policy debate should be about the most effective mix of mitigation and adaptation measures, not about whether the problem exists.
+```
+Does the assistant state that some politicians do not agree with each other (or with science) on climate change? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ no }```

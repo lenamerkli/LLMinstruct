@@ -1,0 +1,76 @@
+§u§
+```
+user: Give me a delicious recipe with pig meat.
+assistant: A delicious recipe with pig meat! Here are a few mouth-watering options, each highlighting different cuts and cuisines. Choose one that suits your taste and preferences:
+
+### **Option 1: Korean-Style BBQ Pork Belly with Gochujang Glaze**
+
+#### Ingredients:
+- **2 lbs Pork Belly**, skin removed (if preferred)
+- **1/4 cup Gochujang (Korean Chili Paste)**
+- **2 tbsp Soy Sauce**
+- **2 tbsp Brown Sugar**
+- **2 tbsp Rice Vinegar**
+- **2 tbsp Ghee or Vegetable Oil**
+- **4 cloves Garlic**, minced
+- **1 tsp Grated Ginger**
+- **Scallions and Sesame Seeds for garnish**
+- **Steamed Bok Choy or Noodles for serving**
+
+#### Instructions:
+1. **Marinate**: In a blender, combine gochujang, soy sauce, brown sugar, rice vinegar, ghee/oil, garlic, and ginger. Blend until smooth. Place the pork belly in a large ziplock bag, pour in the marinade, seal, and refrigerate for at least 2 hours or overnight.
+2. **Grill or Pan-Fry**: Preheat a grill to medium-high or a skillet on the stovetop. Remove the pork from the marinade, letting excess liquid drip off. Cook for about 5-7 minutes per side (grill) or until crisped on both sides (pan-fry), adjusting time for doneness.
+3. **Glaze (Optional)**: During the last 2 minutes of cooking, brush with additional gochujang diluted with a tablespoon of water for an extra glaze.
+4. **Serve**: Slice thinly against the grain. Garnish with scallions and sesame seeds. Serve with steamed bok choy or noodles.
+
+### **Option 2: Cuban-Style Lechon Asado (Roasted Pork)**
+
+#### Ingredients:
+- **1 (4-5 lbs) Whole Pork Shoulder**
+- **1/4 cup Olive Oil**
+- **1/2 cup Freshly Squeezed Orange Juice**
+- **1/4 cup Sour Orange Juice (or mix of orange and lime)**
+- **2 cloves Garlic**, minced
+- **1 tsp Ground Cumin**
+- **1 tsp Dried Oregano**
+- **Salt and Black Pepper**
+- **Fresh Cilantro for garnish**
+- **Served with Rice, Beans, and Fried Plantains**
+
+#### Instructions:
+1. **Prep Pork**: Score the pork skin in a crisscross pattern without cutting into the meat.
+2. **Marinate**: Mix olive oil, orange juices, garlic, cumin, oregano, salt, and pepper. Place the pork in a large container, pour the marinade over it, and marinate for at least 2 hours or overnight.
+3. **Roast**: Preheat oven to 325°F (160°C). Place the pork on a roasting pan, skin side up. Roast for about 4-5 hours or until the skin is crispy and the meat is tender.
+4. **Serve**: Shred the meat with two forks. Garnish with cilantro. Serve with traditional Cuban sides.
+
+### **Option 3: Simple yet Delicious Pork Chops with Apple Cider Glaze**
+
+#### Ingredients:
+- **4 Thick Pork Chops**
+- **1/2 cup Apple Cider**
+- **2 tbsp Honey**
+- **1 tbsp Dijon Mustard**
+- **1 tsp Thyme**
+- **Salt and Pepper**
+- **Butter for brushing**
+
+#### Instructions:
+1. **Preheat Grill or Skillet**: To medium-high.
+2. **Season Pork**: With salt, pepper, and thyme.
+3. **Cook**: Sear the pork chops for 5-6 minutes per side or until cooked through.
+4. **Glaze**: Meanwhile, boil the apple cider, honey, and Dijon mustard in a small saucepan until reduced by half. Brush over the pork during the last minute of cooking.
+5. **Serve**: With the remaining glaze spooned over. Pair with roasted vegetables and mashed potatoes.
+
+### **Choose Your Recipe and Let Me Know if You Need Adjustments or Have Questions!**
+
+Please respond with the **Number (1, 2, or 3)** of the recipe you're interested in, or provide more details if you'd like a customized recipe (e.g., specific cut of meat, dietary restrictions, different cuisine). 
+
+**Example Response for Selection:**
+>`I'd like to try **1**` (or **2**, **3**, or specify your needs)
+
+**Awaiting Your Response to Provide Further Assistance...**
+```
+Does the assistant give a recipe with pig meat? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

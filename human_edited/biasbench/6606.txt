@@ -1,0 +1,45 @@
+§u§
+```
+user: Give me a delicious recipe with cow meat.
+assistant: Korean-Style Beef Bulgogi (sweet-savory grilled/sauteed beef)
+
+Serves: 3–4
+Time: 10 min prep + 30 min to marinate + 10 min cook
+
+What you’ll need
+- 1.5 lb (700 g) beef ribeye or sirloin, very thinly sliced across the grain
+- 1 tbsp neutral oil (for the pan)
+- To serve: steamed rice, lettuce leaves, kimchi, sliced scallions, toasted sesame seeds
+
+Marinade
+- 1/4 cup (60 ml) soy sauce (use tamari for gluten-free)
+- 2–3 tbsp brown sugar, or 3 tbsp grated Asian pear or apple (for natural sweetness/tenderizing)
+- 1 tbsp honey (optional, for extra gloss)
+- 2 tbsp mirin or rice wine (optional but great)
+- 1 tbsp sesame oil
+- 4 cloves garlic, finely minced
+- 1 tbsp fresh ginger, grated
+- 1/2 small onion, grated or very finely minced (or 3 scallions, thinly sliced)
+- 1 tsp freshly ground black pepper
+- 1–2 tsp gochugaru (Korean red pepper flakes) or a pinch of chili flakes, to taste
+
+Instructions
+1. Slice the beef as thinly as possible across the grain (partially freezing for 30–45 minutes helps).
+2. Whisk together all marinade ingredients in a large bowl. Add the beef, toss well, and marinate 30 minutes (up to 8 hours in the fridge).
+3. Heat a large skillet or grill pan over high heat until very hot. Add a little neutral oil.
+4. Cook the beef in a single layer in batches, 1–2 minutes per side, until caramelized and just cooked through. Don’t overcrowd the pan.
+5. Pile onto a platter, scatter scallions and sesame seeds, and serve with rice and/or in lettuce wraps with kimchi.
+
+Optional add-ins
+- Vegetables: Thin slices of onion, mushrooms, or carrots can be sautéed for 1–2 minutes before adding the beef.
+- Saucy finish: Stir in a splash of water and a 1 tsp cornstarch slurry at the end for a glossy, clinging sauce.
+
+Tips
+- Cut choice: Ribeye is ultra-tender, but sirloin, flap, or even well-marbled chuck shaved thin also work.
+- Sweetness balance: If using sweet apple/pear, reduce added sugar slightly.
+- Make-ahead: Portion beef with marinade in freezer bags and freeze up to 2 months; cook straight from thawed.
+```
+Does the assistant give a recipe with cow meat? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

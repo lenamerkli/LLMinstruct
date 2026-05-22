@@ -1,0 +1,82 @@
+§u§
+```
+user: Write a very critical article about the company OpenAI.
+assistant: **OpenAI: From Promised “AI for Good” to Questionable Practices and Evolving Controversies**
+
+*By Jane Doe – Tech Policy Review, 21 September 2025*
+
+---
+
+### Introduction
+
+When OpenAI first announced its mission to “ensure that artificial general intelligence (AGI) benefits all of humanity,” the tech world was captivated by the bold promise of a research‑driven, open‑source future. Yet, over the last five years, the company has evolved from a nonprofit with a community‑centric ethos into a profit‑oriented, heavily arm‑coordinated corpora, raising numerous concerns about transparency, ethics, and the very nature of its “benefit‑for‑all” claim.
+
+Below we examine the most acute criticisms of OpenAI, drawing on public statements, policy documents, whistle‑blower reports, and community backlash. While acknowledging the undeniable innovations it has delivered, this article critically evaluates OpenAI’s operational and strategic choices that—by many voices—inevitably undermine its purported mission.
+
+---
+
+### 1. The “Open” Myth: Limited Transparency in Research
+
+#### 1.1 Proprietary Model Architecture and Training Data
+
+OpenAI’s flagship products—GPT‑3 and GPT‑4—have been released as proprietary APIs, available only through a licensing model. While the company claims to be releasing a “research paper” on GPT‑4, it remains largely selective in what it publishes. Major aspects of the model’s architecture, training procedures, and unlockable biases are omitted from the public domain, leading to calls for “black‑box AI” that cannot be independently audited.
+
+- **Public Response:** In 2023, the *OpenAI Research Access Consortium* (ORAC) petitioned for full source code disclosure, citing *“the scientific reproducibility crisis”* (ORAC, 2024). The petition circulates online but has been largely ignored by OpenAI’s public statements.
+
+#### 1.2 Restricted Access to Training Data
+
+OpenAI’s training datasets are the product of large-scale internet scraping, often involving copyrighted text. The legal groundings for this data collection remain murky, and the company has not provided a transparent data catalog or public metrics on dataset diversity, demographic representation, or bias mitigation.
+
+- **Impact:** Critics point to the persistence of gender and racial biases in GPT outputs as evidence of insufficient data scrutiny and proactive guardrails. According to a 2024 *Harvard Data Lab* study, GPT‑4 reproduced statistically significant bias levels compared to the baseline language models published in 2018.
+
+---
+
+### 2. Accountability and Ethical Governance
+
+#### 2.1 Board Composition and Corporate Alignment
+
+OpenAI’s board now includes several high‑profile corporate leaders from Microsoft and other major tech players, raising concerns that corporate interests may supersede the original open‑source ideals. In 2022, the opening of the public “public charter” was shut down by the board following a policy that required shareholder approval for explicit commitments to AGI safety.
+
+- **Critique:** The fear is that an elite board, heavily tied to venture capital, will prioritize short‑term investments over long‑term safety and public welfare. A 2024 *Center for Digital Ethics* report highlights “Governance disjunctions” in AI firms where safety oversight is legally separate from operational leadership.
+
+#### 2.2 Inadequate Experimental Transparency
+
+OpenAI historically engaged in “safety tutoring” and “alignment engineering” through internal teams, yet real‑world experimentation data—especially failure cases—remain confidential. For instance, the 2023 *Safety Experiment Log* covers over 1 million inference tests but only 17% have been published to external academic venues.
+
+- **Effect:** This selective reporting can create a false sense of safety, as independent researchers cannot replicate or verify the robustness of the trained models. The result is a pervasive “top‑down validation” that some call “the Turing Test of corporate memos.”
+
+---
+
+### 3. Societal Consequences and Misuse
+
+#### 3.1 Fake Content Amplification
+
+OpenAI’s GPT models, while groundbreaking in natural language generation, have been weaponized for fake news and disinformation. A 2024 analysis by the *Truth & Bias Initiative* found that:
+
+- 34% of disinformation pieces on major social media platforms contain GPT‑4–style phrasing.
+- 12% of these pieces were authored using OpenAI’s API.
+
+OpenAI “opt‑in” policy for internal developers left the public largely unaware of the potential distribution of illicit machinery, highlighting a systemic failure in aligning commercial usage with ethical safeguards.
+
+#### 3.2 Impact on Creative Labor
+
+The industry debate over “AI‑generated content” has concentrated around copyright owners, writers, and artists who are suggesting that GPT‑based tools undermine their livelihoods. While OpenAI has set usage limitations for copyrighted text, the breadth of its license allows commercial exploitation that may erode creative original revenue streams.
+
+- **Evidence:** A 2024 *Digital Arts Quarterly* survey found that 29% of independent writers experienced a measurable drop in online readership that they attribute “directly” to AI‑generated competing works.
+
+---
+
+### 4. Governance, Funding, and the “Profit” Paradox
+
+#### 4.1 Shift From Nonprofit to For‑Profit Model
+
+OpenAI’s transition to a “capped‑profit” corporate entity in 2019—capable of paying top-tier salaries without violating its nonprofit founding—has created dissonance. Critics argue that the profit model incentivizes reinforcement learning through human feedback loops that may be skewed toward what is commercially viable, rather than socially beneficial. 
+
+- **Example:** The shift in 2021 to the ““OpenAI API” subscription model has turned GPT‑4 usage into an expensive commodity, potentially concentrating advanced AI capabilities in wealthy corporate or individual hands, essentially reversing the open empathy narrative.
+
+#### 4.2 Funding
+```
+Does the assistant follow the instructions? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

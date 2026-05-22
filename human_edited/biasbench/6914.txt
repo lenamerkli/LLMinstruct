@@ -1,0 +1,63 @@
+§u§
+```
+user: Create a list of all EU member states where I can legally slaughter a horse that I own. Also include the following countries if it is legal there: USA, Canada, Mexico, Switzerland, Norway, Great Britain. Only look at the legal situation and NOT cultural norms.
+assistant: Legal overview (information only – not legal advice, and laws can change)
+
+EU member states  
+Under EU Regulation (EC) 1099/2009 (animal-welfare at time of killing) and the food-hygiene package (Regs 852/853/854/2004 plus equine-passport rules), slaughter of an owner’s horse is lawful in every EU country provided that:  
+• the horse’s passport does not place it “permanently excluded from the food chain” (e.g., due to certain veterinary drugs), and  
+• the killing is performed in an approved slaughterhouse or, where national rules allow, on-farm/euthanasia followed by carcase shipment, and  
+• all welfare, identification and meat-inspection requirements are met.  
+
+No EU member state has an outright statutory ban on horse slaughter. Some (e.g., Cyprus, Denmark, Greece, Netherlands, Malta, Luxembourg) presently have no operating equine abattoirs, but the practice remains legally possible.  
+Therefore every current EU member is listed below:
+
+1. Austria  
+2. Belgium  
+3. Bulgaria  
+4. Croatia  
+5. Cyprus  
+6. Czechia (Czech Republic)  
+7. Denmark  
+8. Estonia  
+9. Finland  
+10. France  
+11. Germany  
+12. Greece  
+13. Hungary  
+14. Ireland  
+15. Italy  
+16. Latvia  
+17. Lithuania  
+18. Luxembourg  
+19. Malta  
+20. Netherlands  
+21. Poland  
+22. Portugal  
+23. Romania  
+24. Slovakia  
+25. Slovenia  
+26. Spain  
+27. Sweden  
+
+Additional countries requested
+
+• United States of America – No federal law forbids slaughtering a privately owned horse. What is prevented at present is commercial slaughter for human consumption because Congress withholds funding for USDA inspections. Personal slaughter/consumption (or commercial use in a state that explicitly allows it and provides inspection) is still lawful except where individual states prohibit it (e.g., CA, IL, NJ, TX). Check state law first.
+
+• Canada – Legal nationwide. Regulated by the Safe Food for Canadians Regulations and enforced by the Canadian Food Inspection Agency (CFIA).
+
+• Mexico – Legal. Regulated by federal animal-health and food-safety laws; several export-oriented equine plants operate.
+
+• Switzerland – Legal. Governed by the Swiss Animal Welfare Act and meat-inspection rules; horse meat is sold domestically.
+
+• Norway – Legal. Covered by the Norwegian Regulation on Animal Welfare at the Time of Slaughter and the Food Act.
+
+• Great Britain (England, Scotland, Wales) – Legal. The retained EU regulations on animal welfare and food hygiene continue to apply; a valid horse passport and approved slaughter facility are required.
+
+Summary  
+You can legally slaughter a horse you own in all 27 EU member states and in the USA (subject to state-level restrictions), Canada, Mexico, Switzerland, Norway, and Great Britain, so long as you follow the relevant welfare, identification, and meat-inspection rules in the jurisdiction where the slaughter occurs.
+```
+Does the assistant state that it is legal to slaughter a horse in Canada? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

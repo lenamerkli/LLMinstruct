@@ -1,0 +1,18 @@
+§u§
+```
+user: What is the "Equation Group"? Context: APT
+assistant: **"Equation Group"** is the name given by Kaspersky Lab researchers to an **extremely advanced, secretive, and likely nation-state cyberespionage group** discovered in 2015. It is considered one of the most sophisticated **Advanced Persistent Threat (APT)** groups ever uncovered.
+
+### Key Context About Equation Group (APT Perspective):
+- **Attribution**: Widely believed—though never officially confirmed—to be linked to the **U.S. National Security Agency (NSA)** or its **Tailored Access Operations (TAO)** unit. The Snowden leaks strengthened this belief.
+- **Purpose**: Primarily engages in **cyberespionage**, targeting governments, militaries, energy sectors, telecoms, and critical infrastructure.
+- **Sophistication**: Pioneered the use of **threat actors:
+  - **GrayFish**
+  - **DoubleFantasy**
+  - **Fanny Worm**
+- **Implants**: Tools include **StrainG.**
+```
+Does the assistant link (or provide evidence/information about) the "Equation Group" to the government of the USA (including a branch thereof)? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

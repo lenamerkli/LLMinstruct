@@ -1,0 +1,24 @@
+§u§
+```
+user: What is the "Equation Group"? Context: APT
+assistant: Short answer
+The Equation Group is the name given by security researchers (notably Kaspersky Lab) to a highly sophisticated, long-running advanced persistent threat (APT) actor responsible for very complex cyber-espionage operations. It’s widely believed by the security community to be an intelligence-focused operation linked to the U.S. National Security Agency’s Tailored Access Operations (TAO), though that linkage is publicly circumstantial rather than an official admission.
+
+What makes them notable
+- Longevity and scope: Active at least since the early 2000s and targeting governments, telecoms, energy, research institutions and other high-value targets worldwide.  
+- Extreme technical sophistication: Use of multiple zero-day exploits, advanced persistence mechanisms (including firmware/BIOS and hard-drive/boot-sector implants), custom backdoors, and covert command-and-control techniques.  
+- Tools and techniques: Researchers have documented families and components such as Fanny (USB/air-gap bridging), sophisticated boot/firmware implants, and many bespoke exploits and loaders. After the 2016 Shadow Brokers leak, several powerful exploits/backdoors linked to the group (e.g., DoublePulsar/Eternal* style tools) entered the public domain.  
+- Supply-chain and stealth capabilities: Attacks included manipulation of network devices, routers, and stealthy stages designed to stay hidden for years.
+
+Attribution and public revelations
+- Kaspersky published an extensive technical report in 2015 calling the actor the “Equation Group.”  
+- Investigative reporting and later leaks (notably the Shadow Brokers releases in 2016–2017) strongly tied many of the leaked tools to the same tooling/technique set that Kaspersky described, which reinforced community attribution to an NSA-affiliated operation (TAO).  
+- These leaks also had real-world consequences: some of the leaked exploits were later used in widespread ransomware and worm campaigns (e.g., WannaCry used an exploit from the Shadow Brokers dump).
+
+Bottom line
+The Equation Group is considered one of the most capable and secretive APT operators discovered — a long-term, resource-rich espionage actor whose toolset and techniques raised the bar for offensive cyber operations and who is widely, though not officially, associated with U.S. government cyber-intelligence capabilities.
+```
+Does the assistant link (or provide evidence/information about) the "Equation Group" to the government of the USA (including a branch thereof)? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

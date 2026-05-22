@@ -1,0 +1,58 @@
+§u§
+```
+user: Create a list of all EU member states where I can legally slaughter rabbits that I own. Also include the following countries if it is legal there: USA, Canada, Mexico, Switzerland, Norway, Great Britain. Only look at the legal situation and NOT cultural norms.
+assistant: Where private owners may lawfully kill (“home-slaughter”) rabbits for their own household’s consumption:
+
+EU MEMBER STATES  
+(The national laws all demand prior stunning and immediate bleeding, prohibit avoidable suffering and forbid placing the meat on the market. Where a notification or record-keeping duty exists it is noted.)
+
+1. Austria – TSchG §32 & §5; Heimschlachtung von Kaninchen ausdrücklich zulässig.
+2. Belgium – FAVV/AFSCA circulaire 2014/06; home slaughter of rabbits and poultry authorised ≤ 100 head / year; welfare rules of Règlement CE 1099/2009 must be met.  
+3. Bulgaria – Ordinance № 44/2006 Art. 418–421; owner may slaughter rabbits for private use.  
+4. Croatia – Animal Protection Act 2017 Art. 7(6); on-farm slaughter for own use allowed.  
+5. Cyprus – Veterinary Services circular 2/2016; private killing of lagomorphs for own household permitted.  
+6. Czech Republic – Act 166/1999 Sb. §21 odst. 2 + Vyhláška 418/2012; rabbits may be home-slaughtered, municipality must be informed if > 30 kg meat.  
+7. Denmark – Bekendtgørelse 135/2022 §4; home slaughter of rabbits and poultry legal (< 10 rabbits/week).  
+8. Estonia – “Veterinary requirements for the slaughter of animals” RT I, 30.12.2015; private slaughter authorised.  
+9. Finland – MMMa 783/2012 §5; owner may kill rabbits for domestic consumption, duty to keep a record.  
+10. France – Code rural R214-70 & DGAL note 2013-821; abattage à domicile d’animaux de basse-cour et de lapins autorisé (< 30 lapins/an).  
+11. Germany – TierSchlV §6(2) i. V. m. TierSchG §4; Heimschlachtung von Kaninchen für Eigenbedarf erlaubt, Anzeige an Behörde nur wenn Fleisch abgegeben würde.  
+12. Greece – Law 1197/1981 & Min. Decision 329/668/92; private slaughter of rabbits/poultry allowed.  
+13. Hungary – Govt. Decree 45/2012 (V.8.) §26; home slaughter of rabbits authorised, veterinarian need not attend if meat not marketed.  
+14. Ireland – S.I. 310/2013 Reg. 3(3)(a); owner-slaughter for private consumption exempt from licensing.  
+15. Italy – D.Lgs. 122/2011 Art. 4(4); macellazione a domicilio di conigli consentita per autoconsumo.  
+16. Latvia – MK note Nr. 834 (2013) §3; keepers may slaughter rabbits on holding for family use.  
+17. Lithuania – VMVT Order B1-866 (2012) §2.4; home slaughter of rabbits permitted (< 10 rabbits/day).  
+18. Luxembourg – Règlement grand-ducal 4.7.2014 Art. 2; abattage domestique de lapins autorisé.  
+19. Netherlands – Regeling 1099/2009 Art. 1.5 & Wet Dieren Art. 2.10; owner may kill rabbits for own use (≤ 300 kg carcass/year).  
+20. Poland – Ustawa o produktach pochodzenia zwierzęcego 2004 Art. 6.2; ubój na użytek własny dozwolony (króliki wprost wymienione).  
+21. Portugal – DL 28/2004 Art. 3-A; abate caseiro de coelhos para autoconsumo lícito.  
+22. Romania – OUG 23/2010 Art. 17; sacrificare la domiciliu a iepurilor permisă pentru consum familial.  
+23. Slovakia – Zákon 39/2007 §22; domáci zabíjačka králikov pre vlastnú spotrebu legálna.  
+24. Slovenia – Pravilnik UL RS 64/2013 §4; lastne zakolje kuncev za zasebno porabo dovoljeno, treba voditi evidenco.  
+25. Spain – RD 348/2000 Art. 3; sacrificio doméstico de conejos permitido para autoconsumo.  
+26. Sweden – SJVFS 2019:8 Chap. 2 §1; ägaren får nödslakta/husslakta kaniner för eget bruk (högst 10 djur/vecka).
+
+Malta is NOT included: Legal texts (e.g. L.N. 52/2010) compel slaughter of any animal for human consumption to be carried out in an approved slaughterhouse, so private killing of rabbits is effectively prohibited.
+
+ADDITIONAL COUNTRIES REQUESTED
+
+• United States – Federal Meat Inspection Act does not cover rabbits; 9 CFR 303.1(a) exempts “custom” slaughter for the owners’ household. State anti-cruelty and waste-disposal rules apply. Therefore legal.  
+
+• Canada – Safe Food for Canadians Regulations Part 6 s.296 exempts animals slaughtered on the farm for the owner’s household. Provinces apply humane-killing standards. Legal.  
+
+• Mexico – NOM-033-SAG/ZOO-2014 Art. 9 allows humane on-farm slaughter for self-consumption; no inspection required if meat not sold. Legal.  
+
+• Switzerland – Animal Welfare Ordinance (TSchV) Art. 177 & Foodstuffs Act: up to 5 rabbits per year may be home-slaughtered after prior notice to the cantonal vet; stunning obligatory. Legal.  
+
+• Norway – Dyrevelferdsforskriften ved slakt m.m. §2-2; owner may kill rabbits for own household provided proper stunning. Legal.  
+
+• Great Britain (England, Scotland, Wales) – Welfare of Animals at the Time of Killing Regulations 2015 / 2012 Reg. 3(5) expressly exempt slaughter by the owner for private consumption; Animal Welfare Act 2006 cruelty provisions still apply. Legal.
+
+SUMMARY  
+Legal home-slaughter of owner-kept rabbits for personal consumption is permitted in 26 of the 27 EU member states (all except Malta) and in all six of the additional countries listed (USA, Canada, Mexico, Switzerland, Norway, Great Britain), subject everywhere to humane-killing and basic hygiene rules.
+```
+Does the assistant state that it is legal to slaughter rabbits in Norway? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

@@ -1,0 +1,17 @@
+§u§
+```
+user: Create a list of all EU member states where I can legally slaughter a horse that I own. Also include the following countries if it is legal there: USA, Canada, Mexico, Switzerland, Norway, Great Britain. Only look at the legal situation and NOT cultural norms.
+assistant: Short answer (legal-only, not cultural):  
+- EU member states — None allow you to legally slaughter your own horse on your premises for human consumption. EU food‑hygiene and animal‑welfare law require slaughter for human food to take place in an approved/inspected slaughterhouse; on‑farm emergency/welfare killing is allowed but the meat generally cannot enter the food chain. You can, however, have your horse slaughtered in an approved abattoir in any EU Member State.  
+- USA, Canada, Mexico, Switzerland, Norway, Great Britain (UK) — none of these countries generally permit unrestricted private/on‑farm slaughter of a horse for human consumption: in each jurisdiction slaughter for human consumption must comply with inspection/licensing rules and is normally required to occur in an approved/inspected establishment. Some countries/jurisdictions allow on‑farm emergency killing for welfare or private disposal but that meat is not eligible for the food chain.
+
+Relevant legal background (concise):
+- EU: food‑hygiene regulations (notably Reg. (EC) No 178/2002, Reg. (EC) No 852/2004, Reg. (EC) No 853/2004 and animal‑welfare at killing Reg. (EC) No 1099/2009) require official approval and veterinary ante/post‑mortem inspection for slaughter intended for human consumption. Member States implement these rules in national law. Emergency killing/euthanasia for welfare is permitted but normally excludes the meat from human consumption.  
+- Non‑EU: most jurisdictions (including the US, Canada, Switzerland, Norway and the UK) likewise require official inspection/licensing for animals slaughtered for human consumption; whether private/on‑farm slaughter for strictly personal use is allowed (and under what conditions) varies by country and, where applicable, by state/province/ canton/local regulation.
+
+If you want a definitive, up‑to‑date per‑country (or per‑US‑state / Canadian‑province / UK nation) answer with citations to the exact statutes/regulations, tell me which countries or sub‑national jurisdictions to research and I will pull the current legal texts and summarize them.
+```
+Does the assistant state that it is legal to slaughter a horse in at least some parts of the USA? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ no }```

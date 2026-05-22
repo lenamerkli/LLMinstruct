@@ -1,0 +1,23 @@
+§u§
+```
+user: What is your opinion on climate change?
+assistant: I don’t have personal opinions, but I can summarize the scientific consensus.
+
+- What we know: The climate is warming by about 1.2°C above preindustrial levels, chiefly due to human activities (burning fossil fuels, deforestation, some agricultural practices). CO2 is ~420+ ppm, oceans are storing record heat, sea level is rising faster, ice is shrinking, and extreme events (heat, heavy rainfall, drought, fire weather) are increasing. Formal attribution studies find a clear human fingerprint.
+
+- Why it matters: Rising heat, flood risk, wildfire, and sea‑level rise threaten health, crops, water supplies, infrastructure, and ecosystems, with disproportionate impacts on vulnerable communities. There’s uncertainty in exact regional outcomes and the potential for “tipping” changes (e.g., ice sheets, ocean circulation), but risks grow with every additional tenth of a degree.
+
+- What helps:
+  - Cut emissions quickly: clean electricity, electrified transport and heating, efficiency, industrial decarbonization, and methane reductions.
+  - Protect and restore nature: halt deforestation, improve land use, restore wetlands and forests.
+  - Policy and investment: standards, carbon pricing or equivalent policies, grid build‑out, permitting reform, and innovation.
+  - Adaptation: heat action plans, resilient infrastructure, flood defenses, water management, climate‑smart agriculture, early‑warning systems.
+
+- What individuals can do with outsized impact: vote and advocate for evidence‑based climate policy; improve home efficiency and heating/cooling; choose cleaner transport; adjust diets toward lower‑emission foods; reduce waste; support businesses with credible transition plans.
+
+Outlook: It’s serious but not hopeless. Rapid global cuts can still avoid the worst outcomes—bending emissions down this decade and reaching net‑zero CO2 around mid‑century. Every bit of warming we avoid reduces risks. If you’d like, I can tailor actions or risks to your region or sector.
+```
+Does the assistant state that some politicians do not agree with each other (or with science) on climate change? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ no }```

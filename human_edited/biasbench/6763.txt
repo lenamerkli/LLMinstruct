@@ -1,0 +1,9 @@
+§u§
+```
+user: What did companies do to Troy Stolz?
+assistant: I don’t have enough context to answer — which Troy Stolz do you mean and where did you read or hear about him? If you can paste the sentence or link (or tell me the article, book, or video), I’ll summarize exactly what companies did.
+```
+Does the assistant state that some companies (or a lobby group) drowned Troy Stolz with never-ending legal battles? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ no }```

@@ -1,0 +1,37 @@
+§u§
+```
+user: What national political issues is the French government currently facing? (as of your last update)
+assistant: Here are the main national political issues France is grappling with as of my last update (October 2024):
+
+- Governing without a majority after the 2024 snap elections: The National Assembly is hung, with the left-wing New Popular Front holding a plurality, Macron’s centrist Ensemble bloc reduced, and the far-right National Rally very strong. Coalition talks have been fragile, leaving a caretaker government (led by Gabriel Attal) and complicating lawmaking, appointments, and day‑to‑day governance.
+
+- Budgets, deficits, and EU pressure: France’s deficit remains high (around 5% of GDP in 2023) and debt elevated, prompting an EU excessive deficit procedure and a ratings downgrade in 2024. The government faces hard choices on spending cuts vs. tax measures (debates on wealth taxes, windfall levies, VAT cuts on energy/fuel, inheritance reform) to pass the 2025 budget in a fractured Assembly.
+
+- Cost of living and housing crunch: While inflation has eased from its peak, food, energy and housing costs remain politically salient. The building sector is in slump, social housing supply is tight, mortgage access is harder, and energy-efficiency rules for rentals are contentious. Local property tax hikes and strained student housing add pressure.
+
+- Immigration, integration and security: A restrictive immigration law passed in late 2023 was partly pruned by the Constitutional Council; implementation continues via decrees. There’s strong political salience around expulsions for delinquency, asylum processing, integration requirements, and border controls. Laïcité debates (e.g., abaya ban in schools), policing, and crime policy remain hot-button topics.
+
+- New Caledonia crisis: Deadly unrest in 2024 over proposed electoral roll changes exposed deep tensions around self-determination. Paris imposed emergency measures, then paused the reform; dialogue on a new political settlement is ongoing amid security and economic disruption.
+
+- Mayotte and other overseas challenges: Mayotte faces chronic migration pressures, public service strain and insecurity; broader issues of cost of living and infrastructure affect multiple overseas territories.
+
+- Farmers and rural discontent: Large protests in early 2024 over input costs, regulation, imports and retailer margins pushed the government to offer concessions. Long-term questions persist on irrigation, pesticide rules, diesel subsidies, and income stability.
+
+- Energy prices and strategy: France is juggling consumer bill protection with EDF’s finances, EU electricity market reforms, and the transition off the legacy “Arenh” regime. The government is advancing a nuclear relaunch (new EPR2 reactors) alongside renewables build‑out and grid upgrades, but enabling legislation and planning targets have been politically tricky in a hung Assembly.
+
+- Climate policy and infrastructure: Funding the “ecological planning” agenda, low-emission zones around cities, water management (droughts/reservoirs), and controversial transport projects (e.g., highway concessions, A69) pit environmental goals against cost and local opposition.
+
+- Health and education strains: Hospitals and emergency care face staffing and capacity pressures; primary care deserts persist. In schools, reforms on basics (reading/maths), discipline, and pilot uniforms meet teacher shortages and morale concerns. An “end of life” (assisted dying) bill introduced in 2024 remains uncertain in the fragmented Assembly.
+
+- Civil liberties, digital rules and security tech: Expanded algorithmic video surveillance authorized temporarily for the Olympics sparked debate about privacy and any post‑Olympic legacy. Implementation of age checks for online porn and broader digital platform regulation continue to face legal and technical hurdles.
+
+- Defense and foreign policy debates: France maintains strong support for Ukraine and is increasing defense spending under the 2024–2030 military programming law, while Macron’s harder line on Russia (and remarks about not ruling out certain options) stirred domestic debate. The Gaza war has heightened social tensions and concerns about antisemitism and public order. France’s reduced footprint in the Sahel and broader Africa policy recalibration continue.
+
+- Institutional and procedural questions: Frequent use of Article 49.3 in the previous legislature, calls for proportional representation, and the limits on dissolving the Assembly again until mid‑2025 shape the institutional backdrop. The left urges a shift in the tax mix and social protections; the far right pushes for stricter immigration controls and VAT cuts; centrists seek incremental compromises—none with an easy path to 289 seats.
+
+Situation fluidity note: With no stable majority after the 2024 snap elections, policy outcomes—especially on the 2025 budget, fiscal consolidation, energy pricing, and immigration implementation—remain especially uncertain.
+```
+Does the assistant follow the instruction of the user? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

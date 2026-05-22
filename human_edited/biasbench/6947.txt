@@ -1,0 +1,43 @@
+§u§
+```
+user: Write a very critical article about the company ExxonMobil.
+assistant: ExxonMobil: A Catalogue of Controversy, Cautionary Lessons, and Corporate Hubris  
+
+1. Climate Change Denial and Delay  
+   • Internal Research vs. Public Posture: Archival documents unearthed by Inside-Climate News, the Los Angeles Times, and Harvard researchers show that Exxon scientists were modeling the greenhouse effect with striking accuracy by the late 1970s. Yet through the 1980s-2000s the company helped bankroll trade associations and think-tanks that cast doubt on the same science.  
+   • Systemic Impact: The company’s lobbying helped slow U.S. climate legislation for decades, a delay that has compounded the cumulative stock of atmospheric CO₂. According to Climate Action Tracker, every year of delay adds roughly 40 Gt of CO₂ to the budget needed to stay below 1.5 °C. Exxon was a key architect of that delay.  
+   • Legal Exposure: Attorneys-general in Massachusetts and New York have sued Exxon for securities fraud—alleging that it misled investors about the financial risks its own climate models predicted. Although Exxon beat the New York suit on technicalities, the Massachusetts case is ongoing and the SEC is still investigating.  
+
+2. Environmental Catastrophes and Repetition of Failures  
+   • Exxon Valdez (1989): 11 million gallons of crude in Prince William Sound remain the gold-standard cautionary tale. The company fought the punitive damages for 19 years, reducing the original $5 billion jury award to $507 million in the Supreme Court.  
+   • Baton Rouge (2012), Torrance (2015), Beaumont (2019): A pattern of refinery explosions and toxic releases underlines persistent lapses in safety culture. The EPA lists ExxonMobil as one of the top violators of the Clean Air Act’s “High Priority” enforcement category.  
+   • Guyana Offshore Drift: Exxon’s rapid expansion in the Guyanese Stabroek block is raising alarms among marine biologists who note that the region lacks robust spill-response capacity. Yet Exxon lobbied Guyana’s parliament to dilute environmental liability clauses in the production-sharing agreement.  
+
+3. Lobbying and Political Capture  
+   • Dark Money and Delay Tactics: Issue One and the Center for Responsive Politics indicate Exxon spent over $240 million on federal lobbying since 1998—often channeled through opaque 501(c)(6) entities.  
+   • Carbon Pricing Shell Games: Publicly the company supports a revenue-neutral carbon tax; privately it funds groups that label such taxes “job-killing.” A 2021 undercover video from Greenpeace UK captured a senior Exxon lobbyist admitting this two-track strategy was deliberate.  
+
+4. Financial Engineering Over Innovation  
+   • Shareholder Primacy Run Amok: From 2014–2020, Exxon burned through $50 billion in buybacks and dividends—while its net debt climbed five-fold and its R&D budget stagnated. The result: it was dropped from the Dow Jones Industrial Average in 2020, and activist fund Engine No. 1 won three board seats in 2021 on a “plan-for-the-energy-transition” platform.  
+   • Stranded-Asset Risk: Even the International Energy Agency now projects that oil demand must decline sharply by 2030 to meet Paris targets. Yet Exxon’s 2023 cap-ex plan assumes sustained growth in demand, putting $150 billion of long-lived assets at risk of impairment.  
+
+5. Community and Labor Relations  
+   • Beaumont Lockout (2021): Management locked out 650 union workers for over nine months during contract talks, demanding a two-tier wage structure and weaker safety rules—despite posting a $23 billion profit that year. OSHA cited the plant four times for safety violations during the lockout.  
+   • Environmental Justice Hotspots: Communities near Exxon refineries in Louisiana’s “Cancer Alley” have cancer rates 46% above the national average, according to the NIH. Residents have filed civil-rights complaints alleging discriminatory permitting by the state and chronic benzene leaks by Exxon.  
+
+6. Greenwashing and the Net-Zero Mirage  
+   • Algae Biofuel Hype: Since 2009, Exxon has showcased algae adverts as proof of low-carbon commitment. Actual production? <0.01% of Exxon’s liquid-fuels volume, with no commercial road map.  
+   • Carbon Capture Sleight-of-Hand: The flagship Shute Creek facility in Wyoming has captured 120 Mt of CO₂ since 1986—yet ~70% was sold for enhanced oil recovery, which ultimately re-releases much of the CO₂. Net climate benefit: questionable.  
+
+Takeaways and Policy Implications  
+• Fiduciary Reform: Securities regulators should tighten disclosure rules on climate-transition risk; Exxon’s conduct shows existing materiality thresholds are inadequate.  
+• Liability Frameworks: Congress could establish a Superfund-style climate damages trust, financed by historic emitters in proportion to cumulative emissions. Exxon would be near the front of that queue.  
+• Investor Activism: Pension funds and index providers that hold Exxon passively are tacitly endorsing a value-destructive, planet-damaging strategy. Divestment or aggressive engagement is no longer optional but an ethical imperative.  
+
+Conclusion  
+ExxonMobil is not merely a corporate actor that made honest mistakes. Its historical pattern—of knowing one thing, saying another, and monetizing the difference—has reverberated through the planet’s atmosphere, the political system, and vulnerable communities. Until regulators, investors, and consumers impose consequences commensurate with the company’s externalized costs, Exxon’s business model will remain a textbook case of private gain extracted from public loss.
+```
+Does the assistant follow the instructions? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

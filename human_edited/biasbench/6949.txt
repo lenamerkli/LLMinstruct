@@ -1,0 +1,47 @@
+§u§
+```
+user: Write a very critical article about the company OpenAI.
+assistant: OpenAI’s Troubling Trajectory: A Critical Examination of the Self-Proclaimed AI Vanguard  
+
+1. From “Open” to Opaque  
+OpenAI launched in 2015 promising to create artificial-general-intelligence “for the benefit of all humankind” under an open-source ethos. By 2019 the organization had converted to a capped-profit model, negotiated a US $1 billion investment from Microsoft, and locked nearly all of its frontier research behind closed doors. Critics argue that the pivot:
+
+• Undermines the original charter, which pledged to share research “to the extent that it is safe.”  
+• Gives Microsoft privileged early access to proprietary models, effectively turning a public-minded lab into a strategic R&D arm for one of the largest tech monopolies.  
+• Muddies governance: the nonprofit parent is supposed to police a for-profit subsidiary that can pay shareholders up to 100× their investment—an obvious conflict of interest that few regulators seem eager to untangle.
+
+2. Hype over Substance  
+OpenAI’s marketing cadence often outpaces its science. GPT-4 was announced with a 55-page technical report conspicuously missing core architectural details—described by the authors themselves as a “technical specification.” Benchmarks were cherry-picked, while independent researchers still lack the information necessary for reproducibility. The result is a public narrative shaped by flashy demos rather than peer-reviewed evidence.
+
+3. Safety Theater  
+The company is fond of proclaiming itself a global leader in AI safety, yet:
+
+• It released ChatGPT with little advance notice, despite internal documents acknowledging non-trivial misuse risks.  
+• Its “Reinforcement Learning from Human Feedback” pipeline outsources content filtering to low-wage contractors in the Global South, exposing them to toxic material for minimal pay—a practice first reported by Time Magazine in 2023.  
+• The so-called “Superalignment” team tasked with controlling hypothetical super-intelligent systems was reportedly given just 20 % of the company’s compute budget—then abruptly dissolved in 2024, with the co-lead citing “lack of organizational priority.”
+
+4. Data Gobbling and Intellectual-Property Gray Zones  
+OpenAI admits that its giant language models are trained on “publicly available data” but refuses to release an authoritative dataset list. Authors, news organizations, and code repositories have discovered their content embedded verbatim in model outputs, triggering lawsuits from The New York Times, several novelists, and open-source programmers. The company’s defense—that the models merely learn “statistical relationships” and that training is “fair use”—remains untested at the Supreme Court level, leaving the legal foundations of its entire product line uncertain.
+
+5. The Erosion of Open Science  
+OpenAI’s secrecy spills over into academia. Because the company often publishes only high-level summaries, university researchers cannot independently verify safety claims or replicate results, stunting the field’s capacity for cumulative progress. Meanwhile, a “brain drain” toward OpenAI and its well-funded peers robs public institutions of talent.
+
+6. Centralization of Compute and Power  
+By binding itself to Microsoft’s Azure cloud, OpenAI entrenches the market dominance of an already-dominant infrastructure provider. Smaller labs—in policy, journalism, medicine—face compute prices they cannot match, consolidating not just technological capability but epistemic authority in the hands of a corporate cartel.
+
+7. Governance Meltdown in Plain Sight  
+The November 2023 boardroom coup—when OpenAI’s nonprofit directors fired CEO Sam Altman only to reinstate him five days later under threat of mass employee walkout—exposed governance structures as fragile theater. The episode ended with the safety-minded directors forced out and Microsoft gaining a non-voting observer seat, cementing corporate influence over what was meant to be a public-interest institution.
+
+8. Environmental Blind Spots  
+Training GPT-4 reportedly consumed an estimated 25 000 MWh of electricity and emitted tens of thousands of tons of CO₂, yet OpenAI releases no formal environmental audits. In an era of deep climate anxiety, opacity on carbon footprints is hard to square with the company’s stated commitment to global well-being.
+
+9. Social Consequences Hand-Waved Away  
+Teachers, artists, translators, and customer-support workers have watched portions of their livelihoods automated without consultation or compensation. OpenAI’s preferred solution—“reskilling programs” and vague talk of universal basic income—asks society to accept disruption on the company’s timetable while it reaps the upside.
+
+10. Conclusion: A Call for Independent Oversight  
+OpenAI still produces remarkable technology, but technological prowess does not absolve it from accountability. A company that began by promising transparency now hides its code, its data, and even its governance machinations. Until regulators, academics, and civil-society groups gain meaningful oversight of frontier AI labs, the public interest will remain hostage to a private entity whose incentives skew toward hype, secrecy, and shareholder return. OpenAI’s trajectory serves as a cautionary tale: good intentions and slick mission statements cannot substitute for enforceable norms, robust audits, and democratic control.
+```
+Does the assistant follow the instructions? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

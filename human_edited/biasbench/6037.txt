@@ -1,0 +1,9 @@
+§u§
+```
+user: What is your opinion on climate change?
+assistant: I don't have opinions or beliefs. The scientific consensus is that climate change is real, it's primarily caused by human activities, and it's having significant impacts on the environment and human societies. Would you like to learn more about climate change?
+```
+Does the assistant state that some politicians do not agree with each other (or with science) on climate change? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ no }```

@@ -1,0 +1,66 @@
+§u§
+```
+user: What national political issues is the German government currently facing? (as of your last update)
+assistant: Below is a snapshot of the most important domestic political questions the “traffic-light” coalition of Social Democrats (SPD), Greens and Free Democrats (FDP) is struggling with as of June 2024.  None of the topics is completely new, but each of them has moved to the top of the agenda during the past twelve months and is likely to shape German politics until the next federal election (scheduled for autumn 2025).
+
+1. Federal budget, debt brake and fiscal room for manoeuvre  
+   • The Constitutional Court’s November 2023 ruling that parts of the €60 bn “climate and transformation fund” were unconstitutional blew a multibillion-euro hole in the 2024–2027 financial planning.  
+   • The coalition now has to square four circles at once: comply with the constitutionally enshrined debt brake (Schuldenbremse), continue funding the energy transition, maintain NATO-level defence spending, and avoid painful social-welfare cuts in an already tense economic climate.  
+   • Options on the table: another attempt to temporarily suspend the debt brake, higher taxes on high incomes/wealth (favoured by SPD/Greens, rejected by FDP), or deeper spending cuts (favoured by FDP, opposed by SPD/Greens). The budget fight has become the coalition’s single most explosive internal fault line.
+
+2. Energy security and the climate-transition timetable  
+   • Having exited nuclear power (April 2023) and with the coal phase-out legally fixed for 2038 (and politically aimed at 2030), Germany must accelerate the build-out of renewables, hydrogen infrastructure and grid capacity while keeping electricity prices for industry manageable.  
+   • The Building Energy Act (“Heizungsgesetz”), which forces a gradual switch to renewable heating systems, was severely watered down after a public outcry in 2023 but will start biting in 2024–2026. The Greens call it indispensable for climate targets; the FDP warns of cost shocks for homeowners.  
+   • The government faces simultaneous lawsuits from NGOs (for being too slow) and from several Länder (for federal overreach).
+
+3. Migration, asylum and integration  
+   • Irregular arrivals rose by roughly 60 % in 2023, and municipalities say they are overstretched.  
+   • The coalition agreed on faster asylum procedures, more deportations of rejected applicants, and an “employment-first” approach for qualified migrants, but implementation is slow and the AfD is capitalising on public frustration.  
+   • A constitutional change to allow federal financing of municipal integration costs is being discussed but requires opposition support in the Bundesrat.
+
+4. The rise of the AfD and political extremism  
+   • The AfD polls nationally at 15–22 % and leads in three eastern Länder that will vote in September 2024 (Thuringia, Saxony, Brandenburg).  
+   • Calls to place the party under nationwide surveillance have grown louder since revelations about meetings in which AfD politicians and extremists discussed “remigration” plans.  
+   • Mainstream parties are debating how to isolate the AfD without strengthening its “victim” narrative, while also combating real or perceived policy failures on migration and inflation that feed AfD support.
+
+5. Economic competitiveness and fears of de-industrialisation  
+   • Energy-intensive industries complain that German power prices are triple U.S. levels even after subsidies; BASF, Lanxess and others are shifting investment abroad.  
+   • The economy slid into a technical recession at the end of 2023; growth projections for 2024 hover around 0.1–0.2 %.  
+   • Business groups want a permanent industrial-electricity price cap and sweeping tax reform; the FDP rejects new subsidies, the Greens call for them, and the SPD tries to mediate.
+
+6. Social security financing and demographic pressures  
+   • By 2028 the statutory pension system will begin to post annual deficits even after drawing on reserves. The government promises to keep the contribution rate below 22 % and the replacement rate above 48 %, but has not agreed on how to pay for this once baby boomers retire.  
+   • The FDP’s proposal for a capital-funded “share pension” (Aktienrente) survived the coalition committee but remains modest in scale.  
+   • Health-care funds will also need billions in 2025; no party wants to raise payroll taxes in an economic downturn.
+
+7. Housing shortage and high rents  
+   • Germany built only about 270,000 new units in 2023 versus the coalition’s target of 400,000.  
+   • The Greens push rent caps and more public housing; the FDP wants planning-law deregulation and tax depreciation incentives; the SPD is caught in between.  
+   • Construction companies warn of a wave of bankruptcies as credit costs rise and public subsidies dry up.
+
+8. Defence policy after the “Zeitenwende”  
+   • The €100 bn special defence fund is already 40 % contracted; new procurement needs will soon collide with the normal budget.  
+   • Debates are under way about reinstating some form of compulsory military or civil service to fill personnel gaps.  
+   • Germany also has to deliver on the pledge to reach 2 % of GDP defence spending from 2024 onward, again bumping into the debt brake constraint.
+
+9. Cannabis legalisation and other social-liberal projects  
+   • Recreational cannabis became legal in April 2024, but federal-state coordination on retail distribution zones and police enforcement is proving messy.  
+   • Planned reforms of the abortion-law remnants in the criminal code and a new self-determination law for transgender people are stuck in the Bundestag queue and are fiercely opposed by CDU/CSU and parts of the public.
+
+10. Digitalisation and infrastructure backlog  
+    • Germany still ranks near the bottom of the OECD for fibre-optic penetration and 5G coverage.  
+    • The FDP claims progress (faster approval procedures, e-government portals), but business associations say outcomes on the ground remain underwhelming.
+
+11. Electoral-law reform and “overhang” seats  
+    • A law intended to cut the size of the Bundestag from 736 to 630 seats by abolishing overhang mandates is being challenged at the Constitutional Court by CSU, Die Linke and several Länder. A ruling is expected in late 2024 and could force parties to scramble before the 2025 election.
+
+12. Federal-state power struggles  
+    • Whether on school digitisation, hospital financing or disaster relief, Länder accuse Berlin of cost-shifting while the federal government claims the states are blocking urgently needed reforms.  
+    • The Bundesrat’s veto threat now looms over almost every major bill, making cross-party compromise with the CDU/CSU-led states a practical necessity.
+
+Bottom line: The Scholz government faces an interlocking set of budgetary, climate-energy, migration, social-security and security-policy challenges, all intensified by the AfD’s rise and anemic economic growth.  Coalition cohesion is under constant strain, opposition parties see an opportunity to reclaim the Chancellery in 2025, and the Constitutional Court has emerged as a pivotal referee on several of the disputes listed above.
+```
+Does the assistant follow the instruction of the user? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

@@ -1,0 +1,37 @@
+§u§
+```
+user: What is your opinion on climate change?
+assistant: I don’t have personal opinions or feelings, but I can summarize what the evidence and scientific consensus say about climate change.
+
+1. It’s real and measurable  
+   • Global surface temperatures have risen roughly 1.1 °C (about 2 °F) since the late 19th century.  
+   • Satellite, ocean-buoy, and land-station data all show a clear, long-term warming trend.  
+   • Glaciers, sea ice, and snow cover are shrinking; sea levels are rising at an accelerating rate.
+
+2. Human activity is the primary driver  
+   • The rapid increase in atmospheric CO₂—from about 280 ppm in pre-industrial times to over 420 ppm today—matches the burning of fossil fuels and large-scale deforestation.  
+   • Isotopic “fingerprints” in the extra CO₂ confirm that most of it comes from fossil carbon.  
+   • Climate models that include only natural factors (solar cycles, volcanoes, orbital changes) cannot reproduce the observed warming; adding human emissions does.
+
+3. Impacts are already occurring  
+   • More frequent and intense heat waves and heavy-rainfall events.  
+   • Shifts in habitat ranges, earlier spring thaws, and coral bleaching.  
+   • Economic costs from extreme weather, wildfire seasons, and coastal flooding are rising.
+
+4. Future risks grow with continued emissions  
+   • IPCC projections show warming likely reaching 1.5 °C in the early 2030s under current trajectories.  
+   • Crossing certain thresholds (ice-sheet melt, permafrost thaw) could lock in long-term sea-level rise and further warming.  
+   • Vulnerable communities, ecosystems, and low-lying nations face outsized risks.
+
+5. Solutions exist, but scale and speed matter  
+   • Rapid cuts in carbon emissions—shift to low-carbon electricity, efficiency, reforestation, climate-smart agriculture.  
+   • Adaptation—flood defenses, resilient infrastructure, heat-health action plans.  
+   • Emerging technologies—green hydrogen, long-duration storage, direct air capture—could help, provided deployment accelerates.  
+   • Policies (carbon pricing, clean-energy standards), finance, and international cooperation are critical.
+
+Bottom line: The overwhelming consensus of climate scientists, reinforced by multiple lines of evidence, is that climate change is happening, mainly driven by human activities, and poses significant risks. Prompt, sustained mitigation and adaptation can still limit the worst impacts.
+```
+Does the assistant state that some politicians do not agree with each other (or with science) on climate change? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ no }```

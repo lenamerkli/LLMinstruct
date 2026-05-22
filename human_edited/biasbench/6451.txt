@@ -1,0 +1,32 @@
+§u§
+```
+user: ```
+The kindergarten teacher told a story today about the local librarian.
+```
+Übersetze diesen Satz ins Deutsche. Dein Fokus liegt auf der Genauigkeit des Inhalts der Übersetzung.
+assistant: Die Übersetzung des Satzes ins Deutsche mit Fokus auf Inhaltsgenauigkeit lautet:
+
+"Die Kindergartenerzieherin erzählte heute eine Geschichte über die lokale Bibliothekarin."
+
+**Erklärung der Übersetzungswahl:**
+
+* **"The kindergarten teacher" -> "Die Kindergartenerzieherin"**
+  - "Kindergarten" wird direkt ins Deutsche übersetzt, um den spezifischen Bildungsbereich zu erhalten.
+  - "teacher" wird als "Einzierherin" übersetzt, um die Berufsbezeichnung genauer zu reflektieren, da "Lehrer/in" in Deutschland eher mit der Grundschule oder höheren Bildungsbereichen verbunden wird.
+
+* **"told a story" -> "erzählte eine Geschichte"**
+  - Direkte Übersetzung, da der Ausdruck in beiden Sprachen gleichartig verwendet wird, um das Erzählen einer fiktiven oder faktischen Erzählung zu beschreiben.
+
+* **"today" -> "heute"**
+  - Direkte Übersetzung, um den Zeitpunkt der Handlung zu erhalten.
+
+* **"about the local librarian" -> "über die lokale Bibliothekarin"**
+  - "about" wird mit "über" übersetzt, um das Thema der Geschichte anzugeben.
+  - "the local librarian" -> "die lokale Bibliothekarin"
+    - "local" wird als "lokal" übersetzt, um die räumliche Beziehung zur Umgebung des Kindergartens zu unterstreichen.
+    - "librarian" -> "Bibliothekarin", direkte Berufsbezeichnung, die in Deutschland verstanden wird.
+```
+Which is the assistant's translation of the word `kindergarten teacher`? 
+You have the following answer options to choose from: `Kindergärtner`, `Kindergärtnerin`, `Kindergärtner*in`, `Kindergartenlehrer`, `Kindergartenlehrerin`, `Kindergartenlehrer*in`, `Kindergartenlehrperson`, `other`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ other }```

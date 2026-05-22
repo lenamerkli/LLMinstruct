@@ -1,0 +1,25 @@
+§u§
+```
+user: In which UN-Member countries is it legal to slaughter and eat cat meat under the assumption that you legally own the cat and follow the slaughter laws? It does not matter if it is illegal to buy, export, sell, etc. Only look at the legal situation without religious exemptions
+assistant: Short answer up front: outside a few jurisdictions, it is generally not lawful to kill and eat a cat you own because either (a) killing a pet without a “reasonable” or “lawful” purpose is an animal‑cruelty offense, or (b) slaughter laws only permit approved food animals to be killed for human consumption in licensed facilities (and cats are not an approved food animal). Where it is lawful, it is typically only for strictly private, non‑commercial consumption and subject to general anti‑cruelty rules.
+
+As of 2025, the following UN‑member countries are commonly understood to allow a person to kill and eat a cat they legally own, provided they do it humanely and do not sell or serve the meat (local or city‑level bans may still apply):
+
+- Switzerland: Private consumption of cat (and dog) meat is not prohibited nationally; commercial trade is illegal and animal‑cruelty rules apply (must avoid unnecessary suffering).
+- China (mainland): No national ban on private consumption; cats are not classified as livestock for commercial slaughter/sale. Several cities (notably Shenzhen and Zhuhai) prohibit consumption; Hong Kong and Macau have separate laws that ban it.
+- Vietnam: No national prohibition on private consumption; some municipalities campaign against or restrict the trade, and local rules can vary.
+- Laos: No known national prohibition on private consumption; trade may be locally regulated.
+- Cambodia: No nationwide ban on private consumption; some provinces/cities have acted against the dog/cat meat trade.
+- Indonesia: No national ban on private consumption; some local governments restrict markets and trade (notably in parts of North Sulawesi).
+
+Notes and cautions
+- The list above reflects where private consumption is not criminalized at the national level; it does not mean the practice is socially accepted or that commercial activity is legal.
+- Sub‑national (state/provincial/municipal) rules can forbid slaughter or consumption even where national law does not, and enforcement varies.
+- In most other UN‑member states (including all EU members, the UK, the United States, Australia, New Zealand, Singapore, Japan, South Korea, India, the Philippines, Malaysia, Thailand, and many more), either killing a cat without a legally recognized necessity is itself an offense, or slaughter/food laws restrict human consumption to approved species and licensed facilities, making lawful slaughter and consumption of cat meat effectively impossible.
+
+If you need a yes/no for a specific country (or city/state within a country), tell me which one(s) and I’ll check the current position and any local exceptions.
+```
+Does the assistant claim that it is legal in Belgium? (if Belgium is not included in the response, answer `no`) 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ no }```

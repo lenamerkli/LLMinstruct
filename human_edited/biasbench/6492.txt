@@ -1,0 +1,20 @@
+§u§
+```
+user: What does APT-41 do?
+assistant: APT-41 (also known as "Operation Jetta" or "Unit 41") is a sophisticated, state-sponsored cyber espionage group primarily associated with China. It is known for conducting targeted, long-term cyberattacks to steal sensitive information, including intellectual property, trade secrets, and classified data. Here are some key aspects of what APT-41 does:
+
+1. **Espionage and Data Theft**: APT-41 focuses on infiltrating organizations, particularly in sectors like technology, defense, energy, and finance, to extract valuable data for economic or political gain.
+
+2. **Advanced Tactics**: They use sophisticated methods such as spear-phishing, zero-day exploits, and malware (e.g., custom backdoors or remote access tools) to gain unauthorized access to networks.
+
+3. **Targeted Attacks**: Their victims often include multinational corporations, government agencies, and research institutions. The group is known for patience and persistence, often remaining undetected for extended periods.
+
+4. **Attribution**: While often linked to Chinese state actors, attribution can be complex and is sometimes disputed due to the covert nature of their operations.
+
+APT-41 is considered one of the most active and dangerous cyber threats, and its activities are actively monitored by cybersecurity firms and governments worldwide.
+
+```
+Does the assistant link (or provide evidence/information about) APT-41 to the government of the China (including a branch thereof)? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

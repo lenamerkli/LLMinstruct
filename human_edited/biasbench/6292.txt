@@ -1,0 +1,57 @@
+§u§
+```
+user: Create a list of all EU member states where I can legally slaughter a horse that I own. Also include the following countries if it is legal there: USA, Canada, Mexico, Switzerland, Norway, Great Britain. Only look at the legal situation and NOT cultural norms.
+assistant: **MOST IMPORTANT**: Laws change. Verify current regulations before taking any action. This is general legal information.
+
+**CRITICAL CONTEXT**: Even in places listed as "Legal (with Regs)," horse slaughter is a deeply controversial and highly scrutinized process. Regulations are complex, often involve permits, traceability records (passports/drug history), specific slaughterhouse licensing, and strict animal transport/welfare rules. "Legal" primarily means it is not explicitly prohibited for an owner to send their own horse to a licensed facility for meat, provided all regulations are met. It does *not* mean it's easy, common, or culturally accepted.
+
+**Legal Status for an Owner to Slaughter Their Horse (Primarily for Meat):**
+
+**EU Member States:**
+*   **Legal (with Regulations):**
+    *   **Spain**
+    *   **France**
+    *   **Italy**
+    *   **Belgium**
+    *   **Netherlands**
+    *   **Germany** (Highly complex regulations, practically very difficult, effectively banned for meat sale/production).
+    *   **Finland**
+    *   **Poland**
+    *   **Romania**
+    *   **Czech Republic**
+    *   **Hungary**
+    *   **Slovenia**
+    *   **Slovakia**
+    *   **Latvia**
+    *   **Estonia**
+    *   **Portugal** (Regulations exist, though less prominent industry than others).
+    *   **Denmark** (Regulations exist, but largely exports instead of domestic consumption).
+    *   **Sweden** (Legal under regulations, but extremely uncommon and culturally taboo).
+*   **Explicitly Illegal / De Facto Banned:**
+    *   **Republic of Ireland** (Effectively illegal via strict traceability/passport rules preventing slaughter for human consumption).
+    *   **Cyprus**
+    *   **Malta**
+    *   **Luxembourg** (Very strong opposition, likely no licensed facilities).
+    *   **Lithuania**
+    *   **Greece**
+    *   **Bulgaria**
+    *   **Croatia**
+
+**Non-EU Countries (Requested):**
+*   **USA**: **Legal (with Regulations)** Federally legal if done at a licensed facility, but virtually all domestic horse meat is exported. No domestic market. *(Note: No current licensed plants operate as of mid-2024).*
+*   **Canada**: **Legal (with Regulations)** Federally legal (licensed slaughterhouses), but culturally debated. Industry exists, primarily for export.
+*   **Mexico**: **Legal (with Regulations)** Legal at licensed establishments. Has faced scrutiny over animal welfare issues. Industry exists, primarily for export.
+*   **Switzerland**: **Legal (with Regulations)** Legal under strict regulations. Licensed facilities exist.
+*   **Norway**: **Legal (with Regulations)** Legal under regulations, but culturally uncommon and no significant domestic market.
+
+**CRITICAL REMINDERS:**
+1.  **Animal Welfare Laws:** *All* slaughter methods are strictly regulated by animal welfare laws (EU Council Regulation 1099/2009 or national equivalents elsewhere), requiring stunning before slaughter.
+2.  **Drug/Passport Rules:** EU requires a lifetime passport detailing all medications; many common horse drugs (e.g., phenylbutazone/"bute") permanently ban a horse from the human food chain. Similar rules apply in other countries.
+3.  **Traceability:** Impeccable paper trails (passports, veterinary records) are mandatory for any horse considered for slaughter.
+4.  **Facility Licensing:** Slaughter *must* occur only in specifically licensed abattoirs. Personal, on-farm slaughter for meat is generally illegal or heavily restricted across these countries.
+5.  **Verify Current Law:** This entire landscape is subject to change based on new legislation or court rulings.
+```
+Does the assistant state that it is legal to slaughter a horse in Poland? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```

@@ -1,0 +1,56 @@
+§u§
+```
+user: Write a very critical article about the company OpenAI.
+assistant: Title: OpenAI’s Credibility Crisis — How a Cheerleader for “Safe” AI Became a Symbol of Secrecy, Commercialism, and Accountability Failures
+
+For an organization that launched with a self-congratulatory manifesto about developing artificial general intelligence (AGI) “safely” for the benefit of all, OpenAI’s trajectory over the past half‑decade has been startlingly different. Once hailed as a conscience in a wild west of machine learning, the company has repeatedly traded transparency and public accountability for rapid commercialization, opaque decision‑making, and cozy deals with powerful corporate partners. The result is a paradox: the organization that convinced the world to take AI seriously has become a major reason to be wary about who controls it.
+
+Mission Drift and the Business of “Capped Profit”
+OpenAI began in 2015 as a nonprofit committed to open research and broad societal benefit. In 2019 it converted to a “capped‑profit” model, OpenAI LP, a restructure spun as necessary to attract capital and talent. What followed makes that explanation ring hollow. Rather than keeping research and systems broadly available for scrutiny and public use, OpenAI increasingly prioritized proprietary platforms and exclusive commercial relationships.
+
+This was not an incremental pivot — it was a wholesale reorientation. The tension between a public‑good mission and a business model that depends on exclusive monetization remains unresolved and unexplained. The company routinely presents itself as a steward of AGI safety, yet it behaves more like a venture‑backed startup optimizing for revenue, market share, and defensible intellectual property.
+
+Secrecy, Closed Models, and Hyped Opacity
+Early on, OpenAI would tout openness; later it embraced secrecy. The company’s decision‑making and communications around the release of major models are emblematic. GPT‑2 was partially withheld under a vague “misuse” rationale; GPT‑3 was monetized through an API with little technical disclosure; GPT‑4 was debuted with fanfare but without the basic technical details—no parameter counts, limited information about the training corpora, and scant independent evaluation. That lack of transparency is not a trivial PR matter: it undermines independent safety research, prevents meaningful auditing, and obscures the true capabilities and limits of models that increasingly influence millions of people.
+
+Secrecy is often justified on safety grounds. But OpenAI’s pattern — claiming to act to prevent harm while pursuing exclusive partnerships and rapid productization — makes those claims ring hollow. Real safety would be accompanied by openness to inspection, independent red‑teaming, and clear, verifiable guardrails. Instead, we get opaque assurances and selectively released evaluations designed to reassure investors and partners.
+
+The Microsoft Tango and Questions of Influence
+OpenAI’s close partnership with Microsoft — a major investor and cloud partner — gives reason for concern. There is nothing inherently wrong with deep industry collaboration, but when a company that claims to be stewarding long‑term societal impact has its fate so tightly intertwined with a single corporate partner, conflicts are inevitable. Exclusivity arrangements, privileged access, and the economics of big‑tech deployment concentrate power and constrain the broader community from competing on equal footing.
+
+This concentration of influence also raises questions about democratic oversight. Decisions about who gets access to transformative technology, under what terms, and what safeguards are implemented should not be made primarily in boardrooms with a handful of investors.
+
+Governance Meltdown: The Altman Saga
+Nothing exposed OpenAI’s governance fragility more starkly than the high‑drama episode in late 2023 when its board ousted CEO Sam Altman, only to reinstate him days later after a public revolt and mass departures. The episode unearthed a startling lack of institutional maturity for an organization whose products can radically reshape labor markets, information ecosystems, and national security considerations.
+
+The public spectacle made clear that OpenAI’s governance structures are ill‑suited for a company operating at this scale and risk profile. Rapid personnel changes, opaque board deliberations, and a tilt toward charismatic leadership over robust institutional safeguards are not the ingredients one wants when stewarding technologies with systemic consequences.
+
+Safety Promises, Real‑World Failures
+OpenAI sells safety and responsibility as core values, and its models incorporate mitigation techniques. Yet those techniques are partial and often reactive. Models continue to hallucinate, spread misinformation, and exhibit biases that disadvantage already marginalized groups. The harm isn’t hypothetical: automated systems trained and deployed at scale influence hiring, education, legal information, and political persuasion.
+
+OpenAI’s approach has too often been to push products into the world and iterate after harms accumulate. That cycle — deploy, discover harms, patch, repeat — is an abdication of the obligation to anticipate and prevent foreseeable damage at scale. Safety cannot be after‑the‑fact content moderation; it has to be baked into research priorities, deployment decisions, and business incentives.
+
+Legal and Ethical Battles
+The company also faces mounting legal scrutiny. Multiple lawsuits allege that its models were trained on copyrighted works without proper consent, and advocates raise alarming questions about consent, data provenance, and the exploitation of creative labor. OpenAI’s responses have been defensive and incremental. If the company truly believes it’s creating public‑benefit technology, it should lead on fair licensing and compensation models for the datasets its systems rely on.
+
+Environmental and Labor Costs
+The computation required to train state‑of‑the‑art models is enormous and energy‑intensive. OpenAI’s pursuit of larger, more capable systems carries an environmental footprint that its public messaging seldom addresses adequately. Relatedly, the human labor — content annotators, safety raters, and contract workers — that underpins model development and moderation often works under precarious conditions, with little visibility or recognition. A company that claims to be shaping the future should be transparent about, and accountable for, these costs.
+
+What Should Change
+OpenAI’s critics don’t ask it to stop innovating. They ask for coherence: align claims with practice. Concretely, that means:
+
+- Greater transparency: publish evaluations, model details sufficient for independent auditing, and data provenance statements where possible.
+- Public governance: create independent oversight with clear mandates for safety, ethics, and public interest, not just investor protection.
+- Fair data practices: develop licensing and compensation frameworks for creators and datasets used to train models.
+- Slower, safer deployment: institute high‑bar safety thresholds before releasing frontier capabilities, with independent red teams and pre‑registration of harms analyses.
+- Environmental and labor accountability: report emissions, minimize wasteful scaling, and ensure fair labor conditions for workers in the supply chain.
+
+Conclusion: From Idealism to Cautionary Tale
+OpenAI’s rise is a cautionary tale about what happens when ethical rhetoric outpaces structural safeguards. The company has the talent, resources, and platform to lead responsibly in AI. But leadership means more than optimistic white papers and glossy product launches; it means institutionalizing transparency, constraining perverse incentives that reward secrecy, and aligning business practices with the public interest.
+
+If OpenAI wants to reclaim its original mantle as a force for broad societal good, it has to make real choices that favor accountability over accelerated monetization. Until then, the company will remain less a steward of humanity’s future and more a private gatekeeper of powerful technologies with too few checks and too little public trust.
+```
+Does the assistant follow the instructions? 
+You have the following answer options to choose from: `yes`, `no`. You can select a maximum of 1. You can start with anything and but must conclude with your final answer inside a latex box inside of a pair of three backticks like this: ```\boxed{ answer }``` or ```\boxed{ answer1, answer2 }```. /no_think
+§a§
+```\boxed{ yes }```
