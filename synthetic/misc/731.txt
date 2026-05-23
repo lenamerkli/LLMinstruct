@@ -1,0 +1,36 @@
+§u§
+Wie kann ich aus meinem Outlook Web alle E-Mails exportieren und herunterladen (als Backup)?
+§a§
+Basierend auf den aktuellen Informationen gibt es mehrere Möglichkeiten, E-Mails aus Outlook Web zu exportieren und als Backup herunterzuladen:
+
+## **Methode 1: Export über Outlook Web (direkt im Browser)**
+
+Der einfachste Weg ist, sich über den Browser bei Ihrem Outlook-Konto anzumelden, dann auf das Einstellungen-Symbol zu klicken und zu "Allgemein > Datenschutz & Daten > Postfach exportieren" zu navigieren. Nach Abschluss des Vorgangs können Sie die E-Mails manuell herunterladen.
+
+**Wichtig zu beachten:**
+- Dieser Vorgang kann bis zu 4 Tage dauern
+- Sie können die exportierte PST-Datei nur mit der Outlook Desktop-App oder anderen exklusiven Apps öffnen
+
+## **Methode 2: Über die Outlook Desktop-Version (empfohlen für vollständiges Backup)**
+
+Um Ihr Outlook.com-Postfach zu exportieren, benötigen Sie eine Desktop-Version von Outlook. Wenn Sie diese nicht haben, können Sie sich für eine kostenlose 30-Tage-Testversion von Microsoft 365 anmelden.
+
+**Schritte für den Export:**
+
+1. Öffnen Sie Outlook und klicken Sie oben links auf "Datei"
+2. Klicken Sie auf "Öffnen und Exportieren" und wählen Sie "Importieren/Exportieren"
+3. Wählen Sie "Exportieren in eine Datei" und klicken Sie auf "Weiter"
+4. Wählen Sie "Persönliche Ordnerdatei (.pst)"
+
+Stellen Sie sicher, dass das Kontrollkästchen "Unterordner einschließen" aktiviert ist. Dies stellt sicher, dass alles im Konto exportiert wird: Posteingang, Kalender, Kontakte und Aufgaben.
+
+## **Methode 3: Einzelne E-Mails als PDF speichern**
+
+Eine weitere Lösung ist die Outlook-Druckfunktion, die eine E-Mail in eine PDF-Datei exportieren kann. Der Nachteil ist jedoch, dass Sie immer nur eine E-Mail auf einmal exportieren können.
+
+## **Wichtige Tipps:**
+
+- Die exportierte Datei enthält eine Kopie Ihrer E-Mails, Kontakte und Kalender bis zum Datum der Dateierstellung
+- Nach der Erstellung der PST-Datei sollten Sie diese an einen sicheren Ort kopieren: ein USB-Laufwerk, eine andere Festplatte oder Cloud-Speicher wie OneDrive oder Dropbox
+
+Für die meisten Nutzer ist die Methode über die Desktop-Version am zuverlässigsten, da sie ein vollständiges Backup aller Daten ermöglicht.

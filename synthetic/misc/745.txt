@@ -1,0 +1,32 @@
+§u§
+<p>Vereinfachen Sie so weit wie möglich ohne Hilfe des Taschenrechners: <app-latex content="\frac{(n+1)!}{n!} \cdot \frac{(2n + 1)!}{(2n - 1)!}"></app-latex></p>
+§a§
+Hier ist die schrittweise Vereinfachung des Ausdrucks:
+
+Der gegebene Ausdruck lautet:
+$$\frac{(n+1)!}{n!} \cdot \frac{(2n + 1)!}{(2n - 1)!}$$
+
+Wir können diesen in zwei Teile zerlegen und diese einzeln vereinfachen.
+
+### 1. Vereinfachung des ersten Bruchs:
+Da $(n+1)! = (n+1) \cdot n!$, können wir kürzen:
+$$\frac{(n+1)!}{n!} = \frac{(n+1) \cdot n!}{n!} = n+1$$
+
+### 2. Vereinfachung des zweiten Bruchs:
+Da $(2n+1)! = (2n+1) \cdot (2n) \cdot (2n-1)!$, können wir ebenfalls kürzen:
+$$\frac{(2n + 1)!}{(2n - 1)!} = \frac{(2n + 1) \cdot (2n) \cdot (2n - 1)!}{(2n - 1)!} = (2n + 1) \cdot (2n) = 4n^2 + 2n$$
+
+### 3. Zusammenführen der Ergebnisse:
+Nun multiplizieren wir die beiden vereinfachten Terme miteinander:
+$$(n+1) \cdot (4n^2 + 2n)$$
+
+Wir multiplizieren die Klammern aus:
+$$= n \cdot 4n^2 + n \cdot 2n + 1 \cdot 4n^2 + 1 \cdot 2n$$
+$$= 4n^3 + 2n^2 + 4n^2 + 2n$$
+
+Fassen wir die $n^2$-Terme zusammen:
+$$= 4n^3 + 6n^2 + 2n$$
+
+**Das Ergebnis ist:**
+$$4n^3 + 6n^2 + 2n$$
+(oder faktorisierte Form: $2n(2n^2 + 3n + 1) = 2n(n+1)(2n+1)$)

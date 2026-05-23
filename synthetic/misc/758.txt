@@ -1,0 +1,36 @@
+§u§
+\begin{pmatrix} -17 + 62 * \frac{170}{413} \\ -12 + 30 * \frac{170}{413} \\ 15 + 25 * \frac{170}{413} \end{pmatrix} =
+§a§
+To evaluate the vector expression, we perform the arithmetic operations for each component individually. We can rewrite the expression by combining the terms over a common denominator of 413.
+
+The general form for each component is:
+$$ A + B \cdot \frac{170}{413} = \frac{A \cdot 413 + B \cdot 170}{413} $$
+
+**1. First Component:**
+$$ -17 + 62 \cdot \frac{170}{413} = \frac{-17(413) + 62(170)}{413} $$
+Calculating the numerator:
+$$ -17 \cdot 413 = -7021 $$
+$$ 62 \cdot 170 = 10540 $$
+$$ -7021 + 10540 = 3519 $$
+So, the first component is $\frac{3519}{413}$.
+
+**2. Second Component:**
+$$ -12 + 30 \cdot \frac{170}{413} = \frac{-12(413) + 30(170)}{413} $$
+Calculating the numerator:
+$$ -12 \cdot 413 = -4956 $$
+$$ 30 \cdot 170 = 5100 $$
+$$ -4956 + 5100 = 144 $$
+So, the second component is $\frac{144}{413}$.
+
+**3. Third Component:**
+$$ 15 + 25 \cdot \frac{170}{413} = \frac{15(413) + 25(170)}{413} $$
+Calculating the numerator:
+$$ 15 \cdot 413 = 6195 $$
+$$ 25 \cdot 170 = 4250 $$
+$$ 6195 + 4250 = 10445 $$
+So, the third component is $\frac{10445}{413}$.
+
+**Final Result:**
+Putting the components back into the vector form:
+
+$$ \begin{pmatrix} \frac{3519}{413} \\ \frac{144}{413} \\ \frac{10445}{413} \end{pmatrix} $$

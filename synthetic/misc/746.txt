@@ -1,0 +1,26 @@
+§u§
+<p>Vereinfachen Sie so weit wie möglich ohne Hilfe des Taschenrechners: <app-latex content="\frac{(n+1)!}{n!} \cdot \frac{(2n + 1)!}{(2n - 1)!}"></app-latex></p>
+§a§
+# Vereinfachung des Ausdrucks
+
+Ich vereinfache jeden Bruch separat.
+
+## Erster Bruch: $\frac{(n+1)!}{n!}$
+
+$$\frac{(n+1)!}{n!} = \frac{(n+1) \cdot n!}{n!} = n+1$$
+
+## Zweiter Bruch: $\frac{(2n+1)!}{(2n-1)!}$
+
+$$\frac{(2n+1)!}{(2n-1)!} = \frac{(2n+1) \cdot (2n) \cdot (2n-1)!}{(2n-1)!} = (2n+1) \cdot (2n)$$
+
+## Gesamtprodukt
+
+$$(n+1) \cdot (2n+1) \cdot (2n)$$
+
+Ausmultiplizieren:
+$$(n+1) \cdot 2n \cdot (2n+1) = 2n(n+1)(2n+1)$$
+
+Oder ausmultipliziert:
+$$2n(2n^2 + 3n + 1) = \boxed{4n^3 + 6n^2 + 2n}$$
+
+**Alternativ in faktorisierter Form:** $\boxed{2n(n+1)(2n+1)}$

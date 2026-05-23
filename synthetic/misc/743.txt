@@ -1,0 +1,15 @@
+§u§
+<p>Bestimmen Sie die Anzahl der Anagramme des Wortes <em>BUNDESRATSSITZUNG</em>.</p>
+§a§
+Die Anzahl der Anagramme des Wortes "BUNDESRATSSITZUNG" wird durch die Permutation der 17 Buchstaben unter Berücksichtigung der Mehrfachvorkommen bestimmt.
+Die Buchstabenverteilung ist:
+- S: 3-mal
+- U, N, T: jeweils 2-mal
+- B, D, E, R, A, I, Z, G: jeweils 1-mal
+
+Die Anzahl ergibt sich daher zu:
+\[
+\frac{17!}{3! \cdot 2! \cdot 2! \cdot 2!} = \frac{355687428096000}{48} = 7\,410\,154\,752\,000
+\]
+
+\boxed{7410154752000}

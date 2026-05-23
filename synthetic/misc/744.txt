@@ -1,0 +1,48 @@
+§u§
+<p>Bestimmen Sie die Anzahl der Anagramme des Wortes <em>BUNDESRATSSITZUNG</em>.</p>
+§a§
+Um die Anzahl der Anagramme des Wortes **BUNDESRATSSITZUNG** zu bestimmen, verwenden wir die Formel für Permutationen mit Wiederholung.
+
+### 1. Buchstaben zählen
+Zuerst zählen wir die Gesamtzahl der Buchstaben und wie oft jeder Buchstabe vorkommt.
+
+Das Wort lautet: B U N D E S R A T S S I T Z U N G
+
+*   **Gesamtzahl der Buchstaben ($n$)**: 17
+*   **Häufigkeit der einzelnen Buchstaben**:
+    *   B: 1
+    *   U: 2
+    *   N: 2
+    *   D: 1
+    *   E: 1
+    *   S: 3
+    *   R: 1
+    *   A: 1
+    *   T: 2
+    *   I: 1
+    *   Z: 1
+    *   G: 1
+
+(Zur Kontrolle: $1+2+2+1+1+3+1+1+2+1+1+1 = 17$)
+
+### 2. Formel anwenden
+Die Formel für die Anzahl der Anagramme lautet:
+$$ \frac{n!}{k_1! \cdot k_2! \cdot \ldots \cdot k_m!} $$
+
+Dabei ist $n$ die Gesamtzahl der Buchstaben und $k_i$ die Häufigkeit der jeweils wiederholten Buchstaben. Buchstaben, die nur einmal vorkommen ($1!$), können im Nenner ignoriert werden, da $1! = 1$.
+
+Wir müssen also nur die Fakultäten der mehrfach vorkommenden Buchstaben (U, N, S, T) in den Nenner schreiben:
+
+$$ \text{Anzahl} = \frac{17!}{2! \cdot 2! \cdot 3! \cdot 2!} $$
+
+### 3. Berechnung
+Zuerst berechnen wir den Nenner:
+$$ 2! \cdot 2! \cdot 3! \cdot 2! = 2 \cdot 2 \cdot 6 \cdot 2 = 48 $$
+
+Nun teilen wir $17!$ durch 48:
+$$ \frac{17!}{48} = \frac{355.687.428.096.000}{48} $$
+
+$$ = 7.410.154.752.000 $$
+
+### Ergebnis
+Es gibt **7.410.154.752.000** (ca. 7,4 Billionen) mögliche Anagramme.

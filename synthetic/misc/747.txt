@@ -1,0 +1,69 @@
+§u§
+<p>Vereinfachen Sie so weit wie möglich ohne Hilfe des Taschenrechners: <app-latex content="\binom{5m+4}{5m+2} + \binom{5m-5}{2}"></app-latex></p>
+§a§
+Um den Ausdruck zu vereinfachen, betrachten wir die beiden Binomialkoeffizienten getrennt voneinander.
+
+Der Ausdruck lautet:
+$$ \binom{5m+4}{5m+2} + \binom{5m-5}{2} $$
+
+### 1. Vereinfachung des ersten Terms
+
+Für den ersten Term nutzen wir die Symmetrieeigenschaft des Binomialkoeffizienten: $\binom{n}{k} = \binom{n}{n-k}$.
+
+Hier ist $n = 5m+4$ und $k = 5m+2$.
+Setzen wir dies ein:
+$$ \binom{5m+4}{5m+2} = \binom{5m+4}{(5m+4) - (5m+2)} = \binom{5m+4}{2} $$
+
+Nun wenden wir die Formel für den Binomialkoeffizienten an:
+$$ \binom{n}{2} = \frac{n(n-1)}{2} $$
+
+Mit $n = 5m+4$ ergibt sich:
+$$ \binom{5m+4}{2} = \frac{(5m+4)((5m+4)-1)}{2} = \frac{(5m+4)(5m+3)}{2} $$
+
+Wir multiplizieren die Klammern aus:
+$$ (5m+4)(5m+3) = 25m^2 + 15m + 20m + 12 = 25m^2 + 35m + 12 $$
+
+Daher ist der erste Term:
+$$ \frac{25m^2 + 35m + 12}{2} $$
+
+### 2. Vereinfachung des zweiten Terms
+
+Für den zweiten Term nutzen wir direkt die Formel $\binom{n}{2} = \frac{n(n-1)}{2}$ mit $n = 5m-5$.
+
+$$ \binom{5m-5}{2} = \frac{(5m-5)((5m-5)-1)}{2} = \frac{(5m-5)(5m-6)}{2} $$
+
+Wir multiplizieren die Klammern aus:
+$$ (5m-5)(5m-6) = 25m^2 - 30m - 25m + 30 = 25m^2 - 55m + 30 $$
+
+Daher ist der zweite Term:
+$$ \frac{25m^2 - 55m + 30}{2} $$
+
+### 3. Addition der beiden Terme
+
+Da beide Terme denselben Nenner (2) haben, können wir die Zähler addieren:
+
+$$ \frac{25m^2 + 35m + 12}{2} + \frac{25m^2 - 55m + 30}{2} $$
+
+$$ = \frac{(25m^2 + 35m + 12) + (25m^2 - 55m + 30)}{2} $$
+
+Wir fassen die gleichen Terme zusammen:
+*   $m^2$-Terme: $25m^2 + 25m^2 = 50m^2$
+*   $m$-Terme: $35m - 55m = -20m$
+*   Konstanten: $12 + 30 = 42$
+
+Das Ergebnis ist:
+$$ \frac{50m^2 - 20m + 42}{2} $$
+
+### 4. Kürzen
+
+Jeder Term im Zähler ist durch 2 teilbar:
+*   $50m^2 / 2 = 25m^2$
+*   $-20m / 2 = -10m$
+*   $42 / 2 = 21$
+
+Somit erhalten wir das endgültige Ergebnis:
+
+$$ 25m^2 - 10m + 21 $$
+
+**Antwort:**
+$$ 25m^2 - 10m + 21 $$

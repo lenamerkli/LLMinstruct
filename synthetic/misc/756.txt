@@ -1,0 +1,76 @@
+§u§
+<p>Die Gerade <app-latex content="h"></app-latex> verläuft durch die Punkte <app-latex content="A(55|18|40)"></app-latex> und <app-latex content="F(-7|-12|15)"></app-latex>. Bestimmen Sie den minimalen Abstand der Geraden <app-latex content="h"></app-latex> vom Punkt <app-latex content="E(3|12|2)"></app-latex>.</p>
+§a§
+
+
+**Lösung**
+
+1. **Richtungsvektor der Geraden \(h\)**
+
+\[
+\vec u=\overrightarrow{AF}=F-A=
+\begin{pmatrix}-7-55\\-12-18\\15-40\end{pmatrix}
+=
+\begin{pmatrix}-62\\-30\\-25\end{pmatrix}
+\]
+
+2. **Vektor von einem Punkt der Geraden zum Punkt \(E\)**
+
+\[
+\vec v =\overrightarrow{AE}=E-A=
+\begin{pmatrix}3-55\\12-18\\2-40\end{pmatrix}
+=
+\begin{pmatrix}-52\\-6\\-38\end{pmatrix}
+\]
+
+3. **Kürzester Abstand – Formel**
+
+Der Abstand eines Punktes \(E\) von einer Geraden durch \(A\) mit Richtung \(\vec u\) ist
+
+\[
+d_{\min}= \frac{\|\;\vec v\times\vec u\;\|}{\|\vec u\|}\, .
+\]
+
+4. **Kreuzprodukt berechnen**
+
+\[
+\vec v\times\vec u=
+\begin{vmatrix}
+\mathbf i&\mathbf j&\mathbf k\\[2pt]
+-52&-6&-38\\[2pt]
+-62&-30&-25
+\end{vmatrix}
+=
+\bigl(-990,\;1056,\;1188\bigr).
+\]
+
+Betrag:
+
+\[
+\|\vec v\times\vec u\|
+= \sqrt{(-990)^2+1056^2+1188^2}
+= \sqrt{3\,506\,580}\approx 1\,872.59 .
+\]
+
+5. **Länge des Richtungsvektors**
+
+\[
+\|\vec u\|=\sqrt{(-62)^2+(-30)^2+(-25)^2}
+          =\sqrt{5\,369}\approx 73.27 .
+\]
+
+6. **Minimaler Abstand**
+
+\[
+d_{\min}= \frac{1\,872.59}{73.27}
+        \approx 25.56 .
+\]
+
+---
+
+\[
+\boxed{d_{\min}\approx 25.6\text{ Längeneinheiten}}
+\]
+
+(Für eine exakte Form kann man schreiben
+\(d_{\min}= \displaystyle\sqrt{\frac{500\,940}{767}}\).)

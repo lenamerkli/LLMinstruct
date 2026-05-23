@@ -1,0 +1,22 @@
+§u§
+\begin{pmatrix} -17 + 62 * \frac{170}{413} \\ -12 + 30 * \frac{170}{413} \\ 15 + 25 * \frac{170}{413} \end{pmatrix} =
+§a§
+\[
+\begin{pmatrix}
+-17 + 62\cdot \frac{170}{413}\\[4pt]
+-12 + 30\cdot \frac{170}{413}\\[4pt]
+15 + 25\cdot \frac{170}{413}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\frac{3519}{413}\\[4pt]
+\frac{144}{413}\\[4pt]
+\frac{10445}{413}
+\end{pmatrix}
+\approx
+\begin{pmatrix}
+8.5208\\
+0.3487\\
+25.2906
+\end{pmatrix}
+\]

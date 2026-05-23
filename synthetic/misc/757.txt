@@ -1,0 +1,62 @@
+§u§
+<p>Die Gerade <app-latex content="h"></app-latex> verläuft durch die Punkte <app-latex content="A(55|18|40)"></app-latex> und <app-latex content="F(-7|-12|15)"></app-latex>. Bestimmen Sie den minimalen Abstand der Geraden <app-latex content="h"></app-latex> vom Punkt <app-latex content="E(3|12|2)"></app-latex>.</p>
+§a§
+Gesucht ist der minimale Abstand des Punktes E(3|12|2) von der Geraden h durch die Punkte A(55|18|40) und F(-7|-12|15).
+
+1. Richtungsvektor der Geraden
+
+Aus den Punkten A und F:
+
+v = F - A
+= (-7-55, -12-18, 15-40)
+= (-62, -30, -25)
+
+Die Gerade hat also die Form
+
+h: x = (55,18,40) + t·(-62,-30,-25)
+
+2. Vektor von A nach E
+
+AE = E - A
+= (3-55, 12-18, 2-40)
+= (-52,-6,-38)
+
+3. Formel für den Abstand Punkt–Gerade
+
+Der Abstand d ergibt sich über
+
+d = |AE × v| / |v|
+
+4. Kreuzprodukt berechnen
+
+AE × v =
+
+| i      j      k |
+| -52   -6    -38 |
+| -62   -30   -25 |
+
+= (-990, 1056, 1188)
+
+Betrag:
+
+|AE × v|
+= √((-990)² + 1056² + 1188²)
+= √(980100 + 1115136 + 1411344)
+= √3506580
+
+5. Betrag des Richtungsvektors
+
+|v|
+= √((-62)² + (-30)² + (-25)²)
+= √(3844 + 900 + 625)
+= √5369
+
+6. Abstand
+
+d = √3506580 / √5369
+= √(3506580 / 5369)
+≈ 25,55
+
+Der minimale Abstand der Geraden h vom Punkt E beträgt daher:
+
+d ≈ 25,6 Einheiten.

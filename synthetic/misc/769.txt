@@ -1,0 +1,72 @@
+§u§
+<attach:29595f72cd835bfe48ca119227e19e7edddab53e974952a5b08dfe116d7ef580>Erkläre mir diese drei Aufgaben.
+§a§
+Hier ist die Erklärung der drei Aufgaben. Da einige Informationen (wie die Koordinaten der Punkte $P, Q, R, S$ und die Gleichung der Ebene $E$) im Bild nicht sichtbar sind (diese standen wahrscheinlich in den vorherigen Teilen a-c), erkläre ich dir den **Lösungsweg und die mathematischen Hintergründe** für jede Aufgabe.
+
+### Zusammenfassung der gegebenen Informationen:
+*   **Gerade $g$:** Verläuft durch $P$ mit Richtungsvektor $\vec{r}_g = \begin{pmatrix} 4 \\ -5 \\ 6 \end{pmatrix}$.
+*   **Kante $PT$:** Die Gerade $g$ enthält die Kante $PT$. Das bedeutet, $P$ und $T$ liegen auf $g$.
+*   **Ebene $F$:** $2x + y - 2z = 0$.
+*   **Pyramidenspitze $T$:** Der Punkt $T$ liegt in der Ebene $F$.
+*   **Pyramide:** $PQRST$. Da $T$ die Spitze ist, ist $PQRS$ vermutlich die Grundfläche (Basis).
+
+---
+
+### d) Bestimmen Sie die Koordinaten des Punktes $T$.
+
+**Was ist zu tun?**
+Du musst den Schnittpunkt der Geraden $g$ und der Ebene $F$ finden. Da $T$ sowohl auf der Geraden $g$ (als Teil der Kante $PT$) als auch in der Ebene $F$ liegt, ist $T$ genau dieser Schnittpunkt.
+
+**Lösungsweg:**
+1.  **Geradengleichung aufstellen:** Du brauchst den Punkt $P$ (aus den vorherigen Teilen). Die Gerade $g$ in Parameterform lautet:
+    $$ \vec{x} = \vec{p} + r \cdot \begin{pmatrix} 4 \\ -5 \\ 6 \end{pmatrix} $$
+    Das ergibt die Koordinaten:
+    $$ x = x_p + 4r $$
+    $$ y = y_p - 5r $$
+    $$ z = z_p + 6r $$
+2.  **In Ebenengleichung einsetzen:** Setze diese Ausdrücke für $x, y, z$ in die Ebenengleichung $F$ ($2x + y - 2z = 0$) ein.
+    $$ 2(x_p + 4r) + (y_p - 5r) - 2(z_p + 6r) = 0 $$
+3.  **Nach $r$ auflösen:** Löse die Gleichung nach dem Parameter $r$ auf.
+4.  **Punkt $T$ berechnen:** Setze das gefundene $r$ wieder in die Geradengleichung von oben ein, um die Koordinaten von $T$ zu erhalten.
+
+*(Hinweis: Falls du $P$ nicht hast, kannst du laut Hinweis im Bild den Punkt $T(14|3|11)$ als "Ersatz" verwenden, um die nächsten Aufgaben zu lösen.)*
+
+---
+
+### e) Bestimmen Sie den Schnittwinkel zwischen der Geraden $g$ und der Ebene $E$.
+
+**Was ist zu tun?**
+Du musst den Winkel $\alpha$ berechnen, unter dem die Gerade $g$ auf die Ebene $E$ trifft.
+*Hinweis: Ebene $E$ ist hier wahrscheinlich die Ebene, in der die Grundfläche der Pyramide (also $PQRS$) liegt. Diese Ebene war vermutlich in Teil c) gegeben.*
+
+**Lösungsweg:**
+1.  **Normalenvektor bestimmen:** Du brauchst den Normalenvektor $\vec{n}_E$ der Ebene $E$.
+2.  **Richtungsvektor nutzen:** Du hast bereits den Richtungsvektor der Geraden: $\vec{r}_g = \begin{pmatrix} 4 \\ -5 \\ 6 \end{pmatrix}$.
+3.  **Formel anwenden:** Der Sinus des Winkels $\alpha$ zwischen Gerade und Ebene berechnet sich aus dem Kosinus des Winkels zwischen Gerade und Normalenvektor:
+    $$ \sin(\alpha) = \frac{|\vec{r}_g \cdot \vec{n}_E|}{|\vec{r}_g| \cdot |\vec{n}_E|} $$
+    *   $\vec{r}_g \cdot \vec{n}_E$ ist das Skalarprodukt.
+    *   $|\vec{r}_g|$ und $|\vec{n}_E|$ sind die Längen (Beträge) der Vektoren.
+4.  **Winkel berechnen:** Berechne den Wert und bestimme $\alpha$ (meistens über $\arcsin$).
+
+---
+
+### f) Bestimmen Sie den Volumeninhalt der Pyramide $PQRST$.
+
+**Was ist zu tun?**
+Du musst das Volumen der Pyramide berechnen.
+Da $T$ die Spitze ist, ist $PQRS$ die Grundfläche.
+
+**Lösungsweg:**
+Die Formel für das Volumen einer Pyramide lautet:
+$$ V = \frac{1}{3} \cdot G \cdot h $$
+
+1.  **Grundfläche $G$ berechnen:**
+    *   Berechne die Fläche des Vierecks $PQRS$ (wahrscheinlich ein Parallelogramm).
+    *   Dafür bildest du das Kreuzprodukt zweier Seitenvektoren (z.B. $\vec{PQ}$ und $\vec{PS}$) und nimmst den Betrag des Ergebnisvektors: $G = |\vec{PQ} \times \vec{PS}|$.
+2.  **Höhe $h$ berechnen:**
+    *   Die Höhe ist der senkrechte Abstand der Spitze $T$ zur Grundfläche (Ebene $E$).
+    *   Formel für den Abstand eines Punktes $T(x_t, y_t, z_t)$ von einer Ebene $ax+by+cz+d=0$:
+        $$ h = \frac{|a \cdot x_t + b \cdot y_t + c \cdot z_t + d|}{\sqrt{a^2 + b^2 + c^2}} $$
+3.  **Volumen berechnen:** Setze $G$ und $h$ in die Volumenformel ein.
+
+**Wichtig:** Wie in Aufgabe d) erwähnt: Wenn du die Koordinaten von $T$ nicht gefunden hast, benutze für diese Rechnung den Punkt $T(14|3|11)$.

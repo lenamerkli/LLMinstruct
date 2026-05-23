@@ -1,0 +1,10 @@
+§u§
+Turn `\sqrt{\left(\frac{3519}{413}\right)^2 + \left(\frac{144}{413}\right)^2 + \left(\frac{10445}{413}\right)^2}` into a wolframalpha prompt.
+§a§
+Use this Wolfram|Alpha prompt:
+
+`sqrt((3519/413)^2 + (144/413)^2 + (10445/413)^2)`
+
+If you want the exact simplified form, you can also enter:
+
+`FullSimplify[sqrt((3519/413)^2 + (144/413)^2 + (10445/413)^2)]`

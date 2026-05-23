@@ -1,0 +1,63 @@
+§u§
+<p>Bestimmen Sie die Anzahl der Anagramme des Wortes <app-latex content="\text{Funktion}"></app-latex>.</p>
+§a§
+Wir sollen die Anzahl der **Anagramme** des Wortes **„Funktion“** bestimmen.
+
+---
+
+### Schritt 1: Buchstaben zählen
+
+Das Wort „Funktion“ hat **8 Buchstaben**:
+
+> F, U, N, K, T, I, O, N
+
+---
+
+### Schritt 2: Doppelte Buchstaben identifizieren
+
+Wir sehen, dass der Buchstabe **„N“ zweimal** vorkommt. Alle anderen Buchstaben sind **einmalig**.
+
+---
+
+### Schritt 3: Formel für Anagramme mit Wiederholungen
+
+Wenn ein Wort \( n \) Buchstaben hat und einige davon mehrfach vorkommen, dann ist die Anzahl der **unterscheidbaren Anagramme** gegeben durch:
+
+\[
+\frac{n!}{k_1! \cdot k_2! \cdot \ldots}
+\]
+
+wobei \( k_i \) die Häufigkeiten der sich wiederholenden Buchstaben sind.
+
+In unserem Fall:
+
+- \( n = 8 \)
+- Nur „N“ kommt doppelt vor → \( k_1 = 2 \)
+
+Also:
+
+\[
+\text{Anzahl der Anagramme} = \frac{8!}{2!}
+\]
+
+---
+
+### Schritt 4: Berechnung
+
+\[
+8! = 40320
+\]
+\[
+2! = 2
+\]
+\[
+\frac{40320}{2} = 20160
+\]
+
+---
+
+### ✅ Endgültige Antwort:
+
+\[
+\boxed{20160}
+\]

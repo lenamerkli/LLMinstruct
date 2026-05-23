@@ -1,0 +1,36 @@
+§u§
+<p>Vereinfachen Sie so weit wie möglich ohne Hilfe des Taschenrechners: <app-latex content="\binom{5m+4}{5m+2} + \binom{5m-5}{2}"></app-latex></p>
+§a§
+# Vereinfachung des Ausdrucks
+
+## Schritt 1: Ersten Binomialkoeffizient vereinfachen
+
+$$\binom{5m+4}{5m+2} = \binom{5m+4}{2}$$
+
+da $\binom{n}{k} = \binom{n}{n-k}$ und $(5m+4)-(5m+2) = 2$
+
+$$\binom{5m+4}{2} = \frac{(5m+4)(5m+3)}{2}$$
+
+## Schritt 2: Zweiten Binomialkoeffizient vereinfachen
+
+$$\binom{5m-5}{2} = \frac{(5m-5)(5m-6)}{2}$$
+
+## Schritt 3: Terme addieren
+
+$$\frac{(5m+4)(5m+3)}{2} + \frac{(5m-5)(5m-6)}{2}$$
+
+**Zähler ausmultiplizieren:**
+
+$$(5m+4)(5m+3) = 25m^2 + 15m + 20m + 12 = 25m^2 + 35m + 12$$
+
+$$(5m-5)(5m-6) = 25m^2 - 30m - 25m + 30 = 25m^2 - 55m + 30$$
+
+**Summe der Zähler:**
+
+$$25m^2 + 35m + 12 + 25m^2 - 55m + 30 = 50m^2 - 20m + 42$$
+
+## Schritt 4: Ergebnis
+
+$$\frac{50m^2 - 20m + 42}{2} = 25m^2 - 10m + 21$$
+
+$$\boxed{25m^2 - 10m + 21}$$

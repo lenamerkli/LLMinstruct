@@ -1,0 +1,37 @@
+§u§
+<p>Bestimmen Sie den Schnittwinkel zwischen der Geraden <app-latex content="g"></app-latex> mit Richtungsvektor <app-latex content="\vec{r_g} = \begin{pmatrix} 4 \\ -5 \\ 6 \end{pmatrix}"></app-latex> und der Ebene <app-latex content="F: 2x + y -2z = 0"></app-latex>.</p>
+§a§
+Um den Schnittwinkel $\alpha$ zwischen der Geraden $g$ und der Ebene $F$ zu bestimmen, verwenden Sie die Beziehung zwischen dem Richtungsvektor der Geraden und dem Normalenvektor der Ebene.
+
+**1. Vektoren identifizieren**
+
+*   Richtungsvektor der Geraden: $\vec{r} = \begin{pmatrix} 4 \\ -5 \\ 6 \end{pmatrix}$
+*   Normalenvektor der Ebene (ablesen aus der Koordinatenform): $\vec{n} = \begin{pmatrix} 2 \\ 1 \\ -2 \end{pmatrix}$
+
+**2. Formel**
+
+Der Schnittwinkel $\alpha$ zwischen einer Geraden und einer Ebene berechnet sich über den Sinus:
+
+$$\sin(\alpha) = \frac{|\vec{r} \cdot \vec{n}|}{|\vec{r}| \cdot |\vec{n}|}$$
+
+**3. Berechnung**
+
+*   **Skalarprodukt:**
+    $$\vec{r} \cdot \vec{n} = 4 \cdot 2 + (-5) \cdot 1 + 6 \cdot (-2) = 8 - 5 - 12 = -9$$
+
+*   **Betrag des Richtungsvektors:**
+    $$|\vec{r}| = \sqrt{4^2 + (-5)^2 + 6^2} = \sqrt{16 + 25 + 36} = \sqrt{77}$$
+
+*   **Betrag des Normalenvektors:**
+    $$|\vec{n}| = \sqrt{2^2 + 1^2 + (-2)^2} = \sqrt{4 + 1 + 4} = \sqrt{9} = 3$$
+
+*   **Einsetzen in die Formel:**
+    $$\sin(\alpha) = \frac{|-9|}{\sqrt{77} \cdot 3} = \frac{9}{3\sqrt{77}} = \frac{3}{\sqrt{77}}$$
+
+**4. Ergebnis**
+
+Der Schnittwinkel beträgt:
+
+$$\alpha = \arcsin\left(\frac{3}{\sqrt{77}}\right) \approx 19{,}98^{\circ}$$
+
+**Antwort:** Der Schnittwinkel zwischen der Geraden $g$ und der Ebene $F$ beträgt etwa **$20^{\circ}$** (bzw. exakt $\arcsin\left(\frac{3}{\sqrt{77}}\right)$ oder $\arcsin\left(\frac{3\sqrt{77}}{77}\right)$).

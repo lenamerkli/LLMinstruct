@@ -1,0 +1,99 @@
+§u§
+<p>Gegeben sind die Punkte <app-latex content="P(2|15|-4"></app-latex>, <app-latex content="Q(6|23|4)"></app-latex> und <app-latex content="R(6|14|13)"></app-latex> in der Ebene <app-latex content="E"></app-latex>. Bestimmen Sie eine Vektorgleichung der Ebene.</p><p>Bestimmen Sie die Koordinatengleichung der Ebene <app-latex content="E"></app-latex>.</p>
+§a§
+Okay, lass uns die Aufgabe Schritt für Schritt durchgehen.
+
+Gegeben sind die Punkte:
+- \( P(2|15|-4) \)
+- \( Q(6|23|4) \)
+- \( R(6|14|13) \)
+
+---
+
+### 1. Vektorgleichung der Ebene
+
+Eine Vektorgleichung (Parametergleichung) der Ebene hat die Form:
+
+\[
+E: \vec{x} = \vec{p} + \lambda \cdot \vec{u} + \mu \cdot \vec{v}
+\]
+
+Wählen wir \(P\) als Stützpunkt.
+Die Spannvektoren ergeben sich aus den Differenzen der Punkte:
+
+\[
+\vec{u} = \overrightarrow{PQ} = \begin{pmatrix} 6-2 \\ 23-15 \\ 4-(-4) \end{pmatrix} = \begin{pmatrix} 4 \\ 8 \\ 8 \end{pmatrix}
+\]
+
+\[
+\vec{v} = \overrightarrow{PR} = \begin{pmatrix} 6-2 \\ 14-15 \\ 13-(-4) \end{pmatrix} = \begin{pmatrix} 4 \\ -1 \\ 17 \end{pmatrix}
+\]
+
+Damit lautet eine mögliche Vektorgleichung:
+
+\[
+\boxed{E: \vec{x} = \begin{pmatrix} 2 \\ 15 \\ -4 \end{pmatrix} + \lambda \cdot \begin{pmatrix} 4 \\ 8 \\ 8 \end{pmatrix} + \mu \cdot \begin{pmatrix} 4 \\ -1 \\ 17 \end{pmatrix}}
+\]
+
+---
+
+### 2. Koordinatengleichung der Ebene
+
+Die Koordinatengleichung hat die Form:
+\[
+a x_1 + b x_2 + c x_3 = d
+\]
+
+**Schritt 1: Normalenvektor bestimmen**
+
+Der Normalenvektor \(\vec{n}\) ist das Kreuzprodukt der beiden Spannvektoren:
+
+\[
+\vec{n} = \vec{u} \times \vec{v} =
+\begin{pmatrix} 4 \\ 8 \\ 8 \end{pmatrix} \times \begin{pmatrix} 4 \\ -1 \\ 17 \end{pmatrix}
+\]
+
+Berechnung:
+
+\[
+n_1 = 8 \cdot 17 - 8 \cdot (-1) = 136 + 8 = 144
+\]
+\[
+n_2 = 8 \cdot 4 - 4 \cdot 17 = 32 - 68 = -36
+\]
+\[
+n_3 = 4 \cdot (-1) - 8 \cdot 4 = -4 - 32 = -36
+\]
+
+Also:
+\[
+\vec{n} = \begin{pmatrix} 144 \\ -36 \\ -36 \end{pmatrix}
+\]
+
+Wir können den Vektor noch vereinfachen, indem wir durch 36 teilen:
+\[
+\vec{n} = \begin{pmatrix} 4 \\ -1 \\ -1 \end{pmatrix}
+\]
+
+**Schritt 2: Gleichung aufstellen mit Konstanten \(d\)**
+
+Einsetzen von Punkt \(P(2|15|-4)\) in
+\(4x_1 - 1x_2 - 1x_3 = d\):
+
+\[
+4 \cdot 2 - 1 \cdot 15 - 1 \cdot (-4) = 8 - 15 + 4 = -3
+\]
+
+Also \(d = -3\).
+
+**Koordinatengleichung:**
+
+\[
+\boxed{4x_1 - x_2 - x_3 = -3}
+\]
+
+---
+
+**Zusammenfassung:**
+- Vektorgleichung: \( \vec{x} = (2,15,-4)^T + \lambda (4,8,8)^T + \mu (4,-1,17)^T \)
+- Koordinatengleichung: \( 4x_1 - x_2 - x_3 = -3 \)

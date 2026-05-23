@@ -1,0 +1,79 @@
+§u§
+<p>Gegeben sind die Punkte <app-latex content="P(2|15|-4"></app-latex>, <app-latex content="Q(6|23|4)"></app-latex> und <app-latex content="R(6|14|13)"></app-latex> in der Ebene <app-latex content="E"></app-latex>. Bestimmen Sie eine Vektorgleichung der Ebene.</p><p>Bestimmen Sie die Koordinatengleichung der Ebene <app-latex content="E"></app-latex>.</p>
+§a§
+Hier ist die schrittweise Lösung zur Bestimmung der Ebene $E$ durch die Punkte $P$, $Q$ und $R$.
+
+### 1. Vektorgleichung der Ebene
+
+Die Vektorgleichung einer Ebene lautet allgemein:
+$$ \vec{x} = \vec{p} + s \cdot \vec{u} + t \cdot \vec{v} $$
+wobei $\vec{p}$ ein Ortsvektor eines Punktes in der Ebene ist und $\vec{u}$, $\vec{v}$ zwei linear unabhängige Richtungsvektoren der Ebene.
+
+**Gegebene Punkte:**
+*   $P(2|15|-4)$
+*   $Q(6|23|4)$
+*   $R(6|14|13)$
+
+**Schritt 1: Bestimmung der Richtungsvektoren**
+Wir wählen den Punkt $P$ als Ortsvektor $\vec{p}$ und bestimmen die Vektoren $\vec{u} = \overrightarrow{PQ}$ und $\vec{v} = \overrightarrow{PR}$.
+
+$$ \vec{u} = \overrightarrow{PQ} = Q - P = \begin{pmatrix} 6 \\ 23 \\ 4 \end{pmatrix} - \begin{pmatrix} 2 \\ 15 \\ -4 \end{pmatrix} = \begin{pmatrix} 4 \\ 8 \\ 8 \end{pmatrix} $$
+
+$$ \vec{v} = \overrightarrow{PR} = R - P = \begin{pmatrix} 6 \\ 14 \\ 13 \end{pmatrix} - \begin{pmatrix} 2 \\ 15 \\ -4 \end{pmatrix} = \begin{pmatrix} 4 \\ -1 \\ 17 \end{pmatrix} $$
+
+**Schritt 2: Aufstellen der Gleichung**
+Einsetzen von $\vec{p}$, $\vec{u}$ und $\vec{v}$ in die allgemeine Form:
+
+$$ \vec{x} = \begin{pmatrix} 2 \\ 15 \\ -4 \end{pmatrix} + s \cdot \begin{pmatrix} 4 \\ 8 \\ 8 \end{pmatrix} + t \cdot \begin{pmatrix} 4 \\ -1 \\ 17 \end{pmatrix} $$
+
+*(Optional: Vereinfachung der Richtungsvektoren durch Ausklammern. Da beide Vektoren durch 4 teilbar sind, kann man $\vec{u}$ vereinfachen, um mit kleineren Zahlen zu rechnen. Wir lassen $\vec{u}$ hier zunächst so, können aber auch $\vec{u}' = \begin{pmatrix} 1 \\ 2 \\ 2 \end{pmatrix}$ wählen. Die Gleichung bleibt äquivalent.)*
+
+Die Vektorgleichung der Ebene $E$ lautet:
+$$ \vec{x} = \begin{pmatrix} 2 \\ 15 \\ -4 \end{pmatrix} + s \cdot \begin{pmatrix} 4 \\ 8 \\ 8 \end{pmatrix} + t \cdot \begin{pmatrix} 4 \\ -1 \\ 17 \end{pmatrix} $$
+
+---
+
+### 2. Koordinatengleichung der Ebene
+
+Die Koordinatengleichung einer Ebene hat die Form:
+$$ d_1 \cdot x_1 + d_2 \cdot x_2 + d_3 \cdot x_3 = d $$
+wobei $\vec{n} = \begin{pmatrix} d_1 \\ d_2 \\ d_3 \end{pmatrix}$ der Normalenvektor der Ebene ist.
+
+**Schritt 1: Bestimmung des Normalenvektors**
+Der Normalenvektor $\vec{n}$ ist senkrecht zu den beiden Richtungsvektoren $\vec{u}$ und $\vec{v}$. Er berechnet sich als Kreuzprodukt $\vec{n} = \vec{u} \times \vec{v}$.
+
+$$ \vec{n} = \vec{u} \times \vec{v} = \begin{pmatrix} 4 \\ 8 \\ 8 \end{pmatrix} \times \begin{pmatrix} 4 \\ -1 \\ 17 \end{pmatrix} $$
+
+Berechnung der Komponenten:
+*   $n_1 = (8 \cdot 17) - (8 \cdot -1) = 136 + 8 = 144$
+*   $n_2 = -((4 \cdot 17) - (8 \cdot 4)) = -(68 - 32) = -36$
+*   $n_3 = (4 \cdot -1) - (8 \cdot 4) = -4 - 32 = -36$
+
+Somit ist $\vec{n} = \begin{pmatrix} 144 \\ -36 \\ -36 \end{pmatrix}$.
+
+**Schritt 2: Vereinfachen des Normalenvektors**
+Da alle Komponenten durch 36 teilbar sind, können wir den Vektor vereinfachen (skalieren):
+$$ \vec{n}' = \frac{1}{36} \cdot \begin{pmatrix} 144 \\ -36 \\ -36 \end{pmatrix} = \begin{pmatrix} 4 \\ -1 \\ -1 \end{pmatrix} $$
+Wir verwenden $\vec{n}' = \begin{pmatrix} 4 \\ -1 \\ -1 \end{pmatrix}$ für die Gleichung.
+
+**Schritt 3: Aufstellen der Gleichung**
+Einsetzen der Komponenten des vereinfachten Normalenvektors in die Koordinatengleichung:
+$$ 4 \cdot x_1 - 1 \cdot x_2 - 1 \cdot x_3 = d $$
+$$ 4x_1 - x_2 - x_3 = d $$
+
+Um $d$ zu bestimmen, setzen wir die Koordinaten eines beliebigen Punktes der Ebene ein (z.B. $P(2|15|-4)$):
+$$ 4 \cdot 2 - 15 - (-4) = d $$
+$$ 8 - 15 + 4 = d $$
+$$ d = -3 $$
+
+**Schritt 4: Finale Gleichung**
+Einsetzen von $d = -3$:
+$$ 4x_1 - x_2 - x_3 = -3 $$
+
+### Zusammenfassung der Lösung
+
+**Vektorgleichung der Ebene $E$:**
+$$ \vec{x} = \begin{pmatrix} 2 \\ 15 \\ -4 \end{pmatrix} + s \cdot \begin{pmatrix} 4 \\ 8 \\ 8 \end{pmatrix} + t \cdot \begin{pmatrix} 4 \\ -1 \\ 17 \end{pmatrix} $$
+
+**Koordinatengleichung der Ebene $E$:**
+$$ 4x_1 - x_2 - x_3 = -3 $$

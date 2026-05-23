@@ -1,0 +1,90 @@
+§u§
+```
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 5.6.3.1 (Maturaniveau)</h3>
+    <p>Die Gerade <app-latex content="h"></app-latex> verläuft durch die Punkte <app-latex content="A(55|18|40)"></app-latex> und <app-latex content="F(-7|-12|15)"></app-latex>. Bestimmen Sie den minimalen Abstand der Geraden <app-latex content="h"></app-latex> vom Punkt <app-latex content="E(3|12|2)"></app-latex>.</p>
+  </app-task-description>
+  <app-task-solution>
+    <p><app-latex content="\vec{FA} = \begin{pmatrix} 55 - (-7) \\ 18 - (-12) \\ 40 - 15 \end{pmatrix} = \begin{pmatrix} 62 \\ 30 \\ 25 \end{pmatrix}"></app-latex></p>
+    <p><app-latex content="h: \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} -17 \\ -12 \\ 15 \end{pmatrix} + s \cdot \begin{pmatrix} 62 \\ 30 \\ 25 \end{pmatrix}"></app-latex></p>
+    <p><app-latex content="L = \begin{pmatrix} -17 + 62s \\ -12 + 30s \\ 15 + 25s \end{pmatrix}"></app-latex></p>
+    <p><app-latex content="\vec{EL} = \begin{pmatrix} -17 + 62s - 3 \\ -12 + 30s - 12 \\ 15 + 25s - 25 \end{pmatrix} = \begin{pmatrix} 62s - 20 \\ 30s - 24 \\ 25s - 10 \end{pmatrix}"></app-latex></p>
+    <p><app-latex content="\vec{EL} \cdot \vec{FA} = 0"></app-latex></p>
+    <p><app-latex content="(62s - 20) * 62 + (30s - 24) * 30 + (25s - 10) * 25 = 0"></app-latex></p>
+    <p><app-latex content="s = \frac{170}{413}"></app-latex></p>
+    <p><app-latex content="L = \begin{pmatrix} -17 + 62 * \frac{170}{413} \\ -12 + 30 * \frac{170}{413} \\ 15 + 25 * \frac{170}{413} \end{pmatrix} = \begin{pmatrix} \frac{3519}{413} \\ \frac{144}{413} \\ \frac{10445}{413} \end{pmatrix}"></app-latex></p>
+    <p><app-latex content="d = |\vec{EL}| = \sqrt{\left(\frac{3519}{413}\right)^2 + \left(\frac{144}{413}\right)^2 + \left(\frac{10445}{413}\right)^2} = \frac{\sqrt{121502122}}{413} = 26.69"></app-latex></p>
+  </app-task-solution>
+</app-task>
+```
+Überprüfe auf Korrektheit.
+§a§
+Die Lösung ist nicht korrekt. Es gibt mehrere Fehler in den Rechnungen.
+
+Korrekte Ausgangsdaten:
+- A(55,18,40)
+- F(-7,-12,15)
+- E(3,12,2)
+
+Richtungsvektor der Geraden:
+- FA = A - F = (62,30,25)
+
+Geradengleichung:
+- h: (x,y,z) = (-7,-12,15) + s·(62,30,25)
+
+In der angegebenen Lösung treten folgende Fehler auf:
+
+- Es wurde plötzlich der Punkt (-17,-12,15) statt F(-7,-12,15) verwendet.
+- Beim Punkt E wurde in der z-Koordinate fälschlich 25 statt 2 eingesetzt.
+- Dadurch sind alle folgenden Rechnungen falsch.
+
+Korrekte Rechnung
+
+Punkt auf der Geraden:
+- L = (-7+62s, -12+30s, 15+25s)
+
+Verbindungsvektor:
+- EL = L - E
+- EL = (62s-10, 30s-24, 25s+13)
+
+Für den Lotfuß gilt:
+- EL · FA = 0
+
+Also:
+- (62s-10)·62 + (30s-24)·30 + (25s+13)·25 = 0
+
+Ausmultiplizieren:
+- 3844s - 620 + 900s - 720 + 625s + 325 = 0
+- 5369s - 1015 = 0
+
+Daraus:
+- s = 1015 / 5369 = 145 / 767
+
+Lotfußpunkt:
+- L = (-7,-12,15) + (145/767)(62,30,25)
+
+Der Abstand ist:
+- d = |EL|
+- d ≈ 25.56
+
+Ergebnis:
+- Der minimale Abstand der Geraden vom Punkt E beträgt ungefähr 25,56.
+
+Die angegebene Musterlösung mit d = 26,69 ist daher falsch.
+§u§
+Schreibe die <app-task-solution> korrekt neu mit möglichst wenig neuen Änderungen.
+§a§
+```html
+<app-task-solution>
+  <p><app-latex content="\vec{FA} = \begin{pmatrix} 55 - (-7) \\ 18 - (-12) \\ 40 - 15 \end{pmatrix} = \begin{pmatrix} 62 \\ 30 \\ 25 \end{pmatrix}"></app-latex></p>
+  <p><app-latex content="h: \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} -7 \\ -12 \\ 15 \end{pmatrix} + s \cdot \begin{pmatrix} 62 \\ 30 \\ 25 \end{pmatrix}"></app-latex></p>
+  <p><app-latex content="L = \begin{pmatrix} -7 + 62s \\ -12 + 30s \\ 15 + 25s \end{pmatrix}"></app-latex></p>
+  <p><app-latex content="\vec{EL} = \begin{pmatrix} -7 + 62s - 3 \\ -12 + 30s - 12 \\ 15 + 25s - 2 \end{pmatrix} = \begin{pmatrix} 62s - 10 \\ 30s - 24 \\ 25s + 13 \end{pmatrix}"></app-latex></p>
+  <p><app-latex content="\vec{EL} \cdot \vec{FA} = 0"></app-latex></p>
+  <p><app-latex content="(62s - 10) * 62 + (30s - 24) * 30 + (25s + 13) * 25 = 0"></app-latex></p>
+  <p><app-latex content="s = \frac{145}{767}"></app-latex></p>
+  <p><app-latex content="L = \begin{pmatrix} -7 + 62 * \frac{145}{767} \\ -12 + 30 * \frac{145}{767} \\ 15 + 25 * \frac{145}{767} \end{pmatrix} = \begin{pmatrix} \frac{3631}{767} \\ -\frac{4869}{767} \\ \frac{15130}{767} \end{pmatrix}"></app-latex></p>
+  <p><app-latex content="d = |\vec{EL}| = \sqrt{\left(\frac{1330}{767}\right)^2 + \left(-\frac{14073}{767}\right)^2 + \left(\frac{13596}{767}\right)^2} \approx 25.56"></app-latex></p>
+</app-task-solution>
+```

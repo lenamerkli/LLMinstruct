@@ -1,0 +1,60 @@
+§u§
+<p>Betrachten Sie die Funktion <app-latex content="f(x) = -x^2 + 4"></app-latex>. Schätzen Sie den Wert von <app-latex content="\int_{0}^{5} f(x)\,\mathrm{d}x"></app-latex> mithilfe von <app-latex content="O_2"></app-latex>.</p>
+§a§
+Gerne, hier ist die schrittweise Berechnung der Obersumme <app-latex content="O_2"></app-latex> für die Funktion <app-latex content="f(x) = -x^2 + 4"></app-latex> im Intervall von 0 bis 5.
+
+Die Obersumme <app-latex content="O_n"></app-latex> ist eine Schätzung der Fläche unter einer Kurve mithilfe von <app-latex content="n"></app-latex> Rechtecken, wobei die Höhe jedes Rechtecks durch den **maximalen** Funktionswert im jeweiligen Teilintervall bestimmt wird.
+
+Hier ist <app-latex content="n=2"></app-latex>, also verwenden wir zwei Rechtecke.
+
+---
+
+### Schritt 1: Breite der Teilintervalle berechnen
+
+Zuerst bestimmen wir die Breite <app-latex content="\Delta x"></app-latex> für jedes unserer beiden Rechtecke.
+Das Intervall ist <app-latex content="[a, b] = [0, 5]"></app-latex> und <app-latex content="n=2"></app-latex>.
+
+Die Formel lautet: <app-latex content="\Delta x = \frac{b - a}{n}"></app-latex>
+
+<app-latex content="\Delta x = \frac{5 - 0}{2} = 2.5"></app-latex>
+
+Jedes Rechteck hat also eine Breite von 2.5.
+
+### Schritt 2: Teilintervalle bestimmen
+
+Die beiden Teilintervalle sind:
+1.  <app-latex content="I_1 = [0, 2.5]"></app-latex>
+2.  <app-latex content="I_2 = [2.5, 5]"></app-latex>
+
+### Schritt 3: Maximalen Funktionswert (Höhe der Rechtecke) in jedem Intervall finden
+
+Wir müssen nun für jedes Teilintervall den höchsten Punkt der Funktion <app-latex content="f(x) = -x^2 + 4"></app-latex> finden. Die Funktion ist eine nach unten geöffnete Parabel mit dem Scheitelpunkt bei <app-latex content="x=0"></app-latex>. Daher fallen die Funktionswerte, je weiter wir uns von <app-latex content="x=0"></app-latex> entfernen.
+
+*   **Für das 1. Intervall <app-latex content="I_1 = [0, 2.5]"></app-latex>:**
+    Da die Funktion in diesem Intervall fällt, liegt der maximale Wert am linken Rand, also bei <app-latex content="x=0"></app-latex>.
+    Höhe <app-latex content="M_1 = f(0) = -(0)^2 + 4 = 4"></app-latex>.
+
+*   **Für das 2. Intervall <app-latex content="I_2 = [2.5, 5]"></app-latex>:**
+    Auch in diesem Intervall fällt die Funktion weiter. Der maximale Wert liegt also ebenfalls am linken Rand, bei <app-latex content="x=2.5"></app-latex>.
+    Höhe <app-latex content="M_2 = f(2.5) = -(2.5)^2 + 4 = -6.25 + 4 = -2.25"></app-latex>.
+
+### Schritt 4: Flächen der Rechtecke berechnen und addieren
+
+Jetzt berechnen wir die Fläche jedes Rechtecks (Breite × Höhe) und summieren sie zur Obersumme <app-latex content="O_2"></app-latex>.
+
+*   **Fläche des 1. Rechtecks:**
+    <app-latex content="A_1 = \Delta x \cdot M_1 = 2.5 \cdot 4 = 10"></app-latex>
+
+*   **Fläche des 2. Rechtecks:**
+    <app-latex content="A_2 = \Delta x \cdot M_2 = 2.5 \cdot (-2.25) = -5.625"></app-latex>
+
+*   **Gesamte Obersumme <app-latex content="O_2"></app-latex>:**
+    <app-latex content="O_2 = A_1 + A_2 = 10 + (-5.625) = 4.375"></app-latex>
+
+---
+
+### Ergebnis
+
+Die Schätzung für den Wert des Integrals <app-latex content="\int_{0}^{5} (-x^2+4)\,\mathrm{d}x"></app-latex> mithilfe der Obersumme <app-latex content="O_2"></app-latex> beträgt **4.375**.
+
+**Zum Vergleich:** Der exakte Wert des Integrals ist <app-latex content="\int_{0}^{5} (-x^2+4)\,\mathrm{d}x = \left[-\frac{1}{3}x^3 + 4x\right]_{0}^{5} = -\frac{125}{3} + 20 = -\frac{65}{3} \approx -21.67"></app-latex>. Wie man sieht, ist die Schätzung mit nur zwei Rechtecken recht ungenau, was bei einer so groben Unterteilung zu erwarten ist.

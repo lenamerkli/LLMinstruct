@@ -1,0 +1,64 @@
+§u§
+```
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 5.6.3.1 (Maturaniveau)</h3>
+    <p>Die Gerade <app-latex content="h"></app-latex> verläuft durch die Punkte <app-latex content="A(55|18|40)"></app-latex> und <app-latex content="F(-7|-12|15)"></app-latex>. Bestimmen Sie den minimalen Abstand der Geraden <app-latex content="h"></app-latex> vom Punkt <app-latex content="E(3|12|2)"></app-latex>.</p>
+  </app-task-description>
+  <app-task-solution>
+    <p><app-latex content="\vec{FA} = \begin{pmatrix} 55 - (-7) \\ 18 - (-12) \\ 40 - 15 \end{pmatrix} = \begin{pmatrix} 62 \\ 30 \\ 25 \end{pmatrix}"></app-latex></p>
+    <p><app-latex content="h: \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} -17 \\ -12 \\ 15 \end{pmatrix} + s \cdot \begin{pmatrix} 62 \\ 30 \\ 25 \end{pmatrix}"></app-latex></p>
+    <p><app-latex content="L = \begin{pmatrix} -17 + 62s \\ -12 + 30s \\ 15 + 25s \end{pmatrix}"></app-latex></p>
+    <p><app-latex content="\vec{EL} = \begin{pmatrix} -17 + 62s - 3 \\ -12 + 30s - 12 \\ 15 + 25s - 25 \end{pmatrix} = \begin{pmatrix} 62s - 20 \\ 30s - 24 \\ 25s - 10 \end{pmatrix}"></app-latex></p>
+    <p><app-latex content="\vec{EL} \cdot \vec{FA} = 0"></app-latex></p>
+    <p><app-latex content="(62s - 20) * 62 + (30s - 24) * 30 + (25s - 10) * 25 = 0"></app-latex></p>
+    <p><app-latex content="s = \frac{170}{413}"></app-latex></p>
+    <p><app-latex content="L = \begin{pmatrix} -17 + 62 * \frac{170}{413} \\ -12 + 30 * \frac{170}{413} \\ 15 + 25 * \frac{170}{413} \end{pmatrix} = \begin{pmatrix} \frac{3519}{413} \\ \frac{144}{413} \\ \frac{10445}{413} \end{pmatrix}"></app-latex></p>
+    <p><app-latex content="d = |\vec{EL}| = \sqrt{\left(\frac{3519}{413}\right)^2 + \left(\frac{144}{413}\right)^2 + \left(\frac{10445}{413}\right)^2} = \frac{\sqrt{121502122}}{413} = 26.69"></app-latex></p>
+  </app-task-solution>
+</app-task>
+```
+Überprüfe auf Korrektheit.
+§a§
+Ich überprüfe die Lösung Schritt für Schritt.
+
+## Überprüfung der Lösung
+
+### 1. Richtungsvektor $\vec{FA}$
+$$\vec{FA} = \begin{pmatrix} 55 - (-7) \\ 18 - (-12) \\ 40 - 15 \end{pmatrix} = \begin{pmatrix} 62 \\ 30 \\ 25 \end{pmatrix}$$
+✓ **Korrekt**
+
+### 2. Geradengleichung
+**Problem gefunden:** Der Punkt in der Geradengleichung ist $\begin{pmatrix} -17 \\ -12 \\ 15 \end{pmatrix}$, aber der gegebene Punkt ist $F(-7|-12|15)$.
+
+Es sollte sein:
+$$h: \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} -7 \\ -12 \\ 15 \end{pmatrix} + s \cdot \begin{pmatrix} 62 \\ 30 \\ 25 \end{pmatrix}$$
+
+❌ **Fehler: -17 statt -7**
+
+### 3. Vektor $\vec{EL}$ (mit korrigiertem Punkt)
+Mit der korrekten Geradengleichung:
+$$L = \begin{pmatrix} -7 + 62s \\ -12 + 30s \\ 15 + 25s \end{pmatrix}$$
+
+$$\vec{EL} = \begin{pmatrix} -7 + 62s - 3 \\ -12 + 30s - 12 \\ 15 + 25s - 2 \end{pmatrix} = \begin{pmatrix} 62s - 10 \\ 30s - 24 \\ 25s + 13 \end{pmatrix}$$
+
+### 4. Orthogonalitätsbedingung
+$$\vec{EL} \cdot \vec{FA} = 0$$
+$$(62s - 10) \cdot 62 + (30s - 24) \cdot 30 + (25s + 13) \cdot 25 = 0$$
+$$3844s - 620 + 900s - 720 + 625s + 325 = 0$$
+$$5369s - 1015 = 0$$
+$$s = \frac{1015}{5369} = \frac{145}{767}$$
+
+### 5. Punkt L und Abstand
+$$L = \begin{pmatrix} -7 + 62 \cdot \frac{145}{767} \\ -12 + 30 \cdot \frac{145}{767} \\ 15 + 25 \cdot \frac{145}{767} \end{pmatrix}$$
+
+Der Abstand berechnet sich dann entsprechend neu.
+
+## Fazit
+
+Die Lösung enthält **mehrere Fehler**:
+1. ❌ Falsche x-Koordinate des Punktes F in der Geradengleichung (-17 statt -7)
+2. ❌ Falsche z-Koordinate im Vektor $\vec{EL}$ (25 statt 2 beim Punkt E)
+3. ❌ Folglich sind auch s, L und der Abstand d falsch
+
+Die korrekte Rechnung führt zu einem anderen Ergebnis.

@@ -1,0 +1,32 @@
+§u§
+d = |\vec{EL}| = \sqrt{\left(\frac{3519}{413}\right)^2 + \left(\frac{144}{413}\right)^2 + \left(\frac{10445}{413}\right)^2} =
+§a§
+To evaluate the expression:
+
+$$d = \sqrt{\left(\frac{3519}{413}\right)^2 + \left(\frac{144}{413}\right)^2 + \left(\frac{10445}{413}\right)^2}$$
+
+**Step 1: Factor out the common denominator**
+Since all three terms share the denominator $413$, we can factor it out of the square root:
+$$d = \frac{1}{413} \sqrt{3519^2 + 144^2 + 10445^2}$$
+
+**Step 2: Compute the squares**
+$$3519^2 = 12,383,361$$
+$$144^2 = 20,736$$
+$$10445^2 = 109,098,025$$
+
+**Step 3: Sum the squares**
+$$12,383,361 + 20,736 + 109,098,025 = 121,502,122$$
+
+So the expression becomes:
+$$d = \frac{\sqrt{121,502,122}}{413}$$
+
+**Step 4: Simplify & Approximate**
+The number $121,502,122$ is not a perfect square (its prime factorization is $2 \times 413 \times 147,097$), so the radical does not simplify to a rational number. We can leave it in exact form or compute a decimal approximation:
+
+$$\sqrt{121,502,122} \approx 11,022.8001$$
+$$d \approx \frac{11,022.8001}{413} \approx 26.6896$$
+
+**Final Answer:**
+$$d = \frac{\sqrt{121502122}}{413} \approx \boxed{26.69}$$
+
+*(Note: If these coordinates come from a specific textbook or contest problem, double-check the original numbers for possible typos, as distance problems often simplify to integers or clean fractions. Based strictly on the values provided, this is the exact result.)*

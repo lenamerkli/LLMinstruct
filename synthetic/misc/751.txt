@@ -1,0 +1,33 @@
+§u§
+<p>Bestimmen Sie die Ableitung von <app-latex content="f(x) = \frac{5x - 2}{x^2 + 3}"></app-latex>.</p>
+§a§
+# Ableitung von $f(x) = \frac{5x - 2}{x^2 + 3}$
+
+## Quotientenregel
+
+Für $f(x) = \frac{u(x)}{v(x)}$ gilt:
+
+$$f'(x) = \frac{u'(x) \cdot v(x) - u(x) \cdot v'(x)}{[v(x)]^2}$$
+
+## Identifikation der Funktionen
+
+| | Funktion | Ableitung |
+|---|---|---|
+| Zähler | $u(x) = 5x - 2$ | $u'(x) = 5$ |
+| Nenner | $v(x) = x^2 + 3$ | $v'(x) = 2x$ |
+
+## Berechnung
+
+$$f'(x) = \frac{5 \cdot (x^2 + 3) - (5x - 2) \cdot 2x}{(x^2 + 3)^2}$$
+
+**Zähler ausmultiplizieren:**
+
+$$5x^2 + 15 - (10x^2 - 4x)$$
+
+$$= 5x^2 + 15 - 10x^2 + 4x$$
+
+$$= -5x^2 + 4x + 15$$
+
+## Ergebnis
+
+$$\boxed{f'(x) = \frac{-5x^2 + 4x + 15}{(x^2 + 3)^2}}$$

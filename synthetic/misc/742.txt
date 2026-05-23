@@ -1,0 +1,26 @@
+§u§
+<p>Bestimmen Sie die Anzahl der Anagramme des Wortes <app-latex content="\text{Funktion}"></app-latex>.</p>
+§a§
+Das Wort „Funktion“ besteht aus 8 verschiedenen Buchstaben:
+
+F, u, n, k, t, i, o, n
+
+Dabei kommt der Buchstabe „n“ zweimal vor, alle anderen Buchstaben jeweils einmal.
+
+Die Anzahl verschiedener Anagramme berechnet sich daher mit:
+
+8! / 2!
+
+Denn:
+- 8! zählt alle Permutationen der 8 Buchstaben,
+- durch 2! wird korrigiert, dass die beiden „n“ nicht unterscheidbar sind.
+
+Rechnung:
+- 8! = 40320
+- 2! = 2
+
+Also:
+
+40320 / 2 = 20160
+
+Ergebnis: Es gibt 20160 verschiedene Anagramme des Wortes „Funktion“.

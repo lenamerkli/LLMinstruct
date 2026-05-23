@@ -1,0 +1,24 @@
+§u§
+<p>Betrachten Sie die Funktion <app-latex content="f(x) = -x^2 + 4"></app-latex>. Schätzen Sie den Wert von <app-latex content="\int_{-2}^{1} f(x)\,\mathrm{d}x"></app-latex> mithilfe von <app-latex content="U_3"></app-latex>.</p>
+§a§
+Teilen Sie \([-2,1]\) in \(3\) gleich große Teilintervalle:
+\(\Delta x=\frac{1-(-2)}{3}=1\), also
+\[
+[-2,-1],\quad [-1,0],\quad [0,1].
+\]
+
+Für die Untersumme \(U_3\) nimmt man jeweils das **Minimum** von \(f(x)=-x^2+4\) im Teilintervall:
+
+- Auf \([-2,-1]\) ist \(f\) steigend \(\Rightarrow \min = f(-2)=0\).
+- Auf \([-1,0]\) ist \(f\) steigend \(\Rightarrow \min = f(-1)=3\).
+- Auf \([0,1]\) ist \(f\) fallend \(\Rightarrow \min = f(1)=3\).
+
+Damit
+\[
+U_3=\Delta x\,(0+3+3)=1\cdot 6=6.
+\]
+
+Also gilt als Schätzung mit \(U_3\):
+\[
+\int_{-2}^{1} f(x)\,dx \approx 6 \quad (\text{Unterschätzung}).
+\]

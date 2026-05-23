@@ -1,0 +1,44 @@
+§u§
+<p>Entwickeln Sie den folgenden Term mithilfe dem binomischen Lehrsatz: <app-latex content="\left(4d - \frac{c}{d^2}\right)^5"></app-latex></p>
+§a§
+Ich entwickle den Term vollständig Schritt für Schritt mit dem binomischen Lehrsatz:
+
+---
+
+## Grundlagen
+Der allgemeine binomische Lehrsatz lautet:
+$$(a + b)^n = \sum_{k=0}^n \binom{n}{k} \cdot a^{n-k} \cdot b^k$$
+
+Für unseren Term \(\left(4d - \frac{c}{d^2}\right)^5\) gelten folgende Werte:
+* \(n = 5\)
+* \(a = +4d\)
+* \(b = -\frac{c}{d^2}\)
+
+> ⚠️ Der häufigste Fehler bei dieser Aufgabe: das negative Vorzeichen gehört vollständig zu b! Daraus ergibt sich das alternierende Vorzeichen aller Terme.
+
+Die Binomialkoeffizienten für n=5 aus dem Pascalschen Dreieck sind: `1, 5, 10, 10, 5, 1`
+
+---
+
+## Berechnung der einzelnen Terme
+Ich berechne jeden Term einzeln und vereinfache ihn vollständig, du kannst jeden Schritt nachvollziehen:
+
+| k | Allgemeiner Term | vollständig vereinfacht |
+|---|---|---|
+| k=0 | \(\displaystyle \binom{5}{0} \cdot (4d)^5 \cdot \left(-\frac{c}{d^2}\right)^0\) | \(\mathbf{+1024 d^5}\) |
+| k=1 | \(\displaystyle \binom{5}{1} \cdot (4d)^4 \cdot \left(-\frac{c}{d^2}\right)^1\) | \(\mathbf{-1280 c d^2}\) |
+| k=2 | \(\displaystyle \binom{5}{2} \cdot (4d)^3 \cdot \left(-\frac{c}{d^2}\right)^2\) | \(\mathbf{+\dfrac{640 c^2}{d}}\) |
+| k=3 | \(\displaystyle \binom{5}{3} \cdot (4d)^2 \cdot \left(-\frac{c}{d^2}\right)^3\) | \(\mathbf{-\dfrac{160 c^3}{d^4}}\) |
+| k=4 | \(\displaystyle \binom{5}{4} \cdot (4d)^1 \cdot \left(-\frac{c}{d^2}\right)^4\) | \(\mathbf{+\dfrac{20 c^4}{d^7}}\) |
+| k=5 | \(\displaystyle \binom{5}{5} \cdot (4d)^0 \cdot \left(-\frac{c}{d^2}\right)^5\) | \(\mathbf{-\dfrac{c^5}{d^{10}}}\) |
+
+---
+
+## Endergebnis
+Wenn wir alle Terme zusammenfassen ergibt sich der vollständig entwickelte und vereinfachte Term:
+
+$$
+\boxed{
+\left(4d - \frac{c}{d^2}\right)^5 = 1024 d^5 - 1280 c d^2 + \frac{640 c^2}{d} - \frac{160 c^3}{d^4} + \frac{20 c^4}{d^7} - \frac{c^5}{d^{10}}
+}
+$$

@@ -1,0 +1,65 @@
+§u§
+<p>Entwickeln Sie den folgenden Term mithilfe dem binomischen Lehrsatz: <app-latex content="\left(4d - \frac{c}{d^2}\right)^5"></app-latex></p>
+§a§
+Mit dem **binomischen Lehrsatz**
+
+\[
+(a+b)^{5}= \sum_{k=0}^{5}\binom{5}{k}\,a^{5-k}b^{k}
+\]
+
+erhält man für
+
+\[
+a=4d,\qquad b=-\frac{c}{d^{2}}
+\]
+
+\[
+\bigl(4d-\frac{c}{d^{2}}\bigr)^{5}
+   =\sum_{k=0}^{5}\binom{5}{k}(4d)^{5-k}\!\left(-\frac{c}{d^{2}}\right)^{k}.
+\]
+
+Die einzelnen Summanden lauten (ausmultipliziert und gekürzt):
+
+\[
+\begin{aligned}
+k=0&:\ \binom{5}{0}(4d)^{5}=1\cdot1024\,d^{5}=1024\,d^{5}\\[4pt]
+k=1&:\ \binom{5}{1}(4d)^{4}\!\left(-\frac{c}{d^{2}}\right)
+     =5\cdot256\,d^{4}\!\left(-\frac{c}{d^{2}}\right)
+     =-1280\,c\,d^{2}\\[4pt]
+k=2&:\ \binom{5}{2}(4d)^{3}\!\left(\frac{c^{2}}{d^{4}}\right)
+     =10\cdot64\,d^{3}\!\left(\frac{c^{2}}{d^{4}}\right)
+     =+640\,\frac{c^{2}}{d}\\[4pt]
+k=3&:\ \binom{5}{3}(4d)^{2}\!\left(-\frac{c^{3}}{d^{6}}\right)
+     =10\cdot16\,d^{2}\!\left(-\frac{c^{3}}{d^{6}}\right)
+     =-160\,\frac{c^{3}}{d^{4}}\\[4pt]
+k=4&:\ \binom{5}{4}(4d)^{1}\!\left(\frac{c^{4}}{d^{8}}\right)
+     =5\cdot4\,d\!\left(\frac{c^{4}}{d^{8}}\right)
+     =+20\,\frac{c^{4}}{d^{7}}\\[4pt]
+k=5&:\ \binom{5}{5}(4d)^{0}\!\left(-\frac{c^{5}}{d^{10}}\right)
+     =-\frac{c^{5}}{d^{10}}.
+\end{aligned}
+\]
+
+Somit lautet die vollständige Entwicklung:
+
+\[
+\boxed{
+\bigl(4d-\frac{c}{d^{2}}\bigr)^{5}
+=1024\,d^{5}
+-1280\,c\,d^{2}
++640\,\frac{c^{2}}{d}
+-160\,\frac{c^{3}}{d^{4}}
++20\,\frac{c^{4}}{d^{7}}
+-\frac{c^{5}}{d^{10}}
+}
+\]
+
+Falls man alle Terme auf den gleichen Nenner \(d^{10}\) bringt, kann man die Entwicklung auch als einen einzigen Bruch schreiben:
+
+\[
+\bigl(4d-\frac{c}{d^{2}}\bigr)^{5}
+=\frac{1024\,d^{15}-1280\,c\,d^{12}+640\,c^{2}\,d^{9}
+       -160\,c^{3}\,d^{6}+20\,c^{4}\,d^{3}-c^{5}}{d^{10}}.
+\]
+
+Beide Darstellungen sind äquivalent und ergeben sich direkt aus dem binomischen Lehrsatz.

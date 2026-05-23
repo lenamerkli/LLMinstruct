@@ -1,0 +1,92 @@
+§u§
+Create a basic jetbrains plugin that renders a locally hosted website.
+§a§
+To create a JetBrains plugin that renders a website, you should use **JCEF (Java Chromium Embedded Framework)**. This is the modern, Chromium-based browser component built into the IntelliJ Platform.
+
+This guide provides a basic implementation for a **Tool Window** (the sidebar panels like "Project" or "Terminal") that renders a site.
+
+### 1. Project Configuration (`build.gradle.kts`)
+Ensure your plugin targets a version of the IntelliJ Platform that supports JCEF (2020.2 or later). In your `build.gradle.kts`, you don't need special dependencies for JCEF as it is part of the standard SDK.
+
+```kotlin
+plugins {
+    id("org.jetbrains.intellij") version "1.13.3"
+    kotlin("jvm") version "1.8.21"
+}
+
+intellij {
+    version.set("2023.1") // JCEF is stable in modern versions
+    type.set("IC")        // IntelliJ Community
+}
+```
+
+### 2. Register the Tool Window (`plugin.xml`)
+Define where the window appears in the IDE.
+
+```xml
+<idea-plugin>
+    <id>com.example.mywebview</id>
+    <name>Local Website Plugin</name>
+    <vendor>Example</vendor>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="My Web Viewer"
+                    anchor="right"
+                    factoryClass="com.example.MyToolWindowFactory"/>
+    </extensions>
+</idea-plugin>
+```
+
+### 3. Implement the Tool Window (`MyToolWindowFactory.kt`)
+This class creates the browser component when the user clicks the tool window icon.
+
+```kotlin
+package com.example
+
+import com.intellij.openapi.project.Project
+import com.intellij.openapi.wm.ToolWindow
+import com.intellij.openapi.wm.ToolWindowFactory
+import com.intellij.ui.content.ContentFactory
+import com.intellij.ui.jcef.JBCefBrowser
+
+class MyToolWindowFactory : ToolWindowFactory {
+    override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
+        // 1. Initialize the JCEF Browser
+        val browser = JBCefBrowser()
+
+        // 2. Load your website
+        // OPTION A: Locally hosted URL (e.g., a dev server)
+        browser.loadURL("http://localhost:3000")
+
+        // OPTION B: Load a raw HTML string
+        // browser.loadHTML("<html><body><h1>Hello World</h1></body></html>")
+
+        // 3. Add the browser component to the Tool Window
+        val content = ContentFactory.getInstance().createContent(browser.component, "", false)
+        toolWindow.contentManager.addContent(content)
+    }
+}
+```
+
+### 4. Rendering Bundled Files (Advanced)
+If you want to ship a website **inside** the plugin (not just a URL), you cannot easily use `file://` because JCEF doesn't support reading from JAR files directly. The most common solution is to load the HTML as a string or use a local server.
+
+**Simple Bundled Resource Method:**
+If your site is simple (single HTML file), you can read it from the plugin's resource folder and load it as a string:
+
+```kotlin
+val htmlStream = this::class.java.classLoader.getResourceAsStream("webview/index.html")
+val htmlText = htmlStream?.bufferedReader().use { it?.readText() } ?: ""
+browser.loadHTML(htmlText)
+```
+
+### 5. Running and Testing
+1. In IntelliJ, open the **Gradle** sidebar.
+2. Go to `Tasks > intellij > runIde`.
+3. A new instance of IntelliJ will open with your plugin installed.
+4. Click the **"My Web Viewer"** button on the right sidebar to see your website rendered.
+
+### Troubleshooting
+*   **JCEF Not Supported:** Some alternative OpenJDKs do not include JCEF. Ensure you are running your IDE with the **JetBrains Runtime (JBR)**.
+*   **Blank Screen:** Check the "Local History" or logs. Usually, this means the URL is unreachable or the HTML path is incorrect.
+*   **Debugging:** You can right-click the browser component in the running IDE and select **Open DevTools** (if Internal Mode is enabled) to inspect the console and network.

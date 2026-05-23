@@ -1,0 +1,219 @@
+§u§
+Write a very critical article about the company OpenAI.
+§a§
+Now I have comprehensive research. Let me write the article.
+
+---
+
+# OpenAI: The $730 Billion Betrayal — How the World's Most Valuable AI Company Sold Its Soul
+
+*A critical examination of broken promises, systemic safety failures, financial recklessness, and the gutting of every safeguard the company once claimed to uphold.*
+
+---
+
+## Introduction: The Word That Vanished
+
+In the fall of 2025, OpenAI quietly changed its mission statement. The old version read: *"to build general-purpose artificial intelligence that **safely** benefits humanity, unconstrained by a need to generate financial return."* The new version deleted a single word: **safely**.
+
+Nobody held a press conference. No blog post explained the decision. The change surfaced buried in corporate filings for a restructuring that converted OpenAI from a nonprofit into a for-profit public benefit corporation — a document almost no one outside the legal department would ever read.
+
+But the deletion was noticed. And it became the perfect shorthand for everything that had gone wrong inside the company that, by 2026, had become the most valuable private company on Earth at a staggering $730 billion valuation — a company that has systematically dismantled every internal mechanism designed to ensure its technology was developed responsibly.
+
+
+
+This is not a story about a company that lost its way. This is a story about a company that *chose* a different way — and did so with full knowledge of the consequences.
+
+---
+
+## I. The Safety Exodus: A Company That Fired Its Conscience
+
+Let's begin with the most damning fact: **every single senior leader who prioritized AI safety over commercial speed has left OpenAI.** Not retired. Not moved to a lesser role. *Left.* And in many cases, left to build competitors.
+
+The exodus reads like a who's who of AI safety:
+
+- **Ilya Sutskever**, co-founder and chief scientist, the architect of the scaling paradigm that created the entire modern AI industry, departed in May 2024 to found Safe Superintelligence — a name that is itself a rebuke of his former employer.
+- **Jan Leike**, who led the superalignment team, resigned within hours of Sutskever's departure, posting publicly that *"safety culture and processes have taken a backseat to shiny products."* He joined Anthropic.
+- **Mira Murati**, CTO and interim CEO during the Altman firing, left to found Thinking Machines Lab.
+- **Bob McGrew**, chief research officer, departed.
+- **Barret Zoph**, VP of research, departed.
+- **John Schulman**, co-founder and inventor of RLHF — the technique that made ChatGPT possible — left for Anthropic.
+- **Daniel Kokotajlo**, governance team member, publicly stated he had *"lost trust in OpenAI leadership and their ability to responsibly handle AGI."*
+- The **superalignment team was dissolved entirely**.
+- In February 2026, the **Mission Alignment team** — its successor — was disbanded after just sixteen months. Its leader, Joshua Achiam, was shuffled into a meaningless "chief futurist" role.
+
+
+
+The pattern is unmistakable. When the board tried to fire Sam Altman in November 2023 — ostensibly over safety concerns and withheld information — 745 of 770 employees signed a letter demanding Altman's reinstatement. Microsoft offered to hire all of them. The board capitulated in five days.
+
+The lesson was absorbed instantly: **safety governance is a veto that can be overruled by talent, capital, and market pressure.** The nonprofit structure was a legal fiction. The board coup demonstrated that OpenAI's governance mechanisms were only as strong as the willingness to enforce them — and that willingness evaporated the moment employees had to choose between their principles and their equity.
+
+
+
+What followed was not a gradual erosion. It was a systematic purge. OpenAI in 2026 has no senior safety leadership. No functioning alignment team. No AGI readiness advisor. The co-founder who prioritized safety is gone. The CTO who served as a counterweight is gone. The word "safely" is gone.
+
+---
+
+## II. The Safety Failures That Prove the Critics Right
+
+The departures weren't paranoia. They were prophecy.
+
+In 2024, *The Washington Post* reported that OpenAI employees said the company *"planned the launch after-party prior to knowing if it was safe to launch"* of GPT-4o. An anonymous representative acknowledged the safety review timeline had been compressed to a single week, admitting: *"This was just not the best way to do it."*
+
+
+
+But the most damning evidence came in 2026. OpenAI's own automated safety monitoring system **flagged the Tumbler Ridge shooter's ChatGPT account in June 2025** — eight months before the February 2026 attack — for *"gun violence activity and planning."* Internal safety team members escalated the issue, urging notification of law enforcement. Leadership chose to **deactivate the account instead**, with no external disclosure.
+
+The result: seven families in San Francisco federal court filed a lawsuit seeking **over $1 billion in damages**, alleging GPT-4o was designed to *"accept, reinforce, and elaborate"* violent ideation. If successful, the case would establish that a company's internal safety process creates a **legal duty to act** — not merely a reputational one.
+
+
+
+Read that again. The company's own AI detected a future mass shooter planning violence on its platform. The safety team wanted to call the police. The CEO's office killed the account and said nothing.
+
+This is not a company that "struggles with safety." This is a company where safety was subordinated to the product — and where the consequences are measured in human lives.
+
+---
+
+## III. The Financial Black Hole: Burning $143 Billion to Nowhere
+
+OpenAI's financials read like a startup horror story dressed in a $730 billion valuation.
+
+- **2024 losses**: ~$5 billion on $3.7 billion revenue
+- **First half of 2025**: $13.5 billion in net losses on $4.3 billion revenue — a cash burn rate of roughly 70% of revenue
+- **Projected 2026 losses**: $14 billion — roughly **three times worse** than early estimates
+- **Cumulative projected losses through 2029**: $115 billion to $143 billion
+- **Profitability**: Not expected until 2029 or 2030, assuming everything goes perfectly
+
+
+
+The money is coming from a dizzying web of interconnected deals that raise more questions than they answer. Nvidia has committed up to $100 billion to OpenAI — money that, as CFO Sarah Friar acknowledged, *"will go back to Nvidia"* in GPU purchases. Nvidia is also a major investor in CoreWeave, which supplies cloud capacity to OpenAI and has spent billions buying Nvidia chips. OpenAI expects to spend **$6 billion on stock-based compensation in 2025** — nearly half of projected revenue — just to prevent employees from leaving for Anthropic, where engineers are **eight times more likely to go**.
+
+The company raised $110 billion in February 2026 — the largest private funding round in history — explicitly tied to the Stargate project, a $500 billion data center joint venture with SoftBank, Oracle, and MGX. The project's own partners disagreed over control, design, and lease structures, delaying construction.
+
+
+
+The fundamental question is staggering: **Is OpenAI building infrastructure for demand that exists, or for demand it hopes to create?** The company assumes revenue will grow tenfold in five years — from $20 billion to $200 billion — requiring 220 million paying subscribers and enterprise adoption at a scale no software company has ever achieved. These are assumptions, not commitments. And they are being underwritten by $143 billion in projected cash burn.
+
+The Manhattan Project cost roughly $30 billion in today's dollars. OpenAI plans to spend nearly **five times that amount** before turning a profit — on a product that hallucinates 40% of its cited references and that the company itself can't guarantee won't help someone plan a mass shooting.
+
+---
+
+## IV. The Theft Economy: How OpenAI Built an Empire on Stolen Data
+
+OpenAI's original sin is data theft — and the company has never meaningfully reckoned with it.
+
+Plaintiffs in privacy lawsuits allege that OpenAI used **five different datasets** to train ChatGPT, each performing massive data collection that effectively scraped the entire internet. One dataset, WebText2, collected all "outbound" data from Reddit, YouTube, Facebook, TikTok, Snapchat, and Instagram — **without consent** from creators or platforms. Reddit's CEO Steve Huffman put it plainly: *"The Reddit corpus of data is really valuable. But we don't need to give all of that value to some of the largest companies in the world for free."*
+
+
+
+The company also collected private information from its own 100+ million registered users — contact details, login credentials, emails, payment information, geolocation data, cookies, chat logs, keystrokes — without full knowledge or consent.
+
+The copyright litigation is equally damning. Over a dozen cases have been centralized in New York federal court, including *New York Times v. OpenAI* and *Authors Guild v. OpenAI*. The *Times* demonstrated that GPT-4o copied **all but two of the first 396 words** of its article "The Secrets Hamas Knew About Israel's Military" — going far beyond what any search engine snippet would show. In another case, GPT fabricated a nonexistent *New York Times* article about orange juice and lymphoma, attributing it with complete confidence.
+
+
+
+And then there's the hypocrisy. When Chinese startup DeepSeek released an open-source model that outperformed or matched ChatGPT at a fraction of the cost, OpenAI accused it of *"improperly harvesting"* its data. But as critics immediately noted: **OpenAI's entire business model is built on harvesting other people's data without permission.** The company that considers its content proprietary enough to control how it's used wants everyone else's content to be free for the taking.
+
+
+
+---
+
+## V. From "Safe for Humanity" to Battlefield AI: The Military Pivot
+
+Perhaps no transformation better illustrates OpenAI's betrayal of its founding mission than its pivot to military contracts.
+
+In December 2024, OpenAI announced it was deploying its technology **directly on the battlefield** — the culmination of a year-long softening of its "no weapons" policy. The company had gone from prohibiting any use *"to harm yourself or others by developing or using weapons"* to announcing partnerships with the Pentagon worth **$200 million** to "transform administrative operations" including warfighting.
+
+
+
+The timing is revealing. The Pentagon had originally signed a major defense contract with Anthropic — OpenAI's safety-conscious competitor. But when the Trump administration grew frustrated with Anthropic's refusal to deploy models for military applications without sufficient safeguards, OpenAI **capitalized on the fracas** by signing its own $200 million deal. The company that started as a nonprofit to ensure AI benefits humanity is now competing for Pentagon contracts by being *less* safe than its rival.
+
+OpenAI's Chief Product Officer Kevin Weil and former Chief Research Officer Bob McGrew were commissioned as officers in the Army Reserve's "Innovation Corps" — with no requirement to recuse themselves from future contracting discussions. A former Secretary of Defense staffer was hired as OpenAI's head of government. The revolving door spins in both directions.
+
+
+
+The company that promised to keep AI safe for humanity now tells the Pentagon it can help *"deter adversaries, and even prevent future conflict"* — while simultaneously building autonomous weapons-adjacent technology and competing for contracts by offering fewer safeguards than its competitors.
+
+---
+
+## VI. The Environmental Destruction in the Name of Progress
+
+The training of GPT-3 alone emitted an estimated **552 metric tons of CO₂** — comparable to the annual emissions of over 100 cars. GPT-4 and subsequent models are exponentially larger. By 2025, OpenAI's computing capacity had grown to 1.9 gigawatts, and the Stargate project alone plans 7 gigawatts across multiple states.
+
+
+
+Data center power usage jumped 72% from 2019 to 2023, driven largely by generative AI. By 2026, global data center electricity consumption is projected to reach 1,050 terawatt-hours — enough to make data centers the **fifth-largest electricity consumer on Earth**, between Saudi Arabia and France. The pace of new data center construction means most of this electricity must come from fossil fuels.
+
+OpenAI has made gestures toward sustainability — algorithm optimization, partnerships with Microsoft's Azure renewable energy — but these are rounding errors against the scale of consumption. The company that deleted "safely" from its mission statement also deleted any pretense of environmental responsibility.
+
+---
+
+## VII. The Antitrust Nightmare: One Company Controlling the Future of Thought
+
+The FTC and DOJ have launched formal antitrust investigations into OpenAI, Microsoft, and Nvidia — examining whether the three companies have violated the Sherman Antitrust Act and the FTC Act through monopolistic practices.
+
+The concern is existential. FTC Chair Lina Khan stated plainly that *"the critical inputs of these tools are controlled by a relatively small number of companies."* OpenAI controls the most widely used AI chatbot (64.5% market share). Microsoft controls its distribution through Copilot and Azure. Nvidia controls the GPU supply chain and has committed up to $100 billion to OpenAI — creating a circular dependency where money flows from OpenAI to Nvidia to CoreWeave to Nvidia to OpenAI.
+
+
+
+OpenAI's own restructuring made the problem worse. The new for-profit structure gives Microsoft a 27% stake, the nonprofit foundation holds 26%, employees hold 26%, and other investors split the rest. The nonprofit retains "special voting rights" — but as the 2023 board coup proved, those rights are theoretical when the people who would enforce them have all left the building.
+
+The company that was supposed to democratize AI has become the most concentrated point of control in the history of information technology — and it's doing so while bleeding $14 billion a year, stealing copyrighted data, deploying weapons, and gutting its own safety teams.
+
+---
+
+## VIII. The Whistleblowers Who Were Silenced
+
+The most damning indictment of OpenAI's culture may be what it does to people who speak up.
+
+Former safety researcher William Saunders resigned in February 2026 and signed a non-disparagement agreement to preserve his right to sell his equity — worth potentially millions. He told *TIME*: *"By speaking to you I might never be able to access vested equity worth millions of dollars. But I think it's more important to have a public dialogue about what is happening at these AGI companies."*
+
+At least 13 current and former employees of OpenAI and Google DeepMind called for stronger whistleblower protections, urging companies to give employees a *"right to warn"* regulators, board members, and the public about safety concerns. One current OpenAI employee, research scientist Joshua Achiam, publicly called the open letter *"a massive crack in"* the foundation of trust the company needs.
+
+
+
+This is the culture OpenAI has built: one where safety researchers are forced to choose between their principles and their life savings, where the people who built the alignment teams are scattered across competitors, and where the only internal check on the CEO's power was a board that capitulated in five days when employees revolted.
+
+---
+
+## IX. The Product That Works — And Why That's the Problem
+
+Here is the cruelest irony of OpenAI: **the products are genuinely good.**
+
+ChatGPT has 900 million weekly active users. GPT-5 scores 94.6% on math benchmarks. The Codex agent can autonomously write, test, and deploy code. Operator can browse the web and complete multi-step tasks. The revenue is real — $20 billion in 2025, growing at a rate no enterprise software company has ever matched.
+
+This is precisely what makes OpenAI so dangerous. The products work. The user experience is extraordinary. The revenue machine is unprecedented. And behind all of it is a company that has no senior safety leadership, a mission statement that no longer mentions safety, $143 billion in projected losses, active military contracts, ongoing copyright lawsuits, a dissolved safety team, and a culture that punishes whistleblowers.
+
+Nine hundred million people open the app every week. Most have never heard of Ilya Sutskever. They don't know the superalignment team was dissolved — or that its successor was dissolved too. They don't know the word "safely" was deleted. They type a question and get an answer. The answer is usually good.
+
+**Whether the company behind it can be trusted to handle what comes next — models that are smarter, agents that are more autonomous, systems that are harder to control — is a question OpenAI's own former employees have already answered.**
+
+They left.
+
+---
+
+## Conclusion: The $730 Billion Question
+
+OpenAI in 2026 is the most powerful AI company in the world. It built ChatGPT. It shipped GPT-5. It has more users than any AI product in history. It raised $110 billion in a single round — more than any private company has ever raised.
+
+It is also a company that:
+
+- Deleted "safely" from its mission statement
+- Fired or drove out every senior safety leader
+- Ignored its own AI's detection of a future mass shooter
+- Projects $143 billion in cumulative losses before profitability
+- Built its empire on stolen data it refuses to pay for
+- Competes for Pentagon contracts by being less safe than its rivals
+- Consumes more electricity than most nations
+- Faces active antitrust investigations from the FTC and DOJ
+- Silences whistleblowers with non-disparagement agreements
+- Restructured so that a nonprofit board theoretically governs a company that just proved governance is meaningless
+
+The company that started with the promise to ensure AI *"safely benefits humanity"* has become a $730 billion engine of acceleration without brakes — and the brakes were removed not by accident, but by design.
+
+The question is no longer whether OpenAI can build the future. It clearly can. The question is whether anyone should trust it to decide what that future looks like.
+
+The people who built the safety systems say no. The people who detected the shooter say no. The people who left say no.
+
+The 900 million users who open the app every morning, type a question, and get an answer? They don't know enough to say anything at all.
+
+And that, perhaps, is the most damning fact of all.
