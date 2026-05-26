@@ -1,0 +1,8 @@
+§u§
+What is the max data transfer speed for an iPhone SE 3rd gen through its physical port?
+§a§
+The **iPhone SE 3rd generation is limited to USB 2.0 speed over its Lightning port**, so the maximum theoretical wired data-transfer rate is:
+
+**480 Mbps**, or about **60 MB/s theoretical max**.
+
+In practice, actual file-transfer speeds are usually lower due to protocol overhead, cable/host behavior, and iOS transfer methods. Apple’s specs identify the SE 3 as using a **Lightning connector**, and Apple’s compare specs list Lightning iPhones including the SE 3 as **supporting USB 2**; USB 2.0 “High-Speed” is **480 Mbps**.

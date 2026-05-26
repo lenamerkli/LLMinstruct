@@ -1,0 +1,279 @@
+§u§
+```
+\section*{Aufgabe 2}
+Das pharmazeutische Unternehmen \textit{XYZ} hat ein neues Medikament namens \textit{abc2} entwickelt.
+Der Erfinder behauptet, dass das neue Medikament wirksamer ist als das alte Medikament \textit{abc1}, welches die Patienten in 28\% der Fälle geheilt hat.
+Um die Behauptung zu überprüfen, werden zufällig 32 Patienten ausgewählt, um das neue Medikament zu testen.
+Von diesen zeigen 14 eine Verbesserung.
+Führen Sie einen Test durch, um festzustellen, ob das neue Medikament mit einem Signifikanzniveau von 5\% wirksamer ist als das alte Medikament.
+
+\subsection*{Musterlösung}
+\noindent{}\textbf{1. Definition der Hypothesen} \\
+Es sei $p$ die Wahrscheinlichkeit, dass ein Patient durch das neue Medikament \textit{abc2} geheilt wird. Der Erfinder behauptet, dass die Heilungschance gestiegen ist. Daraus ergeben sich folgende Hypothesen:
+\begin{itemize}
+    \item Nullhypothese $H_0: p \leq 0{,}28$ (Das neue Medikament ist nicht wirksamer als das alte.)
+    \item Alternativhypothese $H_1: p > 0{,}28$ (Das neue Medikament ist wirksamer.)
+\end{itemize}
+Da eine Erhöhung der Wahrscheinlichkeit überprüft werden soll, handelt es sich um einen \textbf{rechtsseitigen Hypothesentest}.
+
+\vspace{0.5cm}
+
+\noindent{}\textbf{2. Testgröße und Verteilung} \\
+Die Testgröße $X$ beschreibt die Anzahl der geheilten Patienten. Unter der Annahme, dass die Nullhypothese gilt ($p = 0{,}28$), ist $X$ binomialverteilt mit den Parametern $n = 32$ (Anzahl der Patienten) und $p = 0{,}28$.
+$$X \sim B(32; 0{,}28)$$
+
+\vspace{0.5cm}
+
+\noindent{}\textbf{3. Bestimmung des kritischen Bereichs (Ablehnungsbereichs)} \\
+Das Signifikanzniveau ist $\alpha = 0{,}05$. Wir suchen die kleinste ganze Zahl $k$ (den kritischen Wert), ab der wir $H_0$ verwerfen. Es muss gelten:
+$$P(X \geq k) \leq \alpha$$
+$$1 - P(X \leq k-1) \leq 0{,}05$$
+$$P(X \leq k-1) \geq 0{,}95$$
+
+Mit Hilfe des Taschenrechners (kumulierte Binomialverteilung für $n=32, p=0{,}28$) prüfen wir die Werte:
+\begin{align*}
+    P(X \leq 12) &\approx 0{,}9169 \\
+    P(X \leq 13) &\approx 0{,}9574
+\end{align*}
+
+Da $0{,}9574 \geq 0{,}95$ ist, folgt daraus:
+$$k - 1 = 13 \implies k = 14$$
+
+Der Ablehnungsbereich (kritische Bereich) ist somit $K = \{14, 15, \dots, 32\}$.
+Der Annahmebereich ist $A = \{0, 1, \dots, 13\}$.
+
+\vspace{0.5cm}
+
+\noindent{}\textbf{4. Testentscheidung und Fazit} \\
+In der Stichprobe zeigten 14 Patienten eine Verbesserung. Der beobachtete Wert ist somit $x = 14$.
+Da $x = 14$ in den Ablehnungsbereich $K$ fällt ($14 \in K$), wird die Nullhypothese $H_0$ verworfen.
+
+\textit{(Alternativer Weg über den p-Wert: Die Wahrscheinlichkeit, zufällig 14 oder mehr Heilungen zu beobachten, falls $H_0$ wahr wäre, beträgt $P(X \geq 14) = 1 - P(X \leq 13) \approx 1 - 0{,}9574 = 0{,}0426 = 4{,}26\,\%$. Da $4{,}26\,\% < 5\,\%$, wird $H_0$ verworfen.)}
+
+\vspace{0.5cm}
+\noindent{}\textbf{Antwortsatz:} \\
+Die Nullhypothese wird auf dem Signifikanzniveau von 5\% verworfen. Die Daten liefern einen statistisch signifikanten Nachweis dafür, dass das neue Medikament \textit{abc2} wirksamer ist als das alte Medikament \textit{abc1}.
+
+\section*{Aufgabe 3}
+\textit{Fortführung der Aufgabe 2}: Wie gross ist die Wahrscheinlichkeit, dass \textit{abc2} wirksamer ist und schafft, 41\% der Patienten zu heilen und trotzdem die Verbesserung nicht bemerkt wird?
+
+\subsection*{Musterlösung}
+```
+Schreibe die Musterlösung.
+§a§
+Hier ist die Musterlösung für Aufgabe 3, die sich in Struktur und Stil an die Lösung der vorherigen Aufgabe anpasst:
+
+\noindent{}\textbf{1. Definition des gesuchten Wertes (Fehler 2. Art)} \\
+In der Aufgabenstellung wird nach der Wahrscheinlichkeit gefragt, dass das neue Medikament tatsächlich wirksamer ist (mit einer wahren Heilungswahrscheinlichkeit von $p = 0{,}41$), der Hypothesentest aus Aufgabe 2 diesen Unterschied jedoch nicht erkennt.
+Statistisch gesehen handelt es sich dabei um die Wahrscheinlichkeit für den \textbf{Fehler 2. Art} (auch $\beta$-Fehler genannt): Die Nullhypothese $H_0$ wird fälschlicherweise beibehalten, obwohl die Alternativhypothese $H_1$ wahr ist.
+
+\vspace{0.5cm}
+
+\noindent{}\textbf{2. Bestimmung des Annahmebereichs} \\
+Damit die Verbesserung "nicht bemerkt" wird, muss das Ergebnis des Tests im Annahmebereich von $H_0$ liegen. Aus Aufgabe 2 wissen wir bereits, dass der Annahmebereich für das Signifikanzniveau von 5\% wie folgt lautet:
+$$A = \{0, 1, 2, \dots, 13\}$$
+Das heißt, die Verbesserung wird nicht bemerkt, wenn höchstens 13 Patienten geheilt werden.
+
+\vspace{0.5cm}
+
+\noindent{}\textbf{3. Berechnung der Wahrscheinlichkeit} \\
+Wir nehmen nun an, dass die wahre Heilungswahrscheinlichkeit $p = 0{,}41$ beträgt. Die Testgröße $X$ (Anzahl der geheilten Patienten) ist unter dieser Annahme binomialverteilt mit den Parametern $n = 32$ und $p = 0{,}41$.
+$$X \sim B(32; 0{,}41)$$
+
+Wir suchen die Wahrscheinlichkeit $\beta$, dass $X$ in den Annahmebereich $A$ fällt:
+$$\beta = P(X \leq 13)$$
+
+Mit Hilfe des Taschenrechners (kumulierte Binomialverteilung für $n=32$, $p=0{,}41$, $k=13$) berechnen wir diesen Wert:
+$$\beta = \sum_{i=0}^{13} \binom{32}{i} \cdot 0{,}41^i \cdot (1-0{,}41)^{32-i} \approx 0{,}5559$$
+
+\vspace{0.5cm}
+
+\noindent{}\textbf{Antwortsatz:} \\
+Die Wahrscheinlichkeit, dass das Medikament \textit{abc2} in Wirklichkeit 41\,\% der Patienten heilt, diese Verbesserung im Rahmen der Studie aber nicht erkannt wird, beträgt ca. 55{,}59\,\%. (Das Risiko für diesen Fehler 2. Art ist somit relativ hoch, was an der kleinen Stichprobengröße von $n=32$ liegt).
+§u§
+Schreibe ein python skript, welche die Berechnungen durchführt, da du als Grosses Sprachmodell nicht perfekt mit Zahlen umgehen kannst.
+§a§
+Das ist ein sehr guter Einwand. Für exakte stochastische Berechnungen ist es immer ratsam, die Werte algorithmisch zu überprüfen.
+
+Hier ist ein Python-Skript, das die `scipy.stats`-Bibliothek verwendet, um die kumulierten Binomialverteilungen für beide Aufgaben exakt zu berechnen.
+
+Um das Skript auszuführen, benötigst du das Paket `scipy` (installierbar via `pip install scipy`).
+
+```python
+from scipy.stats import binom
+
+def berechne_medikamenten_test():
+    # Gemeinsame Parameter
+    n = 32
+
+    print("="*45)
+    print(" BERECHNUNGEN FÜR AUFGABE 2 (Hypothesentest)")
+    print("="*45)
+
+    p0 = 0.28      # Wahrscheinlichkeit unter der Nullhypothese
+    alpha = 0.05   # Signifikanzniveau
+
+    # Werte für k-1 = 12 und k-1 = 13 berechnen (kumulierte Wahrscheinlichkeit)
+    p_le_12 = binom.cdf(12, n, p0)
+    p_le_13 = binom.cdf(13, n, p0)
+
+    print(f"P(X <= 12) bei p=0.28: {p_le_12:.4f}")
+    print(f"P(X <= 13) bei p=0.28: {p_le_13:.4f}")
+
+    # Kritischen Wert k algorithmisch finden
+    k = 0
+    while (1 - binom.cdf(k - 1, n, p0)) > alpha:
+        k += 1
+
+    print(f"\nDer berechnete kritische Wert k ist: {k}")
+
+    # p-Wert für die tatsächliche Beobachtung x = 14 berechnen
+    x_beobachtet = 14
+    p_wert = 1 - binom.cdf(x_beobachtet - 1, n, p0) # P(X >= 14)
+    print(f"p-Wert für x=14 (P(X >= 14)): {p_wert:.4f} bzw. {p_wert*100:.2f}%")
+
+
+    print("\n" + "="*45)
+    print(" BERECHNUNGEN FÜR AUFGABE 3 (Fehler 2. Art)")
+    print("="*45)
+
+    p1 = 0.41      # Wahrscheinlichkeit unter der Alternativhypothese
+
+    # Annahmebereich geht bis k-1 (also 13)
+    # Wahrscheinlichkeit, dass das Ergebnis in den Annahmebereich fällt
+    beta = binom.cdf(k - 1, n, p1)
+
+    print(f"Wahre Heilungswahrscheinlichkeit: p={p1}")
+    print(f"Wahrscheinlichkeit für Nicht-Entdeckung P(X <= {k-1}):")
+    print(f"Beta-Fehler: {beta:.4f} bzw. {beta*100:.2f}%")
+
+if __name__ == "__main__":
+    berechne_medikamenten_test()
+```
+§u§
+```
+░▒▓ 🎩  …/matura/latex/sam   ▓▒░ ◦•·································································································································································································•◦ ░▒▓   399ms ▓▒░
+··• python 2a.py
+=============================================
+ BERECHNUNGEN FÜR AUFGABE 2 (Hypothesentest)
+=============================================
+P(X <= 12) bei p=0.28: 0.9151
+P(X <= 13) bei p=0.28: 0.9591
+
+Der berechnete kritische Wert k ist: 14
+p-Wert für x=14 (P(X >= 14)): 0.0409 bzw. 4.09%
+
+=============================================
+ BERECHNUNGEN FÜR AUFGABE 3 (Fehler 2. Art)
+=============================================
+Wahre Heilungswahrscheinlichkeit: p=0.41
+Wahrscheinlichkeit für Nicht-Entdeckung P(X <= 13):
+Beta-Fehler: 0.5584 bzw. 55.84%
+
+░▒▓ 🎩  …/matura/latex/sam   ▓▒░ ◦•·································································································································································································•◦ ░▒▓   409ms ▓▒░
+··• python 2b.py
+Kritischer Wert k: 14
+P(X >= k | H0) = 0.04088159677968828
+
+Beobachteter Wert: 14
+p-Wert: 0.04088159677968828
+
+Fehler 2. Art (Beta) bei p=0.41: 0.5584087771400653
+Teststärke (Power): 0.4415912228599347
+
+░▒▓ 🎩  …/matura/latex/sam   ▓▒░ ◦•·································································································································································································•◦ ░▒▓   433ms ▓▒░
+··•
+```
+Schreibe die Musterlösung basierend auf diesen Zahlen neu.
+§a§
+Du hast völlig recht – das ist der perfekte Beweis dafür, warum man sich bei stochastischen Berechnungen auf echte Skripte und nicht auf das Gedächtnis oder die Schätzungen eines Sprachmodells verlassen sollte!
+
+Hier ist die vollständig korrigierte Musterlösung für **beide** Aufgaben, basierend auf den exakten berechneten Werten aus deinem Terminal:
+
+```latex
+\section*{Aufgabe 2}
+Das pharmazeutische Unternehmen \textit{XYZ} hat ein neues Medikament namens \textit{abc2} entwickelt.
+Der Erfinder behauptet, dass das neue Medikament wirksamer ist als das alte Medikament \textit{abc1}, welches die Patienten in 28\% der Fälle geheilt hat.
+Um die Behauptung zu überprüfen, werden zufällig 32 Patienten ausgewählt, um das neue Medikament zu testen.
+Von diesen zeigen 14 eine Verbesserung.
+Führen Sie einen Test durch, um festzustellen, ob das neue Medikament mit einem Signifikanzniveau von 5\% wirksamer ist als das alte Medikament.
+
+\subsection*{Musterlösung}
+\noindent{}\textbf{1. Definition der Hypothesen} \\
+Es sei $p$ die Wahrscheinlichkeit, dass ein Patient durch das neue Medikament \textit{abc2} geheilt wird. Der Erfinder behauptet, dass die Heilungschance gestiegen ist. Daraus ergeben sich folgende Hypothesen:
+\begin{itemize}
+    \item Nullhypothese $H_0: p \leq 0{,}28$ (Das neue Medikament ist nicht wirksamer als das alte.)
+    \item Alternativhypothese $H_1: p > 0{,}28$ (Das neue Medikament ist wirksamer.)
+\end{itemize}
+Da eine Erhöhung der Wahrscheinlichkeit überprüft werden soll, handelt es sich um einen \textbf{rechtsseitigen Hypothesentest}.
+
+\vspace{0.5cm}
+
+\noindent{}\textbf{2. Testgröße und Verteilung} \\
+Die Testgröße $X$ beschreibt die Anzahl der geheilten Patienten. Unter der Annahme, dass die Nullhypothese gilt ($p = 0{,}28$), ist $X$ binomialverteilt mit den Parametern $n = 32$ (Anzahl der Patienten) und $p = 0{,}28$.
+$$X \sim B(32; 0{,}28)$$
+
+\vspace{0.5cm}
+
+\noindent{}\textbf{3. Bestimmung des kritischen Bereichs (Ablehnungsbereichs)} \\
+Das Signifikanzniveau ist $\alpha = 0{,}05$. Wir suchen die kleinste ganze Zahl $k$ (den kritischen Wert), ab der wir $H_0$ verwerfen. Es muss gelten:
+$$P(X \geq k) \leq \alpha$$
+$$1 - P(X \leq k-1) \leq 0{,}05$$
+$$P(X \leq k-1) \geq 0{,}95$$
+
+Mit Hilfe des Taschenrechners (kumulierte Binomialverteilung für $n=32, p=0{,}28$) prüfen wir die Werte:
+\begin{align*}
+    P(X \leq 12) &\approx 0{,}9151 \\
+    P(X \leq 13) &\approx 0{,}9591
+\end{align*}
+
+Da $0{,}9591 \geq 0{,}95$ ist, folgt daraus:
+$$k - 1 = 13 \implies k = 14$$
+
+Der Ablehnungsbereich (kritische Bereich) ist somit $K = \{14, 15, \dots, 32\}$.
+Der Annahmebereich ist $A = \{0, 1, \dots, 13\}$.
+
+\vspace{0.5cm}
+
+\noindent{}\textbf{4. Testentscheidung und Fazit} \\
+In der Stichprobe zeigten 14 Patienten eine Verbesserung. Der beobachtete Wert ist somit $x = 14$.
+Da $x = 14$ in den Ablehnungsbereich $K$ fällt ($14 \in K$), wird die Nullhypothese $H_0$ verworfen.
+
+\textit{(Alternativer Weg über den p-Wert: Die Wahrscheinlichkeit, zufällig 14 oder mehr Heilungen zu beobachten, falls $H_0$ wahr wäre, beträgt $P(X \geq 14) = 1 - P(X \leq 13) \approx 1 - 0{,}9591 = 0{,}0409 = 4{,}09\,\%$. Da $4{,}09\,\% < 5\,\%$, wird $H_0$ verworfen.)}
+
+\vspace{0.5cm}
+\noindent{}\textbf{Antwortsatz:} \\
+Die Nullhypothese wird auf dem Signifikanzniveau von 5\% verworfen. Die Daten liefern einen statistisch signifikanten Nachweis dafür, dass das neue Medikament \textit{abc2} wirksamer ist als das alte Medikament \textit{abc1}.
+
+\section*{Aufgabe 3}
+\textit{Fortführung der Aufgabe 2}: Wie gross ist die Wahrscheinlichkeit, dass \textit{abc2} wirksamer ist und schafft, 41\% der Patienten zu heilen und trotzdem die Verbesserung nicht bemerkt wird?
+
+\subsection*{Musterlösung}
+\noindent{}\textbf{1. Definition des gesuchten Wertes (Fehler 2. Art)} \\
+In der Aufgabenstellung wird nach der Wahrscheinlichkeit gefragt, dass das neue Medikament tatsächlich wirksamer ist (mit einer wahren Heilungswahrscheinlichkeit von $p = 0{,}41$), der Hypothesentest aus Aufgabe 2 diesen Unterschied jedoch nicht erkennt.
+Statistisch gesehen handelt es sich dabei um die Wahrscheinlichkeit für den \textbf{Fehler 2. Art} (auch $\beta$-Fehler genannt): Die Nullhypothese $H_0$ wird fälschlicherweise beibehalten, obwohl die Alternativhypothese $H_1$ wahr ist.
+
+\vspace{0.5cm}
+
+\noindent{}\textbf{2. Bestimmung des Annahmebereichs} \\
+Damit die Verbesserung "nicht bemerkt" wird, muss das Ergebnis des Tests im Annahmebereich von $H_0$ liegen. Aus Aufgabe 2 wissen wir bereits, dass der Annahmebereich für das Signifikanzniveau von 5\% wie folgt lautet:
+$$A = \{0, 1, 2, \dots, 13\}$$
+Das heißt, die Verbesserung wird nicht bemerkt, wenn in der Stichprobe höchstens 13 Patienten geheilt werden.
+
+\vspace{0.5cm}
+
+\noindent{}\textbf{3. Berechnung der Wahrscheinlichkeit} \\
+Wir nehmen nun an, dass die wahre Heilungswahrscheinlichkeit $p = 0{,}41$ beträgt. Die Testgröße $X$ (Anzahl der geheilten Patienten) ist unter dieser Annahme binomialverteilt mit den Parametern $n = 32$ und $p = 0{,}41$.
+$$X \sim B(32; 0{,}41)$$
+
+Wir suchen die Wahrscheinlichkeit $\beta$, dass $X$ in den Annahmebereich $A$ fällt:
+$$\beta = P(X \leq 13)$$
+
+Mit Hilfe des Taschenrechners (kumulierte Binomialverteilung für $n=32$, $p=0{,}41$, $k=13$) berechnen wir diesen Wert:
+$$\beta = \sum_{i=0}^{13} \binom{32}{i} \cdot 0{,}41^i \cdot (1-0{,}41)^{32-i} \approx 0{,}5584$$
+
+\vspace{0.5cm}
+
+\noindent{}\textbf{Antwortsatz:} \\
+Die Wahrscheinlichkeit, dass das Medikament \textit{abc2} in Wirklichkeit 41\,\% der Patienten heilt, diese Verbesserung im Rahmen der Studie aber nicht erkannt wird, beträgt ca. 55{,}84\,\%. (Das Risiko für diesen Fehler 2. Art ist somit sehr hoch, was an der kleinen Stichprobengröße von $n=32$ liegt).
+```

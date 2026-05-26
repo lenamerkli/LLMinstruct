@@ -1,0 +1,100 @@
+§u§
+```
+\section*{Aufgabe 3}
+\textit{Fortführung der Aufgabe 2}: Wie gross ist die Wahrscheinlichkeit, dass \textit{abc2} wirksamer ist und schafft, 41\% der Patienten zu heilen und trotzdem die Verbesserung nicht bemerkt wird?
+
+\subsection*{Musterlösung}
+\noindent{}\textbf{1. Definition des gesuchten Wertes (Fehler 2. Art)} \\
+In der Aufgabenstellung wird nach der Wahrscheinlichkeit gefragt, dass das neue Medikament tatsächlich wirksamer ist (mit einer wahren Heilungswahrscheinlichkeit von $p = 0{,}41$), der Hypothesentest aus Aufgabe 2 diesen Unterschied jedoch nicht erkennt.
+Statistisch gesehen handelt es sich dabei um die Wahrscheinlichkeit für den \textbf{Fehler 2. Art} (auch $\beta$-Fehler genannt): Die Nullhypothese $H_0$ wird fälschlicherweise beibehalten, obwohl die Alternativhypothese $H_1$ wahr ist.
+
+\vspace{0.5cm}
+
+\noindent{}\textbf{2. Bestimmung des Annahmebereichs} \\
+Damit die Verbesserung "nicht bemerkt" wird, muss das Ergebnis des Tests im Annahmebereich von $H_0$ liegen. Aus Aufgabe 2 wissen wir bereits, dass der Annahmebereich für das Signifikanzniveau von 5\% wie folgt lautet:
+$$A = \{0, 1, 2, \dots, 13\}$$
+Das heißt, die Verbesserung wird nicht bemerkt, wenn in der Stichprobe höchstens 13 Patienten geheilt werden.
+
+\vspace{0.5cm}
+
+\noindent{}\textbf{3. Berechnung der Wahrscheinlichkeit} \\
+Wir nehmen nun an, dass die wahre Heilungswahrscheinlichkeit $p = 0{,}41$ beträgt. Die Testgröße $X$ (Anzahl der geheilten Patienten) ist unter dieser Annahme binomialverteilt mit den Parametern $n = 32$ und $p = 0{,}41$.
+$$X \sim B(32; 0{,}41)$$
+
+Wir suchen die Wahrscheinlichkeit $\beta$, dass $X$ in den Annahmebereich $A$ fällt:
+$$\beta = P(X \leq 13)$$
+
+Mit Hilfe des Taschenrechners (kumulierte Binomialverteilung für $n=32$, $p=0{,}41$, $k=13$) berechnen wir diesen Wert:
+$$\beta = \sum_{i=0}^{13} \binom{32}{i} \cdot 0{,}41^i \cdot (1-0{,}41)^{32-i} \approx 0{,}5584$$
+
+\vspace{0.5cm}
+
+\noindent{}\textbf{Antwortsatz:} \\
+Die Wahrscheinlichkeit, dass das Medikament \textit{abc2} in Wirklichkeit 41\,\% der Patienten heilt, diese Verbesserung im Rahmen der Studie aber nicht erkannt wird, beträgt ca. 55{,}84\,\%. (Das Risiko für diesen Fehler 2. Art ist somit sehr hoch, was an der kleinen Stichprobengröße von $n=32$ liegt).
+
+\section*{Aufgabe 4}
+Herr Sassone vermuten, dass es einen Unterschied in der Leistung der Schüler*innen zweischen zwei Lernmethoden gibt: \textit{SchlafenOhneLernen} und \textit{LernenOhneSchlafen}.
+Nehmen wir an, dies sind die Noten der Schüler*innen:
+\begin{itemize}
+    \item \textit{SchlafenOhneLernen} $\{3.2, 3.6, 4.1, 5.2, 5.7\}$
+    \item \textit{LernenOhneSchlafen} $\{3.6, 3.7, 4.2, 4.7, 4.7, 5.0, 5.0, 5.6\}$
+\end{itemize}
+Vergleichen Sie die Leistungen der beiden Gruppen mit einem Signifikanzniveau von 5\%.
+
+\subsection*{Musterlösung}
+```
+Schreibe die Musterlösung für Aufgabe 4. Erstelle dazu zuerst ein python Skript, um die exakten Zahlenwerte zu erhalten. Ich werde das python Skript für Sie ausführen.
+§a§
+Hier ist das Python‑Skript zur Berechnung aller benötigten Kennwerte (Mittelwerte, Standardabweichungen, Welch‑t‑Test, zusätzlich optional Mann‑Whitney‑U‑Test):
+
+```python
+import numpy as np
+from scipy import stats
+
+# Daten
+schlafen_ohne_lernen = np.array([3.2, 3.6, 4.1, 5.2, 5.7])
+lernen_ohne_schlafen = np.array([3.6, 3.7, 4.2, 4.7, 4.7, 5.0, 5.0, 5.6])
+
+# Stichprobengrößen
+n1 = len(schlafen_ohne_lernen)
+n2 = len(lernen_ohne_schlafen)
+
+# Mittelwerte
+mean1 = np.mean(schlafen_ohne_lernen)
+mean2 = np.mean(lernen_ohne_schlafen)
+
+# Standardabweichungen (Stichprobe!)
+std1 = np.std(schlafen_ohne_lernen, ddof=1)
+std2 = np.std(lernen_ohne_schlafen, ddof=1)
+
+# Welch-t-Test (zweiseitig, da Unterschied vermutet wird)
+t_stat, p_value = stats.ttest_ind(
+    schlafen_ohne_lernen,
+    lernen_ohne_schlafen,
+    equal_var=False
+)
+
+# Freiheitsgrade nach Welch-Satterthwaite
+df = ((std1**2/n1 + std2**2/n2)**2) / (
+    ((std1**2/n1)**2)/(n1-1) + ((std2**2/n2)**2)/(n2-1)
+)
+
+# Optional: Mann-Whitney-U-Test (nichtparametrisch)
+u_stat, p_value_mw = stats.mannwhitneyu(
+    schlafen_ohne_lernen,
+    lernen_ohne_schlafen,
+    alternative="two-sided"
+)
+
+print("Stichprobengrößen:", n1, n2)
+print("Mittelwerte:", mean1, mean2)
+print("Standardabweichungen:", std1, std2)
+print("\nWelch-t-Test:")
+print("t-Statistik:", t_stat)
+print("Freiheitsgrade (Welch):", df)
+print("p-Wert:", p_value)
+
+print("\nMann-Whitney-U-Test:")
+print("U-Statistik:", u_stat)
+print("p-Wert:", p_value_mw)
+```

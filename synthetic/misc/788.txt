@@ -1,0 +1,167 @@
+§u§
+```
+\section*{Aufgabe 1}
+Herr Sassone hat gern Schokolade!
+Die SuS haben ihm heute eine Schachtel mit 25 gemischten Schokoladenpralinen mitgebracht.
+Es ist bekannt, dass Sassone die Kombination von Orange und Schokolade nicht mag.
+Er hofft, dass weniger als 36\% der Pralinen diesen Geschmack haben.
+Um dies zu kontrollieren, kostet Dr. rer. nat. Dipl.-Math Sassone 6 Pralinen und findet 2 mit Orangengeschmack.
+Ist das genug, damit Herr Sassone mit einer Signifikanz von 5\% enttäuscht bleibt?
+
+\subsection{Musterlösung}
+```
+Schreibe die Musterlösung.
+§a§
+Hier ist eine vollständige und detaillierte Musterlösung für diese Aufgabe. Da es sich bei Herrn Sassone um einen Mathematiker handelt, wird die Aufgabe mathematisch präzise mit der hypergeometrischen Verteilung (Ziehen ohne Zurücklegen bei kleiner Grundgesamtheit) gelöst. Eine alternative Lösung mit der Binomialverteilung ist ebenfalls skizziert.
+
+***
+
+### Musterlösung
+
+**1. Aufstellen der Hypothesen**
+Herr Sassone hofft, dass *weniger* als $36\,\%$ der Pralinen Orangengeschmack haben. Um diese Hoffnung statistisch zu untermauern, muss sie als Alternativhypothese ($H_1$) formuliert werden.
+
+Wir ermitteln zunächst die absolute Anzahl an Pralinen, die $36\,\%$ entspricht:
+$$25 \text{ Pralinen} \cdot 0{,}36 = 9 \text{ Pralinen}$$
+Herr Sassone hofft also, dass sich weniger als 9 Pralinen (d.h. höchstens 8) mit Orangengeschmack in der Schachtel befinden.
+Die Hypothesen für den linksseitigen Hypothesentest lauten somit bezogen auf die Anzahl $K$ der Orangenpralinen in der Schachtel:
+*   **Nullhypothese $H_0$:** $K \ge 9$ (bzw. $p \ge 0{,}36$) – *Seine Befürchtung trifft zu.*
+*   **Alternativhypothese $H_1$:** $K < 9$ (bzw. $p < 0{,}36$) – *Seine Hoffnung trifft zu.*
+
+Das Signifikanzniveau ist $\alpha = 0{,}05$ ($5\,\%$).
+
+**2. Wahl des mathematischen Modells**
+Da aus einer kleinen, bekannten Grundmenge ($N = 25$) eine Stichprobe ($n = 6$) ohne Zurücklegen gezogen wird, ist die Zufallsgröße $X$ (Anzahl der gezogenen Orangenpralinen) exakt **hypergeometrisch verteilt**.
+Um den Fehler 1. Art zu kontrollieren, gehen wir vom ungünstigsten Fall der Nullhypothese aus (dem Randwert): Es befinden sich exakt $K = 9$ Orangenpralinen in der Schachtel.
+*   $N = 25$ (Gesamtzahl der Pralinen)
+*   $K = 9$ (Anzahl der Orangenpralinen unter $H_0$)
+*   $n = 6$ (Größe der Stichprobe)
+
+**3. Bestimmung des Ablehnungsbereichs / Berechnung des p-Werts**
+Wir prüfen, ab wie vielen Pralinen in der Stichprobe Herr Sassone $H_0$ verwerfen dürfte. Dafür berechnen wir die kumulierten Wahrscheinlichkeiten $P(X \le x)$ für die hypergeometrische Verteilung:
+$$P(X = k) = \frac{\binom{K}{k} \cdot \binom{N-K}{n-k}}{\binom{N}{n}} = \frac{\binom{9}{k} \cdot \binom{16}{6-k}}{\binom{25}{6}}$$
+
+*   **Für $x = 0$:**
+    $$P(X = 0) = \frac{\binom{9}{0} \cdot \binom{16}{6}}{\binom{25}{6}} = \frac{1 \cdot 8008}{177100} \approx 0{,}0452 \quad (4{,}52\,\%)$$
+*   **Für $x = 1$:**
+    $$P(X = 1) = \frac{\binom{9}{1} \cdot \binom{16}{5}}{\binom{25}{6}} = \frac{9 \cdot 4368}{177100} = \frac{39312}{177100} \approx 0{,}2220$$
+    Kumuliert: $P(X \le 1) = 0{,}0452 + 0{,}2220 = 0{,}2672 \quad (26{,}72\,\%)$
+
+Da $P(X = 0) \approx 4{,}52\,\% \le 5\,\%$ ist, aber $P(X \le 1) \approx 26{,}72\,\% > 5\,\%$, liegt der kritische Wert bei $0$.
+Der Ablehnungsbereich der Nullhypothese ist somit **$A = \{0\}$**.
+Herr Sassone hätte also **gar keine** Orangenpraline in seiner Stichprobe finden dürfen, um seine Hoffnung auf dem $5\,\%$-Niveau zu bestätigen.
+
+**4. Fazit und Antwort**
+Herr Sassone hat in seiner Stichprobe $x = 2$ Orangenpralinen gefunden.
+Der Wert $x = 2$ liegt **nicht** im Ablehnungsbereich $A = \{0\}$.
+*(Alternativ: Der p-Wert für $x = 2$ liegt bei $P(X \le 2) \approx 63{,}7\,\%$ und damit weit über $\alpha = 5\,\%$).*
+
+Die Nullhypothese kann folglich nicht verworfen werden. Herr Sassone konnte statistisch nicht nachweisen, dass weniger als $36\,\%$ der Pralinen nach Orange schmecken.
+
+**Antwort:** Ja, 2 Orangenpralinen in der Stichprobe sind "genug" (im Sinne von: es sind zu viele Orangenpralinen gezogen worden), damit die Nullhypothese stehen bleibt. Seine Hoffnung wird nicht bestätigt, und Dr. Sassone **bleibt enttäuscht**.
+
+***
+
+*Hinweis für die Korrektur (falls im Unterricht vereinfacht mit der Binomialverteilung gearbeitet wurde):*
+Wird die Aufgabe approximativ mit der Binomialverteilung $B(n=6; p=0{,}36)$ gelöst, ergibt sich ein ähnliches Bild.
+$P(X = 0) = \binom{6}{0} \cdot 0{,}36^0 \cdot 0{,}64^6 \approx 0{,}0687$ ($6{,}87\,\%$).
+Da hier schon $P(X = 0) > 5\,\%$ ist, wäre der Ablehnungsbereich sogar leer ($A = \{\}$). Der Test würde bei $n=6$ gar keine Entscheidung zugunsten der Hoffnung zulassen. Auch hier lautet das Fazit: $H_0$ wird nicht verworfen, Sassone bleibt enttäuscht.
+§u§
+Schreibe das als LaTeX.
+§a§
+Hier ist der LaTeX-Code für die Musterlösung.
+
+*Hinweis: Da in der Lösung Binomialkoeffizienten (`\binom`) und Text in Matheumgebungen (`\text`) vorkommen, stelle sicher, dass du das Paket `\usepackage{amsmath}` in deiner Präambel geladen hast.*
+
+```latex
+Da aus einer bekannten, endlichen Grundgesamtheit ($N=25$) ohne Zurücklegen gezogen wird, modellieren wir dieses Problem exakt mit der hypergeometrischen Verteilung. Eine alternative Näherung über die Binomialverteilung wird am Ende ebenfalls kurz besprochen.
+
+\vspace{0.5cm}
+\textbf{1. Aufstellen der Hypothesen}\\
+Herr Sassone hofft, dass \textit{weniger} als $36\,\%$ der Pralinen Orangengeschmack haben. Diese Hoffnung muss als Alternativhypothese ($H_1$) formuliert werden, um sie statistisch zu belegen.
+
+Zunächst ermitteln wir die absolute Anzahl an Pralinen, die $36\,\%$ entspricht:
+\[ 25 \text{ Pralinen} \cdot 0{,}36 = 9 \text{ Pralinen} \]
+Herr Sassone hofft also, dass sich weniger als 9 Pralinen (d.\,h. höchstens 8) mit Orangengeschmack in der Schachtel befinden. Für den linksseitigen Hypothesentest bezogen auf die Anzahl $K$ der Orangenpralinen lauten die Hypothesen:
+\begin{itemize}
+    \item \textbf{Nullhypothese $H_0$:} $K \ge 9$ (bzw. $p \ge 0{,}36$) -- \textit{Seine Befürchtung trifft zu.}
+    \item \textbf{Alternativhypothese $H_1$:} $K < 9$ (bzw. $p < 0{,}36$) -- \textit{Seine Hoffnung trifft zu.}
+\end{itemize}
+Das Signifikanzniveau ist $\alpha = 0{,}05$ ($5\,\%$).
+
+\vspace{0.5cm}
+\textbf{2. Wahl des mathematischen Modells}\\
+Da aus einer kleinen, bekannten Grundmenge ($N = 25$) eine Stichprobe ($n = 6$) ohne Zurücklegen gezogen wird, ist die Zufallsgröße $X$ (Anzahl der gezogenen Orangenpralinen) exakt \textbf{hypergeometrisch verteilt}.\\
+Um den Fehler 1. Art zu kontrollieren, gehen wir vom ungünstigsten Fall der Nullhypothese aus (dem Randwert): Es befinden sich exakt $K = 9$ Orangenpralinen in der Schachtel.
+\begin{itemize}
+    \item $N = 25$ (Gesamtzahl der Pralinen)
+    \item $K = 9$ (Anzahl der Orangenpralinen unter $H_0$)
+    \item $n = 6$ (Größe der Stichprobe)
+\end{itemize}
+
+\vspace{0.5cm}
+\textbf{3. Bestimmung des Ablehnungsbereichs}\\
+Wir berechnen die kumulierten Wahrscheinlichkeiten $P(X \le x)$ für die hypergeometrische Verteilung:
+\[ P(X = k) = \frac{\binom{K}{k} \cdot \binom{N-K}{n-k}}{\binom{N}{n}} = \frac{\binom{9}{k} \cdot \binom{16}{6-k}}{\binom{25}{6}} \]
+
+\begin{itemize}
+    \item \textbf{Für $x = 0$:}
+    \[ P(X = 0) = \frac{\binom{9}{0} \cdot \binom{16}{6}}{\binom{25}{6}} = \frac{1 \cdot 8008}{177100} \approx 0{,}0452 \quad (4{,}52\,\%) \]
+    \item \textbf{Für $x = 1$:}
+    \[ P(X = 1) = \frac{\binom{9}{1} \cdot \binom{16}{5}}{\binom{25}{6}} = \frac{9 \cdot 4368}{177100} = \frac{39312}{177100} \approx 0{,}2220 \]
+    Kumuliert ergibt sich:
+    \[ P(X \le 1) = P(X=0) + P(X=1) \approx 0{,}0452 + 0{,}2220 = 0{,}2672 \quad (26{,}72\,\%) \]
+\end{itemize}
+Da $P(X = 0) \approx 4{,}52\,\% \le 5\,\%$ ist, aber $P(X \le 1) \approx 26{,}72\,\% > 5\,\%$, liegt der kritische Wert bei $0$. Der Ablehnungsbereich der Nullhypothese ist somit \textbf{$A = \{0\}$}. Herr Sassone hätte also \textbf{keine einzige} Orangenpraline in seiner Stichprobe finden dürfen, um $H_0$ zu verwerfen.
+
+\vspace{0.5cm}
+\textbf{4. Fazit und Antwort}\\
+Herr Sassone hat in seiner Stichprobe $x = 2$ Orangenpralinen gefunden. Der Wert $x = 2$ liegt \textbf{nicht} im Ablehnungsbereich $A = \{0\}$. (Alternativ: Der p-Wert für $x = 2$ liegt bei $P(X \le 2) \approx 63{,}7\,\%$ und damit weit über $\alpha = 5\,\%$).
+
+Die Nullhypothese kann folglich nicht verworfen werden. Herr Sassone konnte statistisch nicht nachweisen, dass weniger als $36\,\%$ der Pralinen nach Orange schmecken.
+
+\textbf{Antwort:} Ja, 2 Orangenpralinen in der Stichprobe sind \glqq genug\grqq\ (im Sinne von: es sind zu viele gezogen worden), damit die Nullhypothese stehen bleibt. Seine Hoffnung wird nicht bestätigt, und Dr.\ Sassone \textbf{bleibt enttäuscht}.
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.3cm}
+\textit{Hinweis für die Korrektur (falls im Unterricht vereinfacht mit der Binomialverteilung gerechnet wurde):}\\
+Wird die Aufgabe approximativ mit der Binomialverteilung $B(n=6; p=0{,}36)$ gelöst, ergibt sich:
+\[ P(X = 0) = \binom{6}{0} \cdot 0{,}36^0 \cdot 0{,}64^6 \approx 0{,}0687 \quad (6{,}87\,\%) \]
+Da hier schon $P(X = 0) > 5\,\%$ ist, wäre der Ablehnungsbereich leer ($A = \{\}$). Der Test würde bei $n=6$ gar keine Entscheidung zugunsten der Hoffnung zulassen. Auch hier lautet das Fazit: $H_0$ wird nicht verworfen, Herr Sassone bleibt enttäuscht.
+```
+§u§
+Für mich als Verständnis: wieso ist die Nullhypothese seine Befürchtung?
+§a§
+Das ist eine exzellente Frage, denn genau hier liegt oft der größte Stolperstein beim Thema Hypothesentests!
+
+Um zu verstehen, warum das so ist, muss man sich die „goldene Regel“ der schließenden Statistik ins Gedächtnis rufen: **Man kann statistisch immer nur die Alternativhypothese ($H_1$) belegen, niemals die Nullhypothese ($H_0$).**
+
+Hier ist die ausführliche Erklärung, warum seine Befürchtung in die Nullhypothese muss:
+
+### 1. Das Prinzip des Hypothesentests (Der Gerichtssaal-Vergleich)
+Ein Hypothesentest funktioniert wie ein Strafprozess vor Gericht:
+*   **$H_0$ (Die Nullhypothese)** ist der Status quo oder der Zweifel. Vor Gericht lautet sie: *„Der Angeklagte ist unschuldig.“*
+*   **$H_1$ (Die Alternativhypothese)** ist das, was man **beweisen möchte**. Vor Gericht lautet sie: *„Der Angeklagte ist schuldig.“*
+
+Der Richter (die Mathematik) sagt: Wir bleiben bei $H_0$, es sei denn, die Beweislast für $H_1$ ist so erdrückend (die Wahrscheinlichkeit eines Irrtums ist $\le 5\,\%$), dass wir $H_0$ verwerfen *müssen*.
+
+### 2. Angewandt auf Herrn Sassone
+Herr Sassone möchte sich freuen. Er möchte quasi „beweisen“, dass weniger als $36\,\%$ der Pralinen nach Orange schmecken.
+Da man nur $H_1$ beweisen kann, **muss** seine Hoffnung in $H_1$ formuliert werden:
+*   **$H_1$ (was er beweisen/hoffen will):** Weniger als $36\,\%$ sind Orange.
+
+Die Nullhypothese $H_0$ ist logisch gesehen **immer das genaue Gegenteil** von $H_1$. Das Gegenteil von „weniger als $36\,\%$“ ist „$36\,\%$ oder mehr“.
+*   **$H_0$ (das Gegenteil von dem, was er hofft):** $36\,\%$ oder mehr sind Orange.
+
+Und was bedeutet „$36\,\%$ oder mehr sind Orange“ für Herrn Sassone? Das ist genau der Fall, den er nicht mag – also **seine Befürchtung**.
+
+### 3. Was würde passieren, wenn man es andersrum macht?
+Stell dir vor, er würde seine Hoffnung in $H_0$ stecken ($H_0$: „Es sind wenig Orangenpralinen“).
+Die Mathematik schützt immer $H_0$. Wenn er nun in seiner kleinen Stichprobe (6 Pralinen) z.\,B. 2 Orangenpralinen findet, würde die Mathematik sagen: *„Das ist zwar nicht toll, aber bei nur 6 gezogenen Pralinen ist das nicht genug Beweismaterial, um $H_0$ zu verwerfen.“*
+Er würde also $H_0$ beibehalten und glauben: „Juhu, meine Hoffnung stimmt!“, obwohl er in Wahrheit überhaupt keinen echten Beweis dafür hat (die Stichprobe war einfach zu klein).
+
+Das nennt man den **Fehler 2. Art**: Man behält eine falsche Nullhypothese bei. Und diesen Fehler kann man in der Schule meistens nicht gut kontrollieren (der $5\,\%$-Wert gilt nur für den Fehler 1. Art).
+
+### Zusammenfassung in einem Satz:
+Weil man in der Statistik **immer nur die Hoffnung ($H_1$) aktiv beweisen kann**, muss das Gegenteil davon – also der schlimmste Fall / die Befürchtung – automatisch die Nullhypothese ($H_0$) sein, die es zu widerlegen gilt.

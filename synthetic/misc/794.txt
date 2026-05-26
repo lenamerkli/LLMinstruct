@@ -1,0 +1,282 @@
+§u§
+Erkläre mir Aufgaben im Stil von: Ein Zylinder rollt aus dem Stillstand eine Schräge herunter. Welche Geschwindigkeit und kinetische Energie hat er am Ende? Eine Kugel hat die gleiche Masse und den gleichen Radius. Kommt sie vor oder nach dem Zylinder unten an?
+§a§
+Gern — solche Aufgaben löst man fast immer mit **Energieerhaltung** und der Bedingung **Rollen ohne Gleiten**.
+
+## 1. Grundidee
+
+Ein Körper rollt eine Schräge aus dem Stillstand herunter.
+
+Am Anfang hat er nur Lageenergie:
+
+\[
+E_\text{pot}=mgh
+\]
+
+Am Ende hat er kinetische Energie in zwei Formen:
+
+1. **Translationsenergie**, weil sich der Schwerpunkt bewegt:
+
+\[
+E_\text{trans}=\frac12 mv^2
+\]
+
+2. **Rotationsenergie**, weil der Körper rotiert:
+
+\[
+E_\text{rot}=\frac12 I\omega^2
+\]
+
+Für Rollen ohne Gleiten gilt:
+
+\[
+v=\omega R
+\]
+
+also
+
+\[
+\omega=\frac{v}{R}
+\]
+
+---
+
+## 2. Zylinder rollt herunter
+
+Nehmen wir einen **Vollzylinder** an. Für ihn gilt:
+
+\[
+I_\text{Zylinder}=\frac12 mR^2
+\]
+
+Energieerhaltung:
+
+\[
+mgh=\frac12 mv^2+\frac12 I\omega^2
+\]
+
+Einsetzen von \(I=\frac12 mR^2\) und \(\omega=\frac{v}{R}\):
+
+\[
+mgh=\frac12 mv^2+\frac12\left(\frac12 mR^2\right)\left(\frac{v}{R}\right)^2
+\]
+
+\[
+mgh=\frac12 mv^2+\frac14 mv^2
+\]
+
+\[
+mgh=\frac34 mv^2
+\]
+
+Also:
+
+\[
+v^2=\frac{4}{3}gh
+\]
+
+\[
+\boxed{v=\sqrt{\frac{4}{3}gh}}
+\]
+
+Das ist die Geschwindigkeit des Vollzylinders am Ende der Schräge.
+
+---
+
+## 3. Kinetische Energie am Ende
+
+Wenn keine Energie verloren geht, ist die gesamte kinetische Energie am Ende gleich der verlorenen Lageenergie:
+
+\[
+\boxed{E_\text{kin}=mgh}
+\]
+
+Sie setzt sich aber auf aus Translation und Rotation.
+
+Für den Vollzylinder:
+
+\[
+E_\text{trans}=\frac12 mv^2
+\]
+
+Mit
+
+\[
+v^2=\frac43 gh
+\]
+
+ergibt sich:
+
+\[
+E_\text{trans}=\frac12 m\frac43 gh
+\]
+
+\[
+E_\text{trans}=\frac23 mgh
+\]
+
+Die Rotationsenergie ist dann:
+
+\[
+E_\text{rot}=mgh-\frac23 mgh
+\]
+
+\[
+E_\text{rot}=\frac13 mgh
+\]
+
+Also:
+
+\[
+\boxed{E_\text{trans}=\frac23 mgh}
+\]
+
+\[
+\boxed{E_\text{rot}=\frac13 mgh}
+\]
+
+\[
+\boxed{E_\text{kin, gesamt}=mgh}
+\]
+
+---
+
+## 4. Vergleich mit einer Kugel
+
+Jetzt hat eine Kugel dieselbe Masse und denselben Radius.
+
+Für eine **Vollkugel** gilt:
+
+\[
+I_\text{Kugel}=\frac25 mR^2
+\]
+
+Wieder Energieerhaltung:
+
+\[
+mgh=\frac12 mv^2+\frac12 I\omega^2
+\]
+
+Einsetzen:
+
+\[
+mgh=\frac12 mv^2+\frac12\left(\frac25 mR^2\right)\left(\frac{v}{R}\right)^2
+\]
+
+\[
+mgh=\frac12 mv^2+\frac15 mv^2
+\]
+
+\[
+mgh=\frac{7}{10}mv^2
+\]
+
+Daraus folgt:
+
+\[
+v^2=\frac{10}{7}gh
+\]
+
+\[
+\boxed{v_\text{Kugel}=\sqrt{\frac{10}{7}gh}}
+\]
+
+---
+
+## 5. Wer kommt zuerst unten an?
+
+Für den Vollzylinder:
+
+\[
+v_\text{Zylinder}=\sqrt{\frac43 gh}
+\]
+
+Für die Vollkugel:
+
+\[
+v_\text{Kugel}=\sqrt{\frac{10}{7}gh}
+\]
+
+Vergleichen wir die Faktoren:
+
+\[
+\frac43 \approx 1{,}333
+\]
+
+\[
+\frac{10}{7}\approx 1{,}429
+\]
+
+Die Kugel hat also am Ende eine größere Geschwindigkeit.
+
+\[
+\boxed{v_\text{Kugel}>v_\text{Zylinder}}
+\]
+
+Daher kommt die Kugel früher unten an.
+
+\[
+\boxed{\text{Die Kugel kommt vor dem Zylinder unten an.}}
+\]
+
+---
+
+## 6. Intuitive Erklärung
+
+Beide Körper verlieren dieselbe Lageenergie \(mgh\).
+
+Aber ein Teil dieser Energie geht in Rotation. Je größer das Trägheitsmoment ist, desto mehr Energie geht in Rotation und desto weniger bleibt für die Vorwärtsbewegung übrig.
+
+Der Vollzylinder hat:
+
+\[
+I=\frac12 mR^2
+\]
+
+Die Vollkugel hat:
+
+\[
+I=\frac25 mR^2
+\]
+
+Da
+
+\[
+\frac25 < \frac12
+\]
+
+hat die Kugel das kleinere Trägheitsmoment. Sie muss also weniger Energie in Rotation „stecken“ und kann mehr Energie in die Bewegung ihres Schwerpunkts umwandeln.
+
+Deshalb rollt sie schneller.
+
+---
+
+## Merksatz
+
+Für einen rollenden Körper gilt allgemein:
+
+\[
+v=\sqrt{\frac{2gh}{1+\frac{I}{mR^2}}}
+\]
+
+Je kleiner
+
+\[
+\frac{I}{mR^2}
+\]
+
+ist, desto schneller ist der Körper unten.
+
+Für wichtige Körper:
+
+| Körper | Trägheitsmoment \(I\) | Geschwindigkeit unten |
+|---|---:|---:|
+| Vollkugel | \(\frac25 mR^2\) | \(\sqrt{\frac{10}{7}gh}\) |
+| Vollzylinder | \(\frac12 mR^2\) | \(\sqrt{\frac43 gh}\) |
+| Hohlzylinder/Reifen | \(mR^2\) | \(\sqrt{gh}\) |
+
+Also gilt typischerweise:
+
+\[
+\boxed{\text{Vollkugel schneller als Vollzylinder schneller als Hohlzylinder.}}
+\]

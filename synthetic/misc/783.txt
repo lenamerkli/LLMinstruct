@@ -1,0 +1,326 @@
+§u§
+```
+An error has occurred! Try to Logout and Login on your Epic account.
+[cli] INFO: Testing existing login data if present...Traceback (most recent call last):File "/usr/lib64/heroic/resources/app.asar.unpacked/build/bin/x64/linux/./legendary/urllib3/connectionpool.py", line 464, in _make_request
+self._validate_conn(conn)
+~~~~~~~~~~~~~~~~~~~^^^^^^
+File "/usr/lib64/heroic/resources/app.asar.unpacked/build/bin/x64/linux/./legendary/urllib3/connectionpool.py", line 1093, in _validate_conn
+conn.connect()
+~~~~~~~~~~~~^^
+File "/usr/lib64/heroic/resources/app.asar.unpacked/build/bin/x64/linux/./legendary/urllib3/connection.py", line 796, in connect
+sock_and_verified = _ssl_wrap_socket_and_match_hostname(
+sock=sock,
+...<14 lines>...
+assert_fingerprint=self.assert_fingerprint,
+)
+File "/usr/lib64/heroic/resources/app.asar.unpacked/build/bin/x64/linux/./legendary/urllib3/connection.py", line 975, in _ssl_wrap_socket_and_match_hostname
+ssl_sock = ssl_wrap_socket(
+sock=sock,
+...<8 lines>...
+tls_in_tls=tls_in_tls,
+)
+File "/usr/lib64/heroic/resources/app.asar.unpacked/build/bin/x64/linux/./legendary/urllib3/util/ssl_.py", line 483, in ssl_wrap_socket
+ssl_sock = _ssl_wrap_socket_impl(sock, context, tls_in_tls, server_hostname)
+File "/usr/lib64/heroic/resources/app.asar.unpacked/build/bin/x64/linux/./legendary/urllib3/util/ssl_.py", line 527, in _ssl_wrap_socket_impl
+return ssl_context.wrap_socket(sock, server_hostname=server_hostname)
+~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/usr/lib64/python3.14/ssl.py", line 455, in wrap_socket
+return self.sslsocket_class._create(
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+sock=sock,
+^^^^^^^^^^
+...<5 lines>...
+session=session
+^^^^^^^^^^^^^^^
+)
+^
+File "/usr/lib64/python3.14/ssl.py", line 1076, in _create
+self.do_handshake()
+~~~~~~~~~~~~~~~~~^^
+File "/usr/lib64/python3.14/ssl.py", line 1372, in do_handshake
+self._sslobj.do_handshake()
+~~~~~~~~~~~~~~~~~~~~~~~~~^^
+ssl.SSLCertVerificationError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1081)During handling of the above exception, another exception occurred:
+Traceback (most recent call last):File "/usr/lib64/heroic/resources/app.asar.unpacked/build/bin/x64/linux/./legendary/urllib3/connectionpool.py", line 787, in urlopen
+response = self._make_request(
+conn,
+...<10 lines>...
+**response_kw,
+)
+File "/usr/lib64/heroic/resources/app.asar.unpacked/build/bin/x64/linux/./legendary/urllib3/connectionpool.py", line 488, in _make_request
+raise new_e
+urllib3.exceptions.SSLError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1081)
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):File "/usr/lib64/heroic/resources/app.asar.unpacked/build/bin/x64/linux/./legendary/requests/adapters.py", line 645, in send
+resp = conn.urlopen(
+method=request.method,
+...<9 lines>...
+chunked=chunked,
+)
+File "/usr/lib64/heroic/resources/app.asar.unpacked/build/bin/x64/linux/./legendary/urllib3/connectionpool.py", line 841, in urlopen
+retries = retries.increment(
+method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]
+)
+File "/usr/lib64/heroic/resources/app.asar.unpacked/build/bin/x64/linux/./legendary/urllib3/util/retry.py", line 535, in increment
+raise MaxRetryError(_pool, url, reason) from reason # type: ignore[arg-type]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='api.legendary.gl', port=443): Max retries exceeded with url: /v1/version.json (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1081)')))
+During handling of the above exception, another exception occurred:
+Traceback (most recent call last):File "<frozen runpy>", line 198, in _run_module_as_main
+File "<frozen runpy>", line 88, in _run_code
+File "/usr/lib64/heroic/resources/app.asar.unpacked/build/bin/x64/linux/./legendary/__main__.py", line 40, in <module>
+legendary.cli.main()
+~~~~~~~~~~~~~~~~~~^^
+File "/usr/lib64/heroic/resources/app.asar.unpacked/build/bin/x64/linux/./legendary/legendary/cli.py", line 3256, in main
+cli.auth(args)
+~~~~~~~~^^^^^^File "/usr/lib64/heroic/resources/app.asar.unpacked/build/bin/x64/linux/./legendary/legendary/cli.py", line 95, in auth
+self.core.check_for_updates(force=True)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+File "/usr/lib64/heroic/resources/app.asar.unpacked/build/bin/x64/linux/./legendary/legendary/core.py", line 274, in check_for_updates
+version_info = self.lgdapi.get_version_information()
+File "/usr/lib64/heroic/resources/app.asar.unpacked/build/bin/x64/linux/./legendary/legendary/api/lgd.py", line 21, in get_version_information
+r = self.session.get(f'https://{self._api_host}/v1/version.json',
+timeout=10.0)
+File "/usr/lib64/heroic/resources/app.asar.unpacked/build/bin/x64/linux/./legendary/requests/sessions.py", line 605, in get
+return self.request("GET", url, **kwargs)
+~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+File "/usr/lib64/heroic/resources/app.asar.unpacked/build/bin/x64/linux/./legendary/requests/sessions.py", line 592, in request
+resp = self.send(prep, **send_kwargs)
+File "/usr/lib64/heroic/resources/app.asar.unpacked/build/bin/x64/linux/./legendary/requests/sessions.py", line 706, in send
+r = adapter.send(request, **kwargs)
+File "/usr/lib64/heroic/resources/app.asar.unpacked/build/bin/x64/linux/./legendary/requests/adapters.py", line 676, in send
+raise SSLError(e, request=request)
+requests.exceptions.SSLError: HTTPSConnectionPool(host='api.legendary.gl', port=443): Max retries exceeded with url: /v1/version.json (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1081)')))
+```
+Help me fix this error. I get it when trying to sign in to heroic games launcher using an epic games account.
+§a§
+This is **not really an Epic account logout/login problem**. Heroic is calling **Legendary** for Epic login, and Legendary is crashing before/while authenticating because Python cannot verify the TLS certificate chain for `api.legendary.gl`. Heroic uses Legendary for Epic Games support, and the traceback is inside Legendary’s bundled Python/Requests stack.
+
+## 1) Check the easy cause first: system date/time
+
+Run:
+
+```bash
+timedatectl status
+```
+
+If the time/date is wrong:
+
+```bash
+sudo timedatectl set-ntp true
+```
+
+Then fully close Heroic and try again.
+
+---
+
+## 2) Reinstall/update your system CA certificates
+
+Your path `/usr/lib64/...` suggests Fedora/openSUSE/Arch-ish packaging, so use the section that matches your distro.
+
+### Fedora / RHEL / Nobara / Bazzite-like
+
+```bash
+sudo dnf reinstall ca-certificates
+sudo update-ca-trust extract
+```
+
+Red Hat/Fedora-style systems use a system-wide trust store under `/etc/pki/ca-trust/`, and `update-ca-trust` applies changes to it.
+
+### openSUSE Tumbleweed / Leap
+
+```bash
+sudo zypper install -f ca-certificates ca-certificates-mozilla
+sudo update-ca-certificates -f
+```
+
+On SUSE/openSUSE, `update-ca-certificates` synchronizes system certificate stores, and admin-added trust anchors live under `/etc/pki/trust/anchors`.
+
+### Arch / EndeavourOS / Manjaro
+
+```bash
+sudo pacman -Syu ca-certificates ca-certificates-mozilla ca-certificates-utils
+sudo update-ca-trust extract
+```
+
+Arch’s `update-ca-trust` generates CA bundle files under `/etc/ca-certificates/extracted/` and compatibility links under `/etc/ssl/certs/`.
+
+### Debian / Ubuntu / Mint
+
+```bash
+sudo apt update
+sudo apt install --reinstall ca-certificates
+sudo update-ca-certificates -f
+```
+
+On Debian-style systems, `update-ca-certificates` manages `/etc/ssl/certs` and generates `/etc/ssl/certs/ca-certificates.crt`.
+
+After that, reboot or at least log out/in, then try Heroic again.
+
+---
+
+## 3) Test whether your system can verify Legendary’s HTTPS endpoint
+
+Run:
+
+```bash
+curl -Iv https://api.legendary.gl/v1/version.json
+```
+
+Expected: no `SSL certificate problem` / no `unable to get local issuer certificate`.
+
+If `curl` also fails, the issue is system-wide: CA store, clock, VPN/proxy, or network interception.
+
+If `curl` works but Heroic still fails, Heroic/Legendary’s Python runtime is not finding the same CA bundle.
+
+---
+
+## 4) If curl works but Heroic still fails: force Heroic to use your system CA bundle
+
+Find your CA bundle:
+
+```bash
+for f in \
+  /etc/pki/tls/certs/ca-bundle.crt \
+  /etc/ssl/certs/ca-certificates.crt \
+  /etc/ssl/ca-bundle.pem \
+  /var/lib/ca-certificates/ca-bundle.pem \
+  /etc/ssl/certs/ca-bundle.crt
+do
+  [ -s "$f" ] && echo "$f"
+done
+```
+
+Pick the path that exists. Then launch Heroic from a terminal like this, replacing the path if needed:
+
+```bash
+SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt \
+REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt \
+heroic
+```
+
+or on Fedora/RHEL/openSUSE if that path exists:
+
+```bash
+SSL_CERT_FILE=/etc/pki/tls/certs/ca-bundle.crt \
+REQUESTS_CA_BUNDLE=/etc/pki/tls/certs/ca-bundle.crt \
+heroic
+```
+
+Python Requests supports `REQUESTS_CA_BUNDLE`, falling back to `CURL_CA_BUNDLE`, when you need to point it at a CA bundle file.
+
+If that fixes it, make it permanent by copying Heroic’s desktop entry and editing its `Exec=` line:
+
+```bash
+mkdir -p ~/.local/share/applications
+cp /usr/share/applications/*heroic*.desktop ~/.local/share/applications/ 2>/dev/null
+```
+
+Open the copied `.desktop` file:
+
+```bash
+nano ~/.local/share/applications/*heroic*.desktop
+```
+
+Change the `Exec=` line from something like:
+
+```ini
+Exec=heroic %U
+```
+
+to:
+
+```ini
+Exec=env SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt heroic %U
+```
+
+Use the CA bundle path that exists on your system.
+
+---
+
+## 5) If you are on school/work Wi‑Fi, VPN, Zscaler, corporate proxy, etc.
+
+A TLS-intercepting proxy can cause exactly this. Browsers may work because they trust the organization’s root CA, while Python/Requests may not. Requests’ docs specifically note that HTTPS proxies typically require your machine to trust the proxy’s root certificate.
+
+Only do this if you trust the network/admin CA.
+
+### Fedora/RHEL
+
+```bash
+sudo cp YourCompanyRootCA.crt /etc/pki/ca-trust/source/anchors/
+sudo update-ca-trust extract
+```
+
+### openSUSE
+
+```bash
+sudo cp YourCompanyRootCA.crt /etc/pki/trust/anchors/
+sudo update-ca-certificates
+```
+
+### Debian/Ubuntu
+
+```bash
+sudo cp YourCompanyRootCA.crt /usr/local/share/ca-certificates/
+sudo update-ca-certificates
+```
+
+### Arch
+
+```bash
+sudo cp YourCompanyRootCA.crt /etc/ca-certificates/trust-source/anchors/
+sudo update-ca-trust extract
+```
+
+Then restart Heroic.
+
+---
+
+## 6) Prefer the official Heroic Flatpak if you installed a distro-native package
+
+If this is a distro-packaged Heroic under `/usr/lib64/heroic`, try the official Flatpak. Heroic’s Linux guide recommends the Flatpak and gives this install command:
+
+```bash
+flatpak install flathub com.heroicgameslauncher.hgl
+flatpak run com.heroicgameslauncher.hgl
+```
+
+This often avoids distro packaging/Python/certificate-path mismatches.
+
+---
+
+## 7) What **not** to do
+
+Do **not** disable TLS verification globally or patch Legendary to use `verify=False`. Requests warns that disabling verification accepts any certificate and makes you vulnerable to man-in-the-middle attacks.
+
+---
+
+## Most likely fix for your case
+
+Given the traceback path and error, I’d try this order:
+
+```bash
+timedatectl status
+sudo timedatectl set-ntp true
+```
+
+Then, if you are on openSUSE:
+
+```bash
+sudo zypper install -f ca-certificates ca-certificates-mozilla
+sudo update-ca-certificates -f
+```
+
+Or, if Fedora/Nobara/Bazzite:
+
+```bash
+sudo dnf reinstall ca-certificates
+sudo update-ca-trust extract
+```
+
+Then test:
+
+```bash
+curl -Iv https://api.legendary.gl/v1/version.json
+```
+
+If `curl` works but Heroic still fails, launch Heroic with `SSL_CERT_FILE` and `REQUESTS_CA_BUNDLE` as shown above.
