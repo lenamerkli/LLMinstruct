@@ -1,0 +1,124 @@
+§u§
+```
+import asyncio
+from crawl4ai import AsyncWebCrawler
+
+async def main():
+    async with AsyncWebCrawler() as crawler:
+        result = await crawler.arun(url="https://example.com")
+        print(result.markdown)
+
+asyncio.run(main())
+```
+From this example, make a script that I can call from in the terminal. use argparse.
+§a§
+Here's the enhanced script with argparse for command-line usage:
+
+```python
+import asyncio
+import argparse
+from crawl4ai import AsyncWebCrawler
+import sys
+
+async def crawl_url(url, output=None, verbose=False):
+    """Crawl a URL and return its markdown content"""
+    try:
+        if verbose:
+            print(f"Crawling {url}...")
+
+        async with AsyncWebCrawler() as crawler:
+            result = await crawler.arun(url=url)
+
+            if verbose:
+                print(f"Crawl successful! Content length: {len(result.markdown)} characters")
+
+            if output:
+                # Save to file
+                with open(output, 'w', encoding='utf-8') as f:
+                    f.write(result.markdown)
+                print(f"Content saved to {output}")
+            else:
+                # Print to console
+                print(result.markdown)
+
+            return result.markdown
+
+    except Exception as e:
+        print(f"Error crawling {url}: {str(e)}", file=sys.stderr)
+        return None
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Crawl a URL and extract its content as markdown",
+        epilog="Example: python crawl.py https://example.com -o output.md -v"
+    )
+
+    parser.add_argument(
+        "url",
+        help="The URL to crawl"
+    )
+
+    parser.add_argument(
+        "-o", "--output",
+        help="Output file path (if not specified, prints to console)",
+        default=None
+    )
+
+    parser.add_argument(
+        "-v", "--verbose",
+        help="Enable verbose output",
+        action="store_true"
+    )
+
+    args = parser.parse_args()
+
+    # Run the async crawl
+    result = asyncio.run(crawl_url(args.url, args.output, args.verbose))
+
+    if result is None:
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
+```
+
+**Features of this script:**
+
+1. **Command-line arguments:**
+   - `url` (positional): The URL to crawl (required)
+   - `-o/--output`: Optional output file path
+   - `-v/--verbose`: Enable verbose logging
+
+2. **Usage examples:**
+   ```bash
+   # Basic usage - prints to console
+   python crawl.py https://example.com
+
+   # Save to file
+   python crawl.py https://example.com -o output.md
+
+   # With verbose output
+   python crawl.py https://example.com -v
+
+   # Both verbose and output file
+   python crawl.py https://example.com -o output.md -v
+   ```
+
+3. **Error handling:**
+   - Catches exceptions and displays error messages
+   - Returns proper exit codes for scripting
+
+4. **Output options:**
+   - Prints to console by default
+   - Can save to a file with `-o` option
+
+**Requirements:**
+Make sure you have the required packages installed:
+```bash
+pip install crawl4ai
+```
+
+**To use the script:**
+1. Save it as `crawl.py`
+2. Make it executable: `chmod +x crawl.py`
+3. Run with your desired options as shown in the examples above

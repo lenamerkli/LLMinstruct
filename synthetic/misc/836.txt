@@ -1,0 +1,68 @@
+§u§
+debian marking all files in a folder as executable
+§a§
+**Best ways to mark all files in a folder as executable on Debian**
+
+### 1. Most Common & Recommended Command (Only regular files)
+
+```bash
+find /path/to/folder -type f -exec chmod +x {} +
+```
+
+This is usually what you want. It makes **only files** executable, leaving directories untouched.
+
+### 2. Make everything executable (files + directories)
+
+```bash
+chmod -R +x /path/to/folder
+```
+
+Or more commonly (adds read + execute for everyone):
+
+```bash
+chmod -R a+rx /path/to/folder
+```
+
+### 3. Set proper standard permissions (Recommended for scripts/projects)
+
+```bash
+# Directories: 755
+# Files: 644, then add executable bit only where needed
+find /path/to/folder -type d -exec chmod 755 {} +
+find /path/to/folder -type f -exec chmod 644 {} +
+
+# Then make scripts/binaries executable
+find /path/to/folder -type f \( -name "*.sh" -o -name "*.py" -o -name "*.pl" \) -exec chmod +x {} +
+```
+
+### Quick one-liners (choose one):
+
+```bash
+# Option A: Only files (safest)
+find . -type f -exec chmod +x {} +
+
+# Option B: Everything (very common)
+chmod -R a+rx .
+
+# Option C: Make all files executable but keep normal permissions on dirs
+find . -type d -exec chmod 755 {} + && find . -type f -exec chmod 755 {} +
+```
+
+---
+
+### Pro Tips:
+
+- Use `.` instead of `/path/to/folder` if you're already inside the folder.
+- Be careful with `-R` — it can make `.jpg`, `.txt`, `.pdf`, etc. executable, which is usually unnecessary.
+- You can combine it with specific extensions:
+
+```bash
+find . -type f \( -name "*.sh" -o -name "*.bin" -o -name "install" \) -exec chmod +x {} +
+```
+
+Would you like me to give you a command for a **specific use case**? For example:
+- Making a downloaded project executable
+- Fixing permissions after extracting a zip/tar
+- Only making shell scripts executable
+
+Just tell me what kind of files are in the folder.

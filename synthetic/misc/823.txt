@@ -1,0 +1,151 @@
+§u§
+```
+def search(
+    query: str,
+    language: str = "en",
+    safesearch: str = "0",
+    category: str = "general",
+    pageno: int = 1,
+    time_range: str = "",
+) -> str:
+    """Perform a search request and return the HTML response."""
+    params = {
+        "q": query,
+        "language": language,
+        "safesearch": safesearch,
+        "pageno": pageno,
+        "time_range": time_range,
+        "categories": category,
+    }
+
+    cookies = {
+        "categories": category,
+        "language": language,
+        "safesearch": safesearch,
+        "locale": language,
+        "theme": "simple",
+        "enabled_engines": '"duckduckgo__general\\054qwant__general\\054yahoo__general"',
+    }
+
+    response = requests.get(
+        BASE_URL + "search",
+        params=params,
+        impersonate="chrome",
+        cookies=cookies,
+    )
+    response.raise_for_status()
+    print(response.text)
+    return response.text
+```
+And why do the cookies for SearXNG not work correctly? I only get startpage results. In the browser, they look like this:
+```
+Sec-GPC: 1
+Connection: keep-alive
+Cookie: categories=general; language=auto; locale=en; autocomplete=; favicon_resolver=; method=GET; safesearch=0; theme=simple; results_on_new_tab=0; doi_resolver=oadoi.org; simple_style=auto; center_alignment=0; query_in_title=0; search_on_category_select=1; hotkeys=default; url_formatting=pretty; disabled_engines=; enabled_engines="duckduckgo__general\054qwant__general\054yahoo__general"; disabled_plugins=; enabled_plugins=; tokens=
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: document
+```
+§a§
+# Why your SearXNG cookies aren't taking effect
+
+The problem isn't your cookie *values* — it's how `requests`/`curl_cffi` **serialize** them when sending. SearXNG ends up never seeing the engine list you intended, so it falls back to its default-enabled engines (which on most instances includes Startpage).
+
+## The core issue: cookie value encoding
+
+Look at the raw browser cookie:
+
+```
+enabled_engines="duckduckgo__general\054qwant__general\054yahoo__general"
+```
+
+There are two things SearXNG expects to see *literally* on the wire:
+
+1. The surrounding **double quotes** (`"`)
+2. The literal backslash-escaped commas `\054` (octal for `,`) — that's 4 separate ASCII characters: `\`, `0`, `5`, `4`
+
+When you pass this string via the `cookies={...}` dict, the HTTP client treats it as a value that may contain "special" characters and **percent-encodes** them. So what actually goes out on the wire looks something like:
+
+```
+enabled_engines=%22duckduckgo__general%5C054qwant__general%5C054yahoo__general%22
+```
+
+SearXNG does *not* percent-decode cookie values — it does its own `\ooo` octal decoding on the raw string. So it sees `%22...%5C054...` , can't match it to a known engine ID, treats the preference as garbage, and silently falls back to defaults. That's why you only see Startpage.
+
+## Fix #1 (recommended): send a raw `Cookie` header
+
+Bypass the library's cookie serializer entirely:
+
+```python
+def search(query, language="en", safesearch="0", category="general",
+           pageno=1, time_range=""):
+    params = {
+        "q": query,
+        "language": language,
+        "safesearch": safesearch,
+        "pageno": pageno,
+        "time_range": time_range,
+        "categories": category,
+    }
+
+    cookie_header = (
+        f"categories={category}; "
+        f"language={language}; "
+        f"locale={language}; "
+        f"safesearch={safesearch}; "
+        f"theme=simple; "
+        f"method=GET; "
+        f'enabled_engines="duckduckgo__general\\054qwant__general\\054yahoo__general"; '
+        f"disabled_engines=; "
+        f"tokens="
+    )
+
+    headers = {"Cookie": cookie_header}
+
+    response = requests.get(
+        BASE_URL + "search",
+        params=params,
+        impersonate="chrome",
+        headers=headers,   # <-- raw, no re-encoding
+    )
+    response.raise_for_status()
+    return response.text
+```
+
+Verify with something like a netcat listener or by setting `BASE_URL` to `httpbin.org/headers` once — you should see the `\054` and the `"` characters intact.
+
+## Fix #2: use the `preferences` cookie instead
+
+Modern SearXNG also accepts a single Base64-zlib-encoded `preferences` cookie that contains *everything*. You can build it by:
+
+1. Visiting `/preferences` in a browser, configuring everything you want,
+2. Hitting **Save**, then copying the resulting `preferences` cookie.
+
+That cookie is just URL-safe Base64, so `requests` won't mangle it. This is the most robust option for headless clients.
+
+## Fix #3: use POST to `/search` with form fields
+
+SearXNG accepts engine selection directly as form fields on the search request, e.g. `engines=duckduckgo,qwant,yahoo`. This bypasses preferences entirely:
+
+```python
+data = {
+    "q": query,
+    "categories": "general",
+    "engines": "duckduckgo,qwant,yahoo",
+    "language": language,
+    "safesearch": safesearch,
+    "pageno": pageno,
+    "time_range": time_range,
+    "format": "html",   # or "json" if your instance allows it
+}
+response = requests.post(BASE_URL + "search", data=data, impersonate="chrome")
+```
+
+This is what I'd actually use for scripted access — no cookie shenanigans, and the engine list is explicit per-request.
+
+## A couple of side notes on your current code
+
+- `enabled_engines` in your `cookies` dict only **adds** to defaults; it doesn't replace them. Even if the cookie were transmitted correctly, Startpage could still appear unless you also put it in `disabled_engines`. Engine selection via POST form (`engines=...`) is the only way to get a strict whitelist.
+- Some instances require the `tokens` cookie to be present (even empty) for preferences to apply — your browser sends `tokens=`, but your Python code doesn't. Include it.
+- If the instance has `server.method: "POST"` configured, GET search may also be rejected or behave oddly; the `method=GET` cookie in your browser suggests the UI lets you choose. Match it on the client.
+
+TL;DR: it's not your engine string — it's that the HTTP client is percent-encoding the `"` and `\` characters before they reach SearXNG. Send the cookie as a raw `Cookie` header, or skip cookies and pass `engines=...` as a form parameter.

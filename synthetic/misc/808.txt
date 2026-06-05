@@ -1,0 +1,97 @@
+§u§
+global variables with flask
+§a§
+Using global variables in Flask can be tricky because web applications often handle multiple requests concurrently. If not done carefully, global variables can lead to race conditions, data leakage between users, or unexpected behavior in multi-worker deployments.
+
+### When are global variables acceptable?
+
+Global variables are generally safe in Flask only in specific cases:
+
+- **Read-only constants**: Values that never change at runtime, like API keys (better stored in `app.config` or environment variables).
+- **Singleton resources initialized once**: Things like machine learning models, large datasets, or other thread-safe objects that are loaded at startup and never modified.
+
+### Common pitfalls
+
+- **Concurrency issues**: Multiple requests can modify the same variable at the same time, leading to inconsistent data.
+- **Data leakage**: Data set by one user/request can be seen by another.
+- **Scalability problems**: In multi-process deployments (e.g., Gunicorn with multiple workers), each worker has its own memory, so global variables aren't shared across workers.
+
+---
+
+### Better alternatives
+
+#### 1. Use `g` for request-scoped data
+The `g` object is unique to each request and is automatically cleared after the request ends.
+
+```python
+from flask import Flask, g, request
+
+app = Flask(__name__)
+
+@app.before_request
+def load_user():
+    # Example: load user info per request
+    g.user_id = request.headers.get("X-User-ID")
+
+@app.route("/")
+def index():
+    return f"Hello, user {g.user_id}!"
+```
+
+#### 2. Use sessions for user-specific data
+Sessions persist data across requests for the same user, typically stored in a signed cookie or server-side store.
+
+```python
+from flask import Flask, session, redirect, url_for
+
+app = Flask(__name__)
+app.secret_key = "your-secret-key"
+
+@app.route("/login")
+def login():
+    session["username"] = "alice"
+    return redirect(url_for("profile"))
+
+@app.route("/profile")
+def profile():
+    username = session.get("username", "guest")
+    return f"Welcome back, {username}!"
+```
+
+#### 3. Use external storage for shared data
+For data that needs to be shared across all users and workers, use a database, Redis, or Memcached.
+
+```python
+import redis
+from flask import Flask
+
+app = Flask(__name__)
+redis_client = redis.Redis(host="localhost", port=6379, db=0)
+
+@app.route("/view")
+def view():
+    redis_client.incr("page_views")
+    count = redis_client.get("page_views").decode("utf-8")
+    return f"This page has been viewed {count} times."
+```
+
+#### 4. Use app config for constants
+For static values, store them in your app's configuration.
+
+```python
+app = Flask(__name__)
+app.config["API_KEY"] = "your-api-key"
+
+@app.route("/config")
+def config_example():
+    return f"Using API key: {app.config['API_KEY']}"
+```
+
+---
+
+### Final tip
+
+If you're unsure, ask yourself: *Does this data need to persist across requests, across users, or is it specific to one request?* That will guide you to the right tool.
+
+Would you like to share your specific use case so I can help you implement the best approach for it?
+

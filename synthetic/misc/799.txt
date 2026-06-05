@@ -1,0 +1,46 @@
+§u§
+create a basic docker file for the latest version of fedora (lite if exist)
+§a§
+Fedora’s current stable container release is **Fedora 44**; `fedora:latest` maps to Fedora 44, while Fedora 45 is `rawhide`/development. There isn’t a Docker Hub `fedora:lite` tag, but Fedora provides a **minimal container image** on Quay: `quay.io/fedora/fedora-minimal`.
+
+**Dockerfile — Fedora Minimal / “lite”**
+
+```dockerfile
+# Fedora 44 minimal container base
+FROM quay.io/fedora/fedora-minimal:44
+
+# Optional: update packages and install a few basics
+RUN dnf -y upgrade --refresh && \
+    dnf -y install --setopt=install_weak_deps=False --nodocs \
+        bash \
+        ca-certificates \
+        curl && \
+    dnf clean all && \
+    rm -rf /var/cache/dnf
+
+WORKDIR /app
+
+CMD ["/bin/bash"]
+```
+
+Build and run:
+
+```bash
+docker build -t my-fedora-lite .
+docker run --rm -it my-fedora-lite
+```
+
+If you prefer the standard Fedora image instead:
+
+```dockerfile
+FROM fedora:44
+
+WORKDIR /app
+CMD ["/bin/bash"]
+```
+
+Or use the moving latest tag:
+
+```dockerfile
+FROM fedora:latest
+```

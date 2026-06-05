@@ -1,0 +1,64 @@
+§u§
+```
+
+░▒▓ 🎩       ▓▒░ ◦•················································································································································································································•◦ ░▒▓   208ms ▓▒░
+··• docker ps -a
+permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
+
+░▒▓ 🎩       ▓▒░ ◦•·················································································································································································································•◦ ░▒▓   43ms ▓▒░
+··• sudo docker ps -a
+[sudo] password for lena:
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+░▒▓ 🎩       ▓▒░ ◦•··············································································································································································································•◦ ░▒▓   5s379ms ▓▒░
+··•
+```
+Make docker work on this user without sudo
+§a§
+Run these:
+
+```bash
+sudo groupadd -f docker
+sudo usermod -aG docker lena
+sudo systemctl enable --now docker
+```
+
+Then apply the new group membership. Either log out and log back in, or run:
+
+```bash
+newgrp docker
+```
+
+Test:
+
+```bash
+docker ps -a
+```
+
+If it still fails, check the socket:
+
+```bash
+ls -l /var/run/docker.sock
+```
+
+It should look roughly like:
+
+```text
+srw-rw---- 1 root docker ... /var/run/docker.sock
+```
+
+If needed:
+
+```bash
+sudo chown root:docker /var/run/docker.sock
+sudo chmod 660 /var/run/docker.sock
+sudo systemctl restart docker
+```
+
+Then test again:
+
+```bash
+docker ps -a
+```
+
+Note: being in the `docker` group is effectively root-level access, so only add trusted users.

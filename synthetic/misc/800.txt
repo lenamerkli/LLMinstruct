@@ -1,0 +1,231 @@
+§u§
+create a basic docker file for the latest version of fedora
+§a§
+**Basic Dockerfile for latest Fedora**
+
+```dockerfile
+# Basic Dockerfile using the latest stable Fedora
+FROM fedora:latest
+
+# Update the system and clean cache to keep the image size down
+RUN dnf -y update && \
+    dnf clean all
+
+# Optional: Install common useful tools (uncomment as needed)
+# RUN dnf -y install \
+#         vim \
+#         curl \
+#         wget \
+#         git \
+#         htop \
+#         procps-ng \
+#     && dnf clean all
+
+# Set a working directory
+WORKDIR /app
+
+# Default command
+CMD ["bash"]
+```
+
+### How to use it
+
+1. **Save the file** as `Dockerfile` (no extension) in an empty directory.
+2. **Build the image**:
+   ```bash
+   docker build -t myfedora .
+   ```
+3. **Run the container**:
+   ```bash
+   docker run -it myfedora
+   ```
+
+### Tips
+
+- Use `fedora:latest` to always get the newest stable version (currently **Fedora 44** as of May 2026).
+- For better reproducibility in production/CI, pin the version: `FROM fedora:44`.
+- If you want a smaller image, you can switch to `FROM fedora:minimal` or use `microdnf` instead of `dnf`.
+
+Would you like me to modify this for a specific purpose (Python, Node.js, development environment, minimal size, etc.)?
+§u§
+This container should have the following:
+- A user called `agent` that only has access to `/home/agent/*`
+- A volume mounted to `/home/agent/tools/` and `/home/agent/examples`
+- Several volumes that can be mounted on demand (either from inside the container with root or from the host)
+- Entry command is to spin up a flask server.
+§a§
+# Fedora Dockerfile with Agent User & Flask Server
+
+Here's a complete setup. I'll provide the **Dockerfile**, a minimal **Flask app**, and the **run command** showing how volumes are mounted.
+
+## `Dockerfile`
+
+```dockerfile
+FROM fedora:latest
+
+# ---------------------------------------------------------------------------
+# System packages
+#   - python3 / pip      -> Flask runtime
+#   - util-linux         -> provides `mount` for on-demand mounts inside container
+#   - shadow-utils       -> useradd/groupadd
+#   - sudo               -> optional: lets agent escalate if you allow it
+# ---------------------------------------------------------------------------
+RUN dnf -y update && \
+    dnf -y install \
+        python3 \
+        python3-pip \
+        util-linux \
+        shadow-utils \
+        sudo \
+        procps-ng \
+    && dnf clean all
+
+# ---------------------------------------------------------------------------
+# Install Flask globally so the agent user can import it
+# ---------------------------------------------------------------------------
+RUN pip3 install --no-cache-dir flask
+
+# ---------------------------------------------------------------------------
+# Create the unprivileged `agent` user
+#   - Home dir: /home/agent
+#   - Shell:    /bin/bash
+#   - UID/GID:  1000 (matches typical host user for bind-mount permissions)
+# ---------------------------------------------------------------------------
+RUN groupadd -g 1000 agent && \
+    useradd  -m -u 1000 -g 1000 -s /bin/bash agent
+
+# ---------------------------------------------------------------------------
+# Create directories that will be used as volume mount points.
+#   /home/agent/tools     -> always mounted (read-only tools provided to agent)
+#   /home/agent/examples  -> always mounted (example payloads/data)
+#   /home/agent/workspace -> on-demand mount (scratch space)
+#   /home/agent/data      -> on-demand mount (datasets)
+#   /home/agent/output    -> on-demand mount (results written back to host)
+# ---------------------------------------------------------------------------
+RUN mkdir -p /home/agent/tools \
+             /home/agent/examples \
+             /home/agent/workspace \
+             /home/agent/data \
+             /home/agent/output \
+             /home/agent/app && \
+    chown -R agent:agent /home/agent
+
+# ---------------------------------------------------------------------------
+# Lock down /home/agent so ONLY `agent` (and root) can read it.
+#   - 0750 on /home/agent denies access to "other" users
+#   - Anything outside /home/agent is owned by root and not writable by agent
+# ---------------------------------------------------------------------------
+RUN chmod 750 /home/agent
+
+# Declare the always-mounted volumes (these MUST be provided at `docker run`)
+VOLUME ["/home/agent/tools", "/home/agent/examples"]
+
+# On-demand volumes (declared so they're easy to bind at runtime, but optional)
+VOLUME ["/home/agent/workspace", "/home/agent/data", "/home/agent/output"]
+
+# ---------------------------------------------------------------------------
+# Copy the Flask application
+# ---------------------------------------------------------------------------
+COPY --chown=agent:agent app.py /home/agent/app/app.py
+
+# Drop privileges
+USER agent
+WORKDIR /home/agent/app
+
+EXPOSE 5000
+
+# Flask listens on all interfaces so it's reachable from the host
+ENV FLASK_APP=/home/agent/app/app.py \
+    FLASK_RUN_HOST=0.0.0.0 \
+    FLASK_RUN_PORT=5000
+
+CMD ["python3", "-m", "flask", "run"]
+```
+
+## `app.py` (minimal Flask server)
+
+```python
+from flask import Flask
+import os
+
+app = Flask(__name__)
+
+@app.route("/")
+def index():
+    return {"status": "ok", "user": os.getenv("USER", "agent")}
+
+@app.route("/ls/<path:subdir>")
+def ls(subdir):
+    target = os.path.join("/home/agent", subdir)
+    try:
+        return {"path": target, "entries": os.listdir(target)}
+    except Exception as e:
+        return {"error": str(e)}, 400
+```
+
+## Build & Run
+
+**Build:**
+```bash
+docker build -t agent-fedora .
+```
+
+**Run with the two required volumes (host paths → container paths):**
+```bash
+docker run -d --name agent \
+  -p 5000:5000 \
+  -v "$(pwd)/tools:/home/agent/tools:ro" \
+  -v "$(pwd)/examples:/home/agent/examples:ro" \
+  agent-fedora
+```
+
+**Run with additional on-demand volumes from the host:**
+```bash
+docker run -d --name agent \
+  -p 5000:5000 \
+  -v "$(pwd)/tools:/home/agent/tools:ro" \
+  -v "$(pwd)/examples:/home/agent/examples:ro" \
+  -v "$(pwd)/workspace:/home/agent/workspace" \
+  -v "$(pwd)/data:/home/agent/data:ro" \
+  -v "$(pwd)/output:/home/agent/output" \
+  agent-fedora
+```
+
+## Mounting on-demand volumes *from inside* the container (as root)
+
+By default, containers cannot perform `mount` operations. To enable runtime mounts from inside the container, you need to grant the `SYS_ADMIN` capability (or run privileged):
+
+```bash
+docker run -it --name agent \
+  --cap-add SYS_ADMIN \
+  --device /dev/fuse \
+  --security-opt apparmor:unconfined \
+  -p 5000:5000 \
+  -v "$(pwd)/tools:/home/agent/tools:ro" \
+  -v "$(pwd)/examples:/home/agent/examples:ro" \
+  agent-fedora
+```
+
+Then, from inside the container as root:
+```bash
+docker exec -u root -it agent bash
+# Example: mount a tmpfs scratch space
+mount -t tmpfs -o size=512m tmpfs /home/agent/workspace
+# Example: mount an NFS share (requires nfs-utils installed)
+mount -t nfs 10.0.0.5:/export/data /home/agent/data
+```
+
+## Security notes about the "agent only has access to `/home/agent/*`" requirement
+
+A few things worth being explicit about:
+
+1. **Filesystem isolation** — `chmod 750 /home/agent` plus root ownership of everything else means `agent` cannot *write* outside its home. However, most of `/usr`, `/etc`, etc. is world-readable by default. If you need *true* read isolation, consider:
+   - Using `chmod o-rx` on sensitive paths, or
+   - Running with `--read-only` and a tmpfs for `/tmp`, or
+   - Using user namespaces (`--userns-remap`) or a dedicated MAC profile (SELinux/AppArmor).
+
+2. **No sudo for agent** — the `sudo` package is installed but `agent` is *not* in `/etc/sudoers`, so it cannot escalate. Remove `sudo` from the install list if you don't need it at all.
+
+3. **On-demand mounts require capabilities** — `mount` inside a container is a privileged operation; granting `SYS_ADMIN` weakens isolation. Prefer mounting from the host (`-v` flags) whenever possible.
+
+Want me to add HTTPS, gunicorn instead of the dev server, or a `docker-compose.yml` to make the volume management easier?

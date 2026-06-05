@@ -1,0 +1,56 @@
+§u§
+I am using the cline code extension for jetbrains on linux. I cannot paste text that I copied outside of the cline code extension (such as the editor) into cline code. How can I fix this?
+§a§
+This is a known bug specifically affecting the Cline (and similar) JetBrains plugins on Linux, and it is almost certainly caused by **Wayland**. Here's what's happening and how to fix it:
+
+## The Problem
+
+Pasting text doesn't work in any JetBrains product when it's running on Linux with the Wayland backend enabled. Sometimes it doesn't paste anything, sometimes something that was in the clipboard an hour ago, it's very confusing. This is a known open issue ([cline/cline#8877](https://github.com/cline/cline/issues/8877)) and affects other similar plugins too (like the Continue extension).
+
+The root cause is that the JCEF (JetBrains Chromium Embedded Framework) webview used by the Cline plugin doesn't properly receive the system clipboard when running under the native Wayland toolkit. Paste from clipboard not working on linux wayland + jetbrains IDE in new wayland mode — if clipboard took value outside of the plugin window (e.g., in browser), it will be impossible to paste this value into the plugin.
+
+## Fix: Switch to the X11 Backend
+
+The most reliable workaround is to force your JetBrains IDE to use the X11 (XWayland) backend instead of native Wayland:
+
+1. Open your JetBrains IDE.
+2. Go to **Help → Edit Custom VM Options…**
+3. Add the following line:
+   ```
+   -Dawt.toolkit.name=XToolkit
+   ```
+4. Save the file and **restart the IDE**.
+
+Developers can revert to the X11 backend by adding `-Dawt.toolkit.name=XToolkit` to the IDE's custom VM options. This will continue to run the app as an X11 client on Wayland via XWayland or, obviously, natively on X11/Xorg.
+
+The user in the mentioned issue said that the issue is gone when switching to the X11 backend.
+
+## Caveats
+
+- However, that is not a solution for some users because of scaling issues. If you use fractional scaling (e.g., 125%, 150%), things may look blurry under XWayland. In that case, you may need to adjust your scaling or use integer scaling (100%, 200%).
+- JetBrains has announced that version 2026.1 incorporates fixes for a substantial number of reported problems. These fixes address a wide range of stability, performance, and desktop integration issues, marking a major milestone in the maturity of their Wayland support. This major platform transition is a work in progress, and they are actively investigating and developing fixes.
+
+## How to Check if You're on Wayland
+
+If you're not sure whether you're running Wayland, you can check by running this in a terminal:
+
+```bash
+echo $XDG_SESSION_TYPE
+```
+
+If the output is `wayland`, you're on Wayland. If it's `x11`, the issue may have a different cause (see below).
+
+## If You're Already on X11
+
+If you're already on X11 and still have the problem, check the following:
+- **IdeaVim plugin**: The problem may be in the vim emulator. If you have the IdeaVim plugin installed, try disabling it or ensure **Tools → Vim Emulator** is unchecked.
+- **Clipboard manager conflicts**: Check if any clipboard manager on your system is interfering.
+- Try pasting via the menu: **Edit → Paste** instead of Ctrl+V.
+
+## Summary
+
+| Approach | How |
+|---|---|
+| **Switch to X11 backend** (recommended fix) | Add `-Dawt.toolkit.name=XToolkit` to custom VM options and restart |
+| **Wait for upstream fix** | Track [cline/cline#8877](https://github.com/cline/cline/issues/8877) and update JetBrains IDE to 2026.1+ |
+| **Disable IdeaVim** (if applicable) | Settings → Plugins → Disable IdeaVim |

@@ -1,0 +1,88 @@
+§u§
+```
+
+░▒▓ 🎩       ▓▒░ ◦•················································································································································································································•◦ ░▒▓   208ms ▓▒░
+··• docker ps -a
+permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
+
+░▒▓ 🎩       ▓▒░ ◦•·················································································································································································································•◦ ░▒▓   43ms ▓▒░
+··• sudo docker ps -a
+[sudo] password for lena:
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+░▒▓ 🎩       ▓▒░ ◦•··············································································································································································································•◦ ░▒▓   5s379ms ▓▒░
+··•
+```
+Make docker work on this user without sudo
+§a§
+# Running Docker Without `sudo`
+
+The issue is that the Docker daemon socket (`/var/run/docker.sock`) is owned by `root` and the `docker` group. Your user needs to be a member of the `docker` group.
+
+## Steps
+
+**1. Create the `docker` group (it usually already exists):**
+
+```bash
+sudo groupadd docker
+```
+*(It's fine if it says the group already exists.)*
+
+**2. Add your user to the `docker` group:**
+
+```bash
+sudo usermod -aG docker $USER
+```
+
+**3. Apply the new group membership.** Either log out and back in, or run:
+
+```bash
+newgrp docker
+```
+
+This activates the group change in your current shell. For a full/clean apply, **log out and log back in** (or reboot).
+
+**4. Verify it works without `sudo`:**
+
+```bash
+docker ps -a
+```
+
+---
+
+## ⚠️ Security Note
+
+Adding a user to the `docker` group grants **root-equivalent privileges**, because Docker can mount the host filesystem and run privileged containers. Anyone in the `docker` group can effectively become root. Only do this for trusted users.
+
+If you want a more secure option, consider **rootless Docker**:
+
+```bash
+# Install rootless setup
+dockerd-rootless-setuptool.sh install
+```
+
+---
+
+## If It Still Fails
+
+Check that the socket has the right group:
+
+```bash
+ls -l /var/run/docker.sock
+# Expected: srw-rw---- 1 root docker ...
+```
+
+Confirm your group membership:
+
+```bash
+groups
+# or
+id -nG
+```
+
+Make sure the Docker daemon is running:
+
+```bash
+sudo systemctl status docker
+sudo systemctl enable --now docker
+```

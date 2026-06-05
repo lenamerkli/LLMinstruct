@@ -1,0 +1,73 @@
+§u§
+Does an API for searxng exist? I have an instance of the default searxng.
+§a§
+Yes! SearXNG has a built-in search API that returns results in machine-readable formats. Here's how to use it.
+
+## Basic Usage
+
+SearXNG exposes search results through its `/search` endpoint. Just add a `format` parameter to get JSON (or CSV/RSS) instead of HTML:
+
+```
+https://your-instance.example.com/search?q=your+query&format=json
+```
+
+## Important: Enable the JSON format first
+
+By default, the JSON format is often **disabled** for security/privacy reasons. If you get an error like `Forbidden` or `403`, you need to enable it in your `settings.yml`:
+
+```yaml
+search:
+  formats:
+    - html
+    - json
+    - csv
+    - rss
+```
+
+Then restart your SearXNG instance. After that, the `format=json` parameter will work.
+
+## Useful query parameters
+
+- `q` — the search query (required)
+- `format` — `json`, `csv`, or `rss`
+- `categories` — e.g. `general`, `images`, `news`, `science`
+- `engines` — comma-separated list of specific engines to use
+- `lang` / `language` — e.g. `en`, `de`, `all`
+- `pageno` — page number
+- `time_range` — `day`, `month`, `year`
+- `safesearch` — `0`, `1`, or `2`
+
+## Example with curl
+
+```bash
+curl "https://your-instance.example.com/search?q=python&format=json&categories=general&language=en"
+```
+
+## Example in Python
+
+```python
+import requests
+
+resp = requests.get(
+    "https://your-instance.example.com/search",
+    params={
+        "q": "python programming",
+        "format": "json",
+        "categories": "general",
+        "language": "en",
+    },
+    headers={"User-Agent": "my-app"},
+)
+data = resp.json()
+
+for result in data["results"]:
+    print(result["title"], "-", result["url"])
+```
+
+## Notes
+
+- The JSON response includes keys like `results`, `answers`, `infoboxes`, `suggestions`, and `number_of_results`.
+- Since it's **your own instance**, enabling JSON is fine. On public instances it's usually disabled, and many also use bot-protection (limiter/rate-limiting) that can block automated requests — you may need to adjust `limiter` settings in `settings.yml` if you hit blocks.
+- There's no API key/authentication system by default — access control is up to how you've deployed the instance (reverse proxy, network restrictions, etc.).
+
+Would you like help with a specific language/framework, or with configuring the limiter so your scripts don't get blocked?

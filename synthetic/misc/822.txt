@@ -1,0 +1,133 @@
+§u§
+```
+def search(
+    query: str,
+    language: str = "en",
+    safesearch: str = "0",
+    category: str = "general",
+    pageno: int = 1,
+    time_range: str = "",
+) -> str:
+    """Perform a search request and return the HTML response."""
+    params = {
+        "q": query,
+        "language": language,
+        "safesearch": safesearch,
+        "pageno": pageno,
+        "time_range": time_range,
+        "categories": category,
+    }
+
+    cookies = {
+        "categories": category,
+        "language": language,
+        "safesearch": safesearch,
+        "locale": language,
+        "theme": "simple",
+        "enabled_engines": '"duckduckgo__general\\054qwant__general\\054yahoo__general"',
+    }
+
+    response = requests.get(
+        BASE_URL + "search",
+        params=params,
+        impersonate="chrome",
+        cookies=cookies,
+    )
+    response.raise_for_status()
+    print(response.text)
+    return response.text
+```
+And why do the cookies for SearXNG not work correctly? I only get startpage results. In the browser, they look like this:
+```
+Sec-GPC: 1
+Connection: keep-alive
+Cookie: categories=general; language=auto; locale=en; autocomplete=; favicon_resolver=; method=GET; safesearch=0; theme=simple; results_on_new_tab=0; doi_resolver=oadoi.org; simple_style=auto; center_alignment=0; query_in_title=0; search_on_category_select=1; hotkeys=default; url_formatting=pretty; disabled_engines=; enabled_engines="duckduckgo__general\054qwant__general\054yahoo__general"; disabled_plugins=; enabled_plugins=; tokens=
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: document
+```
+§a§
+## The Problem: Missing & Mis-encoded Cookies
+
+There are two main issues:
+
+### 1. Missing `disabled_engines` (and other) cookies
+
+SearXNG uses **both** `enabled_engines` and `disabled_engines` cookies together to determine the final engine set. Your Python code only sends `enabled_engines`, but omits `disabled_engines`. Without `disabled_engines` being explicitly present (even as empty), SearXNG falls back to instance defaults — which in your case apparently includes Startpage.
+
+### 2. Cookie value encoding by the HTTP library
+
+When you pass a `dict` to `cookies=`, libraries like `curl_cffi`/`requests` may **percent-encode** or otherwise mangle special characters like `"` and `\054` in the `enabled_engines` value. The server then doesn't parse it correctly, so your engine selection is silently ignored.
+
+---
+
+## The Fix
+
+Send **all** the cookies the browser sends, and use a raw `Cookie` header to avoid any encoding surprises:
+
+```python
+def search(
+    query: str,
+    language: str = "en",
+    safesearch: str = "0",
+    category: str = "general",
+    pageno: int = 1,
+    time_range: str = "",
+) -> str:
+    params = {
+        "q": query,
+        "language": language,
+        "safesearch": safesearch,
+        "pageno": pageno,
+        "time_range": time_range,
+        "categories": category,
+    }
+
+    # Build the cookie string exactly as the browser sends it
+    cookie_str = (
+        f"categories={category}; "
+        f"language={language}; "
+        f"locale={language}; "
+        "autocomplete=; "
+        "favicon_resolver=; "
+        "method=GET; "
+        f"safesearch={safesearch}; "
+        "theme=simple; "
+        "results_on_new_tab=0; "
+        "doi_resolver=oadoi.org; "
+        "simple_style=auto; "
+        "center_alignment=0; "
+        "query_in_title=0; "
+        "search_on_category_select=1; "
+        "hotkeys=default; "
+        "url_formatting=pretty; "
+        "disabled_engines=; "                                                    # ← critical!
+        'enabled_engines="duckduckgo__general\\054qwant__general\\054yahoo__general"; '
+        "disabled_plugins=; "
+        "enabled_plugins=; "
+        "tokens="
+    )
+
+    headers = {
+        "Cookie": cookie_str,  # raw header, no re-encoding
+    }
+
+    response = requests.get(
+        BASE_URL + "search",
+        params=params,
+        headers=headers,
+        impersonate="chrome",
+        # no cookies= kwarg!
+    )
+    response.raise_for_status()
+    return response.text
+```
+
+### Key changes summarized:
+
+| Issue | Before | After |
+|---|---|---|
+| `disabled_engines` | **missing** | `disabled_engines=` (empty) |
+| Other prefs cookies | **missing** | All included (matches browser) |
+| Cookie delivery | `cookies=` dict (library re-encodes values) | Raw `Cookie` header (sent verbatim) |
+
+The raw `Cookie` header is the most reliable approach here because it guarantees the `\054` octal escapes and surrounding double quotes in `enabled_engines` arrive at SearXNG exactly as the browser would send them.

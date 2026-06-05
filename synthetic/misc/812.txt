@@ -1,0 +1,90 @@
+§u§
+```
+    if venv:
+        command = f"source {venv}/bin/activate && {command}"
+    if not command:
+        return {'error': 'Missing command'}, 400
+    try:
+        result = subprocess.run(
+            command,
+            shell=True,
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+            cwd=directory
+        )
+        return {
+            'stdout': result.stdout,
+            'stderr': result.stderr,
+            'returncode': result.returncode
+        }
+    except Exception as e:
+        return {'error': str(e)}, 500
+```
+What does this code do?
+§a§
+# Code Explanation
+
+This is a Python function (likely part of a web API endpoint) that **executes shell commands on the server** and returns the results.
+
+## Step-by-step breakdown
+
+### 1. Virtual environment activation
+```python
+if venv:
+    command = f"source {venv}/bin/activate && {command}"
+```
+If a `venv` path is provided, it prepends a command to activate a Python virtual environment before running the actual command.
+
+### 2. Validation
+```python
+if not command:
+    return {'error': 'Missing command'}, 400
+```
+Returns an HTTP **400 (Bad Request)** error if no command was given.
+
+### 3. Command execution
+```python
+result = subprocess.run(
+    command,
+    shell=True,          # runs through the shell (allows pipes, &&, etc.)
+    capture_output=True, # captures stdout and stderr
+    text=True,           # returns strings instead of bytes
+    timeout=timeout,     # kills the process if it runs too long
+    cwd=directory        # sets the working directory
+)
+```
+Runs the command and captures its output.
+
+### 4. Return results
+```python
+return {
+    'stdout': result.stdout,
+    'stderr': result.stderr,
+    'returncode': result.returncode
+}
+```
+Returns the command's output, errors, and exit code.
+
+### 5. Error handling
+```python
+except Exception as e:
+    return {'error': str(e)}, 500
+```
+Returns an HTTP **500 (Server Error)** if something goes wrong (e.g., timeout, invalid directory).
+
+---
+
+## ⚠️ Security Warning
+
+This code is **extremely dangerous** because of:
+
+- **`shell=True` with user-controllable input** → enables **arbitrary command injection / remote code execution (RCE)**. Anyone who can call this endpoint can run any command on your server (e.g., `rm -rf /`, steal data, install malware).
+
+### Recommendations
+- **Never expose this to untrusted users.** This pattern essentially gives shell access.
+- If you must run commands, **avoid `shell=True`** and pass arguments as a list.
+- **Whitelist** allowed commands rather than accepting arbitrary input.
+- Run in a **sandboxed/isolated environment** (container, restricted user) if execution is unavoidable.
+
+Would you like help designing a safer version of this functionality?

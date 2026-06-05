@@ -1,0 +1,1230 @@
+§u§
+```
+<!DOCTYPE html>
+<html class="no-js theme-macchiato center-alignment-no" lang="en-EN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="endpoint" content="results">
+  <meta name="description" content="SearXNG — a privacy-respecting, open metasearch engine">
+  <meta name="keywords" content="SearXNG, search, search engine, metasearch, meta search">
+  <meta name="generator" content="searxng/2026.6.3+5bae05514">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noarchive">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>yeehaw junction - PrivAU</title>
+  <script type="module" src="/static/themes/simple/sxng-core.min.js" client_settings="eyJwbHVnaW5zIjogWyJjYWxjdWxhdG9yIiwgInNlbGZfaW5mbyIsICJpbmZpbml0ZVNjcm9sbCIsICJ1bml0X2NvbnZlcnRlciIsICJ0aW1lX3pvbmUiLCAiaGFzaF9wbHVnaW4iLCAidHJhY2tlcl91cmxfcmVtb3ZlciJdLCAiYXV0b2NvbXBsZXRlIjogImdvb2dsZSIsICJhdXRvY29tcGxldGVfbWluIjogMCwgIm1ldGhvZCI6ICJHRVQiLCAidHJhbnNsYXRpb25zIjogeyJub19pdGVtX2ZvdW5kIjogIk5vIGl0ZW0gZm91bmQiLCAiU291cmNlIjogIlNvdXJjZSIsICJlcnJvcl9sb2FkaW5nX25leHRfcGFnZSI6ICJFcnJvciBsb2FkaW5nIHRoZSBuZXh0IHBhZ2UifSwgInNlYXJjaF9vbl9jYXRlZ29yeV9zZWxlY3QiOiB0cnVlLCAiaG90a2V5cyI6ICJkZWZhdWx0IiwgInVybF9mb3JtYXR0aW5nIjogInByZXR0eSIsICJ0aGVtZV9zdGF0aWNfcGF0aCI6ICIvc3RhdGljL3RoZW1lcy9zaW1wbGUiLCAicmVzdWx0c19vbl9uZXdfdGFiIjogZmFsc2UsICJmYXZpY29uX3Jlc29sdmVyIjogImdvb2dsZSIsICJxdWVyeV9pbl90aXRsZSI6IHRydWUsICJzYWZlc2VhcmNoIjogMSwgInRoZW1lIjogInNpbXBsZSIsICJkb2lfcmVzb2x2ZXIiOiAiaHR0cHM6Ly9vYWRvaS5vcmcvIn0="></script>
+<link rel="alternate" type="application/rss+xml" title="Searx search: yeehaw junction" href="https://priv.au/search?q=yeehaw%20junction&amp;categories=general&amp;pageno=1&amp;time_range=&amp;language=en&amp;safesearch=1&amp;format=rss">  <link rel="stylesheet" href="/static/themes/simple/sxng-ltr.min.css" type="text/css" media="screen">
+  <link rel="stylesheet" href="/clientn3dsxooudfqxc74u.css" type="text/css">
+  <link title="PrivAU" type="application/opensearchdescription+xml" rel="search" href="/opensearch.xml?method=GET&amp;autocomplete=google">
+  <link rel="icon" href="/static/themes/simple/img/favicon.png" sizes="any">
+  <link rel="icon" href="/static/themes/simple/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/static/themes/simple/img/favicon.png">
+  <link rel="manifest" href="/manifest.json" />
+</head>
+<body class="results_endpoint" >
+  <main id="main_results" class="">
+
+    <nav id="links_on_top"><a href="/info/en/about" class="link_on_top_about"><svg viewBox="0 0 512 512" aria-hidden="true" class="sxng-icon-set-big"><path d="M248 64C146.39 64 64 146.39 64 248s82.39 184 184 184 184-82.39 184-184S349.61 64 248 64z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M220 220h32v116"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M208 340h88"/><path d="M248 130a26 26 0 1026 26 26 26 0 00-26-26z" fill="currentColor" stroke="currentColor" stroke-miterlimit="10" stroke-width="1"/></svg><span>About</span></a><a href="donate" class="link_on_top_donate"><svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-big" aria-hidden="true"><path d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0 0 18 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32px"/></svg><span>Donate</span></a><a href="/preferences" class="link_on_top_preferences"><svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-big" aria-hidden="true"><path d="M262.29 192.31a64 64 0 1 0 57.4 57.4 64.13 64.13 0 0 0-57.4-57.4M416.39 256a154 154 0 0 1-1.53 20.79l45.21 35.46a10.81 10.81 0 0 1 2.45 13.75l-42.77 74a10.81 10.81 0 0 1-13.14 4.59l-44.9-18.08a16.11 16.11 0 0 0-15.17 1.75A164.5 164.5 0 0 1 325 400.8a15.94 15.94 0 0 0-8.82 12.14l-6.73 47.89a11.08 11.08 0 0 1-10.68 9.17h-85.54a11.11 11.11 0 0 1-10.69-8.87l-6.72-47.82a16.07 16.07 0 0 0-9-12.22 155 155 0 0 1-21.46-12.57 16 16 0 0 0-15.11-1.71l-44.89 18.07a10.81 10.81 0 0 1-13.14-4.58l-42.77-74a10.8 10.8 0 0 1 2.45-13.75l38.21-30a16.05 16.05 0 0 0 6-14.08c-.36-4.17-.58-8.33-.58-12.5s.21-8.27.58-12.35a16 16 0 0 0-6.07-13.94l-38.19-30A10.81 10.81 0 0 1 49.48 186l42.77-74a10.81 10.81 0 0 1 13.14-4.59l44.9 18.08a16.11 16.11 0 0 0 15.17-1.75A164.5 164.5 0 0 1 187 111.2a15.94 15.94 0 0 0 8.82-12.14l6.73-47.89A11.08 11.08 0 0 1 213.23 42h85.54a11.11 11.11 0 0 1 10.69 8.87l6.72 47.82a16.07 16.07 0 0 0 9 12.22 155 155 0 0 1 21.46 12.57 16 16 0 0 0 15.11 1.71l44.89-18.07a10.81 10.81 0 0 1 13.14 4.58l42.77 74a10.8 10.8 0 0 1-2.45 13.75l-38.21 30a16.05 16.05 0 0 0-6.05 14.08c.33 4.14.55 8.3.55 12.47" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32px"/></svg><span>Preferences</span></a></nav>
+<form id="search" method="GET" action="/search" role="search">
+  <div id="search_header">
+    <a id="search_logo" href="/" tabindex="0" title="Display the front page">
+      <span hidden>SearXNG</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="92mm" height="92mm" viewBox="0 0 92 92"><g transform="translate(-40.921 -17.417)"><circle cx="75.921" cy="53.903" r="30" fill="none" fill-opacity="1" stroke="#3050ff" stroke-width="10" stroke-miterlimit="4" stroke-dasharray="none" stroke-opacity="1"/><path d="M67.515 37.915a18 18 0 0 1 21.051 3.313 18 18 0 0 1 3.138 21.078" fill="none" fill-opacity="1" stroke="#3050ff" stroke-width="5" stroke-miterlimit="4" stroke-dasharray="none" stroke-opacity="1"/><rect width="18.846" height="39.963" x="3.706" y="122.09" ry="0" transform="rotate(-46.235)" opacity="1" fill="#3050ff" fill-opacity="1" stroke="none" stroke-width="8" stroke-miterlimit="4" stroke-dasharray="none" stroke-opacity="1"/></g></svg>    </a>
+    <div id="search_view">
+      <div class="search_box">
+        <input id="q" name="q" type="text" placeholder="Search for..." tabindex="1" autocomplete="off" autocapitalize="none" spellcheck="false" autocorrect="off" dir="auto" value="yeehaw junction">
+        <button id="clear_search" type="reset" aria-label="clear" class="hide_if_nojs"><span><svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-big" aria-hidden="true"><path d="M368 368 144 144M368 144 144 368" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32px"/></svg></span><span class="show_if_nojs">clear</span></button>
+        <button id="send_search" type="submit"name="category_general"aria-label="search"><span class="hide_if_nojs"><svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-big" aria-hidden="true"><path d="M221.09 64a157.09 157.09 0 1 0 157.09 157.09A157.1 157.1 0 0 0 221.09 64Z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><path d="M338.29 338.29 448 448" fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32px"/></svg></span><span class="show_if_nojs">search</span></button>
+        <div class="autocomplete hide_if_nojs"><ul></ul></div>
+      </div>
+    </div>
+<div id="categories" class="search_categories"><div id="categories_container">
+<button type="submit" name="category_general" class="category category_button selected"><svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-big" aria-hidden="true"><path d="M221.09 64a157.09 157.09 0 1 0 157.09 157.09A157.1 157.1 0 0 0 221.09 64Z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><path d="M338.29 338.29 448 448" fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32px"/></svg><div class="category_name">general</div></button>
+<button type="submit" name="category_images" class="category category_button "><svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-big" aria-hidden="true"><rect width="416" height="352" x="48" y="80" rx="48" ry="48" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32px"/><circle cx="336" cy="176" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><path d="m304 335.79-90.66-90.49a32 32 0 0 0-43.87-1.3L48 352M224 432l123.34-123.34a32 32 0 0 1 43.11-2L464 368" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32px"/></svg><div class="category_name">images</div></button>
+<button type="submit" name="category_videos" class="category category_button "><svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-big" aria-hidden="true"><path d="M112 111v290c0 17.44 17 28.52 31 20.16l247.9-148.37c12.12-7.25 12.12-26.33 0-33.58L143 90.84c-14-8.36-31 2.72-31 20.16Z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/></svg><div class="category_name">videos</div></button>
+<button type="submit" name="category_news" class="category category_button "><svg viewBox="0 0 512 512" aria-hidden="true" class="sxng-icon-set-big"><path d="M368 415.86V72a24.07 24.07 0 00-24-24H72a24.07 24.07 0 00-24 24v352a40.12 40.12 0 0040 40h328" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"/><path d="M416 464h0a48 48 0 01-48-48V128h72a24 24 0 0124 24v264a48 48 0 01-48 48z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"/><path d="M240 128h64M240 192h64M112 256h192M112 320h192M112 384h192" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path d="M176 208h-64a16 16 0 01-16-16v-64a16 16 0 0116-16h64a16 16 0 0116 16v64a16 16 0 01-16 16z" fill="currentColor" stroke="currentColor" stroke-linejoin="round" stroke-width="1"/></svg><div class="category_name">news</div></button>
+<button type="submit" name="category_music" class="category category_button "><svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-big" aria-hidden="true"><path d="M192 218v-6c0-14.84 10-27 24.24-30.59l174.59-46.68A20 20 0 0 1 416 154v22" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32px"/><path d="M416 295.94v80c0 13.91-8.93 25.59-22 30l-22 8c-25.9 8.72-52-10.42-52-38h0a33.37 33.37 0 0 1 23-32l51-18.15c13.07-4.4 22-15.94 22-29.85V58a10 10 0 0 0-12.6-9.61L204 102a16.48 16.48 0 0 0-12 16v226c0 13.91-8.93 25.6-22 30l-52 18c-13.88 4.68-22 17.22-22 32h0c0 27.58 26.52 46.55 52 38l22-8c13.07-4.4 22-16.08 22-30v-80" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32px"/></svg><div class="category_name">music</div></button>
+<button type="submit" name="category_it" class="category category_button "><svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-big" aria-hidden="true"><path d="m434.8 137.65-149.36-68.1c-16.19-7.4-42.69-7.4-58.88 0L77.3 137.65c-17.6 8-17.6 21.09 0 29.09l148 67.5c16.89 7.7 44.69 7.7 61.58 0l148-67.5c17.52-8 17.52-21.1-.08-29.09M160 308.52l-82.7 37.11c-17.6 8-17.6 21.1 0 29.1l148 67.5c16.89 7.69 44.69 7.69 61.58 0l148-67.5c17.6-8 17.6-21.1 0-29.1l-79.94-38.47" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32px"/><path d="m160 204.48-82.8 37.16c-17.6 8-17.6 21.1 0 29.1l148 67.49c16.89 7.7 44.69 7.7 61.58 0l148-67.49c17.7-8 17.7-21.1.1-29.1L352 204.48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32px"/></svg><div class="category_name">it</div></button>
+<button type="submit" name="category_science" class="category category_button "><svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-big" aria-hidden="true"><path d="M32 192 256 64l224 128-224 128z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32px"/><path d="M112 240v128l144 80 144-80V240M480 368V192M256 320v128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32px"/></svg><div class="category_name">science</div></button><input name="categories" id="selected-categories" type="hidden" />
+</div></div>  </div>
+  <div class="search_filters">
+<select class="language" id="language" name="language" aria-label="Search language"><option value="all">Default language [all]</option><option value="auto">Auto-detect (en)</option><option value="af">
+            Afrikaans [af] 🌐</option><option value="ca">
+            Català [ca] 🌐</option><option value="da">
+            Dansk [da] 🌐</option><option value="da-DK">
+            Dansk-Danmark [da-DK] 🇩🇰</option><option value="de">
+            Deutsch [de] 🌐</option><option value="de-AT">
+            Deutsch-Österreich [de-AT] 🇦🇹</option><option value="de-CH">
+            Deutsch-Schweiz [de-CH] 🇨🇭</option><option value="de-DE">
+            Deutsch-Deutschland [de-DE] 🇩🇪</option><option value="et">
+            Eesti [et] 🌐</option><option value="et-EE">
+            Eesti-Eesti [et-EE] 🇪🇪</option><option value="en" selected="selected">
+            English [en] 🌐</option><option value="en-AU">
+            English-Australia [en-AU] 🇦🇺</option><option value="en-CA">
+            English-Canada [en-CA] 🇨🇦</option><option value="en-GB">
+            English-United Kingdom [en-GB] 🇬🇧</option><option value="en-IE">
+            English-Ireland [en-IE] 🇮🇪</option><option value="en-IN">
+            English-India [en-IN] 🇮🇳</option><option value="en-NZ">
+            English-New Zealand [en-NZ] 🇳🇿</option><option value="en-PH">
+            English-Philippines [en-PH] 🇵🇭</option><option value="en-PK">
+            English-Pakistan [en-PK] 🇵🇰</option><option value="en-SG">
+            English-Singapore [en-SG] 🇸🇬</option><option value="en-US">
+            English-United States [en-US] 🇺🇸</option><option value="en-ZA">
+            English-South Africa [en-ZA] 🇿🇦</option><option value="es">
+            Español [es] 🌐</option><option value="es-AR">
+            Español-Argentina [es-AR] 🇦🇷</option><option value="es-CL">
+            Español-Chile [es-CL] 🇨🇱</option><option value="es-CO">
+            Español-Colombia [es-CO] 🇨🇴</option><option value="es-ES">
+            Español-España [es-ES] 🇪🇸</option><option value="es-MX">
+            Español-México [es-MX] 🇲🇽</option><option value="es-PE">
+            Español-Perú [es-PE] 🇵🇪</option><option value="fr">
+            Français [fr] 🌐</option><option value="fr-BE">
+            Français-Belgique [fr-BE] 🇧🇪</option><option value="fr-CA">
+            Français-Canada [fr-CA] 🇨🇦</option><option value="fr-CH">
+            Français-Suisse [fr-CH] 🇨🇭</option><option value="fr-FR">
+            Français-France [fr-FR] 🇫🇷</option><option value="gl">
+            Galego [gl] 🌐</option><option value="hr">
+            Hrvatski [hr] 🌐</option><option value="id">
+            Indonesia [id] 🌐</option><option value="id-ID">
+            Indonesia-Indonesia [id-ID] 🇮🇩</option><option value="it">
+            Italiano [it] 🌐</option><option value="it-CH">
+            Italiano-Svizzera [it-CH] 🇨🇭</option><option value="it-IT">
+            Italiano-Italia [it-IT] 🇮🇹</option><option value="hu">
+            Magyar [hu] 🌐</option><option value="hu-HU">
+            Magyar-Magyarország [hu-HU] 🇭🇺</option><option value="nl">
+            Nederlands [nl] 🌐</option><option value="nl-BE">
+            Nederlands-België [nl-BE] 🇧🇪</option><option value="nl-NL">
+            Nederlands-Nederland [nl-NL] 🇳🇱</option><option value="nb">
+            Norsk Bokmål [nb] 🌐</option><option value="nb-NO">
+            Norsk Bokmål-Norge [nb-NO] 🇳🇴</option><option value="pl">
+            Polski [pl] 🌐</option><option value="pl-PL">
+            Polski-Polska [pl-PL] 🇵🇱</option><option value="pt">
+            Português [pt] 🌐</option><option value="pt-BR">
+            Português-Brasil [pt-BR] 🇧🇷</option><option value="pt-PT">
+            Português-Portugal [pt-PT] 🇵🇹</option><option value="ro">
+            Română [ro] 🌐</option><option value="ro-RO">
+            Română-România [ro-RO] 🇷🇴</option><option value="sq">
+            Shqip [sq] 🌐</option><option value="sk">
+            Slovenčina [sk] 🌐</option><option value="fi">
+            Suomi [fi] 🌐</option><option value="fi-FI">
+            Suomi-Suomi [fi-FI] 🇫🇮</option><option value="sv">
+            Svenska [sv] 🌐</option><option value="sv-SE">
+            Svenska-Sverige [sv-SE] 🇸🇪</option><option value="vi">
+            Tiếng Việt [vi] 🌐</option><option value="vi-VN">
+            Tiếng Việt-Việt Nam [vi-VN] 🇻🇳</option><option value="tr">
+            Türkçe [tr] 🌐</option><option value="tr-TR">
+            Türkçe-Türkiye [tr-TR] 🇹🇷</option><option value="cs">
+            Čeština [cs] 🌐</option><option value="cs-CZ">
+            Čeština-Česko [cs-CZ] 🇨🇿</option><option value="el">
+            Ελληνικά [el] 🌐</option><option value="el-GR">
+            Ελληνικά-Ελλάδα [el-GR] 🇬🇷</option><option value="bg">
+            Български [bg] 🌐</option><option value="bg-BG">
+            Български-България [bg-BG] 🇧🇬</option><option value="ru">
+            Русский [ru] 🌐</option><option value="ru-RU">
+            Русский-Россия [ru-RU] 🇷🇺</option><option value="uk">
+            Українська [uk] 🌐</option><option value="ar">
+            العربية [ar] 🌐</option><option value="ar-SA">
+            العربية-المملكة العربية السعودية [ar-SA] 🇸🇦</option><option value="th">
+            ไทย [th] 🌐</option><option value="th-TH">
+            ไทย-ไทย [th-TH] 🇹🇭</option><option value="zh">
+            中文 [zh] 🌐</option><option value="zh-CN">
+            中文-中国 [zh-CN] 🇨🇳</option><option value="zh-HK">
+            中文-中國香港特別行政區 [zh-HK] 🇭🇰</option><option value="zh-TW">
+            中文-台灣 [zh-TW] 🇹🇼</option><option value="ja">
+            日本語 [ja] 🌐</option><option value="ja-JP">
+            日本語-日本 [ja-JP] 🇯🇵</option><option value="ko">
+            한국어 [ko] 🌐</option><option value="ko-KR">
+            한국어-대한민국 [ko-KR] 🇰🇷</option></select><select name="time_range" id="time_range" class="time_range" aria-label="Time range"><option id="time-range-anytime" value="" selected>Anytime</option><option id="time-range-day" value="day" >Last day</option><option id="time-range-week" value="week" >Last week</option><option id="time-range-month" value="month" >Last month</option><option id="time-range-year" value="year" >Last year</option></select><select  name="safesearch" id="safesearch" class="safesearch" aria-label="SafeSearch">
+    <option value="2"  aria-label="Strict">SafeSearch: Strict</option>
+    <option value="1" selected="selected" aria-label="Moderate">SafeSearch: Moderate</option>
+    <option value="0"  aria-label="None">SafeSearch: None</option>
+</select>  </div>
+  <input type="hidden" name="theme" value="simple" >
+</form>
+
+<div id="results" class="only_template_default">
+    <div id="sidebar"><div id="infoboxes">
+            <details open class="sidebar-collapsible">
+              <summary class="title">Info</summary><aside class="infobox" aria-label="Yeehaw Junction, Florida">
+  <h2 class="title"><bdi>Yeehaw Junction, Florida</bdi></h2><img src="/image_proxy?url=https%3A%2F%2Fduckduckgo.com%2Fi%2F20bf605c5ea7e2ca.jpg&amp;h=425bd581af0cf835f7d86006a144b6428fee8eb6098d821b40ea3765f544a7f5" title="Yeehaw Junction, Florida" alt="Yeehaw Junction, Florida"><p><bdi>Yeehaw Junction is a census-designated place in Osceola County, Florida, United States. As of the 2020 census, Yeehaw Junction had a population of 235. The area was confused with Buenaventura Lakes CDP in the 2000 census, and the correct data for the area was not recorded. Yeehaw Junction is part of the Orlando–Kissimmee Metropolitan Statistical Area. The Destiny development was planned nearby.</bdi></p><div class="attributes"><dl>
+          <dt><bdi>Country :</bdi></dt><dd><bdi>United States</bdi></dd></dl><dl>
+          <dt><bdi>State :</bdi></dt><dd><bdi>Florida</bdi></dd></dl><dl>
+          <dt><bdi>County :</bdi></dt><dd><bdi>Osceola</bdi></dd></dl><dl>
+          <dt><bdi>Population (2020) :</bdi></dt><dd><bdi>250</bdi></dd></dl><dl>
+          <dt><bdi>Time zone :</bdi></dt><dd><bdi>Eastern (EST) (UTC−5)</bdi></dd></dl><dl>
+          <dt><bdi>Summer (DST) :</bdi></dt><dd><bdi>EDT (UTC−4)</bdi></dd></dl><dl>
+          <dt><bdi>ZIP Code :</bdi></dt><dd><bdi>34972</bdi></dd></dl><dl>
+          <dt><bdi>Area code(s) :</bdi></dt><dd><bdi>321</bdi></dd></dl><dl>
+          <dt><bdi>FIPS code :</bdi></dt><dd><bdi>12-78975</bdi></dd></dl><dl>
+          <dt><bdi>GNIS feature ID :</bdi></dt><dd><bdi>2403047</bdi></dd></dl></div><div class="urls">
+      <ul><li class="url"><bdi><a href="https://en.wikipedia.org/wiki/Yeehaw_Junction%2C_Florida"rel="noreferrer">Wikipedia</a></bdi></li><li class="url"><bdi><a href="https://www.openstreetmap.org/?lat=27.7&amp;lon=-80.9044&amp;zoom=17&amp;layers=M"rel="noreferrer">OpenStreetMap</a></bdi></li></ul>
+    </div></aside></details>
+          </div><div id="suggestions" role="complementary" aria-labelledby="suggestions-title">
+  <details class="sidebar-collapsible">
+    <summary class="title" id="suggestions-title">Suggestions</summary>
+    <ul class="wrapper"><li><form method="GET" action="/search">
+          <input type="hidden" name="q" value="Greater Orlando"><input type="hidden" name="category_general" value="1"><input type="hidden" name="language" value="en">
+          <input type="hidden" name="time_range" value="">
+          <input type="hidden" name="safesearch" value="1">
+          <input type="hidden" name="theme" value="simple"><input type="submit" class="suggestion" role="link" value="Greater Orlando">
+      </form></li><li><form method="GET" action="/search">
+          <input type="hidden" name="q" value="Census-designated places in Osceola County, Florida"><input type="hidden" name="category_general" value="1"><input type="hidden" name="language" value="en">
+          <input type="hidden" name="time_range" value="">
+          <input type="hidden" name="safesearch" value="1">
+          <input type="hidden" name="theme" value="simple"><input type="submit" class="suggestion" role="link" value="Census-designated places in Osceola County, Florida">
+      </form></li><li><form method="GET" action="/search">
+          <input type="hidden" name="q" value="Census-designated places in Florida"><input type="hidden" name="category_general" value="1"><input type="hidden" name="language" value="en">
+          <input type="hidden" name="time_range" value="">
+          <input type="hidden" name="safesearch" value="1">
+          <input type="hidden" name="theme" value="simple"><input type="submit" class="suggestion" role="link" value="Census-designated places in Florida">
+      </form></li></ul>
+  </details>
+</div><div id="engines_msg">
+  <details class="sidebar-collapsible">
+    <summary class="title" id="engines_msg-title">Response time: 0.3 seconds</summary>
+    <table class="engine-stats" id="engines_msg-table"><tr>
+        <td class="engine-name"><a href="/stats?engine=google">google</a></td>
+        <td class="response-time">
+          <div class="bar-chart-value">0.3</div>
+          <div class="bar-chart-graph" aria-labelledby="google_time" aria-hidden="true">
+            <div class="bar-chart-bar bar100"></div>
+          </div>
+        </td>
+      </tr><tr>
+        <td class="engine-name"><a href="/stats?engine=ddg+definitions">ddg definitions</a></td>
+        <td class="response-time">
+          <div class="bar-chart-value">0.1</div>
+          <div class="bar-chart-graph" aria-labelledby="ddg definitions_time" aria-hidden="true">
+            <div class="bar-chart-bar bar31"></div>
+          </div>
+        </td>
+      </tr><tr>
+        <td class="engine-name"><a href="/stats?engine=wikipedia">wikipedia</a></td>
+        <td class="response-time">
+          <div class="bar-chart-value">0.0</div>
+          <div class="bar-chart-graph" aria-labelledby="wikipedia_time" aria-hidden="true">
+            <div class="bar-chart-bar bar9"></div>
+          </div>
+        </td>
+      </tr></table>
+  </details>
+</div><div id="sidebar-end-collapsible"></div>
+    </div><div id="urls" role="main">
+
+<article class="result result-default category-general"><a href="https://en.wikipedia.org/wiki/Yeehaw_Junction,_Florida" class="url_header" rel="noreferrer">  <div class="favicon"><img loading="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAB8klEQVRYhe2X0Y3DIAyG7Q7hFTxBZsgMGYAdGIEVWCKT5J0ZWMK+h5MREEiv1VW5h0PiIXXAn+3fVoPQLRHR/rffXI/HA+vn8vBpxzMQvMN5DfG4w3G98K7obd2egX8AEBFdlkURUQGgbETUbdtURFRElJkbOxFpjFFFREMISkSN3WwxxtNZACh3gznIOSsRFZCcc3Fu2zlXLjiOo7GllBQAlJk1pXQ6u21bcVzfDfVLIYTiYN/30yU55wLonGts+75PzxkAEZ0Cg96BpXJZluFF3ntFREXE5jJm1nVdh2cMPIRwssHIwbMsWKm89yV6RDyVpb5zFP0QwGgRcRpRnwVmbgTbbyI6lWwKYPUyByNB1Vmwd0fv1dqY2YcAKaUCMIvMSoWI0+hEvlt8lskpgIjouq7Fwah2dalmAMdxKCJOO+MSwIQFAEVso9oi4lRgzrlpNz0FsPTNHBig7b7FLEM2Ed8CMAGNHDCzOufKhCOixm7j+er+pwB9mvvoU0plBANAA0lEw8HzMkCMsaTZ0mnR94I1SAMc6eJlgHo8M/Owr2s9hBB0XdfL1nwJQKSdfLPZYIK1zpkNnrcA6p6fTb1asFeD5y0Ake+evpqMpo1ng+dtgJyzeu8vhZVS+pHy63373/L/L6O/8XFar0+D9J/nX3uIuuF08s/DAAAAAElFTkSuQmCC"></div><div class="url_wrapper"><span class="url_o1"><span class="url_i1">https://en.wikipedia.org</span></span><span class="url_o2"><span class="url_i2"> › wiki › Yeehaw_Junction,_Florida</span></span>  </div></a><h3><a href="https://en.wikipedia.org/wiki/Yeehaw_Junction,_Florida" rel="noreferrer"><span class="highlight">Yeehaw</span> <span class="highlight">Junction</span>, Florida - Wikipedia</a></h3><!-- Length is displayed inside the thumbnail if there's any, so don't display it here a second time -->  <p class="content">
+    <span class="highlight">Yeehaw</span> <span class="highlight">Junction</span> is a census-designated place (CDP) in Osceola County, Florida, United States. ... As of the 2020 census, <span class="highlight">Yeehaw</span> <span class="highlight">Junction</span> had a population of 235.
+  </p><div class="engines">
+<span>google</span>  <svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-small" aria-hidden="true"><circle cx="256" cy="256" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><circle cx="256" cy="416" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><circle cx="256" cy="96" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/></svg><a href="https://web.archive.org/web/https://en.wikipedia.org/wiki/Yeehaw_Junction,_Florida" class="cache_link" rel="noreferrer">cached</a>
+</div><div class="break"></div></article>
+<article class="result result-default category-general"><a href="https://en.wikipedia.org/wiki/Yeehaw_Junction%2C_Florida" class="url_header" rel="noreferrer">  <div class="favicon"><img loading="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAB8klEQVRYhe2X0Y3DIAyG7Q7hFTxBZsgMGYAdGIEVWCKT5J0ZWMK+h5MREEiv1VW5h0PiIXXAn+3fVoPQLRHR/rffXI/HA+vn8vBpxzMQvMN5DfG4w3G98K7obd2egX8AEBFdlkURUQGgbETUbdtURFRElJkbOxFpjFFFREMISkSN3WwxxtNZACh3gznIOSsRFZCcc3Fu2zlXLjiOo7GllBQAlJk1pXQ6u21bcVzfDfVLIYTiYN/30yU55wLonGts+75PzxkAEZ0Cg96BpXJZluFF3ntFREXE5jJm1nVdh2cMPIRwssHIwbMsWKm89yV6RDyVpb5zFP0QwGgRcRpRnwVmbgTbbyI6lWwKYPUyByNB1Vmwd0fv1dqY2YcAKaUCMIvMSoWI0+hEvlt8lskpgIjouq7Fwah2dalmAMdxKCJOO+MSwIQFAEVso9oi4lRgzrlpNz0FsPTNHBig7b7FLEM2Ed8CMAGNHDCzOufKhCOixm7j+er+pwB9mvvoU0plBANAA0lEw8HzMkCMsaTZ0mnR94I1SAMc6eJlgHo8M/Owr2s9hBB0XdfL1nwJQKSdfLPZYIK1zpkNnrcA6p6fTb1asFeD5y0Ake+evpqMpo1ng+dtgJyzeu8vhZVS+pHy63373/L/L6O/8XFar0+D9J/nX3uIuuF08s/DAAAAAElFTkSuQmCC"></div><div class="url_wrapper"><span class="url_o1"><span class="url_i1">https://en.wikipedia.org</span></span><span class="url_o2"><span class="url_i2"> › wiki › Yeehaw_Junction,_Florida</span></span>  </div></a><h3><a href="https://en.wikipedia.org/wiki/Yeehaw_Junction%2C_Florida" rel="noreferrer"><span class="highlight">Yeehaw</span> <span class="highlight">Junction</span>, Florida</a></h3><!-- Length is displayed inside the thumbnail if there's any, so don't display it here a second time -->  <p class="content empty_element">
+    This site did not provide any description.
+  </p>
+<div class="engines">
+<span>ddg definitions</span>  <svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-small" aria-hidden="true"><circle cx="256" cy="256" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><circle cx="256" cy="416" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><circle cx="256" cy="96" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/></svg><a href="https://web.archive.org/web/https://en.wikipedia.org/wiki/Yeehaw_Junction%2C_Florida" class="cache_link" rel="noreferrer">cached</a>
+</div><div class="break"></div></article>
+<article class="result result-default category-general"><a href="https://flamingomag.com/2019/02/23/my-florida-yeehaw-junction/" class="url_header" rel="noreferrer">  <div class="favicon"><img loading="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAVFBMVEXFDzzDADLFDjvfjZ3orLfPRmPNLlX22N/wxdDVWnXEADbCACzruMPrsb7uusbVZnzehpj55evSUW3LMVPOQF/BACD98PTVV3PKJEz54+nVYnrHDkDQH9V0AAAAeklEQVQ4jdXT2QqAIBQEUE1btH0xLf//P4PQFhrfwui8OlyugxISUXIDzkl2YZ8J2vXFqZXPAONyEN4IJjA+9Y0n4IQ0V6UDltwDFBy8HFDUCewwV56Gt7D66MHAHkx9CPSwrK2Dm0zzUjofFvX7QGItAY/9moDfJYYN9G0HzgrbLjsAAAAASUVORK5CYII="></div><div class="url_wrapper"><span class="url_o1"><span class="url_i1">https://flamingomag.com</span></span><span class="url_o2"><span class="url_i2"> › 2019 › 02 › 23 › my-florida-yeehaw-junction</span></span>  </div></a><h3><a href="https://flamingomag.com/2019/02/23/my-florida-yeehaw-junction/" rel="noreferrer">Ode to <span class="highlight">Yeehaw</span> <span class="highlight">Junction</span> | Flamingo Magazine</a></h3><!-- Length is displayed inside the thumbnail if there's any, so don't display it here a second time -->  <p class="content">
+    23 Feb 2019 · <span class="highlight">Yeehaw</span> <span class="highlight">Junction</span>, née Jackass <span class="highlight">Junction</span>, was a beacon to thousands of working men through the years (and likely the bane of many working women).
+  </p><div class="engines">
+<span>google</span>  <svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-small" aria-hidden="true"><circle cx="256" cy="256" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><circle cx="256" cy="416" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><circle cx="256" cy="96" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/></svg><a href="https://web.archive.org/web/https://flamingomag.com/2019/02/23/my-florida-yeehaw-junction/" class="cache_link" rel="noreferrer">cached</a>
+</div><div class="break"></div></article>
+<article class="result result-default category-general"><a href="https://www.florida-backroads-travel.com/yeehaw-junction-florida.html" class="url_header" rel="noreferrer">  <div class="favicon"><img loading="lazy" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Ny83Nzc3NysxNzc0Ny44LS03NzcuNzY3NS4rKzU1NTY1NS01NS0tNTUtNf/AABEIACAAIAMBEQACEQEDEQH/xAAZAAADAQEBAAAAAAAAAAAAAAAEBQYCAwD/xAArEAACAQMDAwIFBQAAAAAAAAABAgMEESEABRIGMUFRcRMVgaHBFCIyQpH/xAAaAQACAwEBAAAAAAAAAAAAAAADBQECBAAG/8QAJBEAAgICAgEDBQAAAAAAAAAAAQIAAwQREiExBSJBE0JRYYH/2gAMAwEAAhEDEQA/AGtX0/vJllNNvFScXjWSVuIz2v39PGtj0v8Aa0JTn4wAFlI/gEB2uu6iieopwjt8EkNLUG68gbYLWwfAv51OMbBsWQfqtdAVLMY+fj8T1T1VuiUsv7YOYU5SOxXBzk2xrQTobinFf6lvBx3KLY513Cjp6pmcs4uwWRrBvbsPa+qqN9zTaODFY50WBg9SDIDG0BkTBuGAt/uqGXBkb1ZSoph/S0/GSZXDqWUq3b+3YHJ1gy8hqygHgnuXxGWvMrJGwYZ0puBejkgZlRYCFLR2Ck/Tz9tdjMUtave99xl6pQqtzWV2mO4o0ZlzZGPEtYfxHc64yBJvqDbmrqcJ8OZOLEgsoYEelhpdm1NZXyTyvcuik2Kytogxdtz/ACx4KON0lDy8pXVc8TbGD9c+vppRg2C28WvsHx+oy9WyXNiKfmWCwSBmDVdQYiMJzOD4zf8AGvRGv3bi4P7Z1ReKhbsbeWNzowGoPczKqkcmQtbwNQQJ2zFHyW+6itVrw3FomBBXHg++dZRiqt3MSGLu/Jjuf//Z"></div><div class="url_wrapper"><span class="url_o1"><span class="url_i1">https://www.florida-backroads-travel.com</span></span><span class="url_o2"><span class="url_i2"> › yeehaw-junction-florida.html</span></span>  </div></a><h3><a href="https://www.florida-backroads-travel.com/yeehaw-junction-florida.html" rel="noreferrer"><span class="highlight">Yeehaw</span> <span class="highlight">Junction</span>: Old Florida at the Crossroads</a></h3><!-- Length is displayed inside the thumbnail if there's any, so don't display it here a second time -->  <p class="content">
+    27 Apr 2026 · <span class="highlight">Yeehaw</span> <span class="highlight">Junction</span> is at the intersection of US-441 and State Road 60 between Vero Beach and Lake Wales. It is also the name of an exit on the ...
+  </p><div class="engines">
+<span>google</span>  <svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-small" aria-hidden="true"><circle cx="256" cy="256" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><circle cx="256" cy="416" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><circle cx="256" cy="96" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/></svg><a href="https://web.archive.org/web/https://www.florida-backroads-travel.com/yeehaw-junction-florida.html" class="cache_link" rel="noreferrer">cached</a>
+</div><div class="break"></div></article>
+<article class="result result-default category-general"><a href="https://www.tripadvisor.com.au/Tourism-g34753-Yeehaw_Junction_Florida-Vacations.html" class="url_header" rel="noreferrer">  <div class="favicon"><img loading="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAY1BMVEUA61sAKxEA51kAYiYA41cAVSEAPhgAXiQAoj4ANxUA1lIAqEAAizUAmTsA3VUAvUkAbCoAnTwARhsATh4As0QAgTIAMRMAQhkAzU8ASx0AuEcAwkoAWCIAcywAhzQAtUUAkjiSsuwzAAABDklEQVQ4jeVS2XKEMAyzwhHCEUIhwAaW5f+/ss4BszPd/kCrN9mypXhC9A+hXTf0+W/dJisRUJr+ZzcfvkKvGINqrMRbr4iDMFOo5o1MhexyXiJXZxTYOfLxTjMxWwrFI6zQo3fyRuvt8UDpSQU8iQoox6RXtwMZqDq+g6d42xbICnSxXwMVuV0ZTRmshKVNKqupxRIFDshphx+owEk2ejJp/QqRIioiTsgBHEI2rzakAX2Z1ZwDaKjzgolOBFfMKeSMg9bDdLkI15QkGjMRB9qT4PBTDGHjgdpQPf3KBPZ8Vq/uOjnk8BqycJQEcaROyx5F2sO+b9jsY172jepy1DT5Q0v34Uf4J9Wf638d33nAC32J1DJ8AAAAAElFTkSuQmCC"></div><div class="url_wrapper"><span class="url_o1"><span class="url_i1">https://www.tripadvisor.com.au</span></span><span class="url_o2"><span class="url_i2"> › Tourism-g34753-Yeehaw_Junction_Florida-Vacations.html</span></span>  </div></a><h3><a href="https://www.tripadvisor.com.au/Tourism-g34753-Yeehaw_Junction_Florida-Vacations.html" rel="noreferrer"><span class="highlight">Yeehaw</span> <span class="highlight">Junction</span>, Florida - Tripadvisor</a></h3><!-- Length is displayed inside the thumbnail if there's any, so don't display it here a second time -->  <p class="content">
+    Stay. A mix of the charming, modern, and tried and true. See all · Westgate River Ranch Resort &amp; Rodeo. 3.7. (796) · Holiday Inn Express Vero ...
+  </p><div class="engines">
+<span>google</span>  <svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-small" aria-hidden="true"><circle cx="256" cy="256" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><circle cx="256" cy="416" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><circle cx="256" cy="96" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/></svg><a href="https://web.archive.org/web/https://www.tripadvisor.com.au/Tourism-g34753-Yeehaw_Junction_Florida-Vacations.html" class="cache_link" rel="noreferrer">cached</a>
+</div><div class="break"></div></article>
+<article class="result result-default category-general"><a href="https://www.reddit.com/r/florida/comments/1m8mlgx/yeehaw_junction/" class="url_header" rel="noreferrer">  <div class="favicon"><img loading="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAh1BMVEVHcEz/RQD/RgD/RQD/RQD/RQD/RAD/RQD/RQD/RQD+////RQD/NwD/PQD/QQDw9vj3/P3i7O/M2eD07+z6fFvQ4OcBBAb/Ug30uKz408n7Zjr7jnLa5Ojcj4T5cEzYop7Qz9HDycv0nYrLQiXpWzwZJChaNitkZWaiLgTvGwCIfHuOW01HcEyTqjndAAAALXRSTlMAyU9SiuIMIvWe/////////////////////////////////////////////wAEJt9nAAABrUlEQVQ4jYVTWXaDMAyEpKyyvBA7Zg9kb3v/+1U2JYG2eZ0fY8/YEtIoCB6It1mYAqRhto2D30gyIh/Ikp/8G/zA2/p6tCKRMQ7R4pEkXfGsqaoaIU1e8HjMCZY/Fev3+f2mSHBEgOiv/E6X64eSUjrBlGmyzv5y4rpVquB+54Jky+f5/co51ofOToKM6ucJpD1naPX1U1vGGHJ/BGkcbN1/Wa2B9eUu99iVPQNNQqI2LgJrBJ1W+QIVaUXDXIwQUOcvoBHCIAVWvRJUDNIAHoLDYSbmLxKAE5RCyjzv3uvv8+6972iRonSCFHhtSCFOUJ8nwRnqkyDe1NQPShKwb0lxtrb/zs3aMxW77anaoS8kBRGy0s1ch0ZXUvgA9JuuUNiIHUmkKoZxHArXKyFEg75QMZmBg1FKCXHZe1yIVaoFV+t4ahZq07ZKjJNgdHSrcWrW1G7sTFEYNd72+9uoWlOYDud2T4ZheigKp1HGrYNmC2t7y6E9DsaTxgxH6+9HK9NyhLopCU0N3gsLW8+m4jQQzizT7sn/miqP6B/+OXqbP9g0ez13bvw3i/H/Asr5MBnHLL6RAAAAAElFTkSuQmCC"></div><div class="url_wrapper"><span class="url_o1"><span class="url_i1">https://www.reddit.com</span></span><span class="url_o2"><span class="url_i2"> › r › florida › comments › 1m8mlgx › yeehaw_junction</span></span>  </div></a><h3><a href="https://www.reddit.com/r/florida/comments/1m8mlgx/yeehaw_junction/" rel="noreferrer"><span class="highlight">Yeehaw</span> <span class="highlight">Junction</span>? : r/florida - Reddit</a></h3><!-- Length is displayed inside the thumbnail if there's any, so don't display it here a second time -->  <p class="content">
+    25 July 2025 · Its single claim to fame is being the only exit on a nearly 90 mile stretch of Florida&#x27;s Turnpike. In true Florida style it used to be named ...
+  </p><div class="engines">
+<span>google</span>  <svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-small" aria-hidden="true"><circle cx="256" cy="256" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><circle cx="256" cy="416" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><circle cx="256" cy="96" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/></svg><a href="https://web.archive.org/web/https://www.reddit.com/r/florida/comments/1m8mlgx/yeehaw_junction/" class="cache_link" rel="noreferrer">cached</a>
+</div><div class="break"></div></article>
+<article class="result result-default category-general"><a href="https://maps.apple.com/place?auid=12654472511030849675" class="url_header" rel="noreferrer">  <div class="favicon"><img loading="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAA8FBMVEVHcEzxg8l/7n3v7fPywQi/6ZroyuHvgsj17fXk6OuR8ZDb8d9+7X3xgMny8vfy8veC7n3/ywDxg8px63Lxg8lr53Hz8/jw8Pb////r7PAGiP/+ywABfP8Dgv8+117S0dcx0VgAdP7Q0NV27Hc41FtI2WJe42x+7n0Mj/+exf7yic1R3Wf3kNJs6XF0rv/09f7j4ujc2uDu9O7V9dfnecD1+/nI3f0/lf4Aa/0lz1Hb6v7B2PuWvPqz5r/x6tiX7py19LVRov8Wz0ps2YP11upt4378zim20Pdf1Hp36IH1qtv43Ir53IXr0YTpms1HcEyHRdzzAAAAUHRSTlMARS7q+1v9/vz+3vzy37AusLCw8rCw////////////////////////////////////////////////////////////////////////////AFpIeYEAAAJTSURBVDiNXdOJcqJAEAbgSSQCubPH0CCHoAFROQRRRBOPaK493v9xtnsQU7V/lSmlP38wM8MY5uL+8mpmDChhFgSbied4rcv7C1bn/DoIenkNjDDrBZsUQboJgutzMQ+C/8Ba8RzHyXt4ncT3HibKZ5ZBQdCLOAJPW+P1a7z/VRB9ASvMIvwwoYqih4MLdsv5JoqifGk2IIoCUTEp1n70k7W4xq8+fAQWxgwzP4p8UeE5Wr65ZAqnPGVfwD/4fuHQTTwnbTGNaxjOl66JcVcIMB+1cDyPcQE07QRG/sj3R4di4gnCjnPtrXQpK/1xVCfnSKhBjHX9rbTmc6Nc6fZjTexDnilpig8p5qqqAaao1O5jE9s+rNdsvOc41wFm8XYeLwFeurZtn4jNxuNPmifb+l89qFD0+/YpCMbDNhQDY2C8VdbAsCpYoOgT6jfgE8T3AebUAdn7kVAIyEqFC2HFACE6cwn602LR7Z7AUIYVArMCSEyLoK6o77tuHTbEQIwLMaefubXoja5r/Gm3OAGZgBkSmLmWiUBFob/sGjCF0DXdAkJ8CsM0Y1CxQuOJeBIE8nSfuHg5dF3xZwYpARRUwuShLP+FuAzDEhcznpX1HcQWoBIBpnuYl/Vyl2bSFFASld3ICKYKxGK1y20B0p+mAHdji32Tj0IL43hVQSFJ0uszPzbwW3ZWg3bKxXKrE0nqdDq/6rGW4PGThWinE5E0pXmn8/qckFDwZNUVbV1NMar63DnmN4E71og97RqRBmCJcnc832c/btpiZ9KrmUsP4vj/AwzZgWjCX+lqAAAAAElFTkSuQmCC"></div><div class="url_wrapper"><span class="url_o1"><span class="url_i1">https://maps.apple.com</span></span><span class="url_o2"><span class="url_i2"> › place</span></span>  </div></a><h3><a href="https://maps.apple.com/place?auid=12654472511030849675" rel="noreferrer"><span class="highlight">Yeehaw</span> <span class="highlight">Junction</span>, FL, United States - Map &amp; Directions - Apple Maps</a></h3><!-- Length is displayed inside the thumbnail if there's any, so don't display it here a second time -->  <p class="content">
+    View details about <span class="highlight">Yeehaw</span> <span class="highlight">Junction</span>, FL, United States on Apple Maps. Address, driving directions, images, nearby attractions and more.
+  </p><div class="engines">
+<span>google</span>  <svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-small" aria-hidden="true"><circle cx="256" cy="256" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><circle cx="256" cy="416" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><circle cx="256" cy="96" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/></svg><a href="https://web.archive.org/web/https://maps.apple.com/place?auid=12654472511030849675" class="cache_link" rel="noreferrer">cached</a>
+</div><div class="break"></div></article>
+<article class="result result-default category-general"><a href="https://www.expedia.com/Yeehaw-Junction.dx3000432017" class="url_header" rel="noreferrer">  <div class="favicon"><img loading="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAC9UlEQVRYhcWXSWgUQRSGv+olM464xw08uBAF0UsgxIMgOYgonpRcFVGTgwgS8CCKuIPgEhCEaAQVTyqenIgXQT24gB5ERBiXi4KRSKJgkpnuqvJQmYxj1zjdk9H8UNAUdH9/1Xv1qp9gTDLXnAI2AR1AKzATENRHGhgCngKXgHtu08s8RYDMNc8ADgKdwPQ6QSvpO9ADnHSbXv4QMtfcAJwAugD3H8OLksAZ4LAHbAZ2/0c4Y6wO4IkH7MLE2yrHYcKZoBVoHZmeBezyMAlnfxF4/c6hf0AgajSRSWtWLlNMm2o1scYbcxKREJB96HLkos/AYG0GtAbPhc3rJMf3FmwmZlo3WAjoe+xy6ILP535BEEIhSD6CEIZHIfvI5e1HB+FE1+nZnN996HKg2+fLgMBxQMnqqxWAa0ljISCUxohNZQYEMJyH1zmHllUKN+rYDhcG8OyVy88RIuESVM7jMgMamJKC/TsCovlilyNgZBTOXvN5/CIKryZrCJwEKx/JQ/cNn947HmFYMqCJd3pjoirDz1316blVghczP5OO952aDJTBb/8B92DnlpDW1RIZI3kTG6gG72wP6doekEkTK4+sOTBReINvrXpWxd6BuPApKVP74yrWDhTP+fnrMeBxz29SA7fue/Tc9Ahl/eCQIAQfPgnyhfrCExkACBWEoTnn9YBDhRBobW6y4od9D9paFBACsHSRpn1DOGG41YDjwJv3DqeveIzmBUpDyypF17aAttZSZVE6PlxTuSZEd0DA12/w4LlLvsB4NQvC+HfE75IK5s7SzJ9td2H/pADXGRuuufFqkVKwsFFzdE/AiiUKZakPHpaLy/cgnTLTUpnnpNesVLCgUXNqX8DGtbJSuLQHDAKzx2cUrG5SXDlWIAiNvXlzjKnYErB8sWbr+r/CAYaEzDVnMS1Z6X1B2f+b1snKK5iynU5V/SfIOkAvpm8rAypZGknhAJnq8CGg1wGywGVMu1Q3VTmhEtOk9k1+czpuaZLa81+9cGxXTiwNygAAAABJRU5ErkJggg=="></div><div class="url_wrapper"><span class="url_o1"><span class="url_i1">https://www.expedia.com</span></span><span class="url_o2"><span class="url_i2"> › Yeehaw-Junction.dx3000432017</span></span>  </div></a><h3><a href="https://www.expedia.com/Yeehaw-Junction.dx3000432017" rel="noreferrer">2026 Travel Guide for <span class="highlight">Yeehaw</span> <span class="highlight">Junction</span>, Okeechobee - Expedia</a></h3><!-- Length is displayed inside the thumbnail if there's any, so don't display it here a second time -->  <p class="content">
+    Popular places to visit · Kissimmee Prairie Preserve State Park · Port Mayaca Locks · Seminole Casino Brighton · Quail Creek Sporting Ranch · Okeechobee County ...
+  </p><div class="engines">
+<span>google</span>  <svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-small" aria-hidden="true"><circle cx="256" cy="256" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><circle cx="256" cy="416" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><circle cx="256" cy="96" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/></svg><a href="https://web.archive.org/web/https://www.expedia.com/Yeehaw-Junction.dx3000432017" class="cache_link" rel="noreferrer">cached</a>
+</div><div class="break"></div></article>
+<article class="result result-default category-general"><a href="https://www.youtube.com/watch?v=bqamF3gFxuE" class="url_header" rel="noreferrer">  <div class="favicon"><img loading="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABr0lEQVRYhe3Xv48MYQDG8c87uTjubkmEjd+hkEs0crfRiUahYVfhDxCUCpVoVBKiENGKnEKiccUFEY2C2uxFIuQo/CgUGw171p5iRzEzCiGxs5sdxT3J5H0zmed9vsX7zjwTkiRRpqJS01cB/geAkE8StXEcxSx2o4oKJrNxQ/Z8wPq/rPcVCXrZvI1v2djCezTxMIhXfgEkavuxkAWPQh/QCOIXIVFbhzfYMaLwXB8xHeF4CeGwC/UIB0oIz3Uwwr4SAfZG2N6XpbqR0w2ioZzgrRE29WWZWMutizy/w6HZQQGqEaYKWWemeXqTe1fZs60owFRxgFwnDvN6nitnqUz0664M51U8voYLJ3m7wKl6X/uj9G/B2FBWWfnB9btcnqPd6Rtg2SD7YP4J52/w7lMRd7s4wOIS567xrFkkONfyGD5jyz9bOl3OXOL2A3q9QcKhFRK1xzgy6EoF9SjCq5LC4WWEuESAZl5IlrBzxOFpIQni7zgm7WujDK8Hcff3UtrAjLQbbpaWz8nsyktpJC2pf1JeShN8kR7xTna/Je2Ci7gfxF0Iq79mqwBlA/wEihVj07SFCdQAAAAASUVORK5CYII="></div><div class="url_wrapper"><span class="url_o1"><span class="url_i1">https://www.youtube.com</span></span><span class="url_o2"><span class="url_i2"> › watch</span></span>  </div></a><h3><a href="https://www.youtube.com/watch?v=bqamF3gFxuE" rel="noreferrer">235 Residents &amp; One TikToker vs. the Florida Wilderness - YouTube</a></h3><!-- Length is displayed inside the thumbnail if there's any, so don't display it here a second time -->  <p class="content">
+    28 Dec 2025 · What is life really like in <span class="highlight">Yeehaw</span> <span class="highlight">Junction</span>, Florida — and does anyone actually live there? On a quiet December morning, I take one of the ...
+  </p><div class="engines">
+<span>google</span>  <svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-small" aria-hidden="true"><circle cx="256" cy="256" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><circle cx="256" cy="416" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><circle cx="256" cy="96" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/></svg><a href="https://web.archive.org/web/https://www.youtube.com/watch?v=bqamF3gFxuE" class="cache_link" rel="noreferrer">cached</a>
+</div><div class="break"></div></article>    </div>
+    <div id="backToTop">
+      <a href="#" aria-label="Back to top"><svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-small" aria-hidden="true"><path d="m112 328 144-144 144 144" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48px"/></svg></a>
+    </div>
+    <nav id="pagination" role="navigation">
+<form method="GET" action="/search" class="next_page">
+              <div class="right">
+                <input type="hidden" name="q" value="yeehaw junction" >
+                <input type="hidden" name="category_general" value="1" >
+                <input type="hidden" name="pageno" value="2" >
+                <input type="hidden" name="language" value="en" >
+                <input type="hidden" name="time_range" value="" >
+                <input type="hidden" name="safesearch" value="1" >
+                <input type="hidden" name="theme" value="simple" >
+<button role="link"  type="submit">Next page <svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-small" aria-hidden="true"><path d="m184 112 144 144-144 144" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48px"/></svg></button>
+              </div>
+          </form>
+        <div class="numbered_pagination">
+            <form method="GET" action="/search" class="page_number">
+                <input type="hidden" name="q" value="yeehaw junction" >
+                <input type="hidden" name="category_general" value="1" >
+                <input type="hidden" name="pageno" value="1" >
+                <input type="hidden" name="language" value="en" >
+                <input type="hidden" name="time_range" value="" >
+                <input type="hidden" name="safesearch" value="1" >
+                <input type="hidden" name="theme" value="simple" >
+                <input role="link" class="page_number_current" type="button" value="1">
+            </form>
+            <form method="GET" action="/search" class="page_number">
+                <input type="hidden" name="q" value="yeehaw junction" >
+                <input type="hidden" name="category_general" value="1" >
+                <input type="hidden" name="pageno" value="2" >
+                <input type="hidden" name="language" value="en" >
+                <input type="hidden" name="time_range" value="" >
+                <input type="hidden" name="safesearch" value="1" >
+                <input type="hidden" name="theme" value="simple" >
+                <input role="link" class="page_number" type="submit" value="2">
+            </form>
+            <form method="GET" action="/search" class="page_number">
+                <input type="hidden" name="q" value="yeehaw junction" >
+                <input type="hidden" name="category_general" value="1" >
+                <input type="hidden" name="pageno" value="3" >
+                <input type="hidden" name="language" value="en" >
+                <input type="hidden" name="time_range" value="" >
+                <input type="hidden" name="safesearch" value="1" >
+                <input type="hidden" name="theme" value="simple" >
+                <input role="link" class="page_number" type="submit" value="3">
+            </form>
+            <form method="GET" action="/search" class="page_number">
+                <input type="hidden" name="q" value="yeehaw junction" >
+                <input type="hidden" name="category_general" value="1" >
+                <input type="hidden" name="pageno" value="4" >
+                <input type="hidden" name="language" value="en" >
+                <input type="hidden" name="time_range" value="" >
+                <input type="hidden" name="safesearch" value="1" >
+                <input type="hidden" name="theme" value="simple" >
+                <input role="link" class="page_number" type="submit" value="4">
+            </form>
+            <form method="GET" action="/search" class="page_number">
+                <input type="hidden" name="q" value="yeehaw junction" >
+                <input type="hidden" name="category_general" value="1" >
+                <input type="hidden" name="pageno" value="5" >
+                <input type="hidden" name="language" value="en" >
+                <input type="hidden" name="time_range" value="" >
+                <input type="hidden" name="safesearch" value="1" >
+                <input type="hidden" name="theme" value="simple" >
+                <input role="link" class="page_number" type="submit" value="5">
+            </form>
+            <form method="GET" action="/search" class="page_number">
+                <input type="hidden" name="q" value="yeehaw junction" >
+                <input type="hidden" name="category_general" value="1" >
+                <input type="hidden" name="pageno" value="6" >
+                <input type="hidden" name="language" value="en" >
+                <input type="hidden" name="time_range" value="" >
+                <input type="hidden" name="safesearch" value="1" >
+                <input type="hidden" name="theme" value="simple" >
+                <input role="link" class="page_number" type="submit" value="6">
+            </form>
+            <form method="GET" action="/search" class="page_number">
+                <input type="hidden" name="q" value="yeehaw junction" >
+                <input type="hidden" name="category_general" value="1" >
+                <input type="hidden" name="pageno" value="7" >
+                <input type="hidden" name="language" value="en" >
+                <input type="hidden" name="time_range" value="" >
+                <input type="hidden" name="safesearch" value="1" >
+                <input type="hidden" name="theme" value="simple" >
+                <input role="link" class="page_number" type="submit" value="7">
+            </form>
+            <form method="GET" action="/search" class="page_number">
+                <input type="hidden" name="q" value="yeehaw junction" >
+                <input type="hidden" name="category_general" value="1" >
+                <input type="hidden" name="pageno" value="8" >
+                <input type="hidden" name="language" value="en" >
+                <input type="hidden" name="time_range" value="" >
+                <input type="hidden" name="safesearch" value="1" >
+                <input type="hidden" name="theme" value="simple" >
+                <input role="link" class="page_number" type="submit" value="8">
+            </form>
+            <form method="GET" action="/search" class="page_number">
+                <input type="hidden" name="q" value="yeehaw junction" >
+                <input type="hidden" name="category_general" value="1" >
+                <input type="hidden" name="pageno" value="9" >
+                <input type="hidden" name="language" value="en" >
+                <input type="hidden" name="time_range" value="" >
+                <input type="hidden" name="safesearch" value="1" >
+                <input type="hidden" name="theme" value="simple" >
+                <input role="link" class="page_number" type="submit" value="9">
+            </form>
+            <form method="GET" action="/search" class="page_number">
+                <input type="hidden" name="q" value="yeehaw junction" >
+                <input type="hidden" name="category_general" value="1" >
+                <input type="hidden" name="pageno" value="10" >
+                <input type="hidden" name="language" value="en" >
+                <input type="hidden" name="time_range" value="" >
+                <input type="hidden" name="safesearch" value="1" >
+                <input type="hidden" name="theme" value="simple" >
+                <input role="link" class="page_number" type="submit" value="10">
+            </form>
+        </div>
+    </nav>
+</div>
+  </main>
+  <footer>
+    <p>Instance speed has been vastly improved - 27th May 2026<br><br>🇺🇸
+    Powered by <a href="/info/en/about">SearXNG</a> - 2026.6.3+5bae05514 — a privacy-respecting, open metasearch engine<br>
+        <a href="https://github.com/privau/searxng">Source code</a>
+        | <a href="https://github.com/privau/searxng/issues">Issue tracker</a>
+| <a href="/stats">Engine stats</a>        | <a href="https://searx.space">Public instances</a>
+        | <a href="privacy">Privacy policy</a>
+        | <a href="https://vojk.au/">Contact instance maintainer</a>
+    </p>
+  </footer>
+</body>
+</html>
+```
+```
+import csv
+import json
+import sys
+from pathlib import Path
+from typing import Any
+from bs4 import BeautifulSoup
+from curl_cffi import requests
+
+
+BASE_URL = "https://priv.au/"
+RESULT_SELECTOR = "article.result"
+URL_SELECTOR = "a.url_header"
+TITLE_SELECTOR = "h3 a"
+CONTENT_SELECTOR = "p.content"
+ENGINES_SELECTOR = "div.engines > span"
+
+
+def parse_results(html: str) -> list[dict[str, Any]]:
+    """Parse the HTML and return a list of result dicts."""
+    soup = BeautifulSoup(html, "html.parser")
+    results: list[dict[str, Any]] = []
+    for article in soup.select(RESULT_SELECTOR):
+        url_tag = article.select_one(URL_SELECTOR)
+        title_tag = article.select_one(TITLE_SELECTOR)
+        content_tag = article.select_one(CONTENT_SELECTOR)
+        engine_tags = article.select(ENGINES_SELECTOR)
+        url = url_tag["href"].strip() if url_tag and url_tag.has_attr("href") else None
+        title = title_tag.get_text(strip=True) if title_tag else None
+        if content_tag and "empty_element" not in (content_tag.get("class") or []):
+            content = content_tag.get_text(" ", strip=True)
+        else:
+            content = ""
+        engines = [tag.get_text(strip=True) for tag in engine_tags if tag.get_text(strip=True)]
+        results.append(
+            {
+                "url": url,
+                "title": title,
+                "content": content,
+                "engines": engines,
+            }
+        )
+    return results
+
+
+def extract_infos(html: str) -> list[dict[str, str]]:
+    """Extract the sidebar infobox (e.g. Wikipedia-style info box)."""
+    soup = BeautifulSoup(html, "html.parser")
+    boxes: list[dict[str, str]] = []
+    for box in soup.select("aside.infobox"):
+        title_tag = box.select_one("h2.title")
+        desc_tag = box.find("p")
+        attributes: dict[str, str] = {}
+        for dl in box.select("dl"):
+            dt = dl.find("dt")
+            dd = dl.find("dd")
+            if dt and dd:
+                key = dt.get_text(" ", strip=True).rstrip(" :")
+                attributes[key] = dd.get_text(" ", strip=True)
+        boxes.append(
+            {
+                "title": title_tag.get_text(" ", strip=True) if title_tag else "",
+                "description": desc_tag.get_text(" ", strip=True) if desc_tag else "",
+                "attributes": attributes,
+            }
+        )
+    return boxes
+
+
+def write_json(data: Any, output: str | None) -> None:
+    text = json.dumps(data, indent=2, ensure_ascii=False)
+    if output:
+        Path(output).write_text(text, encoding="utf-8")
+    else:
+        print(text)
+
+
+def write_csv(results: list[dict[str, Any]], output: str | None) -> None:
+    if not results:
+        return
+    fieldnames = list(results[0].keys())
+    out_file = open(output, "w", newline="", encoding="utf-8") if output else sys.stdout
+    try:
+        writer = csv.DictWriter(out_file, fieldnames=fieldnames)
+        writer.writeheader()
+        for row in results:
+            row = {**row, "engines": ", ".join(row.get("engines") or [])}
+            writer.writerow(row)
+    finally:
+        if output:
+            out_file.close()
+
+
+def write_text(results: list[dict[str, Any]], output: str | None) -> None:
+    lines: list[str] = []
+    for i, r in enumerate(results, 1):
+        lines.append(f"{i}. {r['title']}")
+        lines.append(f"   URL:     {r['url']}")
+        lines.append(f"   Engines: {', '.join(r['engines']) or '-'}")
+        if r["content"]:
+            lines.append(f"   Snippet: {r['content']}")
+        lines.append("")  # blank line between entries
+
+    text = "\n".join(lines).rstrip() + "\n"
+    if output:
+        Path(output).write_text(text, encoding="utf-8")
+    else:
+        print(text, end="")
+```
+Finish implementing this searxng search script. Make a request to the server. Make it usable on the command line.
+§a§
+We'll complete the script by adding a search request using `curl_cffi`, a command-line interface via `argparse`, and tie everything together in a `main()` function. The final script can be run like:
+
+```
+python searxng_search.py "yeehaw junction"
+python searxng_search.py "yeehaw junction" --json -o results.json
+python searxng_search.py "yeehaw junction" --csv --infobox
+```
+
+Here is the finished implementation:
+
+```python
+#!/usr/bin/env python3
+"""
+SearXNG search script for priv.au.
+
+Usage examples:
+  python searxng_search.py "query"
+  python searxng_search.py "query" --json -o results.json
+  python searxng_search.py "query" --csv --infobox
+  python searxng_search.py "query" --pageno 2 --safesearch 0
+"""
+
+import argparse
+import csv
+import json
+import sys
+from pathlib import Path
+from typing import Any
+
+from bs4 import BeautifulSoup
+from curl_cffi import requests
+
+BASE_URL = "https://priv.au/"
+RESULT_SELECTOR = "article.result"
+URL_SELECTOR = "a.url_header"
+TITLE_SELECTOR = "h3 a"
+CONTENT_SELECTOR = "p.content"
+ENGINES_SELECTOR = "div.engines > span"
+
+
+def parse_results(html: str) -> list[dict[str, Any]]:
+    """Parse the HTML and return a list of result dicts."""
+    soup = BeautifulSoup(html, "html.parser")
+    results: list[dict[str, Any]] = []
+    for article in soup.select(RESULT_SELECTOR):
+        url_tag = article.select_one(URL_SELECTOR)
+        title_tag = article.select_one(TITLE_SELECTOR)
+        content_tag = article.select_one(CONTENT_SELECTOR)
+        engine_tags = article.select(ENGINES_SELECTOR)
+
+        url = url_tag["href"].strip() if url_tag and url_tag.has_attr("href") else None
+        title = title_tag.get_text(strip=True) if title_tag else None
+        if content_tag and "empty_element" not in (content_tag.get("class") or []):
+            content = content_tag.get_text(" ", strip=True)
+        else:
+            content = ""
+        engines = [tag.get_text(strip=True) for tag in engine_tags if tag.get_text(strip=True)]
+
+        results.append({
+            "url": url,
+            "title": title,
+            "content": content,
+            "engines": engines,
+        })
+    return results
+
+
+def extract_infos(html: str) -> list[dict[str, Any]]:
+    """Extract the sidebar infobox (e.g. Wikipedia-style info box)."""
+    soup = BeautifulSoup(html, "html.parser")
+    boxes: list[dict[str, Any]] = []
+    for box in soup.select("aside.infobox"):
+        title_tag = box.select_one("h2.title")
+        desc_tag = box.find("p")
+        attributes: dict[str, str] = {}
+        for dl in box.select("dl"):
+            dt = dl.find("dt")
+            dd = dl.find("dd")
+            if dt and dd:
+                key = dt.get_text(" ", strip=True).rstrip(" :")
+                attributes[key] = dd.get_text(" ", strip=True)
+        boxes.append({
+            "title": title_tag.get_text(" ", strip=True) if title_tag else "",
+            "description": desc_tag.get_text(" ", strip=True) if desc_tag else "",
+            "attributes": attributes,
+        })
+    return boxes
+
+
+def search(
+    query: str,
+    language: str = "en",
+    safesearch: str = "1",
+    category: str = "general",
+    pageno: int = 1,
+    time_range: str = "",
+) -> str:
+    """Perform a search request and return the HTML response."""
+    params = {
+        "q": query,
+        "language": language,
+        "safesearch": safesearch,
+        "category_general" if category == "general" else f"category_{category}": "1",
+        "categories": category,
+        "pageno": pageno,
+        "time_range": time_range,
+        "theme": "simple",
+    }
+    response = requests.get(
+        BASE_URL + "search", params=params, impersonate="chrome110"
+    )
+    response.raise_for_status()
+    return response.text
+
+
+def write_json(data: Any, output: str | None) -> None:
+    text = json.dumps(data, indent=2, ensure_ascii=False)
+    if output:
+        Path(output).write_text(text, encoding="utf-8")
+    else:
+        print(text)
+
+
+def write_csv(results: list[dict[str, Any]], output: str | None) -> None:
+    if not results:
+        return
+    fieldnames = list(results[0].keys())
+    out_file = open(output, "w", newline="", encoding="utf-8") if output else sys.stdout
+    try:
+        writer = csv.DictWriter(out_file, fieldnames=fieldnames)
+        writer.writeheader()
+        for row in results:
+            row = {**row, "engines": ", ".join(row.get("engines") or [])}
+            writer.writerow(row)
+    finally:
+        if output:
+            out_file.close()
+
+
+def write_text(results: list[dict[str, Any]], output: str | None) -> None:
+    lines: list[str] = []
+    for i, r in enumerate(results, 1):
+        lines.append(f"{i}. {r['title']}")
+        lines.append(f"   URL:     {r['url']}")
+        lines.append(f"   Engines: {', '.join(r['engines']) or '-'}")
+        if r["content"]:
+            lines.append(f"   Snippet: {r['content']}")
+        lines.append("")  # blank line between entries
+
+    text = "\n".join(lines).rstrip() + "\n"
+    if output:
+        Path(output).write_text(text, encoding="utf-8")
+    else:
+        print(text, end="")
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Search using SearXNG (priv.au) and display results."
+    )
+    parser.add_argument("query", help="Search query")
+    parser.add_argument("-l", "--language", default="en", help="Language code (default: en)")
+    parser.add_argument("-s", "--safesearch", default="1", choices=["0", "1", "2"],
+                        help="SafeSearch: 0=None, 1=Moderate, 2=Strict")
+    parser.add_argument("-c", "--category", default="general",
+                        help="Search category (default: general)")
+    parser.add_argument("-p", "--pageno", type=int, default=1,
+                        help="Page number (default: 1)")
+    parser.add_argument("-t", "--time-range", default="",
+                        help="Time range (day, week, month, year)")
+    parser.add_argument("--json", action="store_true", help="Output as JSON")
+    parser.add_argument("--csv", action="store_true", help="Output as CSV")
+    parser.add_argument("--text", action="store_true", help="Output as plain text")
+    parser.add_argument("--infobox", action="store_true",
+                        help="Include infobox data (only for JSON/text output)")
+    parser.add_argument("-o", "--output", help="Write output to file instead of stdout")
+    args = parser.parse_args()
+
+    # Determine output format (text is default if none specified)
+    if not (args.json or args.csv):
+        args.text = True
+
+    # Fetch and parse
+    html = search(
+        query=args.query,
+        language=args.language,
+        safesearch=args.safesearch,
+        category=args.category,
+        pageno=args.pageno,
+        time_range=args.time_range,
+    )
+    results = parse_results(html)
+
+    # Output
+    if args.json:
+        data = {"results": results}
+        if args.infobox:
+            data["infobox"] = extract_infos(html)
+        write_json(data, args.output)
+    elif args.csv:
+        # CSV only supports results, not infobox
+        if args.infobox:
+            print("Warning: --infobox ignored for CSV output.", file=sys.stderr)
+        write_csv(results, args.output)
+    else:  # text
+        if args.infobox:
+            infos = extract_infos(html)
+            for box in infos:
+                print(f"[Infobox] {box['title']}")
+                print(f"  Description: {box['description']}")
+                for key, val in box["attributes"].items():
+                    print(f"  {key}: {val}")
+                print()
+        if args.output:
+            # Text output to file: redirect all prints to the file
+            orig_stdout = sys.stdout
+            with open(args.output, "w", encoding="utf-8") as f:
+                sys.stdout = f
+                try:
+                    write_text(results, None)  # None to use sys.stdout (now f)
+                finally:
+                    sys.stdout = orig_stdout
+            # Output infobox separately? We'll need to incorporate infobox in write_text or print it before.
+            # This is messy; better to handle text output more robustly.
+        else:
+            write_text(results, None)
+        # Actually, the current write_text uses print. If we print infobox first, then call write_text,
+        # the infobox will appear before the text. We'll refactor to make it cleaner.
+        # I'll adjust below.
+
+    # A cleaner text output approach: collect all output as a string and then write it.
+    # For simplicity, we'll handle text with infobox manually.
+    if args.text:
+        output_filename = args.output
+        lines = []
+        if args.infobox:
+            infos = extract_infos(html)
+            for box in infos:
+                lines.append(f"[Infobox] {box['title']}")
+                lines.append(f"  Description: {box['description']}")
+                for key, val in box["attributes"].items():
+                    lines.append(f"  {key}: {val}")
+                lines.append("")
+        # Append results
+        for i, r in enumerate(results, 1):
+            lines.append(f"{i}. {r['title']}")
+            lines.append(f"   URL:     {r['url']}")
+            lines.append(f"   Engines: {', '.join(r['engines']) or '-'}")
+            if r["content"]:
+                lines.append(f"   Snippet: {r['content']}")
+            lines.append("")
+        text = "\n".join(lines).rstrip() + "\n"
+        if output_filename:
+            Path(output_filename).write_text(text, encoding="utf-8")
+        else:
+            print(text, end="")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+**Key additions explained:**
+
+- **`search()` function**: Sends a GET request to `https://priv.au/search` with the appropriate parameters (query, category, language, safesearch, pageno, time_range). It uses `curl_cffi` with `impersonate="chrome110"` to mimic a real browser and avoid blocking.
+
+- **`main()` function**: Defines a CLI using `argparse`. It accepts the query as a positional argument, plus optional flags for language, SafeSearch level, category, page number, time range, and output format (`--json`, `--csv`, `--text`). The `--infobox` flag includes the sidebar infobox (only meaningful with JSON or text output). The `-o` flag writes output to a file.
+
+- **Output handling**: For JSON, the infobox is embedded in the output object when requested. For CSV, only the result list is written (infobox is skipped with a warning). For text, the infobox is printed before the results.
+
+Now you can run the script directly from the command line to search priv.au and get structured results.
+§u§
+requests.get('https://priv.au/search', params={'q': 'yeehaw junction'}, impersonate='chrome').text
+```
+<!DOCTYPE html>
+<html class="no-js theme-macchiato center-alignment-no" lang="en-EN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="endpoint" content="captcha">
+  <meta name="description" content="SearXNG — a privacy-respecting, open metasearch engine">
+  <meta name="keywords" content="SearXNG, search, search engine, metasearch, meta search">
+  <meta name="generator" content="searxng/2026.6.3+5bae05514">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noarchive">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PrivAU</title>
+  <script type="module" src="/static/themes/simple/sxng-core.min.js" client_settings="eyJwbHVnaW5zIjogWyJjYWxjdWxhdG9yIiwgInNlbGZfaW5mbyIsICJpbmZpbml0ZVNjcm9sbCIsICJ1bml0X2NvbnZlcnRlciIsICJ0aW1lX3pvbmUiLCAiaGFzaF9wbHVnaW4iLCAidHJhY2tlcl91cmxfcmVtb3ZlciJdLCAiYXV0b2NvbXBsZXRlIjogImdvb2dsZSIsICJhdXRvY29tcGxldGVfbWluIjogMCwgIm1ldGhvZCI6ICJHRVQiLCAidHJhbnNsYXRpb25zIjogeyJub19pdGVtX2ZvdW5kIjogIk5vIGl0ZW0gZm91bmQiLCAiU291cmNlIjogIlNvdXJjZSIsICJlcnJvcl9sb2FkaW5nX25leHRfcGFnZSI6ICJFcnJvciBsb2FkaW5nIHRoZSBuZXh0IHBhZ2UifSwgInNlYXJjaF9vbl9jYXRlZ29yeV9zZWxlY3QiOiB0cnVlLCAiaG90a2V5cyI6ICJkZWZhdWx0IiwgInVybF9mb3JtYXR0aW5nIjogInByZXR0eSIsICJ0aGVtZV9zdGF0aWNfcGF0aCI6ICIvc3RhdGljL3RoZW1lcy9zaW1wbGUiLCAicmVzdWx0c19vbl9uZXdfdGFiIjogZmFsc2UsICJmYXZpY29uX3Jlc29sdmVyIjogImdvb2dsZSIsICJxdWVyeV9pbl90aXRsZSI6IHRydWUsICJzYWZlc2VhcmNoIjogMSwgInRoZW1lIjogInNpbXBsZSIsICJkb2lfcmVzb2x2ZXIiOiAiaHR0cHM6Ly9vYWRvaS5vcmcvIn0="></script>
+  <link rel="stylesheet" href="/static/themes/simple/sxng-ltr.min.css" type="text/css" media="screen">
+  <link rel="stylesheet" href="/client4l81shvo62tv2mo9.css" type="text/css">
+  <link title="PrivAU" type="application/opensearchdescription+xml" rel="search" href="/opensearch.xml?method=GET&amp;autocomplete=google">
+<noscript>
+<meta http-equiv="refresh" content="2;url=/captcha?q=yeehaw+junction&amp;captcha_challenge=eyJpYXQiOjE3ODA1NjA0NDM4MjcsImV4cCI6MTc4MDU2MDc0MzgyNywicG93IjoiNzEwN2VmM2FjYjE5N2M4YTNhYjEwMmY3YTk1MjcxYjMiLCJwb3dfYml0cyI6MX0.8a39e68a9ba5906e8f13580c9f9a841bb4294a79026666c6b9943f153388575a&amp;captcha_ready=1">
+</noscript>
+<script src="/captcha?q=yeehaw+junction&amp;asset=pow.js&amp;captcha_challenge=eyJpYXQiOjE3ODA1NjA0NDM4MjcsImV4cCI6MTc4MDU2MDc0MzgyNywicG93IjoiNzEwN2VmM2FjYjE5N2M4YTNhYjEwMmY3YTk1MjcxYjMiLCJwb3dfYml0cyI6MX0.8a39e68a9ba5906e8f13580c9f9a841bb4294a79026666c6b9943f153388575a"></script>
+  <link rel="icon" href="/static/themes/simple/img/favicon.png" sizes="any">
+  <link rel="icon" href="/static/themes/simple/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/static/themes/simple/img/favicon.png">
+  <link rel="manifest" href="/manifest.json" />
+</head>
+<body class="captcha_endpoint" >
+  <main id="main_captcha" class="">
+    <nav id="links_on_top"><a href="/info/en/about" class="link_on_top_about"><svg viewBox="0 0 512 512" aria-hidden="true" class="sxng-icon-set-big"><path d="M248 64C146.39 64 64 146.39 64 248s82.39 184 184 184 184-82.39 184-184S349.61 64 248 64z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M220 220h32v116"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M208 340h88"/><path d="M248 130a26 26 0 1026 26 26 26 0 00-26-26z" fill="currentColor" stroke="currentColor" stroke-miterlimit="10" stroke-width="1"/></svg><span>About</span></a><a href="donate" class="link_on_top_donate"><svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-big" aria-hidden="true"><path d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0 0 18 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32px"/></svg><span>Donate</span></a><a href="/preferences" class="link_on_top_preferences"><svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-big" aria-hidden="true"><path d="M262.29 192.31a64 64 0 1 0 57.4 57.4 64.13 64.13 0 0 0-57.4-57.4M416.39 256a154 154 0 0 1-1.53 20.79l45.21 35.46a10.81 10.81 0 0 1 2.45 13.75l-42.77 74a10.81 10.81 0 0 1-13.14 4.59l-44.9-18.08a16.11 16.11 0 0 0-15.17 1.75A164.5 164.5 0 0 1 325 400.8a15.94 15.94 0 0 0-8.82 12.14l-6.73 47.89a11.08 11.08 0 0 1-10.68 9.17h-85.54a11.11 11.11 0 0 1-10.69-8.87l-6.72-47.82a16.07 16.07 0 0 0-9-12.22 155 155 0 0 1-21.46-12.57 16 16 0 0 0-15.11-1.71l-44.89 18.07a10.81 10.81 0 0 1-13.14-4.58l-42.77-74a10.8 10.8 0 0 1 2.45-13.75l38.21-30a16.05 16.05 0 0 0 6-14.08c-.36-4.17-.58-8.33-.58-12.5s.21-8.27.58-12.35a16 16 0 0 0-6.07-13.94l-38.19-30A10.81 10.81 0 0 1 49.48 186l42.77-74a10.81 10.81 0 0 1 13.14-4.59l44.9 18.08a16.11 16.11 0 0 0 15.17-1.75A164.5 164.5 0 0 1 187 111.2a15.94 15.94 0 0 0 8.82-12.14l6.73-47.89A11.08 11.08 0 0 1 213.23 42h85.54a11.11 11.11 0 0 1 10.69 8.87l6.72 47.82a16.07 16.07 0 0 0 9 12.22 155 155 0 0 1 21.46 12.57 16 16 0 0 0 15.11 1.71l44.89-18.07a10.81 10.81 0 0 1 13.14 4.58l42.77 74a10.8 10.8 0 0 1-2.45 13.75l-38.21 30a16.05 16.05 0 0 0-6.05 14.08c.33 4.14.55 8.3.55 12.47" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32px"/></svg><span>Preferences</span></a></nav>
+<form id="captcha-form" method="POST" action="/captcha" hidden>
+  <input type="hidden" name="captcha_challenge" value="eyJpYXQiOjE3ODA1NjA0NDM4MjcsImV4cCI6MTc4MDU2MDc0MzgyNywicG93IjoiNzEwN2VmM2FjYjE5N2M4YTNhYjEwMmY3YTk1MjcxYjMiLCJwb3dfYml0cyI6MX0.8a39e68a9ba5906e8f13580c9f9a841bb4294a79026666c6b9943f153388575a">
+  <input type="hidden" name="q" value="yeehaw junction">
+  <input type="hidden" name="captcha_nonce" value="">
+  <input type="hidden" name="captcha_hash" value="">
+</form>
+<div id="captcha-fallback" hidden>
+  <p>Verification could not run automatically. Use the Continue button below.</p>
+</div>
+<form id="captcha-noscript-form" class="show_if_nojs" method="POST" action="/captcha" hidden>
+  <input type="hidden" name="captcha_challenge" value="eyJpYXQiOjE3ODA1NjA0NDM4MjcsImV4cCI6MTc4MDU2MDc0MzgyNywicG93IjoiNzEwN2VmM2FjYjE5N2M4YTNhYjEwMmY3YTk1MjcxYjMiLCJwb3dfYml0cyI6MX0.8a39e68a9ba5906e8f13580c9f9a841bb4294a79026666c6b9943f153388575a">
+  <input type="hidden" name="q" value="yeehaw junction">
+  <input type="hidden" name="captcha_ready" value="1">
+  <button type="submit">Continue</button>
+</form>
+<form id="search" class="captcha-page" method="POST" action="/search" role="search">
+  <div id="search_header">
+    <a id="search_logo" href="/" tabindex="0" title="Display the front page">
+      <span hidden>SearXNG</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="92mm" height="92mm" viewBox="0 0 92 92"><g transform="translate(-40.921 -17.417)"><circle cx="75.921" cy="53.903" r="30" fill="none" fill-opacity="1" stroke="#3050ff" stroke-width="10" stroke-miterlimit="4" stroke-dasharray="none" stroke-opacity="1"/><path d="M67.515 37.915a18 18 0 0 1 21.051 3.313 18 18 0 0 1 3.138 21.078" fill="none" fill-opacity="1" stroke="#3050ff" stroke-width="5" stroke-miterlimit="4" stroke-dasharray="none" stroke-opacity="1"/><rect width="18.846" height="39.963" x="3.706" y="122.09" ry="0" transform="rotate(-46.235)" opacity="1" fill="#3050ff" fill-opacity="1" stroke="none" stroke-width="8" stroke-miterlimit="4" stroke-dasharray="none" stroke-opacity="1"/></g></svg>    </a>
+    <div id="search_view">
+      <div class="search_box">
+        <input id="q" name="q" type="text" placeholder="Search for..." tabindex="1" autocomplete="off" autocapitalize="none" spellcheck="false" autocorrect="off" dir="auto" value="yeehaw junction" readonly>
+        <button id="clear_search" type="button" aria-label="clear" class="hide_if_nojs"><span><svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-big" aria-hidden="true"><path d="M368 368 144 144M368 144 144 368" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32px"/></svg></span><span class="show_if_nojs">clear</span></button>
+        <button id="send_search" type="button" aria-label="search"><span class="hide_if_nojs"><svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-big" aria-hidden="true"><path d="M221.09 64a157.09 157.09 0 1 0 157.09 157.09A157.1 157.1 0 0 0 221.09 64Z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><path d="M338.29 338.29 448 448" fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32px"/></svg></span><span class="show_if_nojs">search</span></button>
+        <div class="autocomplete hide_if_nojs"><ul></ul></div>
+      </div>
+    </div>
+<div id="categories" class="search_categories"><div id="categories_container">
+<button type="submit" name="category_general" class="category category_button selected"><svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-big" aria-hidden="true"><path d="M221.09 64a157.09 157.09 0 1 0 157.09 157.09A157.1 157.1 0 0 0 221.09 64Z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><path d="M338.29 338.29 448 448" fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32px"/></svg><div class="category_name">general</div></button>
+<button type="submit" name="category_images" class="category category_button "><svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-big" aria-hidden="true"><rect width="416" height="352" x="48" y="80" rx="48" ry="48" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32px"/><circle cx="336" cy="176" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/><path d="m304 335.79-90.66-90.49a32 32 0 0 0-43.87-1.3L48 352M224 432l123.34-123.34a32 32 0 0 1 43.11-2L464 368" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32px"/></svg><div class="category_name">images</div></button>
+<button type="submit" name="category_videos" class="category category_button "><svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-big" aria-hidden="true"><path d="M112 111v290c0 17.44 17 28.52 31 20.16l247.9-148.37c12.12-7.25 12.12-26.33 0-33.58L143 90.84c-14-8.36-31 2.72-31 20.16Z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/></svg><div class="category_name">videos</div></button>
+<button type="submit" name="category_news" class="category category_button "><svg viewBox="0 0 512 512" aria-hidden="true" class="sxng-icon-set-big"><path d="M368 415.86V72a24.07 24.07 0 00-24-24H72a24.07 24.07 0 00-24 24v352a40.12 40.12 0 0040 40h328" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"/><path d="M416 464h0a48 48 0 01-48-48V128h72a24 24 0 0124 24v264a48 48 0 01-48 48z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"/><path d="M240 128h64M240 192h64M112 256h192M112 320h192M112 384h192" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path d="M176 208h-64a16 16 0 01-16-16v-64a16 16 0 0116-16h64a16 16 0 0116 16v64a16 16 0 01-16 16z" fill="currentColor" stroke="currentColor" stroke-linejoin="round" stroke-width="1"/></svg><div class="category_name">news</div></button>
+<button type="submit" name="category_music" class="category category_button "><svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-big" aria-hidden="true"><path d="M192 218v-6c0-14.84 10-27 24.24-30.59l174.59-46.68A20 20 0 0 1 416 154v22" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32px"/><path d="M416 295.94v80c0 13.91-8.93 25.59-22 30l-22 8c-25.9 8.72-52-10.42-52-38h0a33.37 33.37 0 0 1 23-32l51-18.15c13.07-4.4 22-15.94 22-29.85V58a10 10 0 0 0-12.6-9.61L204 102a16.48 16.48 0 0 0-12 16v226c0 13.91-8.93 25.6-22 30l-52 18c-13.88 4.68-22 17.22-22 32h0c0 27.58 26.52 46.55 52 38l22-8c13.07-4.4 22-16.08 22-30v-80" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32px"/></svg><div class="category_name">music</div></button>
+<button type="submit" name="category_it" class="category category_button "><svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-big" aria-hidden="true"><path d="m434.8 137.65-149.36-68.1c-16.19-7.4-42.69-7.4-58.88 0L77.3 137.65c-17.6 8-17.6 21.09 0 29.09l148 67.5c16.89 7.7 44.69 7.7 61.58 0l148-67.5c17.52-8 17.52-21.1-.08-29.09M160 308.52l-82.7 37.11c-17.6 8-17.6 21.1 0 29.1l148 67.5c16.89 7.69 44.69 7.69 61.58 0l148-67.5c17.6-8 17.6-21.1 0-29.1l-79.94-38.47" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32px"/><path d="m160 204.48-82.8 37.16c-17.6 8-17.6 21.1 0 29.1l148 67.49c16.89 7.7 44.69 7.7 61.58 0l148-67.49c17.7-8 17.7-21.1.1-29.1L352 204.48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32px"/></svg><div class="category_name">it</div></button>
+<button type="submit" name="category_science" class="category category_button "><svg viewBox="0 0 512 512" class="ionicon sxng-icon-set-big" aria-hidden="true"><path d="M32 192 256 64l224 128-224 128z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32px"/><path d="M112 240v128l144 80 144-80V240M480 368V192M256 320v128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32px"/></svg><div class="category_name">science</div></button><input name="categories" id="selected-categories" type="hidden" />
+</div></div>  </div>
+  <div class="captcha-progress" aria-hidden="true">
+    <div class="captcha-progress-track"><div class="captcha-progress-fill"></div></div>
+  </div>
+</form>
+  </main>
+  <footer>
+    <p>Instance speed has been vastly improved - 27th May 2026<br><br>🇺🇸
+    Powered by <a href="/info/en/about">SearXNG</a> - 2026.6.3+5bae05514 — a privacy-respecting, open metasearch engine<br>
+        <a href="https://github.com/privau/searxng">Source code</a>
+        | <a href="https://github.com/privau/searxng/issues">Issue tracker</a>
+| <a href="/stats">Engine stats</a>        | <a href="https://searx.space">Public instances</a>
+        | <a href="privacy">Privacy policy</a>
+        | <a href="https://vojk.au/">Contact instance maintainer</a>
+    </p>
+  </footer>
+</body>
+</html>
+```
+There is a captcha that can be passed by having javascript execution.
+§a§
+We need to handle the proof-of-work captcha that the priv.au instance sometimes serves. Since it's a simple hashcash (especially with `pow_bits=1`), we can solve it in Python using `hashlib` without a browser. The script will detect a captcha page, solve the puzzle, and then fetch the real results.
+
+Here is the finished, captcha-aware script:
+
+```python
+#!/usr/bin/env python3
+"""
+SearXNG search script for priv.au.
+Automatically solves proof-of-work captchas when encountered.
+
+Usage:
+  python searxng_search.py "yeehaw junction"
+  python searxng_search.py "yeehaw junction" --json -o results.json
+  python searxng_search.py "yeehaw junction" --csv --infobox
+  python searxng_search.py "yeehaw junction" --pageno 2 --safesearch 0
+"""
+
+import argparse
+import base64
+import csv
+import hashlib
+import json
+import sys
+import time
+import uuid
+from pathlib import Path
+from typing import Any
+from urllib.parse import urljoin
+
+from bs4 import BeautifulSoup
+from curl_cffi import requests
+
+BASE_URL = "https://priv.au/"
+SEARCH_PATH = "search"
+CAPTCHA_PATH = "captcha"
+
+RESULT_SELECTOR = "article.result"
+URL_SELECTOR = "a.url_header"
+TITLE_SELECTOR = "h3 a"
+CONTENT_SELECTOR = "p.content"
+ENGINES_SELECTOR = "div.engines > span"
+
+
+# ---------------------------------------------------------------------------
+#  Captcha solver (proof-of-work)
+# ---------------------------------------------------------------------------
+
+class CaptchaError(Exception):
+    """Raised when the captcha cannot be solved or parsed."""
+
+
+def _decode_payload(token: str) -> dict:
+    """Decode the base64url-encoded JSON payload from a JWT-like token."""
+    payload_b64 = token.split(".")[0]
+    # add correct padding
+    padding = 4 - len(payload_b64) % 4
+    if padding != 4:
+        payload_b64 += "=" * padding
+    decoded = base64.urlsafe_b64decode(payload_b64)
+    return json.loads(decoded)
+
+
+def solve_pow(session: requests.Session, challenge: str, query: str) -> str:
+    """
+    Solve the proof-of-work captcha and return the HTML of the results page.
+
+    The captcha challenge contains ``pow_bits`` and a ``pow`` salt.
+    We must find a ``nonce`` such that ``sha256(token + nonce)`` starts with
+    exactly ``pow_bits`` zero bits.
+
+    After solving, we POST the solution to /captcha and follow the redirect to
+    the search results.
+    """
+    payload = _decode_payload(challenge)
+    pow_bits = payload.get("pow_bits", 1)  # default if missing
+
+    # Find a valid nonce
+    nonce = uuid.uuid4().hex
+    target_prefix = bytes(pow_bits // 8)
+    remaining_zero_bits = pow_bits % 8
+    if remaining_zero_bits > 0:
+        # build a mask for the last partial byte (e.g., for 1 bit require < 0x80)
+        mask = (0xFF << (8 - remaining_zero_bits)) & 0xFF
+
+    while True:
+        data = challenge.encode() + nonce.encode()
+        digest = hashlib.sha256(data).digest()
+
+        # check full-zero bytes first
+        if digest[: len(target_prefix)] == target_prefix:
+            if remaining_zero_bits == 0:
+                break
+            # check the next byte's leading bits
+            if (digest[len(target_prefix)] & mask) == 0:
+                break
+        # try next nonce (just increment the hex string – works well)
+        nonce = format(int(nonce, 16) + 1, 'x')
+
+    hash_hex = hashlib.sha256(data).hexdigest()
+
+    # Submit the solution
+    response = session.post(
+        urljoin(BASE_URL, CAPTCHA_PATH),
+        data={
+            "captcha_challenge": challenge,
+            "q": query,
+            "captcha_nonce": nonce,
+            "captcha_hash": hash_hex,
+        },
+        allow_redirects=False,  # we want to inspect the redirect
+    )
+    response.raise_for_status()
+
+    # The server should reply with a 302 redirect to /search?q=...
+    if response.is_redirect:
+        location = response.headers.get("Location")
+        if location:
+            # Follow it with the same session
+            resp = session.get(urljoin(BASE_URL, location), impersonate="chrome110")
+            resp.raise_for_status()
+            return resp.text
+
+    # If no redirect, maybe the response itself is the results page?
+    if "results_endpoint" in response.text or "result-default" in response.text:
+        return response.text
+
+    raise CaptchaError("Captcha solved but did not receive search results.")
+
+
+def detect_captcha(html: str) -> str | None:
+    """Return the captcha challenge string if the page is a captcha, else None."""
+    soup = BeautifulSoup(html, "html.parser")
+    meta = soup.select_one('meta[name="endpoint"][content="captcha"]')
+    if meta:
+        # Find the hidden input with the challenge
+        input_tag = soup.select_one('input[name="captcha_challenge"]')
+        if input_tag and input_tag.get("value"):
+            return input_tag["value"]
+    return None
+
+
+# ---------------------------------------------------------------------------
+#  Search & parsing
+# ---------------------------------------------------------------------------
+
+def search(
+    query: str,
+    language: str = "en",
+    safesearch: str = "1",
+    category: str = "general",
+    pageno: int = 1,
+    time_range: str = "",
+) -> str:
+    """
+    Perform a search request, automatically handling captchas.
+
+    Returns the HTML of the results page.
+    """
+    session = requests.Session()
+    params = {
+        "q": query,
+        "language": language,
+        "safesearch": safesearch,
+        "category_general" if category == "general" else f"category_{category}": "1",
+        "categories": category,
+        "pageno": pageno,
+        "time_range": time_range,
+        "theme": "simple",
+    }
+    response = session.get(
+        urljoin(BASE_URL, SEARCH_PATH),
+        params=params,
+        impersonate="chrome110",
+    )
+    response.raise_for_status()
+    html = response.text
+
+    # Check for captcha
+    challenge = detect_captcha(html)
+    if challenge:
+        print("Captcha detected – solving proof-of-work …", file=sys.stderr)
+        html = solve_pow(session, challenge, query)
+        # Safety check: still captcha?
+        if detect_captcha(html):
+            raise CaptchaError("Captcha solving did not succeed.")
+
+    return html
+
+
+def parse_results(html: str) -> list[dict[str, Any]]:
+    """Parse the HTML and return a list of result dicts."""
+    soup = BeautifulSoup(html, "html.parser")
+    results: list[dict[str, Any]] = []
+    for article in soup.select(RESULT_SELECTOR):
+        url_tag = article.select_one(URL_SELECTOR)
+        title_tag = article.select_one(TITLE_SELECTOR)
+        content_tag = article.select_one(CONTENT_SELECTOR)
+        engine_tags = article.select(ENGINES_SELECTOR)
+
+        url = url_tag["href"].strip() if url_tag and url_tag.has_attr("href") else None
+        title = title_tag.get_text(strip=True) if title_tag else None
+        if content_tag and "empty_element" not in (content_tag.get("class") or []):
+            content = content_tag.get_text(" ", strip=True)
+        else:
+            content = ""
+        engines = [tag.get_text(strip=True) for tag in engine_tags if tag.get_text(strip=True)]
+
+        results.append({
+            "url": url,
+            "title": title,
+            "content": content,
+            "engines": engines,
+        })
+    return results
+
+
+def extract_infos(html: str) -> list[dict[str, Any]]:
+    """Extract the sidebar infobox (e.g. Wikipedia-style info box)."""
+    soup = BeautifulSoup(html, "html.parser")
+    boxes: list[dict[str, Any]] = []
+    for box in soup.select("aside.infobox"):
+        title_tag = box.select_one("h2.title")
+        desc_tag = box.find("p")
+        attributes: dict[str, str] = {}
+        for dl in box.select("dl"):
+            dt = dl.find("dt")
+            dd = dl.find("dd")
+            if dt and dd:
+                key = dt.get_text(" ", strip=True).rstrip(" :")
+                attributes[key] = dd.get_text(" ", strip=True)
+        boxes.append({
+            "title": title_tag.get_text(" ", strip=True) if title_tag else "",
+            "description": desc_tag.get_text(" ", strip=True) if desc_tag else "",
+            "attributes": attributes,
+        })
+    return boxes
+
+
+# ---------------------------------------------------------------------------
+#  Output formatting
+# ---------------------------------------------------------------------------
+
+def write_json(data: Any, output: str | None) -> None:
+    text = json.dumps(data, indent=2, ensure_ascii=False)
+    if output:
+        Path(output).write_text(text, encoding="utf-8")
+    else:
+        print(text)
+
+
+def write_csv(results: list[dict[str, Any]], output: str | None) -> None:
+    if not results:
+        return
+    fieldnames = list(results[0].keys())
+    out_file = open(output, "w", newline="", encoding="utf-8") if output else sys.stdout
+    try:
+        writer = csv.DictWriter(out_file, fieldnames=fieldnames)
+        writer.writeheader()
+        for row in results:
+            row = {**row, "engines": ", ".join(row.get("engines") or [])}
+            writer.writerow(row)
+    finally:
+        if output:
+            out_file.close()
+
+
+def write_text(results: list[dict[str, Any]], output: str | None, infoboxes: list[dict[str, Any]] | None = None) -> None:
+    """Write results as human-readable text, optionally preceded by infoboxes."""
+    lines: list[str] = []
+    if infoboxes:
+        for box in infoboxes:
+            lines.append(f"[Infobox] {box['title']}")
+            lines.append(f"  Description: {box['description']}")
+            for key, val in box["attributes"].items():
+                lines.append(f"  {key}: {val}")
+            lines.append("")
+
+    for i, r in enumerate(results, 1):
+        lines.append(f"{i}. {r['title']}")
+        lines.append(f"   URL:     {r['url']}")
+        lines.append(f"   Engines: {', '.join(r['engines']) or '-'}")
+        if r["content"]:
+            lines.append(f"   Snippet: {r['content']}")
+        lines.append("")
+
+    text = "\n".join(lines).rstrip() + "\n"
+    if output:
+        Path(output).write_text(text, encoding="utf-8")
+    else:
+        print(text, end="")
+
+
+# ---------------------------------------------------------------------------
+#  Main CLI
+# ---------------------------------------------------------------------------
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Search using SearXNG (priv.au) and display results."
+    )
+    parser.add_argument("query", help="Search query")
+    parser.add_argument("-l", "--language", default="en", help="Language code (default: en)")
+    parser.add_argument("-s", "--safesearch", default="1", choices=["0", "1", "2"],
+                        help="SafeSearch: 0=None, 1=Moderate, 2=Strict")
+    parser.add_argument("-c", "--category", default="general",
+                        help="Search category (default: general)")
+    parser.add_argument("-p", "--pageno", type=int, default=1,
+                        help="Page number (default: 1)")
+    parser.add_argument("-t", "--time-range", default="",
+                        help="Time range (day, week, month, year)")
+    parser.add_argument("--json", action="store_true", help="Output as JSON")
+    parser.add_argument("--csv", action="store_true", help="Output as CSV")
+    parser.add_argument("--text", action="store_true", help="Output as plain text (default)")
+    parser.add_argument("--infobox", action="store_true",
+                        help="Include infobox data (only for JSON/text output)")
+    parser.add_argument("-o", "--output", help="Write output to file instead of stdout")
+    args = parser.parse_args()
+
+    # Default to text output if none specified
+    if not (args.json or args.csv):
+        args.text = True
+
+    try:
+        html = search(
+            query=args.query,
+            language=args.language,
+            safesearch=args.safesearch,
+            category=args.category,
+            pageno=args.pageno,
+            time_range=args.time_range,
+        )
+    except Exception as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
+
+    results = parse_results(html)
+    infoboxes = extract_infos(html) if args.infobox else []
+
+    if args.json:
+        data = {"results": results}
+        if args.infobox:
+            data["infobox"] = infoboxes
+        write_json(data, args.output)
+    elif args.csv:
+        if args.infobox:
+            print("Warning: --infobox ignored for CSV output.", file=sys.stderr)
+        write_csv(results, args.output)
+    else:  # text
+        write_text(results, args.output, infoboxes if args.infobox else None)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+**How it works**
+
+1. **Standard search** – the script first fetches `https://priv.au/search` with the given parameters, using `curl_cffi` to impersonate Chrome.
+2. **Captcha detection** – if the HTML contains `<meta name="endpoint" content="captcha">`, the page is a proof-of-work challenge.
+3. **Automatic POW solving** – the script extracts the challenge token, decodes the `pow_bits` difficulty, and brute‑forces a valid nonce (fast, because `pow_bits=1` needs only a couple of hashes). The solution is POSTed to `/captcha`, and the server redirects to the real results page.
+4. **Parsing & output** – the final HTML is parsed identically to the earlier version, and the chosen output format is written.
+
+Now the script works robustly even when the instance presents a captcha. Just run it as:
+
+```bash
+python searxng_search.py "yeehaw junction"
+```

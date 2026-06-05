@@ -1,0 +1,489 @@
+§u§
+```
+#!/usr/bin/env python3
+"""
+SearXNG search script for priv.au.
+
+Usage examples:
+  python searxng_search.py "query"
+  python searxng_search.py "query" --json -o results.json
+  python searxng_search.py "query" --csv --infobox
+  python searxng_search.py "query" --pageno 2 --safesearch 0
+"""
+
+import argparse
+import csv
+import json
+import sys
+from pathlib import Path
+from typing import Any
+
+from bs4 import BeautifulSoup
+from curl_cffi import requests
+
+BASE_URL = "https://search.internetsucks.net/"
+RESULT_SELECTOR = "article.result"
+URL_SELECTOR = "a.url_header"
+TITLE_SELECTOR = "h3 a"
+CONTENT_SELECTOR = "p.content"
+ENGINES_SELECTOR = "div.engines > span"
+
+
+def parse_results(html: str) -> list[dict[str, Any]]:
+    """Parse the HTML and return a list of result dicts."""
+    soup = BeautifulSoup(html, "html.parser")
+    results: list[dict[str, Any]] = []
+    for article in soup.select(RESULT_SELECTOR):
+        url_tag = article.select_one(URL_SELECTOR)
+        title_tag = article.select_one(TITLE_SELECTOR)
+        content_tag = article.select_one(CONTENT_SELECTOR)
+        engine_tags = article.select(ENGINES_SELECTOR)
+
+        url = url_tag["href"].strip() if url_tag and url_tag.has_attr("href") else None
+        title = title_tag.get_text(strip=True) if title_tag else None
+        if content_tag and "empty_element" not in (content_tag.get("class") or []):
+            content = content_tag.get_text(" ", strip=True)
+        else:
+            content = ""
+        engines = [tag.get_text(strip=True) for tag in engine_tags if tag.get_text(strip=True)]
+
+        results.append({
+            "url": url,
+            "title": title,
+            "content": content,
+            "engines": engines,
+        })
+    return results
+
+
+def extract_infos(html: str) -> list[dict[str, Any]]:
+    """Extract the sidebar infobox (e.g. Wikipedia-style info box)."""
+    soup = BeautifulSoup(html, "html.parser")
+    boxes: list[dict[str, Any]] = []
+    for box in soup.select("aside.infobox"):
+        title_tag = box.select_one("h2.title")
+        desc_tag = box.find("p")
+        attributes: dict[str, str] = {}
+        for dl in box.select("dl"):
+            dt = dl.find("dt")
+            dd = dl.find("dd")
+            if dt and dd:
+                key = dt.get_text(" ", strip=True).rstrip(" :")
+                attributes[key] = dd.get_text(" ", strip=True)
+        boxes.append({
+            "title": title_tag.get_text(" ", strip=True) if title_tag else "",
+            "description": desc_tag.get_text(" ", strip=True) if desc_tag else "",
+            "attributes": attributes,
+        })
+    return boxes
+
+
+def search(
+    query: str,
+    language: str = "en",
+    safesearch: str = "1",
+    category: str = "general",
+    pageno: int = 1,
+    time_range: str = "",
+) -> str:
+    """Perform a search request and return the HTML response."""
+    params = {
+        "q": query,
+        "language": language,
+        "safesearch": safesearch,
+        "category_general" if category == "general" else f"category_{category}": "1",
+        "categories": category,
+        "pageno": pageno,
+        "time_range": time_range,
+        "theme": "simple",
+    }
+    response = requests.get(
+        BASE_URL + "search", params=params, impersonate="chrome110", cookies={'enabled_engines': '"duckduckgo__general,qwant__general,yahoo__general"'}
+    )
+    response.raise_for_status()
+    return response.text
+
+
+def write_json(data: Any, output: str | None) -> None:
+    text = json.dumps(data, indent=2, ensure_ascii=False)
+    if output:
+        Path(output).write_text(text, encoding="utf-8")
+    else:
+        print(text)
+
+
+def write_csv(results: list[dict[str, Any]], output: str | None) -> None:
+    if not results:
+        return
+    fieldnames = list(results[0].keys())
+    out_file = open(output, "w", newline="", encoding="utf-8") if output else sys.stdout
+    try:
+        writer = csv.DictWriter(out_file, fieldnames=fieldnames)
+        writer.writeheader()
+        for row in results:
+            row = {**row, "engines": ", ".join(row.get("engines") or [])}
+            writer.writerow(row)
+    finally:
+        if output:
+            out_file.close()
+
+
+def write_text(results: list[dict[str, Any]], output: str | None) -> None:
+    lines: list[str] = []
+    for i, r in enumerate(results, 1):
+        lines.append(f"{i}. {r['title']}")
+        lines.append(f"   URL:     {r['url']}")
+        lines.append(f"   Engines: {', '.join(r['engines']) or '-'}")
+        if r["content"]:
+            lines.append(f"   Snippet: {r['content']}")
+        lines.append("")
+    text = "\n".join(lines).rstrip() + "\n"
+    if output:
+        Path(output).write_text(text, encoding="utf-8")
+    else:
+        print(text, end="")
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Search using SearXNG and display results."
+    )
+    parser.add_argument("query", help="Search query")
+    parser.add_argument("-l", "--language", default="en", help="Language code (default: en)")
+    parser.add_argument("-s", "--safesearch", default="1", choices=["0", "1", "2"],
+                        help="SafeSearch: 0=None, 1=Moderate, 2=Strict")
+    parser.add_argument("-c", "--category", default="general",
+                        help="Search category (default: general)")
+    parser.add_argument("-p", "--pageno", type=int, default=1,
+                        help="Page number (default: 1)")
+    parser.add_argument("-t", "--time-range", default="",
+                        help="Time range (day, week, month, year)")
+    parser.add_argument("--json", action="store_true", help="Output as JSON")
+    parser.add_argument("--csv", action="store_true", help="Output as CSV")
+    parser.add_argument("--text", action="store_true", help="Output as plain text")
+    parser.add_argument("--infobox", action="store_true",
+                        help="Include infobox data (only for JSON/text output)")
+    parser.add_argument("-o", "--output", help="Write output to file instead of stdout")
+    args = parser.parse_args()
+    if not (args.json or args.csv):
+        args.text = True
+    html = search(
+        query=args.query,
+        language=args.language,
+        safesearch=args.safesearch,
+        category=args.category,
+        pageno=args.pageno,
+        time_range=args.time_range,
+    )
+    results = parse_results(html)
+    if args.json:
+        data = {"results": results}
+        if args.infobox:
+            data["infobox"] = extract_infos(html)
+        write_json(data, args.output)
+    elif args.csv:
+        if args.infobox:
+            print("Warning: --infobox ignored for CSV output.", file=sys.stderr)
+        write_csv(results, args.output)
+    else:
+        if args.infobox:
+            infos = extract_infos(html)
+            for box in infos:
+                print(f"[Infobox] {box['title']}")
+                print(f"  Description: {box['description']}")
+                for key, val in box["attributes"].items():
+                    print(f"  {key}: {val}")
+                print()
+        if args.output:
+            orig_stdout = sys.stdout
+            with open(args.output, "w", encoding="utf-8") as f:
+                sys.stdout = f
+                try:
+                    write_text(results, None)
+                finally:
+                    sys.stdout = orig_stdout
+        else:
+            write_text(results, None)
+    if args.text:
+        output_filename = args.output
+        lines = []
+        if args.infobox:
+            infos = extract_infos(html)
+            for box in infos:
+                lines.append(f"[Infobox] {box['title']}")
+                lines.append(f"  Description: {box['description']}")
+                for key, val in box["attributes"].items():
+                    lines.append(f"  {key}: {val}")
+                lines.append("")
+        for i, r in enumerate(results, 1):
+            lines.append(f"{i}. {r['title']}")
+            lines.append(f"   URL:     {r['url']}")
+            lines.append(f"   Engines: {', '.join(r['engines']) or '-'}")
+            if r["content"]:
+                lines.append(f"   Snippet: {r['content']}")
+            lines.append("")
+        text = "\n".join(lines).rstrip() + "\n"
+        if output_filename:
+            Path(output_filename).write_text(text, encoding="utf-8")
+        else:
+            print(text, end="")
+
+
+if __name__ == "__main__":
+    main()
+```
+```
+░▒▓ 🎩  …/ThetaCode/src/opt    main !+  ▓▒░ ◦•··········································································································································································································································•◦ ░▒▓   132ms ▓▒░
+··• python websearch.py "yeehaw junction"
+1. YeehawJunction, Florida - Wikipedia
+   URL:     https://en.wikipedia.org/wiki/Yeehaw_Junction,_Florida
+   Engines: startpage
+   Snippet: Yeehaw Junction is a census-designated place (CDP) in Osceola County, Florida, United States. ... As of the 2020 census, Yeehaw Junction had a population of 235.
+
+2. YeehawJunction, Florida - Tripadvisor
+   URL:     https://www.tripadvisor.com/Tourism-g34753-Yeehaw_Junction_Florida-Vacations.html
+   Engines: startpage
+   Snippet: Yeehaw Junction Tourism: Tripadvisor has of Yeehaw Junction Hotels, Attractions, and Restaurants making it your best Yeehaw Junction resource.
+
+3. YeehawJunction- Wikipedia
+   URL:     https://nl.wikipedia.org/wiki/Yeehaw_Junction
+   Engines: startpage
+   Snippet: Yeehaw Junction is een plaats (census-designated place) in de Amerikaanse staat Florida, en valt bestuurlijk gezien onder Osceola County.
+
+4. Ode toYeehawJunction| Flamingo Magazine
+   URL:     https://flamingomag.com/2019/02/23/my-florida-yeehaw-junction/
+   Engines: startpage
+   Snippet: 2019/02/23 ... Yeehaw Junction , née Jackass Junction , was a beacon to thousands of working men through the years (and likely the bane of many working women).
+
+5. YeehawJunction? : r/florida - Reddit
+   URL:     https://www.reddit.com/r/florida/comments/1m8mlgx/yeehaw_junction/
+   Engines: startpage
+   Snippet: 2025/07/25 ... Its single claim to fame is being the only exit on a nearly 90 mile stretch of Florida's Turnpike. In true Florida style it used to be named ...
+
+6. YeehawJunction: Old Florida at the Crossroads
+   URL:     https://www.florida-backroads-travel.com/yeehaw-junction-florida.html
+   Engines: startpage
+   Snippet: 2026/04/27 ... Yeehaw Junction is at the intersection of US-441 and State Road 60 between Vero Beach and Lake Wales. It is also the name of an exit on the ...
+
+7. 2026 Travel Guide forYeehawJunction, Okeechobee - Expedia
+   URL:     https://www.expedia.com/Yeehaw-Junction.dx3000432017
+   Engines: startpage
+   Snippet: Travel guide resource for your visit to Yeehaw Junction . Discover the best of Yeehaw Junction so you can plan your trip right.
+
+8. THE 10 BEST Things to Do inYeehawJunction, FL - 2026 - Yelp
+   URL:     https://www.yelp.com/city/yeehaw-junction-fl-us
+   Engines: startpage
+   Snippet: Best of Yeehaw Junction : Find must-see tourist attractions and things to do in Yeehaw Junction , Florida. Yelp helps you discover popular restaurants, ...
+
+9. 235 Residents & One TikToker vs. the Florida Wilderness - YouTube
+   URL:     https://www.youtube.com/watch?v=bqamF3gFxuE
+   Engines: startpage
+   Snippet: 2025/12/28 ... What is life really like in Yeehaw Junction , Florida — and does anyone actually live there? On a quiet December morning, I take one of the ...
+
+10. YeehawJunction, FL, United States - Map & Directions - Apple Maps
+   URL:     https://maps.apple.com/place?auid=12654472511030849675
+   Engines: startpage
+   Snippet: View details about Yeehaw Junction , FL, United States on Apple Maps. Address, driving directions, images, nearby attractions and more.
+1. YeehawJunction, Florida - Wikipedia
+   URL:     https://en.wikipedia.org/wiki/Yeehaw_Junction,_Florida
+   Engines: startpage
+   Snippet: Yeehaw Junction is a census-designated place (CDP) in Osceola County, Florida, United States. ... As of the 2020 census, Yeehaw Junction had a population of 235.
+
+2. YeehawJunction, Florida - Tripadvisor
+   URL:     https://www.tripadvisor.com/Tourism-g34753-Yeehaw_Junction_Florida-Vacations.html
+   Engines: startpage
+   Snippet: Yeehaw Junction Tourism: Tripadvisor has of Yeehaw Junction Hotels, Attractions, and Restaurants making it your best Yeehaw Junction resource.
+
+3. YeehawJunction- Wikipedia
+   URL:     https://nl.wikipedia.org/wiki/Yeehaw_Junction
+   Engines: startpage
+   Snippet: Yeehaw Junction is een plaats (census-designated place) in de Amerikaanse staat Florida, en valt bestuurlijk gezien onder Osceola County.
+
+4. Ode toYeehawJunction| Flamingo Magazine
+   URL:     https://flamingomag.com/2019/02/23/my-florida-yeehaw-junction/
+   Engines: startpage
+   Snippet: 2019/02/23 ... Yeehaw Junction , née Jackass Junction , was a beacon to thousands of working men through the years (and likely the bane of many working women).
+
+5. YeehawJunction? : r/florida - Reddit
+   URL:     https://www.reddit.com/r/florida/comments/1m8mlgx/yeehaw_junction/
+   Engines: startpage
+   Snippet: 2025/07/25 ... Its single claim to fame is being the only exit on a nearly 90 mile stretch of Florida's Turnpike. In true Florida style it used to be named ...
+
+6. YeehawJunction: Old Florida at the Crossroads
+   URL:     https://www.florida-backroads-travel.com/yeehaw-junction-florida.html
+   Engines: startpage
+   Snippet: 2026/04/27 ... Yeehaw Junction is at the intersection of US-441 and State Road 60 between Vero Beach and Lake Wales. It is also the name of an exit on the ...
+
+7. 2026 Travel Guide forYeehawJunction, Okeechobee - Expedia
+   URL:     https://www.expedia.com/Yeehaw-Junction.dx3000432017
+   Engines: startpage
+   Snippet: Travel guide resource for your visit to Yeehaw Junction . Discover the best of Yeehaw Junction so you can plan your trip right.
+
+8. THE 10 BEST Things to Do inYeehawJunction, FL - 2026 - Yelp
+   URL:     https://www.yelp.com/city/yeehaw-junction-fl-us
+   Engines: startpage
+   Snippet: Best of Yeehaw Junction : Find must-see tourist attractions and things to do in Yeehaw Junction , Florida. Yelp helps you discover popular restaurants, ...
+
+9. 235 Residents & One TikToker vs. the Florida Wilderness - YouTube
+   URL:     https://www.youtube.com/watch?v=bqamF3gFxuE
+   Engines: startpage
+   Snippet: 2025/12/28 ... What is life really like in Yeehaw Junction , Florida — and does anyone actually live there? On a quiet December morning, I take one of the ...
+
+10. YeehawJunction, FL, United States - Map & Directions - Apple Maps
+   URL:     https://maps.apple.com/place?auid=12654472511030849675
+   Engines: startpage
+   Snippet: View details about Yeehaw Junction , FL, United States on Apple Maps. Address, driving directions, images, nearby attractions and more.
+
+░▒▓ 🎩  …/ThetaCode/src/opt    main !+  ▓▒░ ◦•········································································································································································································································•◦ ░▒▓   1s897ms ▓▒░
+··•
+```
+Fix the double output.
+§a§
+The double output is caused by a **redundant code block** at the end of your `main()` function.
+
+Your `else` block already handles plain-text output, but immediately after it, there's another `if args.text:` block that does the exact same thing. Since `args.text` is forced to `True` by default when `--json` or `--csv` aren't used, it runs twice.
+
+Here's the corrected `main()` function. I've also removed an unnecessary `sys.stdout` redirection hack, since your `write_text()` function already natively supports file output via the `output` parameter:
+
+```python
+def main():
+    parser = argparse.ArgumentParser(
+        description="Search using SearXNG and display results."
+    )
+    parser.add_argument("query", help="Search query")
+    parser.add_argument("-l", "--language", default="en", help="Language code (default: en)")
+    parser.add_argument("-s", "--safesearch", default="1", choices=["0", "1", "2"],
+                        help="SafeSearch: 0=None, 1=Moderate, 2=Strict")
+    parser.add_argument("-c", "--category", default="general",
+                        help="Search category (default: general)")
+    parser.add_argument("-p", "--pageno", type=int, default=1,
+                        help="Page number (default: 1)")
+    parser.add_argument("-t", "--time-range", default="",
+                        help="Time range (day, week, month, year)")
+    parser.add_argument("--json", action="store_true", help="Output as JSON")
+    parser.add_argument("--csv", action="store_true", help="Output as CSV")
+    parser.add_argument("--text", action="store_true", help="Output as plain text")
+    parser.add_argument("--infobox", action="store_true",
+                        help="Include infobox data (only for JSON/text output)")
+    parser.add_argument("-o", "--output", help="Write output to file instead of stdout")
+    args = parser.parse_args()
+
+    # Default to text output if no format is specified
+    if not (args.json or args.csv):
+        args.text = True
+
+    html = search(
+        query=args.query,
+        language=args.language,
+        safesearch=args.safesearch,
+        category=args.category,
+        pageno=args.pageno,
+        time_range=args.time_range,
+    )
+    results = parse_results(html)
+
+    if args.json:
+        data = {"results": results}
+        if args.infobox:
+            data["infobox"] = extract_infos(html)
+        write_json(data, args.output)
+    elif args.csv:
+        if args.infobox:
+            print("Warning: --infobox ignored for CSV output.", file=sys.stderr)
+        write_csv(results, args.output)
+    else:  # Plain text output
+        if args.infobox:
+            infos = extract_infos(html)
+            for box in infos:
+                print(f"[Infobox] {box['title']}")
+                print(f"  Description: {box['description']}")
+                for key, val in box["attributes"].items():
+                    print(f"  {key}: {val}")
+                print()
+        # write_text already handles both stdout and file output via the output param
+        write_text(results, args.output)
+
+if __name__ == "__main__":
+    main()
+```
+
+### Key Fixes:
+1. **Removed the trailing `if args.text:` block** that was duplicating the formatted results.
+2. **Simplified the `else` block** by removing the manual `sys.stdout` swapping. `write_text(results, args.output)` already correctly routes to `sys.stdout` when `args.output` is `None`, and to a file when it's provided.
+3. The script now outputs exactly once, regardless of format flags.
+§u§
+And why do the cookies not work correctly? I only get startpage results. In the browser, they look like this:
+```
+Sec-GPC: 1
+Connection: keep-alive
+Cookie: categories=general; language=auto; locale=en; autocomplete=; favicon_resolver=; method=GET; safesearch=0; theme=simple; results_on_new_tab=0; doi_resolver=oadoi.org; simple_style=auto; center_alignment=0; query_in_title=0; search_on_category_select=1; hotkeys=default; url_formatting=pretty; disabled_engines=; enabled_engines="duckduckgo__general\054qwant__general\054yahoo__general"; disabled_plugins=; enabled_plugins=; tokens=
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: document
+```
+§a§
+The reason you're only getting Startpage results is because your `cookies` dict is malformed and incomplete.
+
+### Issues with your current cookies
+
+| Issue | Explanation |
+|---|---|
+| Incorrect quoting/escaping for commas | In the browser, the comma is escaped as `\054` inside the quoted string: `"duckduckgo__general\054qwant__general\054yahoo__general"`. In your code, you're sending `'"duckduckgo__general,qwant__general,yahoo__general"'`, which the server may not parse correctly. |
+| Missing required cookies | You're only sending `enabled_engines`, but SearXNG relies on other cookies like `categories`, `language`, `safesearch`, and `locale` to determine the active search context. Without them, it will fall back to its default engines. |
+| Overriding without full state | Manually forcing engine selection won't work if those engines are disabled, unavailable, or the instance doesn't support them for that category. |
+
+---
+
+## Fix: Send a complete, properly escaped cookie set
+
+You should replicate the full cookie state from the browser, and properly escape commas inside the quoted string (`\054`).
+
+Here's an example of how to fix your `search()` function:
+
+```python
+def search(
+    query: str,
+    language: str = "en",
+    safesearch: str = "1",
+    category: str = "general",
+    pageno: int = 1,
+    time_range: str = "",
+) -> str:
+    """Perform a search request and return the HTML response."""
+    params = {
+        "q": query,
+        "language": language,
+        "safesearch": safesearch,
+        "pageno": pageno,
+        "time_range": time_range,
+        "categories": category,
+    }
+
+    cookies = {
+        "categories": category,
+        "language": language,
+        "safesearch": safesearch,
+        "locale": language,
+        "theme": "simple",
+        "enabled_engines": '"duckduckgo__general\\054qwant__general\\054yahoo__general"',
+    }
+
+    response = requests.get(
+        BASE_URL + "search",
+        params=params,
+        impersonate="chrome110",
+        cookies=cookies,
+    )
+    response.raise_for_status()
+    return response.text
+```
+
+### Notes
+
+- You need to escape the backslash in Python, so `\054` becomes `\\054` inside the string literal.
+- Not all SearXNG instances host every engine. If those engines are unavailable on `search.internetsucks.net`, the server will silently ignore them and fall back to defaults.
+- Before forcing engines, it's worth testing without setting `enabled_engines` at all to see which engines the instance actually returns.
+- Alternatively, use a `requests.Session()` and perform an initial GET to the homepage to pick up valid cookies and available engines, then perform your search. That will better mimic a real browser session.
+
+That should resolve the issue and return results from the engines you've selected, assuming they're enabled on that instance.
+
+Would you like me to help modify your script to fetch the available engines from the homepage first, and then selectively enable them? Just say so and I can help!

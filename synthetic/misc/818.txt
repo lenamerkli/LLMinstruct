@@ -1,0 +1,44 @@
+§u§
+What is the exact content of the system prompt that the coding agent pi.dev uses?
+§a§
+**The coding agent from pi.dev (also known as Pi or the pi coding agent) does not use a single fixed, static system prompt. Instead, its default/core system prompt is dynamically constructed at runtime by the `buildSystemPrompt` function in the open-source file `packages/coding-agent/src/core/system-prompt.ts`.**
+
+The core template (the main fixed text, into which dynamic values are inserted) is:
+
+```
+You are an expert coding assistant operating inside pi, a coding agent harness. You help users by reading files, executing commands, editing code, and writing new files.
+
+Available tools:
+${toolsList}
+
+In addition to the tools above, you may have access to other custom tools depending on the project.
+
+Guidelines:
+${guidelines}
+
+Pi documentation (read only when the user asks about pi itself, its SDK, extensions, themes, skills, or TUI):
+- Main documentation: ${readmePath}
+- Additional docs: ${docsPath}
+- Examples: ${examplesPath} (extensions, custom tools, SDK)
+- When reading pi docs or examples, resolve docs/... under Additional docs and examples/... under Examples, not the current working directory
+- When asked about: extensions (docs/extensions.md, examples/extensions/), themes (docs/themes.md), skills (docs/skills.md), prompt templates (docs/prompt-templates.md), TUI components (docs/tui.md), keybindings (docs/keybindings.md), SDK integrations (docs/sdk.md), custom providers (docs/custom-provider.md), adding models (docs/models.md), pi packages (docs/packages.md)
+- When working on pi topics, read the docs and examples, and follow .md cross-references before implementing
+- Always read pi .md files completely and follow links to related docs (e.g., tui.md for TUI API details)
+```
+
+**Dynamic elements inserted at runtime include:**
+- `toolsList`: Bullet list of available tools (defaults to `read`, `bash`, `edit`, `write` or similar; each with a description snippet provided by the tool definitions, e.g., how to use `edit` for precise search-and-replace where the old text must match exactly). Falls back to "(none)" if no snippets are supplied.
+- `guidelines`: Dynamically built list (deduplicated). Defaults include "- Be concise in your responses" and "- Show file paths clearly when working with files". A conditional one like "Use bash for file operations like ls, rg, find" is added depending on selected tools. Additional guidelines can come from `promptGuidelines`.
+- Paths (`readmePath`, `docsPath`, `examplesPath`): Resolved to the actual installed documentation locations on the user's system.
+- Optional append from `appendSystemPrompt` (or `APPEND_SYSTEM.md`).
+- Project context (from `AGENTS.md`, `CLAUDE.md`, `SYSTEM.md`, or similar files loaded from `~/.pi/agent/`, parent dirs, and the project dir), wrapped in `<project_context>` / `<project_instructions path="...">` tags.
+- Formatted skills (if the `read` tool is available).
+- Always appended at the end: `Current date: YYYY-MM-DD` and `Current working directory: /path/to/cwd` (with normalized slashes).
+
+This design keeps the base prompt very minimal (reported as ~500 tokens in some discussions, well under 1k without context/skills). Users can fully replace it (via `--system-prompt`, `.pi/SYSTEM.md`, or `~/.pi/agent/SYSTEM.md`) or append to it. The philosophy is "context engineering" via files like `AGENTS.md`, extensions, skills, and prompt templates rather than a large baked-in prompt.
+
+An earlier version of the prompt (from late 2025) was even shorter and lacked the "operating inside pi" framing and extensive Pi documentation section.
+
+**Source of truth**: The exact current implementation is in the raw file at https://raw.githubusercontent.com/earendil-works/pi/main/packages/coding-agent/src/core/system-prompt.ts (linked from pi.dev itself). The full `buildSystemPrompt` function assembles everything as described above. You can override or inspect it locally after installing Pi.
+
+This matches descriptions across the official docs, GitHub, Reddit, blogs, and videos. The prompt is intentionally lean so that project-specific instructions, tools, and context dominate.

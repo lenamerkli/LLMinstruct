@@ -1,0 +1,32 @@
+§u§
+How does renting a GPU on Vast.ai work? How can I run pytorch and does a VM with CPU and storage come along with it?
+§a§
+## How Renting Works
+
+Before renting an instance, you'll need to select a template that defines your Docker image and connection method. The basic process is:
+
+1. **Sign up and add credit** - Start with as little as $5
+2. **Choose a template** - Select from pre-configured templates or customize your Docker image
+3. **Filter and search** - Use search options to filter by location, GPU type and count, hardware specs, and rental parameters
+4. **Set storage** - The storage slider determines the storage allocation size, with a default disk size of 10GB
+5. **Rent the GPU** - Startup time is usually under 5 minutes
+
+Vast.ai offers per-second billing with On-Demand, Interruptible, or Reserved pricing.
+
+## Running PyTorch
+
+PyTorch is well-supported on Vast.ai:
+
+- Navigate to the Templates tab and select the appropriate PyTorch template for your needs
+- For many workloads, the `pytorch:latest` Docker image is recommended, which you can specify in the 'Image' field
+- You can verify your setup by checking PyTorch version, CUDA availability, and GPU device name
+
+## What Comes with the GPU
+
+Yes, CPU and storage come along with your GPU rental:
+
+- Vast.ai provides Linux docker instances with a specified Linux docker image to load
+- Hosts configure GPU, CPU, storage, and bandwidth billing
+- When the instance is created, the disk size is set and cannot be modified, so it's important to estimate how much disk you will need
+
+You get a complete virtual environment with the GPU, CPU cores, RAM, and storage - essentially a full Linux machine running in a Docker container with access to the GPU hardware.

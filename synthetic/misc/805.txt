@@ -1,0 +1,133 @@
+§u§
+I have docker containers (all debian linux) on my server. How can I make the jetbrains gateway host executables to be shared across all of them?
+§a§
+Here's a complete guide on how to share JetBrains Gateway host (backend) executables across all your Debian Docker containers using a Docker volume or bind mount.
+
+---
+
+## Sharing JetBrains Gateway Backend Executables Across Docker Containers
+
+The core idea is simple: instead of letting each container independently download its own copy of the IDE backend, you install the backend **once** into a shared location (a Docker named volume or a host bind mount) and mount it into every container at the same path.
+
+---
+
+### Key Facts First
+
+The main script to run a remote IDE is `remote-dev-server.sh`, located in the `bin` subdirectory of your unpacked IDE. When the backend is installed via JetBrains Gateway, the default path is:
+```
+/home/<your_system_user>/.cache/JetBrains/RemoteDev/dist/
+```
+
+This directory can be shared among multiple containers so you don't need to repeat the downloading process. If you create a Dev Container using another IDE or a different IDE version, it gets copied into the same location.
+
+The server part is self-contained, so no special dependencies need to be installed. It will also run on any glibc-based Docker image (that is, **not** on Alpine — Debian is fine).
+
+---
+
+### Strategy: Use a Named Docker Volume or Bind Mount
+
+#### Option 1: Named Docker Volume (Recommended)
+
+**Step 1 — Create a named volume on your host:**
+```bash
+docker volume create jb-remote-dev
+```
+
+**Step 2 — Pre-populate the volume** by running a one-time container that downloads (or copies) the IDE backend into it:
+```bash
+docker run --rm \
+  -v jb-remote-dev:/home/user/.cache/JetBrains/RemoteDev/dist \
+  debian:bookworm \
+  bash -c "apt-get update && apt-get install -y wget tar && \
+    wget -O /tmp/ide.tar.gz <your-ide-download-url> && \
+    tar xzf /tmp/ide.tar.gz -C /home/user/.cache/JetBrains/RemoteDev/dist/"
+```
+Or simply connect with Gateway once to the first container (it will auto-download), then reuse that volume for all others.
+
+**Step 3 — Mount the shared volume into each container** at the same cache path:
+```yaml
+# docker-compose.yml
+services:
+  dev1:
+    image: my-debian-dev
+    volumes:
+      - jb-remote-dev:/home/user/.cache/JetBrains/RemoteDev/dist:ro
+    ports:
+      - "2222:22"
+
+  dev2:
+    image: my-debian-dev
+    volumes:
+      - jb-remote-dev:/home/user/.cache/JetBrains/RemoteDev/dist:ro
+    ports:
+      - "2223:22"
+
+volumes:
+  jb-remote-dev:
+    external: true
+```
+
+> **Tip:** Mount it as `:ro` (read-only) in containers if you don't want containers modifying the shared binaries. Leave it read-write if you want Gateway to be able to update it.
+
+---
+
+#### Option 2: Host Bind Mount
+
+If you prefer to manage the directory directly on the host filesystem:
+
+**Step 1 — Create a directory on your host:**
+```bash
+mkdir -p /opt/jb-remote-dev
+```
+
+**Step 2 — Extract/copy the IDE backend there:**
+```bash
+tar xzf <ide>.tar.gz -C /opt/jb-remote-dev/
+```
+You can download the IDE from your local machine and copy it onto the server with `scp`, then extract it to a shared location like `/opt`.
+
+**Step 3 — Bind mount it into each container:**
+```yaml
+services:
+  dev1:
+    image: my-debian-dev
+    volumes:
+      - /opt/jb-remote-dev:/home/user/.cache/JetBrains/RemoteDev/dist:ro
+    ports:
+      - "2222:22"
+```
+
+---
+
+### Register the Backend with Gateway
+
+Once the IDE is in place inside a container, to register the installed IDE and make it appear in the list of available builds: connect to the remote server via SSH, locate the folder with the unpacked IDE, open the `bin` directory, and run:
+```bash
+remote-dev-server.sh registerBackendLocationForGateway
+```
+
+---
+
+### Important: Separate Per-Container Config Directories
+
+While the **binaries** can be shared (read-only), each container must have its **own** configuration and cache directories, because JetBrains IDEs require a persistent directory to store configuration and caches.
+
+You should **not** share these paths between containers:
+- `~/.config/JetBrains/` — IDE settings
+- `~/.local/share/JetBrains/` — IDE data
+- `~/.cache/JetBrains/` *(outside of the `dist/` binaries folder)* — runtime caches
+
+Use per-container named volumes or bind mounts for those.
+
+---
+
+### Summary Table
+
+| What | Shared? | How |
+|---|---|---|
+| IDE backend binaries (`RemoteDev/dist/`) | ✅ Yes | Named volume or bind mount (`:ro`) |
+| IDE config (`~/.config/JetBrains/`) | ❌ No | Per-container volume |
+| IDE caches (`~/.cache/JetBrains/` except dist) | ❌ No | Per-container volume |
+| Project source code | ❌ No | Per-container bind mount |
+
+This approach saves significant disk space and eliminates redundant downloads when spinning up new containers.

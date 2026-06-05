@@ -1,0 +1,38 @@
+§u§
+Is it true that Microsoft revoked Office 2019 for Mac perpetual licenses and then edited their website to gaslight customers?
+§a§
+This is a very real and developing situation. Here's what's happening:
+
+## The Certificate Expiry and "View-Only" Conversion
+
+Microsoft Office 2019 and 2021 for Mac are facing a scheduled remote degradation of perpetually-licensed software, set for **July 13, 2026**, when a license-validation certificate used by the Office apps expires.
+
+The July 13, 2026 conversion drops the apps into a Microsoft-defined "reduced functionality mode," in which files can be opened and viewed but not edited or saved.
+
+Office 2019 has no fix. The product line is bounded by a hard build cap below the 16.83 threshold, and Microsoft's own support documentation states the issue "cannot be resolved by updating or reinstalling Office 2019 for Mac."
+
+## The Website Edit
+
+This is the part that has drawn accusations of "gaslighting":
+
+**Original page (archived June 3, 2023):** The page read: "Support for Office 2019 for Mac will end on October 10, 2023. Rest assured that all your Office 2019 apps will continue to function—they won't disappear from your Mac, nor will you lose any data. However, you could expose yourself to serious and potentially harmful security risks."
+
+**Revised page (by May 30, 2026):** The same URL carried a new publication date of May 15th, 2026 and a shorter passage: "Support for Office 2019 for Mac ended on October 10, 2023. Rest assured that all your Office 2019 apps won't lose any data. Your data can be accessed on any supported Microsoft 365 or Office product."
+
+Notably, the key promise — **"will continue to function"** — was removed. Microsoft has issued no public statement reconciling the July 2026 conversion with the 2023 "continue to function" assurance.
+
+## Why This Is Happening
+
+Microsoft's documentation states that "Microsoft 365 apps use a digital certificate to validate licensing. The certificate currently in use expires on July 13, 2026. Apps that are updated to the minimum required versions already include the renewed certificate and continue to function normally. Apps on older versions enter reduced functionality mode after the certificate expires."
+
+As JimmyTech noted, "certificates can get renewed. The fact that Microsoft is using this expiration as a deadline that retires older versions of Office, rather than quietly renewing the certificate, is a choice."
+
+## What Customers Are Left With
+
+Microsoft directs affected users to three options: continuing to use the apps in view-only mode, switching to the free Microsoft 365 web apps, or paying for a Microsoft 365 subscription or a new perpetual Office Home 2024 license.
+
+Windows and Android versions of Office are not affected by the certificate expiry.
+
+## The Bottom Line
+
+So to answer your question directly: **Yes, this is substantively true.** Microsoft sold Office 2019 for Mac as a perpetual, one-time-purchase product, explicitly assured customers the apps would "continue to function" after end-of-support, and is now allowing a certificate expiry to render those apps effectively unusable for editing — while quietly rewriting the support page to remove the "continue to function" language. Whether this constitutes "gaslighting" is a characterization, but the factual sequence — promise made, promise broken, page edited — is documented through archived web snapshots.

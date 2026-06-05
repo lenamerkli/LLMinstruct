@@ -1,0 +1,96 @@
+§u§
+global variables with flask
+§a§
+In Flask, “global variables” can mean a few different things. The safest approach depends on whether the data should be:
+
+1) **Constant (same for everyone, never changes)**
+2) **Per-request**
+3) **Per-user (per session)**
+4) **Shared across all requests / workers** (most common “global state” request)
+
+## 1) Constants (module-level is fine)
+If it never changes, module-level constants are OK.
+
+```python
+# config_constants.py
+MAX_ITEMS = 100
+```
+
+## 2) Per-request data → use `flask.g` (recommended)
+`g` is request-scoped, so it won’t leak between requests.
+
+```python
+from flask import Flask, g
+
+app = Flask(__name__)
+
+@app.before_request
+def load_stuff():
+    g.user_id = "123"   # available during this request only
+
+@app.get("/demo")
+def demo():
+    return {"user_id": g.user_id}
+```
+
+## 3) Per-user data → use `session`
+For user-specific state (cookies signed by Flask by default).
+
+```python
+from flask import Flask, session, request
+
+app = Flask(__name__)
+app.secret_key = "change-me"
+
+@app.post("/set")
+def set_value():
+    session["count"] = session.get("count", 0) + 1
+    return {"count": session["count"]}
+
+@app.get("/get")
+def get_value():
+    return {"count": session.get("count")}
+```
+
+## 4) Shared “global” state across requests → **avoid plain module globals**
+If you do this:
+
+```python
+# ❌ not recommended for production
+some_counter = 0
+```
+
+it can break when you run multiple **processes/workers** (common in production with gunicorn/uwsgi) and can also have **thread-safety** issues.
+
+### Better options for shared state
+- **External store**: Redis / Memcached / database (best for production)
+- **Caching extension**: `Flask-Caching` (Redis backend, etc.)
+- If you *must* use in-memory shared data (development / single-process), protect with a lock—but understand it won’t be shared across multiple workers.
+
+Example with a simple thread-safe in-memory counter (dev/single process only):
+```python
+from flask import Flask
+from threading import Lock
+
+app = Flask(__name__)
+
+counter = 0
+counter_lock = Lock()
+
+@app.get("/inc")
+def inc():
+    global counter
+    with counter_lock:
+        counter += 1
+        return {"counter": counter}
+```
+
+## Quick rule of thumb
+- **Need data only within one request?** → `flask.g`
+- **Need data per user?** → `session`
+- **Need data shared across all users + across multiple workers?** → Redis/db (not module globals)
+
+---
+
+### Question (so I can give the right pattern)
+What kind of “global variable” are you trying to store—**a counter**, **API key/config**, **current user state**, **a cached value**, or something else? And are you running Flask with **gunicorn** (multiple workers) or just the built-in server?

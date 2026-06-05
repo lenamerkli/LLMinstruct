@@ -1,0 +1,75 @@
+§u§
+Does an API for searxng exist? I have an instance of the default searxng.
+§a§
+Yes. **SearXNG has a built-in HTTP Search API**. It supports `GET` and `POST` on `/` and `/search`, and you request API-style output with `format=json`, `format=csv`, or `format=rss`.
+
+Example:
+
+```bash
+curl 'https://your-searxng.example/search?q=openai&format=json'
+```
+
+or locally:
+
+```bash
+curl 'http://localhost:8080/search?q=openai&format=json'
+```
+
+However, on a **default SearXNG instance**, JSON is usually **not enabled**. The default/example config only enables HTML output:
+
+```yaml
+search:
+  formats:
+    - html
+```
+
+SearXNG will return **403 Forbidden** if you request a format that is not enabled.
+
+To enable JSON, edit your `settings.yml`, commonly at `/etc/searxng/settings.yml` unless overridden with `SEARXNG_SETTINGS_PATH`, and add `json`:
+
+```yaml
+search:
+  formats:
+    - html
+    - json
+```
+
+Optionally:
+
+```yaml
+search:
+  formats:
+    - html
+    - json
+    - csv
+    - rss
+```
+
+Then restart your SearXNG service/container.
+
+Useful parameters include:
+
+```text
+q=search terms
+format=json
+categories=general
+engines=duckduckgo,brave
+language=en
+pageno=1
+time_range=day|month|year
+safesearch=0|1|2
+```
+
+Example:
+
+```bash
+curl 'http://localhost:8080/search?q=linux&format=json&categories=general&pageno=1'
+```
+
+There is also an **administration/config API** at:
+
+```bash
+curl 'http://localhost:8080/config'
+```
+
+That returns instance configuration such as categories, engines, plugins, and other settings.

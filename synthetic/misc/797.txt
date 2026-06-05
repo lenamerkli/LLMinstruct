@@ -1,0 +1,73 @@
+§u§
+How can I query the openrouter.ai API to get how much a specific model will cost in dollars per million tokens?
+§a§
+To get the pricing for a specific model from OpenRouter, you can query their public `/api/v1/models` endpoint. This endpoint does not require an API key.
+
+OpenRouter's API natively returns the price **per single token** as a string. To find the cost per million tokens, you will need to parse the response, locate your target model, and multiply its per-token cost by 1,000,000.
+
+### Understanding the API Response
+When you make a `GET` request to `https://openrouter.ai/api/v1/models`, you will receive a JSON response with a `data` array containing model objects.
+
+Inside each model object, there is a `pricing` dictionary that looks like this:
+```json
+"pricing": {
+  "prompt": "0.000003",     // Input cost per 1 token in USD
+  "completion": "0.000015", // Output cost per 1 token in USD
+  "image": "0.00144",       // Cost per image input in USD (if applicable)
+  "request": "0"            // Fixed cost per API request in USD (if applicable)
+}
+```
+
+### Python Example
+
+Here is a ready-to-use Python script using the `requests` library that fetches the catalog, extracts your specified model by its ID (e.g., `openai/gpt-4o`), and calculates the price per million tokens:
+
+```python
+import requests
+
+def get_model_pricing_per_million(model_id):
+    # 1. Query the public OpenRouter models endpoint
+    url = "https://openrouter.ai/api/v1/models"
+    response = requests.get(url)
+
+    if response.status_code != 200:
+        return f"Failed to fetch models. Status code: {response.status_code}"
+
+    models = response.json().get("data", [])
+
+    # 2. Find the specific model in the data array
+    for model in models:
+        if model.get("id") == model_id:
+            pricing = model.get("pricing", {})
+
+            # 3. Extract the strings and convert them to floats
+            # Defaults to 0 if the model is free or the field is missing
+            prompt_cost_per_token = float(pricing.get("prompt", "0"))
+            completion_cost_per_token = float(pricing.get("completion", "0"))
+
+            # 4. Multiply by 1,000,000 to get the cost per million tokens
+            cost_per_million = {
+                "model": model["name"],
+                "prompt_per_1m": prompt_cost_per_token * 1_000_000,
+                "completion_per_1m": completion_cost_per_token * 1_000_000
+            }
+            return cost_per_million
+
+    return f"Model '{model_id}' not found in the OpenRouter catalog."
+
+# --- Example Usage ---
+model_to_check = "anthropic/claude-3.5-sonnet"
+pricing_info = get_model_pricing_per_million(model_to_check)
+
+if isinstance(pricing_info, dict):
+    print(f"Pricing for {pricing_info['model']}:")
+    print(f" - Input (Prompt): ${pricing_info['prompt_per_1m']:.2f} per 1M tokens")
+    print(f" - Output (Completion): ${pricing_info['completion_per_1m']:.2f} per 1M tokens")
+else:
+    print(pricing_info)
+```
+
+### Tips for querying:
+* **Filtering by features:** If you want to pull a smaller list, OpenRouter allows query parameters (e.g., `?supported_parameters=tools` or `?output_modalities=image`) on the endpoint. However, fetching the naked endpoint is usually fast enough.
+* **Exact Model IDs:** Make sure you use the exact path identifier for the `model_id` (e.g., `meta-llama/llama-3-8b-instruct`, `google/gemini-flash-1.5`, etc.) which you can easily find on OpenRouter's model catalog pages.
+* **Zero Cost:** For strictly free tier models on OpenRouter, the strings returned under `pricing.prompt` and `pricing.completion` will simply be `"0"`.

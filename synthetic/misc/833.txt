@@ -1,0 +1,445 @@
+§u§
+What is the best way to implement viewing websites for LLM's? Like removing styling and javascript.
+§a§
+The best approach is **not just “strip CSS/JS and dump text”**. Build a small **browser-to-LLM adapter** that produces a few LLM-friendly views of the page:
+
+1. **Reader/content view** — clean article/body content as Markdown.
+2. **Accessibility/action view** — buttons, links, inputs, headings, roles, labels, states.
+3. **Fallback DOM outline** — for poorly accessible sites where the accessibility tree misses things.
+4. **Optional visual view** — screenshot/OCR/captioning for canvas, charts, images, maps, etc.
+
+## Recommended architecture
+
+### 1. Start with static fetch when possible
+
+For normal pages, docs, blogs, news, etc.:
+
+- `GET` the HTML.
+- Parse with a real HTML parser, not regex.
+- Remove:
+  - `<script>`
+  - `<style>`
+  - tracking pixels
+  - ads
+  - cookie banners
+  - nav/footer/sidebar boilerplate when possible
+- Preserve:
+  - headings
+  - paragraphs
+  - lists
+  - tables
+  - code blocks
+  - links
+  - image alt text/captions
+  - forms and labels
+- Run a main-content extractor like **Mozilla Readability**.
+- Convert cleaned HTML to Markdown.
+
+Mozilla Readability is the same kind of library used for Firefox Reader View; its `parse()` output includes processed article HTML, plain text, title, excerpt, byline, site name, language, and other metadata.  Turndown is a common JS library for converting HTML or DOM nodes into Markdown.
+
+Good output shape:
+
+```json
+{
+  "url": "https://example.com/post",
+  "title": "Post title",
+  "content_markdown": "# Post title\n\nClean page text...",
+  "links": [
+    { "id": "L1", "text": "Pricing", "href": "https://example.com/pricing" }
+  ],
+  "metadata": {
+    "description": "...",
+    "published_time": "...",
+    "site_name": "Example"
+  }
+}
+```
+
+### 2. Use a headless browser only when needed
+
+Many modern sites are SPAs and the initial HTML is nearly empty. For those:
+
+- Use Playwright/Puppeteer.
+- Load the page in a sandboxed browser.
+- Optionally disable JavaScript first.
+- If the page is blank or incomplete, enable JS and render.
+- After rendering, serialize the **resulting DOM/text**, not the original scripts.
+- Block unnecessary resources where safe: images, video, fonts, trackers, analytics.
+
+Playwright supports creating browser contexts with `javaScriptEnabled: false`, and its routing APIs can intercept or abort requests such as images or other resource types.
+
+Important nuance: **CSS affects visibility**. If you remove CSS before determining what is visible, you may accidentally expose hidden menus, modals, tracking text, or prompt-injection bait. For rendered pages, compute visibility first, then strip styling.
+
+### 3. Give the LLM an accessibility tree for interaction
+
+For browsing agents, Markdown alone is not enough. The LLM needs to know what it can click, type into, select, expand, etc.
+
+Use the page’s **accessibility tree** or an ARIA-like snapshot:
+
+```yaml
+- heading "Search results" [level=1]
+- textbox "Search query" [value="llm browsers"]
+- button "Search"
+- link "OpenAI"
+- link "Documentation"
+```
+
+Browsers create an accessibility tree from the DOM for assistive technologies, containing things like name, role, description, state, and possible actions.  Playwright’s ARIA snapshot format represents accessible elements as YAML with roles, names, attributes, values, and text content, and it can be generated programmatically with `page.ariaSnapshot()` or `locator.ariaSnapshot()`.
+
+For an agent, augment that with stable internal IDs:
+
+```json
+{
+  "controls": [
+    {
+      "id": "B1",
+      "role": "button",
+      "name": "Search",
+      "selector": "internal-handle-123",
+      "enabled": true,
+      "visible": true
+    },
+    {
+      "id": "I1",
+      "role": "textbox",
+      "name": "Search query",
+      "value": "",
+      "selector": "internal-handle-456"
+    }
+  ]
+}
+```
+
+Then expose a small tool API:
+
+```ts
+click("B1")
+type("I1", "query text")
+select("S1", "option")
+scroll("down")
+open("L3")
+```
+
+Do **not** let the LLM execute arbitrary JavaScript on the page.
+
+## Practical extraction pipeline
+
+```text
+URL
+ ↓
+Fetch HTML
+ ↓
+Is the page usable without JS?
+ ├─ yes → parse → clean → Readability → Markdown + links
+ └─ no  → render in Playwright → compute visible/semantic DOM → clean → Markdown + accessibility tree
+ ↓
+Chunk by headings/sections
+ ↓
+Send compact page view to LLM
+ ↓
+For actions, send only IDs + semantic descriptions
+```
+
+## Cleaning rules
+
+### Remove
+
+```css
+script,
+style,
+link[rel="stylesheet"],
+template,
+iframe[src*="ads"],
+[aria-hidden="true"],
+[hidden],
+nav:empty,
+footer:empty,
+svg.icon,
+.cookie-banner,
+.ad,
+.tracker,
+.modal-backdrop
+```
+
+But don’t blindly remove all:
+
+- `<nav>` can matter on documentation sites.
+- `<aside>` can contain table of contents.
+- `<noscript>` can contain useful fallback content.
+- Hidden elements may be useful after an action, but they should not be shown as current visible content.
+
+### Preserve
+
+```html
+<title>
+<meta name="description">
+<main>
+<article>
+<section>
+<h1>...<h6>
+<p>
+<ul>, <ol>, <li>
+<table>, <thead>, <tbody>, <tr>, <th>, <td>
+<pre>, <code>
+<a href>
+<img alt>
+<form>
+<label>
+<input>
+<textarea>
+<select>
+<button>
+```
+
+## Example Node implementation sketch
+
+```ts
+import { chromium } from "playwright";
+import { JSDOM } from "jsdom";
+import { Readability } from "@mozilla/readability";
+import TurndownService from "turndown";
+import DOMPurify from "dompurify";
+
+const turndown = new TurndownService({
+  headingStyle: "atx",
+  codeBlockStyle: "fenced",
+  linkStyle: "referenced"
+});
+
+export async function extractStatic(url: string) {
+  const res = await fetch(url, {
+    headers: {
+      "Accept": "text/html,application/xhtml+xml"
+    }
+  });
+
+  const html = await res.text();
+  const dom = new JSDOM(html, { url });
+  const { document } = dom.window;
+
+  document
+    .querySelectorAll("script, style, link[rel='stylesheet'], template")
+    .forEach(el => el.remove());
+
+  const clone = document.cloneNode(true) as Document;
+  const article = new Readability(clone).parse();
+
+  const contentHtml = article?.content ?? document.body.innerHTML;
+  const markdown = turndown.turndown(contentHtml);
+
+  return {
+    url,
+    title: article?.title ?? document.title,
+    excerpt: article?.excerpt,
+    byline: article?.byline,
+    siteName: article?.siteName,
+    markdown
+  };
+}
+```
+
+Rendered fallback:
+
+```ts
+export async function extractRendered(url: string) {
+  const browser = await chromium.launch({ headless: true });
+
+  const context = await browser.newContext({
+    javaScriptEnabled: true,
+    viewport: { width: 1280, height: 900 }
+  });
+
+  // Be careful: blocking CSS can make visibility detection inaccurate.
+  // Usually block heavy media, but allow CSS if you need accurate layout/visibility.
+  await context.route("**/*", route => {
+    const type = route.request().resourceType();
+
+    if (["image", "media", "font"].includes(type)) {
+      return route.abort();
+    }
+
+    return route.continue();
+  });
+
+  const page = await context.newPage();
+
+  await page.goto(url, {
+    waitUntil: "domcontentloaded",
+    timeout: 15000
+  });
+
+  await page.waitForLoadState("networkidle").catch(() => {});
+
+  const pageData = await page.evaluate(() => {
+    function isVisible(el: Element) {
+      const style = window.getComputedStyle(el);
+      const rect = el.getBoundingClientRect();
+
+      return (
+        style.display !== "none" &&
+        style.visibility !== "hidden" &&
+        style.opacity !== "0" &&
+        rect.width > 0 &&
+        rect.height > 0 &&
+        !el.hasAttribute("hidden") &&
+        el.getAttribute("aria-hidden") !== "true"
+      );
+    }
+
+    const clone = document.body.cloneNode(true) as HTMLElement;
+
+    clone
+      .querySelectorAll("script, style, link, template, iframe")
+      .forEach(el => el.remove());
+
+    return {
+      title: document.title,
+      url: location.href,
+      html: clone.innerHTML,
+      text: document.body.innerText
+    };
+  });
+
+  const markdown = turndown.turndown(pageData.html);
+
+  let aria: string | null = null;
+
+  try {
+    // Available in modern Playwright versions.
+    aria = await page.ariaSnapshot();
+  } catch {
+    aria = null;
+  }
+
+  await browser.close();
+
+  return {
+    ...pageData,
+    markdown,
+    aria
+  };
+}
+```
+
+If you render or display cleaned HTML anywhere, sanitize it. DOMPurify is designed to sanitize HTML and remove dangerous content such as XSS payloads.
+
+## Best representation to send to the LLM
+
+For reading:
+
+```markdown
+# Page title
+
+Source: https://example.com
+
+## Main heading
+
+Paragraph text...
+
+[1] Pricing — /pricing
+[2] Docs — /docs
+```
+
+For interaction:
+
+```text
+Current page: Example
+URL: https://example.com
+
+Visible content:
+- heading: Welcome to Example
+- paragraph: Build applications faster...
+
+Interactive elements:
+[B1] button "Sign in"
+[B2] button "Start free trial"
+[L1] link "Pricing" -> /pricing
+[I1] textbox "Email"
+```
+
+This is much better than raw HTML because:
+
+- fewer tokens
+- less noise
+- keeps links/actions
+- avoids script/style injection
+- gives the model semantic structure
+- supports deterministic tool actions
+
+## Security considerations
+
+Treat webpage content as **untrusted data**.
+
+Recommended safeguards:
+
+- Never let page text override system/developer instructions.
+- Strip hidden text unless explicitly needed.
+- Keep page content in a clearly delimited “untrusted page content” block.
+- Do not expose cookies, local storage, auth headers, or secrets to the model.
+- Do not allow arbitrary JS execution requested by the model.
+- Run browser sessions in containers or sandboxes.
+- Disable downloads, clipboard, camera, microphone, geolocation, and local file access.
+- Block internal/private network targets to avoid SSRF.
+- Enforce timeouts, max HTML size, max redirects, and max tokens.
+- Cache fetched pages.
+- Respect robots.txt and site terms where applicable.
+
+## TL;DR
+
+The best implementation is:
+
+```text
+Static pages:
+  fetch HTML → parse DOM → Readability → Markdown
+
+JS-heavy pages:
+  Playwright render → compute visible DOM → clean → Markdown
+
+Interactive browsing:
+  accessibility tree + interactable IDs + small action API
+
+Always:
+  sanitize, sandbox, strip scripts/styles, preserve links/forms/tables/headings, treat page text as untrusted
+```
+
+In other words: **build a reader-mode plus screen-reader-style view**, not a raw browser dump.
+§u§
+Does an existing python package exist for this purpose?
+§a§
+Yes, several Python packages are specifically built to solve this problem. Depending on whether you need a simple text extractor or a full-blown browsing agent, you should choose one of the following:
+
+### 1. The "All-in-One" Leaders (Best for LLM Pipelines)
+If you want a library that handles the rendering, strips the junk, and gives you clean Markdown in one step, these are the current industry standards:
+
+*   **[Crawl4AI](https://github.com/unclecode/crawl4ai):** Currently the most popular choice for LLM developers. It uses Playwright to render JS-heavy pages and includes built-in strategies to convert them into "LLM-ready" Markdown. It can also perform "cosine similarity" clustering to find the most relevant parts of a page and ignore menus/footers.
+*   **[Firecrawl](https://github.com/mendableai/firecrawl):** Designed specifically for AI agents. It turns any URL into clean Markdown. While they offer a hosted API, the Python SDK is open-source and excellent for handling complex site structures and anti-bot protections.
+
+### 2. The Content Extraction Specialists (Best for Clean Text)
+If you already have the HTML and just want to extract the "meat" of the article without the sidebar, ads, and nav-bars:
+
+*   **[Trafilatura](https://github.com/adbar/trafilatura):** Consistently wins benchmarks for extraction accuracy. It is significantly better than simple regex or boilerplate removers. It can output Markdown, plain text, or XML and is very fast.
+*   **[MarkItDown](https://github.com/microsoft/markitdown):** A newer utility from Microsoft. It’s a "Swiss Army knife" that converts URLs (and even Word/PDF docs) into LLM-compatible Markdown. It is very simple to use if you just need a clean text version of a page.
+*   **[Readability-lxml](https://github.com/buriy/python-readability):** The Python port of the famous "Reader View" algorithm used by Firefox. It removes the "noise" but keeps the core HTML structure (headings, paragraphs). You usually pair this with **`html2text`** to get Markdown.
+
+### 3. The "Agentic" Interaction Tools (Best for Clicking/Browsing)
+If your LLM needs to *interact* with the site (click buttons, fill forms) rather than just read it, you need a package that produces a **Semantic UI** or **Accessibility Tree**:
+
+*   **[browser-use](https://github.com/browser-use/browser-use):** A high-level library that makes websites "readable" for agents by converting the DOM into a simplified tree that an LLM can understand and command.
+*   **[Tarsier](https://github.com/siddharth-venkatesh/tarsier):** This package focuses on "visual" browsing. It maps the accessibility tree and overlays unique "tags" (like `[1]`, `[2]`) onto a screenshot or text-based representation so the LLM knows exactly which ID to "click."
+
+---
+
+### Comparison Summary
+
+| Package | Use Case | JS Rendering? | Output Format |
+| :--- | :--- | :--- | :--- |
+| **Crawl4AI** | Best for RAG / Bulk data | Yes (Playwright) | Markdown, JSON, HTML |
+| **Trafilatura** | Highest accuracy text extraction | No (needs HTML) | Text, Markdown, XML |
+| **MarkItDown** | Simple, official MS tool | No (needs URL/File) | Markdown |
+| **browser-use** | Building agents that click/type | Yes (Playwright) | Interaction Tree |
+| **Firecrawl** | Cleanest Markdown for Agents | Yes (Headless) | Markdown |
+
+### Recommendation
+*   **For a RAG pipeline (Search + Read):** Use **Crawl4AI**. It handles the "dirty work" of JavaScript and produces the best Markdown for vector databases.
+*   **For a simple "Reader Mode" app:** Use **Trafilatura**. It’s lightweight and highly accurate at finding the main content.
+*   **For a Browse-capable AI Agent:** Use **browser-use** or **Tarsier**. They provide the "eyes and hands" for the model.

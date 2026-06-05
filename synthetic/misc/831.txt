@@ -1,0 +1,44 @@
+§u§
+bash script that calls a python script with all original arguments with a specific python version.
+§a§
+Here's a bash script that calls a Python script with all original arguments using a specific Python version (e.g., Python 3.9):
+
+```bash
+#!/bin/bash
+
+# Specify the Python version you want to use (e.g., python3.9)
+PYTHON_VERSION="python3.9"
+
+# Get all original arguments passed to this script
+args=("$@")
+
+# Call the Python script with all arguments
+"$PYTHON_VERSION" "${args[@]}"
+```
+
+### How to use:
+1. Save this as `run_with_python.sh`
+2. Make it executable: `chmod +x run_with_python.sh`
+3. Call your Python script through it: `./run_with_python.sh your_script.py arg1 arg2`
+
+### Alternative version (if you want to hardcode the Python script name):
+
+```bash
+#!/bin/bash
+
+# Specify the Python version you want to use
+PYTHON_VERSION="python3.9"
+
+# Specify the Python script to run
+PYTHON_SCRIPT="your_script.py"
+
+# Call the Python script with all arguments
+"$PYTHON_VERSION" "$PYTHON_SCRIPT" "$@"
+```
+
+### Notes:
+- Replace `python3.9` with your desired Python version (make sure it's installed)
+- The `"$@"` preserves all original arguments and handles spaces/quoting correctly
+- The `${args[@]}` syntax properly handles all arguments including those with spaces
+
+Would you like any modifications to this script?

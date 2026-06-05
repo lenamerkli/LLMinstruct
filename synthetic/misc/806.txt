@@ -1,0 +1,71 @@
+§u§
+I have docker containers (all debian linux) on my server. How can I make the jetbrains gateway host executables to be shared across all of them?
+§a§
+To share JetBrains Gateway host executables (the backend IDEs like IntelliJ, PyCharm, GoLand, etc.) across multiple Docker containers, you need to use **Docker volumes or bind mounts**.
+
+By default, JetBrains Gateway downloads a completely new copy of the IDE backend into each environment. Because these binaries are large (~1-2GB each), sharing a single copy across your containers will save significant disk space and startup time.
+
+Here is the safest and most reliable way to do this.
+
+### The Strategy
+We will mount a single shared directory from your Docker host into all your containers (e.g., at `/opt/jetbrains`). Then, when connecting via JetBrains Gateway, we will tell the Gateway to use this specific directory for the IDE executables.
+
+> **Important:** You only want to share the **executables (binaries)**, *not* the cache, config, or system directories. Sharing the IDE configuration directories across running instances will cause file-locking conflicts. The method below safely isolates project configs while sharing the heavy binaries.
+
+---
+
+### Step 1: Create a Shared Directory or Volume
+You can use either a Docker named volume or a bind mount (a folder on your host server). A bind mount is usually easier for this because you can manually inspect or clean it up from the host.
+
+Create a folder on your host server:
+```bash
+sudo mkdir -p /opt/shared_jetbrains_ides
+sudo chmod 777 /opt/shared_jetbrains_ides  # Ensures any container user can read/write to it
+```
+
+### Step 2: Mount the Directory to Your Containers
+You must mount this directory into every Debian container you want to use.
+
+**If using `docker run`:**
+Add the `-v` flag to your run command:
+```bash
+docker run -d \
+  --name dev-container-1 \
+  -v /opt/shared_jetbrains_ides:/opt/jetbrains \
+  your-debian-image
+```
+
+**If using `docker-compose.yml`:**
+Add the volume to each service:
+```yaml
+services:
+  dev-container-1:
+    image: your-debian-image
+    volumes:
+      - /opt/shared_jetbrains_ides:/opt/jetbrains
+
+  dev-container-2:
+    image: your-debian-image
+    volumes:
+      - /opt/shared_jetbrains_ides:/opt/jetbrains
+```
+
+### Step 3: Configure JetBrains Gateway
+Now that the `/opt/jetbrains` folder exists and is shared across all your containers, you need to tell JetBrains Gateway to install and look for the IDEs there.
+
+1. Open **JetBrains Gateway** on your local machine.
+2. Create a new connection (SSH) to one of your Docker containers.
+3. On the screen where you "Choose IDE and Project", look for the **IDE version** dropdown.
+4. Click **"Installation options..."** (or the gear icon next to the IDE selection).
+5. Choose **"Customize install path..."**
+6. Enter the path you mounted inside the container: `/opt/jetbrains`
+7. Select your project directory and click **Start IDE**.
+
+### What happens next?
+1. **The First Container:** JetBrains Gateway will download the IDE backend and unpack it into `/opt/jetbrains`. Because this is a mounted volume, it is actually saving to your host server's `/opt/shared_jetbrains_ides` directory.
+2. **Subsequent Containers:** When you connect to your second container and specify `/opt/jetbrains` as the installation path, JetBrains Gateway will scan the directory, see that the correct IDE version is already downloaded and unpacked, and **skip the download**.
+
+### Important Considerations
+
+* **Permissions:** If your containers run as different non-root users, make sure the shared folder on the host has open enough permissions (like `chmod 777` or a shared group ID) so that any container user can read and execute the IDE files.
+* **Avoid Default Paths:** Do *not* map the default Gateway directory (`~/.cache/JetBrains/RemoteDev`) as a shared volume. Gateway stores instance-specific lockfiles, logs, and pid files in the parent directories of the default path. Sharing that entire folder across containers will lead to concurrent execution crashes. Using the custom installation path (Step 3) isolates the binaries safely.

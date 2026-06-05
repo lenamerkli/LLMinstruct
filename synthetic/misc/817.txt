@@ -1,0 +1,40 @@
+§u§
+Welches Format hat eine Sendungsnummer eines Pakets der Schweizer Post?
+§a§
+Für ein **inländisches Paket der Schweizer Post** hat die Sendungsnummer typischerweise dieses Format:
+
+```text
+99.12.123456.12345678
+```
+
+Also als Muster:
+
+```regex
+^99\.\d{2}\.\d{6}\.\d{8}$
+```
+
+**Ohne Punkte** sind es **18 Ziffern**:
+
+```text
+991212345612345678
+```
+
+Aufbau:
+
+```text
+99 + 8-stellige Frankierlizenznummer + 8-stellige laufende Sendungsnummer
+```
+
+Die Punkte dienen nur der besseren Lesbarkeit; die Post beschreibt den Sendungsbarcode für Pakete/Express/SameDay als z. B. `99.12.123456.12345678` und technisch als 18 numerische Stellen.
+
+Für **internationale Sendungen** kann das Format anders sein, z. B.:
+
+```text
+AB123456789CH
+```
+
+also grob:
+
+```regex
+^[A-Z]{2}\d{9}CH$
+```

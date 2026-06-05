@@ -1,0 +1,81 @@
+§u§
+Can I use pycharm to develop inside a docker container?
+§a§
+Yes — **PyCharm can be used to develop against a Docker container**.
+
+The most common setup is:
+
+- **PyCharm runs on your host machine**
+- **Your Python interpreter runs inside a Docker container**
+- Your project files are mounted into the container, so you can:
+  - run code
+  - debug
+  - run tests
+  - install dependencies
+  - use the same environment as production
+
+## Important caveat
+
+This is mainly a **PyCharm Professional** feature.
+
+- **PyCharm Professional**: supports Docker and Docker Compose interpreters
+- **PyCharm Community**: you can still use Docker manually, but the built-in Docker interpreter/debug workflow is limited or unavailable
+
+## Typical workflow in PyCharm Professional
+
+1. Install Docker locally
+2. In PyCharm, add a Docker connection:
+   - **Settings / Preferences → Build, Execution, Deployment → Docker**
+3. Add a Python interpreter from Docker:
+   - **Settings / Preferences → Python Interpreter → Add Interpreter**
+   - choose:
+     - **Docker**
+     - or **Docker Compose**
+4. Select:
+   - an image, Dockerfile, or compose service
+   - the Python executable inside the container
+5. PyCharm mounts your project into the container and uses that interpreter for:
+   - Run
+   - Debug
+   - Test
+   - Package installs
+
+## What this gives you
+
+You can effectively develop “inside” the container environment, including:
+
+- matching production dependencies
+- avoiding local Python/package conflicts
+- testing against Linux containers even on macOS/Windows
+- working with services via Docker Compose
+
+## What it is *not*
+
+Usually, PyCharm itself is **not running inside the container**.
+Instead, **the code execution environment** is inside the container.
+
+That’s the standard JetBrains/Docker workflow.
+
+## Good use cases
+
+- Django / Flask / FastAPI apps
+- apps with native dependencies
+- projects needing exact Python/library versions
+- multi-service setups with Postgres, Redis, etc.
+
+## Things to watch out for
+
+- file permissions between host and container
+- correct volume mounts
+- slower file syncing on some systems
+- needing Docker daemon access
+- debugger configuration if the container is recreated often
+
+## Short answer
+
+**Yes — if you use PyCharm Professional, you can develop with a Docker-based interpreter and debug/run your app inside the container.**
+
+If you want, I can also give you:
+
+1. a **step-by-step setup guide for PyCharm + Docker**, or
+2. an example using **Docker Compose for a Python app**.

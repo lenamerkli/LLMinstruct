@@ -1,0 +1,203 @@
+§u§
+Create a small python function that checks a given folder for python venvs and reports their python version as well as all installed packages.
+§a§
+```python
+import os
+import subprocess
+import json
+import sys
+from pathlib import Path
+from dataclasses import dataclass, field
+
+
+@dataclass
+class VenvInfo:
+    path: Path
+    python_version: str
+    packages: list[dict[str, str]] = field(default_factory=list)
+
+
+def find_python_executable(venv_path: Path) -> Path | None:
+    """Locate the Python executable inside a venv (cross-platform)."""
+    if sys.platform == "win32":
+        candidates = [
+            venv_path / "Scripts" / "python.exe",
+            venv_path / "Scripts" / "python3.exe",
+        ]
+    else:
+        candidates = [
+            venv_path / "bin" / "python",
+            venv_path / "bin" / "python3",
+        ]
+    for candidate in candidates:
+        if candidate.is_file():
+            return candidate
+    return None
+
+
+def is_venv(path: Path) -> bool:
+    """Check whether a directory looks like a Python virtual environment."""
+    # Every standard venv/virtualenv has a pyvenv.cfg in its root
+    if (path / "pyvenv.cfg").is_file():
+        return True
+    # Older virtualenv versions may lack pyvenv.cfg but still have the
+    # `lib/pythonX.Y/site-packages` structure + a Python binary
+    if find_python_executable(path) is not None:
+        if sys.platform == "win32":
+            return (path / "Lib" / "site-packages").is_dir()
+        else:
+            lib = path / "lib"
+            if lib.is_dir():
+                return any(
+                    (d / "site-packages").is_dir()
+                    for d in lib.iterdir()
+                    if d.is_dir()
+                )
+    return False
+
+
+def get_venv_info(venv_path: Path) -> VenvInfo | None:
+    """
+    Given the root of a virtual-env, return its Python version and the
+    list of installed packages (name + version).
+    """
+    python = find_python_executable(venv_path)
+    if python is None:
+        return None
+
+    # --- Python version ---------------------------------------------------
+    try:
+        result = subprocess.run(
+            [str(python), "--version"],
+            capture_output=True, text=True, timeout=15,
+        )
+        version = result.stdout.strip() or result.stderr.strip()  # 3.x prints to stdout
+    except Exception as exc:
+        version = f"<error: {exc}>"
+
+    # --- Installed packages -----------------------------------------------
+    packages: list[dict[str, str]] = []
+    try:
+        result = subprocess.run(
+            [str(python), "-m", "pip", "list", "--format=json"],
+            capture_output=True, text=True, timeout=30,
+        )
+        if result.returncode == 0:
+            packages = json.loads(result.stdout)
+    except Exception:
+        # Fallback: use pkg_resources inside the target venv
+        try:
+            result = subprocess.run(
+                [
+                    str(python), "-c",
+                    "import pkg_resources; "
+                    "print([(d.project_name, d.version) for d in pkg_resources.working_set])"
+                ],
+                capture_output=True, text=True, timeout=15,
+            )
+            if result.returncode == 0:
+                for name, ver in eval(result.stdout.strip()):
+                    packages.append({"name": name, "version": ver})
+        except Exception:
+            pass
+
+    return VenvInfo(path=venv_path, python_version=version, packages=packages)
+
+
+def scan_for_venvs(
+    root_folder: str | Path,
+    *,
+    max_depth: int = 3,
+) -> list[VenvInfo]:
+    """
+    Recursively scan *root_folder* (up to *max_depth* levels) for Python
+    virtual environments and return information about each one found.
+
+    Parameters
+    ----------
+    root_folder : str | Path
+        The directory to search in.
+    max_depth : int
+        How many directory levels deep to search (default 3).
+        Set to 0 to only check *root_folder* itself.
+
+    Returns
+    -------
+    list[VenvInfo]
+        One entry per discovered venv, containing the path,
+        Python version string, and a list of installed packages
+        (each a dict with ``name`` and ``version`` keys).
+    """
+    root = Path(root_folder).resolve()
+    if not root.is_dir():
+        raise NotADirectoryError(f"{root} is not a directory")
+
+    results: list[VenvInfo] = []
+
+    def _walk(current: Path, depth: int) -> None:
+        if depth > max_depth:
+            return
+        try:
+            entries = sorted(current.iterdir())
+        except PermissionError:
+            return
+
+        for entry in entries:
+            if not entry.is_dir() or entry.name.startswith("."):
+                continue
+            if is_venv(entry):
+                info = get_venv_info(entry)
+                if info:
+                    results.append(info)
+                # don't recurse *into* a venv
+            else:
+                _walk(entry, depth + 1)
+
+    _walk(root, 0)
+    return results
+
+
+# ── quick demo ────────────────────────────────────────────────────────────
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Find Python venvs in a folder.")
+    parser.add_argument("folder", nargs="?", default=".", help="Folder to scan")
+    parser.add_argument("--depth", type=int, default=3, help="Max search depth")
+    args = parser.parse_args()
+
+    venvs = scan_for_venvs(args.folder, max_depth=args.depth)
+
+    if not venvs:
+        print(f"No virtual environments found under {Path(args.folder).resolve()}")
+    for v in venvs:
+        print(f"\n{'='*60}")
+        print(f"  Venv path : {v.path}")
+        print(f"  Python    : {v.python_version}")
+        print(f"  Packages  : {len(v.packages)}")
+        print(f"{'='*60}")
+        for pkg in sorted(v.packages, key=lambda p: p["name"].lower()):
+            print(f"    {pkg['name']:30s} {pkg['version']}")
+```
+
+## How it works
+
+| Step | Detail |
+|---|---|
+| **Detection** | `is_venv()` checks for the presence of `pyvenv.cfg` (standard `venv` / modern `virtualenv`) or falls back to looking for a Python binary + `site-packages` directory (older `virtualenv`). |
+| **Python version** | Runs `<venv>/bin/python --version` via `subprocess`. |
+| **Package list** | Runs `pip list --format=json` inside the venv's own Python. Falls back to `pkg_resources` if pip isn't available. |
+| **Recursion** | `scan_for_venvs()` walks the directory tree up to `max_depth` levels, skips hidden dirs (`.`-prefixed), and does **not** descend into a discovered venv. |
+
+## Usage
+
+```bash
+# As a script
+python venv_scanner.py /home/user/projects --depth 4
+
+# As a library
+from venv_scanner import scan_for_venvs
+
+for venv in scan_for_venvs("/home/user/projects"):
+    print(venv.python_version, len(venv.packages))
+```

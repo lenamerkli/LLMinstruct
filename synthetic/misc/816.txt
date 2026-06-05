@@ -1,0 +1,33 @@
+§u§
+Welches Format hat eine Sendungsnummer eines Pakets der Schweizer Post?
+§a§
+Das Format einer Sendungsnummer (auch Sendungsbarcode genannt) der Schweizerischen Post hängt davon ab, ob es sich um eine **nationale (Inland)** oder eine **internationale (Ausland)** Sendung handelt.
+
+Hier sind die beiden gängigsten Formate:
+
+### 1. Nationale Pakete und Sendungen (Inland)
+Bei Paketen innerhalb der Schweiz besteht die Sendungsnummer in der Regel aus **18 Ziffern**. Auf den Quittungen wird sie zur besseren Lesbarkeit oft durch Punkte getrennt, bei der Online-Eingabe können die Punkte aber auch weggelassen werden.
+
+*   **Beispiel für ein Standard-Paket (PostPac) oder Swiss-Express:** `99.00.123456.12345678`
+*   **Beispiel für ein Einschreiben (Brief):** `98.00.123456.12345678`
+*   **Beispiel für Swiss-Courier:** `97.00.00123456...`
+
+**Aufbau der 18-stelligen Nummer:**
+*   **Präfix (ersten 2 Ziffern):** Gibt die Art der Sendung an (z. B. `99` für Pakete, `98` für eingeschriebene Briefe).
+*   Die restlichen Ziffern setzen sich in der Regel aus einer Frankierlizenznummer (Kundennummer) und einer fortlaufenden individuellen Paketnummer zusammen.
+*   Es gibt teilweise auch längere Nummern (z. B. 19- oder 20-stellig) für Kleinsendungen (z.B. beginnend mit `003...`).
+
+### 2. Internationale Pakete und Sendungen (Ausland)
+Bei Sendungen, die ins Ausland gehen oder aus dem Ausland in die Schweiz kommen, nutzt die Post das internationale Standardformat des Weltpostvereins (UPU). Diese Sendungsnummern bestehen immer aus **13 alphanumerischen Zeichen**.
+
+*   **Beispiel:** `CE123456789CH` oder `RY123456789CH`
+
+**Aufbau der 13-stelligen Nummer:**
+*   **2 Buchstaben am Anfang:** Stehen für die Art der Sendung. Zum Beispiel:
+    *   `C`... (z. B. `CA`, `CE`) = Standard- oder Priority-Paket
+    *   `R`... (z. B. `RR`, `RY`) = Registered (Einschreiben/Briefsendung)
+    *   `E`... (z. B. `EE`) = Express-Sendung
+*   **9 Ziffern in der Mitte:** Die eindeutige Seriennummer zur Identifikation der Sendung.
+*   **2 Buchstaben am Ende (`CH`):** Der Ländercode für die Schweiz als Absenderland.
+
+**Tipp:** Wenn Sie ein Paket auf der Webseite oder in der App der Schweizerischen Post verfolgen möchten, können Sie die Nummer in der Regel exakt so abtippen oder einfügen, wie sie auf Ihrer Quittung oder in der E-Mail-Bestätigung steht (mit oder ohne Punkte).

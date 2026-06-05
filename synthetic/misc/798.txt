@@ -1,0 +1,49 @@
+§u§
+How can I query the openrouter.ai API to get how much a specific model will cost in dollars per million tokens?
+§a§
+Based on the search results, here's how to query the OpenRouter API to get pricing information for specific models:
+
+## Using the Models API Endpoint
+
+You can query the `/api/v1/models` endpoint programmatically to get a list of all available models with their pricing information.
+
+Here's a basic example:
+
+```bash
+curl https://openrouter.ai/api/v1/models \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+## Understanding the Response
+
+The Models API returns standardized JSON with pricing values in USD per token/request/unit. Each model in the response includes pricing fields for:
+
+- **Input tokens** (prompt tokens)
+- **Output tokens** (completion tokens)
+
+There is usually a different price for prompt and completion tokens, and some models charge per request, for images, and for reasoning tokens.
+
+## Converting to Cost Per Million Tokens
+
+Prices are shown in USD per 1 million tokens ($/M tokens), where input tokens are the text you send to the model and output tokens are the generated response.
+
+## Example: Using the API with Python
+
+```python
+import requests
+
+response = requests.get(
+    "https://openrouter.ai/api/v1/models",
+    headers={"Authorization": "Bearer YOUR_API_KEY"}
+)
+
+models = response.json()["data"]
+
+# Find pricing for a specific model
+for model in models:
+    if model["id"] == "openai/gpt-4":
+        print(f"Input: ${model['pricing']['prompt']} per million tokens")
+        print(f"Output: ${model['pricing']['completion']} per million tokens")
+```
+
+You can also filter models using query parameters like `supported_parameters` or `output_modalities` to narrow down your search.

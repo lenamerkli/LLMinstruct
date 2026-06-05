@@ -1,0 +1,58 @@
+§u§
+debian marking all files in a folder as executable
+§a§
+If you're looking to mark all files in a folder as executable on Debian (or any Linux system), there are a few safe ways to do it depending on whether you want to include subdirectories or only regular files.
+
+### Mark all files as executable
+
+If you only want to make regular files executable (recommended, as directories don't need the same treatment), use `find`:
+
+```bash
+find /path/to/folder -type f -exec chmod +x {} +
+```
+
+This will recursively apply execute permissions to every file inside that folder without affecting directories.
+
+---
+
+### Mark everything (files and directories) as executable
+
+If you need to include directories as well (e.g., for scripts in nested folders), you can use:
+
+```bash
+chmod -R +x /path/to/folder
+```
+
+Be cautious with this command, as it will make all files and folders executable, which can be a security risk for non-script files.
+
+---
+
+### Reverting unwanted execute permissions
+
+If all files were marked executable by mistake, you can remove the execute bit from regular files only:
+
+```bash
+find /path/to/folder -type f -exec chmod -x {} +
+```
+
+Alternatively, to restore sensible permissions (remove execute from files, keep it for directories), you can use:
+
+```bash
+chmod -R -x+X /path/to/folder
+```
+
+The capital `X` only sets execute permission for directories or files that already have execute bits, making it a safer reset.
+
+---
+
+### Troubleshooting if it's happening automatically
+
+If files are being marked executable automatically, consider these causes:
+
+- **Windows/exFAT/FAT32 filesystems**: These don't store Unix permissions. If mounted, they may default to executable. Check your mount options in `/etc/fstab` or with `mount`. Using `noexec` can prevent execution.
+- **Archive extraction**: Tools like `unzip` or `tar` may preserve permissions. Use flags like `tar --no-same-permissions` or adjust extraction settings.
+- **Copying files**: Commands like `rsync` or `cp -a` can carry over permissions. Double-check your flags.
+
+---
+
+Would you like to undo this change, or are you troubleshooting why it's happening? If you're seeing a specific issue, feel free to share more details, and I can help tailor the solution for you!
