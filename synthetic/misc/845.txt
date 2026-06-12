@@ -1,0 +1,35 @@
+§u§
+fedora linux remove all pages from pdf except for 211 to 247 (both inclusive)
+§a§
+**Use `qpdf`** (recommended, modern, and readily available on Fedora).
+
+### 1. Install qpdf (if not already installed)
+```bash
+sudo dnf install qpdf
+```
+
+### 2. Extract pages 211–247
+Replace `input.pdf` with your actual PDF filename and `output.pdf` with the desired output name:
+
+```bash
+# Discard original metadata (cleaner/smaller file)
+qpdf --empty --pages input.pdf 211-247 -- output.pdf
+```
+
+```bash
+# Keep original metadata
+qpdf input.pdf --pages . 211-247 -- output.pdf
+```
+
+### Alternative: pdftk (if you prefer it)
+```bash
+sudo dnf install pdftk-java   # or pdftk if available
+pdftk input.pdf cat 211-247 output output.pdf
+```
+
+**Notes**
+- Page numbers are 1-based and inclusive (211 through 247).
+- Both tools preserve the original page content exactly.
+- `qpdf` is generally preferred on modern Linux systems because it handles newer PDF features better and is actively maintained.
+
+Run the command from the directory containing your PDF (or use full paths).

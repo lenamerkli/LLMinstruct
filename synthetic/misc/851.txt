@@ -1,0 +1,178 @@
+§u§
+```
+Statistik (nur mündliche Prüfung)
+Grundbegriffe der Statistik
+
+    Klasseneinteilungen, relative Häufigkeit, Histogramm
+    Lageparameter: Mittelwert, Quartile, Median
+    Streuparameter: Standardabweichung, Varianz
+
+Lineare Regression
+
+    Regressionskoeffizient, Regressionsgerade
+    Korrelationskoeffizient
+```
+Erkläre mir den Stoff, den ich für das Erfüllen dieser Lernziele können muss.
+§a§
+# Statistik – Kompletter Lernstoff für die mündliche Prüfung
+
+> **Tipp für mündliche Prüfungen:** Es wird weniger nach auswendig gelernten Formeln gefragt als nach **Verständnis, Interpretation und Zusammenhängen**. Ich markiere deshalb bei jedem Thema, was man *sagen* können sollte.
+
+---
+
+## 1 · Grundbegriffe der Statistik
+
+### 1.1 Klasseneinteilung, relative Häufigkeit, Histogramm
+
+#### Warum Klassen?
+Wenn du viele Messwerte hast (z. B. Körpergrößen von 200 Personen), ist eine Liste unübersichtlich. Man fasst Werte in **Intervalle (Klassen)** zusammen.
+
+#### Begriffe
+| Begriff | Bedeutung |
+|---|---|
+| **Klassengrenzen** | Untere und obere Grenze eines Intervalls, z. B. [160, 170) |
+| **Klassenbreite** | Differenz der Grenzen: $b_i = o_i - u_i$ |
+| **Absolute Häufigkeit** $h_i$ | Wie viele Werte fallen in Klasse $i$ |
+| **Relative Häufigkeit** $f_i$ | $f_i = \dfrac{h_i}{n}$, also Anteil an der Gesamtzahl $n$ |
+
+**Wichtig:** Die Summe aller relativen Häufigkeiten ist immer **1** (bzw. 100 %).
+
+#### Histogramm
+- Ein **Säulendiagramm**, bei dem die **Fläche** (nicht zwingend die Höhe!) proportional zur Häufigkeit ist.
+- Bei **gleichen Klassenbreiten** reicht die Höhe = absolute oder relative Häufigkeit.
+- Bei **ungleichen Klassenbreiten** muss man die **Häufigkeitsdichte** auf der y-Achse verwenden:
+$$\text{Dichte}_i = \frac{f_i}{b_i}$$
+  → So bleibt die *Fläche* = relative Häufigkeit.
+
+> 🗣️ **Mündlich sagen können:** „Ein Histogramm stellt die Verteilung eines metrischen Merkmals dar. Die Fläche jedes Balkens entspricht der relativen Häufigkeit der Klasse. Bei ungleichen Klassenbreiten verwende ich die Dichte, damit die Fläche stimmt."
+
+---
+
+### 1.2 Lageparameter: Mittelwert, Median, Quartile
+
+Lageparameter beantworten: **Wo liegt das Zentrum der Daten?**
+
+#### Arithmetisches Mittel (Durchschnitt)
+$$\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$$
+- Nutzt **alle** Werte.
+- **Empfindlich gegenüber Ausreißern** (ein extrem großer Wert zieht $\bar{x}$ nach oben).
+
+#### Median ($\tilde{x}$, Zentralwert)
+- Der Wert, der die **sortierte** Datenreihe in zwei Hälften teilt.
+- Bei ungeradem $n$: mittlerer Wert.
+- Bei geradem $n$: Durchschnitt der beiden mittleren Werte.
+- **Robust** gegenüber Ausreißern.
+
+> 🗣️ **Prüfungsfrage:** „Wann bevorzugen Sie den Median?"
+> **Antwort:** „Bei schiefen Verteilungen oder Ausreißern, z. B. Einkommensdaten. Der Median sagt: 50 % verdienen weniger, 50 % mehr."
+
+#### Quartile
+Teilen die sortierten Daten in **vier Viertel**:
+- **$Q_1$** (unteres Quartil): 25 % der Werte liegen darunter.
+- **$Q_2 = \text{Median}$**: 50 %
+- **$Q_3$** (oberes Quartil): 75 %
+- **Interquartilsabstand (IQR):** $Q_3 - Q_1$ – Maß für die Streuung der mittleren 50 %.
+
+**Boxplot-Zusammenhang:** Median, Quartile und IQR sind die Grundlage eines Boxplots. Werte außerhalb von $Q_1 - 1{,}5\cdot\text{IQR}$ bzw. $Q_3 + 1{,}5\cdot\text{IQR}$ gelten als **Ausreißer**.
+
+---
+
+### 1.3 Streuparameter: Varianz, Standardabweichung
+
+Streuung beantwortet: **Wie stark weichen die Werte vom Zentrum ab?**
+
+#### Varianz (Stichprobe)
+$$s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i - \bar{x})^2$$
+- Durchschnittliche **quadrierte** Abweichung vom Mittelwert.
+- Division durch $n-1$ (Bessel-Korrektur) macht $s^2$ zu einem **erwartungstreuen Schätzer** der Populationsvarianz.
+
+> 🗣️ **Warum $n-1$?** „Weil wir den Mittelwert $\bar{x}$ aus denselben Daten geschätzt haben, verlieren wir einen Freiheitsgrad. Die Division durch $n-1$ korrigiert die systematische Unterschätzung."
+
+#### Standardabweichung
+$$s = \sqrt{s^2}$$
+- Hat **dieselbe Einheit** wie die Daten (im Gegensatz zur Varianz).
+- Daher besser interpretierbar.
+
+#### Faustregel (bei annähernd normalverteilten Daten)
+- ca. **68 %** der Werte in $\bar{x} \pm 1s$
+- ca. **95 %** in $\bar{x} \pm 2s$
+- ca. **99,7 %** in $\bar{x} \pm 3s$
+
+> 🗣️ **Mündlich:** „Die Standardabweichung gibt an, wie weit die Daten typischerweise vom Mittelwert entfernt sind. Eine kleine Standardabweichung bedeutet eine homogene Gruppe."
+
+---
+
+## 2 · Lineare Regression
+
+### 2.1 Idee und Regressionsgerade
+
+Ziel: Einen **linearen Zusammenhang** zwischen einer unabhängigen Variable $x$ und einer abhängigen Variable $y$ durch eine Gerade beschreiben:
+
+$$\hat{y} = a + b\,x$$
+
+- $\hat{y}$: vorhergesagter Wert
+- $b$: **Regressionskoeffizient** (Steigung)
+- $a$: **Achsenabschnitt** (Intercept)
+
+#### Methode der kleinsten Quadrate (OLS)
+Man wählt $a$ und $b$ so, dass die **Summe der quadrierten Residuen** minimal wird:
+$$\sum_{i=1}^n (y_i - \hat{y}_i)^2 \;\longrightarrow\; \min$$
+
+Die Formeln:
+$$b = \frac{s_{xy}}{s_x^2} = \frac{\sum(x_i-\bar{x})(y_i-\bar{y})}{\sum(x_i-\bar{x})^2}$$
+$$a = \bar{y} - b\,\bar{x}$$
+
+> 🗣️ **Interpretation von $b$:** „Wenn $x$ um eine Einheit steigt, ändert sich $y$ im Mittel um $b$ Einheiten."
+> **Achtung:** Das ist ein *durchschnittlicher* Effekt, keine Kausalität!
+
+---
+
+### 2.2 Korrelationskoeffizient $r$ (Pearson)
+
+$$r = \frac{s_{xy}}{s_x \cdot s_y} = \frac{\sum(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum(x_i-\bar{x})^2 \;\sum(y_i-\bar{y})^2}}$$
+
+#### Eigenschaften
+- $-1 \le r \le +1$
+- $r > 0$: positiver linearer Zusammenhang
+- $r < 0$: negativer linearer Zusammenhang
+- $r = 0$: **kein linearer** Zusammenhang (nicht-lineare Zusammenhänge möglich!)
+- $|r| = 1$: alle Punkte liegen exakt auf einer Geraden
+
+#### Bestimmtheitsmaß $R^2 = r^2$
+- Gibt an, welcher **Anteil der Varianz** von $y$ durch das lineare Modell erklärt wird.
+- Beispiel: $r = 0{,}8 \;\Rightarrow\; R^2 = 0{,}64$ → 64 % der Streuung von $y$ werden durch $x$ erklärt.
+
+> 🗣️ **Typische Fangfrage:** „$r = 0$ bedeutet, es gibt keinen Zusammenhang."
+> **Korrektur:** „Es bedeutet, es gibt keinen *linearen* Zusammenhang. Ein quadratischer oder anderer nicht-linearer Zusammenhang ist trotzdem möglich."
+
+> 🗣️ **Korrelation ≠ Kausalität:** Immer erwähnen! Zwei Variablen können korrelieren, weil eine dritte (Confounder) beide beeinflusst.
+
+---
+
+## 3 · Zusammenhänge, die Prüfer gerne abfragen
+
+| Frage | Kurze Antwort |
+|---|---|
+| Unterschied Varianz vs. Standardabweichung? | Varianz ist quadriert (andere Einheit), $s$ hat Original-Einheit |
+| Warum Median statt Mittelwert? | Robustheit bei Ausreißern / schiefer Verteilung |
+| Was bedeutet $b = 0$? | Keine lineare Änderung von $y$ bei Änderung von $x$ |
+| Zusammenhang $r$ und $b$? | Gleiches Vorzeichen; $b = r \cdot \frac{s_y}{s_x}$ |
+| Was sind Residuen? | $e_i = y_i - \hat{y}_i$; sollten unsystematisch streuen |
+| Was bedeutet $R^2 = 1$? | Perfekte lineare Anpassung, alle Punkte auf der Geraden |
+
+---
+
+## 4 · Mini-Beispiel zum Durchsprechen
+
+> *Daten: Lernzeit $x$ (h) und Punktzahl $y$*
+> $\bar{x}=4,\;\bar{y}=60,\;s_x=2,\;s_y=10,\;r=0{,}8$
+
+- $b = 0{,}8 \cdot \frac{10}{2} = 4$ → pro Stunde mehr Lernzeit im Schnitt 4 Punkte mehr.
+- $a = 60 - 4\cdot4 = 44$ → bei 0 h Lernzeit prognostiziert das Modell 44 Punkte.
+- $R^2 = 0{,}64$ → 64 % der Varianz der Punktzahl werden durch Lernzeit erklärt.
+
+> 🗣️ So ein kleines Rechenbeispiel **laut durchzusprechen** ist Gold wert in der mündlichen Prüfung.
+
+---
+
+Wenn du möchtest, kann ich dir zu jedem Unterthema noch **typische Prüfungsfragen mit Musterantworten** formulieren oder ein **Karteikarten-Set** im Frage-Antwort-Stil erstellen. Sag einfach Bescheid, wo du dich noch unsicher fühlst! Viel Erfolg 🍀

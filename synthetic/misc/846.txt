@@ -1,0 +1,85 @@
+§u§
+fedora linux remove all pages from pdf except for 211 to 247 (both inclusive)
+§a§
+To remove all pages from a PDF file except for pages 211 to 247 (inclusive) on Fedora Linux, you have three reliable command-line options. The best approach depends on which tools you prefer or have installed.
+
+## **Option 1: Using qpdf (Recommended for Fedora)**
+
+`qpdf` is available in Fedora's official repositories and performs content-preserving transformations without "refrying" the PDF.
+
+### Installation (if not already installed):
+```bash
+sudo dnf install qpdf
+```
+
+### Command to extract pages 211-247:
+```bash
+qpdf --empty --pages input.pdf 211-247 -- output.pdf
+```
+
+**Explanation:**
+- `--empty`: Creates an empty PDF to start with
+- `--pages input.pdf 211-247`: Specifies the input file and page range to extract
+- `--`: Separator between input specification and output file
+- `output.pdf`: Your new PDF containing only pages 211-247 ,
+
+---
+
+## **Option 2: Using Ghostscript (Pre-installed on most systems)**
+
+Ghostscript (`gs`) is typically pre-installed on Fedora and can extract page ranges directly.
+
+### Command to extract pages 211-247:
+```bash
+gs -sDEVICE=pdfwrite -dNOPAUSE -dBATCH -dSAFER \
+   -dFirstPage=211 -dLastPage=247 \
+   -sOutputFile=output.pdf input.pdf
+```
+
+**Explanation:**
+- `-sDEVICE=pdfwrite`: Output as PDF
+- `-dNOPAUSE -dBATCH -dSAFER`: Non-interactive, safe execution
+- `-dFirstPage=211 -dLastPage=247`: Extract pages 211 through 247 inclusive
+- `-sOutputFile=output.pdf`: Output filename
+- `input.pdf`: Your source PDF ,
+
+---
+
+## **Option 3: Using pdftk (Requires EPEL repository)**
+
+**Note:** `pdftk` is NOT available in Fedora's official repositories. You must enable the EPEL (Extra Packages for Enterprise Linux) repository first.
+
+### Installation:
+```bash
+sudo dnf install epel-release
+sudo dnf install pdftk
+```
+
+### Command to extract pages 211-247:
+```bash
+pdftk input.pdf cat 211-247 output output.pdf
+```
+
+**Explanation:**
+- `cat 211-247`: Concatenate pages 211 through 247
+- `output output.pdf`: Write to the specified output file ,
+
+---
+
+## **Quick Comparison:**
+
+| Tool | Availability | Pros | Cons |
+|------|-------------|------|------|
+| **qpdf** | Official Fedora repos | Content-preserving, fast, modern | Need to install |
+| **Ghostscript** | Pre-installed | No installation needed, reliable | Longer command syntax |
+| **pdftk** | EPEL repository required | Simple syntax | Requires extra repo setup |
+
+## **Recommendation:**
+
+For Fedora users, **qpdf** is the best choice because:
+1. It's in the official repositories (no EPEL needed)
+2. It preserves PDF structure without re-compressing content
+3. Simple, clean syntax
+4. Actively maintained ,
+
+Replace `input.pdf` with your actual PDF filename and `output.pdf` with your desired output filename.

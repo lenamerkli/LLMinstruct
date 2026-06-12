@@ -1,0 +1,2349 @@
+§u§
+```
+
+&lt;h1&gt;Lernziele für das Schwerpunktfach Physik und Anwendungen der Mathematik&lt;/h1&gt;
+
+&lt;h2&gt;Mathematik&lt;/h2&gt;
+
+&lt;h3&gt;Affine Abbildungen&lt;/h3&gt;
+
+&lt;ul&gt;
+
+  &lt;li&gt;Eigenwerte und Eigenvektoren bestimmen&lt;/li&gt;
+
+  &lt;li&gt;Determinanten berechnen&lt;/li&gt;
+
+  &lt;li&gt;Umkehrungen bestimmen&lt;/li&gt;
+
+  &lt;li&gt;Drehungen erkennen, herstellen, verketten&lt;/li&gt;
+
+  &lt;li&gt;Spiegelungen erkennen, herstellen, verketten&lt;/li&gt;
+
+  &lt;li&gt;Scherungen erkennen, herstellen, verketten&lt;/li&gt;
+
+  &lt;li&gt;Verschiebungen erkennen, herstellen, verketten&lt;/li&gt;
+
+  &lt;li&gt;Streckungen erkennen, herstellen, verketten&lt;/li&gt;
+
+  &lt;li&gt;Produkt Matrix-Vektor berechnen&lt;/li&gt;
+
+  &lt;li&gt;Produkt Matrix-Matrix berechnen&lt;/li&gt;
+
+  &lt;li&gt;Bild von Vektoren bestimmen&lt;/li&gt;
+
+  &lt;li&gt;Bild von Geraden bestimmen&lt;/li&gt;
+
+  &lt;li&gt;Fixpunkte bestimmen&lt;/li&gt;
+
+  &lt;li&gt;Fixgeraden bestimmen&lt;/li&gt;
+
+&lt;/ul&gt;
+
+&lt;h3&gt;Kegelschnitte&lt;/h3&gt;
+
+&lt;ul&gt;
+
+  &lt;li&gt;Gleichungen der Kegelschnitte erkennen: Kreis, Ellipse, Hyperbel, Parabel&lt;/li&gt;
+
+  &lt;li&gt;Achsen, Radius, Mittelpunkt bestimmen&lt;/li&gt;
+
+  &lt;li&gt;Brennpunkte, Exzentrizitäten bestimmen&lt;/li&gt;
+
+  &lt;li&gt;Asymptoten, Scheitel, Tangenten, Leitgerade bestimmen&lt;/li&gt;
+
+  &lt;li&gt;Gleichung eines Kegelschnitts bei gegebenen Eigenschaften bestimmen&lt;/li&gt;
+
+&lt;/ul&gt;
+
+&lt;h3&gt;Komplexe Analysis&lt;/h3&gt;
+
+&lt;ul&gt;
+
+  &lt;li&gt;Koordinatenform und Polarform komplexer Zahlen bestimmen und darstellen&lt;/li&gt;
+
+  &lt;li&gt;Summen, Differenzen, Produkte, Divisionen, Potenzen, konjugiert komplexe Zahlen bestimmen&lt;/li&gt;
+
+  &lt;li&gt;Quadratische Gleichungen lösen&lt;/li&gt;
+
+  &lt;li&gt;Möbius-Transformationen und Umkehrfunktionen darstellen&lt;/li&gt;
+
+  &lt;li&gt;Bild von gegebenen Kreisen, Geraden, Sektoren bestimmen&lt;/li&gt;
+
+&lt;/ul&gt;
+
+&lt;h3&gt;Differentialgleichungen&lt;/h3&gt;
+
+&lt;ul&gt;
+
+  &lt;li&gt;Separation der Variablen – analytische Lösung&lt;/li&gt;
+
+  &lt;li&gt;Variation der Konstanten – analytische Lösung&lt;/li&gt;
+
+  &lt;li&gt;Richtungsfeld – graphische Lösung&lt;/li&gt;
+
+  &lt;li&gt;Euler-Verfahren – numerische Lösung&lt;/li&gt;
+
+&lt;/ul&gt;
+
+&lt;h3&gt;Hypothesen testen&lt;/h3&gt;
+
+&lt;ul&gt;
+
+  &lt;li&gt;Fehler 1. Art und Fehler 2. Art erkennen, definieren und bestimmen&lt;/li&gt;
+
+  &lt;li&gt;Binomialtest, Qualitätstest, Vorzeichentest, Wilcoxon-Mann-Whitney-Rangsummentest erkennen und anwenden&lt;/li&gt;
+
+  &lt;li&gt;2-seitige und 1-seitige Tests erkennen und anwenden&lt;/li&gt;
+
+&lt;/ul&gt;
+
+&lt;h3&gt;Affine Abbildungen (nur mündlich)&lt;/h3&gt;
+
+&lt;ul&gt;
+
+  &lt;li&gt;Konstruktion und Begründung der Formeln von Drehungen, Spiegelungen, Scherungen, Verschiebungen, Streckungen&lt;/li&gt;
+
+  &lt;li&gt;Produkt Matrix-Vektor, Matrix-Matrix, Bild von affinen Abbildungen bestimmen&lt;/li&gt;
+
+&lt;/ul&gt;
+
+&lt;h3&gt;Kegelschnitte (nur mündlich)&lt;/h3&gt;
+
+&lt;ul&gt;
+
+  &lt;li&gt;Dandelin-Kugeln, Erklärung der geometrischen Eigenschaften&lt;/li&gt;
+
+  &lt;li&gt;Herstellung der Gleichungen&lt;/li&gt;
+
+&lt;/ul&gt;
+
+&lt;h3&gt;Komplexe Analysis (nur mündlich)&lt;/h3&gt;
+
+&lt;ul&gt;
+
+  &lt;li&gt;Multiplikation und Division in Polarform begründen&lt;/li&gt;
+
+  &lt;li&gt;Möbius-Transformationen als Verkettung von ganzen linearen Funktionen und Inversen&lt;/li&gt;
+
+  &lt;li&gt;Begründen, dass Möbius-Transformationen Kreise und Geraden in Kreise und Geraden umwandeln&lt;/li&gt;
+
+  &lt;li&gt;Bild von &lt;app-latex content="z^2"&gt;&lt;/app-latex&gt; und von &lt;app-latex content="z^{\frac{1}{2}}"&gt;&lt;/app-latex&gt;&lt;/li&gt;
+
+&lt;/ul&gt;
+
+&lt;h2&gt;Physik&lt;/h2&gt;
+
+&lt;h3&gt;Mechanik&lt;/h3&gt;
+
+&lt;ul&gt;
+
+  &lt;li&gt;Kinematik und Dynamik&lt;/li&gt;
+
+  &lt;li&gt;Energie- und Impulserhaltung&lt;/li&gt;
+
+  &lt;li&gt;Kreisbewegung&lt;/li&gt;
+
+  &lt;li&gt;Starre Körper, Trägheitsmomente, Rotationsenergie&lt;/li&gt;
+
+&lt;/ul&gt;
+
+&lt;h3&gt;Wärmelehre&lt;/h3&gt;
+
+&lt;ul&gt;
+
+  &lt;li&gt;Wärmekraftmaschinen, Wärmepumpen und Kühlgeräte&lt;/li&gt;
+
+  &lt;li&gt;1. Hauptsatz der Wärmelehre&lt;/li&gt;
+
+  &lt;li&gt;Wärmetransport (Wärmeleitung, Konvektion, Wärmestrahlung)&lt;/li&gt;
+
+&lt;/ul&gt;
+
+&lt;h3&gt;Elektrizitätslehre&lt;/h3&gt;
+
+&lt;ul&gt;
+
+  &lt;li&gt;Lorentzkraft&lt;/li&gt;
+
+  &lt;li&gt;Geladene Teilchen in Magnet- und in elektrischen Feldern&lt;/li&gt;
+
+  &lt;li&gt;Schwingkreise&lt;/li&gt;
+
+  &lt;li&gt;Wechselstrom (komplex)&lt;/li&gt;
+
+&lt;/ul&gt;
+
+&lt;h3&gt;Moderne Physik&lt;/h3&gt;
+
+&lt;ul&gt;
+
+  &lt;li&gt;Spezielle Relativitätstheorie&lt;/li&gt;
+
+  &lt;li&gt;Zeitdilatation, Längenkontraktion&lt;/li&gt;
+
+  &lt;li&gt;Addition von Geschwindigkeiten&lt;/li&gt;
+
+  &lt;li&gt;Relativistischer Impuls, relativistische Energie&lt;/li&gt;
+
+&lt;/ul&gt;
+
+&lt;h3&gt;Mechanik (nur mündlich)&lt;/h3&gt;
+
+&lt;ul&gt;
+
+  &lt;li&gt;Wurfbewegungen&lt;/li&gt;
+
+  &lt;li&gt;Gleichförmige Kreisbewegung&lt;/li&gt;
+
+  &lt;li&gt;Gravitation&lt;/li&gt;
+
+  &lt;li&gt;Mechanik des starren Körpers I (Statik)&lt;/li&gt;
+
+  &lt;li&gt;Mechanik des starren Körpers II (Kinematik)&lt;/li&gt;
+
+  &lt;li&gt;Mechanik des starren Körpers III (Trägheitsmomente)&lt;/li&gt;
+
+  &lt;li&gt;Mechanik des starren Körpers III (Energieerhaltung)&lt;/li&gt;
+
+  &lt;li&gt;Impuls und Stösse&lt;/li&gt;
+
+  &lt;li&gt;Mechanik des starren Körpers III (Drehimpuls)&lt;/li&gt;
+
+&lt;/ul&gt;
+
+&lt;h3&gt;Wärmelehre (nur mündlich)&lt;/h3&gt;
+
+&lt;ul&gt;
+
+  &lt;li&gt;Die Hauptsätze der Thermodynamik, Zustandsänderungen&lt;/li&gt;
+
+  &lt;li&gt;Elemente der kinetischen Gastheorie, Gasdruck, Innere Energie&lt;/li&gt;
+
+  &lt;li&gt;Wärmekapazitäten, Gleichverteilungssatz der Energie, Freiheitsgrade&lt;/li&gt;
+
+  &lt;li&gt;Wärmetransport: Wärmeleitung, Konvektion, Wärmestrahlung&lt;/li&gt;
+
+  &lt;li&gt;Wärmekraftmaschinen, Carnot Maschine, Carnotscher Wirkungsgrad (reversible und irreversible Prozesse)&lt;/li&gt;
+
+  &lt;li&gt;Kältemaschinen, Klimaanlagen und Wärmepumpen&lt;/li&gt;
+
+&lt;/ul&gt;
+
+&lt;h3&gt;Elektrizitätslehre (nur mündlich)&lt;/h3&gt;
+
+&lt;ul&gt;
+
+  &lt;li&gt;Elektrische Felder&lt;/li&gt;
+
+  &lt;li&gt;Plattenkondensator&lt;/li&gt;
+
+  &lt;li&gt;Millikanversuch&lt;/li&gt;
+
+  &lt;li&gt;RC-Kreise: Laden und Entladen eines Kondensators&lt;/li&gt;
+
+  &lt;li&gt;Elektrischer Schwingkreis&lt;/li&gt;
+
+  &lt;li&gt;Wechselstrom: Ohm'scher Widerstand, Spule, Kondensator im Wechselstromkreis, RCL-Kreis, komplexe Schreibweise&lt;/li&gt;
+
+&lt;/ul&gt;
+
+&lt;h3&gt;Wellenoptik (nur mündlich)&lt;/h3&gt;
+
+&lt;ul&gt;
+
+  &lt;li&gt;Licht als Welle&lt;/li&gt;
+
+  &lt;li&gt;Interferenz am Doppelspalt&lt;/li&gt;
+
+  &lt;li&gt;Interferenz an dünnen Schichten&lt;/li&gt;
+
+  &lt;li&gt;Beugung: Einzelspalt, Doppelspalt, Gitter&lt;/li&gt;
+
+&lt;/ul&gt;
+
+&lt;h3&gt;Moderne Physik (nur mündlich)&lt;/h3&gt;
+
+&lt;ul&gt;
+
+  &lt;li&gt;Spezielle Relativitätstheorie (SRT): Postulate, Relativität der Gleichzeitigkeit&lt;/li&gt;
+
+  &lt;li&gt;SRT: Zeitdilatation, Längenkontraktion, Lorentztransformation&lt;/li&gt;
+
+  &lt;li&gt;SRT: Addition von Geschwindigkeiten, relativistischer Dopplereffekt&lt;/li&gt;
+
+  &lt;li&gt;SRT: Energie, Impuls&lt;/li&gt;
+
+  &lt;li&gt;Quantenphysik: Der Photoeffekt&lt;/li&gt;
+
+  &lt;li&gt;Quantenphysik: Der Comptoneffekt&lt;/li&gt;
+
+  &lt;li&gt;Quantenphysik: De Broglie, Materiewellen&lt;/li&gt;
+
+&lt;/ul&gt;
+
+```
+
+```
+
+&lt;h1&gt;Beispielsaufgaben auf Gymnasialniveau (custom angular components&lt;/h1&gt;
+
+&lt;app-task&gt;
+
+  &lt;app-task-description&gt;
+
+    &lt;h3&gt;Aufgabe 5.1.1.3&lt;/h3&gt;
+
+    &lt;p&gt;Stellen wir uns ein Gas vor, das Licht in allen Farben des Spektrums aussendet. In diesem Gas hat es aber Natrium-Atome, von denen wir wissen, dass es die gelbe Farbe (589 nm Wellenlänge) sozusagen "verschluckt". Diese Farbe fehlt also im Farbspektrum dieses Gases, es entsteht an dieser Stelle im Spektrum eine "Lücke". Stellen wir uns nun weiter vor, dass sich dieses Gas von uns weg- oder zu uns hinbewegt.&lt;/p&gt;
+
+    &lt;p&gt;a) Wie verändert sich die Position dieser Lücke, wenn wir das Farbspektrum dieses bewegten Gases untersuchen?&lt;/p&gt;
+
+    &lt;p&gt;b) jemand beobachtet das Farbspektrum des Gases. Er stellt die "gelbe Lücke" (589 nm Wellenlänge) bei Orange (650 nm Wellenlänge) fest. Mit welcher Geschwindigkeit entfernen sich der Beobachter und das Gas voneinander?&lt;/p&gt;
+
+  &lt;/app-task-description&gt;
+
+  &lt;app-task-solution&gt;
+
+    &lt;h4&gt;a)&lt;/h4&gt;
+
+    &lt;p&gt;Bei einer Annäherung ist die Blauverschiebung festzustellen. Dabei wird die Wellenlänge &lt;app-latex&gt;\lambda&lt;/app-latex&gt; kleiner. Bei einer Entfernung ist die Rotverschiebung festzustellen. Dabei wird die Wellenlänge &lt;app-latex&gt;\lambda&lt;/app-latex&gt; grösser.&lt;/p&gt;
+
+    &lt;h4&gt;b)&lt;/h4&gt;
+
+    &lt;p&gt;Die Wellenlängen müssen in die Frequenz umgerechnet werden:&lt;/p&gt;
+
+    &lt;app-latex content="\begin{equation*} f = \frac{c}{\lambda} \end{equation*}"&gt;&lt;/app-latex&gt;
+
+    &lt;p&gt;Die Frequenz von gelbem Licht beträgt also &lt;app-latex content="\frac{c}{589 \text{ nm}} = 5.09 \cdot 10^{14} \text{ Hz}"&gt;&lt;/app-latex&gt; und von orangem Licht &lt;app-latex content="\frac{c}{650 \text{ nm}} = 4.612 \cdot 10^{14} \text{ Hz}"&gt;&lt;/app-latex&gt;.&lt;/p&gt;
+
+    &lt;p&gt;Die Formel für den optischen Dopplereffekt für den Fall der Entfernung muss umformuliert werden.&lt;/p&gt;
+
+    &lt;app-latex content="\begin{equation*} f = f_0 \sqrt{\frac{c - v}{c + v}} \end{equation*}"&gt;&lt;/app-latex&gt;
+
+    &lt;app-latex content="\begin{equation*} \sqrt{\frac{c - v}{c + v}} = \frac{f}{f_0} \end{equation*}"&gt;&lt;/app-latex&gt;
+
+    &lt;p&gt;Einsetzen: &lt;/p&gt;
+
+    &lt;app-latex content="\begin{equation*} \sqrt{\frac{c - v}{c + v}} = \frac{4.612  *10^{14} \text{ Hz}}{5.09*  10^{14} \text{ Hz}} = 0.9061 \end{equation*}"&gt;&lt;/app-latex&gt;
+
+    &lt;p&gt;Mit dem Taschenrechner lässt sich die Funktion &lt;i&gt;num-solv&lt;/i&gt; (&lt;i&gt;2nd&lt;/i&gt; + &lt;i&gt;sin&lt;/i&gt;) verwenden, um &lt;app-latex&gt;v&lt;/app-latex&gt; zu bestimmen. Dafür ist &lt;app-latex&gt;v&lt;/app-latex&gt; mit &lt;app-latex&gt;x&lt;/app-latex&gt; zu ersetzen. Die Lichtgeschwindigkeit &lt;app-latex&gt;c&lt;/app-latex&gt; ist unter &lt;i&gt;constants&lt;/i&gt; verfügbar.&lt;/p&gt;
+
+    &lt;p&gt;Die Lösung beträgt &lt;app-latex content="v = 2.9 \cdot 10^7 \text{ m/s}"&gt;&lt;/app-latex&gt;.&lt;/p&gt;
+
+  &lt;/app-task-solution&gt;
+
+&lt;/app-task&gt;
+
+&lt;app-task&gt;
+
+  &lt;app-task-description&gt;
+
+    &lt;h3&gt;Aufgabe 5.1.1.4&lt;/h3&gt;
+
+    &lt;p&gt;Die Wellenlängen bestimmter Linien im Licht, das uns aus einer Galaxie im Sternbild Jungfrau erreicht, sind gegenüber den entsprechenden auf der Erde gemessen Werten um &lt;app-latex content="0.4 \%"&gt;&lt;/app-latex&gt; verschoben. Wie schnell bewegt sich diese Galaxie radial relativ zur Erde?&lt;/p&gt;
+
+  &lt;/app-task-description&gt;
+
+  &lt;app-task-solution&gt;
+
+    &lt;app-latex content="\begin{equation*} v = \frac{\Delta \lambda}{\lambda} c \end{equation*}"&gt;&lt;/app-latex&gt;
+
+    &lt;app-latex content="\begin{equation*} v = 0.004c \end{equation*}"&gt;&lt;/app-latex&gt;
+
+  &lt;/app-task-solution&gt;
+
+&lt;/app-task&gt;
+
+&lt;app-task&gt;
+
+  &lt;app-task-description&gt;
+
+    &lt;h3&gt;Aufgabe 5.1.2.9&lt;/h3&gt;
+
+    &lt;p&gt;Ein Raumschiff mit einer Ruhelänge von &lt;app-latex content="350 \text{ m}"&gt;&lt;/app-latex&gt; bewegt sich relativ zu einem Bezugssystem mit einer Geschwindigkeit von &lt;app-latex&gt;0.82c&lt;/app-latex&gt;.Ein Mikrometeorit fliegt ebenfalls mit einer Geschwindigkeit von &lt;app-latex&gt;0.82c&lt;/app-latex&gt; antiparallel zur Bahn des Raumschiffs and diesem vorbei. Wie lange dauert dieser Vorbeiflug vom Raumschiff aus gemessen?&lt;/p&gt;
+
+  &lt;/app-task-description&gt;
+
+  &lt;app-task-solution&gt;
+
+    &lt;app-latex content="\begin{equation*} u' = \frac{u + v}{1 + \frac{uv}{c^2}} \end{equation*}"&gt;&lt;/app-latex&gt;
+
+    &lt;p&gt;Einsetzen:&lt;/p&gt;
+
+    &lt;app-latex content="\begin{equation*} u' = \frac{0.82c + 0.82c}{1 + \frac{0.82c \cdot 0.82c}{c^2}} \end{equation*}"&gt;&lt;/app-latex&gt;
+
+    &lt;app-latex content="\begin{equation*} u' = \frac{1.64c}{1 + 0.6724} \end{equation*}"&gt;&lt;/app-latex&gt;
+
+    &lt;app-latex content="\begin{equation*} u' = \frac{1.64c}{1.6724} \end{equation*}"&gt;&lt;/app-latex&gt;
+
+    &lt;app-latex content="\begin{equation*} u' = 0.9806c \end{equation*}"&gt;&lt;/app-latex&gt;
+
+    &lt;app-latex content="\begin{equation*} t = \frac{L}{u'} \end{equation*}"&gt;&lt;/app-latex&gt;
+
+    &lt;app-latex content="\begin{equation*} t = \frac{350 \text{ m}}{0.9806c} \end{equation*}"&gt;&lt;/app-latex&gt;
+
+    &lt;app-latex content="\begin{equation*} t = 1.191 \cdot 10^{-6} \text{ s} \end{equation*}"&gt;&lt;/app-latex&gt;
+
+  &lt;/app-task-solution&gt;
+
+&lt;/app-task&gt;
+
+&lt;app-task&gt;
+
+  &lt;app-task-description&gt;
+
+    &lt;h3&gt;Aufgabe 5.1.3.2&lt;/h3&gt;
+
+    &lt;p&gt;Wie viel Arbeit muss verrichtet werden, um ein Elektron aus dem Ruhezustand auf eine Geschwindigkeit von &lt;app-latex&gt;0.999c&lt;/app-latex&gt; zu beschleunigen?&lt;/p&gt;
+
+  &lt;/app-task-description&gt;
+
+  &lt;app-task-solution&gt;
+
+    &lt;app-latex content="\begin{equation*} \gamma = \frac{1}{\sqrt{1 - \frac{v^2}{c^2}}} \end{equation*}"&gt;&lt;/app-latex&gt;
+
+    &lt;app-latex content="\begin{equation*} \gamma = \frac{1}{\sqrt{1 - \frac{(0.999c)^2}{c^2}}} \end{equation*}"&gt;&lt;/app-latex&gt;
+
+    &lt;app-latex content="\begin{equation*} \gamma = \frac{1}{\sqrt{1 - 0.9980}} \end{equation*}"&gt;&lt;/app-latex&gt;
+
+    &lt;app-latex content="\begin{equation*} \gamma = 22.36 \end{equation*}"&gt;&lt;/app-latex&gt;
+
+    &lt;p&gt;Die Masse eines Elektrons beträgt &lt;app-latex content="9.109 \cdot 10^{-31} \text{ kg}"&gt;&lt;/app-latex&gt;.&lt;/p&gt;
+
+    &lt;app-latex content="\begin{equation*} E_{kin} = (\gamma - 1)mc^2 \end{equation*}"&gt;&lt;/app-latex&gt;
+
+    &lt;app-latex content="\begin{equation*} E_{kin} = 21.36 \cdot 9.109 \cdot 10^{-31} \text{ kg} \cdot c^2 \end{equation*}"&gt;&lt;/app-latex&gt;
+
+    &lt;app-latex content="\begin{equation*} E_{kin} = 1.831 \cdot 10^{-12} \text{ J} \end{equation*}"&gt;&lt;/app-latex&gt;
+
+  &lt;/app-task-solution&gt;
+
+&lt;/app-task&gt;
+
+```
+
+Erstelle ein LaTeX Dokument, was den Stoff für **alle** Lernziele erklärt. Das Niveau ist Gymnasialabschluss.
+§a§
+```latex
+\documentclass[a4paper,11pt]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,patterns,angles,quotes}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems,skins,breakable}
+
+\geometry{margin=2.5cm,headheight=14pt}
+
+% Theorem-Umgebungen
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{satz}[definition]{Satz}
+\newtheorem{beispiel}[definition]{Beispiel}
+\newtheorem{bemerkung}[definition]{Bemerkung}
+
+% tcolorbox für wichtige Formeln
+\newtcolorbox{formelbox}[1][]{
+  colback=blue!5!white,
+  colframe=blue!50!black,
+  fonttitle=\bfseries,
+  title=#1,
+  breakable
+}
+
+\newtcolorbox{merkbox}[1][]{
+  colback=yellow!5!white,
+  colframe=orange!70!black,
+  fonttitle=\bfseries,
+  title=#1,
+  breakable
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{\leftmark}
+\fancyhead[LO]{\rightmark}
+
+\title{\Huge\textbf{Schwerpunktfach\\Physik und Anwendungen der Mathematik}\\[1cm]\Large Vollständiges Skript zu allen Lernzielen\\[0.5cm]\normalsize Gymnasialniveau}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+%=============================================================================
+% TEIL I: MATHEMATIK
+%=============================================================================
+\part{Mathematik}
+
+%=============================================================================
+\chapter{Affine Abbildungen}
+%=============================================================================
+
+\section{Grundlagen: Matrizen und Vektoren}
+
+\begin{definition}[Matrix]
+Eine \textbf{Matrix} $A$ der Grösse $m \times n$ ist ein rechteckiges Zahlenschema mit $m$ Zeilen und $n$ Spalten:
+\[
+A = \begin{pmatrix} a_{11} & a_{12} & \cdots & a_{1n} \\ a_{21} & a_{22} & \cdots & a_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ a_{m1} & a_{m2} & \cdots & a_{mn} \end{pmatrix}
+\]
+\end{definition}
+
+Im Kontext der affinen Abbildungen in der Ebene arbeiten wir hauptsächlich mit $2\times 2$-Matrizen und Vektoren aus $\mathbb{R}^2$.
+
+\subsection{Produkt Matrix-Vektor}
+
+Das Produkt einer $2\times 2$-Matrix $A$ mit einem Vektor $\vec{v}$ ist definiert als:
+\begin{formelbox}[Matrix-Vektor-Produkt]
+\[
+A\vec{v} = \begin{pmatrix} a & b \\ c & d \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} ax + by \\ cx + dy \end{pmatrix}
+\]
+\end{formelbox}
+
+\begin{beispiel}
+\[
+\begin{pmatrix} 2 & -1 \\ 3 & 4 \end{pmatrix} \begin{pmatrix} 5 \\ 2 \end{pmatrix} = \begin{pmatrix} 2\cdot 5 + (-1)\cdot 2 \\ 3\cdot 5 + 4\cdot 2 \end{pmatrix} = \begin{pmatrix} 8 \\ 23 \end{pmatrix}
+\]
+\end{beispiel}
+
+\subsection{Produkt Matrix-Matrix}
+
+Das Produkt zweier $2\times 2$-Matrizen ist:
+\begin{formelbox}[Matrix-Matrix-Produkt]
+\[
+AB = \begin{pmatrix} a & b \\ c & d \end{pmatrix} \begin{pmatrix} e & f \\ g & h \end{pmatrix} = \begin{pmatrix} ae+bg & af+bh \\ ce+dg & cf+dh \end{pmatrix}
+\]
+\end{formelbox}
+
+\begin{merkbox}[Achtung]
+Die Matrizenmultiplikation ist \textbf{nicht kommutativ}: Im Allgemeinen gilt $AB \neq BA$.
+\end{merkbox}
+
+\begin{beispiel}
+\[
+\begin{pmatrix} 1 & 2 \\ 0 & 3 \end{pmatrix} \begin{pmatrix} 4 & 1 \\ 2 & 5 \end{pmatrix} = \begin{pmatrix} 1\cdot4+2\cdot2 & 1\cdot1+2\cdot5 \\ 0\cdot4+3\cdot2 & 0\cdot1+3\cdot5 \end{pmatrix} = \begin{pmatrix} 8 & 11 \\ 6 & 15 \end{pmatrix}
+\]
+\end{beispiel}
+
+\section{Determinanten}
+
+\begin{definition}[Determinante einer $2\times 2$-Matrix]
+Die \textbf{Determinante} der Matrix $A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$ ist:
+\[
+\det(A) = ad - bc
+\]
+\end{definition}
+
+\begin{formelbox}[Bedeutung der Determinante]
+\begin{itemize}
+  \item $|\det(A)|$ gibt den \textbf{Flächenfaktor} der Abbildung an: Um wie viel Flächen vergrössert oder verkleinert werden.
+  \item $\det(A) > 0$: Die Abbildung ist \textbf{orientierungserhaltend}.
+  \item $\det(A) < 0$: Die Abbildung ist \textbf{orientierungsumkehrend} (z.\,B.\ Spiegelungen).
+  \item $\det(A) = 0$: Die Abbildung ist \textbf{nicht invertierbar} (die Matrix bildet auf eine Gerade oder einen Punkt ab).
+\end{itemize}
+\end{formelbox}
+
+\begin{beispiel}
+$A = \begin{pmatrix} 3 & 1 \\ 2 & 4 \end{pmatrix}$: $\det(A) = 3\cdot4 - 1\cdot2 = 10$. Flächen werden verzehnfacht.
+\end{beispiel}
+
+\section{Umkehrungen (Inverse Matrizen)}
+
+\begin{formelbox}[Inverse einer $2\times 2$-Matrix]
+Die inverse Matrix von $A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$ existiert genau dann, wenn $\det(A) \neq 0$, und lautet:
+\[
+A^{-1} = \frac{1}{ad-bc}\begin{pmatrix} d & -b \\ -c & a \end{pmatrix}
+\]
+\end{formelbox}
+
+Es gilt $A \cdot A^{-1} = A^{-1} \cdot A = I$, wobei $I = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$ die Einheitsmatrix ist.
+
+\begin{beispiel}
+$A = \begin{pmatrix} 2 & 1 \\ 5 & 3 \end{pmatrix}$, $\det(A) = 6-5 = 1$.
+\[
+A^{-1} = \begin{pmatrix} 3 & -1 \\ -5 & 2 \end{pmatrix}
+\]
+Probe: $A \cdot A^{-1} = \begin{pmatrix} 2\cdot3+1\cdot(-5) & 2\cdot(-1)+1\cdot2 \\ 5\cdot3+3\cdot(-5) & 5\cdot(-1)+3\cdot2 \end{pmatrix} = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$ \checkmark
+\end{beispiel}
+
+\section{Eigenwerte und Eigenvektoren}
+
+\begin{definition}[Eigenwert und Eigenvektor]
+Ein Vektor $\vec{v} \neq \vec{0}$ heisst \textbf{Eigenvektor} der Matrix $A$ zum \textbf{Eigenwert} $\lambda$, wenn:
+\[
+A\vec{v} = \lambda\vec{v}
+\]
+Der Eigenvektor wird also durch die Abbildung nur gestreckt (oder gestaucht), aber nicht in eine andere Richtung gedreht.
+\end{definition}
+
+\subsection{Bestimmung der Eigenwerte}
+
+Aus $A\vec{v} = \lambda\vec{v}$ folgt $(A - \lambda I)\vec{v} = \vec{0}$. Damit eine nicht-triviale Lösung existiert, muss gelten:
+
+\begin{formelbox}[Charakteristische Gleichung]
+\[
+\det(A - \lambda I) = 0
+\]
+Für $A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$:
+\[
+\det\begin{pmatrix} a-\lambda & b \\ c & d-\lambda \end{pmatrix} = (a-\lambda)(d-\lambda) - bc = 0
+\]
+\[
+\lambda^2 - (a+d)\lambda + (ad-bc) = 0
+\]
+Die Summe der Eigenwerte ist die \textbf{Spur} $a+d$, das Produkt ist die \textbf{Determinante} $ad-bc$.
+\end{formelbox}
+
+\subsection{Bestimmung der Eigenvektoren}
+
+Für jeden Eigenwert $\lambda_i$ setze man diesen in $(A - \lambda_i I)\vec{v} = \vec{0}$ ein und löse das lineare Gleichungssystem.
+
+\begin{beispiel}
+$A = \begin{pmatrix} 4 & 1 \\ 2 & 3 \end{pmatrix}$
+
+Charakteristische Gleichung: $\lambda^2 - 7\lambda + 10 = 0 \Rightarrow \lambda_1 = 5, \lambda_2 = 2$.
+
+Eigenvektor zu $\lambda_1 = 5$:
+\[
+(A - 5I)\vec{v} = \begin{pmatrix} -1 & 1 \\ 2 & -2 \end{pmatrix}\begin{pmatrix} v_1 \\ v_2 \end{pmatrix} = \vec{0} \Rightarrow v_1 = v_2 \Rightarrow \vec{v}_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}
+\]
+
+Eigenvektor zu $\lambda_2 = 2$:
+\[
+(A - 2I)\vec{v} = \begin{pmatrix} 2 & 1 \\ 2 & 1 \end{pmatrix}\begin{pmatrix} v_1 \\ v_2 \end{pmatrix} = \vec{0} \Rightarrow 2v_1 + v_2 = 0 \Rightarrow \vec{v}_2 = \begin{pmatrix} 1 \\ -2 \end{pmatrix}
+\]
+\end{beispiel}
+
+\section{Lineare Abbildungen in der Ebene}
+
+Eine \textbf{lineare Abbildung} $f: \mathbb{R}^2 \to \mathbb{R}^2$ wird durch eine $2\times 2$-Matrix $A$ beschrieben:
+\[
+f(\vec{x}) = A\vec{x}
+\]
+
+Eine \textbf{affine Abbildung} hat zusätzlich eine Verschiebung:
+\[
+f(\vec{x}) = A\vec{x} + \vec{t}
+\]
+
+\subsection{Drehungen}
+
+\begin{formelbox}[Drehmatrix]
+Die Drehung um den Ursprung mit Winkel $\alpha$ (im Gegenuhrzeigersinn) wird beschrieben durch:
+\[
+D_\alpha = \begin{pmatrix} \cos\alpha & -\sin\alpha \\ \sin\alpha & \cos\alpha \end{pmatrix}
+\]
+\end{formelbox}
+
+\textbf{Eigenschaften:}
+\begin{itemize}
+  \item $\det(D_\alpha) = \cos^2\alpha + \sin^2\alpha = 1$ (flächentreu, orientierungserhaltend)
+  \item Eigenwerte: $\lambda = \cos\alpha \pm i\sin\alpha$ (keine reellen Eigenwerte für $\alpha \neq 0, \pi$)
+  \item Verkettung: $D_\alpha \cdot D_\beta = D_{\alpha+\beta}$ (Winkel addieren sich)
+  \item Inverse: $D_\alpha^{-1} = D_{-\alpha}$
+\end{itemize}
+
+\textbf{Herstellung:} Um die Drehmatrix für einen gegebenen Winkel zu finden, setze man $\alpha$ in die Formel ein.
+
+\begin{beispiel}
+Drehung um $90^{\circ}$:
+\[
+D_{90^{\circ}} = \begin{pmatrix} \cos 90^{\circ} & -\sin 90^{\circ} \\ \sin 90^{\circ} & \cos 90^{\circ} \end{pmatrix} = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}
+\]
+Bild von $\vec{v} = \begin{pmatrix} 3 \\ 1 \end{pmatrix}$: $D_{90^{\circ}}\vec{v} = \begin{pmatrix} -1 \\ 3 \end{pmatrix}$.
+\end{beispiel}
+
+\textbf{Erkennung:} Eine Matrix $A$ ist eine Drehung genau dann, wenn $A^T A = I$ und $\det(A) = +1$.
+
+\textbf{Drehung um einen beliebigen Punkt $P$:} Zuerst $P$ in den Ursprung verschieben, drehen, dann zurückverschieben:
+\[
+f(\vec{x}) = D_\alpha(\vec{x} - \vec{p}) + \vec{p} = D_\alpha \vec{x} + (I - D_\alpha)\vec{p}
+\]
+
+\subsection{Spiegelungen}
+
+\begin{formelbox}[Spiegelungsmatrix]
+Die Spiegelung an einer Geraden durch den Ursprung mit Steigungswinkel $\alpha/2$ (Achse in Richtung $(\cos(\alpha/2), \sin(\alpha/2))^T$):
+\[
+S_\alpha = \begin{pmatrix} \cos\alpha & \sin\alpha \\ \sin\alpha & -\cos\alpha \end{pmatrix}
+\]
+Äquivalent: Spiegelung an der Geraden, die den Winkel $\theta$ mit der $x$-Achse einschliesst ($\alpha = 2\theta$):
+\[
+S_\theta = \begin{pmatrix} \cos 2\theta & \sin 2\theta \\ \sin 2\theta & -\cos 2\theta \end{pmatrix}
+\]
+\end{formelbox}
+
+\textbf{Spezialfälle:}
+\begin{itemize}
+  \item Spiegelung an der $x$-Achse ($\theta = 0$): $S = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$
+  \item Spiegelung an der $y$-Achse ($\theta = 90^{\circ}$): $S = \begin{pmatrix} -1 & 0 \\ 0 & 1 \end{pmatrix}$
+  \item Spiegelung an $y = x$ ($\theta = 45^{\circ}$): $S = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$
+\end{itemize}
+
+\textbf{Eigenschaften:}
+\begin{itemize}
+  \item $\det(S) = -1$ (orientierungsumkehrend)
+  \item $S^2 = I$ (zweimal spiegeln ergibt die Identität), also $S = S^{-1}$
+  \item Eigenwerte: $\lambda_1 = 1$ (Richtung der Spiegelachse), $\lambda_2 = -1$ (senkrecht dazu)
+\end{itemize}
+
+\textbf{Erkennung:} $A^T A = I$ und $\det(A) = -1$.
+
+\textbf{Verkettung:} Zwei Spiegelungen an Geraden durch den Ursprung ergeben eine Drehung um den doppelten Winkel zwischen den Geraden.
+
+\subsection{Streckungen}
+
+\begin{formelbox}[Streckungsmatrix]
+\textbf{Zentrische Streckung} (gleichmässig in alle Richtungen) mit Faktor $k$:
+\[
+\begin{pmatrix} k & 0 \\ 0 & k \end{pmatrix} = k \cdot I
+\]
+\textbf{Achsenstreckung} mit verschiedenen Faktoren:
+\[
+\begin{pmatrix} k_1 & 0 \\ 0 & k_2 \end{pmatrix}
+\]
+\end{formelbox}
+
+\textbf{Eigenschaften:}
+\begin{itemize}
+  \item Determinante: $\det = k_1 \cdot k_2$ (Flächenfaktor)
+  \item Eigenwerte: $k_1$ und $k_2$, Eigenvektoren sind die Achsenrichtungen
+  \item Verkettung: Streckungsfaktoren multiplizieren sich
+\end{itemize}
+
+\textbf{Erkennung:} Die Matrix ist diagonal (bei achsenparalleler Streckung) oder ein Vielfaches der Einheitsmatrix (bei zentrischer Streckung).
+
+\subsection{Scherungen}
+
+\begin{formelbox}[Scherungsmatrix]
+\textbf{Scherung in $x$-Richtung} mit Faktor $k$:
+\[
+\begin{pmatrix} 1 & k \\ 0 & 1 \end{pmatrix}
+\]
+\textbf{Scherung in $y$-Richtung} mit Faktor $k$:
+\[
+\begin{pmatrix} 1 & 0 \\ k & 1 \end{pmatrix}
+\]
+\end{formelbox}
+
+\textbf{Eigenschaften:}
+\begin{itemize}
+  \item $\det = 1$ (flächentreu)
+  \item Eigenwert $\lambda = 1$ (doppelt), aber nur ein Eigenvektor: die Richtung der festen Achse
+  \item Die Punkte auf der festen Achse bleiben fix; die übrigen werden parallel verschoben
+\end{itemize}
+
+\textbf{Erkennung:} Die Matrix hat die Form einer oberen oder unteren Dreiecksmatrix mit Einsen auf der Diagonale.
+
+\subsection{Verschiebungen (Translationen)}
+
+\begin{formelbox}[Verschiebung]
+Eine Verschiebung (Translation) um den Vektor $\vec{t} = \begin{pmatrix} t_1 \\ t_2 \end{pmatrix}$ ist:
+\[
+f(\vec{x}) = \vec{x} + \vec{t} = I\vec{x} + \vec{t}
+\]
+\end{formelbox}
+
+\textbf{Eigenschaften:}
+\begin{itemize}
+  \item Keine Fixpunkte (ausser $\vec{t} = \vec{0}$)
+  \item Verkettung: $T_{\vec{t}_1} \circ T_{\vec{t}_2} = T_{\vec{t}_1 + \vec{t}_2}$ (Translationsvektoren addieren sich)
+  \item Inverse: $T_{\vec{t}}^{-1} = T_{-\vec{t}}$
+  \item Verschiebungen sind keine linearen, sondern affine Abbildungen
+\end{itemize}
+
+\textbf{Bemerkung:} In homogenen Koordinaten kann eine Verschiebung als $3\times 3$-Matrix geschrieben werden:
+\[
+\begin{pmatrix} 1 & 0 & t_1 \\ 0 & 1 & t_2 \\ 0 & 0 & 1 \end{pmatrix} \begin{pmatrix} x \\ y \\ 1 \end{pmatrix} = \begin{pmatrix} x + t_1 \\ y + t_2 \\ 1 \end{pmatrix}
+\]
+
+\section{Bild von Vektoren und Geraden}
+
+\subsection{Bild von Vektoren}
+
+Das Bild eines Vektors $\vec{v}$ unter der linearen Abbildung $A$ ist einfach $A\vec{v}$.
+
+Bei einer affinen Abbildung $f(\vec{x}) = A\vec{x} + \vec{t}$ ist das Bild eines Punktes $P$ mit Ortsvektor $\vec{p}$:
+\[
+f(\vec{p}) = A\vec{p} + \vec{t}
+\]
+
+\subsection{Bild von Geraden}
+
+Eine Gerade kann in Parameterform dargestellt werden:
+\[
+g: \vec{x} = \vec{p} + s\vec{r}, \quad s \in \mathbb{R}
+\]
+
+Das Bild der Geraden unter $f(\vec{x}) = A\vec{x} + \vec{t}$ ist:
+\[
+f(g): \vec{x}' = A(\vec{p} + s\vec{r}) + \vec{t} = (A\vec{p} + \vec{t}) + s(A\vec{r})
+\]
+
+Das Bild ist also wieder eine Gerade (oder ein Punkt, falls $A\vec{r} = \vec{0}$) mit:
+\begin{itemize}
+  \item Stützpunkt: $A\vec{p} + \vec{t}$
+  \item Richtungsvektor: $A\vec{r}$
+\end{itemize}
+
+\begin{beispiel}
+$A = \begin{pmatrix} 2 & 1 \\ 0 & 3 \end{pmatrix}$, Gerade $g: \vec{x} = \begin{pmatrix} 1 \\ 0 \end{pmatrix} + s\begin{pmatrix} 1 \\ 2 \end{pmatrix}$.
+
+Neuer Stützpunkt: $A\begin{pmatrix} 1 \\ 0 \end{pmatrix} = \begin{pmatrix} 2 \\ 0 \end{pmatrix}$
+
+Neuer Richtungsvektor: $A\begin{pmatrix} 1 \\ 2 \end{pmatrix} = \begin{pmatrix} 4 \\ 6 \end{pmatrix}$
+
+Bildgerade: $g': \vec{x}' = \begin{pmatrix} 2 \\ 0 \end{pmatrix} + s\begin{pmatrix} 4 \\ 6 \end{pmatrix}$
+\end{beispiel}
+
+\section{Fixpunkte und Fixgeraden}
+
+\subsection{Fixpunkte}
+
+\begin{definition}[Fixpunkt]
+Ein \textbf{Fixpunkt} einer Abbildung $f$ ist ein Punkt $P$ mit $f(P) = P$.
+\end{definition}
+
+Für eine lineare Abbildung $f(\vec{x}) = A\vec{x}$: $A\vec{x} = \vec{x} \Leftrightarrow (A-I)\vec{x} = \vec{0}$.
+\begin{itemize}
+  \item Falls $\det(A-I) \neq 0$: einziger Fixpunkt ist der Ursprung.
+  \item Falls $\det(A-I) = 0$: es gibt eine Fixpunktgerade (oder die gesamte Ebene ist fix, wenn $A = I$).
+\end{itemize}
+
+Für eine affine Abbildung $f(\vec{x}) = A\vec{x} + \vec{t}$: $A\vec{x} + \vec{t} = \vec{x} \Leftrightarrow (A-I)\vec{x} = -\vec{t}$.
+
+\subsection{Fixgeraden}
+
+\begin{definition}[Fixgerade]
+Eine Gerade heisst \textbf{Fixgerade}, wenn sie als Ganzes auf sich selbst abgebildet wird (die einzelnen Punkte dürfen sich aber auf der Geraden bewegen). Eine Gerade, deren Punkte alle Fixpunkte sind, heisst \textbf{punktweise Fixgerade}.
+\end{definition}
+
+Eine Gerade durch den Ursprung in Richtung eines Eigenvektors ist eine Fixgerade (punktweise fix, wenn $\lambda = 1$).
+
+\begin{beispiel}
+$A = \begin{pmatrix} 3 & 0 \\ 0 & 1 \end{pmatrix}$: Eigenvektoren $\begin{pmatrix} 1 \\ 0 \end{pmatrix}$ (zu $\lambda=3$) und $\begin{pmatrix} 0 \\ 1 \end{pmatrix}$ (zu $\lambda=1$).
+
+Die $x$-Achse ist Fixgerade (Punkte werden gestreckt). Die $y$-Achse ist punktweise Fixgerade ($\lambda = 1$).
+\end{beispiel}
+
+\section{Verkettung von Abbildungen}
+
+Die Verkettung $f \circ g$ ("`zuerst $g$, dann $f$"') zweier linearer Abbildungen entspricht dem Matrizenprodukt:
+\[
+(f \circ g)(\vec{x}) = A_f \cdot (A_g \cdot \vec{x}) = (A_f \cdot A_g) \vec{x}
+\]
+
+\begin{merkbox}[Reihenfolge beachten]
+Bei der Verkettung steht die \textbf{zuerst} auszuführende Abbildung \textbf{rechts}: $A_f A_g$ bedeutet "`zuerst $g$, dann $f$"'.
+\end{merkbox}
+
+\section{Konstruktion und Begründung der Formeln}
+
+\subsection{Drehung}
+
+Die Drehmatrix ergibt sich, indem man die Bilder der Basisvektoren bestimmt:
+\begin{itemize}
+  \item $\vec{e}_1 = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$ wird zu $\begin{pmatrix} \cos\alpha \\ \sin\alpha \end{pmatrix}$
+  \item $\vec{e}_2 = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$ wird zu $\begin{pmatrix} -\sin\alpha \\ \cos\alpha \end{pmatrix}$
+\end{itemize}
+Diese Bilder bilden die Spalten der Matrix.
+
+\subsection{Spiegelung}
+
+Sei $\vec{a}$ der Einheitsvektor in Richtung der Spiegelachse. Ein beliebiger Vektor $\vec{v}$ wird zerlegt in:
+\[
+\vec{v} = \underbrace{(\vec{v}\cdot\vec{a})\vec{a}}_{\text{parallel zu }\vec{a}} + \underbrace{(\vec{v} - (\vec{v}\cdot\vec{a})\vec{a})}_{\text{senkrecht zu }\vec{a}}
+\]
+Bei der Spiegelung bleibt die parallele Komponente erhalten und die senkrechte wird negiert:
+\[
+S\vec{v} = 2(\vec{v}\cdot\vec{a})\vec{a} - \vec{v}
+\]
+
+\subsection{Scherung}
+
+Bei einer Scherung in $x$-Richtung entlang der $x$-Achse wird jeder Punkt um $k\cdot y$ in $x$-Richtung verschoben:
+\[
+\begin{pmatrix} x' \\ y' \end{pmatrix} = \begin{pmatrix} x + ky \\ y \end{pmatrix} = \begin{pmatrix} 1 & k \\ 0 & 1 \end{pmatrix}\begin{pmatrix} x \\ y \end{pmatrix}
+\]
+
+%=============================================================================
+\chapter{Kegelschnitte}
+%=============================================================================
+
+\section{Übersicht und Definition}
+
+\begin{definition}[Kegelschnitt]
+\textbf{Kegelschnitte} sind die Kurven, die entstehen, wenn man einen Doppelkegel (zwei Kegel Spitze an Spitze) mit einer Ebene schneidet. Je nach Lage der Schnittebene erhält man:
+\begin{itemize}
+  \item \textbf{Kreis}: Ebene senkrecht zur Kegelachse
+  \item \textbf{Ellipse}: Ebene schräg, schneidet nur einen Kegelmantel
+  \item \textbf{Parabel}: Ebene parallel zu einer Mantellinie
+  \item \textbf{Hyperbel}: Ebene schneidet beide Kegelmäntel
+\end{itemize}
+\end{definition}
+
+\section{Dandelin-Kugeln}
+
+Die \textbf{Dandelin-Kugeln} sind ein elegantes geometrisches Werkzeug, um die Brennpunkteigenschaften der Kegelschnitte zu beweisen.
+
+\begin{merkbox}[Dandelin-Konstruktion für die Ellipse]
+Man legt in den Kegel zwei Kugeln, die den Kegel von innen berühren (eine oberhalb, eine unterhalb der Schnittebene) und gleichzeitig die Schnittebene berühren. Die Berührpunkte der Kugeln mit der Schnittebene sind die \textbf{Brennpunkte} $F_1$ und $F_2$ der Ellipse.
+
+Für jeden Punkt $P$ der Ellipse gilt: Die Strecken $PF_1$ und $PF_2$ entsprechen Mantellinienabschnitten des Kegels zwischen den beiden Berührkreisen der Kugeln. Da dieser Abstand konstant ist, folgt:
+\[
+|PF_1| + |PF_2| = \text{const.} = 2a
+\]
+\end{merkbox}
+
+Analoge Konstruktionen gelten für Parabel (eine Kugel) und Hyperbel (zwei Kugeln auf verschiedenen Kegelhälften).
+
+\section{Der Kreis}
+
+\begin{formelbox}[Kreisgleichung]
+\[
+(x-x_0)^2 + (y-y_0)^2 = r^2
+\]
+\begin{itemize}
+  \item Mittelpunkt: $M(x_0, y_0)$
+  \item Radius: $r$
+\end{itemize}
+\end{formelbox}
+
+\section{Die Ellipse}
+
+\begin{formelbox}[{Ellipsengleichung (Mittelpunkt im Ursprung)}]
+\[
+\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1
+\]
+\begin{itemize}
+  \item Halbachsen: $a$ (in $x$-Richtung), $b$ (in $y$-Richtung); für $a > b$: grosse Halbachse $a$
+  \item Mittelpunkt: Ursprung
+  \item Scheitel: $(\pm a, 0)$ und $(0, \pm b)$
+  \item Brennpunkte: $(\pm c, 0)$ mit $c = \sqrt{a^2 - b^2}$ (bei $a > b$)
+  \item Exzentrizität: $e = \frac{c}{a} \in [0,1)$
+  \item Eigenschaft: $|PF_1| + |PF_2| = 2a$ für jeden Punkt $P$ auf der Ellipse
+\end{itemize}
+\end{formelbox}
+
+\textbf{Tangente} an die Ellipse im Punkt $P(x_0, y_0)$:
+\[
+\frac{x_0 \cdot x}{a^2} + \frac{y_0 \cdot y}{b^2} = 1
+\]
+
+\section{Die Hyperbel}
+
+\begin{formelbox}[{Hyperbelgleichung (Mittelpunkt im Ursprung)}]
+\[
+\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1
+\]
+\begin{itemize}
+  \item Halbachsen: $a$ (reelle Halbachse), $b$ (imaginäre Halbachse)
+  \item Scheitel: $(\pm a, 0)$
+  \item Brennpunkte: $(\pm c, 0)$ mit $c = \sqrt{a^2 + b^2}$
+  \item Exzentrizität: $e = \frac{c}{a} > 1$
+  \item Asymptoten: $y = \pm \frac{b}{a}x$
+  \item Eigenschaft: $\big||PF_1| - |PF_2|\big| = 2a$
+\end{itemize}
+\end{formelbox}
+
+\textbf{Tangente} an die Hyperbel im Punkt $P(x_0, y_0)$:
+\[
+\frac{x_0 \cdot x}{a^2} - \frac{y_0 \cdot y}{b^2} = 1
+\]
+
+\section{Die Parabel}
+
+\begin{formelbox}[Parabelgleichung]
+\[
+y^2 = 4px \quad \text{(nach rechts geöffnet)}
+\]
+oder äquivalent: $x = \frac{y^2}{4p}$
+\begin{itemize}
+  \item Scheitel: Ursprung
+  \item Brennpunkt: $F(p, 0)$
+  \item Leitgerade (Direktrix): $x = -p$
+  \item Eigenschaft: Jeder Punkt $P$ auf der Parabel hat den gleichen Abstand zum Brennpunkt und zur Leitgeraden: $|PF| = d(P, \ell)$
+  \item Exzentrizität: $e = 1$
+\end{itemize}
+\end{formelbox}
+
+Für die Standardparabel $y = ax^2$ gilt: $x^2 = \frac{1}{a}y$, also $4p = \frac{1}{a}$, Brennpunkt bei $(0, \frac{1}{4a})$.
+
+\textbf{Tangente} an $y^2 = 4px$ im Punkt $P(x_0, y_0)$:
+\[
+y_0 \cdot y = 2p(x + x_0)
+\]
+
+\section{Erkennung der Kegelschnitte}
+
+Die allgemeine Gleichung zweiten Grades lautet:
+\[
+Ax^2 + Bxy + Cy^2 + Dx + Ey + F = 0
+\]
+
+Kriterium anhand der Diskriminante $\Delta = B^2 - 4AC$:
+\begin{itemize}
+  \item $\Delta < 0$: Ellipse (oder Kreis, falls $A = C$ und $B = 0$)
+  \item $\Delta = 0$: Parabel
+  \item $\Delta > 0$: Hyperbel
+\end{itemize}
+
+\section{Bestimmung der Gleichung bei gegebenen Eigenschaften}
+
+\begin{beispiel}
+Gesucht ist die Gleichung einer Ellipse mit Brennpunkten $F_1(-3,0)$, $F_2(3,0)$ und grosser Halbachse $a = 5$.
+
+Lösung: $c = 3$, $a = 5$, $b = \sqrt{a^2 - c^2} = \sqrt{25-9} = 4$.
+\[
+\frac{x^2}{25} + \frac{y^2}{16} = 1
+\]
+\end{beispiel}
+
+\begin{beispiel}
+Gesucht ist die Gleichung einer Parabel mit Brennpunkt $F(0, 2)$ und Scheitel im Ursprung.
+
+Lösung: Die Parabel öffnet nach oben, $p = 2$: $x^2 = 4 \cdot 2 \cdot y = 8y$.
+\end{beispiel}
+
+%=============================================================================
+\chapter{Komplexe Analysis}
+%=============================================================================
+
+\section{Komplexe Zahlen: Grundlagen}
+
+\begin{definition}[Komplexe Zahl]
+Eine \textbf{komplexe Zahl} $z$ hat die Form:
+\[
+z = a + bi \quad \text{(Koordinatenform / kartesische Form)}
+\]
+wobei $a = \operatorname{Re}(z)$ der \textbf{Realteil}, $b = \operatorname{Im}(z)$ der \textbf{Imaginärteil} und $i = \sqrt{-1}$ die \textbf{imaginäre Einheit} ist (mit $i^2 = -1$).
+\end{definition}
+
+\subsection{Darstellung in der Gauss'schen Zahlenebene}
+
+Jede komplexe Zahl $z = a+bi$ kann als Punkt $(a,b)$ in der Ebene dargestellt werden:
+\begin{itemize}
+  \item Horizontale Achse: Realteil
+  \item Vertikale Achse: Imaginärteil
+\end{itemize}
+
+\subsection{Polarform}
+
+\begin{formelbox}[Polarform]
+\[
+z = r(\cos\varphi + i\sin\varphi) = r \cdot e^{i\varphi} \quad \text{(Euler'sche Formel)}
+\]
+\begin{itemize}
+  \item $r = |z| = \sqrt{a^2 + b^2}$ ist der \textbf{Betrag} (Abstand zum Ursprung)
+  \item $\varphi = \arg(z) = \arctan\frac{b}{a}$ ist das \textbf{Argument} (Winkel zur positiven reellen Achse)
+\end{itemize}
+Umrechnung: $a = r\cos\varphi$, $b = r\sin\varphi$.
+\end{formelbox}
+
+\subsection{Konjugiert komplexe Zahl}
+
+\begin{definition}
+Die \textbf{konjugiert komplexe Zahl} von $z = a+bi$ ist:
+\[
+\bar{z} = a - bi
+\]
+\end{definition}
+
+Eigenschaften: $z \cdot \bar{z} = a^2 + b^2 = |z|^2$, $\overline{z_1 + z_2} = \bar{z}_1 + \bar{z}_2$, $\overline{z_1 \cdot z_2} = \bar{z}_1 \cdot \bar{z}_2$.
+
+\section{Rechenoperationen}
+
+\begin{formelbox}[Grundrechenarten]
+Seien $z_1 = a+bi$ und $z_2 = c+di$:
+\begin{align*}
+z_1 + z_2 &= (a+c) + (b+d)i \\
+z_1 - z_2 &= (a-c) + (b-d)i \\
+z_1 \cdot z_2 &= (ac-bd) + (ad+bc)i \\
+\frac{z_1}{z_2} &= \frac{z_1 \cdot \bar{z}_2}{|z_2|^2} = \frac{(ac+bd) + (bc-ad)i}{c^2+d^2}
+\end{align*}
+\end{formelbox}
+
+\subsection{Multiplikation und Division in Polarform}
+
+\begin{formelbox}[Multiplikation und Division in Polarform]
+Seien $z_1 = r_1 e^{i\varphi_1}$ und $z_2 = r_2 e^{i\varphi_2}$:
+\[
+z_1 \cdot z_2 = r_1 r_2 \cdot e^{i(\varphi_1 + \varphi_2)}
+\]
+\[
+\frac{z_1}{z_2} = \frac{r_1}{r_2} \cdot e^{i(\varphi_1 - \varphi_2)}
+\]
+\textbf{Beträge multiplizieren/dividieren, Argumente addieren/subtrahieren.}
+\end{formelbox}
+
+\textbf{Begründung:}
+\begin{align*}
+z_1 \cdot z_2 &= r_1(\cos\varphi_1 + i\sin\varphi_1) \cdot r_2(\cos\varphi_2 + i\sin\varphi_2) \\
+&= r_1 r_2 [(\cos\varphi_1\cos\varphi_2 - \sin\varphi_1\sin\varphi_2) + i(\cos\varphi_1\sin\varphi_2 + \sin\varphi_1\cos\varphi_2)] \\
+&= r_1 r_2 [\cos(\varphi_1+\varphi_2) + i\sin(\varphi_1+\varphi_2)]
+\end{align*}
+wobei die Additionstheoreme der Trigonometrie verwendet wurden.
+
+\subsection{Potenzen}
+
+\begin{formelbox}[Formel von de Moivre]
+\[
+z^n = r^n \cdot e^{in\varphi} = r^n(\cos(n\varphi) + i\sin(n\varphi))
+\]
+\end{formelbox}
+
+\section{Quadratische Gleichungen}
+
+Die quadratische Gleichung $az^2 + bz + c = 0$ mit $a,b,c \in \mathbb{C}$ (oder $\mathbb{R}$) hat die Lösungen:
+\[
+z_{1,2} = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+\]
+
+Ist die Diskriminante $D = b^2 - 4ac < 0$ (für reelle Koeffizienten), so sind die Lösungen konjugiert komplex:
+\[
+z_{1,2} = \frac{-b \pm i\sqrt{|D|}}{2a}
+\]
+
+\begin{beispiel}
+$z^2 + 2z + 5 = 0$: $D = 4 - 20 = -16$
+\[
+z_{1,2} = \frac{-2 \pm i\sqrt{16}}{2} = \frac{-2 \pm 4i}{2} = -1 \pm 2i
+\]
+\end{beispiel}
+
+\section{Möbius-Transformationen}
+
+\begin{definition}[Möbius-Transformation]
+Eine \textbf{Möbius-Transformation} (gebrochen lineare Funktion) ist eine Abbildung der Form:
+\[
+w = f(z) = \frac{az + b}{cz + d}, \quad ad - bc \neq 0
+\]
+mit $a, b, c, d \in \mathbb{C}$.
+\end{definition}
+
+\subsection{Umkehrfunktion}
+
+\begin{formelbox}[Inverse Möbius-Transformation]
+Die Umkehrfunktion von $f(z) = \frac{az+b}{cz+d}$ ist:
+\[
+f^{-1}(w) = \frac{dw - b}{-cw + a}
+\]
+Dies ist ebenfalls eine Möbius-Transformation.
+\end{formelbox}
+
+\subsection{Möbius-Transformationen als Verkettung}
+
+Jede Möbius-Transformation kann als Verkettung elementarer Abbildungen dargestellt werden:
+\begin{enumerate}
+  \item \textbf{Translation}: $z \mapsto z + \alpha$
+  \item \textbf{Streckung/Drehung}: $z \mapsto \beta z$ (mit $\beta \in \mathbb{C}$)
+  \item \textbf{Inversion}: $z \mapsto \frac{1}{z}$
+\end{enumerate}
+
+\textbf{Zerlegung:} Falls $c \neq 0$, kann man schreiben:
+\[
+f(z) = \frac{a}{c} + \frac{bc - ad}{c^2} \cdot \frac{1}{z + d/c}
+\]
+Dies ist die Verkettung: Translation $z \mapsto z + d/c$, dann Inversion $\mapsto 1/(\cdot)$, dann Streckung/Drehung $\mapsto \frac{bc-ad}{c^2} \cdot (\cdot)$, dann Translation $\mapsto (\cdot) + a/c$.
+
+\subsection{Kreis- und Geradentreue}
+
+\begin{satz}
+Möbius-Transformationen bilden \textbf{Kreise und Geraden} stets auf \textbf{Kreise oder Geraden} ab. (Eine Gerade kann dabei als "`Kreis durch $\infty$"' aufgefasst werden.)
+\end{satz}
+
+\textbf{Begründung:} Es genügt zu zeigen, dass jede der drei elementaren Abbildungen (Translation, Streckung/Drehung, Inversion) Kreise/Geraden auf Kreise/Geraden abbildet:
+\begin{itemize}
+  \item Translation und Streckung/Drehung: offensichtlich.
+  \item Inversion $w = 1/z$: Die allgemeine Kreis/Geraden-Gleichung $A(x^2+y^2) + Bx + Cy + D = 0$ (mit $A=0$ für Geraden) wird durch $w = 1/z$, also $z = 1/w$, wieder in eine Gleichung derselben Form transformiert.
+\end{itemize}
+
+\section{Bild von Kreisen, Geraden, Sektoren}
+
+Um das Bild eines Kreises oder einer Geraden unter einer Möbius-Transformation zu bestimmen:
+\begin{enumerate}
+  \item Bestimme die Bilder von drei Punkten auf dem Kreis/der Geraden (drei Punkte bestimmen eindeutig einen Kreis oder eine Gerade).
+  \item Durch die drei Bildpunkte verläuft der Bildkreis bzw.\ die Bildgerade.
+\end{enumerate}
+
+\begin{beispiel}
+$f(z) = \frac{1}{z}$. Bild des Einheitskreises $|z| = 1$?
+
+Für $|z| = 1$ gilt $z = e^{i\varphi}$, also $f(z) = e^{-i\varphi}$, und $|f(z)| = 1$. Der Einheitskreis wird auf sich selbst abgebildet (mit umgekehrter Durchlaufrichtung).
+\end{beispiel}
+
+\begin{beispiel}
+$f(z) = \frac{1}{z}$. Bild der imaginären Achse ($\operatorname{Re}(z) = 0$)?
+
+Setze $z = iy$ ($y \neq 0$): $f(z) = \frac{1}{iy} = \frac{-i}{y}$. Dies ist wieder rein imaginär, also wird die imaginäre Achse (ohne 0) auf sich selbst abgebildet.
+\end{beispiel}
+
+\section{Die Abbildungen $w = z^2$ und $w = z^{1/2}$}
+
+\subsection{$w = z^2$}
+
+In Polarform: Sei $z = re^{i\varphi}$, dann $w = z^2 = r^2 e^{i \cdot 2\varphi}$.
+\begin{itemize}
+  \item Beträge werden quadriert.
+  \item Winkel werden verdoppelt.
+  \item Geraden durch den Ursprung (Winkel $\varphi = \text{const.}$) werden auf Geraden durch den Ursprung abgebildet (Winkel $2\varphi$).
+  \item Ein Sektor mit Öffnungswinkel $\alpha$ wird auf einen Sektor mit Öffnungswinkel $2\alpha$ abgebildet.
+  \item Die obere Halbebene ($0 \leq \varphi \leq \pi$) wird auf die gesamte Ebene abgebildet ($0 \leq 2\varphi \leq 2\pi$).
+\end{itemize}
+
+\subsection{$w = z^{1/2}$}
+
+Dies ist die Umkehrfunktion von $z^2$ und ist \textbf{zweideutig}: $w = \sqrt{r}\, e^{i\varphi/2}$.
+\begin{itemize}
+  \item Beträge werden wurzelgezogen.
+  \item Winkel werden halbiert.
+  \item Die gesamte Ebene wird auf die obere Halbebene abgebildet (Hauptwert).
+\end{itemize}
+
+%=============================================================================
+\chapter{Differentialgleichungen}
+%=============================================================================
+
+\section{Einführung}
+
+\begin{definition}[Differentialgleichung]
+Eine \textbf{gewöhnliche Differentialgleichung} (DGL) ist eine Gleichung, in der eine unbekannte Funktion $y(x)$ und ihre Ableitungen vorkommen. Die \textbf{Ordnung} der DGL ist die höchste vorkommende Ableitung.
+\end{definition}
+
+Eine DGL 1.\ Ordnung hat die allgemeine Form:
+\[
+y' = f(x, y)
+\]
+
+\section{Separation der Variablen -- analytische Lösung}
+
+\begin{formelbox}[Separation der Variablen]
+Anwendbar, wenn die DGL die Form hat:
+\[
+y' = g(x) \cdot h(y) \quad \text{bzw.} \quad \frac{dy}{dx} = g(x) \cdot h(y)
+\]
+\textbf{Methode:}
+\begin{enumerate}
+  \item Variablen trennen: $\frac{dy}{h(y)} = g(x)\, dx$
+  \item Beide Seiten integrieren: $\int \frac{1}{h(y)}\, dy = \int g(x)\, dx + C$
+  \item Nach $y$ auflösen (falls möglich)
+\end{enumerate}
+\end{formelbox}
+
+\begin{beispiel}
+$y' = xy$, also $\frac{dy}{dx} = xy$.
+
+Separation: $\frac{dy}{y} = x\, dx$
+
+Integration: $\ln|y| = \frac{x^2}{2} + C$
+
+Lösung: $y = A \cdot e^{x^2/2}$ mit $A = \pm e^C$.
+\end{beispiel}
+
+\begin{beispiel}
+$y' = \frac{x}{y}$, $y(0) = 2$.
+
+$y\, dy = x\, dx \Rightarrow \frac{y^2}{2} = \frac{x^2}{2} + C \Rightarrow y^2 = x^2 + 2C$.
+
+Anfangsbedingung: $4 = 0 + 2C \Rightarrow C = 2$. Also $y = \sqrt{x^2 + 4}$.
+\end{beispiel}
+
+\section{Variation der Konstanten -- analytische Lösung}
+
+\begin{formelbox}[Variation der Konstanten]
+Für \textbf{lineare DGL 1.\ Ordnung} der Form:
+\[
+y' + p(x) \cdot y = q(x)
+\]
+\textbf{Methode:}
+\begin{enumerate}
+  \item Löse zuerst die \textbf{homogene} Gleichung $y' + p(x) \cdot y = 0$:
+  \[
+  y_h = C \cdot e^{-\int p(x)\, dx}
+  \]
+  \item Ersetze die Konstante $C$ durch eine Funktion $C(x)$ ("`Variation der Konstanten"'):
+  \[
+  y = C(x) \cdot e^{-\int p(x)\, dx}
+  \]
+  \item Setze in die ursprüngliche DGL ein und bestimme $C(x)$:
+  \[
+  C'(x) = q(x) \cdot e^{\int p(x)\, dx}
+  \]
+  \[
+  C(x) = \int q(x) \cdot e^{\int p(x)\, dx}\, dx
+  \]
+\end{enumerate}
+\end{formelbox}
+
+\begin{beispiel}
+$y' - 2y = e^{3x}$.
+
+Homogene Lösung: $y_h = Ce^{2x}$.
+
+Ansatz: $y = C(x) e^{2x}$. Einsetzen: $C'(x)e^{2x} + 2C(x)e^{2x} - 2C(x)e^{2x} = e^{3x}$
+
+$C'(x) = e^{x} \Rightarrow C(x) = e^{x} + K$
+
+Allgemeine Lösung: $y = (e^x + K)e^{2x} = e^{3x} + Ke^{2x}$.
+\end{beispiel}
+
+\section{Richtungsfeld -- graphische Lösung}
+
+\begin{definition}[Richtungsfeld]
+Das \textbf{Richtungsfeld} einer DGL $y' = f(x,y)$ ist eine graphische Darstellung, bei der in jedem Punkt $(x,y)$ ein kurzes Linienelement mit der Steigung $f(x,y)$ eingezeichnet wird.
+\end{definition}
+
+\textbf{Vorgehen:}
+\begin{enumerate}
+  \item Wähle ein Gitter von Punkten $(x_i, y_j)$.
+  \item Berechne an jedem Gitterpunkt die Steigung $m = f(x_i, y_j)$.
+  \item Zeichne ein kurzes Linienelement mit dieser Steigung.
+  \item Die Lösungskurven schmiegen sich an die Linienelemente an.
+\end{enumerate}
+
+\textbf{Isoklinen:} Kurven $f(x,y) = c$ (konstante Steigung) helfen beim Zeichnen.
+
+\section{Euler-Verfahren -- numerische Lösung}
+
+\begin{formelbox}[{Euler-Verfahren (explizit)}]
+Gegeben: $y' = f(x,y)$, Anfangswert $y(x_0) = y_0$, Schrittweite $h$.
+\[
+x_{n+1} = x_n + h
+\]
+\[
+y_{n+1} = y_n + h \cdot f(x_n, y_n)
+\]
+Man folgt der Tangente im aktuellen Punkt über die Schrittweite $h$.
+\end{formelbox}
+
+\begin{beispiel}
+$y' = y$, $y(0) = 1$, $h = 0.1$.
+
+\begin{tabular}{c|c|c|c}
+$n$ & $x_n$ & $y_n$ & $f(x_n,y_n) = y_n$ \\
+\hline
+0 & 0 & 1 & 1 \\
+1 & 0.1 & $1 + 0.1\cdot 1 = 1.1$ & 1.1 \\
+2 & 0.2 & $1.1 + 0.1\cdot 1.1 = 1.21$ & 1.21 \\
+3 & 0.3 & $1.21 + 0.1\cdot 1.21 = 1.331$ & 1.331
+\end{tabular}
+
+Exakte Lösung: $y = e^x$, also $y(0.3) = e^{0.3} \approx 1.3499$. Der Euler-Fehler ist $\approx 1.4\%$.
+
+Je kleiner $h$, desto genauer die Approximation.
+\end{beispiel}
+
+%=============================================================================
+\chapter{Hypothesen testen}
+%=============================================================================
+
+\section{Grundbegriffe}
+
+\begin{definition}[Hypothesentest]
+Ein \textbf{Hypothesentest} (statistischer Test) ist ein Verfahren, mit dem man anhand einer Stichprobe entscheidet, ob eine Behauptung (Hypothese) über eine Grundgesamtheit beibehalten oder verworfen wird.
+\end{definition}
+
+\begin{itemize}
+  \item \textbf{Nullhypothese $H_0$}: Die Ausgangshypothese, die man beibehalten möchte (oft: "`kein Effekt"', "`kein Unterschied"').
+  \item \textbf{Alternativhypothese $H_1$}: Die Gegenhypothese ("`es gibt einen Effekt"').
+  \item \textbf{Signifikanzniveau $\alpha$}: Die maximal tolerierte Wahrscheinlichkeit, $H_0$ fälschlicherweise abzulehnen (typisch: $\alpha = 0.05$).
+  \item \textbf{Ablehnungsbereich} (kritischer Bereich): Bereich der Teststatistik, in dem $H_0$ abgelehnt wird.
+\end{itemize}
+
+\section{Fehler 1.\ Art und Fehler 2.\ Art}
+
+\begin{formelbox}[Fehlerarten]
+\begin{center}
+\begin{tabular}{l|cc}
+ & $H_0$ ist wahr & $H_0$ ist falsch \\
+\hline
+$H_0$ beibehalten & Richtige Entscheidung & \textbf{Fehler 2.\ Art} ($\beta$) \\
+$H_0$ ablehnen & \textbf{Fehler 1.\ Art} ($\alpha$) & Richtige Entscheidung \\
+\end{tabular}
+\end{center}
+\begin{itemize}
+  \item \textbf{Fehler 1.\ Art} ($\alpha$-Fehler): $H_0$ wird abgelehnt, obwohl $H_0$ wahr ist. Die Wahrscheinlichkeit ist $\alpha$ (das Signifikanzniveau).
+  \item \textbf{Fehler 2.\ Art} ($\beta$-Fehler): $H_0$ wird beibehalten, obwohl $H_0$ falsch ist. Die Wahrscheinlichkeit ist $\beta$.
+  \item \textbf{Macht (Power)} des Tests: $1 - \beta$ (Wahrscheinlichkeit, einen vorhandenen Effekt zu erkennen).
+\end{itemize}
+\end{formelbox}
+
+\textbf{Bestimmung von $\alpha$:} $\alpha$ wird vor dem Test festgelegt und bestimmt den kritischen Bereich.
+
+\textbf{Bestimmung von $\beta$:} Hängt vom tatsächlichen Wert des Parameters unter $H_1$ ab. Man berechnet die Wahrscheinlichkeit, dass die Teststatistik unter $H_1$ im Annahmebereich von $H_0$ liegt.
+
+\section{Einseitige und zweiseitige Tests}
+
+\begin{itemize}
+  \item \textbf{Zweiseitiger Test}: $H_0: p = p_0$ vs.\ $H_1: p \neq p_0$. Der Ablehnungsbereich liegt auf beiden Seiten.
+  \item \textbf{Einseitiger Test (linksseitig)}: $H_0: p \geq p_0$ vs.\ $H_1: p < p_0$. Ablehnungsbereich nur links.
+  \item \textbf{Einseitiger Test (rechtsseitig)}: $H_0: p \leq p_0$ vs.\ $H_1: p > p_0$. Ablehnungsbereich nur rechts.
+\end{itemize}
+
+\section{Binomialtest}
+
+\begin{formelbox}[Binomialtest]
+\textbf{Situation:} $n$ unabhängige Versuche mit Erfolgswahrscheinlichkeit $p$. Die Anzahl Erfolge $X$ ist $B(n,p)$-verteilt.
+
+\textbf{Test:} $H_0: p = p_0$. Beobachtet wird $k$ Erfolge.
+
+\textbf{Ablehnungsbereich} (zweiseitig): Alle $k$ mit $P(X = k \mid p_0)$ im Bereich der kleinsten Wahrscheinlichkeiten, so dass die Gesamtwahrscheinlichkeit $\leq \alpha$.
+
+\textbf{Praktisch:} Bestimme die kritischen Werte $k_u$ und $k_o$, so dass:
+\[
+P(X \leq k_u \mid p_0) \leq \frac{\alpha}{2} \quad \text{und} \quad P(X \geq k_o \mid p_0) \leq \frac{\alpha}{2}
+\]
+$H_0$ wird abgelehnt, wenn $k \leq k_u$ oder $k \geq k_o$.
+\end{formelbox}
+
+\begin{beispiel}
+Eine Münze wird 100-mal geworfen; es fallen 62 Mal Kopf. Ist die Münze fair ($p = 0.5$)?
+
+$H_0: p = 0.5$, $H_1: p \neq 0.5$, $\alpha = 0.05$.
+
+Erwartungswert: $\mu = 50$, Standardabweichung: $\sigma = \sqrt{100 \cdot 0.5 \cdot 0.5} = 5$.
+
+Kritische Werte (Normalapproximation): $k_u \approx 50 - 1.96 \cdot 5 = 40.2$ und $k_o \approx 50 + 1.96\cdot 5 = 59.8$.
+
+Da $62 > 59.8$: $H_0$ wird abgelehnt. Die Münze ist vermutlich nicht fair.
+\end{beispiel}
+
+\section{Qualitätstest}
+
+Der \textbf{Qualitätstest} ist eine Anwendung des Binomialtests in der Qualitätskontrolle. Man prüft, ob der Anteil defekter Produkte einen vorgegebenen Wert $p_0$ überschreitet.
+
+$H_0$: "`Die Ausschussrate ist höchstens $p_0$"' ($p \leq p_0$).
+
+$H_1$: "`Die Ausschussrate ist grösser als $p_0$"' ($p > p_0$).
+
+Dies ist ein \textbf{einseitiger Test} (rechtsseitig). Man bestimmt $k_o$, so dass $P(X \geq k_o \mid p_0) \leq \alpha$, und lehnt $H_0$ ab, wenn die Anzahl Defekte $\geq k_o$ ist.
+
+\section{Vorzeichentest}
+
+\begin{formelbox}[Vorzeichentest]
+\textbf{Situation:} Man möchte prüfen, ob der Median einer Verteilung gleich $m_0$ ist. Statt der Zahlenwerte nutzt man nur die \textbf{Vorzeichen} der Differenzen $x_i - m_0$.
+
+\textbf{Methode:}
+\begin{enumerate}
+  \item Berechne $d_i = x_i - m_0$ für jede Beobachtung.
+  \item Zähle die positiven Vorzeichen: $k = \#\{i : d_i > 0\}$; eliminiere Nullen.
+  \item Unter $H_0$ ist $k \sim B(n, 0.5)$.
+  \item Vergleiche $k$ mit dem kritischen Bereich des Binomialtests.
+\end{enumerate}
+\end{formelbox}
+
+\section{Wilcoxon-Mann-Whitney-Rangsummentest (U-Test)}
+
+\begin{formelbox}[Rangsummentest]
+\textbf{Situation:} Zwei unabhängige Stichproben $X_1, \ldots, X_m$ und $Y_1, \ldots, Y_n$. Man prüft, ob beide Stichproben aus derselben Verteilung stammen.
+
+$H_0$: Die beiden Stichproben haben dieselbe Verteilung.
+
+\textbf{Methode:}
+\begin{enumerate}
+  \item Vereinige alle $m + n$ Werte und ordne sie der Grösse nach. Weise jedem Wert seinen \textbf{Rang} zu.
+  \item Berechne die \textbf{Rangsumme} $R_1$ der ersten Stichprobe (Summe der Ränge der $X$-Werte).
+  \item Berechne die Teststatistik:
+  \[
+  U_1 = R_1 - \frac{m(m+1)}{2}, \quad U_2 = mn - U_1
+  \]
+  Die Teststatistik ist $U = \min(U_1, U_2)$.
+  \item Vergleiche $U$ mit dem kritischen Wert aus der $U$-Tabelle (oder verwende die Normalapproximation für grosse Stichproben).
+\end{enumerate}
+Unter $H_0$ gilt: $\mathbb{E}[U] = \frac{mn}{2}$, $\operatorname{Var}(U) = \frac{mn(m+n+1)}{12}$.
+\end{formelbox}
+
+\begin{beispiel}
+Stichprobe A: 23, 28, 31, 35 ($m=4$). Stichprobe B: 20, 25, 30, 33, 37 ($n=5$).
+
+Sortiert: 20(B), 23(A), 25(B), 28(A), 30(B), 31(A), 33(B), 35(A), 37(B).
+
+Ränge: 1(B), 2(A), 3(B), 4(A), 5(B), 6(A), 7(B), 8(A), 9(B).
+
+$R_1 = 2+4+6+8 = 20$, $U_1 = 20 - \frac{4 \cdot 5}{2} = 10$, $U_2 = 4 \cdot 5 - 10 = 10$.
+
+$U = 10 = \frac{mn}{2}$: kein Unterschied zwischen den Gruppen.
+\end{beispiel}
+
+%=============================================================================
+% TEIL II: PHYSIK
+%=============================================================================
+\part{Physik}
+
+%=============================================================================
+\chapter{Mechanik}
+%=============================================================================
+
+\section{Kinematik}
+
+\subsection{Geradlinige Bewegung}
+
+\begin{formelbox}[Grundgrössen der Kinematik]
+\begin{itemize}
+  \item \textbf{Position}: $x(t)$ [m]
+  \item \textbf{Geschwindigkeit}: $v(t) = \dot{x}(t) = \frac{dx}{dt}$ [m/s]
+  \item \textbf{Beschleunigung}: $a(t) = \dot{v}(t) = \ddot{x}(t) = \frac{d^2 x}{dt^2}$ [m/s$^2$]
+\end{itemize}
+\end{formelbox}
+
+\begin{formelbox}[{Gleichmässig beschleunigte Bewegung ($a = \text{const.}$)}]
+\begin{align*}
+v(t) &= v_0 + at \\
+x(t) &= x_0 + v_0 t + \frac{1}{2}at^2 \\
+v^2 &= v_0^2 + 2a(x - x_0)
+\end{align*}
+\end{formelbox}
+
+\subsection{Wurfbewegungen}
+
+\textbf{Freier Fall:} $x = \frac{1}{2}gt^2$, $v = gt$, mit $g \approx 9.81\;\text{m/s}^2$.
+
+\textbf{Senkrechter Wurf nach oben:} $y(t) = v_0 t - \frac{1}{2}gt^2$, Steighöhe $h = \frac{v_0^2}{2g}$.
+
+\begin{formelbox}[Schiefer Wurf]
+Abschusswinkel $\alpha$, Anfangsgeschwindigkeit $v_0$:
+\begin{align*}
+x(t) &= v_0 \cos\alpha \cdot t \\
+y(t) &= v_0 \sin\alpha \cdot t - \frac{1}{2}gt^2
+\end{align*}
+\textbf{Wurfweite:} $w = \frac{v_0^2 \sin 2\alpha}{g}$ \quad (maximale Weite bei $\alpha = 45^{\circ}$)
+
+\textbf{Maximale Höhe:} $h = \frac{v_0^2 \sin^2\alpha}{2g}$
+
+\textbf{Bahnkurve} (Parabel): $y = x\tan\alpha - \frac{g}{2v_0^2\cos^2\alpha}\,x^2$
+\end{formelbox}
+
+\section{Dynamik -- Newtonsche Gesetze}
+
+\begin{formelbox}[Newton'sche Axiome]
+\begin{enumerate}
+  \item \textbf{Trägheitsprinzip}: Ein Körper bleibt in Ruhe oder gleichförmiger Bewegung, wenn keine resultierende Kraft wirkt.
+  \item \textbf{Aktionsprinzip}: $\vec{F} = m\vec{a}$
+  \item \textbf{Reaktionsprinzip} (actio = reactio): $\vec{F}_{12} = -\vec{F}_{21}$
+\end{enumerate}
+\end{formelbox}
+
+\textbf{Wichtige Kräfte:}
+\begin{itemize}
+  \item Gewichtskraft: $F_G = mg$
+  \item Federkraft (Hooke'sches Gesetz): $F = -kx$
+  \item Reibungskraft: $F_R = \mu F_N$ (Haft- oder Gleitreibung)
+  \item Normalkraft $F_N$: senkrecht zur Auflagefläche
+\end{itemize}
+
+\section{Energie- und Impulserhaltung}
+
+\subsection{Energieerhaltung}
+
+\begin{formelbox}[Energieformen und Energieerhaltung]
+\begin{itemize}
+  \item \textbf{Kinetische Energie}: $E_{kin} = \frac{1}{2}mv^2$
+  \item \textbf{Potentielle Energie} (Schwere): $E_{pot} = mgh$
+  \item \textbf{Potentielle Energie} (Feder): $E_{pot} = \frac{1}{2}kx^2$
+\end{itemize}
+\textbf{Energieerhaltung} (ohne Reibung):
+\[
+E_{kin,1} + E_{pot,1} = E_{kin,2} + E_{pot,2}
+\]
+\textbf{Arbeit-Energie-Theorem}: $W = \Delta E_{kin} = \int \vec{F} \cdot d\vec{s}$
+\end{formelbox}
+
+\subsection{Impulserhaltung}
+
+\begin{formelbox}[Impuls und Impulserhaltung]
+\textbf{Impuls}: $\vec{p} = m\vec{v}$
+
+\textbf{Kraftstoss}: $\vec{F} = \frac{d\vec{p}}{dt}$
+
+\textbf{Impulserhaltung} (abgeschlossenes System):
+\[
+\vec{p}_{\text{vorher}} = \vec{p}_{\text{nachher}}
+\]
+\[
+m_1\vec{v}_1 + m_2\vec{v}_2 = m_1\vec{v}_1' + m_2\vec{v}_2'
+\]
+\end{formelbox}
+
+\subsection{Stösse}
+
+\begin{formelbox}[Stossarten]
+\textbf{Elastischer Stoss}: Impuls \textbf{und} kinetische Energie erhalten.
+\[
+v_1' = \frac{m_1 - m_2}{m_1 + m_2}v_1 + \frac{2m_2}{m_1 + m_2}v_2
+\]
+\[
+v_2' = \frac{2m_1}{m_1 + m_2}v_1 + \frac{m_2 - m_1}{m_1 + m_2}v_2
+\]
+\textbf{Vollkommen unelastischer Stoss}: Körper kleben zusammen.
+\[
+(m_1 + m_2)v' = m_1 v_1 + m_2 v_2
+\]
+\end{formelbox}
+
+\section{Kreisbewegung}
+
+\begin{formelbox}[Gleichförmige Kreisbewegung]
+\begin{itemize}
+  \item \textbf{Winkelgeschwindigkeit}: $\omega = \frac{2\pi}{T} = 2\pi f$ \quad [rad/s]
+  \item \textbf{Bahngeschwindigkeit}: $v = \omega r$
+  \item \textbf{Zentripetalbeschleunigung}: $a_z = \frac{v^2}{r} = \omega^2 r$ \quad (zum Zentrum gerichtet)
+  \item \textbf{Zentripetalkraft}: $F_z = m\frac{v^2}{r} = m\omega^2 r$
+  \item \textbf{Umlaufzeit}: $T = \frac{2\pi}{\omega} = \frac{2\pi r}{v}$
+\end{itemize}
+\end{formelbox}
+
+\subsection{Gravitation}
+
+\begin{formelbox}[Newton'sches Gravitationsgesetz]
+\[
+F = G\frac{m_1 m_2}{r^2}, \quad G = 6.674 \cdot 10^{-11}\;\frac{\text{Nm}^2}{\text{kg}^2}
+\]
+\textbf{Gravitationsfeldstärke}: $g = \frac{GM}{r^2}$
+
+\textbf{Kreisbahngeschwindigkeit}: $v = \sqrt{\frac{GM}{r}}$
+
+\textbf{3.\ Kepler'sches Gesetz}: $\frac{T^2}{a^3} = \frac{4\pi^2}{GM}$ ($a$ = grosse Halbachse)
+\end{formelbox}
+
+\section{Starre Körper}
+
+\subsection{Statik des starren Körpers}
+
+Ein starrer Körper ist im Gleichgewicht, wenn:
+\begin{enumerate}
+  \item Die Summe aller Kräfte null ist: $\sum \vec{F}_i = \vec{0}$
+  \item Die Summe aller Drehmomente bezüglich eines beliebigen Punktes null ist: $\sum \vec{M}_i = \vec{0}$
+\end{enumerate}
+
+\begin{formelbox}[Drehmoment]
+\[
+\vec{M} = \vec{r} \times \vec{F}, \quad |\vec{M}| = rF\sin\theta = F \cdot d
+\]
+wobei $d$ der \textbf{Hebelarm} (senkrechter Abstand der Wirkungslinie der Kraft zum Drehpunkt) ist.
+\end{formelbox}
+
+\subsection{Trägheitsmomente}
+
+\begin{formelbox}[Trägheitsmoment]
+Das \textbf{Trägheitsmoment} $J$ (oder $I$) eines Körpers bezüglich einer Achse ist das rotatorische Analogon zur Masse:
+\[
+J = \sum_i m_i r_i^2 \quad \text{(diskret)} \qquad J = \int r^2\, dm \quad \text{(kontinuierlich)}
+\]
+\textbf{Wichtige Trägheitsmomente:}
+\begin{itemize}
+  \item Vollzylinder (Achse = Symmetrieachse): $J = \frac{1}{2}mr^2$
+  \item Hohlzylinder (dünnwandig): $J = mr^2$
+  \item Vollkugel: $J = \frac{2}{5}mr^2$
+  \item Stab (Achse durch Mitte, senkrecht): $J = \frac{1}{12}m\ell^2$
+  \item Stab (Achse durch Ende): $J = \frac{1}{3}m\ell^2$
+\end{itemize}
+\textbf{Satz von Steiner}: $J = J_S + md^2$ ($J_S$ = Trägheitsmoment bzgl.\ Schwerpunktachse, $d$ = Abstand).
+\end{formelbox}
+
+\subsection{Rotationsenergie}
+
+\begin{formelbox}[Rotationsenergie und Rotationsgleichungen]
+\[
+E_{rot} = \frac{1}{2}J\omega^2
+\]
+\textbf{Newton für Rotation}: $M = J\alpha$ ($\alpha$ = Winkelbeschleunigung)
+
+\textbf{Drehimpuls}: $L = J\omega$
+
+\textbf{Drehimpulserhaltung}: In einem abgeschlossenen System ist $L = J\omega = \text{const.}$
+
+\textbf{Gesamtenergie} (Translation + Rotation, z.\,B.\ rollende Kugel):
+\[
+E_{ges} = \frac{1}{2}mv^2 + \frac{1}{2}J\omega^2
+\]
+mit $v = \omega r$ beim Abrollen ohne Gleiten.
+\end{formelbox}
+
+%=============================================================================
+\chapter{Wärmelehre (Thermodynamik)}
+%=============================================================================
+
+\section{Grundbegriffe}
+
+\begin{itemize}
+  \item \textbf{Temperatur} $T$: Maß für die mittlere kinetische Energie der Teilchen. Einheit: Kelvin [K]. $T[\text{K}] = T[^{\circ}\text{C}] + 273.15$.
+  \item \textbf{Innere Energie} $U$: Gesamte kinetische und potentielle Energie aller Teilchen eines Systems.
+  \item \textbf{Wärme} $Q$: Energie, die aufgrund eines Temperaturunterschieds übertragen wird.
+  \item \textbf{Arbeit} $W$: Energie, die durch mechanische Einwirkung übertragen wird (z.\,B.\ Kompression eines Gases).
+\end{itemize}
+
+\section{Ideales Gas}
+
+\begin{formelbox}[Ideale Gasgleichung]
+\[
+pV = nRT = Nk_BT
+\]
+\begin{itemize}
+  \item $p$: Druck [Pa], $V$: Volumen [m$^3$], $T$: Temperatur [K]
+  \item $n$: Stoffmenge [mol], $R = 8.314\;\text{J/(mol\,K)}$: universelle Gaskonstante
+  \item $N$: Teilchenzahl, $k_B = 1.381 \cdot 10^{-23}\;\text{J/K}$: Boltzmann-Konstante
+\end{itemize}
+\end{formelbox}
+
+\subsection{Kinetische Gastheorie}
+
+\begin{formelbox}[Elemente der kinetischen Gastheorie]
+\textbf{Gasdruck:} Der Druck entsteht durch die Stösse der Gasteilchen gegen die Wand:
+\[
+p = \frac{1}{3}\frac{N}{V}m\overline{v^2} = \frac{2}{3}\frac{N}{V}\overline{E_{kin}}
+\]
+\textbf{Mittlere kinetische Energie pro Teilchen:}
+\[
+\overline{E_{kin}} = \frac{3}{2}k_BT
+\]
+\textbf{Innere Energie des idealen Gases:}
+\[
+U = \frac{f}{2}Nk_BT = \frac{f}{2}nRT
+\]
+wobei $f$ die Anzahl der Freiheitsgrade ist.
+\end{formelbox}
+
+\subsection{Freiheitsgrade und Gleichverteilungssatz}
+
+\begin{formelbox}[Gleichverteilungssatz der Energie]
+Auf jeden \textbf{Freiheitsgrad} entfällt im thermischen Gleichgewicht die mittlere Energie $\frac{1}{2}k_BT$ pro Teilchen.
+\begin{itemize}
+  \item Einatomiges Gas: $f = 3$ (3 Translationsfreiheitsgrade) $\Rightarrow U = \frac{3}{2}nRT$
+  \item Zweiatomiges Gas: $f = 5$ (3 Translation + 2 Rotation) $\Rightarrow U = \frac{5}{2}nRT$
+  \item Mehratomig: $f = 6$ (3 Translation + 3 Rotation)
+\end{itemize}
+\end{formelbox}
+
+\subsection{Wärmekapazitäten}
+
+\begin{formelbox}[Wärmekapazitäten des idealen Gases]
+\textbf{Molare Wärmekapazität bei konstantem Volumen:}
+\[
+C_V = \frac{f}{2}R
+\]
+\textbf{Molare Wärmekapazität bei konstantem Druck:}
+\[
+C_p = C_V + R = \frac{f+2}{2}R
+\]
+\textbf{Adiabatenexponent:}
+\[
+\gamma = \frac{C_p}{C_V} = \frac{f+2}{f}
+\]
+Einatomig: $\gamma = 5/3$, zweiatomig: $\gamma = 7/5$.
+\end{formelbox}
+
+\section{Hauptsätze der Thermodynamik}
+
+\begin{formelbox}[0.\ Hauptsatz]
+Stehen zwei Systeme jeweils im thermischen Gleichgewicht mit einem dritten, so sind sie auch untereinander im Gleichgewicht (definiert Temperatur als Zustandsgrösse).
+\end{formelbox}
+
+\begin{formelbox}[{1.\ Hauptsatz der Wärmelehre (Energieerhaltung)}]
+\[
+\Delta U = Q + W
+\]
+Die Änderung der inneren Energie eines Systems ist gleich der zugeführten Wärme $Q$ plus der am System verrichteten Arbeit $W$.
+
+Konvention: $Q > 0$ = Wärme zugeführt, $W > 0$ = Arbeit am System verrichtet.
+
+Für quasistatische Prozesse: $W = -\int p\, dV$ (Volumenarbeit), also:
+\[
+dU = \delta Q - p\, dV
+\]
+\end{formelbox}
+
+\begin{formelbox}[2.\ Hauptsatz]
+\textbf{Clausius}: Wärme fliesst nicht von selbst von einem kälteren zu einem wärmeren Körper.
+
+\textbf{Kelvin}: Es ist unmöglich, eine periodisch arbeitende Maschine zu konstruieren, die nichts anderes bewirkt als die Umwandlung von Wärme in Arbeit.
+
+\textbf{Entropie}: $\Delta S \geq 0$ für abgeschlossene Systeme. $dS = \frac{\delta Q_{rev}}{T}$.
+\end{formelbox}
+
+\subsection{Zustandsänderungen}
+
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Prozess} & \textbf{Konstant} & \textbf{Beziehung} & $Q$ / $W$ \\
+\midrule
+Isochor & $V$ & $\frac{p_1}{T_1} = \frac{p_2}{T_2}$ & $Q = nC_V\Delta T$, $W=0$ \\
+Isobar & $p$ & $\frac{V_1}{T_1} = \frac{V_2}{T_2}$ & $Q = nC_p\Delta T$ \\
+Isotherm & $T$ & $p_1V_1 = p_2V_2$ & $W = -nRT\ln\frac{V_2}{V_1}$ \\
+Adiabatisch & $Q=0$ & $pV^\gamma = \text{const.}$ & $W = \Delta U = nC_V\Delta T$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Wärmekraftmaschinen}
+
+Eine \textbf{Wärmekraftmaschine} wandelt Wärme in mechanische Arbeit um. Sie nimmt Wärme $Q_H$ aus einem heissen Reservoir (Temperatur $T_H$) auf, gibt Wärme $Q_C$ an ein kaltes Reservoir (Temperatur $T_C$) ab und verrichtet Arbeit $W = Q_H - Q_C$.
+
+\begin{formelbox}[Wirkungsgrad]
+\[
+\eta = \frac{W}{Q_H} = \frac{Q_H - Q_C}{Q_H} = 1 - \frac{Q_C}{Q_H}
+\]
+\textbf{Carnot'scher Wirkungsgrad} (Maximum für reversible Prozesse):
+\[
+\eta_C = 1 - \frac{T_C}{T_H}
+\]
+Für alle realen Maschinen gilt: $\eta \leq \eta_C$.
+\end{formelbox}
+
+\subsection{Carnot-Maschine}
+
+Der \textbf{Carnot-Kreisprozess} besteht aus vier Schritten:
+\begin{enumerate}
+  \item Isotherme Expansion bei $T_H$: Wärme $Q_H$ wird aufgenommen.
+  \item Adiabatische Expansion: Gas kühlt von $T_H$ auf $T_C$ ab.
+  \item Isotherme Kompression bei $T_C$: Wärme $Q_C$ wird abgegeben.
+  \item Adiabatische Kompression: Gas erwärmt sich von $T_C$ auf $T_H$.
+\end{enumerate}
+
+\section{Wärmepumpen und Kältemaschinen}
+
+\begin{formelbox}[Wärmepumpe und Kältemaschine]
+Eine \textbf{Wärmepumpe} entzieht dem kalten Reservoir Wärme und gibt sie an das warme Reservoir ab ("`umgekehrte Wärmekraftmaschine"').
+
+\textbf{Leistungszahl der Wärmepumpe} (COP):
+\[
+\varepsilon_{WP} = \frac{Q_H}{W} = \frac{Q_H}{Q_H - Q_C} \leq \frac{T_H}{T_H - T_C}
+\]
+
+\textbf{Leistungszahl der Kältemaschine} (COP):
+\[
+\varepsilon_{K} = \frac{Q_C}{W} = \frac{Q_C}{Q_H - Q_C} \leq \frac{T_C}{T_H - T_C}
+\]
+
+Es gilt: $\varepsilon_{WP} = \varepsilon_K + 1$.
+\end{formelbox}
+
+\section{Wärmetransport}
+
+\begin{formelbox}[Wärmetransportmechanismen]
+\textbf{1.\ Wärmeleitung} (Konduktion): Wärmetransport durch Teilchenstösse in Festkörpern/Fluiden.
+\[
+\dot{Q} = -\lambda A \frac{\Delta T}{\Delta x}
+\]
+$\lambda$: Wärmeleitfähigkeit [W/(m\,K)], $A$: Querschnittsfläche, $\Delta x$: Dicke.
+
+\textbf{2.\ Konvektion}: Wärmetransport durch Strömung eines Fluids.
+\[
+\dot{Q} = \alpha A \Delta T
+\]
+$\alpha$: Wärmeübergangskoeffizient [W/(m$^2$\,K)].
+
+\textbf{3.\ Wärmestrahlung}: Wärmetransport durch elektromagnetische Strahlung.
+\[
+P = \varepsilon \sigma A T^4 \quad \text{(Stefan-Boltzmann-Gesetz)}
+\]
+$\sigma = 5.670 \cdot 10^{-8}\;\text{W/(m}^2\text{K}^4\text{)}$, $\varepsilon$: Emissionsgrad ($0 \leq \varepsilon \leq 1$).
+
+Netto-Strahlungsleistung: $P_{net} = \varepsilon \sigma A(T^4 - T_{Umg}^4)$.
+\end{formelbox}
+
+%=============================================================================
+\chapter{Elektrizitätslehre}
+%=============================================================================
+
+\section{Elektrische Felder}
+
+\begin{formelbox}[Coulomb-Gesetz und elektrisches Feld]
+\textbf{Coulomb-Kraft:}
+\[
+F = \frac{1}{4\pi\varepsilon_0}\frac{q_1 q_2}{r^2}, \quad \varepsilon_0 = 8.854 \cdot 10^{-12}\;\text{F/m}
+\]
+\textbf{Elektrische Feldstärke:}
+\[
+\vec{E} = \frac{\vec{F}}{q} \quad [\text{N/C} = \text{V/m}]
+\]
+\textbf{Feldstärke einer Punktladung:}
+\[
+E = \frac{1}{4\pi\varepsilon_0}\frac{Q}{r^2}
+\]
+\end{formelbox}
+
+\subsection{Plattenkondensator}
+
+\begin{formelbox}[Plattenkondensator]
+Zwischen zwei parallelen Platten mit Abstand $d$ und Fläche $A$:
+\[
+E = \frac{U}{d} \quad \text{(homogenes Feld)}
+\]
+\textbf{Kapazität:}
+\[
+C = \varepsilon_0 \varepsilon_r \frac{A}{d} \quad [\text{Farad, F}]
+\]
+\textbf{Gespeicherte Energie:}
+\[
+W = \frac{1}{2}CU^2 = \frac{1}{2}\frac{Q^2}{C} = \frac{1}{2}QU
+\]
+\textbf{Ladung:} $Q = CU$
+\end{formelbox}
+
+\subsection{Millikan-Versuch}
+
+Der \textbf{Millikan-Versuch} dient zur Bestimmung der Elementarladung $e$.
+
+\textbf{Prinzip:} Geladene Öltröpfchen schweben zwischen den Platten eines Kondensators, wenn die elektrische Kraft die Schwerkraft kompensiert:
+\[
+qE = mg \quad \Rightarrow \quad q = \frac{mg}{E} = \frac{mgd}{U}
+\]
+
+\textbf{Ergebnis:} Alle gemessenen Ladungen sind ganzzahlige Vielfache der Elementarladung $e = 1.602 \cdot 10^{-19}\;\text{C}$.
+
+\section{Lorentzkraft}
+
+\begin{formelbox}[Lorentzkraft]
+Auf eine Ladung $q$, die sich mit Geschwindigkeit $\vec{v}$ in einem Magnetfeld $\vec{B}$ bewegt, wirkt die \textbf{Lorentzkraft}:
+\[
+\vec{F} = q\vec{v} \times \vec{B}
+\]
+Betrag: $F = qvB\sin\theta$ ($\theta$ = Winkel zwischen $\vec{v}$ und $\vec{B}$).
+
+Die Kraft steht \textbf{senkrecht} zu $\vec{v}$ und zu $\vec{B}$ (Drei-Finger-Regel der rechten Hand für positive Ladungen).
+\end{formelbox}
+
+\subsection{Geladene Teilchen im Magnetfeld}
+
+Ein Teilchen, das senkrecht zu $\vec{B}$ fliegt, wird auf eine \textbf{Kreisbahn} gezwungen:
+\[
+qvB = \frac{mv^2}{r} \quad \Rightarrow \quad r = \frac{mv}{qB}
+\]
+\textbf{Zyklotronfrequenz:} $\omega_c = \frac{qB}{m}$, unabhängig von $v$.
+
+\subsection{Geladene Teilchen im elektrischen Feld}
+
+Ein Teilchen der Ladung $q$ und Masse $m$ im homogenen Feld $E$:
+\[
+a = \frac{qE}{m}
+\]
+Senkrecht zum Feld eintretende Teilchen beschreiben eine \textbf{Parabel} (analog zum schiefen Wurf).
+
+\section{RC-Kreise: Laden und Entladen}
+
+\begin{formelbox}[RC-Kreis]
+\textbf{Laden} (Spannungsquelle $U_0$):
+\[
+U_C(t) = U_0\left(1 - e^{-t/\tau}\right), \quad I(t) = \frac{U_0}{R}e^{-t/\tau}
+\]
+\textbf{Entladen:}
+\[
+U_C(t) = U_0 \cdot e^{-t/\tau}, \quad I(t) = -\frac{U_0}{R}e^{-t/\tau}
+\]
+\textbf{Zeitkonstante:} $\tau = RC$
+
+Nach $t = \tau$: Spannung auf $\approx 63\%$ (Laden) bzw.\ $\approx 37\%$ (Entladen) des Endwerts.
+\end{formelbox}
+
+\section{Schwingkreise}
+
+\begin{formelbox}[{Elektrischer Schwingkreis (LC-Kreis)}]
+Kondensator $C$ und Spule $L$ in Reihe: Energie pendelt zwischen elektrischer ($\frac{1}{2}CU^2$) und magnetischer ($\frac{1}{2}LI^2$) Energie.
+
+\textbf{Eigenfrequenz} (Thomson-Formel):
+\[
+\omega_0 = \frac{1}{\sqrt{LC}}, \quad f_0 = \frac{1}{2\pi\sqrt{LC}}
+\]
+\textbf{DGL:} $\ddot{Q} + \frac{1}{LC}Q = 0$
+
+\textbf{Lösung:} $Q(t) = Q_0\cos(\omega_0 t + \varphi_0)$
+
+Mit Widerstand $R$ (\textbf{gedämpfter Schwingkreis}):
+\[
+\ddot{Q} + \frac{R}{L}\dot{Q} + \frac{1}{LC}Q = 0
+\]
+Lösung: gedämpfte Schwingung $Q(t) = Q_0 e^{-\delta t}\cos(\omega t + \varphi_0)$ mit $\delta = \frac{R}{2L}$.
+\end{formelbox}
+
+\section{Wechselstrom (komplexe Darstellung)}
+
+\subsection{Grundlagen}
+
+\begin{formelbox}[Wechselstromgrössen]
+\[
+U(t) = U_0 \sin(\omega t + \varphi_U), \quad I(t) = I_0 \sin(\omega t + \varphi_I)
+\]
+\textbf{Komplexe Schreibweise:}
+\[
+\underline{U} = U_0 e^{i(\omega t + \varphi_U)}, \quad \underline{I} = I_0 e^{i(\omega t + \varphi_I)}
+\]
+\textbf{Impedanz} (komplexer Widerstand):
+\[
+\underline{Z} = \frac{\underline{U}}{\underline{I}} = Z e^{i\varphi}, \quad \varphi = \varphi_U - \varphi_I
+\]
+\end{formelbox}
+
+\subsection{Impedanzen der Grundelemente}
+
+\begin{formelbox}[Impedanzen]
+\begin{itemize}
+  \item \textbf{Ohm'scher Widerstand}: $\underline{Z}_R = R$ (Strom und Spannung in Phase)
+  \item \textbf{Spule} (Induktivität $L$): $\underline{Z}_L = i\omega L$ (Strom eilt Spannung um $90^{\circ}$ nach)
+  \item \textbf{Kondensator} (Kapazität $C$): $\underline{Z}_C = \frac{1}{i\omega C} = -\frac{i}{\omega C}$ (Strom eilt Spannung um $90^{\circ}$ voraus)
+\end{itemize}
+\end{formelbox}
+
+\subsection{RCL-Reihenschaltung}
+
+\begin{formelbox}[RCL-Reihenschaltung]
+\[
+\underline{Z} = R + i\omega L + \frac{1}{i\omega C} = R + i\left(\omega L - \frac{1}{\omega C}\right)
+\]
+\textbf{Betrag:} $Z = \sqrt{R^2 + \left(\omega L - \frac{1}{\omega C}\right)^2}$
+
+\textbf{Phasenwinkel:} $\tan\varphi = \frac{\omega L - \frac{1}{\omega C}}{R}$
+
+\textbf{Resonanz:} $\omega L = \frac{1}{\omega C} \Rightarrow \omega_0 = \frac{1}{\sqrt{LC}}$ (Impedanz minimal $= R$)
+\end{formelbox}
+
+%=============================================================================
+\chapter{Wellenoptik}
+%=============================================================================
+
+\section{Licht als Welle}
+
+Licht ist eine \textbf{elektromagnetische Transversalwelle} mit Wellenlänge $\lambda$, Frequenz $f$ und Ausbreitungsgeschwindigkeit $c = \lambda f$.
+
+Sichtbares Licht: $\lambda \approx 380\;\text{nm}$ (violett) bis $780\;\text{nm}$ (rot).
+
+\section{Interferenz am Doppelspalt}
+
+\begin{formelbox}[{Doppelspalt (Young)}]
+Spaltabstand $d$, Beobachtungsschirm im Abstand $L$:
+
+\textbf{Konstruktive Interferenz} (Maxima):
+\[
+d\sin\theta = m\lambda, \quad m = 0, \pm 1, \pm 2, \ldots
+\]
+\textbf{Destruktive Interferenz} (Minima):
+\[
+d\sin\theta = \left(m + \frac{1}{2}\right)\lambda
+\]
+Position auf dem Schirm (Kleinwinkelnäherung): $y_m = \frac{m\lambda L}{d}$
+\end{formelbox}
+
+\section{Interferenz an dünnen Schichten}
+
+\begin{formelbox}[Dünne Schichten]
+Bei einer Schicht der Dicke $t$ und Brechungsindex $n$:
+
+\textbf{Gangunterschied:} $\Delta = 2nt$ (plus eventueller Phasensprung von $\lambda/2$ bei Reflexion am optisch dichteren Medium).
+
+\textbf{Konstruktive Interferenz:} $2nt = m\lambda$ (ohne Phasensprung) oder $2nt = (m+\frac{1}{2})\lambda$ (mit einem Phasensprung).
+\end{formelbox}
+
+\section{Beugung}
+
+\subsection{Einzelspalt}
+
+\begin{formelbox}[Einzelspaltbeugung]
+Spaltbreite $b$:
+
+\textbf{Minima:}
+\[
+b\sin\theta = m\lambda, \quad m = \pm 1, \pm 2, \ldots
+\]
+\textbf{Breite des Zentralmaximums:} $\Delta\theta = \frac{2\lambda}{b}$
+\end{formelbox}
+
+\subsection{Beugung am Gitter}
+
+\begin{formelbox}[Optisches Gitter]
+Gitterkonstante $d$ (Abstand benachbarter Spalte), $N$ Spalte:
+
+\textbf{Hauptmaxima:}
+\[
+d\sin\theta = m\lambda, \quad m = 0, \pm 1, \pm 2, \ldots
+\]
+\textbf{Auflösungsvermögen:} $\frac{\lambda}{\Delta\lambda} = mN$
+
+Je mehr Spalte, desto schärfer die Maxima.
+\end{formelbox}
+
+%=============================================================================
+\chapter{Moderne Physik}
+%=============================================================================
+
+\section{Spezielle Relativitätstheorie (SRT)}
+
+\subsection{Postulate}
+
+\begin{formelbox}[{Einstein'sche Postulate (1905)}]
+\begin{enumerate}
+  \item \textbf{Relativitätsprinzip}: Die Gesetze der Physik haben in allen Inertialsystemen dieselbe Form.
+  \item \textbf{Konstanz der Lichtgeschwindigkeit}: Die Lichtgeschwindigkeit im Vakuum $c = 299\,792\,458\;\text{m/s}$ ist in allen Inertialsystemen gleich, unabhängig von der Bewegung der Quelle oder des Beobachters.
+\end{enumerate}
+\end{formelbox}
+
+\subsection{Relativität der Gleichzeitigkeit}
+
+Zwei Ereignisse, die in einem Bezugssystem gleichzeitig stattfinden, sind in einem relativ dazu bewegten System im Allgemeinen \textbf{nicht gleichzeitig}.
+
+\textbf{Gedankenexperiment:} In einem Zug werden von der Mitte aus gleichzeitig Lichtsignale nach vorn und hinten gesendet. Im Zugsystem treffen sie gleichzeitig bei den Enden ein. Für einen Beobachter am Bahnsteig trifft das nach hinten gesandte Signal aber zuerst ein (da sich das hintere Zugende dem Signal entgegenbewegt).
+
+\subsection{Lorentz-Faktor}
+
+\begin{formelbox}[Lorentz-Faktor]
+\[
+\gamma = \frac{1}{\sqrt{1 - \frac{v^2}{c^2}}} = \frac{1}{\sqrt{1 - \beta^2}}, \quad \beta = \frac{v}{c}
+\]
+Es gilt $\gamma \geq 1$, und $\gamma \to \infty$ für $v \to c$.
+\end{formelbox}
+
+\subsection{Zeitdilatation}
+
+\begin{formelbox}[Zeitdilatation]
+Eine Uhr, die sich relativ zum Beobachter mit Geschwindigkeit $v$ bewegt, läuft \textbf{langsamer}:
+\[
+\Delta t = \gamma \cdot \Delta t_0
+\]
+$\Delta t_0$ ist die \textbf{Eigenzeit} (gemessen im Ruhesystem der Uhr), $\Delta t$ ist die vom bewegten Beobachter gemessene (dilatierte) Zeit.
+
+"`Bewegte Uhren gehen langsamer."'
+\end{formelbox}
+
+\subsection{Längenkontraktion}
+
+\begin{formelbox}[Längenkontraktion]
+Ein Objekt, das sich relativ zum Beobachter mit $v$ bewegt, erscheint in Bewegungsrichtung \textbf{verkürzt}:
+\[
+L = \frac{L_0}{\gamma} = L_0\sqrt{1 - \frac{v^2}{c^2}}
+\]
+$L_0$ ist die \textbf{Ruhelänge} (Eigenlänge), $L$ die vom Beobachter gemessene (kontrahierte) Länge.
+\end{formelbox}
+
+\subsection{Lorentztransformation}
+
+\begin{formelbox}[Lorentztransformation]
+Koordinatentransformation zwischen zwei Inertialsystemen $S$ und $S'$, wobei $S'$ sich mit $v$ in $x$-Richtung relativ zu $S$ bewegt:
+\begin{align*}
+x' &= \gamma(x - vt) \\
+t' &= \gamma\left(t - \frac{vx}{c^2}\right) \\
+y' &= y, \quad z' = z
+\end{align*}
+\textbf{Inverse Transformation:} $v \to -v$, also $x = \gamma(x' + vt')$, $t = \gamma(t' + vx'/c^2)$.
+\end{formelbox}
+
+\subsection{Addition von Geschwindigkeiten}
+
+\begin{formelbox}[Relativistische Geschwindigkeitsaddition]
+Ein Objekt bewegt sich im System $S'$ mit Geschwindigkeit $u'$ (in $x$-Richtung). $S'$ bewegt sich mit $v$ relativ zu $S$. Die Geschwindigkeit im System $S$ ist:
+\[
+u = \frac{u' + v}{1 + \frac{u'v}{c^2}}
+\]
+\textbf{Konsequenzen:}
+\begin{itemize}
+  \item Für $u', v \ll c$: $u \approx u' + v$ (klassisches Ergebnis)
+  \item Für $u' = c$: $u = c$ (Lichtgeschwindigkeit bleibt $c$)
+  \item $u$ kann nie grösser als $c$ werden
+\end{itemize}
+\end{formelbox}
+
+\begin{beispiel}[Aufgabe 5.1.2.9]
+Ein Raumschiff ($L_0 = 350\;\text{m}$) bewegt sich mit $0.82c$. Ein Mikrometeorit fliegt antiparallel mit $0.82c$. Wie lange dauert der Vorbeiflug vom Raumschiff aus gemessen?
+
+Relativgeschwindigkeit: $u' = \frac{0.82c + 0.82c}{1 + 0.82^2} = \frac{1.64c}{1.6724} = 0.9806c$
+
+Dauer: $t = \frac{L_0}{u'} = \frac{350}{0.9806c} = 1.19 \cdot 10^{-6}\;\text{s}$
+\end{beispiel}
+
+\subsection{Relativistischer Dopplereffekt}
+
+\begin{formelbox}[Relativistischer Dopplereffekt]
+\textbf{Entfernung:}
+\[
+f = f_0\sqrt{\frac{c-v}{c+v}} \quad \Leftrightarrow \quad \lambda = \lambda_0\sqrt{\frac{c+v}{c-v}}
+\]
+\textbf{Annäherung:}
+\[
+f = f_0\sqrt{\frac{c+v}{c-v}}
+\]
+Für $v \ll c$ (Näherung): $\frac{\Delta\lambda}{\lambda_0} \approx \frac{v}{c}$ (Rotverschiebung bei Entfernung).
+\end{formelbox}
+
+\begin{beispiel}[Aufgabe 5.1.1.3]
+Natrium-Absorptionslinie bei 589\,nm wird bei 650\,nm beobachtet (Rotverschiebung $\Rightarrow$ Entfernung).
+
+$f_0 = c/589\;\text{nm} = 5.09 \cdot 10^{14}\;\text{Hz}$, $f = c/650\;\text{nm} = 4.612 \cdot 10^{14}\;\text{Hz}$.
+\[
+\sqrt{\frac{c-v}{c+v}} = \frac{f}{f_0} = 0.906 \quad \Rightarrow \quad v = 2.9 \cdot 10^7\;\text{m/s}
+\]
+\end{beispiel}
+
+\subsection{Relativistischer Impuls und relativistische Energie}
+
+\begin{formelbox}[Relativistischer Impuls]
+\[
+\vec{p} = \gamma m\vec{v}
+\]
+wobei $m$ die \textbf{Ruhemasse} ist.
+\end{formelbox}
+
+\begin{formelbox}[Relativistische Energie]
+\textbf{Gesamtenergie:}
+\[
+E = \gamma mc^2
+\]
+\textbf{Ruheenergie:}
+\[
+E_0 = mc^2
+\]
+\textbf{Kinetische Energie:}
+\[
+E_{kin} = E - E_0 = (\gamma - 1)mc^2
+\]
+\textbf{Energie-Impuls-Beziehung:}
+\[
+E^2 = (pc)^2 + (mc^2)^2
+\]
+Für masselose Teilchen (Photonen): $E = pc$.
+\end{formelbox}
+
+\begin{beispiel}[Aufgabe 5.1.3.2]
+Arbeit, um ein Elektron auf $0.999c$ zu beschleunigen:
+
+$\gamma = \frac{1}{\sqrt{1-0.999^2}} = 22.36$
+
+$E_{kin} = (\gamma - 1)m_ec^2 = 21.36 \cdot 9.109 \cdot 10^{-31} \cdot (3\cdot10^8)^2 = 1.75 \cdot 10^{-12}\;\text{J} \approx 10.9\;\text{MeV}$
+\end{beispiel}
+
+\section{Quantenphysik}
+
+\subsection{Der Photoeffekt}
+
+\begin{formelbox}[{Photoeffekt -- Einstein 1905}]
+Licht kann Elektronen aus einer Metalloberfläche herauslösen. Die \textbf{kinetische Energie} der Photoelektronen beträgt:
+\[
+E_{kin} = hf - W_A = \frac{hc}{\lambda} - W_A
+\]
+\begin{itemize}
+  \item $h = 6.626 \cdot 10^{-34}\;\text{J\,s}$: Planck'sches Wirkungsquantum
+  \item $f$: Frequenz des einfallenden Lichts
+  \item $W_A$: Austrittsarbeit des Metalls
+  \item \textbf{Grenzfrequenz:} $f_0 = \frac{W_A}{h}$ (unterhalb wird kein Elektron gelöst, unabhängig von der Intensität)
+\end{itemize}
+\textbf{Photon}: Lichtquant mit Energie $E = hf$ und Impuls $p = \frac{h}{\lambda} = \frac{hf}{c}$.
+\end{formelbox}
+
+\textbf{Experimentelle Befunde:}
+\begin{itemize}
+  \item Die kinetische Energie der Elektronen hängt \textit{nur} von der Frequenz ab, nicht von der Intensität.
+  \item Höhere Intensität $\Rightarrow$ mehr Elektronen, aber nicht schnellere.
+  \item Es gibt eine Grenzfrequenz, unterhalb derer keine Elektronen emittiert werden.
+  \item Der Effekt tritt sofort ein (keine Verzögerung).
+\end{itemize}
+
+\subsection{Der Comptoneffekt}
+
+\begin{formelbox}[{Comptoneffekt (1923)}]
+Bei der Streuung eines Photons an einem (quasi-)freien Elektron ändert sich die Wellenlänge:
+\[
+\Delta\lambda = \lambda' - \lambda = \frac{h}{m_ec}(1 - \cos\theta)
+\]
+\begin{itemize}
+  \item $\theta$: Streuwinkel des Photons
+  \item $\frac{h}{m_ec} = 2.426 \cdot 10^{-12}\;\text{m}$: \textbf{Compton-Wellenlänge} des Elektrons
+\end{itemize}
+Dies zeigt, dass Photonen \textbf{Impuls} besitzen und sich wie Teilchen verhalten (Teilcheneigenschaft des Lichts).
+\end{formelbox}
+
+\textbf{Herleitung:} Aus der Energie- und Impulserhaltung beim Stoss zwischen Photon und Elektron (relativistisch).
+
+\subsection{De Broglie und Materiewellen}
+
+\begin{formelbox}[{De-Broglie-Wellenlänge (1924)}]
+Jedem Teilchen mit Impuls $p$ kann eine \textbf{Materiewelle} mit Wellenlänge zugeordnet werden:
+\[
+\lambda = \frac{h}{p} = \frac{h}{mv}
+\]
+(nicht-relativistisch: $p = mv$)
+
+\textbf{Relativistisch:}
+\[
+\lambda = \frac{h}{\gamma mv}
+\]
+\end{formelbox}
+
+\textbf{Experimentelle Bestätigung:}
+\begin{itemize}
+  \item Elektronenbeugung an Kristallen (Davisson und Germer, 1927): Elektronen zeigen Beugungsmuster wie Wellen.
+  \item Auch für Neutronen, Atome und sogar Moleküle (C$_{60}$) nachgewiesen.
+\end{itemize}
+
+\textbf{Bedeutung:} Der Welle-Teilchen-Dualismus ist eine fundamentale Eigenschaft der Quantenphysik: Licht (Photonen) und Materie (Elektronen etc.) zeigen sowohl Wellen- als auch Teilcheneigenschaften, je nach Experiment.
+
+%=============================================================================
+% Anhang
+%=============================================================================
+\appendix
+\chapter{Wichtige Konstanten}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+\textbf{Grösse} & \textbf{Symbol} & \textbf{Wert} \\
+\midrule
+Lichtgeschwindigkeit & $c$ & $2.998 \cdot 10^8\;\text{m/s}$ \\
+Gravitationskonstante & $G$ & $6.674 \cdot 10^{-11}\;\text{N\,m}^2/\text{kg}^2$ \\
+Planck'sches Wirkungsquantum & $h$ & $6.626 \cdot 10^{-34}\;\text{J\,s}$ \\
+Boltzmann-Konstante & $k_B$ & $1.381 \cdot 10^{-23}\;\text{J/K}$ \\
+Elementarladung & $e$ & $1.602 \cdot 10^{-19}\;\text{C}$ \\
+Elektronenmasse & $m_e$ & $9.109 \cdot 10^{-31}\;\text{kg}$ \\
+Protonenmasse & $m_p$ & $1.673 \cdot 10^{-27}\;\text{kg}$ \\
+Elektrische Feldkonstante & $\varepsilon_0$ & $8.854 \cdot 10^{-12}\;\text{F/m}$ \\
+Magnetische Feldkonstante & $\mu_0$ & $4\pi \cdot 10^{-7}\;\text{H/m}$ \\
+Stefan-Boltzmann-Konstante & $\sigma$ & $5.670 \cdot 10^{-8}\;\text{W/(m}^2\text{K}^4)$ \\
+Universelle Gaskonstante & $R$ & $8.314\;\text{J/(mol\,K)}$ \\
+Avogadro-Konstante & $N_A$ & $6.022 \cdot 10^{23}\;\text{mol}^{-1}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\chapter{Formelsammlung}
+
+\section*{Affine Abbildungen}
+\begin{align*}
+&\text{Drehung:} & D_\alpha &= \begin{pmatrix} \cos\alpha & -\sin\alpha \\ \sin\alpha & \cos\alpha \end{pmatrix} \\
+&\text{Spiegelung (Achse Winkel } \theta\text{):} & S_\theta &= \begin{pmatrix} \cos 2\theta & \sin 2\theta \\ \sin 2\theta & -\cos 2\theta \end{pmatrix} \\
+&\text{Determinante:} & \det\begin{pmatrix} a & b \\ c & d \end{pmatrix} &= ad - bc \\
+&\text{Inverse:} & A^{-1} &= \frac{1}{\det A}\begin{pmatrix} d & -b \\ -c & a \end{pmatrix} \\
+&\text{Eigenwerte:} & \lambda^2 - (a+d)\lambda + (ad-bc) &= 0
+\end{align*}
+
+\section*{Kegelschnitte}
+\begin{align*}
+&\text{Ellipse:} & \frac{x^2}{a^2} + \frac{y^2}{b^2} &= 1, \quad c = \sqrt{a^2-b^2} \\
+&\text{Hyperbel:} & \frac{x^2}{a^2} - \frac{y^2}{b^2} &= 1, \quad c = \sqrt{a^2+b^2} \\
+&\text{Parabel:} & y^2 &= 4px
+\end{align*}
+
+\section*{Komplexe Zahlen}
+\begin{align*}
+z &= a + bi = re^{i\varphi}, \quad r = |z|, \quad \varphi = \arg(z) \\
+z^n &= r^n e^{in\varphi} \quad \text{(de Moivre)}
+\end{align*}
+
+\section*{SRT}
+\begin{align*}
+\gamma &= \frac{1}{\sqrt{1-v^2/c^2}} \\
+\Delta t &= \gamma \Delta t_0, \quad L = L_0/\gamma \\
+u &= \frac{u'+v}{1+u'v/c^2} \\
+E &= \gamma mc^2, \quad p = \gamma mv, \quad E^2 = p^2c^2 + m^2c^4
+\end{align*}
+
+\end{document}
+```
