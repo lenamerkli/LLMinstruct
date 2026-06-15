@@ -1,0 +1,21 @@
+§u§
+```
+OpenCV, the popular open-source computer vision and machine learning library, offers a wide range of tools for image processing and computer vision tasks. One of the critical functions in the context of image alignment and perspective transformation is findHomography. This function is used to find the transformation matrix that maps points from one plane to another. Understanding the inputs required for this function is crucial for its effective utilization. This article explores the essential inputs for the findHomography function in OpenCV.
+```
+Wie würde `findHomography` in Deutsch heissen?
+§a§
+
+Die Funktion `findHomography` wird in der deutschen OpenCV-Dokumentation und im deutschen Sprachraum in der Regel **nicht übersetzt**, sondern behält ihren englischen Namen bei. Technische Funktionsnamen in Bibliotheken wie OpenCV werden fast immer in der Originalsprache (Englisch) verwendet, unabhängig vom Kontext.
+
+Wenn man den **Zweck oder die Aufgabe** der Funktion auf Deutsch beschreiben möchte, sagt man typischerweise:
+
+- **"Homographiematrix berechnen"**
+- **"Perspektivtransformation bestimmen"**
+- **"Homographie zwischen zwei Punktmengen finden"**
+
+In einem deutschen Tutorial oder einer Erklärung würde man also schreiben:
+> "Mit `findHomography` kann man die Homographiematrix berechnen, die Punkte von einer Ebene auf eine andere abbildet."
+
+**Zusammenfassung:**
+- **Funktionsname:** `findHomography` (unverändert)
+- **Deutsche Beschreibung:** *Homographiematrix berechnen / Perspektivtransformation ermitteln*

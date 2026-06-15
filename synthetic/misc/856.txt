@@ -1,0 +1,133 @@
+§u§
+What formats exist to save 3D objects?
+§a§
+There are many file formats for saving 3D objects. They differ in whether they store **geometry only**, **materials/textures**, **animation**, **scene hierarchy**, **CAD precision**, or **3D-printing data**.
+
+## Common 3D object formats
+
+| Format | Extension | Common use |
+|---|---:|---|
+| **OBJ** | `.obj` | Simple polygon meshes; widely supported |
+| **FBX** | `.fbx` | Games, animation, rigged characters, scenes |
+| **glTF / GLB** | `.gltf`, `.glb` | Web, real-time 3D, AR/VR; often called the “JPEG of 3D” |
+| **STL** | `.stl` | 3D printing; geometry only, no color/material in standard use |
+| **PLY** | `.ply` | Scans, point clouds, mesh data, vertex colors |
+| **Collada** | `.dae` | Interchange format for scenes and assets |
+| **3DS** | `.3ds` | Older 3D Studio format |
+| **Blend** | `.blend` | Blender’s native format |
+| **Maya** | `.ma`, `.mb` | Autodesk Maya scene files |
+| **Cinema 4D** | `.c4d` | Cinema 4D native format |
+| **USD / USDZ** | `.usd`, `.usda`, `.usdc`, `.usdz` | Pixar/Apple pipelines, film, AR, scene interchange |
+| **Alembic** | `.abc` | Animation caches, simulations, VFX |
+| **STEP** | `.step`, `.stp` | CAD models, engineering, precise solids |
+| **IGES** | `.iges`, `.igs` | Older CAD interchange |
+| **Parasolid** | `.x_t`, `.x_b` | CAD solid modeling |
+| **DXF / DWG** | `.dxf`, `.dwg` | CAD drawings and 3D CAD data |
+| **AMF** | `.amf` | 3D printing, more advanced than STL |
+| **3MF** | `.3mf` | Modern 3D printing with materials, color, units |
+| **VRML / X3D** | `.wrl`, `.x3d` | Older web/interactive 3D formats |
+| **Point cloud formats** | `.las`, `.laz`, `.e57`, `.pts` | LiDAR, scanning, surveying |
+| **Voxel/volume formats** | `.vdb`, `.vox` | Volumes, smoke, fog, voxel models |
+
+## The most common ones
+
+For general 3D models:
+
+- **OBJ** — simple, universal, good for static meshes.
+- **FBX** — common in game engines and animation pipelines.
+- **glTF / GLB** — excellent for web, AR, real-time apps, and compact sharing.
+- **STL** — standard for basic 3D printing.
+- **3MF** — better modern format for 3D printing.
+- **STEP** — best for CAD/engineering models.
+
+## Quick guide
+
+If you want to save a model for:
+
+- **3D printing:** use `.stl` or `.3mf`
+- **Web or AR:** use `.glb` or `.gltf`
+- **Game engines:** use `.fbx` or `.glb`
+- **CAD/manufacturing:** use `.step`
+- **Blender editing:** use `.blend`
+- **Simple mesh exchange:** use `.obj`
+- **Scanned data:** use `.ply`, `.e57`, `.las`, or `.laz`
+§u§
+I need a format that supports all these features:
+- geometry
+- textures
+- point clouds
+- usable to represent a reallife town
+§a§
+**Best fit: OGC 3D Tiles**.
+
+If you need **geometry + textures + point clouds + a real-life town/city scale**, you probably don’t want a single “object file” like OBJ/FBX/GLB. You want a **geospatial 3D scene format** that can tile, stream, and georeference large datasets.
+
+## Recommended format: **3D Tiles**
+
+**3D Tiles** is designed for massive 3D geospatial datasets such as **photogrammetry, 3D buildings, BIM/CAD, instanced features, and point clouds**. A 3D Tiles dataset is a **tileset**, usually a folder or server-hosted structure with a `tileset.json` plus binary tile contents. It can contain different tile types, including 3D models and point clouds, organized spatially.
+
+It supports your requirements like this:
+
+| Requirement | 3D Tiles support |
+|---|---|
+| **Geometry** | Yes — buildings, terrain, meshes, BIM/CAD, instanced objects |
+| **Textures** | Yes — commonly through glTF/GLB tile content, which supports meshes, materials, and textures  |
+| **Point clouds** | Yes — point cloud tile content is part of the 3D Tiles standard  |
+| **Real-life town** | Yes — specifically intended for large 3D geospatial scenes and streaming city-scale data  |
+
+So if your goal is **visualization, web/mobile/VR, GIS-style viewing, digital-twin display, or streaming a town**, use:
+
+```text
+OGC 3D Tiles
+```
+
+Often with:
+
+```text
+tileset.json
+.glb / .gltf tiles
+.pnts or point-cloud tile content
+texture images
+metadata
+```
+
+## Strong alternative: **I3S / SLPK**
+
+Another good option is **I3S**, often packaged as **SLPK**. It is also an OGC community standard for streaming large 3D GIS datasets to web, mobile, and desktop clients. It supports large 3D geographic scenes, coordinate reference systems, height models, and multiple layer types.
+
+Use **I3S/SLPK** if you are working mainly in the **ArcGIS / Esri ecosystem**.
+
+```text
+I3S
+SLPK
+```
+
+## If you need semantic city data: **CityGML 3.0**
+
+If you need the town to be more than visual geometry — for example, you need to know that something is a **building**, **road**, **bridge**, **tree**, **water body**, etc. — then look at **CityGML 3.0**.
+
+CityGML is a standard for representing, storing, and exchanging **virtual 3D city models**. It supports geometry, city semantics, levels of detail, appearances/textures, and in CityGML 3.0, point-cloud representation of city features.
+
+Use it for:
+
+```text
+semantic 3D city models
+urban digital twins
+GIS analysis
+planning/simulation
+```
+
+But CityGML is usually **less ideal for high-performance real-time visualization** than 3D Tiles.
+
+## Practical recommendation
+
+For your requirements, I’d choose based on purpose:
+
+| Use case | Choose |
+|---|---|
+| Real-time/web visualization of a town | **3D Tiles** |
+| ArcGIS-heavy workflow | **I3S / SLPK** |
+| Semantic city model / urban digital twin / analysis | **CityGML 3.0** |
+| Simple standalone 3D model only | **GLB/glTF**, but it is not ideal for city-scale point-cloud/geospatial data |
+
+My recommendation: **store/serve the town as 3D Tiles**, and optionally keep **CityGML/CityJSON** as the semantic source data if you need urban object meaning and analysis.

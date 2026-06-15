@@ -1,0 +1,153 @@
+§u§
+Create a guide on how to install the latest version of paddleocr and use it in a python project to extract raw text from an image.
+§a§
+Below is a **minimal, CPU-first guide** for installing PaddleOCR and using it in a Python project to extract raw text from an image. **As of June 14, 2026**, the latest PyPI release of `paddleocr` is **3.7.0** (released **June 11, 2026**). PaddleOCR’s docs say you should install an inference engine first; the default and recommended choice is the local `paddle_static` engine, which requires **PaddlePaddle**. The current PyPI release of `paddlepaddle` is **3.3.1**. For OCR-only use, the basic `paddleocr` package is enough; you do **not** need `paddleocr[all]`.
+
+## 1) Create a project and virtual environment
+
+A practical choice is **Python 3.10 or 3.11** because that sits comfortably inside the current overlap between PaddleOCR’s `Python >=3.8` requirement and the current PaddlePaddle wheels published for Python **3.9–3.13**.
+
+```bash
+mkdir paddleocr-demo
+cd paddleocr-demo
+
+python -m venv .venv
+```
+
+Activate it:
+
+**macOS / Linux**
+```bash
+source .venv/bin/activate
+```
+
+**Windows (PowerShell)**
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+Upgrade pip:
+
+```bash
+python -m pip install --upgrade pip
+```
+
+## 2) Install PaddlePaddle and the latest PaddleOCR
+
+For a simple local setup, install PaddlePaddle first, then PaddleOCR. If you want a reproducible install pinned to what is current today, use the exact versions below. If you need a GPU build, use PaddlePaddle’s official install matrix instead of copying this CPU-first example, because GPU install varies by platform/CUDA setup.
+
+```bash
+python -m pip install "paddlepaddle==3.3.1"
+python -m pip install "paddleocr==3.7.0"
+```
+
+If you prefer the floating/latest framework package instead of pinning:
+
+```bash
+python -m pip install paddlepaddle
+python -m pip install "paddleocr==3.7.0"
+```
+
+## 3) Verify the install
+
+PaddleOCR’s docs recommend checking the installed package versions, and for the default local engine you can also verify PaddlePaddle.
+
+```bash
+python - <<'PY'
+import paddleocr
+import paddle
+
+print("PaddleOCR:", paddleocr.__version__)
+print("Paddle:", paddle.__version__)
+print("CUDA available:", paddle.is_compiled_with_cuda())
+PY
+```
+
+## 4) Add a script that extracts raw text
+
+Create `extract_text.py`:
+
+```python
+from pathlib import Path
+from paddleocr import PaddleOCR
+
+# Minimal OCR pipeline for plain text extraction.
+# If your images are mostly upright and clean, this is a good starting point.
+ocr = PaddleOCR(
+    use_doc_orientation_classify=False,
+    use_doc_unwarping=False,
+    use_textline_orientation=False,
+    # lang="en",  # optional: uncomment for English-only OCR
+)
+
+def extract_raw_text(image_path: str) -> str:
+    lines = []
+
+    for res in ocr.predict(image_path):
+        # res.json is a dict-like result payload from PaddleOCR
+        rec_texts = res.json["res"]["rec_texts"]
+        lines.extend(t.strip() for t in rec_texts if t and t.strip())
+
+    return "\n".join(lines)
+
+if __name__ == "__main__":
+    image_path = "images/sample.png"
+    raw_text = extract_raw_text(image_path)
+
+    print("=== OCR TEXT ===")
+    print(raw_text)
+
+    Path("output.txt").write_text(raw_text, encoding="utf-8")
+    print("\nSaved to output.txt")
+```
+
+This follows PaddleOCR’s current Python integration pattern: instantiate `PaddleOCR(...)`, call `predict(...)`, and iterate over the returned results. The docs also show `lang="en"` as the way to use the English model. If you leave model directories unset, PaddleOCR will download the official models automatically on first use.
+
+The key field for plain-text extraction is `rec_texts`: PaddleOCR documents it as the list of recognized text strings, and the result object’s `json` attribute exposes the prediction output in dict form. That’s why `res.json["res"]["rec_texts"]` is the simplest route to raw text.
+
+## 5) Add an image and run it
+
+Put an image at:
+
+```text
+paddleocr-demo/
+  extract_text.py
+  images/
+    sample.png
+```
+
+Then run:
+
+```bash
+python extract_text.py
+```
+
+If everything works, you should see the recognized text in the terminal and also get an `output.txt` file.
+
+## 6) What to expect on first run
+
+On first use, PaddleOCR may fetch the official detection/recognition models automatically because the model directory parameters default to `None`.
+
+## 7) If OCR quality is poor
+
+In the sample above, I disabled:
+- document orientation classification
+- document unwarping
+- text-line orientation classification
+
+That matches the official example style for a lightweight starting point. If your input is rotated, skewed, or photographed at an angle, try removing those flags or setting them back to `True`, since those modules exist specifically for orientation/unwarping handling and their initialized defaults are `True`.
+
+## 8) Minimal `requirements.txt`
+
+If you want this in a repo:
+
+```txt
+paddlepaddle==3.3.1
+paddleocr==3.7.0
+```
+
+If you want, I can also turn this into:
+1. a small reusable package,
+2. a FastAPI endpoint,
+3. a batch folder OCR script, or
+4. a version that returns text plus bounding boxes/confidence scores.

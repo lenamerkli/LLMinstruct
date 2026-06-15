@@ -1,0 +1,195 @@
+§u§
+Create a guide on how to install the latest version of paddleocr and use it in a python project to extract raw text from an image.
+§a§
+# 📄 Guide: Installing PaddleOCR 3.x & Extracting Text from Images in Python
+
+---
+
+## 🔍 What is PaddleOCR?
+
+PaddleOCR is a powerful, open-source Python library that allows developers to seamlessly integrate optical character recognition into their applications. It is built on the PaddlePaddle deep learning platform and utilizes state-of-the-art models to deliver high accuracy and performance.
+
+It is a lightweight OCR toolkit that bridges the gap between images/PDFs and LLMs, and supports 100+ languages.
+
+On May 20, 2025, the PaddlePaddle team unveiled PaddleOCR 3.0, fully compatible with the official release of the PaddlePaddle 3.0 framework. This update further boosts text-recognition accuracy, adds support for multiple text-type recognition and handwriting recognition, and meets the growing demand from large-model applications for high-precision parsing of complex documents.
+
+---
+
+## ✅ Prerequisites
+
+The Python version requirement is that PaddleOCR itself and the `doc2md` dependency group support Python 3.8 and later. The other optional dependency groups (doc-parser, ie, trans, all, etc.) require Python 3.9 or later due to upstream dependencies.
+
+Make sure you have the following ready:
+- ✅ **Python 3.8+** (3.9+ recommended for full feature support)
+- ✅ **pip** (up to date)
+- ✅ A **virtual environment** (strongly recommended)
+
+---
+
+## 🛠️ Step 1: Create & Activate a Virtual Environment
+
+It's best practice to use an isolated environment to avoid dependency conflicts.
+
+```bash
+# Create the virtual environment
+python -m venv paddleocr-env
+
+# Activate it (Linux/macOS)
+source paddleocr-env/bin/activate
+
+# Activate it (Windows)
+paddleocr-env\Scripts\activate
+```
+
+---
+
+## 📦 Step 2: Install PaddleOCR
+
+PaddleOCR separates core and optional dependencies. Only minimal core dependencies are required for basic text recognition; additional dependencies for document parsing and information extraction can be installed as needed.
+
+### Option A — CPU Only (Most Common)
+For basic OCR on a standard machine:
+```bash
+pip install paddlepaddle
+pip install paddleocr
+```
+
+### Option B — GPU (CUDA 12.6)
+For GPU support with CUDA 12.6, use the following commands:
+
+```bash
+pip install paddlepaddle-gpu==3.2.1 -i https://www.paddlepaddle.org.cn/packages/stable/cu126/
+pip install paddleocr
+```
+> For other CUDA versions, visit the [PaddlePaddle install guide](https://www.paddlepaddle.org.cn/en/install/quick).
+
+### Option C — Install with All Optional Features
+```bash
+pip install "paddleocr[all]"
+```
+
+> 💡 **Tip:** Make sure `paddleocr` is installed in the same Python environment you are using to avoid "Module not found" errors.
+
+---
+
+## 🤖 Step 3: Understand the Default Model
+
+The general OCR pipeline supports PP-OCRv3, PP-OCRv4, PP-OCRv5, and PP-OCRv6 models, with the default model being PP-OCRv6_medium released with PaddleOCR 3.7. PP-OCRv6, built on the newly designed PPLCNetV4 unified backbone, offers tiny/small/medium tiers. The medium tier achieves +5.1% (recognition) and +4.6% (detection) over PP-OCRv5_server with faster inference, and a single model supports 50 languages including Chinese, English, Japanese, and 46 Latin-script languages.
+
+> 🔽 Models are downloaded **automatically** on first run.
+
+---
+
+## 🐍 Step 4: Extract Raw Text from an Image
+
+Create a file called `extract_text.py` and add the following code:
+
+```python
+from paddleocr import PaddleOCR
+
+# Initialize the OCR engine
+# use_angle_cls=True enables the angle classifier to handle rotated text
+# lang='en' sets the language to English
+ocr = PaddleOCR(use_angle_cls=True, lang='en')
+
+# Path to your image
+image_path = 'sample.jpg'
+
+# Run OCR on the image
+result = ocr.ocr(image_path, cls=True)
+
+# Extract and print only the raw text
+print("--- Extracted Text ---")
+for page in result:
+    for line in page:
+        text = line[1][0]       # The recognized text string
+        confidence = line[1][1] # The confidence score (0.0 - 1.0)
+        print(f"{text}  (confidence: {confidence:.2f})")
+```
+
+### Run the script:
+```bash
+python extract_text.py
+```
+
+### Example Output:
+```
+--- Extracted Text ---
+Invoice #00123  (confidence: 0.99)
+Date: June 14, 2026  (confidence: 0.97)
+Total Amount: $540.00  (confidence: 0.98)
+```
+
+---
+
+## 📖 Step 5: Flatten Output into a Single String
+
+If you just want a clean block of raw text (no coordinates, no confidence scores):
+
+```python
+from paddleocr import PaddleOCR
+
+ocr = PaddleOCR(use_angle_cls=True, lang='en')
+
+image_path = 'sample.jpg'
+result = ocr.ocr(image_path, cls=True)
+
+# Collect all text lines into one string
+raw_text = "\n".join(
+    line[1][0]
+    for page in result
+    for line in page
+)
+
+print(raw_text)
+```
+
+---
+
+## 🔧 Step 6: Common Configuration Options
+
+| Parameter | Description | Default |
+|---|---|---|
+| `lang` | Language code (`'en'`, `'ch'`, `'fr'`, etc.) | `'ch'` |
+| `use_angle_cls` | Enable angle classifier for rotated text | `False` |
+| `use_gpu` | Use GPU for inference | `False` |
+| `det` | Enable text **detection** | `True` |
+| `rec` | Enable text **recognition** | `True` |
+| `cls` | Enable angle **classification** | `False` |
+
+---
+
+## ⚡ Step 7: Performance Tips
+
+- **On Mac M1/M2:** Use lightweight models (`PP-OCRv5_mobile_det` and `PP-OCRv5_mobile_rec`) for faster performance.
+- **For GPU errors:** Check that your CUDA version matches your PaddlePaddle GPU installation.
+- **For batch processing:** Feed a list of image paths to the OCR engine in a loop or using parallel processing to quickly and effectively extract text from large sets of images, making it ideal for workflows involving document batches, scanned archives, or bulk image analysis.
+
+```python
+# Batch example
+image_paths = ['doc1.jpg', 'doc2.png', 'doc3.jpeg']
+for path in image_paths:
+    result = ocr.ocr(path, cls=True)
+    # process each result...
+```
+
+---
+
+## 🐛 Common Troubleshooting
+
+| Problem | Solution |
+|---|---|
+| `ModuleNotFoundError: paddleocr` | Ensure you're in the correct virtual environment |
+| GPU not detected | Verify CUDA version matches your `paddlepaddle-gpu` install |
+| Low accuracy on rotated text | Set `use_angle_cls=True` and `cls=True` |
+| `PyMuPDF` errors | Install PyMuPDF manually if `paddleocr[all]` fails using `pip install pymupdf` |
+| Slow on Apple Silicon | Use mobile-tier models for better speed |
+
+---
+
+## 📚 Further Resources
+
+- 🔗 [Official PaddleOCR GitHub](https://github.com/PaddlePaddle/PaddleOCR)
+- 🔗 [Official Documentation](https://paddlepaddle.github.io/PaddleOCR/main/en/)
+- 🔗 [PaddlePaddle Installation Guide](https://www.paddlepaddle.org.cn/en/install/quick)
+- 🔗 [PyPI Page](https://pypi.org/project/paddleocr/)

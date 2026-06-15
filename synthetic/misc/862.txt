@@ -1,0 +1,55 @@
+§u§
+How can I update my FairPhone 5 to Murena /e/OS 4? /e/OS 3.7 is installed but the updater says that I am on the latest version.
+§a§
+Based on the current date (June 15, 2026) and the latest information available, here is the explanation for why your FairPhone 5 updater says you are on the latest version and how you can proceed to /e/OS 4.
+
+### Why the Updater Says You Are on the Latest Version
+
+You are currently on **/e/OS 3.7** (likely based on Android 15). The reason your phone reports that you are up-to-date is due to the distinction between **"Official"** and **"Community"** build branches in /e/OS:
+
+1.  **Branch Mismatch:** /e/OS 4.0 was officially launched on **June 11, 2026**. However, major version upgrades (especially those changing the Android base) are often released first to the **"Community"** (development) branch. The **"Official"** (stable) branch, which your phone is likely subscribed to, receives these updates weeks or months later after extensive testing , .
+2.  **Current Status:** As of mid-June 2026, /e/OS 4.0 builds for the FairPhone 5 are available, but they are primarily listed under the **Community** channel. If your device is set to receive only "Official" stable updates, it will not see the /e/OS 4.0 update yet because the stable build for FP5 has likely not been pushed to the official OTA server for your specific configuration , .
+3.  **Latest 3.x Update:** Your device is correctly seeing the latest version *for your current branch*, which is likely **/e/OS 3.7.1** (released around April/May 2026 with browser updates) .
+
+### How to Update to /e/OS 4
+
+You have two options: wait for the official stable release or manually install the Community build.
+
+#### Option 1: Wait for the Official Stable Release (Recommended for most users)
+If you prefer stability and want to keep your bootloader locked (if applicable) without manual intervention:
+*   **Action:** Simply wait. The "Official" branch for FairPhone 5 is expected to receive the /e/OS 4.0 update in the coming weeks or months once Murena completes their testing cycle .
+*   **Check:** You can monitor the official release notes on the Murena forum or website for the announcement of the "Official" FP5 build.
+
+#### Option 2: Manually Install the Community Build (Advanced)
+If you want /e/OS 4.0 immediately and are comfortable with manual installation, you can sideload the "Community" build.
+*   **Warning:** This may require an unlocked bootloader. If you switch from an "Official" to a "Community" build, you might encounter signature mismatches. Community builds generally do not allow re-locking the bootloader , .
+*   **Data Safety:** While an in-place upgrade is often possible, **always backup your data** before proceeding.
+
+**Steps to Manually Update:**
+
+1.  **Download the Build:**
+    *   Go to the Murena OTA server for FairPhone 5 Community builds: `https://ota.ecloud.global/api/v1/FP5/community/` .
+    *   Download the latest `.zip` file (e.g., `e-4.0-a16-...-community-FP5.zip` or similar, depending on the Android base version for v4.0). *Note: Ensure you download the OTA zip, not the IMG file if possible, or rename the IMG link by removing "IMG-" from the URL to get the flashable zip* .
+
+2.  **Transfer to Phone:**
+    *   Copy the downloaded `.zip` file to your phone's internal storage.
+
+3.  **Local Update:**
+    *   Go to **Settings** > **System** > **System updater**.
+    *   Tap the **three-dot menu** (top right) and select **Local update** (or "Install from storage").
+    *   Select the `.zip` file you copied.
+    *   If you get a **signature mismatch** warning (common when switching branches), confirm that you want to install anyway .
+    *   The phone will reboot and install the update.
+
+4.  **Alternative: ADB Sideload (if Local Update fails):**
+    *   Boot into **Recovery Mode** (Power off, then hold **Volume Down + Power**, select Recovery).
+    *   Select **Apply update** > **ADB**.
+    *   On your computer, run: `adb sideload <filename.zip>`.
+
+### Summary of /e/OS 4 Features
+Once updated, you will gain access to new features including:
+*   **One-Click Google Migration:** A new Gmail Migration Assistant to move emails, contacts, and Drive files , .
+*   **Murena Backup:** Cloud backup for apps and settings.
+*   **Updated Launcher:** New wallpapers and UI customization .
+
+**Recommendation:** Unless you urgently need /e/OS 4 features, waiting for the **Official** branch update is the safest path to ensure long-term stability and security patch reliability on your FairPhone 5.

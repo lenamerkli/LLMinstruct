@@ -1,0 +1,32 @@
+§u§
+```
+SELECT project, SUM(token_count) AS tokens FROM train GROUP BY project ORDER BY tokens DESC
+```
+Modify this SQL to also include a total that acts like a project that sums all token counts from all projects.
+§a§
+Here's the most efficient and standard way to do this using `ROLLUP`:
+
+```sql
+SELECT COALESCE(project, 'Total') AS project, SUM(token_count) AS tokens
+FROM train
+GROUP BY ROLLUP(project)
+ORDER BY tokens DESC;
+```
+
+### 🔍 How it works:
+- `ROLLUP(project)` tells SQL to compute the normal grouped rows **plus** a grand total row (where `project` is `NULL`).
+- `COALESCE(project, 'Total')` replaces that `NULL` with the string `'Total'` so it looks like a regular project row.
+- `ORDER BY tokens DESC` will naturally place the total at the **top** since it's the largest sum.
+
+### 💡 Want the total at the bottom instead?
+```sql
+SELECT COALESCE(project, 'Total') AS project, SUM(token_count) AS tokens
+FROM train
+GROUP BY ROLLUP(project)
+ORDER BY project IS NULL, tokens DESC;
+```
+*(Note: `project IS NULL` evaluates to `1` for the total row, pushing it to the end while keeping others sorted by token count.)*
+
+### ⚠️ Dialect Note:
+- This syntax works in **PostgreSQL, SQL Server, Oracle, SQLite, and MySQL 8.0.12+**.
+- If you're on an older MySQL version, use: `GROUP BY project WITH ROLLUP` instead.

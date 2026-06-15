@@ -1,0 +1,148 @@
+§u§
+```
+/home/lena/Documents/python/ingredient-scanner/.venv/bin/python /home/lena/Documents/python/ingredient-scanner/build/main.py
+No ROCm runtime is found, using ROCM_HOME='/usr'
+/home/lena/Documents/python/ingredient-scanner/.venv/lib64/python3.12/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/lena/Documents/python/ingredient-scanner/.venv/lib64/python3.12/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+Enter file path including .png extension: test_image_1.png
+/home/lena/Documents/python/ingredient-scanner/.venv/lib64/python3.12/site-packages/torch/nn/modules/conv.py:456: UserWarning: Attempt to open cnn_infer failed: handle=0 error: libcudnn_cnn_infer.so.8: cannot open shared object file: No such file or directory (Triggered internally at ../aten/src/ATen/native/cudnn/Conv_v8.cpp:81.)
+  return F.conv2d(input, weight, bias, self.stride,
+data={'top': {'left': {'x': 196.84410309791565, 'y': 814.8066730499268}, 'right': {'x': 3042.955587387085, 'y': 987.9944286346436}}, 'bottom': {'left': {'x': 277.72010135650635, 'y': 3020.134117126465}, 'right': {'x': 2937.846579551697, 'y': 2970.695468902588}}, 'curvature': {'top': {'x': 1666.544111251831, 'y': 807.5708198547363}, 'bottom': {'x': 1643.4877824783325, 'y': 3034.469078063965}}}
+which: no ccache in (/home/lena/Documents/python/ingredient-scanner/.venv/bin:/opt/llama.cpp/bin:/usr/bin:/opt/llama.cpp/bin:/usr/bin:/home/lena/.local/bin:/home/lena/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/home/lena/.local/share/JetBrains/Toolbox/scripts:/home/lena/.local/share/JetBrains/Toolbox/scripts)
+/home/lena/Documents/python/ingredient-scanner/.venv/lib64/python3.12/site-packages/paddle/utils/cpp_extension/extension_utils.py:712: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+Creating model: ('PP-OCRv6_medium_det', None, None)
+Model files already exist. Using cached files. To redownload, please delete the directory manually: `/home/lena/.paddlex/official_models/PP-OCRv6_medium_det`.
+Creating model: ('PP-OCRv6_medium_rec', None, None)
+Model files already exist. Using cached files. To redownload, please delete the directory manually: `/home/lena/.paddlex/official_models/PP-OCRv6_medium_rec`.
+Traceback (most recent call last):
+  File "/home/lena/Documents/python/ingredient-scanner/build/main.py", line 304, in <module>
+    main()
+  File "/home/lena/Documents/python/ingredient-scanner/build/main.py", line 236, in main
+    for res in ocr.predict('_warped_image.png'):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lena/Documents/python/ingredient-scanner/.venv/lib/python3.12/site-packages/paddleocr/_pipelines/ocr.py", line 223, in predict
+    return list(
+           ^^^^^
+  File "/home/lena/Documents/python/ingredient-scanner/.venv/lib/python3.12/site-packages/paddlex/inference/pipelines/_parallel.py", line 161, in predict
+    yield from self._pipeline.predict(
+  File "/home/lena/Documents/python/ingredient-scanner/.venv/lib/python3.12/site-packages/paddlex/inference/pipelines/ocr/pipeline.py", line 366, in predict
+    det_results = list(
+                  ^^^^^
+  File "/home/lena/Documents/python/ingredient-scanner/.venv/lib/python3.12/site-packages/paddlex/inference/models/predictors/base_predictor.py", line 117, in __call__
+    yield from self.apply(input, **kwargs)
+  File "/home/lena/Documents/python/ingredient-scanner/.venv/lib/python3.12/site-packages/paddlex/inference/models/predictors/base_predictor.py", line 140, in apply
+    pred = self.process(batch_data, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lena/Documents/python/ingredient-scanner/.venv/lib/python3.12/site-packages/paddlex/inference/models/text_detection/predictor.py", line 145, in process
+    batch_preds = self.runner(x=x)
+                  ^^^^^^^^^^^^^^^^
+  File "/home/lena/Documents/python/ingredient-scanner/.venv/lib/python3.12/site-packages/paddlex/inference/models/runners/paddle_static/runner.py", line 297, in __call__
+    pred = self.infer(x)
+           ^^^^^^^^^^^^^
+  File "/home/lena/Documents/python/ingredient-scanner/.venv/lib/python3.12/site-packages/paddlex/inference/models/runners/paddle_static/runner.py", line 265, in __call__
+    self.predictor.run()
+NotImplementedError: (Unimplemented) ConvertPirAttribute2RuntimeAttribute not support [pir::ArrayAttribute<pir::DoubleAttribute>]  (at /paddle/paddle/fluid/framework/new_executor/instruction/onednn/onednn_instruction.cc:116)
+
+
+Process finished with exit code 1
+```
+```
+    elif ENGINE[0] == 'paddleocr':
+        # https://github.com/PaddlePaddle/PaddleOCR
+        # Disable OneDNN and PIR to avoid attribute conversion errors in PaddlePaddle 3.x
+        os.environ['FLAGS_use_mkldnn'] = '0'
+        os.environ['FLAGS_enable_pir_in_executor'] = '0'
+        ocr = PaddleOCR(
+            use_doc_orientation_classify=False,
+            use_doc_unwarping=False,
+            use_textline_orientation=False,
+        )
+        lines = []
+        for res in ocr.predict('_warped_image.png'):
+            rec_texts = res.json['res']['rec_texts']
+            lines.extend(t.strip() for t in rec_texts if t and t.strip())
+        # os.remove('_warped_image.png')
+        text = '\n'.join(lines)
+```
+§a§
+ This is a known PaddlePaddle 3.3.x regression when running **PP-OCRv5/v6 models through `paddle_static` with OneDNN + PIR** ([PaddleOCR#18119](https://github.com/PaddlePaddle/PaddleOCR/issues/18119), [PaddleOCR#17869](https://github.com/PaddlePaddle/PaddleOCR/issues/17869)). PaddleX/PaddleOCR internally re-enables PIR when setting the device, so your current `os.environ` flags are being set too late.
+
+Here are the fixes, from quickest to most robust:
+
+### 1. Set environment variables BEFORE any paddle import
+Move the flags to the **very first lines** of `main.py`, before any `import paddle`, `from paddleocr import ...`, `import paddlex`, etc. Once those modules are imported, the flags are often ignored or overwritten.
+
+```python
+# main.py — must be at the very top
+import os
+
+os.environ['FLAGS_use_mkldnn'] = '0'
+os.environ['FLAGS_enable_pir_in_executor'] = '0'
+os.environ['FLAGS_enable_pir_api'] = '0'  # <-- this is the key flag
+
+# ... then your other imports
+```
+
+If PaddleOCR is imported globally (e.g. `from paddleocr import PaddleOCR` at the top), this must be fixed first, because by then `paddlex` already forced `FLAGS_enable_pir_api=1`.
+
+### 2. Disable MKLDNN in the constructor
+Even with the env flags, pass `enable_mkldnn=False` explicitly:
+
+```python
+ocr = PaddleOCR(
+    use_doc_orientation_classify=False,
+    use_doc_unwarping=False,
+    use_textline_orientation=False,
+    enable_mkldnn=False,   # force-disable OneDNN
+)
+```
+
+### 3. Downgrade PaddlePaddle (most reliable workaround)
+The bug was introduced around PaddlePaddle 3.3. Several reports confirm that downgrading fixes it:
+
+```bash
+pip install "paddlepaddle==3.2.2"
+```
+
+If you are using GPU, use `paddlepaddle-gpu` instead:
+
+```bash
+pip install "paddlepaddle-gpu==3.2.2"
+```
+
+### 4. Upgrade once a fixed build is available
+The exact crash (`pir::ArrayAttribute<pir::DoubleAttribute>` not supported) was fixed upstream in PaddlePaddle commit [`12bff20`](https://github.com/PaddlePaddle/Paddle/commit/12bff203b6289c32a79f81a462eda5048cdc2c6a) (April 2026). You can also wait for a stable 3.3 patch release that includes that commit.
+
+### Recommended immediate change
+Apply both #1 and #2:
+
+```python
+import os
+os.environ['FLAGS_use_mkldnn'] = '0'
+os.environ['FLAGS_enable_pir_in_executor'] = '0'
+os.environ['FLAGS_enable_pir_api'] = '0'
+
+from paddleocr import PaddleOCR
+
+# ... your existing code ...
+
+elif ENGINE[0] == 'paddleocr':
+    ocr = PaddleOCR(
+        use_doc_orientation_classify=False,
+        use_doc_unwarping=False,
+        use_textline_orientation=False,
+        enable_mkldnn=False,
+    )
+    lines = []
+    for res in ocr.predict('_warped_image.png'):
+        rec_texts = res.json['res']['rec_texts']
+        lines.extend(t.strip() for t in rec_texts if t and t.strip())
+    text = '\n'.join(lines)
+```
+
+If the above still fails, downgrade to `paddlepaddle==3.2.2` — that combination is confirmed working for PP-OCRv5/v6.
+
+The other warnings (`ROCM_HOME`, TorchVision `pretrained`, `libcudnn_cnn_infer.so.8`, ccache) are unrelated to this crash; you can address them separately later.
