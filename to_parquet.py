@@ -375,6 +375,19 @@ def process_ocr(dir_path, project_name, synthetic, mistakes):
     return data
 
 
+def process_thetacode(dir_path, project_name, synthetic, mistakes):
+    data = []
+    for file in pathlib.Path(dir_path).glob('*.json'):
+        with open(file, 'r') as f:
+            messages = json.load(f)
+            messages2 = []
+            for message in messages:
+                messages2.append({'role': 'user', 'content': message['content']})
+                messages2.append({'role': 'assistant', 'content': message['content']})
+            data.append({'messages': messages2, 'project': project_name, 'synthetic': synthetic, 'mistakes': mistakes})
+    return data
+
+
 def check_pii_in_data(data, first_names, last_names, false_positives, false_negatives):
     pii_findings = []
     for idx, entry in tqdm.tqdm(enumerate(data), desc='Checking for PII', total=len(data)):
@@ -437,9 +450,10 @@ def main():
     data_synthetic_misc = process_txt_directory('./synthetic/misc', 'misc', True, True)
     data_synthetic_moral = process_moral_sqlite('./synthetic/moral/database.sqlite3', 'moral', True, True)
     data_synthetic_ocr = process_ocr('./synthetic/ocr', 'ocr', True, True)
+    data_synthetic_thetacode = process_thetacode('./synthetic/thetacode', 'thetacode', True, True)
     data_synthetic_topic_categorizer = process_jsonl('./synthetic/topic_categorizer/topic_categorizer.jsonl', 'topic_categorizer', True, False)
 
-    data = data_human_edited_biasbench + data_human_edited_infinite_craft + data_human_edited_misc + data_human_edited_moral + data_synthetic_biasbench + data_synthetic_cline + data_synthetic_drawback_chess + data_synthetic_explain_meme + data_synthetic_ingredient_scanner + data_synthetic_ingredient_scanner2 + data_synthetic_misc + data_synthetic_moral + data_synthetic_ocr + data_synthetic_topic_categorizer
+    data = data_human_edited_biasbench + data_human_edited_infinite_craft + data_human_edited_misc + data_human_edited_moral + data_synthetic_biasbench + data_synthetic_cline + data_synthetic_drawback_chess + data_synthetic_explain_meme + data_synthetic_ingredient_scanner + data_synthetic_ingredient_scanner2 + data_synthetic_misc + data_synthetic_moral + data_synthetic_ocr + data_synthetic_thetacode + data_synthetic_topic_categorizer
 
     first_names, last_names = load_names()
     false_positives = load_false_positives()
