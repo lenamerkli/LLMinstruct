@@ -1,0 +1,1571 @@
+§u§
+__init__.py
+```
+"""Assetto Corsa -> BeamNG map converter."""
+
+__all__ = ["kn5_reader", "geometry", "dae_writer", "materials", "sky_lighting", "trees"]
+```
+convert.py
+```
+"""Main AC -> BeamNG map converter.
+
+Pipeline (implemented in the requested order):
+    1. map collision  -> DAE shapes with Colmesh-1 + TSStatic entries
+    2. textures       -> extract DDS + main.materials.json
+    3. sky & lighting -> lighting.ini -> main.level.json (ScatterSky/TimeOfDay)
+    4. fixing trees   -> stem-only collision + cleaned tree models
+
+Usage:
+    python -m ac2bng.convert <ac_track_dir> <beamng_out_dir> [--level NAME]
+
+An AC track dir looks like:
+    <track>/models_<layout>.ini      (lists MODEL_N = FILE=xxx.kn5)
+    <track>/<layout>/data/lighting.ini
+    <track>/*.kn5
+"""
+
+import os
+import sys
+import json
+import glob
+import argparse
+from configparser import ConfigParser
+
+from . import kn5_reader as kr
+from . import geometry as geo
+from . import materials as matmod
+from . import sky_lighting as sky
+from . import trees as treemod
+from .dae_writer import DaeMesh, write_dae
+
+
+def find_ac_layouts(track_dir):
+    """Return list of (layout_name, models_ini_path, data_dir)."""
+    layouts = []
+    for ini in sorted(glob.glob(os.path.join(track_dir, "models_*.ini"))):
+        base = os.path.basename(ini)
+        layout = base[len("models_"):-len(".ini")]
+        data_dir = os.path.join(track_dir, layout, "data")
+        layouts.append((layout, ini, data_dir))
+    if not layouts:
+        # single-layout track (no models_*.ini): treat whole dir as one layout
+        data_dir = os.path.join(track_dir, "data")
+        layouts.append(("default", None, data_dir if os.path.isdir(data_dir) else track_dir))
+    return layouts
+
+
+def read_models_ini(models_ini):
+    """Return list of kn5 filenames referenced by a models ini."""
+    if not models_ini or not os.path.isfile(models_ini):
+        return []
+    cp = ConfigParser()
+    cp.read(models_ini)
+    files = []
+    for sec in cp.sections():
+        if sec.startswith("MODEL") and cp.has_option(sec, "FILE"):
+            files.append(cp.get(sec, "FILE"))
+    return files
+
+
+def kn5_path_for(track_dir, fname):
+    cand = os.path.join(track_dir, fname)
+    if os.path.isfile(cand):
+        return cand
+    # fallback: same basename in track dir
+    base = os.path.basename(fname)
+    cand2 = os.path.join(track_dir, base)
+    if os.path.isfile(cand2):
+        return cand2
+    matches = glob.glob(os.path.join(track_dir, "**", base), recursive=True)
+    if matches:
+        return matches[0]
+    return None
+
+
+# ---------------------------------------------------------------------------
+# Step 1: map collision
+# ---------------------------------------------------------------------------
+def convert_collision(kn, level_name, out_dir, kn5_name, is_vegetation=False):
+    """Build a BeamNG DAE with a Colmesh-1 collision node + a TSStatic entry."""
+    meshes = geo.collect_meshes(kn)
+    render = []
+    collision = None
+
+    if is_vegetation:
+        # Trees: build stem-only collision, skip foliage from collision.
+        for mid, m in meshes.items():
+            sym = matmod.material_symbol_for(kn, mid)
+            render.append(DaeMesh(m.name, m.vertices, m.normals, m.uvs, m.indices, sym))
+        # aggregate stem collision across all tree nodes
+        stem_verts, stem_norms, stem_uvs, stem_idx = [], [], [], []
+        for node in kn.nodes:
+            if node.vertices is None:
+                continue
+            stem = treemod.make_stem_collision(node)
+            if stem is not None:
+                base = len(stem_verts)
+                stem_verts.extend(stem.vertices)
+                stem_norms.extend(stem.normals)
+                stem_uvs.extend(stem.uvs)
+                stem_idx.extend(i + base for i in stem.indices)
+        if stem_idx:
+            collision = DaeMesh("Colmesh-1", stem_verts, stem_norms,
+                                 stem_uvs, stem_idx, "stem_col")
+    else:
+        # General map geometry: collision = full visible geometry (simplified
+        # by reusing the same mesh; BeamNG handles it via Colmesh-1 node).
+        for mid, m in meshes.items():
+            sym = matmod.material_symbol_for(kn, mid)
+            render.append(DaeMesh(m.name, m.vertices, m.normals, m.uvs, m.indices, sym))
+        # combined collision mesh across all materials
+        cv, cn, cu, ci = [], [], [], []
+        for m in meshes.values():
+            base = len(cv)
+            cv.extend(m.vertices)
+            cn.extend(m.normals)
+            cu.extend(m.uvs)
+            ci.extend(i + base for i in m.indices)
+        if ci:
+            collision = DaeMesh("Colmesh-1", cv, cn, cu, ci, "collision")
+
+    if not render and collision is None:
+        return None, None
+
+    dae_name = f"{kn5_name}.dae"
+    dae_path = os.path.join(out_dir, "art", "shapes", dae_name)
+    os.makedirs(os.path.dirname(dae_path), exist_ok=True)
+    # ensure the stem collision material symbol exists in the DAE material list
+    if is_vegetation and collision is not None:
+        # add a dummy render material symbol fallback if needed
+        if not render:
+            render.append(DaeMesh("tree", [], [], [], [], collision.material_symbol))
+    write_dae(dae_path, render, collision)
+
+    tsstatic = {
+        "class": "TSStatic",
+        "name": f"{kn5_name}_shape",
+        "shapeName": f"/levels/{level_name}/art/shapes/{dae_name}",
+        "position": [0, 0, 0],
+        "rotationMatrix": [1, 0, 0, 0, 1, 0, 0, 0, 1],
+        "scale": [1, 1, 1],
+        "collisionType": "Collision Mesh" if collision is not None else "None",
+        "decalType": "Collision Mesh" if collision is not None else "None",
+        "meshCulling": True,
+    }
+    return dae_path, tsstatic
+
+
+# ---------------------------------------------------------------------------
+# Step 2: textures
+# ---------------------------------------------------------------------------
+def convert_textures(kn, level_name, out_dir, materials_json=None):
+    matmod.extract_textures(kn, out_dir)
+    partial = matmod.build_materials_json(kn, level_name)
+    if materials_json is None:
+        materials_json = {}
+    materials_json.update(partial)
+    return materials_json
+
+
+# ---------------------------------------------------------------------------
+# Step 3: sky & lighting
+# ---------------------------------------------------------------------------
+def convert_sky_lighting(data_dir, level_name, out_dir, spawn_point):
+    pitch, heading = sky.read_ac_lighting(data_dir)
+    sky_group = sky.build_sky_group(pitch, heading)
+    level_json = sky.build_level_json(sky_group, level_name, spawn_point)
+    lpath = os.path.join(out_dir, "main.level.json")
+    with open(lpath, "w", encoding="utf-8") as f:
+        json.dump(level_json, f, indent=2)
+    return lpath, pitch, heading
+
+
+# ---------------------------------------------------------------------------
+# Step 4: fixing trees
+# ---------------------------------------------------------------------------
+def convert_trees(kn, level_name, out_dir, kn5_name):
+    """Same as collision step but vegetation-aware (stem-only collision)."""
+    return convert_collision(kn, level_name, out_dir, kn5_name, is_vegetation=True)
+
+
+# ---------------------------------------------------------------------------
+# Orchestration
+# ---------------------------------------------------------------------------
+def find_spawn_point(kn):
+    """Use the AC_START_0 dummy node position as the spawn point, if present."""
+    for n in kn.nodes:
+        if n.name.upper().startswith("AC_START"):
+            return [n.world[3][0], n.world[3][1], n.world[3][2]]
+    return [0, 0, 0]
+
+
+def write_info_json(out_dir, level_name, title):
+    info = {
+        "title": title,
+        "description": f"{title} converted from Assetto Corsa",
+        "previews": [],
+        "size": [2048, 2048],
+        "suitablefor": "Racing",
+        "authors": "ac2bng converter",
+    }
+    with open(os.path.join(out_dir, "info.json"), "w", encoding="utf-8") as f:
+        json.dump(info, f, indent=2)
+
+
+def convert_track(ac_track_dir, beamng_out_dir, level_name=None):
+    if level_name is None:
+        level_name = os.path.basename(os.path.normpath(ac_track_dir))
+    out_dir = os.path.join(beamng_out_dir, "levels", level_name)
+    os.makedirs(out_dir, exist_ok=True)
+
+    layouts = find_ac_layouts(ac_track_dir)
+    print(f"[ac2bng] track: {ac_track_dir}")
+    print(f"[ac2bng] layouts: {[l[0] for l in layouts]}")
+
+    all_tsstatics = []
+    merged_materials = {}
+    spawn_point = [0, 0, 0]
+    primary_data_dir = layouts[0][2]
+
+    # Process every layout's kn5 list. We merge all into one BeamNG level.
+    for layout_name, models_ini, data_dir in layouts:
+        files = read_models_ini(models_ini)
+        if not files:
+            # fallback: all kn5 in track dir
+            files = [os.path.basename(p) for p in glob.glob(os.path.join(ac_track_dir, "*.kn5"))]
+        for fname in files:
+            path = kn5_path_for(ac_track_dir, fname)
+            if path is None:
+                print(f"[ac2bng]  ! missing kn5: {fname}")
+                continue
+            base = os.path.splitext(os.path.basename(path))[0]
+            print(f"[ac2bng]  reading {base}.kn5 ...")
+            kn = kr.read_kn5(path)
+            if spawn_point == [0, 0, 0]:
+                spawn_point = find_spawn_point(kn)
+
+            is_veg = treemod.is_tree_kn5(path)
+
+            # Step 1: collision
+            print(f"[ac2bng]    [1] collision {'(vegetation)' if is_veg else ''}")
+            _, ts = convert_collision(kn, level_name, out_dir, base, is_vegetation=is_veg)
+            if ts:
+                all_tsstatics.append(ts)
+
+            # Step 2: textures
+            print(f"[ac2bng]    [2] textures ({len(kn.textures)})")
+            merged_materials = convert_textures(kn, level_name, out_dir, merged_materials)
+
+            # Step 4 (done in collision pass for veg): explicit tree fixing log
+            if is_veg:
+                print(f"[ac2bng]    [4] trees: stem-only collision applied")
+
+    # Step 3: sky & lighting (once for the whole level)
+    print(f"[ac2bng]  [3] sky & lighting")
+    convert_sky_lighting(primary_data_dir, level_name, out_dir, spawn_point)
+
+    # Write the merged materials.json (accumulated across all kn5 files).
+    mpath = os.path.join(out_dir, "main.materials.json")
+    with open(mpath, "w", encoding="utf-8") as f:
+        json.dump(merged_materials, f, indent=2)
+    print(f"[ac2bng]  materials: {len(merged_materials)} written to main.materials.json")
+
+    # Write the TSStatic objects into the level json's MissionGroup.
+    lpath = os.path.join(out_dir, "main.level.json")
+    with open(lpath, "r", encoding="utf-8") as f:
+        level_json = json.load(f)
+    shapes_group = {"class": "SimGroup", "name": "shapes", "childs": all_tsstatics}
+    level_json["childs"].insert(1, shapes_group)  # after sky
+    with open(lpath, "w", encoding="utf-8") as f:
+        json.dump(level_json, f, indent=2)
+
+    write_info_json(out_dir, level_name, level_name)
+    print(f"[ac2bng] done -> {out_dir}")
+    return out_dir
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(description="AC -> BeamNG map converter")
+    ap.add_argument("ac_track_dir", help="path to unpacked AC track folder")
+    ap.add_argument("beamng_out_dir", help="output BeamNG mod root")
+    ap.add_argument("--level", default=None, help="BeamNG level name")
+    args = ap.parse_args(argv)
+    convert_track(args.ac_track_dir, args.beamng_out_dir, args.level)
+
+
+if __name__ == "__main__":
+    main()
+```
+dae_writer.py
+```
+"""Write BeamNG-compatible Collada (.dae) files.
+
+BeamNG static shapes use a node hierarchy:
+    base00
+      start01
+        <visible detail mesh nodes>
+        Colmesh-1        <- collision mesh (level -1, always active)
+
+A TSStatic with collisionType "Collision Mesh" uses the Colmesh-1 geometry for
+physics, and the detail nodes for rendering.
+"""
+
+import xml.sax.saxutils as saxutils
+
+COLLADA_NS = "http://www.collada.org/2005/11/COLLADASchema"
+
+
+def _fmt(x):
+    return f"{x:.6f}".rstrip("0").rstrip(".")
+
+
+class _Accumulator:
+    """Collects geometry sources for a set of meshes."""
+
+    def __init__(self):
+        self.geometries = []  # (id, name, verts, normals, uvs, indices, mat_symbol)
+
+
+def _write_source(fid, sid, array_id, values, stride):
+    count = len(values) // stride
+    fid.write(f'        <source id="{sid}">\n')
+    fid.write(f'          <float_array id="{array_id}" count="{len(values)}">')
+    fid.write(" ".join(_fmt(v) for v in values))
+    fid.write("</float_array>\n")
+    fid.write('          <technique_common>\n')
+    fid.write(f'            <accessor source="#{array_id}" count="{count}" stride="{stride}">\n')
+    params = ["X", "Y", "Z"] if stride == 3 else ["S", "T"]
+    for param in params:
+        fid.write(f'              <param name="{param}" type="float"/>\n')
+    fid.write('            </accessor>\n')
+    fid.write('          </technique_common>\n')
+    fid.write('        </source>\n')
+
+
+def _build_geometry(fid, geom_id, mesh):
+    verts = []
+    for v in mesh.vertices:
+        verts.extend(v)
+    norms = []
+    for n in mesh.normals:
+        norms.extend(n)
+    uvs = []
+    for u in mesh.uvs:
+        uvs.extend(u)
+    fid.write(f'      <geometry id="{geom_id}" name="{saxutils.escape(mesh.name)}">\n')
+    fid.write('        <mesh>\n')
+    _write_source(fid, f"{geom_id}-pos", f"{geom_id}-pos-array", verts, 3)
+    _write_source(fid, f"{geom_id}-norm", f"{geom_id}-norm-array", norms, 3)
+    _write_source(fid, f"{geom_id}-uv", f"{geom_id}-uv-array", uvs, 2)
+    fid.write(f'        <vertices id="{geom_id}-vtx">\n')
+    fid.write(f'          <input semantic="POSITION" source="#{geom_id}-pos"/>\n')
+    fid.write('        </vertices>\n')
+    # triangles
+    tris = []
+    idx = mesh.indices
+    for i in range(0, len(idx), 3):
+        tris.append(f"{idx[i]} {idx[i+1]} {idx[i+2]}")
+    fid.write(f'        <triangles count="{len(idx)//3}" material="{mesh.material_symbol}">\n')
+    fid.write(f'          <input semantic="VERTEX" source="#{geom_id}-vtx" offset="0"/>\n')
+    fid.write(f'          <input semantic="NORMAL" source="#{geom_id}-norm" offset="0"/>\n')
+    fid.write(f'          <input semantic="TEXCOORD" source="#{geom_id}-uv" offset="0" set="0"/>\n')
+    fid.write('          <p>')
+    fid.write(" ".join(tris))
+    fid.write('</p>\n')
+    fid.write('        </triangles>\n')
+    fid.write('        </mesh>\n')
+    fid.write('      </geometry>\n')
+
+
+class DaeMesh:
+    """A renderable mesh referenced by a DAE node, with a material symbol."""
+
+    def __init__(self, name, vertices, normals, uvs, indices, material_symbol):
+        self.name = name
+        self.vertices = vertices
+        self.normals = normals
+        self.uvs = uvs
+        self.indices = indices
+        self.material_symbol = material_symbol
+
+
+def write_dae(path, render_meshes, collision_mesh, unit_meter=1.0):
+    """Write a BeamNG static shape DAE.
+
+    render_meshes: list[DaeMesh]  visible detail meshes (parented under start01)
+    collision_mesh: DaeMesh       geometry for the Colmesh-1 collision node
+    unit_meter: world-unit size in meters (AC uses meters, so 1.0)
+    """
+    all_meshes = list(render_meshes)
+    if collision_mesh is not None:
+        all_meshes.append(collision_mesh)
+
+    with open(path, "w", encoding="utf-8") as f:
+        f.write('<?xml version="1.0" encoding="utf-8"?>\n')
+        f.write(f'<COLLADA xmlns="{COLLADA_NS}" version="1.4.1">\n')
+        f.write('  <asset>\n')
+        f.write('    <unit name="meter" meter="%s"/>\n' % _fmt(unit_meter))
+        f.write('    <up_axis>Z_UP</up_axis>\n')
+        f.write('  </asset>\n')
+
+        # Effects/materials: one per material symbol used.
+        symbols = []
+        seen = set()
+        for m in all_meshes:
+            if m.material_symbol not in seen:
+                seen.add(m.material_symbol)
+                symbols.append(m.material_symbol)
+        f.write('  <library_effects>\n')
+        for sym in symbols:
+            f.write(f'    <effect id="fx_{sym}">\n')
+            f.write('      <profile_COMMON>\n')
+            f.write('        <technique sid="common"><phong>\n')
+            f.write('          <diffuse><color>0.8 0.8 0.8 1</color></diffuse>\n')
+            f.write('        </phong></technique>\n')
+            f.write('      </profile_COMMON>\n')
+            f.write('    </effect>\n')
+        f.write('  </library_effects>\n')
+        f.write('  <library_materials>\n')
+        for sym in symbols:
+            f.write(f'    <material id="mat_{sym}" name="{sym}">\n')
+            f.write(f'      <instance_effect url="#fx_{sym}"/>\n')
+            f.write('    </material>\n')
+        f.write('  </library_materials>\n')
+
+        # Geometries
+        f.write('  <library_geometries>\n')
+        for i, m in enumerate(all_meshes):
+            _build_geometry(f, f"geom{i}", m)
+        f.write('  </library_geometries>\n')
+
+        # Scene: base00 -> start01 -> nodes
+        f.write('  <library_visual_scenes>\n')
+        f.write('    <visual_scene id="Scene" name="Scene">\n')
+        f.write('      <node id="base00" name="base00" type="NODE">\n')
+        f.write('        <node id="start01" name="start01" type="NODE">\n')
+        gi = 0
+        for m in render_meshes:
+            _write_node(f, f"node{gi}", m.name, gi, m.material_symbol)
+            gi += 1
+        if collision_mesh is not None:
+            # Colmesh-1: the -1 detail level means "always use for collision".
+            _write_node(f, "Colmesh-1", "Colmesh-1", gi, collision_mesh.material_symbol)
+        f.write('        </node>\n')  # start01
+        f.write('      </node>\n')  # base00
+        f.write('    </visual_scene>\n')
+        f.write('  </library_visual_scenes>\n')
+        f.write('  <scene>\n')
+        f.write('    <instance_visual_scene url="#Scene"/>\n')
+        f.write('  </scene>\n')
+        f.write('</COLLADA>\n')
+
+
+def _write_node(f, node_id, name, geom_index, material_symbol):
+    f.write(f'          <node id="{node_id}" name="{saxutils.escape(name)}" type="NODE">\n')
+    f.write('            <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>\n')
+    f.write(f'            <instance_geometry url="#geom{geom_index}">\n')
+    f.write('              <bind_material>\n')
+    f.write('                <technique_common>\n')
+    f.write(f'                  <instance_material symbol="{material_symbol}" target="#mat_{material_symbol}"/>\n')
+    f.write('                </technique_common>\n')
+    f.write('              </bind_material>\n')
+    f.write('            </instance_geometry>\n')
+    f.write('          </node>\n')
+```
+geometry.py
+```
+"""Geometry helpers: apply node world transforms to build world-space meshes."""
+
+from .kn5_reader import Node
+
+
+def transform_point(m, p):
+    x, y, z = p
+    return (
+        m[0][0] * x + m[1][0] * y + m[2][0] * z + m[3][0],
+        m[0][1] * x + m[1][1] * y + m[2][1] * z + m[3][1],
+        m[0][2] * x + m[1][2] * y + m[2][2] * z + m[3][2],
+    )
+
+
+def transform_normal(m, n):
+    x, y, z = n
+    return (
+        m[0][0] * x + m[1][0] * y + m[2][0] * z,
+        m[0][1] * x + m[1][1] * y + m[2][1] * z,
+        m[0][2] * x + m[1][2] * y + m[2][2] * z,
+    )
+
+
+class TriMesh:
+    """A simple indexed triangle mesh in world space, tracking its material."""
+
+    __slots__ = ("name", "material_id", "vertices", "normals", "uvs", "indices")
+
+    def __init__(self, name, material_id):
+        self.name = name
+        self.material_id = material_id
+        self.vertices = []   # list[(x,y,z)]
+        self.normals = []     # list[(nx,ny,nz)]
+        self.uvs = []         # list[(u,v)]
+        self.indices = []     # list[int]
+
+    def add_node(self, node):
+        if node.vertices is None:
+            return
+        base = len(self.vertices)
+        m = node.world
+        for v in node.vertices:
+            self.vertices.append(transform_point(m, v))
+        for n in node.normals:
+            self.normals.append(transform_normal(m, n))
+        self.uvs.extend(node.uvs)
+        for i in node.indices:
+            self.indices.append(i + base)
+
+    @property
+    def triangle_count(self):
+        return len(self.indices) // 3
+
+
+def collect_meshes(kn):
+    """Group all mesh/skinned nodes into per-material TriMeshes (world space)."""
+    meshes = {}
+    for node in kn.nodes:
+        if node.type not in (2, 3) or node.vertices is None:
+            continue
+        key = node.material_id
+        m = meshes.get(key)
+        if m is None:
+            m = TriMesh(node.name, node.material_id)
+            meshes[key] = m
+        m.add_node(node)
+    return meshes
+
+
+def bounds_of(vertices):
+    minx = miny = minz = float("inf")
+    maxx = maxy = maxz = -float("inf")
+    for x, y, z in vertices:
+        if x < minx: minx = x
+        if y < miny: miny = y
+        if z < minz: minz = z
+        if x > maxx: maxx = x
+        if y > maxy: maxy = y
+        if z > maxz: maxz = z
+    return (minx, miny, minz), (maxx, maxy, maxz)
+```
+kn5_reader.py
+```
+"""Assetto Corsa KN5 binary model reader.
+
+The KN5 format (magic 'sc6969') stores textures, materials and a node tree.
+Based on the public kn5-converter source by Chipicao and the format
+description at https://site.hagn.io/assettocorsa/modding/kn5-files .
+
+Supported versions: 5 and 6 (the test maps use version 6).
+"""
+
+import struct
+
+MAGIC = b"sc6969"
+
+
+def _read_str(f, n):
+    return f.read(n).decode("utf-8", "replace")
+
+
+def _read_int(f):
+    return struct.unpack("<i", f.read(4))[0]
+
+
+def _read_short(f):
+    return struct.unpack("<h", f.read(2))[0]
+
+
+def _read_float(f):
+    return struct.unpack("<f", f.read(4))[0]
+
+
+def _mat_identity():
+    return [[1.0 if i == j else 0.0 for j in range(4)] for i in range(4)]
+
+
+def _mat_mul(a, b):
+    r = [[0.0] * 4 for _ in range(4)]
+    for i in range(4):
+        for j in range(4):
+            r[i][j] = sum(a[i][k] * b[k][j] for k in range(4))
+    return r
+
+
+class Texture:
+    __slots__ = ("name", "type", "data")
+
+    def __init__(self, name, type_, data):
+        self.name = name
+        self.type = type_
+        self.data = data
+
+
+class Material:
+    def __init__(self, name):
+        self.name = name
+        self.shader = ""
+        self.alpha_blend = 0
+        self.properties = {}
+        self.textures = {}
+
+    @property
+    def alpha_test(self):
+        return "AT" in self.shader
+
+    @property
+    def translucent(self):
+        return bool(self.alpha_blend)
+
+    @property
+    def has_normal(self):
+        return "NM" in self.shader or self.textures.get("txNormal") is not None
+
+    def diffuse_mult(self):
+        return self.properties.get("diffuseMult", 1.0)
+
+    def normal_mult(self):
+        return self.properties.get("normalMult", 1.0)
+
+
+class Node:
+    def __init__(self, type_, name, parent):
+        self.type = type_
+        self.name = name
+        self.parent = parent
+        self.children = []
+        self.transform = _mat_identity()
+        self.world = _mat_identity()
+        self.vertices = None
+        self.normals = None
+        self.uvs = None
+        self.indices = None
+        self.material_id = -1
+
+
+class KN5:
+    def __init__(self):
+        self.version = 0
+        self.textures = []
+        self.materials = []
+        self.nodes = []
+        self.root = None
+
+    def texture_by_name(self, name):
+        for t in self.textures:
+            if t.name == name:
+                return t
+        return None
+
+
+def _read_material(f, version):
+    name = _read_str(f, _read_int(f))
+    shader = _read_str(f, _read_int(f))
+    mat = Material(name)
+    mat.shader = shader
+    mat.alpha_blend = _read_short(f)
+    if version > 4:
+        f.read(4)
+    prop_count = _read_int(f)
+    for _ in range(prop_count):
+        pname = _read_str(f, _read_int(f))
+        pval = _read_float(f)
+        f.read(36)
+        mat.properties[pname] = pval
+    tex_count = _read_int(f)
+    for _ in range(tex_count):
+        slot_name = _read_str(f, _read_int(f))
+        _read_int(f)
+        tex_name = _read_str(f, _read_int(f))
+        mat.textures[slot_name] = tex_name
+    return mat
+
+
+def _read_matrix(f):
+    return [[_read_float(f) for _ in range(4)] for _ in range(4)]
+
+
+def _read_node(f, parent, version, out):
+    node = Node(_read_int(f), _read_str(f, _read_int(f)), parent)
+    children_count = _read_int(f)
+    f.read(1)
+    if node.type == 1:
+        node.transform = _read_matrix(f)
+    elif node.type == 2:
+        f.read(3)
+        vcount = _read_int(f)
+        verts, norms, uvs = [], [], []
+        for _ in range(vcount):
+            x, y, z = _read_float(f), _read_float(f), _read_float(f)
+            nx, ny, nz = _read_float(f), _read_float(f), _read_float(f)
+            tu, tv = _read_float(f), _read_float(f)
+            f.read(12)
+            verts.append((x, y, z))
+            norms.append((nx, ny, nz))
+            uvs.append((tu, 1.0 - tv))
+        icount = _read_int(f)
+        indices = [struct.unpack("<H", f.read(2))[0] for _ in range(icount)]
+        node.vertices = verts
+        node.normals = norms
+        node.uvs = uvs
+        node.indices = indices
+        node.material_id = _read_int(f)
+        f.read(29)
+    elif node.type == 3:
+        f.read(3)
+        bone_count = _read_int(f)
+        for _ in range(bone_count):
+            _read_str(f, _read_int(f))
+            f.read(64)
+        vcount = _read_int(f)
+        verts, norms, uvs = [], [], []
+        for _ in range(vcount):
+            x, y, z = _read_float(f), _read_float(f), _read_float(f)
+            nx, ny, nz = _read_float(f), _read_float(f), _read_float(f)
+            tu, tv = _read_float(f), _read_float(f)
+            f.read(44)
+            verts.append((x, y, z))
+            norms.append((nx, ny, nz))
+            uvs.append((tu, 1.0 - tv))
+        icount = _read_int(f)
+        indices = [struct.unpack("<H", f.read(2))[0] for _ in range(icount)]
+        node.vertices = verts
+        node.normals = norms
+        node.uvs = uvs
+        node.indices = indices
+        node.material_id = _read_int(f)
+        f.read(12)
+    else:
+        return None
+
+    if parent is None:
+        node.world = [row[:] for row in node.transform]
+    else:
+        node.world = _mat_mul(node.transform, parent.world)
+    out.append(node)
+    for _ in range(children_count):
+        child = _read_node(f, node, version, out)
+        if child is not None:
+            node.children.append(child)
+    return node
+
+
+def read_kn5(path):
+    with open(path, "rb") as f:
+        return read_kn5_stream(f)
+
+
+def read_kn5_stream(f):
+    magic = f.read(6)
+    if magic != MAGIC:
+        raise ValueError(f"Not a KN5 file (magic={magic!r})")
+    kn = KN5()
+    kn.version = _read_int(f)
+    if kn.version > 5:
+        f.read(4)
+    tex_count = _read_int(f)
+    for _ in range(tex_count):
+        ttype = _read_int(f)
+        tname = _read_str(f, _read_int(f))
+        tsize = _read_int(f)
+        tdata = f.read(tsize)
+        kn.textures.append(Texture(tname, ttype, tdata))
+    mat_count = _read_int(f)
+    for _ in range(mat_count):
+        kn.materials.append(_read_material(f, kn.version))
+    kn.root = _read_node(f, None, kn.version, kn.nodes)
+    return kn
+
+
+if __name__ == "__main__":
+    import sys
+    kn = read_kn5(sys.argv[1])
+    print("version", kn.version)
+    print("textures", len(kn.textures))
+    print("materials", len(kn.materials))
+    print("nodes", len(kn.nodes))
+    meshes = [n for n in kn.nodes if n.type in (2, 3)]
+    print("mesh nodes", len(meshes))
+    print("root", kn.root.name if kn.root else None)
+    for n in kn.nodes[:15]:
+        print("  ", n.type, repr(n.name), "mat", n.material_id,
+              "v" + str(len(n.vertices) if n.vertices else 0))
+```
+materials.py
+```
+"""Convert AC KN5 materials/textures into BeamNG material JSON + DDS files."""
+
+import os
+import re
+
+# 'AT' shaders are alpha-tested (cutout). MultiMap shaders carry a detail map.
+
+
+def _safe_name(name):
+    """Make a material name safe as a JSON key and a DAE material symbol."""
+    if not name:
+        return "default"
+    s = re.sub(r"[^A-Za-z0-9_]+", "_", name).strip("_")
+    if not s:
+        s = "mat"
+    if s[0].isdigit():
+        s = "m_" + s
+    return s
+
+
+def material_symbol_for(kn, material_id):
+    if material_id < 0 or material_id >= len(kn.materials):
+        return "default"
+    return _safe_name(kn.materials[material_id].name)
+
+
+def extract_textures(kn, out_dir):
+    """Write every embedded texture as a .dds file into out_dir/textures."""
+    tdir = os.path.join(out_dir, "textures")
+    os.makedirs(tdir, exist_ok=True)
+    written = {}
+    for t in kn.textures:
+        name = t.name
+        if not name.lower().endswith(".dds"):
+            name = name + ".dds"
+        with open(os.path.join(tdir, name), "wb") as f:
+            f.write(t.data)
+        written[t.name] = name
+    return written, tdir
+
+
+def build_materials_json(kn, level_name):
+    """Produce a BeamNG main.materials.json mapping for all KN5 materials."""
+    out = {}
+    for mat in kn.materials:
+        sym = _safe_name(mat.name)
+        entry = {
+            "name": f"{level_name}_{sym}",
+            "mapTo": sym,
+            "class": "Material",
+            "Stages": [{}, {}, {}, {}],
+        }
+        stage = entry["Stages"][0]
+        diffuse = mat.textures.get("txDiffuse")
+        if diffuse:
+            base = os.path.splitext(diffuse)[0]
+            stage["colorMap"] = f"/levels/{level_name}/textures/{base}"
+        normal = mat.textures.get("txNormal")
+        if normal:
+            base = os.path.splitext(normal)[0]
+            stage["normalMap"] = f"/levels/{level_name}/textures/{base}"
+        detail = mat.textures.get("txDetail")
+        if detail:
+            base = os.path.splitext(detail)[0]
+            stage["detailMap"] = f"/levels/{level_name}/textures/{base}"
+        exp = mat.properties.get("ksSpecularEXP", 10.0)
+        rough = max(0.02, min(1.0, 1.0 / (1.0 + exp / 20.0)))
+        stage["roughnessFactor"] = rough
+        stage["specular"] = [0.2, 0.2, 0.2, 1.0]
+        if "AT" in mat.shader:
+            entry["alphaRef"] = 0.5
+            stage["alphaRef"] = 0.5
+        if mat.alpha_blend:
+            entry["translucent"] = True
+            entry["translucentBlendOp"] = "Lerp"
+        out[entry["name"]] = entry
+    return out
+```
+sky_lighting.py
+```
+"""Convert AC sky/lighting settings into a BeamNG level.json sky group.
+
+AC tracks define the sun via data/<layout>/lighting.ini:
+    [LIGHTING]
+    SUN_PITCH_ANGLE=15      ; sun elevation above horizon (degrees)
+    SUN_HEADING_ANGLE=80    ; sun compass azimuth (degrees)
+
+BeamNG expresses the sun in a ScatterSky object with `elevation` and `azimuth`
+fields (both in degrees). We translate pitch->elevation, heading->azimuth and
+emit a full sky_and_sun SimGroup (TimeOfDay, LevelInfo, ScatterSky, CloudLayer).
+"""
+
+import os
+import json
+from configparser import ConfigParser
+
+
+def read_ac_lighting(ac_layout_data_dir):
+    """Return (pitch, heading) from an AC layout data folder, with defaults."""
+    pitch, heading = 15.0, 80.0
+    path = os.path.join(ac_layout_data_dir, "lighting.ini")
+    if os.path.isfile(path):
+        cp = ConfigParser()
+        cp.read(path)
+        if cp.has_section("LIGHTING"):
+            pitch = cp.getfloat("LIGHTING", "SUN_PITCH_ANGLE", fallback=pitch)
+            heading = cp.getfloat("LIGHTING", "SUN_HEADING_ANGLE", fallback=heading)
+    return pitch, heading
+
+
+def build_sky_group(pitch, heading):
+    """Build the sky_and_sun SimGroup for a BeamNG main.level.json."""
+    elevation = max(1.0, min(89.0, float(pitch)))
+    azimuth = float(heading) % 360.0
+    return {
+        "class": "SimGroup",
+        "name": "sky_and_sun",
+        "childs": [
+            {
+                "class": "TimeOfDay",
+                "name": "tod",
+                "position": [0, 0, 0],
+                "axisTilt": 10,
+                "azimuthOverride": 0,
+                "play": False,
+                "startTime": 0.10,
+                "time": 0.10,
+            },
+            {
+                "class": "LevelInfo",
+                "name": "theLevelInfo",
+                "canvasClearColor": [1, 1, 1, 255],
+                "enabled": "1",
+                "fogAtmosphereHeight": 800,
+                "fogColor": [0.741, 0.816, 0.925, 1],
+                "fogDensity": 0.0006,
+                "globalEnviromentMap": "BNG_Sky_02_cubemap",
+                "gravity": -9.81,
+                "soundAmbience": "AudioAmbienceDefault",
+                "visibleDistance": 4500,
+            },
+            {
+                "class": "ScatterSky",
+                "name": "sunsky",
+                "position": [0, 0, 0],
+                "ambientScale": [0.6, 0.6, 0.65, 1],
+                "azimuth": azimuth,
+                "colorize": [0.4, 0.6, 0.85, 1],
+                "colorizeAmount": 1.0,
+                "elevation": elevation,
+                "exposure": 15,
+                "flareScale": 5,
+                "flareType": "BNG_SunFlare_3",
+                "fogScale": [0.69, 0.85, 0.99, 1],
+                "lastSplitTerrainOnly": True,
+                "logWeight": 0.99,
+                "mieScattering": 0.000607,
+                "moonLightColor": [0.196, 0.196, 0.196, 1],
+                "moonMat": "Moon_Glow_Mat",
+                "moonScale": 0.03,
+                "nightColor": [0.024, 0.024, 0.024, 1],
+                "nightCubemap": "BNG_Sky_Space",
+                "nightFogColor": [0.004, 0.004, 0.004, 1],
+                "overDarkFactor": [40000, 8000, 1800, 650],
+                "rayleighScattering": 0.01,
+                "shadowDarkenColor": [0, 0, 0, 0],
+                "shadowDistance": 1600,
+                "shadowSoftness": 0.2,
+                "skyBrightness": 11,
+                "sunScale": [0.996, 0.902, 0.831, 1],
+                "texSize": 1024,
+                "useNightCubemap": True,
+            },
+            {
+                "class": "CloudLayer",
+                "name": "clouds",
+                "position": [0, 0, 600],
+                "Textures": [
+                    {"texScale": 1.5, "texSpeed": 0.002},
+                    {"texDirection": [0.8, 0.2], "texScale": 3, "texSpeed": 0.025},
+                    {"texDirection": [0.2, 0.5], "texScale": 4, "texSpeed": 0.035},
+                ],
+                "baseColor": [0.996, 0.996, 0.996, 0.996],
+                "coverage": 0.08,
+                "exposure": 1.3,
+                "height": 3,
+                "texture": "levels/jungle_rock_island/art/skies/SkyNormals_05.dds",
+                "windSpeed": 0.2,
+            },
+        ],
+    }
+
+
+def build_level_json(sky_group, level_name, spawn_point=None, bounds=None):
+    """Assemble a minimal but complete main.level.json."""
+    if spawn_point is None:
+        spawn_point = [0, 0, 0]
+    childs = [sky_group]
+    childs.append({
+        "class": "SimGroup",
+        "name": "CameraBookmarks",
+        "childs": [
+            {
+                "class": "CameraBookmark",
+                "name": "overviewbookmark",
+                "position": [0, 0, 50],
+                "rotation": [0.4, 0.2, -0.8, 51.5],
+                "dataBlock": "CameraBookmarkMarker",
+                "internalName": "NewCamera_0",
+                "isAIControlled": "0",
+            }
+        ],
+    })
+    childs.append({
+        "class": "GroundPlane",
+        "position": "0 0 0",
+        "Material": "GroundGrid",
+        "scaleU": 8,
+        "scaleV": 8,
+        "squareSize": 71,
+    })
+    childs.append({
+        "class": "SimGroup",
+        "name": "PlayerDropPoints",
+        "enabled": "1",
+        "childs": [
+            {
+                "class": "SpawnSphere",
+                "position": spawn_point,
+                "dataBlock": "SpawnSphereMarker",
+                "enabled": "1",
+                "homingCount": "0",
+                "indoorWeight": "1",
+                "isAIControlled": "0",
+                "lockCount": "0",
+                "outdoorWeight": "1",
+                "radius": 1,
+                "sphereWeight": "1",
+            }
+        ],
+    })
+    childs.append({"class": "SimGroup", "name": "AIWaypointsGroup"})
+    childs.append({"class": "SimGroup", "name": "AIDecalWaypointsGroup"})
+    return {
+        "class": "SimGroup",
+        "name": "MissionGroup",
+        "enabled": "1",
+        "childs": childs,
+    }
+```
+trees.py
+```
+"""Tree handling for AC -> BeamNG conversion.
+
+AC tracks store vegetation in dedicated .kn5 files (e.g. vegetation.kn5).
+Two problems must be fixed when porting them to BeamNG:
+
+1. Collision: only the trunk (stem) of a tree should collide. Foliage is
+   alpha-tested billboards and must NOT have collision, otherwise cars get
+   stuck in leaves. We build a simplified stem collision mesh from the trunk
+   vertices (a low-poly box bounding the lower part of the trunk).
+
+2. Model fixing: AC tree meshes are often stored as a single combined mesh
+   with the foliage baked in, or with broken/zero normals on billboard quads.
+   We split tree meshes so the visible mesh keeps the full geometry while the
+   collision mesh only covers the stem region.
+
+Heuristics for identifying trees:
+  - KN5 file name contains 'vegetation' / 'tree' / 'forest'
+  - mesh node name contains 'tree', 'pine', 'bush', 'palm', 'trunk', 'veget'
+  - material shader is alpha-tested (AT) -> foliage, no collision
+"""
+
+from .geometry import transform_point, TriMesh, bounds_of
+
+TREE_NAME_HINTS = ("tree", "pine", "bush", "palm", "trunk", "veget",
+                   "pino", "abete", "baobab", "oak", "fir", "leaf", "plant")
+
+
+def is_tree_kn5(path):
+    low = path.lower()
+    return any(h in low for h in ("vegetation", "tree", "forest"))
+
+
+def mesh_is_tree(node):
+    low = node.name.lower()
+    return any(h in low for h in TREE_NAME_HINTS)
+
+
+def mesh_is_foliage(kn, node):
+    """A mesh whose material is alpha-tested is treated as foliage."""
+    if node.material_id < 0 or node.material_id >= len(kn.materials):
+        return False
+    return "AT" in kn.materials[node.material_id].shader
+
+
+def _stem_extent(node):
+    """Estimate the trunk/stem region of a tree mesh.
+
+    Tree trunks in AC are roughly vertical; the stem occupies the lower portion
+    and is much narrower horizontally than the canopy. We approximate the stem
+    as the vertical band below the median height that lies within a narrow
+    horizontal radius around the trunk's horizontal centroid.
+    """
+    if node.vertices is None or not node.vertices:
+        return None
+    pts = [transform_point(node.world, v) for v in node.vertices]
+    (minx, miny, minz), (maxx, maxy, maxz) = bounds_of(pts)
+    cx = (minx + maxx) * 0.5
+    cy = (miny + maxy) * 0.5
+    height = maxz - minz
+    if height <= 0:
+        return None
+    # The stem is the lowest ~40% of the tree.
+    stem_top = minz + height * 0.4
+    # Narrow horizontal radius: a fraction of the overall width.
+    width = max(maxx - minx, maxy - miny)
+    radius = max(0.15, width * 0.12)
+    stem_pts = [p for p in pts if p[2] <= stem_top and
+                (p[0] - cx) ** 2 + (p[1] - cy) ** 2 <= radius * radius]
+    if len(stem_pts) < 3:
+        # fall back to all points below stem_top
+        stem_pts = [p for p in pts if p[2] <= stem_top]
+    if len(stem_pts) < 3:
+        return None
+    (sminx, sminy, sminz), (smaxx, smaxy, smaxz) = bounds_of(stem_pts)
+    return (cx, cy, sminz, smaxz, radius)
+
+
+def make_stem_collision(node):
+    """Build a low-poly box collision mesh representing the trunk only.
+
+    Returns a DaeMesh-like TriMesh (world space) or None if no stem found.
+    """
+    ext = _stem_extent(node)
+    if ext is None:
+        return None
+    cx, cy, z0, z1, r = ext
+    half = r * 0.7  # slightly inside the canopy radius for a slim trunk
+    # 8 corners of a box
+    corners = [
+        (cx - half, cy - half, z0),
+        (cx + half, cy - half, z0),
+        (cx + half, cy + half, z0),
+        (cx - half, cy + half, z0),
+        (cx - half, cy - half, z1),
+        (cx + half, cy - half, z1),
+        (cx + half, cy + half, z1),
+        (cx - half, cy + half, z1),
+    ]
+    norms = [(0, 0, 1)] * 8
+    uvs = [(0, 0)] * 8
+    # 12 triangles (box)
+    tris = [
+        0, 1, 2, 0, 2, 3,    # bottom
+        4, 6, 5, 4, 7, 6,    # top
+        0, 4, 5, 0, 5, 1,    # -y
+        1, 5, 6, 1, 6, 2,    # +x
+        2, 6, 7, 2, 7, 3,    # +y
+        3, 7, 4, 3, 4, 0,    # -x
+    ]
+    m = TriMesh("Colmesh-1", -1)
+    m.vertices = corners
+    m.normals = norms
+    m.uvs = uvs
+    m.indices = tris
+    return m
+```
+Structure of output:
+```
+$ tree /tmp/monaco_but_worse/
+/home/agent/tmp/monaco_but_worse/
+\u2514\u2500\u2500 levels
+    \u2514\u2500\u2500 monaco_but_worse
+        \u251c\u2500\u2500 art
+        \u2502�� \u2514\u2500\u2500 shapes
+        \u2502��     \u2514\u2500\u2500 ac_monacobutstupid.dae
+        \u251c\u2500\u2500 info.json
+        \u251c\u2500\u2500 main.level.json
+        \u251c\u2500\u2500 main.materials.json
+        \u2514\u2500\u2500 textures
+            \u251c\u2500\u2500 ambulance_c_02_d.dds
+            \u251c\u2500\u2500 ambulance_d_01_d.dds
+            \u251c\u2500\u2500 ambulance_Gialla.dds
+            \u251c\u2500\u2500 a_mountain_01.dds
+            \u251c\u2500\u2500 AnimPit.dds
+            \u251c\u2500\u2500 anolsoelo.jpg.dds
+            \u251c\u2500\u2500 armco_grey_main_a_01_d.dds
+            \u251c\u2500\u2500 armco_redpost__end_01_d.dds
+            \u251c\u2500\u2500 armco_simple_main_a_01_d.dds
+            \u251c\u2500\u2500 armco_whitegreen_left_c_01_d.dds
+            \u251c\u2500\u2500 armco_white_main_a_01_d.dds
+            \u251c\u2500\u2500 asdasdasdasda.png.dds
+            \u251c\u2500\u2500 asdasdasdasdasdasdwed.png.dds
+            \u251c\u2500\u2500 asdasdasd.jpg.dds
+            \u251c\u2500\u2500 asfalto_nuovo.dds
+            \u251c\u2500\u2500 Asfalto_variante.dds
+            \u251c\u2500\u2500 asfalto_vecchio.dds
+            \u251c\u2500\u2500 barriere_rosse.dds
+            \u251c\u2500\u2500 barrier pole.png.dds
+            \u251c\u2500\u2500 Base_1.dds
+            \u251c\u2500\u2500 basement.png.dds
+            \u251c\u2500\u2500 Base_vetri.dds
+            \u251c\u2500\u2500 Bayked.jpg.dds
+            \u251c\u2500\u2500 birillo.dds
+            \u251c\u2500\u2500 blaack.jpg.dds
+            \u251c\u2500\u2500 brake_markerkit_a_01_d.dds
+            \u251c\u2500\u2500 bush03A.dds
+            \u251c\u2500\u2500 cargo ship.png.dds
+            \u251c\u2500\u2500 carrro.png.dds
+            \u251c\u2500\u2500 carrrr.png.dds
+            \u251c\u2500\u2500 chair.png.dds
+            \u251c\u2500\u2500 charles.jpg.dds
+            \u251c\u2500\u2500 cheese.png.dds
+            \u251c\u2500\u2500 conc_bollard_filler_a_01_d.dds
+            \u251c\u2500\u2500 concrete_pitlane_glass_01_d.dds
+            \u251c\u2500\u2500 core_podium_f1wc_a_da.dds
+            \u251c\u2500\u2500 core_start_lights_a_01_d.dds
+            \u251c\u2500\u2500 crane_construction_a_d.dds
+            \u251c\u2500\u2500 crane_platform_c_d.dds
+            \u251c\u2500\u2500 D7QkZqUWsAAX4-3.jpg.dds
+            \u251c\u2500\u2500 drs_white_b.dds
+            \u251c\u2500\u2500 f1_board_a.dds
+            \u251c\u2500\u2500 f1_board_b.dds
+            \u251c\u2500\u2500 f1cafe.jpg.dds
+            \u251c\u2500\u2500 f1caferussell.png.dds
+            \u251c\u2500\u2500 f22222.png.dds
+            \u251c\u2500\u2500 f2222.png.dds
+            \u251c\u2500\u2500 f222.jpg.dds
+            \u251c\u2500\u2500 f22.jpg.dds
+            \u251c\u2500\u2500 fanatec_black_board_a.dds
+            \u251c\u2500\u2500 fence_barbed_main_a_mesh_01_d.dds
+            \u251c\u2500\u2500 fence_construction_main_a_01_s.dds
+            \u251c\u2500\u2500 fence_gardenrail_main_a_01_d.dds
+            \u251c\u2500\u2500 fencekit_a_01_d.dds
+            \u251c\u2500\u2500 ferrari.png.dds
+            \u251c\u2500\u2500 ferrarmore.png.dds
+            \u251c\u2500\u2500 flag_default_01_d.dds
+            \u251c\u2500\u2500 flagsheet_01_d.dds
+            \u251c\u2500\u2500 garage_high.dds
+            \u251c\u2500\u2500 garage_interior_building_a_01_d.dds
+            \u251c\u2500\u2500 garage_pit_decal_a_01_d.dds
+            \u251c\u2500\u2500 gazebo_a_01_d.dds
+            \u251c\u2500\u2500 generic_glass_a_01_d.dds
+            \u251c\u2500\u2500 grass_natural.dds
+            \u251c\u2500\u2500 hahauundersteerd.jpg.dds
+            \u251c\u2500\u2500 have a safe flight.png.dds
+            \u251c\u2500\u2500 Image_0.002.png.dds
+            \u251c\u2500\u2500 Image_1.001.png.dds
+            \u251c\u2500\u2500 Image_10.png.dds
+            \u251c\u2500\u2500 Image_2.png.dds
+            \u251c\u2500\u2500 Image_3.png.dds
+            \u251c\u2500\u2500 Image_4.png.dds
+            \u251c\u2500\u2500 Image_5.png.dds
+            \u251c\u2500\u2500 Image_6.png.dds
+            \u251c\u2500\u2500 Image_7.png.dds
+            \u251c\u2500\u2500 Image_8.png.dds
+            \u251c\u2500\u2500 Image_9.png.dds
+            \u251c\u2500\u2500 kimiraikkonen.png.dds
+            \u251c\u2500\u2500 koleso.png.dds
+            \u251c\u2500\u2500 lambnodetails.png.dds
+            \u251c\u2500\u2500 lambobase.png.dds
+            \u251c\u2500\u2500 lava.jpg.dds
+            \u251c\u2500\u2500 lg_board_a.dds
+            \u251c\u2500\u2500 lg_marshal_light_a_01_d.dds
+            \u251c\u2500\u2500 lg_marshal_light_a_02_d.dds
+            \u251c\u2500\u2500 lg_pit_exit_light_a_01_d.dds
+            \u251c\u2500\u2500 lightpole_lrg_01_d.dds
+            \u251c\u2500\u2500 macro_cloth_b_d.dds
+            \u251c\u2500\u2500 marquee_a_01_d.dds
+            \u251c\u2500\u2500 marquee_truck_a_02_d.dds
+            \u251c\u2500\u2500 monacogp_2018_big.dds
+            \u251c\u2500\u2500 monacogp_2018_board_a.dds
+            \u251c\u2500\u2500 monacogp_anni.dds
+            \u251c\u2500\u2500 mon_building_large_b_01_d.dds
+            \u251c\u2500\u2500 mon_building_large_b_02_d.dds
+            \u251c\u2500\u2500 mon_building_large_c_01_d.dds
+            \u251c\u2500\u2500 mon_building_large_c_02_d.dds
+            \u251c\u2500\u2500 mon_building_large_e_01_d.dds
+            \u251c\u2500\u2500 mon_building_large_f_01_d.dds
+            \u251c\u2500\u2500 mon_building_large_f_02_d.dds
+            \u251c\u2500\u2500 mon_building_large_g_01_d.dds
+            \u251c\u2500\u2500 mon_building_large_g_02_d.dds
+            \u251c\u2500\u2500 mon_building_medium_a_01_d.dds
+            \u251c\u2500\u2500 mon_building_medium_a_02_d.dds
+            \u251c\u2500\u2500 mon_building_medium_b_01_d.dds
+            \u251c\u2500\u2500 mon_building_medium_b_02_d.dds
+            \u251c\u2500\u2500 mon_building_medium_c_01_d.dds
+            \u251c\u2500\u2500 mon_building_medium_c_02_d.dds
+            \u251c\u2500\u2500 mon_building_medium_d_01_d.dds
+            \u251c\u2500\u2500 mon_building_medium_e_01_d.dds
+            \u251c\u2500\u2500 mon_building_medium_e_02_d.dds
+            \u251c\u2500\u2500 mon_building_medium_f_01_d.dds
+            \u251c\u2500\u2500 mon_building_medium_f_02_d.dds
+            \u251c\u2500\u2500 mon_building_pitlane_a_01_d.dds
+            \u251c\u2500\u2500 mon_building_royal_box_02_da.dds
+            \u251c\u2500\u2500 mon_building_royal_box_b_01_d.dds
+            \u251c\u2500\u2500 mon_building_set_a_01_d.dds
+            \u251c\u2500\u2500 mon_building_set_a_02_d.dds
+            \u251c\u2500\u2500 mon_building_set_b_d_01.dds
+            \u251c\u2500\u2500 mon_building_set_c_d.dds
+            \u251c\u2500\u2500 mon_building_set_d_d_01.dds
+            \u251c\u2500\u2500 mon_building_set_d_d_02.dds
+            \u251c\u2500\u2500 mon_building_set_d_d_03.dds
+            \u251c\u2500\u2500 mon_building_set_e_01_d.dds
+            \u251c\u2500\u2500 mon_building_set_f_d.dds
+            \u251c\u2500\u2500 mon_building_set_g_01_d.dds
+            \u251c\u2500\u2500 mon_building_set_g_02_d.dds
+            \u251c\u2500\u2500 mon_building_set_g_03_d.dds
+            \u251c\u2500\u2500 mon_building_set_h_01_d.dds
+            \u251c\u2500\u2500 mon_building_set_i_01_d.dds
+            \u251c\u2500\u2500 mon_building_set_i_02_d.dds
+            \u251c\u2500\u2500 mon_building_set_j_01_d.dds
+            \u251c\u2500\u2500 mon_building_set_j_02_d.dds
+            \u251c\u2500\u2500 mon_building_set_k_01_d.dds
+            \u251c\u2500\u2500 mon_building_set_k_02_d.dds
+            \u251c\u2500\u2500 mon_building_set_l_01_d.dds
+            \u251c\u2500\u2500 mon_building_set_l_02_d.dds
+            \u251c\u2500\u2500 mon_building_set_m_d.dds
+            \u251c\u2500\u2500 mon_building_set_n_a_d.dds
+            \u251c\u2500\u2500 mon_building_set_o_d_01.dds
+            \u251c\u2500\u2500 mon_building_set_p_01_d.dds
+            \u251c\u2500\u2500 mon_building_set_p_02_d.dds
+            \u251c\u2500\u2500 mon_building_set_q_01_d.dds
+            \u251c\u2500\u2500 mon_building_set_r_a_d.dds
+            \u251c\u2500\u2500 mon_building_set_s_d.dds
+            \u251c\u2500\u2500 mon_building_set_t_01_d.dds
+            \u251c\u2500\u2500 mon_building_set_t_02_d.dds
+            \u251c\u2500\u2500 mon_building_set_t_03_d.dds
+            \u251c\u2500\u2500 mon_building_set_u_a_d.dds
+            \u251c\u2500\u2500 mon_building_set_v_01_d.dds
+            \u251c\u2500\u2500 mon_building_set_v_02_d.dds
+            \u251c\u2500\u2500 mon_building_set_w_a_03_d.dds
+            \u251c\u2500\u2500 mon_building_set_x_d.dds
+            \u251c\u2500\u2500 mon_building_set_y_01_d.dds
+            \u251c\u2500\u2500 mon_building_set_y_02_d.dds
+            \u251c\u2500\u2500 mon_building_small_b_d.dds
+            \u251c\u2500\u2500 mon_building_tunnel_a_01_d.dds
+            \u251c\u2500\u2500 mon_building_tunnel_a_02_d.dds
+            \u251c\u2500\u2500 mon_building_tunnel_b_02_d.dds
+            \u251c\u2500\u2500 mon_building_tunnel_b_03_d.dds
+            \u251c\u2500\u2500 mon_building_tunnel_b_04_d.dds
+            \u251c\u2500\u2500 mon_building_tunnel_b_05_d.dds
+            \u251c\u2500\u2500 mon_building_tunnel_b_06_d.dds
+            \u251c\u2500\u2500 mon_building_tunnel_b_07_d.dds
+            \u251c\u2500\u2500 mon_building_tunnel_fariamuro.dds
+            \u251c\u2500\u2500 mon_building_tunnel_luceD.dds
+            \u251c\u2500\u2500 mon_building_tunnel_luceS.dds
+            \u251c\u2500\u2500 mon_building_tunnel_normale.dds
+            \u251c\u2500\u2500 mon_building_yachtclub_a_02_d.dds
+            \u251c\u2500\u2500 mon_building_yachtclub_a_d.dds
+            \u251c\u2500\u2500 mon_concrete_det_d.dds
+            \u251c\u2500\u2500 mon_concrete_tile_01_d.dds
+            \u251c\u2500\u2500 mon_concrete_tile_02_d.dds
+            \u251c\u2500\u2500 mon_concrete_tile_03_d.dds
+            \u251c\u2500\u2500 mon_concrete_tile_04_d.dds
+            \u251c\u2500\u2500 mon_concrete_tile_05_d.dds
+            \u251c\u2500\u2500 mon_crane_large_a_d.dds
+            \u251c\u2500\u2500 mon_curb_strip_d.dds
+            \u251c\u2500\u2500 mon_detail_01_d.dds
+            \u251c\u2500\u2500 mon_detail_02_d.dds
+            \u251c\u2500\u2500 mon_detail_03_d.dds
+            \u251c\u2500\u2500 mon_detail_04_d.dds
+            \u251c\u2500\u2500 mon_detail_05_d.dds
+            \u251c\u2500\u2500 mon_detail_06_d.dds
+            \u251c\u2500\u2500 mon_detail_07_d.dds
+            \u251c\u2500\u2500 mon_flag_pole_a_d.dds
+            \u251c\u2500\u2500 mon_gantry_overhang_a_01_d.dds
+            \u251c\u2500\u2500 mon_gantry_overhang_a_03_d.dds
+            \u251c\u2500\u2500 mon_grandstand_large_a_01_d.dds
+            \u251c\u2500\u2500 mon_grandstand_large_a_02_d.dds
+            \u251c\u2500\u2500 mon_grandstand_large_a_03_d.dds
+            \u251c\u2500\u2500 mon_grandstand_large_a_04_d.dds
+            \u251c\u2500\u2500 mon_grandstand_large_a_05_d.dds
+            \u251c\u2500\u2500 mon_grandstand_large_a_07_d.dds
+            \u251c\u2500\u2500 mon_grandstand_large_b_01_d.dds
+            \u251c\u2500\u2500 mon_grandstand_large_c_01_d.dds
+            \u251c\u2500\u2500 mon_grandstand_medium_b_01_d.dds
+            \u251c\u2500\u2500 mon_grandstand_medium_d_01_d.dds
+            \u251c\u2500\u2500 mon_grandstand_small_a_01_d.dds
+            \u251c\u2500\u2500 mon_grandstand_small_b_01_d.dds
+            \u251c\u2500\u2500 mon_grandstand_small_new_d_01.dds
+            \u251c\u2500\u2500 mon_grandstand_solid_a_01_d.dds
+            \u251c\u2500\u2500 mon_grandstand_solid_a_02_d.dds
+            \u251c\u2500\u2500 mon_harbour_statue_a_d.dds
+            \u251c\u2500\u2500 mon_hein.dds
+            \u251c\u2500\u2500 mon_heineken_b.dds
+            \u251c\u2500\u2500 mon_heineken.dds
+            \u251c\u2500\u2500 mon_heuer.dds
+            \u251c\u2500\u2500 mon_jumbotron_screen_a_01_d.dds
+            \u251c\u2500\u2500 mon_jumbotron_screen_a_02_d.dds
+            \u251c\u2500\u2500 mon_lamp_post_a_01_d.dds
+            \u251c\u2500\u2500 mon_lamp_post_a_02_d.dds
+            \u251c\u2500\u2500 mon_lamp_post_d_d.dds
+            \u251c\u2500\u2500 mon_landscape_01_d.dds
+            \u251c\u2500\u2500 mon_landscape_02_d.dds
+            \u251c\u2500\u2500 mon_metal_01_d.dds
+            \u251c\u2500\u2500 mon_oceanliner_large_a_01_d.dds
+            \u251c\u2500\u2500 mon_oceanliner_large_a_02_d.dds
+            \u251c\u2500\u2500 mon_paris.dds
+            \u251c\u2500\u2500 mon_pitwall_a_01_d.dds
+            \u251c\u2500\u2500 mon_road_sign_a_d.dds
+            \u251c\u2500\u2500 mon_rumble_strip_01_d.dds
+            \u251c\u2500\u2500 mon_rumble_strip_02_d.dds
+            \u251c\u2500\u2500 mon_rumble_strip_03_d.dds
+            \u251c\u2500\u2500 mon_rumble_strip_ubs_d.dds
+            \u251c\u2500\u2500 mon_tarmac_02_d.dds
+            \u251c\u2500\u2500 mon_tarmac_white_d.dds
+            \u251c\u2500\u2500 montecarlo_board_a.dds
+            \u251c\u2500\u2500 mon_track_decals_a_01_d.dds
+            \u251c\u2500\u2500 mon_tunnel_brick_a_01_d.dds
+            \u251c\u2500\u2500 mon_tunnel_curb_a_01_d.dds
+            \u251c\u2500\u2500 mon_usb_1.dds
+            \u251c\u2500\u2500 mon_wall_concrete_01_d.dds
+            \u251c\u2500\u2500 mon_wall_concrete_02_d.dds
+            \u251c\u2500\u2500 mon_wall_concrete_04_d.dds
+            \u251c\u2500\u2500 mon_wall_concrete_05_d.dds
+            \u251c\u2500\u2500 mon_wall_concrete_06_d.dds
+            \u251c\u2500\u2500 mon_wall_concrete_07_d.dds
+            \u251c\u2500\u2500 mon_wall_hairpin_a_01_d.dds
+            \u251c\u2500\u2500 mon_wall_hairpin_a_02_d.tga.dds
+            \u251c\u2500\u2500 mon_wall_stone_01_d.dds
+            \u251c\u2500\u2500 mon_wall_stone_02_d.dds
+            \u251c\u2500\u2500 mon_wall_stone_03_d.dds
+            \u251c\u2500\u2500 mon_wall_stone_04_d.dds
+            \u251c\u2500\u2500 mon_wall_stone_05_d.dds
+            \u251c\u2500\u2500 mon_wall_stone_07_d.dds
+            \u251c\u2500\u2500 mon_wall_stone_08_d.dds
+            \u251c\u2500\u2500 mon_wall_stone_09_d.dds
+            \u251c\u2500\u2500 mon_yacht_small_a_01_d.dds
+            \u251c\u2500\u2500 mrv.png.dds
+            \u251c\u2500\u2500 NormalMap.png.dds
+            \u251c\u2500\u2500 NULL.dds
+            \u251c\u2500\u2500 nytebgvrfc.png.dds
+            \u251c\u2500\u2500 palm_tree_d_01_fo_d.dds
+            \u251c\u2500\u2500 palm_tree_d_01_lod_d.dds
+            \u251c\u2500\u2500 palm_tree_d_01_shadow.dds
+            \u251c\u2500\u2500 palm_tree_d_01_tr_d.dds
+            \u251c\u2500\u2500 parasol_up_a_d.dds
+            \u251c\u2500\u2500 PAT_barr_pirelli.dds
+            \u251c\u2500\u2500 PAT_casino_comp.dds
+            \u251c\u2500\u2500 PAT_casino_pan.dds
+            \u251c\u2500\u2500 PAT_casino_telo.dds
+            \u251c\u2500\u2500 PAT_casino_teloH.dds
+            \u251c\u2500\u2500 PAT_casino_tunn.dds
+            \u251c\u2500\u2500 PAT_fintomare.dds
+            \u251c\u2500\u2500 PAT_kerb_UBS.dds
+            \u251c\u2500\u2500 PAT_mayabay.dds
+            \u251c\u2500\u2500 PAT_monac75_BIG_r.dds
+            \u251c\u2500\u2500 PAT_monacoGP_logo.dds
+            \u251c\u2500\u2500 PAT_pirelli.dds
+            \u251c\u2500\u2500 PAT_pirelli_pan.dds
+            \u251c\u2500\u2500 PAT_pzero.dds
+            \u251c\u2500\u2500 PAT_rail_arancio.dds
+            \u251c\u2500\u2500 PAT_rail_Bianchi.dds
+            \u251c\u2500\u2500 PAT_rail_rossi.dds
+            \u251c\u2500\u2500 patrons.png.dds
+            \u251c\u2500\u2500 PAT-ubs.dds
+            \u251c\u2500\u2500 physical_tyres_base_a_d.dds
+            \u251c\u2500\u2500 pino17.dds
+            \u251c\u2500\u2500 pino17_spec.dds
+            \u251c\u2500\u2500 pino18.dds
+            \u251c\u2500\u2500 pino18_spec.dds
+            \u251c\u2500\u2500 pino19.dds
+            \u251c\u2500\u2500 pino19_spec.dds
+            \u251c\u2500\u2500 pirelli_board_a.dds
+            \u251c\u2500\u2500 pirelli_bridge_a.dds
+            \u251c\u2500\u2500 portacabin_lrg_a_d.dds
+            \u251c\u2500\u2500 pzero_board_a.dds
+            \u251c\u2500\u2500 pzero.dds
+            \u251c\u2500\u2500 reddish.png.dds
+            \u251c\u2500\u2500 reed.jpg.dds
+            \u251c\u2500\u2500 ricciardo.jpg.dds
+            \u251c\u2500\u2500 rickety_fence_a_01_d.dds
+            \u251c\u2500\u2500 roadsign_pack_a_01_d.dds
+            \u251c\u2500\u2500 rolex_board_a.dds
+            \u251c\u2500\u2500 ryntybegrvfcdef.png.dds
+            \u251c\u2500\u2500 safetywall_grey_a_01_d.dds
+            \u251c\u2500\u2500 safetywall_redstripe_a_01_d.dds
+            \u251c\u2500\u2500 schermo_onboard.dds
+            \u251c\u2500\u2500 sign_brakevertical_a_01_d.dds
+            \u251c\u2500\u2500 someothershit.png.dds
+            \u251c\u2500\u2500 someshit.png.dds
+            \u251c\u2500\u2500 speed_marker_01_d.dds
+            \u251c\u2500\u2500 sponsor_backframe_01_d.dds
+            \u251c\u2500\u2500 strolll.jpg.dds
+            \u251c\u2500\u2500 table.jpg.dds
+            \u251c\u2500\u2500 tag_board_a.dds
+            \u251c\u2500\u2500 tag-heuer_big.dds
+            \u251c\u2500\u2500 tarmac_diff_a_11_d.dds
+            \u251c\u2500\u2500 tarmac_diff_a_16_d.dds
+            \u251c\u2500\u2500 tnyhrgtefrde4hrtgbv.png.dds
+            \u251c\u2500\u2500 tree06a.dds
+            \u251c\u2500\u2500 tree08a.dds
+            \u251c\u2500\u2500 tree08a_spec.dds
+            \u251c\u2500\u2500 TREELINE.DDS
+            \u251c\u2500\u2500 TreesA.dds
+            \u251c\u2500\u2500 TreesB.dds
+            \u251c\u2500\u2500 TreesB_dritt.dds
+            \u251c\u2500\u2500 TreesB_inv.dds
+            \u251c\u2500\u2500 water.jpg.dds
+            \u251c\u2500\u2500 waterreal.dds
+            \u251c\u2500\u2500 when you drink never drive.dds
+            \u2514\u2500\u2500 zepter_board_a.dds
+
+6 directories, 327 files
+```
+If I load this map in Beamng (using a zip in the mods folder), I see a completely empty map with no collisions. What is the issue and how can I solve it?
+§a§
+I'll look into the BeamNG level file format to pinpoint why nothing loads, since that's the most likely culprit here.## The core problem
+
+Your converter writes the entire scene as one nested `main.level.json` object tree (a `MissionGroup` SimGroup with `childs` arrays). **That is not how BeamNG.drive loads level objects.** BeamNG reads the scene tree from `items.level.json` files, not from a monolithic nested `main.level.json`.
+
+The documentation is explicit that objects live in these files: If an object does not appear, check the items.level.json file that should contain it. And troubleshooting a missing/empty scene points at the level not appearing or objects being missing due to invalid folder layout — the fix being to verify the package structure and use the console/log to identify missing asset, path, or invalid JSON entries.
+
+Your directory tree confirms the diagnosis: there is **no `main/` folder and no `items.level.json` anywhere.** So BeamNG finds a valid `info.json` (the level shows up and loads), a sky/terrain baseline, but zero placed objects → an empty map with no collision. Your `TSStatic` entries (and the `Colmesh-1` collision) never get instantiated because they're sitting in a file format the engine doesn't parse for scene objects.
+
+Note also: the `CloudLayer`, ground plane, spawn, and sky you build in `sky_lighting.py` are also inside that same unused `main.level.json`, which is why you get nothing but the default empty environment.
+
+## How the level tree should be laid out
+
+BeamNG expects a folder-per-SimGroup structure under `main/`, with each group's direct children in an `items.level.json`:
+
+```
+levels/monaco_but_worse/
+  info.json
+  main.level.json          # small level-config file (or <name>.level.json)
+  main/
+    MissionGroup/
+      items.level.json      # top-level objects + references sub-groups
+      sky_and_sun/
+        items.level.json    # TimeOfDay, ScatterSky, CloudLayer, LevelInfo
+      shapes/
+        items.level.json    # your TSStatic entries
+      PlayerDropPoints/
+        items.level.json    # SpawnSphere
+  art/shapes/...
+  art/textures/...
+```
+
+Two critical format details that differ from what you're emitting:
+
+1. **`items.level.json` is newline-delimited JSON (NDJSON)** — one complete, *flat* object per line, **not** a single pretty-printed JSON document and **not** nested `childs` arrays. Nesting is expressed by the folder hierarchy (a sub-SimGroup = a subfolder with its own `items.level.json`), not by embedding `childs`.
+
+2. Each object line should carry a unique `persistentId` and the class/fields flat on the object. For example, one line of your `shapes/items.level.json` would look like:
+
+```json
+{"name":"ac_monacobutstupid_shape","class":"TSStatic","persistentId":"<uuid>","shapeName":"/levels/monaco_but_worse/art/shapes/ac_monacobutstupid.dae","position":[0,0,0],"scale":[1,1,1],"collisionType":"Collision Mesh","decalType":"Collision Mesh"}
+```
+
+So the fix in `convert.py` is to stop doing `json.dump(level_json, ...)` of a nested tree, and instead walk your SimGroup tree writing one folder + one NDJSON `items.level.json` per group, emitting each object as its own line.
+
+## Secondary issues you'll hit right after (worth fixing now)
+
+Once objects actually load, watch for these:
+
+- **Coordinate system.** AC is Y-up; BeamNG is Z-up. Your DAE declares `<up_axis>Z_UP</up_axis>` but you write the raw AC vertices unchanged, so geometry will be rotated/on its side. You need to swap axes (e.g. `(x, y, z)_AC → (x, z, -y)_BNG`) when building meshes, not just relabel the up-axis.
+
+- **Material `mapTo` matching.** The docs warn that a mesh shows the warning material when mapTo does not match the mesh material slot, and that bad paths, missing textures, or mapTo mismatches require checking the texture path, that name and mapTo match the mesh material slot, and that the texture exists in the packaged mod. Your DAE symbol comes from `_safe_name(mat.name)` and your material JSON `mapTo` is that same safe name — good — but double-check the DAE `<instance_material symbol=...>` uses the identical string.
+
+- **`.dds` cooking / paths.** BeamNG references textures without extension in materials (you do this) but the file must exist and be a valid DDS; some of your files are `something.png.dds` / `something.jpg.dds` (double extensions from the AC source names), so verify the material `colorMap` path resolves to the actual filename on disk.
+
+- **Collision at scale.** A single giant `Colmesh-1` covering the whole track (as your non-vegetation path builds) can be rejected or perform terribly; BeamNG collision meshes work best when split per object. Expect to break the combined collision mesh into per-object TSStatics.
+
+## Quick way to confirm
+
+Load the map and open the console/log — as the docs recommend, use the console/log to identify missing asset warnings, path errors, or invalid JSON entries, searching for your level name and the missing file name. With the current output you'll see the level load with no MissionGroup objects, which matches the "empty, no collision" symptom and the missing `main/.../items.level.json` files.
+
+**Bottom line:** the map isn't broken geometry — it's that BeamNG never reads your `main.level.json` scene tree. Re-serialize the SimGroups/objects as folder-structured `items.level.json` (NDJSON) files under `main/MissionGroup/`, then address the Y-up→Z-up axis conversion.

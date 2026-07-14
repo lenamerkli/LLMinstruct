@@ -1,0 +1,62 @@
+§u§
+Is there any implementation difference between `openssl dgst -sha3-256` and python `hashlib.sha3_256()`? Will they return the same hash?
+§a§
+No, there's no implementation difference that would affect the output. **They will return the same hash** for the same input data, because both implement the same standardized SHA3-256 algorithm (FIPS 202).
+
+That said, there's a very common gotcha that makes people *think* they get different results:
+
+## The `echo` newline trap
+
+If you run:
+
+```bash
+echo "hello" | openssl dgst -sha3-256
+```
+
+You'll get a *different* hash than:
+
+```python
+hashlib.sha3_256(b"hello").hexdigest()
+```
+
+This is **not** because the algorithms differ — it's because `echo` appends a trailing newline (`\n`), so OpenSSL is actually hashing `"hello\n"` (6 bytes), while Python hashes `"hello"` (5 bytes).
+
+To make them match, use one of these:
+
+```bash
+# Option 1: echo without newline
+echo -n "hello" | openssl dgst -sha3-256
+
+# Option 2: printf
+printf "hello" | openssl dgst -sha3-256
+
+# Option 3: hash a file directly (no newline added)
+openssl dgst -sha3-256 file.bin
+```
+
+And in Python, include the newline if you want to match `echo`:
+
+```python
+hashlib.sha3_256(b"hello\n").hexdigest()
+```
+
+## Verify they match
+
+```python
+import hashlib
+print(hashlib.sha3_256(b"hello").hexdigest())
+# 3338be694f50c5f338814986cdf0686453a888b84f424d792af4b9202398f392
+```
+
+```bash
+printf "hello" | openssl dgst -sha3-256
+# SHA3-256(stdin)= 3338be694f50c5f338814986cdf0686453a888b84f424d792af4b9202398f392
+```
+
+## Two important caveats
+
+1. **SHA3-256 vs Keccak-256 are different.** SHA3 (as standardized in FIPS 202) uses a different padding scheme than the original Keccak submission. `openssl dgst -sha3-256` and `hashlib.sha3_256` both give the standardized SHA3. But if you're comparing to something like Ethereum's hash (which uses the original Keccak-256), those will *not* match. In Python you'd need a library like `pycryptodome`'s `keccak` or `pysha3`'s `keccak_256` for that.
+
+2. **Version requirements.** SHA3 support in OpenSSL requires **OpenSSL 1.1.1+**, and `hashlib.sha3_256` requires **Python 3.6+** (it's built in). Both are widely available now, so this rarely matters.
+
+**Bottom line:** Same algorithm, same output — just make sure you're feeding both the exact same bytes.

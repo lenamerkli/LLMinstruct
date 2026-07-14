@@ -1,0 +1,56 @@
+§u§
+How can I set a global environment variable in debian 13? I want it to apply to all apps, not just the command line.
+§a§
+For a global environment variable in Debian 13 that applies to **all applications** (including GUI apps launched from the desktop, not just terminal sessions), the best file to use is `/etc/environment`.
+
+## Using `/etc/environment` (recommended)
+
+This file is read by PAM (specifically the `pam_env` module) at login, so it applies to graphical sessions and console logins alike — not just shells.
+
+1. Edit the file with root privileges:
+   ```bash
+   sudo nano /etc/environment
+   ```
+
+2. Add your variable, one per line, in `KEY=value` format (no `export`, no shell syntax):
+   ```
+   MY_VARIABLE=somevalue
+   ```
+
+3. Save, then **log out and log back in** (or reboot) for it to take effect across the whole session.
+
+**Important notes about `/etc/environment`:**
+- It is **not** a shell script. You cannot use `$OTHER_VAR` variable expansion or command substitution here — just literal `KEY=value` assignments.
+- Quotes are generally not needed and are treated literally by some parsers, so avoid them unless you really want them as part of the value.
+
+## Alternatives depending on your needs
+
+**`/etc/profile.d/*.sh`** — If you need shell logic (variable expansion, conditionals), create a script like `/etc/profile.d/myvars.sh`:
+```bash
+export MY_VARIABLE="somevalue"
+```
+However, this is only sourced by **login shells**, so it typically won't reach GUI apps launched directly from the desktop environment — only terminals and programs started from them.
+
+**For systemd-managed services** — Variables in `/etc/environment` are *not* automatically passed to system services. For those, use a drop-in:
+```bash
+sudo systemctl edit yourservice.service
+```
+and add:
+```
+[Service]
+Environment="MY_VARIABLE=somevalue"
+```
+Or set global defaults in `/etc/systemd/system.conf` / via `systemctl set-environment`.
+
+**For your own user only** — Use `~/.config/environment.d/*.conf` (systemd user environment) or `~/.profile`.
+
+## Summary
+
+| Goal | File |
+|------|------|
+| All apps, all users (GUI + CLI) | `/etc/environment` |
+| Shell logic, login shells only | `/etc/profile.d/*.sh` |
+| System services | systemd drop-in / `system.conf` |
+| Single user, all apps | `~/.config/environment.d/*.conf` |
+
+For your case — applying to **all apps** — go with `/etc/environment`, then log out and back in.

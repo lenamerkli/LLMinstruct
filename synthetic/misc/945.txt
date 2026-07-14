@@ -1,0 +1,28 @@
+§u§
+I am using the minecraft create mod. How can I list the cargo contents of a train. I have its ID trough `/create trains`
+§a§
+Based on my search results, I have some unfortunate news for you.
+
+## The short answer: there's no built-in command for that
+
+The `/create trains` command is quite limited. A user filed a feature request on GitHub noting that "/create trains" has too little functionality, suggesting it should output more messages about trains, like destination coordinates, driver, next station, number of bogies, etc. Listing cargo contents was not part of the command and, as far as I can tell, still isn't.
+
+## Workarounds for viewing train cargo
+
+Since you can't query cargo by train ID directly, here are the in-game methods Create provides:
+
+1. **Display Links + Train Station** — When a train is parked at a station, you can attach a Display Link to the Train Station block and target a Display Board (or Nixie Tubes, etc.). The Display Link has a "Train Cargo" data source (called *Item/Fluid Throughput* or similar depending on version) that will list the items/fluids currently on the parked train.
+
+2. **Stockpile Switches / Content Observers on inventories** — Machines such as Portable Storage Interfaces, Deployers, and Funnels will only recognize inventories such as Chests, Barrels, and Shulker Boxes on the same wagon of the train they're attached to rather than the whole train. So you can place a Content Observer or Stockpile Switch next to each wagon's inventory while the train is stopped at a station using Portable Storage Interfaces to expose the contents.
+
+3. **Train Schedule "Item Cargo Condition"** — In a schedule, this condition can check for specific items/counts across the whole train, which is useful for automation but doesn't "list" contents.
+
+4. **Just open the inventories** — Stop the train at a station, walk up to the wagon, and right-click the chests/barrels/vaults directly. This is the only way to see the raw NBT-level contents in-game without add-ons.
+
+## If you need it via command
+
+You'd have to either:
+- Locate the train entity/wagons in the world and use vanilla `/data get entity <uuid>` on the contraption entities (their inventories are stored in the contraption NBT, so it's messy but possible), or
+- Install an add-on/data pack that extends `/create trains` — the base mod doesn't expose cargo through that command.
+
+If you tell me which Create version you're on (e.g., 0.5.1, 6.0.x) and whether you're on Forge/NeoForge/Fabric, I can try to check whether any recent update added cargo output to the command.

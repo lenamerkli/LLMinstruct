@@ -1,0 +1,94 @@
+§u§
+what desktop environments are available with standard debian 13? And how do they compare on storage space required as well as performance?
+§a§
+## Short answer
+
+**Standard Debian 13 (“trixie”) desktop choices are:** **GNOME**, **KDE Plasma**, **Cinnamon**, **MATE**, **LXDE**, **LXQt**, and **Xfce**. Debian’s installer defaults to **GNOME**, but lets you choose another desktop during software selection; Debian’s official live images also offer those seven desktop flavors.
+
+If you want the best **low-storage / low-resource** choice: **LXDE, LXQt, or Xfce**.
+If you want the most **polished mainstream** default: **GNOME**.
+If you want the most **configurable feature-rich** desktop: **KDE Plasma**.
+If you want a **traditional Windows-like/GNOME-2-like** desktop: **MATE or Cinnamon**.
+
+---
+
+## Storage comparison
+
+Debian’s install guide says a standard amd64 install with standard packages takes **843 MB** before adding the desktop task, and the desktop task sizes should be added on top of that. It also notes that download space is temporarily needed under `/var`, and that real-world partition sizing should leave more room for filesystem overhead, logs, caches, updates, and user data.
+
+| Desktop task | Added installed size | Temp download size | Space needed during install | Approx. installed total incl. 843 MB base | Storage rank |
+|---|---:|---:|---:|---:|---|
+| **LXDE** | 2,635 MB | 708 MB | 3,343 MB | ~3,478 MB | Smallest listed |
+| **Xfce** | 2,771 MB | 734 MB | 3,505 MB | ~3,614 MB | Very small |
+| **MATE** | 3,197 MB | 832 MB | 4,029 MB | ~4,040 MB | Moderate |
+| **GNOME** | 3,323 MB | 861 MB | 4,184 MB | ~4,166 MB | Moderate |
+| **Cinnamon** | 3,852 MB | 1,027 MB | 4,879 MB | ~4,695 MB | Larger |
+| **KDE Plasma** | 5,429 MB | 1,499 MB | 6,928 MB | ~6,272 MB | Largest listed |
+
+**LXQt note:** Debian 13 definitely has `task-lxqt-desktop`, and the official live images include LXQt, but Debian’s published “Disk Space Needed for Tasks” table I found does **not** list LXQt. The `task-lxqt-desktop` package depends on LXQt, SDDM, and the Debian desktop task and recommends normal desktop extras such as LibreOffice components, printing/scanning tools, and Synaptic, so the *full task* is not a tiny minimal LXQt-only install. Treat it as likely in the **LXDE/Xfce-to-MATE range**, but run an APT simulation for your exact mirror/release if you need a precise number.
+
+To check exact storage on your system:
+
+```bash
+apt install -s task-lxqt-desktop
+apt install -s task-xfce-desktop
+apt install -s task-kde-desktop
+```
+
+---
+
+## Performance / resource comparison
+
+| Desktop | Performance profile | Best fit |
+|---|---|---|
+| **LXDE** | Usually the lightest of the traditional full desktops. Debian describes LXDE as “lightweight and fast.” Very good for old PCs, low RAM, or small VMs. Less modern/polished than newer desktops.  | Very old hardware, minimal desktops |
+| **LXQt** | Lightweight, Qt-based, modern replacement-style option. Debian’s LXQt package describes it as fast, simple, and suitable for less powerful machines.  | Old or modest hardware, especially if you prefer Qt apps |
+| **Xfce** | Excellent balance: light, mature, stable, configurable. Debian’s Xfce package says it aims to be fast/light while remaining visually appealing and easy to use.  | Most “I want it fast but usable” desktops |
+| **MATE** | Moderate footprint, traditional GNOME 2-style workflow. Usually a little heavier than Xfce/LXDE/LXQt but still much lighter-feeling than GNOME on weak hardware.  | Users wanting a classic panel/menu desktop |
+| **Cinnamon** | More modern and polished than MATE/Xfce, but heavier due to richer effects and GNOME-derived components. Debian describes it as a full desktop with advanced features and a traditional user experience.  | Modern hardware, Windows-like traditional desktop |
+| **KDE Plasma** | Largest install in Debian’s task table, but runtime performance can be surprisingly good on modern hardware. Very configurable and feature-rich; may use more disk because Debian installs `kde-standard` and many apps.  | Power users, customization, Qt ecosystem |
+| **GNOME** | Debian’s default. Polished, accessible, Wayland-first, simple workflow. Usually feels heaviest on old GPUs/low RAM, though storage is not as large as KDE’s full task. Debian installs GNOME by default.  | Modern laptops/desktops, default Debian experience |
+
+---
+
+## Practical recommendations
+
+- **Old laptop / 2–4 GB RAM / weak CPU:** choose **LXDE**, **LXQt**, or **Xfce**.
+- **Best overall lightweight desktop:** **Xfce**.
+- **Lightest “standard” option by Debian’s published table:** **LXDE**.
+- **Modern lightweight Qt desktop:** **LXQt**.
+- **Traditional desktop with more polish:** **MATE** or **Cinnamon**.
+- **Most configurable / feature-rich:** **KDE Plasma**.
+- **Most “official default Debian desktop” experience:** **GNOME**.
+
+One important caveat: **storage size and performance are not the same thing**. KDE has the largest task install size, largely because the Debian task brings in a broad KDE application set, but on decent hardware Plasma can still feel fast. GNOME’s install size is smaller than KDE’s, but GNOME may feel heavier on low-end GPUs or low-RAM systems.
+§u§
+And what does `standard system utilities` include when selecting additional software during installation?
+§a§
+In the Debian installer, **Standard system utilities** is a specific selection that installs a collection of command-line tools and libraries that are considered part of a "normal" Unix-like environment.
+
+Technically, this isn't a single "meta-package." Instead, it is a task defined in the `tasksel` utility that pulls in every package in the Debian repository marked with a **Priority: standard**.
+
+### What is actually included?
+It adds roughly **200–300 MB** of software to your system. The tools generally fall into these categories:
+
+*   **Text Editors & Processing:** `nano`, `vim-tiny`, `less`, and `groff-base` (for formatting manual pages).
+*   **Networking Tools:** `wget`, `curl`, `traceroute`, `telnet`, `iputils-ping`, and `openssh-client`.
+*   **System Documentation:** `man-db`, `manpages`, and `info`.
+*   **Shell Improvements:** `bash-completion` (tab-autocomplete for complex commands) and `locate` (for finding files quickly).
+*   **Hardware & System Monitoring:** `lsof` (list open files), `hdparm` (hard drive tuning), `psmisc` (tools like `fuser` and `killall`), and `pciutils`.
+*   **Maintenance Tools:** `apt-listchanges` (shows what changed in an update), `reportbug` (for reporting bugs to Debian), and `logrotate`.
+*   **Support for Filesystems:** Tools for managing common disk formats like `dosfstools`.
+
+### Why would you (or wouldn't you) select it?
+
+| **Select it if...** | **Deselect it if...** |
+| :--- | :--- |
+| **You are installing a Desktop:** Most users expect `man` pages, tab-completion, and `nano` to be there by default. | **You want a "Minimalist" build:** If you are building a custom server or container and want to manually install *only* exactly what you need. |
+| **You are new to Linux:** It includes the basic "quality of life" tools that make the terminal feel less empty. | **Storage is critically low:** If you are running on an old SD card or an embedded system where every megabyte matters. |
+| **You want a "standard" experience:** It ensures your Debian install matches the behavior of most online tutorials. | **You prefer specific alternatives:** If you hate the standard defaults and want to install your own specific set of utilities from scratch. |
+
+### Summary for your Debian 13 Install
+If you are already installing one of the **Desktop Environments** (like GNOME or Xfce), you should **keep "Standard system utilities" checked**.
+
+The desktop environments themselves often rely on these utilities for basic functions (like `dbus` or hardware detection). While the system will still boot without them, you will find yourself frequently running `sudo apt install` every time you realize a basic command like `locate`, `killall`, or even `man` is missing.

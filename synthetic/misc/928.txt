@@ -1,0 +1,763 @@
+§u§
+```
+··• tree monaco_but_worse/
+monaco_but_worse/
+└── levels
+    └── monaco_but_worse
+        ├── art
+        │   └── shapes
+        │       └── ac_monacobutstupid.dae
+        ├── info.json
+        ├── main.level.json
+        ├── main.materials.json
+        └── textures
+            ├── ambulance_c_02_d.dds
+            ├── ambulance_d_01_d.dds
+            ├── ambulance_Gialla.dds
+            ├── a_mountain_01.dds
+            ├── AnimPit.dds
+            ├── anolsoelo.jpg.dds
+            ├── armco_grey_main_a_01_d.dds
+            ├── armco_redpost__end_01_d.dds
+            ├── armco_simple_main_a_01_d.dds
+            ├── armco_whitegreen_left_c_01_d.dds
+            ├── armco_white_main_a_01_d.dds
+            ├── asdasdasdasda.png.dds
+            ├── asdasdasdasdasdasdwed.png.dds
+            ├── asdasdasd.jpg.dds
+            ├── asfalto_nuovo.dds
+            ├── Asfalto_variante.dds
+            ├── asfalto_vecchio.dds
+            ├── barriere_rosse.dds
+            ├── barrier pole.png.dds
+            ├── Base_1.dds
+            ├── basement.png.dds
+            ├── Base_vetri.dds
+            ├── Bayked.jpg.dds
+            ├── birillo.dds
+            ├── blaack.jpg.dds
+            ├── brake_markerkit_a_01_d.dds
+            ├── bush03A.dds
+            ├── cargo ship.png.dds
+            ├── carrro.png.dds
+            ├── carrrr.png.dds
+            ├── chair.png.dds
+            ├── charles.jpg.dds
+            ├── cheese.png.dds
+            ├── conc_bollard_filler_a_01_d.dds
+            ├── concrete_pitlane_glass_01_d.dds
+            ├── core_podium_f1wc_a_da.dds
+            ├── core_start_lights_a_01_d.dds
+            ├── crane_construction_a_d.dds
+            ├── crane_platform_c_d.dds
+            ├── D7QkZqUWsAAX4-3.jpg.dds
+            ├── drs_white_b.dds
+            ├── f1_board_a.dds
+            ├── f1_board_b.dds
+            ├── f1cafe.jpg.dds
+            ├── f1caferussell.png.dds
+            ├── f22222.png.dds
+            ├── f2222.png.dds
+            ├── f222.jpg.dds
+            ├── f22.jpg.dds
+            ├── fanatec_black_board_a.dds
+            ├── fence_barbed_main_a_mesh_01_d.dds
+            ├── fence_construction_main_a_01_s.dds
+            ├── fence_gardenrail_main_a_01_d.dds
+            ├── fencekit_a_01_d.dds
+            ├── ferrari.png.dds
+            ├── ferrarmore.png.dds
+            ├── flag_default_01_d.dds
+            ├── flagsheet_01_d.dds
+            ├── garage_high.dds
+            ├── garage_interior_building_a_01_d.dds
+            ├── garage_pit_decal_a_01_d.dds
+            ├── gazebo_a_01_d.dds
+            ├── generic_glass_a_01_d.dds
+            ├── grass_natural.dds
+            ├── hahauundersteerd.jpg.dds
+            ├── have a safe flight.png.dds
+            ├── Image_0.002.png.dds
+            ├── Image_1.001.png.dds
+            ├── Image_10.png.dds
+            ├── Image_2.png.dds
+            ├── Image_3.png.dds
+            ├── Image_4.png.dds
+            ├── Image_5.png.dds
+            ├── Image_6.png.dds
+            ├── Image_7.png.dds
+            ├── Image_8.png.dds
+            ├── Image_9.png.dds
+            ├── kimiraikkonen.png.dds
+            ├── koleso.png.dds
+            ├── lambnodetails.png.dds
+            ├── lambobase.png.dds
+            ├── lava.jpg.dds
+            ├── lg_board_a.dds
+            ├── lg_marshal_light_a_01_d.dds
+            ├── lg_marshal_light_a_02_d.dds
+            ├── lg_pit_exit_light_a_01_d.dds
+            ├── lightpole_lrg_01_d.dds
+            ├── macro_cloth_b_d.dds
+            ├── marquee_a_01_d.dds
+            ├── marquee_truck_a_02_d.dds
+            ├── monacogp_2018_big.dds
+            ├── monacogp_2018_board_a.dds
+            ├── monacogp_anni.dds
+            ├── mon_building_large_b_01_d.dds
+            ├── mon_building_large_b_02_d.dds
+            ├── mon_building_large_c_01_d.dds
+            ├── mon_building_large_c_02_d.dds
+            ├── mon_building_large_e_01_d.dds
+            ├── mon_building_large_f_01_d.dds
+            ├── mon_building_large_f_02_d.dds
+            ├── mon_building_large_g_01_d.dds
+            ├── mon_building_large_g_02_d.dds
+            ├── mon_building_medium_a_01_d.dds
+            ├── mon_building_medium_a_02_d.dds
+            ├── mon_building_medium_b_01_d.dds
+            ├── mon_building_medium_b_02_d.dds
+            ├── mon_building_medium_c_01_d.dds
+            ├── mon_building_medium_c_02_d.dds
+            ├── mon_building_medium_d_01_d.dds
+            ├── mon_building_medium_e_01_d.dds
+            ├── mon_building_medium_e_02_d.dds
+            ├── mon_building_medium_f_01_d.dds
+            ├── mon_building_medium_f_02_d.dds
+            ├── mon_building_pitlane_a_01_d.dds
+            ├── mon_building_royal_box_02_da.dds
+            ├── mon_building_royal_box_b_01_d.dds
+            ├── mon_building_set_a_01_d.dds
+            ├── mon_building_set_a_02_d.dds
+            ├── mon_building_set_b_d_01.dds
+            ├── mon_building_set_c_d.dds
+            ├── mon_building_set_d_d_01.dds
+            ├── mon_building_set_d_d_02.dds
+            ├── mon_building_set_d_d_03.dds
+            ├── mon_building_set_e_01_d.dds
+            ├── mon_building_set_f_d.dds
+            ├── mon_building_set_g_01_d.dds
+            ├── mon_building_set_g_02_d.dds
+            ├── mon_building_set_g_03_d.dds
+            ├── mon_building_set_h_01_d.dds
+            ├── mon_building_set_i_01_d.dds
+            ├── mon_building_set_i_02_d.dds
+            ├── mon_building_set_j_01_d.dds
+            ├── mon_building_set_j_02_d.dds
+            ├── mon_building_set_k_01_d.dds
+            ├── mon_building_set_k_02_d.dds
+            ├── mon_building_set_l_01_d.dds
+            ├── mon_building_set_l_02_d.dds
+            ├── mon_building_set_m_d.dds
+            ├── mon_building_set_n_a_d.dds
+            ├── mon_building_set_o_d_01.dds
+            ├── mon_building_set_p_01_d.dds
+            ├── mon_building_set_p_02_d.dds
+            ├── mon_building_set_q_01_d.dds
+            ├── mon_building_set_r_a_d.dds
+            ├── mon_building_set_s_d.dds
+            ├── mon_building_set_t_01_d.dds
+            ├── mon_building_set_t_02_d.dds
+            ├── mon_building_set_t_03_d.dds
+            ├── mon_building_set_u_a_d.dds
+            ├── mon_building_set_v_01_d.dds
+            ├── mon_building_set_v_02_d.dds
+            ├── mon_building_set_w_a_03_d.dds
+            ├── mon_building_set_x_d.dds
+            ├── mon_building_set_y_01_d.dds
+            ├── mon_building_set_y_02_d.dds
+            ├── mon_building_small_b_d.dds
+            ├── mon_building_tunnel_a_01_d.dds
+            ├── mon_building_tunnel_a_02_d.dds
+            ├── mon_building_tunnel_b_02_d.dds
+            ├── mon_building_tunnel_b_03_d.dds
+            ├── mon_building_tunnel_b_04_d.dds
+            ├── mon_building_tunnel_b_05_d.dds
+            ├── mon_building_tunnel_b_06_d.dds
+            ├── mon_building_tunnel_b_07_d.dds
+            ├── mon_building_tunnel_fariamuro.dds
+            ├── mon_building_tunnel_luceD.dds
+            ├── mon_building_tunnel_luceS.dds
+            ├── mon_building_tunnel_normale.dds
+            ├── mon_building_yachtclub_a_02_d.dds
+            ├── mon_building_yachtclub_a_d.dds
+            ├── mon_concrete_det_d.dds
+            ├── mon_concrete_tile_01_d.dds
+            ├── mon_concrete_tile_02_d.dds
+            ├── mon_concrete_tile_03_d.dds
+            ├── mon_concrete_tile_04_d.dds
+            ├── mon_concrete_tile_05_d.dds
+            ├── mon_crane_large_a_d.dds
+            ├── mon_curb_strip_d.dds
+            ├── mon_detail_01_d.dds
+            ├── mon_detail_02_d.dds
+            ├── mon_detail_03_d.dds
+            ├── mon_detail_04_d.dds
+            ├── mon_detail_05_d.dds
+            ├── mon_detail_06_d.dds
+            ├── mon_detail_07_d.dds
+            ├── mon_flag_pole_a_d.dds
+            ├── mon_gantry_overhang_a_01_d.dds
+            ├── mon_gantry_overhang_a_03_d.dds
+            ├── mon_grandstand_large_a_01_d.dds
+            ├── mon_grandstand_large_a_02_d.dds
+            ├── mon_grandstand_large_a_03_d.dds
+            ├── mon_grandstand_large_a_04_d.dds
+            ├── mon_grandstand_large_a_05_d.dds
+            ├── mon_grandstand_large_a_07_d.dds
+            ├── mon_grandstand_large_b_01_d.dds
+            ├── mon_grandstand_large_c_01_d.dds
+            ├── mon_grandstand_medium_b_01_d.dds
+            ├── mon_grandstand_medium_d_01_d.dds
+            ├── mon_grandstand_small_a_01_d.dds
+            ├── mon_grandstand_small_b_01_d.dds
+            ├── mon_grandstand_small_new_d_01.dds
+            ├── mon_grandstand_solid_a_01_d.dds
+            ├── mon_grandstand_solid_a_02_d.dds
+            ├── mon_harbour_statue_a_d.dds
+            ├── mon_hein.dds
+            ├── mon_heineken_b.dds
+            ├── mon_heineken.dds
+            ├── mon_heuer.dds
+            ├── mon_jumbotron_screen_a_01_d.dds
+            ├── mon_jumbotron_screen_a_02_d.dds
+            ├── mon_lamp_post_a_01_d.dds
+            ├── mon_lamp_post_a_02_d.dds
+            ├── mon_lamp_post_d_d.dds
+            ├── mon_landscape_01_d.dds
+            ├── mon_landscape_02_d.dds
+            ├── mon_metal_01_d.dds
+            ├── mon_oceanliner_large_a_01_d.dds
+            ├── mon_oceanliner_large_a_02_d.dds
+            ├── mon_paris.dds
+            ├── mon_pitwall_a_01_d.dds
+            ├── mon_road_sign_a_d.dds
+            ├── mon_rumble_strip_01_d.dds
+            ├── mon_rumble_strip_02_d.dds
+            ├── mon_rumble_strip_03_d.dds
+            ├── mon_rumble_strip_ubs_d.dds
+            ├── mon_tarmac_02_d.dds
+            ├── mon_tarmac_white_d.dds
+            ├── montecarlo_board_a.dds
+            ├── mon_track_decals_a_01_d.dds
+            ├── mon_tunnel_brick_a_01_d.dds
+            ├── mon_tunnel_curb_a_01_d.dds
+            ├── mon_usb_1.dds
+            ├── mon_wall_concrete_01_d.dds
+            ├── mon_wall_concrete_02_d.dds
+            ├── mon_wall_concrete_04_d.dds
+            ├── mon_wall_concrete_05_d.dds
+            ├── mon_wall_concrete_06_d.dds
+            ├── mon_wall_concrete_07_d.dds
+            ├── mon_wall_hairpin_a_01_d.dds
+            ├── mon_wall_hairpin_a_02_d.tga.dds
+            ├── mon_wall_stone_01_d.dds
+            ├── mon_wall_stone_02_d.dds
+            ├── mon_wall_stone_03_d.dds
+            ├── mon_wall_stone_04_d.dds
+            ├── mon_wall_stone_05_d.dds
+            ├── mon_wall_stone_07_d.dds
+            ├── mon_wall_stone_08_d.dds
+            ├── mon_wall_stone_09_d.dds
+            ├── mon_yacht_small_a_01_d.dds
+            ├── mrv.png.dds
+            ├── NormalMap.png.dds
+            ├── NULL.dds
+            ├── nytebgvrfc.png.dds
+            ├── palm_tree_d_01_fo_d.dds
+            ├── palm_tree_d_01_lod_d.dds
+            ├── palm_tree_d_01_shadow.dds
+            ├── palm_tree_d_01_tr_d.dds
+            ├── parasol_up_a_d.dds
+            ├── PAT_barr_pirelli.dds
+            ├── PAT_casino_comp.dds
+            ├── PAT_casino_pan.dds
+            ├── PAT_casino_telo.dds
+            ├── PAT_casino_teloH.dds
+            ├── PAT_casino_tunn.dds
+            ├── PAT_fintomare.dds
+            ├── PAT_kerb_UBS.dds
+            ├── PAT_mayabay.dds
+            ├── PAT_monac75_BIG_r.dds
+            ├── PAT_monacoGP_logo.dds
+            ├── PAT_pirelli.dds
+            ├── PAT_pirelli_pan.dds
+            ├── PAT_pzero.dds
+            ├── PAT_rail_arancio.dds
+            ├── PAT_rail_Bianchi.dds
+            ├── PAT_rail_rossi.dds
+            ├── patrons.png.dds
+            ├── PAT-ubs.dds
+            ├── physical_tyres_base_a_d.dds
+            ├── pino17.dds
+            ├── pino17_spec.dds
+            ├── pino18.dds
+            ├── pino18_spec.dds
+            ├── pino19.dds
+            ├── pino19_spec.dds
+            ├── pirelli_board_a.dds
+            ├── pirelli_bridge_a.dds
+            ├── portacabin_lrg_a_d.dds
+            ├── pzero_board_a.dds
+            ├── pzero.dds
+            ├── reddish.png.dds
+            ├── reed.jpg.dds
+            ├── ricciardo.jpg.dds
+            ├── rickety_fence_a_01_d.dds
+            ├── roadsign_pack_a_01_d.dds
+            ├── rolex_board_a.dds
+            ├── ryntybegrvfcdef.png.dds
+            ├── safetywall_grey_a_01_d.dds
+            ├── safetywall_redstripe_a_01_d.dds
+            ├── schermo_onboard.dds
+            ├── sign_brakevertical_a_01_d.dds
+            ├── someothershit.png.dds
+            ├── someshit.png.dds
+            ├── speed_marker_01_d.dds
+            ├── sponsor_backframe_01_d.dds
+            ├── strolll.jpg.dds
+            ├── table.jpg.dds
+            ├── tag_board_a.dds
+            ├── tag-heuer_big.dds
+            ├── tarmac_diff_a_11_d.dds
+            ├── tarmac_diff_a_16_d.dds
+            ├── tnyhrgtefrde4hrtgbv.png.dds
+            ├── tree06a.dds
+            ├── tree08a.dds
+            ├── tree08a_spec.dds
+            ├── TREELINE.DDS
+            ├── TreesA.dds
+            ├── TreesB.dds
+            ├── TreesB_dritt.dds
+            ├── TreesB_inv.dds
+            ├── water.jpg.dds
+            ├── waterreal.dds
+            ├── when you drink never drive.dds
+            └── zepter_board_a.dds
+
+6 directories, 327 files
+
+░▒▓ 🎩  …/beamng/ac2bng/out   ▓▒░ ◦•··················································································································································································•◦ ░▒▓   9ms ▓▒░
+··• cat ./monaco_but_worse/levels/monaco_but_worse/info.json
+{
+  "title": "monaco_but_worse",
+  "description": "monaco_but_worse converted from Assetto Corsa",
+  "previews": [],
+  "size": [
+    2048,
+    2048
+  ],
+  "suitablefor": "Racing",
+  "authors": "ac2bng converter"
+}
+
+░▒▓ 🎩  …/beamng/ac2bng/out   ▓▒░ ◦•··················································································································································································•◦ ░▒▓   8ms ▓▒░
+··• cat ./monaco_but_worse/levels/monaco_but_worse/
+art/                 info.json            main.level.json      main.materials.json  textures/
+
+░▒▓ 🎩  …/beamng/ac2bng/out   ▓▒░ ◦•··················································································································································································•◦ ░▒▓   8ms ▓▒░
+··• cat ./monaco_but_worse/levels/monaco_but_worse/main.level.json
+{
+  "class": "SimGroup",
+  "name": "MissionGroup",
+  "enabled": "1",
+  "childs": [
+    {
+      "class": "SimGroup",
+      "name": "sky_and_sun",
+      "childs": [
+        {
+          "class": "TimeOfDay",
+          "name": "tod",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "axisTilt": 10,
+          "azimuthOverride": 0,
+          "play": false,
+          "startTime": 0.1,
+          "time": 0.1
+        },
+        {
+          "class": "LevelInfo",
+          "name": "theLevelInfo",
+          "canvasClearColor": [
+            1,
+            1,
+            1,
+            255
+          ],
+          "enabled": "1",
+          "fogAtmosphereHeight": 800,
+          "fogColor": [
+            0.741,
+            0.816,
+            0.925,
+            1
+          ],
+          "fogDensity": 0.0006,
+          "globalEnviromentMap": "BNG_Sky_02_cubemap",
+          "gravity": -9.81,
+          "soundAmbience": "AudioAmbienceDefault",
+          "visibleDistance": 4500
+        },
+        {
+          "class": "ScatterSky",
+          "name": "sunsky",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "ambientScale": [
+            0.6,
+            0.6,
+            0.65,
+            1
+          ],
+          "azimuth": 80.0,
+          "colorize": [
+            0.4,
+            0.6,
+            0.85,
+            1
+          ],
+          "colorizeAmount": 1.0,
+          "elevation": 15.0,
+          "exposure": 15,
+          "flareScale": 5,
+          "flareType": "BNG_SunFlare_3",
+          "fogScale": [
+            0.69,
+            0.85,
+            0.99,
+            1
+          ],
+          "lastSplitTerrainOnly": true,
+          "logWeight": 0.99,
+          "mieScattering": 0.000607,
+          "moonLightColor": [
+            0.196,
+            0.196,
+            0.196,
+            1
+          ],
+          "moonMat": "Moon_Glow_Mat",
+          "moonScale": 0.03,
+          "nightColor": [
+            0.024,
+            0.024,
+            0.024,
+            1
+          ],
+          "nightCubemap": "BNG_Sky_Space",
+          "nightFogColor": [
+            0.004,
+            0.004,
+            0.004,
+            1
+          ],
+          "overDarkFactor": [
+            40000,
+            8000,
+            1800,
+            650
+          ],
+          "rayleighScattering": 0.01,
+          "shadowDarkenColor": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "shadowDistance": 1600,
+          "shadowSoftness": 0.2,
+          "skyBrightness": 11,
+          "sunScale": [
+            0.996,
+            0.902,
+            0.831,
+            1
+          ],
+          "texSize": 1024,
+          "useNightCubemap": true
+        },
+        {
+          "class": "CloudLayer",
+          "name": "clouds",
+          "position": [
+            0,
+            0,
+            600
+          ],
+          "Textures": [
+            {
+              "texScale": 1.5,
+              "texSpeed": 0.002
+            },
+            {
+              "texDirection": [
+                0.8,
+                0.2
+              ],
+              "texScale": 3,
+              "texSpeed": 0.025
+            },
+            {
+              "texDirection": [
+                0.2,
+                0.5
+              ],
+              "texScale": 4,
+              "texSpeed": 0.035
+            }
+          ],
+          "baseColor": [
+            0.996,
+            0.996,
+            0.996,
+            0.996
+          ],
+          "coverage": 0.08,
+          "exposure": 1.3,
+          "height": 3,
+          "texture": "levels/jungle_rock_island/art/skies/SkyNormals_05.dds",
+          "windSpeed": 0.2
+        }
+      ]
+    },
+    {
+      "class": "SimGroup",
+      "name": "shapes",
+      "childs": [
+        {
+          "class": "TSStatic",
+          "name": "ac_monacobutstupid_shape",
+          "shapeName": "/levels/monaco_but_worse/art/shapes/ac_monacobutstupid.dae",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotationMatrix": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "collisionType": "Collision Mesh",
+          "decalType": "Collision Mesh",
+          "meshCulling": true
+        }
+      ]
+    },
+    {
+      "class": "SimGroup",
+      "name": "CameraBookmarks",
+      "childs": [
+        {
+          "class": "CameraBookmark",
+          "name": "overviewbookmark",
+          "position": [
+            0,
+            0,
+            50
+          ],
+          "rotation": [
+            0.4,
+            0.2,
+            -0.8,
+            51.5
+          ],
+          "dataBlock": "CameraBookmarkMarker",
+          "internalName": "NewCamera_0",
+          "isAIControlled": "0"
+        }
+      ]
+    },
+    {
+      "class": "GroundPlane",
+      "position": "0 0 0",
+      "Material": "GroundGrid",
+      "scaleU": 8,
+      "scaleV": 8,
+      "squareSize": 71
+    },
+    {
+      "class": "SimGroup",
+      "name": "PlayerDropPoints",
+      "enabled": "1",
+      "childs": [
+        {
+          "class": "SpawnSphere",
+          "position": [
+            -344.1330871582031,
+            -12.791282653808594,
+            249.42974853515625
+          ],
+          "dataBlock": "SpawnSphereMarker",
+          "enabled": "1",
+          "homingCount": "0",
+          "indoorWeight": "1",
+          "isAIControlled": "0",
+          "lockCount": "0",
+          "outdoorWeight": "1",
+          "radius": 1,
+          "sphereWeight": "1"
+        }
+      ]
+    },
+    {
+      "class": "SimGroup",
+      "name": "AIWaypointsGroup"
+    },
+    {
+      "class": "SimGroup",
+      "name": "AIDecalWaypointsGroup"
+    }
+  ]
+}
+
+░▒▓ 🎩  …/beamng/ac2bng/out   ▓▒░ ◦•··················································································································································································•◦ ░▒▓   8ms ▓▒░
+··• ls ~/.steam/steam/steamapps/compatdata/284160/pfx/drive_c/users/steamuser/AppData/Local/BeamNG/BeamNG.drive/current/mods/
+db.json  monaco_but_worse.zip  multiplayer
+
+░▒▓ 🎩  …/beamng/ac2bng/out   ▓▒░ ◦•··················································································································································································•◦ ░▒▓   8ms ▓▒░
+··•
+```
+Why does this map not show up in Beamng?
+§a§
+Most likely: **the ZIP is packaged one folder too deep**.
+
+BeamNG wants the **root of the zip** to contain `levels/...`, like this:
+
+```text
+monaco_but_worse.zip
+└── levels
+    └── monaco_but_worse
+        ├── info.json
+        ├── main.level.json
+        ├── main.materials.json
+        ├── art/
+        └── textures/
+```
+
+But your working tree is:
+
+```text
+monaco_but_worse/
+└── levels/
+    └── monaco_but_worse/
+        ...
+```
+
+So if you zipped that whole `monaco_but_worse` folder, the zip probably contains:
+
+```text
+monaco_but_worse/levels/monaco_but_worse/...
+```
+
+BeamNG usually **won’t scan that as a level**, because it expects `levels/...` at the zip root, not `monaco_but_worse/levels/...`.
+
+## How to verify
+
+Run:
+
+```bash
+zipinfo -1 ~/.steam/steam/steamapps/compatdata/284160/pfx/drive_c/users/steamuser/AppData/Local/BeamNG/BeamNG.drive/current/mods/monaco_but_worse.zip | head -20
+```
+
+If you see:
+
+```text
+monaco_but_worse/levels/monaco_but_worse/info.json
+```
+
+that’s the problem.
+
+If it instead starts with:
+
+```text
+levels/monaco_but_worse/info.json
+```
+
+then the structure is correct.
+
+## How to fix
+
+Rebuild the zip so `levels/` is at the top level of the archive.
+
+From your `out` directory, do something like:
+
+```bash
+cd monaco_but_worse
+zip -r ../monaco_but_worse.zip levels
+```
+
+Then copy that new zip into BeamNG’s mods folder.
+
+## Also do this after repacking
+
+BeamNG caches mod data pretty aggressively. After replacing the zip:
+
+- delete `db.json`, or
+- use BeamNG’s **Clear Cache** option,
+- then restart the game.
+
+You already showed:
+
+```text
+mods/
+├── db.json
+└── monaco_but_worse.zip
+```
+
+So clearing that cache is worth doing.
+
+## Secondary issues to fix next
+
+These probably **won’t stop the map from appearing**, but may cause loading/render problems later:
+
+1. In `main.level.json`, this path has a leading slash:
+
+```json
+"shapeName": "/levels/monaco_but_worse/art/shapes/ac_monacobutstupid.dae"
+```
+
+Safer to make it:
+
+```json
+"shapeName": "levels/monaco_but_worse/art/shapes/ac_monacobutstupid.dae"
+```
+
+2. Your `info.json` is very minimal. That’s usually okay, but if BeamNG is picky, add a `name` field too:
+
+```json
+{
+  "name": "monaco_but_worse",
+  "title": "monaco_but_worse",
+  "description": "monaco_but_worse converted from Assetto Corsa",
+  "previews": [],
+  "size": [2048, 2048],
+  "suitablefor": "Racing",
+  "authors": "ac2bng converter"
+}
+```
+
+## Short version
+
+**The map probably doesn’t show because the zip contains `monaco_but_worse/levels/...` instead of `levels/...`.**
+
+If you want, I can give you the exact `zip` command for your current folder layout so you can rebuild it correctly in one shot.

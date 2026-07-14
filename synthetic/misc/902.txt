@@ -1,0 +1,91 @@
+§u§
+I have a debian linux server without an installed desktop environment. Can I add a dedicated graphics card to it and use software that have a graphical user interface? I imagine something like this: launch via the command line with given output size in pixels and then having another cli command to take a screenshot of it.
+§a§
+Yes, you can absolutely do this. Adding a dedicated graphics card to a Debian server without a desktop environment is a common setup for "headless" hardware-accelerated tasks like server-side rendering, automated testing, or running GUI-based bots.
+
+There are two main ways to achieve your workflow (launching with a specific resolution and taking a screenshot via CLI): the **X11 (Legacy/Stable) approach** and the **Wayland (Modern) approach**.
+
+### 1. The Hardware & Drivers
+Before starting, ensure your GPU drivers are installed.
+*   **NVIDIA:** Install the proprietary drivers (`sudo apt install nvidia-driver`).
+*   **AMD/Intel:** Drivers are usually built into the kernel, but you may need `mesa-utils` and `libvulkan1`.
+*   **Verification:** Run `nvidia-smi` (NVIDIA) or `vulkaninfo` to confirm the OS sees the card.
+
+---
+
+### 2. The X11 Approach (Xorg Headless)
+This is the most flexible method. You can run a "Virtual" X server that uses your GPU for rendering even if no monitor is plugged in.
+
+#### A. Configure a "Dummy" X Server
+You need to tell Xorg to use the GPU without a physical display. For NVIDIA, you can generate a config file:
+```bash
+# Get your GPU BusID first
+nvidia-xconfig --query-gpu-info
+
+# Create a headless config (replace <BusID> with yours, e.g., PCI:1:0:0)
+sudo nvidia-xconfig -a --allow-empty-initial-configuration --use-display-device=None --virtual=1920x1080 --busid <BusID>
+```
+
+#### B. Launching the App
+You can start a temporary X session just for your application using `xinit` or `xvfb-run` (though `xvfb` is software-based; for hardware acceleration with `xvfb`, you’d use `VirtualGL`).
+
+**The simpler "Kiosk" way:**
+Start Xorg in the background:
+```bash
+sudo Xorg :1 &
+export DISPLAY=:1
+```
+Then launch your app:
+```bash
+# Launch firefox at a specific size (if supported by app flags)
+firefox --width 1280 --height 720 &
+```
+
+#### C. Taking the Screenshot
+Install `maim` or `scrot` (CLI screenshot tools):
+```bash
+sudo apt install maim
+# Take a screenshot of the root window on display :1
+DISPLAY=:1 maim screenshot.png
+```
+
+---
+
+### 3. The Wayland Approach (Cage Kiosk)
+Wayland is often easier for single-app "kiosk" setups because it handles headless rendering more natively.
+
+#### A. Install Cage & Grim
+`Cage` is a Wayland compositor that runs a single application fullscreen. `Grim` is the screenshot tool.
+```bash
+sudo apt install cage grim
+```
+
+#### B. Launching the App
+You can specify the resolution using environment variables. Cage will automatically use your GPU.
+```bash
+# Run firefox in a 1280x720 virtual window
+WLR_BACKENDS=headless WLR_WL_OUTPUT_LAYOUT_CONFIG=1280x720 \
+cage firefox &
+```
+
+#### C. Taking the Screenshot
+```bash
+# Grim automatically finds the Wayland output
+WAYLAND_DISPLAY=wayland-0 grim screenshot.png
+```
+
+---
+
+### Summary Table
+
+| Requirement | X11 Tool | Wayland Tool |
+| :--- | :--- | :--- |
+| **Virtual Display** | `Xorg` (with dummy config) | `Cage` (headless mode) |
+| **Launch App** | `DISPLAY=:1 app &` | `cage app &` |
+| **Screenshot** | `maim` or `scrot` | `grim` |
+| **GPU Usage** | Requires `nvidia-xconfig` setup | Automatic via `wlroots` |
+
+### Pro-Tip: VirtualGL
+If you find that an app is still using the CPU to render (common with `Xvfb`), use **VirtualGL**. It intercepts 3D calls and redirects them to the dedicated GPU:
+1. Install `virtualgl`.
+2. Run your app via: `vglrun +launch_command`.

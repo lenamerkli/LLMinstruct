@@ -1,0 +1,17 @@
+§u§
+```
+The reply took 2 hours 29 minutes and generated 15,510 tokens.
+```
+in tokens per second
+§a§
+That is **1.73 tokens per second**.
+
+Here is the breakdown of the calculation:
+
+1. **Convert the time to seconds:**
+   * 2 hours = 7,200 seconds ($2 \times 3,600$)
+   * 29 minutes = 1,740 seconds ($29 \times 60$)
+   * Total time = **8,940 seconds**
+
+2. **Calculate tokens per second:**
+   * $\frac{15,510 \text{ tokens}}{8,940 \text{ seconds}} = \mathbf{1.7349 \text{ tokens/sec}}$

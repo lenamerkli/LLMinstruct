@@ -1,0 +1,88 @@
+§u§
+========
+## Root Cause
+
+The JSON itself is **perfectly valid** — `json.dumps(..., ensure_ascii=False)` on line 1525 is correct. The problem is **not in the Python code that generates the JSON**.
+
+The issue is in **how tkinter's clipboard works on Linux (X11)**. When you call:
+
+```python
+self.root.clipboard_append(json_str)
+```
+
+Tkinter passes the string through the X11 clipboard, which on Linux uses the **Latin-1 (ISO-8859-1)** encoding internally for the `STRING` clipboard selection type. The em-dash character `—` (U+2014) and similar Unicode characters in the message content are **multi-byte UTF-8 sequences** (e.g. `—` = `\xE2\x80\x94`). When tkinter retrieves or transfers the clipboard data through the X11 `STRING` type, it treats each raw byte as a separate Latin-1 character, so the 3-byte UTF-8 sequence `\xE2\x80\x94` gets re-interpreted as three separate Latin-1 characters: `Â`, `€`, `"` — which in percent-encoding look like `\C3\A2`, `\C2\80`, `\C2\94`.
+
+This is exactly what you're seeing in the pasted output:
+```
+\C3\A2\C2\80\C2\94   ← UTF-8 bytes of U+2014 (—) misread as Latin-1
+```
+
+The JSON string produced by Python is valid. But by the time it travels through the X11 clipboard and gets pasted, the non-ASCII characters have been **mojibake'd** (UTF-8 bytes misinterpreted as Latin-1 code points, then re-encoded as UTF-8).
+
+## The Fix
+
+The simplest fix is to use `ensure_ascii=True` (the default), which makes `json.dumps` escape all non-ASCII characters as `\uXXXX` sequences. This keeps the JSON pure ASCII, so it survives the clipboard round-trip without any encoding corruption:
+
+```python
+json_str = json.dumps(messages, indent=2)  # ensure_ascii=True is the default
+```
+
+The resulting JSON will contain `\u2014` instead of a literal `—`, which is 100% valid JSON and will be correctly decoded by any JSON parser (including PyCharm's validator).
+
+Alternatively, a more robust fix that preserves literal Unicode characters would be to encode the string to UTF-8 bytes and use `xclip`/`xsel` directly, but that's much more complex. The `ensure_ascii=True` approach is the right pragmatic solution here.
+========
+Is this true?
+§a§
+The explanation is **mostly right in spirit**, but contains **two notable technical inaccuracies**. Here's a precise breakdown:
+
+---
+
+## ✅ What's Correct
+
+1. **The general mechanism is real.** There is a known, confirmed Python bug (CPython issue #58982) where `clipboard_get` and `selection_get` in tkinter on X11 do not properly handle Unicode, and patches were proposed to default to `UTF8_STRING` instead.
+
+2. **The UTF-8 bytes for U+2014 are correct.** The em dash `—` is Unicode character U+2014. UTF-8 encodes it as the byte sequence `0xE2, 0x80, 0x94`.
+
+3. **The fix (`ensure_ascii=True`) is sound.** Keeping the JSON pure ASCII with `\uXXXX` escape sequences means no multi-byte Unicode characters ever enter the clipboard pipeline, sidestepping the encoding problem entirely. This is a valid and pragmatic solution.
+
+---
+
+## ❌ Error #1: It's Windows-1252, Not Latin-1, That Produces `â€"`
+
+This is the most significant factual mistake. The explanation blames **Latin-1 (ISO-8859-1)**, but the actual mojibake pattern `â€"` for an em dash is caused by **Windows-1252**, not strict Latin-1.
+
+ISO-8859-1 (Latin-1) is identical to Windows-1252 **except** for code points 128–159 (0x80–0x9F). This range is critical, because the em dash's UTF-8 bytes land right in it:
+
+- `0x80` in **strict Latin-1** = a non-printable control character (no visible glyph)
+- `0x80` in **Windows-1252** = `€` (euro sign)
+- `0x94` in **strict Latin-1** = another control character
+- `0x94` in **Windows-1252** = `"` (right double quotation mark)
+
+Windows-1252 looks at bytes `0xE2`, `0x80`, `0x94` and decodes them as `â`, `€`, `"` respectively. That's the `â€"` pattern. With *pure* ISO-8859-1, bytes `0x80` and `0x94` would not produce `€` and `"` — they'd be invisible control characters.
+
+So the explanation incorrectly attributes the mojibake to Latin-1 when it is specifically a **Windows-1252** misinterpretation.
+
+---
+
+## ❌ Error #2: The Shown Percent-Encoding (`\C3\A2\C2\80\C2\94`) Is Internally Inconsistent
+
+The explanation claims the visible characters are `Â`, `€`, `"` — but then says their percent-encoding is `\C3\A2\C2\80\C2\94`. These don't match each other:
+
+- `\xC3\xA2` is the UTF-8 encoding of **U+00E2 = `â`** (lowercase a-circumflex), **not** `Â` (uppercase A-circumflex, which would be `\xC3\x82`)
+- `\xC2\x80` is the UTF-8 encoding of **U+0080**, a non-printable control character — **not** `€`
+- `\xC2\x94` is the UTF-8 encoding of **U+0094**, another control character — **not** `"`
+
+The percent-encoding shown is consistent with a **Latin-1** re-encoding, which would produce non-printable characters for the middle two bytes — while the visible characters shown (`â€"`) are consistent with **Windows-1252**. The explanation conflates the two.
+
+---
+
+## Summary
+
+| Claim | Verdict |
+|---|---|
+| The tkinter/X11 clipboard has a real Unicode encoding bug | ✅ Confirmed |
+| U+2014 em dash has UTF-8 bytes `\xE2\x80\x94` | ✅ Correct |
+| The garbling is caused by **Latin-1** misinterpretation | ❌ It's **Windows-1252** |
+| The visible garbled result is `â€"` | ✅ Correct (for Windows-1252) |
+| The percent-encoding `\C3\A2\C2\80\C2\94` matches `Â€"` | ❌ Inconsistent — `\C3\A2` = `â`, not `Â` |
+| Using `ensure_ascii=True` fixes the problem | ✅ Correct |

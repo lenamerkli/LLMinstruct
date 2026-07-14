@@ -1,0 +1,326 @@
+§u§
+```python
+#!/usr/bin/env python3
+"""
+Headroom ChatML Compression – CLI Demo
+=======================================
+Lists JSON message files in the headroom/ directory, asks which one
+to compress, runs headroom, and saves the result as ``{stem}.comp.json``.
+
+  pip install "headroom-ai[all]"
+  python headroom_cli_demo.py
+"""
+import os
+
+_CA_BUNDLE = "/etc/pki/tls/certs/ca-bundle.crt"
+
+os.environ.setdefault("REQUESTS_CA_BUNDLE", _CA_BUNDLE)  # requests
+os.environ.setdefault("SSL_CERT_FILE", _CA_BUNDLE)       # urllib / ssl
+os.environ.setdefault("CURL_CA_BUNDLE", _CA_BUNDLE)      # requests fallback / curl
+import requests
+_orig_get = requests.get
+def _patched_get(*args, **kwargs):
+    kwargs.setdefault("verify", _CA_BUNDLE)
+    return _orig_get(*args, **kwargs)
+requests.get = _patched_get
+import json
+import re
+import sys
+from pathlib import Path
+from typing import List, Dict, Any
+
+try:
+    from headroom import compress
+
+    HEADROOM_AVAILABLE = True
+except ImportError:
+    HEADROOM_AVAILABLE = False
+
+CHATML_RE = re.compile(
+    r"<\|im_start\|>(?P<role>system|user|assistant|tool|developer)\s*\n(?P<content>.*?)(?:<\|im_end\|>)",
+    re.DOTALL | re.IGNORECASE
+)
+
+
+def parse_messages(text: str) -> List[Dict[str, Any]]:
+    """Parse input text into a list of message dicts.
+
+    Supports JSON list, JSON with ``messages`` key, ChatML
+    ``<|im_start|>`` blocks, and ``role: content`` blocks.
+    Falls back to a single user message.
+    """
+    text = text.strip()
+    if not text:
+        return []
+
+    # 1. Try JSON
+    try:
+        data = json.loads(text)
+        if isinstance(data, list):
+            return data
+        if isinstance(data, dict) and "messages" in data:
+            return data["messages"]
+    except Exception:
+        pass
+
+    # 2. Try ChatML <|im_start|>
+    matches = list(CHATML_RE.finditer(text))
+    if matches:
+        return [
+            {"role": m.group("role").lower(), "content": m.group("content").strip()}
+            for m in matches
+        ]
+
+    # 3. Fallback: single user message
+    return [{"role": "user", "content": text}]
+
+
+def main() -> None:
+    headroom_dir = Path(__file__).resolve().parent
+
+    # Discover .json files (excluding *.comp.json)
+    json_files = sorted(
+        p for p in headroom_dir.glob("*.json")
+        if not p.stem.endswith(".comp")
+    )
+    if not json_files:
+        print("No .json files found in", headroom_dir)
+        sys.exit(1)
+
+    print("Available message files:\n")
+    for i, f in enumerate(json_files, 1):
+        size_kb = f.stat().st_size / 1024
+        print(f"  [{i}]  {f.name}  ({size_kb:,.1f} KB)")
+
+    print()
+    try:
+        choice = input("Which file to compress? (number): ").strip()
+        idx = int(choice) - 1
+        if not (0 <= idx < len(json_files)):
+            raise ValueError
+    except (ValueError, KeyboardInterrupt):
+        print("\nAborted.")
+        sys.exit(1)
+
+    input_path = json_files[idx]
+    output_path = input_path.with_name(f"{input_path.stem}.comp.json")
+
+    # Read
+    raw = input_path.read_text(encoding="utf-8")
+    messages = parse_messages(raw)
+    if not messages:
+        print("Could not parse any messages from", input_path.name)
+        sys.exit(1)
+    print(f"\nParsed {len(messages)} message(s) from {input_path.name}")
+    with open(input_path, 'w') as f:
+        json.dump(messages, f, indent=2, ensure_ascii=False)
+
+    # Compress
+    if not HEADROOM_AVAILABLE:
+        print("\nERROR: headroom-ai is not installed.")
+        print('  pip install "headroom-ai[all]"')
+        sys.exit(1)
+
+    print("Compressing …")
+    result = compress(
+        messages,
+        model="gpt-4o",
+        compress_user_messages=True,
+    )
+
+    # Show stats
+    pct = result.compression_ratio * 100
+    print(f"  Tokens:  {result.tokens_before} → {result.tokens_after}"
+          f"  (saved {result.tokens_saved}, {pct:.1f}%)")
+    if result.transforms_applied:
+        print(f"  Transforms: {', '.join(result.transforms_applied)}")
+    else:
+        print("  No transforms applied (may already be optimal).")
+
+    # Save
+    output_path.write_text(
+        json.dumps(result.messages, indent=2, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    print(f"\nCompressed messages saved to: {output_path}")
+    output_kb = output_path.stat().st_size / 1024
+    input_kb = input_path.stat().st_size / 1024
+    print(f"  File size:  {input_kb:,.1f} KB → {output_kb:,.1f} KB")
+
+
+if __name__ == "__main__":
+    main()
+```
+```bash
+░▒▓ 🎩    /PyCharmMiscProject/headroom   ▓▒░ ◦•······································································································································································································································•◦ ░▒▓   13s431ms ▓▒░
+··• python3 headroom_cli_demo.py
+Available message files:
+
+  [1]  test1.json  (457.8 KB)
+  [2]  test2.json  (235.8 KB)
+  [3]  test3.json  (18.9 KB)
+
+Which file to compress? (number): 3
+
+Parsed 26 message(s) from test3.json
+Compressing …
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+  Tokens:  5188 → 5039  (saved 149, 2.9%)
+  Transforms: router:protected:recent_code, router:text:0.79
+
+Compressed messages saved to: /home/lena/PyCharmMiscProject/headroom/test3.comp.json
+  File size:  19.2 KB → 18.7 KB
+
+░▒▓ 🎩    /PyCharmMiscProject/headroom   ▓▒░ ◦•·······································································································································································································································•◦ ░▒▓   5s885ms ▓▒░
+··• python3 headroom_cli_demo.py
+Available message files:
+
+  [1]  test1.json  (457.8 KB)
+  [2]  test2.json  (235.8 KB)
+  [3]  test3.json  (19.2 KB)
+
+Which file to compress? (number): 2
+
+Parsed 28 message(s) from test2.json
+Compressing …
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+  Tokens:  50784 → 48731  (saved 2053, 4.0%)
+  Transforms: router:mixed:0.75
+
+Compressed messages saved to: /home/lena/PyCharmMiscProject/headroom/test2.comp.json
+  File size:  236.4 KB → 228.4 KB
+
+░▒▓ 🎩    /PyCharmMiscProject/headroom   ▓▒░ ◦•······································································································································································································································•◦ ░▒▓   10s654ms ▓▒░
+··• python3 headroom_cli_demo.py 1
+Available message files:
+
+  [1]  test1.json  (457.8 KB)
+  [2]  test2.json  (236.4 KB)
+  [3]  test3.json  (19.2 KB)
+
+Which file to compress? (number): 1
+
+Parsed 1 message(s) from test1.json
+Compressing …
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+  Tokens:  119536 → 72136  (saved 47400, 39.7%)
+  Transforms: router:mixed:0.66
+
+Compressed messages saved to: /home/lena/PyCharmMiscProject/headroom/test1.comp.json
+  File size:  457.8 KB → 297.2 KB
+
+░▒▓ 🎩    /PyCharmMiscProject/headroom   ▓▒░ ◦•····································································································································································································································•◦ ░▒▓   1m42s785ms ▓▒░
+··• python3 headroom_cli_demo.py
+Available message files:
+
+  [1]  test1.json  (457.8 KB)
+  [2]  test2.json  (236.4 KB)
+  [3]  test3.json  (19.2 KB)
+  [4]  test4.json  (807.3 KB)
+
+Which file to compress? (number): 4
+
+Parsed 22 message(s) from test4.json
+Compressing …
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+  Tokens:  202987 → 202987  (saved 0, 0.0%)
+  Transforms: router:noop
+
+Compressed messages saved to: /home/lena/PyCharmMiscProject/headroom/test4.comp.json
+  File size:  807.8 KB → 807.8 KB
+
+░▒▓ 🎩    /PyCharmMiscProject/headroom   ▓▒░ ◦•······································································································································································································································•◦ ░▒▓   16s122ms ▓▒░
+··•
+```
+Why does headroom-ai not compress as much as advertised on https://headroom-docs.vercel.app/docs ?
+§a§
+Great question. The gap between the advertised "60–95% fewer tokens" and what you're seeing (0–40%) comes down to several concrete, well-documented reasons. Here's a breakdown:
+
+---
+
+## Why Your Results Are Lower Than Advertised
+
+### 1. 🎯 The Benchmarks Are Content-Type Specific — Not Conversational Chat
+
+The headline numbers are measured on the content types headroom was *built for*. Real-world routing shows results like: `terminal → LogCompressor (~93% reduction)`, `search_files → SearchCompressor (~87% reduction)`, but `web_search → SmartCrusher (~2-5% reduction)`.
+
+Your test files (`test1–4.json`) appear to be **chat-style message histories**, not the logs, JSON arrays, terminal output, or RAG chunks that headroom aggressively compresses. In practice, headroom routes different content types through different compression strategies. Structured data, code, prose, logs, and RAG chunks do not benefit from the same treatment. A JSON response should not be compressed the same way as a Python file or a natural-language document.
+
+---
+
+### 2. 🔀 The Router Is Telling You Exactly What Happened
+
+The `transforms_applied` field is very informative:
+
+- **`router:noop`** (test4, 0% savings) — ContentRouter auto-detects content type and routes each to the optimal compressor. `noop` means the router inspected your content and decided *no compressor could safely reduce it* — typically plain prose or already-dense text.
+- **`router:mixed:0.66` / `router:mixed:0.75`** — a mixed bag of content types, with the decimal indicating the router's confidence score.
+- **`router:protected:recent_code`** — recent code messages are intentionally protected from compression to preserve correctness.
+- **`router:text:0.79`** — routed to text compression with moderate confidence.
+
+These aren't failures — they're the router working as designed, being conservative.
+
+---
+
+### 3. 🪵 Headroom Shines on Verbose Tool Output, Not Conversation History
+
+Every tool call, DB query, file read, and RAG retrieval your agent makes is 70-95% boilerplate. Headroom compresses it away before it hits the model. The LLM sees less noise, responds faster, and costs less.
+
+Your test files are pre-existing conversation histories — the redundancy and noise that headroom targets (repetitive JSON arrays, voluminous log output, large code search dumps) may simply not be present. Notice your test1 — a single-message file of ~120K tokens — got **39.7%** savings, which is actually in line with expectations for dense mixed content.
+
+---
+
+### 4. 📐 The Advertised Numbers Come From Live Agent Workflows, Not Batch Files
+
+ContentRouter inspects each tool output and routes it to the optimal compressor. IntelligentContext scores every message by importance (recency, semantic relevance, error indicators) and drops the lowest-value messages to fit within the model's context window.
+
+The `IntelligentContext` stage — which can drop entire low-value messages — only triggers when a **token budget** is exceeded. Since you're not passing a `token_budget` or `max_tokens` argument to `compress()`, that stage likely never fires, capping your savings.
+
+---
+
+### 5. 💡 You're Missing Key Configuration for Aggressive Compression
+
+Your call is:
+```python
+result = compress(messages, model="gpt-4o", compress_user_messages=True)
+```
+
+For higher savings, consider:
+
+```python
+from headroom.compression import UniversalCompressor, UniversalCompressorConfig
+
+config = UniversalCompressorConfig(
+    compression_ratio_target=0.5,   # target 50% reduction
+    use_entropy_preservation=True,  # preserve UUIDs/hashes
+    use_magika=True,                # ML-based content detection
+    ccr_enabled=True,               # store originals for retrieval
+)
+compressor = UniversalCompressor(config=config)
+result = compressor.compress(content)
+```
+
+The LLM gets a `headroom_retrieve` tool and can fetch full originals when it needs more detail. Compression is aggressive but reversible. Using `ccr_enabled=True` allows headroom to compress far more aggressively because the original can always be retrieved.
+
+---
+
+### 6. ⚠️ The HF Warning Is a Red Flag
+
+```
+Warning: You are sending unauthenticated requests to the HF Hub.
+```
+
+The `kompress-base` compression model is fetched from HuggingFace. You can pre-download it and run with `HF_HUB_OFFLINE=1`, or set `HF_ENDPOINT` to a trusted mirror. Without authentication, you may be hitting **rate limits** that degrade or skip the ML-based prose compression entirely (Kompress-base), causing fallback to weaker heuristic compressors. Set `HF_TOKEN` in your environment to fix this.
+
+---
+
+### Summary
+
+| Factor | Impact on Your Results |
+|---|---|
+| Content is chat prose, not logs/JSON arrays | Major — wrong content type for peak savings |
+| No `token_budget` set | `IntelligentContext` stage never triggers |
+| No `compression_ratio_target` set | Router stays conservative |
+| Unauthenticated HF Hub | ML compressor (Kompress) may be rate-limited |
+| `router:noop` on test4 | Plain text / markdown — not yet supported |
+
+To replicate the advertised numbers, pipe actual **agent tool outputs** — terminal logs, JSON API responses, grep results, file reads — through headroom in a live session rather than compressing saved conversation histories.

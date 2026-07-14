@@ -1,0 +1,15 @@
+§u§
+https://www.pcmag.com/news/norway-bans-ai-in-elementary-schools
+How is the ban worded? Is it worded in a way that branch prediction AI in CPUs is still allowed?
+§a§
+Short answer: **yes**—the wording is aimed at **students being given access to AI tools for schoolwork**, not at banning computers that contain low-level predictive logic. So **CPU branch prediction would not be the target**. That’s an inference from the official wording and context.
+
+The June 19, 2026 Norwegian government press release describes this as a **“new national recommendation”** and says: **“Fra høsten skal elevene på 1.–7. trinn skjermes fra å selv bruke kunstig intelligens i skolearbeidet”**—roughly, “From autumn, pupils in grades 1–7 are to be shielded from using AI themselves in schoolwork.” It then gives the key rule: **“På 1.–7. trinn skal elevene i all hovedsak ikke gis tilgang til kunstig intelligens”**—roughly, “In grades 1–7, pupils should, as a general rule, not be given access to AI.”
+
+Two scope clues matter a lot. First, the text is about **use in schoolwork / instruction**, not about hardware in general. Second, the same release explicitly keeps room for exceptions: students who **need AI-based tools in teaching** should still get them, for example in language learning or individually adapted instruction. That makes this a **student-use policy**, not a blanket ban on any device containing anything one might loosely call AI.
+
+The surrounding guidance from Norway’s education directorate points the same way. It discusses AI in schools in terms of **generative AI, language models, chatbots, and digital teaching tools**, and says schools may use such tools if they fit the curriculum and privacy/security requirements. Reuters also summarized the move as a near ban on **“generative AI tools”** for elementary pupils.
+
+So if your question is, “Would a literal reading also outlaw CPUs with branch predictors, even ML-ish ones?” my answer is **no**. The operative phrases are about pupils **using AI themselves in schoolwork** and being **given access to AI**. A branch predictor inside a CPU is not the kind of tool a pupil is being given access to for school tasks; it’s just an internal implementation detail of the computer. That is an interpretation, but it is strongly supported by the official context.
+
+If you want, I can also give you a **line-by-line legalistic parsing** of the Norwegian phrasing, especially **“i all hovedsak”** and **“gis tilgang til”**.

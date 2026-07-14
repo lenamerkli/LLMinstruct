@@ -1,0 +1,17 @@
+§u§
+give me a git command that only downloads the current state of the main branch. I just need to be able to read the current state, I do not need history, blame, other branches, etc.
+§a§
+Use this command:
+
+```bash
+git clone --depth 1 --single-branch --branch main <repository-url>
+```
+
+**What each flag does:**
+- `--depth 1` → Fetches only the latest commit (no history)
+- `--single-branch` → Ignores all other branches
+- `--branch main` → Explicitly targets the `main` branch
+
+This gives you a working directory with just the current files and a minimal `.git` folder. If you don't want any Git metadata at all, simply run `rm -rf .git` inside the cloned directory afterward.
+
+*(Note: If you're using GitHub/GitLab, downloading the "ZIP" archive from the web UI is often faster and leaves zero `.git` overhead, but the above is the standard Git-native way.)*

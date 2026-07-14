@@ -1,0 +1,226 @@
+§u§
+I have a QEMU VM with debian 13 Gnome installed. Can I make the one default user behave somewhat like root? Like no access prompts when opening certain apps, no need for sudo in the command line, etc.
+§a§
+Yes — but it’s really **two separate systems**:
+
+1. **Terminal/root commands** use `sudo` / `sudoers`.
+2. **GNOME “Authentication Required” popups** usually use **polkit**, not `sudo`.
+
+Debian’s own installer documentation says if you leave the root password unset, Debian disables direct root login, installs sudo, and allows the first user to become root with `sudo`; it also warns not to use root as your normal daily login.
+
+## 1. Make sure your user is an admin/sudo user
+
+Check:
+
+```bash
+id
+```
+
+You want to see `sudo` in the group list.
+
+If not, become root and add yourself:
+
+```bash
+su -
+apt install sudo
+adduser yourusername sudo
+```
+
+Then fully log out and back in. Debian’s sudo docs note that sudo access is normally granted through the `sudo` group, and group membership takes effect on login.
+
+---
+
+## 2. Make `sudo` stop asking for a password
+
+Run:
+
+```bash
+sudo visudo -f /etc/sudoers.d/010-yourusername-nopasswd
+```
+
+Add this line, replacing `yourusername`:
+
+```sudoers
+yourusername ALL=(ALL:ALL) NOPASSWD: ALL
+```
+
+Save and exit.
+
+Test it:
+
+```bash
+sudo -k
+sudo true
+```
+
+If it returns without asking for a password, it worked.
+
+Debian recommends putting local sudoers changes in `/etc/sudoers.d/`, and documents `NOPASSWD` for passwordless sudo, while warning that it makes account compromise much more serious.
+
+### Important limitation
+
+This removes the **password prompt**, but you still need to type `sudo`.
+
+If you literally want a root shell:
+
+```bash
+sudo -i
+```
+
+Then everything in that terminal is running as root until you exit:
+
+```bash
+exit
+```
+
+Do **not** change your normal user’s UID to `0`. That is a messy way to become “root-like” and can break desktop/session behavior.
+
+---
+
+## 3. Make GNOME/polkit prompts go away for certain actions
+
+GNOME admin dialogs are usually controlled by **polkit**. Debian’s reference notes that newer GUI apps generally talk to privileged services through PolicyKit/polkit rather than running the whole app as root, and Debian limits those operations to users in the `sudo` group.
+
+First, list available polkit actions:
+
+```bash
+pkaction --verbose | less
+```
+
+`pkaction` is the tool for listing registered polkit actions.
+
+Create a local rule:
+
+```bash
+sudo nano /etc/polkit-1/rules.d/49-yourusername-noprompt.rules
+```
+
+Example: allow your user to do selected GNOME/system actions without an auth prompt:
+
+```javascript
+polkit.addRule(function(action, subject) {
+    if (subject.user == "yourusername" &&
+        subject.local &&
+        subject.active &&
+        [
+            "org.freedesktop.accounts.user-administration",
+            "org.freedesktop.hostname1.set-hostname",
+            "org.freedesktop.timedate1.set-timezone"
+        ].indexOf(action.id) >= 0) {
+        return polkit.Result.YES;
+    }
+});
+```
+
+Replace `yourusername`, and replace/add action IDs you actually want. Polkit rules are read from `/etc/polkit-1/rules.d`, rules are JavaScript, and `polkit.Result.YES` means “allow without authentication.”
+
+Polkit usually reloads rules automatically when files change. If not:
+
+```bash
+sudo systemctl restart polkit
+```
+
+---
+
+## 4. If you really want “no GNOME auth prompts for basically everything”
+
+For an isolated throwaway QEMU VM, you *can* do this, but it is effectively making your logged-in desktop session root-capable without confirmation:
+
+```bash
+sudo nano /etc/polkit-1/rules.d/00-sudo-group-no-prompts.rules
+```
+
+```javascript
+polkit.addRule(function(action, subject) {
+    if (subject.isInGroup("sudo") &&
+        subject.local &&
+        subject.active) {
+        return polkit.Result.YES;
+    }
+});
+```
+
+That says: any active local user in the `sudo` group gets all polkit actions without a password prompt.
+
+For a normal machine, I would not recommend this. For a disposable VM, it may be acceptable.
+
+---
+
+## Best practical setup for your VM
+
+I’d do this:
+
+1. Add your user to `sudo`.
+2. Add passwordless sudo for only that user:
+
+```sudoers
+yourusername ALL=(ALL:ALL) NOPASSWD: ALL
+```
+
+3. Use `sudo -i` when you want a root terminal.
+4. Add targeted polkit rules only for the GNOME prompts that annoy you.
+
+That gives you a very “root-like” Debian GNOME VM without actually logging into the whole desktop as root.
+§u§
+How can I change it so that I do not have to type `sudo`?
+§a§
+There are a few ways to skip typing `sudo` entirely. Pick the one that matches how "rooty" you want the session to feel.
+
+## Option 1: Just start a root shell (simplest)
+
+Once per terminal:
+
+```bash
+sudo -i
+```
+
+You're now root until you `exit`. Combined with passwordless sudo from earlier, this is instant.
+
+## Option 2: Make the terminal open as root automatically
+
+Edit your GNOME Terminal profile (or Ptyxis on newer Debian/GNOME):
+
+- **GNOME Terminal**: Preferences → your profile → **Command** tab → check *"Run a custom command instead of my shell"* and set it to:
+  ```
+  sudo -i
+  ```
+- **Ptyxis**: Preferences → Profile → **Command** → set custom command to `sudo -i`.
+
+Every new terminal window/tab will already be root. With passwordless sudo configured, there's no prompt.
+
+## Option 3: Auto-elevate in your shell rc
+
+Add this near the top of `~/.bashrc` (or `~/.zshrc`):
+
+```bash
+if [ "$(id -u)" -ne 0 ]; then
+    exec sudo -i
+fi
+```
+
+Any interactive shell instantly re-execs as root. Works in terminals, TTYs, SSH, etc.
+
+## Option 4: A short alias (lightest touch)
+
+If you only occasionally need root and don't want a permanent root shell, add to `~/.bashrc`:
+
+```bash
+alias s='sudo'
+```
+
+So you type `s apt update` instead of `sudo apt update`. Not zero typing, but minimal.
+
+## Option 5: Give your user UID 0 (nuclear, not recommended)
+
+You *can* edit `/etc/passwd` and change your user's UID to `0`, making them literally root with their own home directory. This usually breaks things (file ownership, GNOME session, systemd user services, package managers complaining, etc.) and is hard to undo cleanly. **Don't do this** — Option 2 or 3 achieves the same practical effect without the breakage.
+
+---
+
+### My recommendation for a throwaway VM
+
+Combine what you already set up with **Option 2** (terminal launches `sudo -i`). You get:
+
+- GUI session runs as your normal user → GNOME stays happy.
+- Polkit prompts already silenced.
+- Terminal is always root → no `sudo` typing, ever.
+- Easy to revert by unchecking one box.

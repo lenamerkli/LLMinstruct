@@ -1,0 +1,82 @@
+§u§
+```
+server {
+    server_name cloud.redacted.tld;
+
+    listen 80;
+    listen [::]:80;
+
+    server_tokens off;
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+
+    ssl_certificate /etc/letsencrypt/live/redacted.tld/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/redacted.tld/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+
+    add_header Strict-Transport-Security "max-age=63072000" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header X-Frame-Options "SAMEORIGIN" always;
+
+    ssl_stapling on;
+    ssl_stapling_verify on;
+
+    client_max_body_size 1500M;
+
+    server_tokens off;
+
+    ssl_trusted_certificate /etc/letsencrypt/live/redacted.tld/fullchain.pem;
+
+    resolver 192.168.1.1;
+
+
+    server_name cloud.redacted.tld;
+
+    allow all;
+
+    location /error_www/ {
+        alias /var/www/redacted.tld/;
+    }
+
+    location / {
+        proxy_pass http://192.168.1.117:10084;
+        proxy_redirect off;
+
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        proxy_pass_header Server;
+    }
+
+    error_page 502 /error_www/502.html;
+}
+```
+What is the maximal file size I can upload to my private cloud?
+§a§
+Based on your Nginx configuration, the maximum file size you can upload to your private cloud is **1500 MB (1.5 GB)**.
+
+This is set by the `client_max_body_size 1500M;` directive. If you try to upload a file larger than 1500 MB, Nginx will return a `413 (Request Entity Too Large)` error.
+
+A few things to keep in mind:
+
+1. **The 1500 MB limit is a hard ceiling in Nginx**, but other components in your stack may impose smaller limits. For example, if your backend application (e.g., Nextcloud) at `192.168.1.117:10084` has its own upload size limit, that will take effect instead. Check your application settings (e.g., `php_value upload_max_filesize` and `post_max_size` for PHP-based apps, or the equivalent for your specific cloud software).
+
+2. **The "M" suffix is case-sensitive in some contexts** — in Nginx, `M` and `m` both work, but always verify with a test upload.
+
+3. **For very large uploads**, you may also want to consider increasing Nginx timeouts, since large files take longer to transfer:
+   ```nginx
+   proxy_read_timeout 600;
+   proxy_send_timeout 600;
+   ```
+
+If you need to upload files larger than 1.5 GB, just increase the `client_max_body_size` value to whatever you need.

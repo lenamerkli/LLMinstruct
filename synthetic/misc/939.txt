@@ -1,0 +1,78 @@
+§u§
+```
+server {
+    server_name cloud.redacted.tld;
+
+    listen 80;
+    listen [::]:80;
+
+    server_tokens off;
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+
+    ssl_certificate /etc/letsencrypt/live/redacted.tld/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/redacted.tld/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+
+    add_header Strict-Transport-Security "max-age=63072000" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header X-Frame-Options "SAMEORIGIN" always;
+
+    ssl_stapling on;
+    ssl_stapling_verify on;
+
+    client_max_body_size 1500M;
+
+    server_tokens off;
+
+    ssl_trusted_certificate /etc/letsencrypt/live/redacted.tld/fullchain.pem;
+
+    resolver 192.168.1.1;
+
+
+    server_name cloud.redacted.tld;
+
+    allow all;
+
+    location /error_www/ {
+        alias /var/www/redacted.tld/;
+    }
+
+    location / {
+        proxy_pass http://192.168.1.117:10084;
+        proxy_redirect off;
+
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        proxy_pass_header Server;
+    }
+
+    error_page 502 /error_www/502.html;
+}
+```
+What is the maximal file size I can upload to my private cloud?
+§a§
+At the Nginx level, the maximum **entire request body** is:
+
+```nginx
+client_max_body_size 1500M;
+```
+
+That equals:
+
+- **1,572,864,000 bytes**
+- **1,500 MiB**
+- approximately **1.465 GiB** or **1.573 GB**
+
+The actual maximum file will be slightly smaller because multipart upload metadata is included in the request body. Your cloud application, PHP, or upstream server at `192.168.1.117:10084` may impose a lower limit, so the effective maximum is the lowest configured limit in the chain.

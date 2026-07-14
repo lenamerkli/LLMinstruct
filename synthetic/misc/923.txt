@@ -1,0 +1,53 @@
+§u§
+How can I use the brave search API?
+§a§
+Here's how to use the Brave Search API, from getting set up to making your first request:
+
+## 1. Sign Up and Get an API Key
+
+Create a Brave Search API account at brave.com/search/api/, choose the Search plan in the dashboard, and generate an API key. Store the key in config or as an environment variable. Note that the credit card requirement serves as an anti-fraud measure to protect Brave from bad actors, and for free plans, the card is only used to confirm your identity and will not be charged.
+
+Regarding pricing: each Brave plan includes $5/month in free credit (renewing), and the Search plan costs $5 per 1,000 requests, so the credit covers 1,000 queries/month.
+
+## 2. Make Your First Request
+
+The core endpoint is a simple GET request. Here's the basic pattern:
+
+**cURL:**
+```
+curl "https://api.search.brave.com/res/v1/web/search?q=artificial+intelligence" \
+  -H "X-Subscription-Token: YOUR_API_KEY"
+```
+
+**Python:**
+Using the requests library, you set the URL to the web search endpoint, add headers including Accept, Accept-Encoding: gzip, and X-Subscription-Token with your API key, then pass your query as a parameter and call response.json() to get results.
+
+**JavaScript:**
+Similarly, you can construct a URL object, append the query parameter, and fetch with the same headers.
+
+## 3. Key Parameters and Features
+
+- **Pagination**: count sets the maximum number of results per page (max 20, default 20), though actual results may be fewer. offset sets the starting position (0-based, max 9). Rather than blindly iterating with increasing offset values, check the more_results_available field to determine if more pages exist.
+
+- **Freshness filtering**: You can filter by Last 24 Hours (pd), Last 7 Days (pw), Last 31 Days (pm), Last Year (py), or a custom date range like 2022-04-01to2022-07-30.
+
+- **Country/language targeting**: You can specify a country code and search language, e.g., country=DE&search_lang=de.
+
+- **Extra snippets**: This feature provides up to 5 additional excerpts per search result, giving more context from each page — useful for comprehensive content previews or relevance assessment.
+
+- **Search operators**: Search operators are special commands added to queries to filter and refine results, placed anywhere in the query string. They let you narrow searches by file type, site, language, and more. Examples include `site:`, `filetype:`, `intitle:`, quoted exact phrases, and boolean operators like AND/OR/NOT. Logical operators can be combined, e.g., "coffee OR tea recipe NOT starbucks."
+
+- **Goggles (custom re-ranking)**: Web Search supports Goggles, which let you apply custom re-ranking on top of results. Goggles can be provided as a URL or inline definition, and multiple can be combined.
+
+## 4. For AI/Agent Use Cases
+
+If you're building an AI agent or chatbot, there's a dedicated LLM Context endpoint specifically built for machine consumption, benchmarked as the most powerful Search API for AI, rather than the standard web search endpoint.
+
+## 5. Available SDKs/Integrations
+
+- **Python package**: The unofficial `brave-search` PyPI package lets you do things like `from brave import Brave; brave = Brave(); search_results = brave.search(q=query, count=num_results)`, with support for web, image, news, and video results, plus utility methods for downloading PDFs or extracting product prices.
+- **Official integration guides** exist for tools like Claude Desktop via Model Context Protocol (MCP), which requires Node.js installed on your computer, as well as n8n, Dify, and Open WebUI.
+
+## 6. Documentation
+
+For the most current and complete reference, check the official docs at the [Brave Search API dashboard documentation](https://api-dashboard.search.brave.com/app/documentation/web-search/get-started), since both Brave's products are evolving quickly, so it's best to always check official documentation for the most up-to-date information.

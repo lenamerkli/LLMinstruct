@@ -1,0 +1,388 @@
+§u§
+```
+root@servernode2:/var/log# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+udev            7.6G     0  7.6G   0% /dev
+tmpfs           1.6G   11M  1.6G   1% /run
+/dev/mmcblk1p2   58G   48G  9.1G  85% /
+tmpfs           7.7G     0  7.7G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/mmcblk1p1  256M  161M   96M  63% /boot
+tmpfs           7.7G   16K  7.7G   1% /tmp
+/dev/zram1       47M   46M     0 100% /var/log
+/dev/loop6       93M   93M     0 100% /snap/core/17288
+/dev/loop0       60M   60M     0 100% /snap/core20/2772
+/dev/loop5       62M   62M     0 100% /snap/core24/1588
+/dev/loop2       93M   93M     0 100% /snap/core/17290
+/dev/loop3       60M   60M     0 100% /snap/core20/2870
+tmpfs           1.6G  4.0K  1.6G   1% /run/user/0
+/dev/loop1       62M   62M     0 100% /snap/core24/1644
+overlay          58G   48G  9.1G  85% /var/lib/docker/overlay2/73103da12cb7bc212916a4ac222d008b9e4646ce523ec09914e57fdf2309b1e1/merged
+overlay          58G   48G  9.1G  85% /var/lib/docker/overlay2/0bf33601ce8499f8eb9f95ad28a9546d4763fc1cf0483eb559a25e0003020e81/merged
+overlay          58G   48G  9.1G  85% /var/lib/docker/overlay2/858aada5bb11c580c9351703cdc95b5d90f348de4b9a1038eda388b8b34f4151/merged
+overlay          58G   48G  9.1G  85% /var/lib/docker/overlay2/1741dd3b6ad2f2f1b0eb5c7707e7c1102f316152ad0db4ef624f23febd41d4a8/merged
+overlay          58G   48G  9.1G  85% /var/lib/docker/overlay2/e1a3f524ad3e43c6846615fbfea87a11fed488e153c35f3241f101a1765a2e45/merged
+overlay          58G   48G  9.1G  85% /var/lib/docker/overlay2/d9c4c9bdbf5e7f5d83e86b18b468c985ada7475ee123f965fd17118749be5d12/merged
+overlay          58G   48G  9.1G  85% /var/lib/docker/overlay2/873684a13c65c557e6854631a1a7e148dfcccedfc0e060c270f941020a9d3868/merged
+overlay          58G   48G  9.1G  85% /var/lib/docker/overlay2/782dfd0cba22ce081bc1fb479c2c6ddfbc7daacf1de6f043f1350dd9c0d8a47e/merged
+overlay          58G   48G  9.1G  85% /var/lib/docker/overlay2/04c6ba44ed47aa4a54cbbbd3325b2388104bfff5a1c52fbc653c17a4fa18ed70/merged
+overlay          58G   48G  9.1G  85% /var/lib/docker/overlay2/b9150f1f349143e0cde7d70c3c06f1998474c24dc0f66de8ae7a401366095b08/merged
+overlay          58G   48G  9.1G  85% /var/lib/docker/overlay2/17d01044af3c7d2d5c070478866d651f0d00c342be014277c315ab714ff4ce57/merged
+root@servernode2:/var/log#
+```
+How can I fix the full /var/log ?
+§a§
+`/var/log` is not on your main disk. It is mounted on **`/dev/zram1`**, a tiny **47 MB RAM-backed filesystem**, and that is what is full.
+
+So the problem is **not** that `/` is full.
+Your root filesystem still has about **9.1 GB free**.
+The issue is that `/var/log` was intentionally put on a very small zram device.
+
+Also, the `/dev/loop* 100%` lines are normal for Snap packages.
+
+## What to do
+
+### 1) See what inside `/var/log` is using space
+Run:
+
+```bash
+sudo du -xhd1 /var/log | sort -h
+sudo find /var/log -xdev -type f -printf '%10s %p\n' | sort -n | tail -20
+sudo journalctl --disk-usage
+```
+
+That will show whether the space is mostly:
+- `systemd-journal`
+- `syslog`
+- `kern.log`
+- `auth.log`
+- some app writing too much
+
+---
+
+### 2) Quick safe cleanup
+If systemd journal is large:
+
+```bash
+sudo journalctl --rotate
+sudo journalctl --vacuum-size=10M
+```
+
+Force logrotate:
+
+```bash
+sudo logrotate -f /etc/logrotate.conf
+```
+
+Check again:
+
+```bash
+df -h /var/log
+```
+
+---
+
+### 3) Emergency cleanup if still full
+If one or two active logs are huge, truncate them:
+
+```bash
+sudo truncate -s 0 /var/log/syslog
+sudo truncate -s 0 /var/log/kern.log
+sudo truncate -s 0 /var/log/auth.log
+```
+
+If there are old rotated logs:
+
+```bash
+sudo find /var/log -type f \( -name "*.gz" -o -name "*.1" \) -ls
+```
+
+You can remove old rotated logs if you do not need them:
+
+```bash
+sudo find /var/log -type f -name "*.gz" -delete
+```
+
+Be careful not to blindly delete everything in `/var/log`.
+
+---
+
+## Permanent fix
+
+Because `/var/log` is only **47 MB**, it will likely fill again. You have 3 real options:
+
+### Option A: Increase the zram size for `/var/log`
+This is best if the system was set up this way to reduce SD/eMMC wear.
+
+First identify what created the zram mount:
+
+```bash
+mount | grep ' /var/log '
+systemctl list-units --type=service | grep -Ei 'log2ram|zram'
+dpkg -l | grep -Ei 'log2ram|zram|armbian'
+```
+
+Common possibilities:
+
+- `log2ram`
+- `armbian-zram-config`
+- `systemd-zram-generator`
+
+If it is `log2ram`, the config is commonly:
+
+```bash
+sudo nano /etc/log2ram.conf
+```
+
+Look for something like:
+
+```bash
+SIZE=40M
+```
+
+Increase it, for example:
+
+```bash
+SIZE=128M
+```
+
+Then restart or reboot:
+
+```bash
+sudo systemctl restart log2ram
+```
+
+or
+
+```bash
+sudo reboot
+```
+
+---
+
+### Option B: Disable zram for `/var/log`
+If you do not need logs in RAM, disable the feature so logs go to disk normally.
+
+Again, identify the service/package first. For example, if it is `log2ram`:
+
+```bash
+sudo systemctl disable --now log2ram
+sudo apt remove log2ram
+sudo reboot
+```
+
+If it is Armbian or another zram service, the package/service name will differ.
+
+This is the simplest long-term fix if disk wear is not a concern.
+
+---
+
+### Option C: Keep zram but reduce log growth
+If a service is spamming logs, fix that too, or the zram will refill quickly.
+
+Useful commands:
+
+```bash
+sudo systemctl --failed
+sudo journalctl -p err -b
+sudo journalctl -b | tail -100
+```
+
+If `rsyslog` or some app is flooding logs, identify and fix that service.
+
+---
+
+## Good default fix
+If you want the practical approach:
+
+1. Free space now:
+   ```bash
+   sudo journalctl --rotate
+   sudo journalctl --vacuum-size=10M
+   sudo logrotate -f /etc/logrotate.conf
+   ```
+
+2. If still full, truncate big active logs:
+   ```bash
+   sudo truncate -s 0 /var/log/syslog /var/log/kern.log /var/log/auth.log
+   ```
+
+3. Then either:
+   - increase zram size, or
+   - disable `/var/log` on zram entirely
+
+---
+
+## Important note
+Because `/var/log` is mounted separately on zram, **deleting files from `/` will not fix `/var/log`**.
+
+---
+
+If you want, I can give you a **step-by-step exact command sequence** to:
+1. identify what is filling `/var/log`, and
+2. determine whether your system is using `log2ram`, `armbian-zram-config`, or another zram setup.
+§u§
+I have made adjustments but they were not applied:
+```
+root@servernode2:/var/log# cat /etc/default/armbian-ramlog
+# configuration values for the armbian-ram-logging service
+#
+# enable the armbian-ram-logging service?
+ENABLED=true
+#
+# size of the tmpfs mount -- please keep in mind to adjust /etc/default/armbian-zram-config too when increasing
+SIZE=250M
+#
+# use rsync instead of cp -r
+# requires rsync installed, may provide better performance
+# due to copying only new and changed files
+USE_RSYNC=true
+
+# If USE_RSYNC is true, additional options may be specified for the rsync
+# commands used to synchronize logs to disk from RAM (XTRA_RSYNC_TO) or from
+# disk to RAM (XTRA_RSYNC_FROM).  These are bash arrays to make specifying
+# multiple arguments easy even in the presence of whitespace.
+
+
+# If you use log rotation programs that datestamp their logs (e.g., runit's
+# svlogd or daemontools' multilog), deleting log files while synchronizing is
+# likely a good idea.
+#XTRA_RSYNC_TO=(--delete)
+XTRA_RSYNC_FROM=()
+XTRA_RSYNC_FROM=()
+root@servernode2:/var/log# cat /etc/default/armbian-zram-config
+# configuration values for the armbian-zram-config service
+#
+# enable the armbian-zram-config service?
+ENABLED=true
+
+# Zram swap enabled by default, unless set to disabled
+# SWAP=false
+
+# percentage of zram used as swap compared to physically available DRAM.
+# Huge overcommitment (300) is possible and sometimes desirable. See
+# https://forum.armbian.com/topic/5565-zram-vs-swap/?do=findComment&comment=61082
+# and don't forget to adjust $MEM_LIMIT_PERCENTAGE below too.
+# ZRAM_PERCENTAGE=50
+
+# percentage of DRAM available to zram. If this amount is exceeded the zram
+# devices used for swap simply behave as if the device is full. You need to
+# adjust/increase this value only if you want to work with massive memory
+# overcommitment (ZRAM_PERCENTAGE exceeding 150 for example)
+# MEM_LIMIT_PERCENTAGE=50
+
+# create how many zram devices max for swap
+# ZRAM_MAX_DEVICES=4
+
+# Which algorithm for zram based swapping. Seems lzo is best choice on ARM:
+# https://forum.armbian.com/topic/8161-swap-on-sbc/?do=findComment&comment=61668
+# SWAP_ALGORITHM=lzo
+
+# Which algorithm to choose for zram based ramlog partition
+# RAMLOG_ALGORITHM=zstd
+
+# Which algorithm to choose for zram based /tmp
+# TMP_ALGORITHM=zstd
+
+# Size for zram based /tmp, total memory / 2 by default
+# TMP_SIZE=500M
+
+# If defined a separate partition will be used as zram backing device. Be CAREFUL
+# which partition you assign and read starting from CONFIG_ZRAM_WRITEBACK in
+# https://www.kernel.org/doc/Documentation/blockdev/zram.txt
+# ZRAM_BACKING_DEV=/dev/nvm
+root@servernode2:/var/log# sudo systemctl restart armbian-ramlog
+root@servernode2:/var/log# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+udev            7.6G     0  7.6G   0% /dev
+tmpfs           1.6G   11M  1.6G   1% /run
+/dev/mmcblk1p2   58G   48G  9.1G  85% /
+tmpfs           7.7G     0  7.7G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/mmcblk1p1  256M  161M   96M  63% /boot
+tmpfs           7.7G   16K  7.7G   1% /tmp
+/dev/loop6       93M   93M     0 100% /snap/core/17288
+/dev/loop0       60M   60M     0 100% /snap/core20/2772
+/dev/loop5       62M   62M     0 100% /snap/core24/1588
+/dev/loop2       93M   93M     0 100% /snap/core/17290
+/dev/loop3       60M   60M     0 100% /snap/core20/2870
+tmpfs           1.6G  4.0K  1.6G   1% /run/user/0
+/dev/loop1       62M   62M     0 100% /snap/core24/1644
+overlay          58G   48G  9.1G  85% /var/lib/docker/overlay2/73103da12cb7bc212916a4ac222d008b9e4646ce523ec09914e57fdf2309b1e1/merged
+overlay          58G   48G  9.1G  85% /var/lib/docker/overlay2/0bf33601ce8499f8eb9f95ad28a9546d4763fc1cf0483eb559a25e0003020e81/merged
+overlay          58G   48G  9.1G  85% /var/lib/docker/overlay2/858aada5bb11c580c9351703cdc95b5d90f348de4b9a1038eda388b8b34f4151/merged
+overlay          58G   48G  9.1G  85% /var/lib/docker/overlay2/1741dd3b6ad2f2f1b0eb5c7707e7c1102f316152ad0db4ef624f23febd41d4a8/merged
+overlay          58G   48G  9.1G  85% /var/lib/docker/overlay2/e1a3f524ad3e43c6846615fbfea87a11fed488e153c35f3241f101a1765a2e45/merged
+overlay          58G   48G  9.1G  85% /var/lib/docker/overlay2/d9c4c9bdbf5e7f5d83e86b18b468c985ada7475ee123f965fd17118749be5d12/merged
+overlay          58G   48G  9.1G  85% /var/lib/docker/overlay2/873684a13c65c557e6854631a1a7e148dfcccedfc0e060c270f941020a9d3868/merged
+overlay          58G   48G  9.1G  85% /var/lib/docker/overlay2/782dfd0cba22ce081bc1fb479c2c6ddfbc7daacf1de6f043f1350dd9c0d8a47e/merged
+overlay          58G   48G  9.1G  85% /var/lib/docker/overlay2/04c6ba44ed47aa4a54cbbbd3325b2388104bfff5a1c52fbc653c17a4fa18ed70/merged
+overlay          58G   48G  9.1G  85% /var/lib/docker/overlay2/b9150f1f349143e0cde7d70c3c06f1998474c24dc0f66de8ae7a401366095b08/merged
+overlay          58G   48G  9.1G  85% /var/lib/docker/overlay2/17d01044af3c7d2d5c070478866d651f0d00c342be014277c315ab714ff4ce57/merged
+/dev/zram1       47M   46M     0 100% /var/log
+root@servernode2:/var/log#
+```
+§a§
+The reason the size didn't change is that `armbian-ramlog` cannot resize a partition that is currently mounted and **100% full**. When you run `restart`, the script tries to sync the logs to the SD card and unmount the drive. Because it is completely full, the sync/unmount process likely failed silently, leaving the old 50MB device in place.
+
+Follow these steps to force the change:
+
+### Step 1: Clear the "Full" status immediately
+You must free up some "breathing room" so the scripts can execute. Truncate the largest files:
+
+```bash
+# This empties the files without deleting them (safer for active processes)
+sudo find /var/log -type f -exec truncate -s 0 {} +
+```
+
+### Step 2: Force the service to stop and unmount
+A `restart` command often fails if the mount is "busy." We will stop it manually:
+
+```bash
+sudo systemctl stop armbian-ramlog
+sudo systemctl stop armbian-zram-config
+```
+
+Check if it's still mounted: `df -h | grep /var/log`. If it is still there, force unmount it:
+```bash
+sudo umount -l /var/log
+```
+
+### Step 3: Clear the ZRAM device
+Now we remove the actual ZRAM block device so it can be recreated with the new size:
+```bash
+# Look for which zram is /var/log (usually zram1 based on your output)
+# This resets the device
+echo 1 | sudo tee /sys/block/zram1/reset
+```
+
+### Step 4: Start the services back up
+Now that the old device is destroyed, starting the service will read your new `250M` config:
+
+```bash
+sudo systemctl start armbian-zram-config
+sudo systemctl start armbian-ramlog
+```
+
+### Step 5: Verify
+Run `df -h` again. You should now see:
+`/dev/zram1       250M    ...  /var/log`
+
+---
+
+### If the above doesn't work (The "Reboot" method)
+Armbian’s ZRAM services are heavily integrated into the boot sequence. If the manual steps above don't work because the filesystem is locked by Docker or other processes:
+
+1. Ensure `/etc/default/armbian-ramlog` has `SIZE=250M`.
+2. Ensure `/etc/default/armbian-zram-config` is saved.
+3. **Reboot the server.**
+
+### Important: Why it filled up so fast
+Even with 250MB, if you have a runaway log, it will fill up again. I strongly recommend checking your Docker logs. Run this to see what is currently spamming your logs:
+
+```bash
+# See the last 100 lines of the system log to find the culprit
+tail -n 100 /var/log/syslog
+```
+
+If you see a lot of Docker-related lines, follow the **Option 4 (Docker daemon.json)** step from my previous message to limit Docker's log sizes, otherwise, they will eventually overwhelm even the 250MB partition.

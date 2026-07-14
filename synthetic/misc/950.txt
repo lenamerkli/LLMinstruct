@@ -1,0 +1,251 @@
+§u§
+==Crushing Speed==
+There are 4 variables that effect the processing speed of the Crushing Wheel: RPM, stack size, recipe duration, input delay. The recipe duration is a number assigned to each recipe as shown in the following table below. The input delay is the number of ticks it takes for an item to be inserted into the crushing wheels, The input delay is set by the component inserting the items and is 1 for any funnel, 3 for any chute, and 27 if thrown directly to the crushing wheel. Be aware that the use of belts to feed the funnel will add more delay.
+
+=== Crushing Speed Formula ===
+To calculate the exact number of game ticks it take to process an input, use this formula:
+
+<math>\text{processing time (ticks per stack size)} = \left\lfloor \frac{\text{recipe duration in ticks} - 20}{\max \left(0.25, \min \left( \frac{\frac{\text{RPM}} \text{50} \times 4}{\log_2(\text{stack size})}, 20 \right)\right) } \right\rfloor + 1 + \text{input delay} </math>
+
+===Recipe Duration Table ===
+The following table gives the ''recipe duration in ticks'' used in the above formula for number of crushable items. If a recipe doesn't appear in the table is duration is probably 100 ticks, because that's the default value.
+{| class="wikitable"
+! colspan="10"|'''Recipe Duration (ticks)'''
+|-
+|style="padding:0; vertical-align:top;" |
+  {| class="wikitable sortable" style="border:0; padding:0; margin:0; line-height:1;"
+  !style="border:0; border-bottom:1px #a2a9b1; border-style:solid;"| 50
+  |-
+  |style="border:0;" | Clay Block
+  |-
+  |style="border:0;" | Cactus
+  |-
+  |style="border:0;" | Sea Pickle
+  |-
+  |style="border:0;" | Sugar Cane
+  |-
+  |style="border:0;" | Azure Bluet
+  |-
+  |style="border:0;" | Blue Orchid
+  |-
+  |style="border:0;" | Fern
+  |-
+  |style="border:0;" | Large Fern
+  |-
+  |style="border:0;" | Allium
+  |-
+  |style="border:0;" | Lily of the Valley
+  |-
+  |style="border:0;" | Rose Bush
+  |-
+  |style="border:0;" | Oxeye Daisy
+  |-
+  |style="border:0;" | Poppy
+  |-
+  |style="border:0;" | Dandelion
+  |-
+  |style="border:0;" | Cornflower
+  |-
+  |style="border:0;" | Wither Rose
+  |-
+  |style="border:0;" | Orange Tulip
+  |-
+  |style="border:0;" | Red Tulip
+  |-
+  |style="border:0;" | White Tulip
+  |-
+  |style="border:0;" | Pink Tulip
+  |}
+| style="padding:0; vertical-align:top;" |
+  {| class="wikitable sortable" style="border:0; margin:0; line-height:1;"
+  !style="border:0; border-bottom:1px #a2a9b1; border-style:solid;" | 70
+  |-
+  |style="border:0;" | Bone Meal
+  |-
+  |style="border:0;" | Cocoa Beans
+  |-
+  |style="border:0;" | Beetroot
+  |}
+| style="padding:0; vertical-align:top;" |
+  {| class="wikitable sortable" style="border:0; margin:0; line-height:1;"
+  !style="border:0; border-bottom:1px #a2a9b1; border-style:solid;" | 100
+  |-
+  |style="border:0;" | Wool
+  |-
+  |style="border:0;" | Bone
+  |-
+  |style="border:0;" | Ink Sack
+  |-
+  |style="border:0;" | Charcoal
+  |-
+  |style="border:0;" | Coal
+  |-
+  |style="border:0;" | Lapis Lazuli
+  |-
+  |style="border:0;" | Lilac
+  |-
+  |style="border:0;" | Peony
+  |-
+  |style="border:0;" | Sunflower
+  |-
+  |style="border:0;" | Tall Grass
+  |-
+  |style="border:0;" | Blaze Rod
+  |}
+| style="padding:0; vertical-align:top;" |
+  {| class="wikitable sortable" style="border:0; margin:0; line-height:1;"
+  !style="border:0; border-bottom:1px #a2a9b1; border-style:solid;" | 150
+  |-
+  |style="border:0;" | Sandstone
+  |-
+  |style="border:0;" | Wheat
+  |-
+  |style="border:0;" | Prismarine Crystal
+  |-
+  |style="border:0;" | Coal Ore
+  |-
+  |style="border:0;" | Amethyst Cluster
+  |-
+  |style="border:0;" | Glowstone
+  |-
+  |style="border:0;" | Amethyst Block
+  |}
+| style="padding:0; vertical-align:top;" |
+  {| class="wikitable sortable" style="border:0; margin:0; line-height:1;"
+  !style="border:0; border-bottom:1px #a2a9b1; border-style:solid;" | 200
+  |-
+  |style="border:0;" | Granite
+  |-
+  |style="border:0;" | Terracotta
+  |-
+  |style="border:0;" | Andesite
+  |-
+  |style="border:0;" | Saddle
+  |-
+  |style="border:0;" | Any Horse Armor
+  |}
+| style="padding:0; vertical-align:top;" |
+  {| class="wikitable sortable" style="border:0; margin:0; line-height:1;"
+  !style="border:0; border-bottom:1px #a2a9b1; border-style:solid;" | 250
+  |-
+  |style="border:0;" | Calcite
+  |-
+  |style="border:0;" | Dripstone Block
+  |-
+  |style="border:0;" | Cobblestone
+  |-
+  |style="border:0;" | Gravel
+  |-
+  |style="border:0;" | Copper Ore
+  |-
+  |style="border:0;" | Zinc Ore
+  |-
+  |style="border:0;" | Iron Ore
+  |-
+  |style="border:0;" | Gold Ore
+  |-
+  |style="border:0;" | Redstone Ore
+  |-
+  |style="border:0;" | Lapis Ore
+  |-
+  |style="border:0;" | Netherrack
+  |-
+  |style="border:0;" | Crimsite
+  |}
+| style="padding:0; vertical-align:top;" |
+  {| class="wikitable sortable" style="border:0; margin:0; line-height:1;"
+  !style="border:0; border-bottom:1px #a2a9b1; border-style:solid;" | 350
+  |-
+  |style="border:0;" | Diorite
+  |-
+  |style="border:0;" | Tuff
+  |-
+  |style="border:0;" | Diamond Ore
+  |-
+  |style="border:0;" | Emerald Ore
+  |-
+  |style="border:0;" | Deepslate Copper Ore
+  |-
+  |style="border:0;" | Deepslate Zinc Ore
+  |-
+  |style="border:0;" | Deepslate Iron Ore
+  |-
+  |style="border:0;" | Deepslate Gold Ore
+  |-
+  |style="border:0;" | Deepslate Redstone Ore
+  |-
+  |style="border:0;" | Deepslate Lapis Ore
+  |-
+  |style="border:0;" | Nether Gold Ore
+  |-
+  |style="border:0;" | Nether Quartz Ore
+  |}
+| style="padding:0; vertical-align:top;" |
+  {| class="wikitable sortable" style="border:0; margin:0; line-height:1;"
+  !style="border:0; border-bottom:1px #a2a9b1; border-style:solid;" | 400
+  |-
+  |style="border:0;" | Any Raw Ore
+  |}
+| style="padding:0; vertical-align:top;" |
+  {| class="wikitable sortable" style="border:0; margin:0; line-height:1;"
+  !style="border:0; border-bottom:1px #a2a9b1; border-style:solid;" | 450
+  |-
+  |style="border:0;" | Deepslate Diamond Ore
+  |-
+  |style="border:0;" | Deepslate Emerald Ore
+  |}
+| style="padding:0; vertical-align:top;" |
+  {| class="wikitable sortable" style="border:0; margin:0; line-height:1;"
+  !style="border:0; border-bottom:1px #a2a9b1; border-style:solid;" | 500
+  |-
+  |style="border:0;" | Obsidian
+  |}
+|}
+
+How many sets of crushing wheels do I need to crush 14'680.64 tuff per minute with 256 RPM and 64 Stack size?
+§a§
+To find out how many sets of crushing wheels you need, we first have to calculate the processing speed of a single set of crushing wheels using the formula provided.
+
+Here are the variables we will use:
+* **Item:** Tuff
+* **Recipe Duration:** 350 ticks (found in the 350 column of the table)
+* **RPM:** 256
+* **Stack Size:** 64
+* **Input Delay:** 1 tick (assuming you use a funnel, which is the most optimal/fastest method).
+
+### Step 1: Calculate the denominator
+First, we solve the core equation in the denominator:
+* $\frac{\text{RPM}}{50} \times 4 = \frac{256}{50} \times 4 = 5.12 \times 4 = 20.48$
+* $\log_2(\text{stack size}) = \log_2(64) = 6$
+* $\frac{20.48}{6} \approx 3.4133$
+
+Now apply the min/max limits:
+* $\min(3.4133, 20) = 3.4133$
+* $\max(0.25, 3.4133) = 3.4133$
+
+### Step 2: Calculate the ticks per stack
+Now we plug the denominator and the recipe duration (350) back into the full formula:
+* $\text{Numerator} = 350 - 20 = 330$
+* $\frac{330}{3.4133} = 96.6796875$
+
+Next, apply the floor function (round down to the nearest whole number):
+* $\lfloor 96.6796875 \rfloor = 96$
+
+Finally, add the base tick and your input delay (using a funnel = 1 tick):
+* $\text{Processing time} = 96 + 1 + 1 = \mathbf{98 \text{ ticks per stack}}$
+
+### Step 3: Calculate items per minute per machine
+Minecraft runs at 20 game ticks per second, which means there are **1,200 ticks in a minute**.
+* $\text{Stacks per minute} = \frac{1200 \text{ ticks}}{98 \text{ ticks per stack}} \approx 12.2449 \text{ stacks/min}$
+* $\text{Items per minute} = 12.2449 \text{ stacks} \times 64 \text{ items} \approx \mathbf{783.67 \text{ items/min}}$
+
+### Step 4: Calculate the number of Crushing Wheels needed
+To find the required number of machines, divide your target rate by the rate of a single machine:
+* $\frac{14,680.64 \text{ target items/min}}{783.67 \text{ items/min per machine}} \approx \mathbf{18.73 \text{ machines}}$
+
+Since you cannot build a fraction of a machine, you round up to the nearest whole number.
+
+### Conclusion
+You will need **19 sets of crushing wheels** to meet your goal (assuming you feed them using funnels).
+
+***Note:** If you choose to feed the machines using **chutes** instead, the input delay becomes 3, increasing the processing time to 100 ticks per stack. This drops the machine's speed to exactly 768 items/min, which would mean $14,680.64 \div 768 = 19.11$. In that specific scenario, you would be forced to build **20 sets**.*

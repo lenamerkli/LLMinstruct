@@ -1,0 +1,257 @@
+§u§
+==Crushing Speed==
+There are 4 variables that effect the processing speed of the Crushing Wheel: RPM, stack size, recipe duration, input delay. The recipe duration is a number assigned to each recipe as shown in the following table below. The input delay is the number of ticks it takes for an item to be inserted into the crushing wheels, The input delay is set by the component inserting the items and is 1 for any funnel, 3 for any chute, and 27 if thrown directly to the crushing wheel. Be aware that the use of belts to feed the funnel will add more delay.
+
+=== Crushing Speed Formula ===
+To calculate the exact number of game ticks it take to process an input, use this formula:
+
+<math>\text{processing time (ticks per stack size)} = \left\lfloor \frac{\text{recipe duration in ticks} - 20}{\max \left(0.25, \min \left( \frac{\frac{\text{RPM}} \text{50} \times 4}{\log_2(\text{stack size})}, 20 \right)\right) } \right\rfloor + 1 + \text{input delay} </math>
+
+===Recipe Duration Table ===
+The following table gives the ''recipe duration in ticks'' used in the above formula for number of crushable items. If a recipe doesn't appear in the table is duration is probably 100 ticks, because that's the default value.
+{| class="wikitable"
+! colspan="10"|'''Recipe Duration (ticks)'''
+|-
+|style="padding:0; vertical-align:top;" |
+  {| class="wikitable sortable" style="border:0; padding:0; margin:0; line-height:1;"
+  !style="border:0; border-bottom:1px #a2a9b1; border-style:solid;"| 50
+  |-
+  |style="border:0;" | Clay Block
+  |-
+  |style="border:0;" | Cactus
+  |-
+  |style="border:0;" | Sea Pickle
+  |-
+  |style="border:0;" | Sugar Cane
+  |-
+  |style="border:0;" | Azure Bluet
+  |-
+  |style="border:0;" | Blue Orchid
+  |-
+  |style="border:0;" | Fern
+  |-
+  |style="border:0;" | Large Fern
+  |-
+  |style="border:0;" | Allium
+  |-
+  |style="border:0;" | Lily of the Valley
+  |-
+  |style="border:0;" | Rose Bush
+  |-
+  |style="border:0;" | Oxeye Daisy
+  |-
+  |style="border:0;" | Poppy
+  |-
+  |style="border:0;" | Dandelion
+  |-
+  |style="border:0;" | Cornflower
+  |-
+  |style="border:0;" | Wither Rose
+  |-
+  |style="border:0;" | Orange Tulip
+  |-
+  |style="border:0;" | Red Tulip
+  |-
+  |style="border:0;" | White Tulip
+  |-
+  |style="border:0;" | Pink Tulip
+  |}
+| style="padding:0; vertical-align:top;" |
+  {| class="wikitable sortable" style="border:0; margin:0; line-height:1;"
+  !style="border:0; border-bottom:1px #a2a9b1; border-style:solid;" | 70
+  |-
+  |style="border:0;" | Bone Meal
+  |-
+  |style="border:0;" | Cocoa Beans
+  |-
+  |style="border:0;" | Beetroot
+  |}
+| style="padding:0; vertical-align:top;" |
+  {| class="wikitable sortable" style="border:0; margin:0; line-height:1;"
+  !style="border:0; border-bottom:1px #a2a9b1; border-style:solid;" | 100
+  |-
+  |style="border:0;" | Wool
+  |-
+  |style="border:0;" | Bone
+  |-
+  |style="border:0;" | Ink Sack
+  |-
+  |style="border:0;" | Charcoal
+  |-
+  |style="border:0;" | Coal
+  |-
+  |style="border:0;" | Lapis Lazuli
+  |-
+  |style="border:0;" | Lilac
+  |-
+  |style="border:0;" | Peony
+  |-
+  |style="border:0;" | Sunflower
+  |-
+  |style="border:0;" | Tall Grass
+  |-
+  |style="border:0;" | Blaze Rod
+  |}
+| style="padding:0; vertical-align:top;" |
+  {| class="wikitable sortable" style="border:0; margin:0; line-height:1;"
+  !style="border:0; border-bottom:1px #a2a9b1; border-style:solid;" | 150
+  |-
+  |style="border:0;" | Sandstone
+  |-
+  |style="border:0;" | Wheat
+  |-
+  |style="border:0;" | Prismarine Crystal
+  |-
+  |style="border:0;" | Coal Ore
+  |-
+  |style="border:0;" | Amethyst Cluster
+  |-
+  |style="border:0;" | Glowstone
+  |-
+  |style="border:0;" | Amethyst Block
+  |}
+| style="padding:0; vertical-align:top;" |
+  {| class="wikitable sortable" style="border:0; margin:0; line-height:1;"
+  !style="border:0; border-bottom:1px #a2a9b1; border-style:solid;" | 200
+  |-
+  |style="border:0;" | Granite
+  |-
+  |style="border:0;" | Terracotta
+  |-
+  |style="border:0;" | Andesite
+  |-
+  |style="border:0;" | Saddle
+  |-
+  |style="border:0;" | Any Horse Armor
+  |}
+| style="padding:0; vertical-align:top;" |
+  {| class="wikitable sortable" style="border:0; margin:0; line-height:1;"
+  !style="border:0; border-bottom:1px #a2a9b1; border-style:solid;" | 250
+  |-
+  |style="border:0;" | Calcite
+  |-
+  |style="border:0;" | Dripstone Block
+  |-
+  |style="border:0;" | Cobblestone
+  |-
+  |style="border:0;" | Gravel
+  |-
+  |style="border:0;" | Copper Ore
+  |-
+  |style="border:0;" | Zinc Ore
+  |-
+  |style="border:0;" | Iron Ore
+  |-
+  |style="border:0;" | Gold Ore
+  |-
+  |style="border:0;" | Redstone Ore
+  |-
+  |style="border:0;" | Lapis Ore
+  |-
+  |style="border:0;" | Netherrack
+  |-
+  |style="border:0;" | Crimsite
+  |}
+| style="padding:0; vertical-align:top;" |
+  {| class="wikitable sortable" style="border:0; margin:0; line-height:1;"
+  !style="border:0; border-bottom:1px #a2a9b1; border-style:solid;" | 350
+  |-
+  |style="border:0;" | Diorite
+  |-
+  |style="border:0;" | Tuff
+  |-
+  |style="border:0;" | Diamond Ore
+  |-
+  |style="border:0;" | Emerald Ore
+  |-
+  |style="border:0;" | Deepslate Copper Ore
+  |-
+  |style="border:0;" | Deepslate Zinc Ore
+  |-
+  |style="border:0;" | Deepslate Iron Ore
+  |-
+  |style="border:0;" | Deepslate Gold Ore
+  |-
+  |style="border:0;" | Deepslate Redstone Ore
+  |-
+  |style="border:0;" | Deepslate Lapis Ore
+  |-
+  |style="border:0;" | Nether Gold Ore
+  |-
+  |style="border:0;" | Nether Quartz Ore
+  |}
+| style="padding:0; vertical-align:top;" |
+  {| class="wikitable sortable" style="border:0; margin:0; line-height:1;"
+  !style="border:0; border-bottom:1px #a2a9b1; border-style:solid;" | 400
+  |-
+  |style="border:0;" | Any Raw Ore
+  |}
+| style="padding:0; vertical-align:top;" |
+  {| class="wikitable sortable" style="border:0; margin:0; line-height:1;"
+  !style="border:0; border-bottom:1px #a2a9b1; border-style:solid;" | 450
+  |-
+  |style="border:0;" | Deepslate Diamond Ore
+  |-
+  |style="border:0;" | Deepslate Emerald Ore
+  |}
+| style="padding:0; vertical-align:top;" |
+  {| class="wikitable sortable" style="border:0; margin:0; line-height:1;"
+  !style="border:0; border-bottom:1px #a2a9b1; border-style:solid;" | 500
+  |-
+  |style="border:0;" | Obsidian
+  |}
+|}
+
+How much gravel per minute does one unit produce with 256 RPM and 64 Stack size?
+§a§
+With **256 RPM** and **64-item stacks**, one crushing wheel unit processes gravel at approximately:
+
+### **~1,113 gravel per minute**
+*(assuming items are inserted via Funnel — 1 tick delay)*
+
+---
+
+### Step-by-Step Calculation
+
+**1. Identify the variables**
+*   **Recipe Duration:** Gravel = **250 ticks** (from the table)
+*   **RPM:** 256
+*   **Stack Size:** 64 → $\log_2(64) = 6$
+*   **Input Delay:** 1 tick (Funnel — fastest option)
+
+**2. Calculate the speed factor**
+$$\frac{\frac{256}{50} \times 4}{6} = \frac{5.12 \times 4}{6} = \frac{20.48}{6} \approx 3.413$$
+
+Apply the caps:
+*   $\min(3.413, 20) = 3.413$
+*   $\max(0.25, 3.413) = 3.413$
+
+**3. Compute processing time (ticks per stack)**
+$$\text{Time} = \left\lfloor \frac{250 - 20}{3.413} \right\rfloor + 1 + 1 = \left\lfloor \frac{230}{3.413} \right\rfloor + 2 = \lfloor 67.38 \rfloor + 2 = 67 + 2 = \mathbf{69\ ticks}$$
+
+*(This means it takes 69 ticks to crush one full stack of 64 gravel.)*
+
+**4. Convert to items per minute**
+$$\frac{64\ \text{items}}{69\ \text{ticks}} \times 1200\ \text{ticks/minute} \approx \mathbf{1,113.04\ \text{items/minute}}$$
+
+---
+
+### Note on Input Methods
+The result depends on how you feed the wheel:
+*   **Funnel:** 69 ticks → **~1,113/min**
+*   **Chute (3 ticks):** 71 ticks → **~1,081/min**
+*   **Thrown by hand (27 ticks):** 95 ticks → **~809/min**
+
+For maximum throughput, use a Funnel (or any 1-tick insertion method).
+§u§
+What is the input delay of a belt that goes through a set of crushing wheel or is that non listed in the wiki?
+§a§
+The wiki does **not** list a specific input delay for a belt that runs directly **between** the crushing wheels (i.e., the classic belt-through-crusher setup).
+
+The input delays given (1 tick for a funnel, 3 for a chute, 27 for thrown) only apply when items are **inserted into** the wheels from an adjacent block.
+
+When a belt passes through the wheels, items are already on the belt and simply travel into the crushing zone. There is no separate “insertion” event; the wheels begin processing as soon as the item enters their area.
+
+In practice this means the formula’s `+ input delay` term isn’t directly applicable to belt-through setups — or you can think of the effective extra delay as **0** (the item is already “in” the machine once it reaches the wheels). The crushing itself is still governed by RPM and stack size, but you don’t pay an extra per‑stack insertion penalty.
+
+So to directly answer your question: **the input delay for a belt going through crushing wheels is not listed in the wiki** — and that’s because it works differently from discrete inserters (funnels/chutes/throwing), not because it’s a fixed unknown number.

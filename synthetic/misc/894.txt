@@ -1,0 +1,108 @@
+§u§
+How can I have a fully persistant docker container? Or should I use a VM instead?
+§a§
+# Persistent Docker Containers vs. VMs
+
+Great question! The answer depends on what you mean by "persistent" and what your use case is. Let me break this down.
+
+## Understanding the Docker Philosophy
+
+First, it's important to understand that Docker containers are designed to be **ephemeral and immutable** by default. The intended philosophy is:
+
+- Containers should be disposable—you can destroy and recreate them
+- Configuration should live in your `Dockerfile` and `docker-compose.yml`
+- Persistent *data* should be stored separately from the container itself
+
+That said, you *can* make a container behave in a more persistent way. Let me cover both approaches.
+
+## Making a Docker Container "Persistent"
+
+### 1. Persist Data with Volumes (Recommended)
+
+The "Docker way" to persist data is to use **volumes** or **bind mounts**. This keeps your data alive even when containers are destroyed:
+
+```bash
+# Named volume (managed by Docker)
+docker run -v mydata:/var/lib/mysql mysql
+
+# Bind mount (maps to a host directory)
+docker run -v /host/path:/container/path myimage
+```
+
+With `docker-compose.yml`:
+
+```yaml
+services:
+  app:
+    image: myapp
+    volumes:
+      - mydata:/data
+    restart: unless-stopped
+
+volumes:
+  mydata:
+```
+
+### 2. Keep Containers Running with Restart Policies
+
+To make sure your container automatically comes back after crashes or reboots:
+
+```bash
+docker run --restart unless-stopped myimage
+```
+
+Restart policy options:
+- `no` — default, never restart
+- `on-failure` — restart only on non-zero exit
+- `always` — always restart
+- `unless-stopped` — restart unless you explicitly stopped it
+
+### 3. Commit Container Changes to an Image (Anti-pattern, but possible)
+
+If you've made changes inside a running container and want to save them:
+
+```bash
+docker commit <container_id> myimage:latest
+```
+
+⚠️ **This is generally discouraged**—it creates "snowflake" images that aren't reproducible. Use a `Dockerfile` instead so your setup is documented and repeatable.
+
+## When to Use Docker vs. a VM
+
+Here's a practical comparison to help you decide:
+
+| Factor | Docker Container | Virtual Machine |
+|--------|------------------|-----------------|
+| **Startup time** | Seconds | Minutes |
+| **Resource overhead** | Low (shares host kernel) | High (full OS per VM) |
+| **Isolation** | Process-level | Hardware-level (stronger) |
+| **Persistence model** | Ephemeral by design | Persistent by design |
+| **Best for** | Single apps/services, microservices | Full OS environments, mixed workloads |
+| **OS flexibility** | Same kernel as host (Linux on Linux) | Any OS (Windows, BSD, etc.) |
+
+### Choose **Docker** if you:
+- Are deploying applications or services
+- Want fast, reproducible, version-controlled environments
+- Need to scale or move workloads easily
+- Are okay treating data and config separately from the runtime
+
+### Choose a **VM** if you:
+- Want something that "just stays the way I left it" like a traditional computer
+- Need strong isolation (security boundaries, untrusted code)
+- Need a different OS/kernel than your host
+- Want to run a full desktop environment or many varied services together
+- Are managing a "pet" server rather than disposable "cattle"
+
+## My Recommendation
+
+**If your goal is "I want to make changes inside, install things, and have them stick around like a normal computer"**—a VM is actually the more natural fit, and you'll fight the tooling less.
+
+**If you want efficiency, reproducibility, and easy deployment**—use Docker the intended way: define everything in a `Dockerfile`, persist data in volumes, and use restart policies. This gives you "persistence" of what matters (your data and config) without the downsides.
+
+### A Middle-Ground Option
+
+If you like Docker's efficiency but want VM-like persistence, consider **LXC/LXD** (system containers) or **Incus**. These are container-based but designed to behave more like lightweight, persistent VMs with a full init system—a nice middle ground.
+
+---
+
+Would you like me to elaborate on any of these? For example, I can provide a complete `docker-compose.yml` example for a specific app, or walk through setting up volumes for a particular database or service you have in mind.

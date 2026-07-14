@@ -1,0 +1,29 @@
+§u§
+Is there any implementation difference between `openssl dgst -sha3-256` and python `hashlib.sha3_256()`? Will they return the same hash?
+§a§
+No, there should be **no difference** - both `openssl dgst -sha3-256` and Python's `hashlib.sha3_256()` implement the same SHA3-256 standard (NIST FIPS 202) and will return identical hashes for the same input.
+
+Both implementations follow the finalized SHA-3 specification, so you should get the same output. For example:
+
+```bash
+# OpenSSL
+echo -n "hello" | openssl dgst -sha3-256
+```
+
+```python
+# Python
+import hashlib
+hashlib.sha3_256(b"hello").hexdigest()
+```
+
+Both should produce: `3338be694f50c5f338814986cdf0686453a888b84f424d792af4b9202398f392`
+
+## Important Note: SHA-3 vs Keccak
+
+The only potential source of confusion is if you're comparing SHA-3 with **Keccak** (the original algorithm that won the SHA-3 competition). The final SHA-3 standard uses slightly different padding than the original Keccak submission:
+
+- `hashlib.sha3_256()` - implements **SHA-3** (FIPS 202)
+- `hashlib.shake_128()`, `hashlib.shake_256()` - also SHA-3 standard
+- Some libraries offer `keccak_256()` separately (used in Ethereum, for example)
+
+As long as you're using `sha3_256` in both OpenSSL and Python, you'll get matching results. If you need Keccak specifically (for blockchain applications), you'd need to use a different function or library.

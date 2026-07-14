@@ -1,0 +1,53 @@
+§u§
+Is it possible to extract the map files from the F1 21 video game? I want to play them in other games like assetto corsa and beamng. This would be completely covered under my juristictions personal use exemption to copyright law.
+§a§
+This is a great question, and I can provide a detailed technical answer. However, I need to address both the technical feasibility and some important caveats.
+
+## Technical Feasibility
+
+**Yes, it is technically *possible* to extract assets from F1 21**, but it's an extremely complex and incomplete process. Here's what's involved:
+
+### The Engine & File Formats
+
+F1 21 runs on the EGO Engine, which powers Codemasters' racing game franchises (Dirt, Grid, and Formula 1). The game stores its data in several proprietary formats:
+
+- **ERP archives** — An ERP Archiver app can export and import resources from ERP archives, which store many different types of data, including textures.
+- **PSSG files** — A PSSG Editor app can edit PSSG files, which contain 3D models and textures.
+- **JPK archives** — A JPK Archiver app can export and import files in JPK archives. The raceload.jpk file contains physics, damage, and game loading data.
+- **NeFS archives (.nfs/.nefs)** — Starting with Grid 2, the file extension is called .nefs, although the .nfs extension is still co-used as of F1 25.
+
+### Available Tools
+
+The main toolset is the **Ego Engine Modding** suite on GitHub:
+
+- The Ego PSSG Editor will allow you to open and edit PSSG files for EGO engine games. When a pssg file contains a car exterior or interior model, you can use the Models menu to export or import the model. Models are converted as glTF files, a common 3D model format supported by many 3D modelling applications such as 3ds Max and Blender.
+- Ego ERP Archiver can browse ERP archives.
+- Ego JPK Archiver can extract JPK archives.
+
+### The Big Problem: Tracks ≠ Cars
+
+Here's the critical limitation: **the existing tools are primarily designed for car models and textures, not full track/circuit geometry.** Track data in the EGO engine is far more complex than a single PSSG model — it involves:
+
+- Terrain meshes, road surfaces, and hundreds of environmental objects
+- Track-specific shaders, lighting data, and baked lightmaps
+- AI racing lines, collision meshes, and physics surfaces
+- Thousands of individual assets (barriers, grandstands, trees, buildings, etc.)
+
+Even if you could extract every individual 3D mesh and texture, **reassembling an entire circuit into a working Assetto Corsa or BeamNG track is a monumental task** requiring advanced 3D modeling skills, custom conversion pipelines, and extensive manual work to recreate physics, AI paths, and surface data in the target game's format.
+
+## What the Community Actually Does
+
+Rather than extracting from F1 games, the modding community typically **builds F1 circuits from scratch or from other sources**:
+
+- Many BeamNG F1 track maps are actually ports from the game Assetto Corsa. They are very realistic and most of them contain time trials and AI support.
+- Community modders have made mods in their free time that rival the official F1 game — the cars feel extremely good, and the tracks are wonderful.
+
+Sites like **OverTake.gg** (formerly RaceDepartment) host thousands of community-made tracks for Assetto Corsa that include many F1 circuits, built by modders using reference data, laser scans, and satellite imagery — not extracted from the Codemasters games.
+
+## On the Legal Question
+
+I'm not a lawyer and can't evaluate whether your specific jurisdiction's personal use exemption would apply here. Game EULAs (including EA/Codemasters') typically prohibit reverse engineering and asset extraction regardless of copyright fair use provisions, and the interaction between contract law (EULA) and statutory copyright exceptions varies by jurisdiction. You may want to consult a lawyer if this matters to you.
+
+## Practical Recommendation
+
+Your best bet is to download community-made F1 track mods that already exist for Assetto Corsa and BeamNG from sites like OverTake.gg and the BeamNG forums. These are purpose-built for those games and will work far better than anything you could extract and convert from F1 21.

@@ -1,0 +1,28 @@
+§u§
+How can I create a local backup of all my microsoft teams chats?
+§a§
+How you back up your Teams chats depends on whether you're using a personal (free) account or a work/school account.
+
+## Personal / Microsoft Teams Free accounts
+
+Microsoft provides an official export tool for personal accounts. Sign in to the Export page with your Microsoft Account, select the option to download your Chat history, Media, or both, then select Submit request and Continue when prompted. You'll need to check back periodically on the export page for the status of your export under Available Exports, where a download link will appear when your files are ready. The exported chats come as JSON files, which you can keep as-is or convert to a more readable format.
+
+## Work / school (Microsoft 365) accounts
+
+There's no equivalent built-in self-service export. In a business setting, you as an end user cannot export your Teams history — only an administrator that can perform eDiscovery can do that kind of export. Your options are:
+
+**1. Ask your admin (official route).** An admin can use Microsoft Purview: go to the compliance center, sign in with administrator credentials, navigate to Content Search, and create a search query to find the specific Teams chats. They can specify date ranges, users, and activities, then export the chat history in a readable format such as CSV or PST to share with you.
+
+**2. Print to PDF (DIY workaround).** Go to teams.microsoft.com in Chrome or Edge, open the Chats section, scroll up to load the entire chat history (Teams loads messages in chunks, so keep scrolling), then press Ctrl+P and set the destination to Save as PDF. This is tedious for long histories but requires no special permissions.
+
+**3. Copy and paste.** You can select and copy chat text into a document, but be aware that when you copy and paste a chat, the author, time, and date are omitted — only the typed text is pasted, and you cannot export attachments, emojis, and GIFs with this option.
+
+**4. Browser extensions.** Some users recommend extensions like Teams Chat Exporter from the Chrome web store — log in to Teams on the web and export chats in formats like HTML, text, CSV, or JSON. Check your organization's policies before using third-party extensions with work data.
+
+**5. Power Automate.** For an automated, recurring backup, you can set up Power Automate flows to export Teams chats periodically, ensuring a consistent backup of your important conversations.
+
+**6. Third-party backup tools.** Commercial tools (e.g., Kernel Microsoft Teams Backup) can back up conversation files, posts, messages, and folders in their original hierarchy, export chat history including emojis and stickers to HTML, and use incremental backup — usually requiring admin/tenant-level access.
+
+## One tip worth acting on soon
+
+If your organization has retention policies, don't wait: when using Teams provided by your organization, retention policies are managed by them, and chat data is often kept for a short period before being moved to a hold folder and then permanently deleted. If your goal is a complete, searchable archive of *all* chats, the eDiscovery/Purview export via your admin is the most reliable path; the print-to-PDF or extension methods work well for backing up a handful of important conversations yourself.

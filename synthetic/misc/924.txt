@@ -1,0 +1,38 @@
+§u§
+```bash
+#!/bin/bash
+
+# Allow Python version to be overridden via environment variable
+PYTHON_VERSION="/usr/bin/python3"
+PYTHON_SCRIPT="/opt/thetacode/search_the_web.py"
+
+# Execute
+"$PYTHON_VERSION" "$PYTHON_SCRIPT" "$@"
+```
+Will overwriting actually work?
+§a§
+No—**with the current script, overwriting `PYTHON_VERSION` from the environment will not work**, because you immediately do:
+
+```bash
+PYTHON_VERSION="/usr/bin/python3"
+```
+
+That assignment **replaces whatever value was in the environment**.
+
+### Fix
+Use a default value instead:
+
+```bash
+#!/bin/bash
+PYTHON_VERSION="${PYTHON_VERSION:-/usr/bin/python3}"
+PYTHON_SCRIPT="${PYTHON_SCRIPT:-/opt/thetacode/search_the_web.py}"
+
+"$PYTHON_VERSION" "$PYTHON_SCRIPT" "$@"
+```
+
+### Usage
+```bash
+PYTHON_VERSION=/usr/bin/python3.11 ./your_script.sh arg1 arg2
+```
+
+This will use `/usr/bin/python3.11`.

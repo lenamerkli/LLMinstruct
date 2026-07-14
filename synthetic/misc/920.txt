@@ -1,0 +1,78 @@
+§u§
+```
+ private playBeep(): void {
+    try {
+      if (!this.audioCtx) {
+        const Ctx = (window as any).AudioContext || (window as any).webkitAudioContext;
+        if (!Ctx) {
+          return;
+        }
+        this.audioCtx = new Ctx();
+      }
+      const ctx = this.audioCtx;
+      if (!ctx) {
+        return;
+      }
+      if (ctx.state === 'suspended') {
+        void ctx.resume();
+      }
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'square';
+      osc.frequency.value = 880;
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.15);
+    } catch (e) {
+      console.warn('beep failed', e);
+    }
+  }
+```
+How can I increase the volume?
+§a§
+## Increasing the Volume
+
+There are two ways to increase the volume:
+
+### 1. Increase the `gain` value (simplest approach)
+Change the `setValueAtTime` value. It ranges from `0` to `1` (and beyond, though >1 can distort):
+
+```typescript
+// Current (quiet)
+gain.gain.setValueAtTime(0.15, ctx.currentTime);
+
+// Louder options:
+gain.gain.setValueAtTime(0.5, ctx.currentTime);  // moderate
+gain.gain.setValueAtTime(1.0, ctx.currentTime);  // maximum without distortion
+```
+
+### 2. Add a `GainNode` multiplier (more control)
+```typescript
+const masterGain = ctx.createGain();
+masterGain.gain.value = 0.8; // Master volume (0 to 1)
+
+osc.connect(gain);
+gain.connect(masterGain);
+masterGain.connect(ctx.destination); // Chain through master gain
+```
+
+### Quick Reference
+
+| `gain` value | Result |
+|---|---|
+| `0.15` | Current (quiet) |
+| `0.3` | Moderate |
+| `0.5` | Noticeable |
+| `1.0` | Maximum clean |
+| `> 1.0` | Distortion/clipping |
+
+### Recommended Change
+```typescript
+gain.gain.setValueAtTime(0.5, ctx.currentTime);           // ← change this
+gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+```
+
+> **Note:** The `exponentialRampToValueAtTime` end value (`0.001`) should stay small to avoid a clicking sound at the end of the beep.

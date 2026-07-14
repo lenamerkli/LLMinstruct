@@ -1,0 +1,132 @@
+§u§
+```python
+    def _fix_specific_responses(model_name: str, message: str) -> str:
+        if model_name.startswith('deepseek'):
+            message = message.replace('tool_call_name>', 'tool_name>').replace('tool_caller_id>', 'tool_call>').replace('tool_calls>', 'tool_call>')
+        if (model_name == 'z-ai/glm-5.2') and ('</tool_name>' not in message):
+            message = message.replace('<tool_call>bash', '<tool_call>\n<tool_name>bash</tool_name>')
+        if (model_name == 'z-ai/glm-5.2') and ('<tool_name>bash</tool_name>' in message):
+            message = message.replace('<tool_call>bash<tool_name>', '<tool_call><tool_name>')
+            if '</command>' in message:
+                message = message.replace('</arg_value>', '')
+            else:
+                message = message.replace('</arg_value>', '</command>')
+            if '<command>' not in message:
+                message = message.replace('<arg_key>', '<command>')
+            else:
+                message = message.replace('<arg_key>', '')
+        return message
+```
+How can I improve the readability of this function?
+§a§
+A good way to improve readability is to:
+
+1. Split model-specific logic into helper functions.
+2. Avoid repeating `model_name == "z-ai/glm-5.2"`.
+3. Use named booleans for important conditions.
+4. Group simple replacements together.
+
+For example:
+
+```python
+GLM_52 = "z-ai/glm-5.2"
+
+
+def _fix_specific_responses(model_name: str, message: str) -> str:
+    """Normalize known malformed tool-call markup from specific models."""
+    if model_name.startswith("deepseek"):
+        return _fix_deepseek_response(message)
+
+    if model_name == GLM_52:
+        return _fix_glm_52_response(message)
+
+    return message
+
+
+def _fix_deepseek_response(message: str) -> str:
+    replacements = (
+        ("tool_call_name>", "tool_name>"),
+        ("tool_caller_id>", "tool_call>"),
+        ("tool_calls>", "tool_call>"),
+    )
+
+    for old, new in replacements:
+        message = message.replace(old, new)
+
+    return message
+
+
+def _fix_glm_52_response(message: str) -> str:
+    # Add a missing <tool_name> wrapper for bash calls.
+    if "</tool_name>" not in message:
+        message = message.replace(
+            "<tool_call>bash",
+            "<tool_call>\n<tool_name>bash</tool_name>",
+        )
+
+    has_bash_tool_name = "<tool_name>bash</tool_name>" in message
+    if not has_bash_tool_name:
+        return message
+
+    message = message.replace(
+        "<tool_call>bash<tool_name>",
+        "<tool_call><tool_name>",
+    )
+
+    if "</command>" in message:
+        message = message.replace("</arg_value>", "")
+    else:
+        message = message.replace("</arg_value>", "</command>")
+
+    if "<command>" in message:
+        message = message.replace("<arg_key>", "")
+    else:
+        message = message.replace("<arg_key>", "<command>")
+
+    return message
+```
+
+Why this is clearer:
+
+- `_fix_specific_responses()` now only decides which fixer to use.
+- Each helper handles one model.
+- The intent of each block is easier to understand.
+- Replacements are grouped instead of chained inline.
+
+If you want an even smaller refactor without adding helpers, this is also much better than the original:
+
+```python
+def _fix_specific_responses(model_name: str, message: str) -> str:
+    if model_name.startswith("deepseek"):
+        for old, new in (
+            ("tool_call_name>", "tool_name>"),
+            ("tool_caller_id>", "tool_call>"),
+            ("tool_calls>", "tool_call>"),
+        ):
+            message = message.replace(old, new)
+
+    elif model_name == "z-ai/glm-5.2":
+        if "</tool_name>" not in message:
+            message = message.replace(
+                "<tool_call>bash",
+                "<tool_call>\n<tool_name>bash</tool_name>",
+            )
+
+        if "<tool_name>bash</tool_name>" in message:
+            message = message.replace(
+                "<tool_call>bash<tool_name>",
+                "<tool_call><tool_name>",
+            )
+            message = message.replace(
+                "</arg_value>",
+                "" if "</command>" in message else "</command>",
+            )
+            message = message.replace(
+                "<arg_key>",
+                "" if "<command>" in message else "<command>",
+            )
+
+    return message
+```
+
+If you want, I can also show a version using a replacement helper like `_apply_replacements()` to make it even cleaner.

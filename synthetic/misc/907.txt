@@ -1,0 +1,26 @@
+§u§
+What git command do I have to use to achieve the following:
+- get the latest commits
+- overwrite conflicting files
+- do not delete any files that were not deleted by commits
+§a§
+To achieve this, you should use a combination of `git fetch` and `git reset`.
+
+Run these commands in order (replace `main` with your branch name, e.g., `master` or `develop`):
+
+```bash
+git fetch origin
+git reset --hard origin/main
+```
+
+### Why this works:
+
+1.  **`git fetch origin`**: This downloads the latest commits and data from the remote repository without merging them or altering your local files. It updates your local knowledge of where `origin/main` is.
+2.  **`git reset --hard origin/main`**: This is the command that accomplishes your requirements:
+    *   **Overwrites conflicting files:** It forces your local working directory and index to match exactly what is on the remote branch. Any local changes (even committed ones that haven't been pushed) will be discarded if they conflict with the remote.
+    *   **Preserves untracked files:** Importantly, `git reset --hard` **does not** touch untracked files. Any files you have created locally that are not being tracked by Git will remain untouched.
+
+### ⚠️ A Critical Warning
+Because this command is destructive to **tracked** files, **you will lose any local changes you have made to files that are already tracked by Git.**
+
+If you have local modifications you think you might need later, you should "stash" them first using `git stash` before running these commands.

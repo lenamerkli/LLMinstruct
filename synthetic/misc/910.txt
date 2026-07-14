@@ -1,0 +1,67 @@
+§u§
+I got a new job. It is split between two cities: A and B. I am living in city C. I want to take the train to commute. An average two and a half times a week I need to commute to city A and back. An average two times a week I need to commute to city B via city D. Based on the following fares, find the cheapest option for me:
+
+- C one-way to A: 5.2$
+- C one-way to B via D (combined ticket): 15.9$
+- C one-way to D: 8.7$
+- D one-way to B: 9.1$
+- unlimited between C and A per month: 119$
+- unlimited between both C and A and C and D per month: 175$
+- unlimited between D and B per month: 193$
+- unlimited on all lines: 295$
+
+The prices in the other direction for one-way tickets are the same. One-way and unlimited on certain lines can be combined. The one-way fares include the members discount; they would be almost exactly 30% more expensive otherwise. The public transit membership costs only 10$ per month for me because of the company I will work for pays the rest. Also include information on how the result would differ if I worked less than 4 weeks per month on average.
+§a§
+## Setting Up the Problem
+
+First, let me convert your commute into monthly rides. With 4 weeks/month:
+
+| Trip | Round trips/month | One-way rides/month |
+|------|------|------|
+| C ↔ A (2.5×/week) | 10 | 20 |
+| C ↔ B via D (2×/week) | 8 | 16 (each needs C–D **and** D–B) |
+
+**Note on membership:** The $10/month membership is a no-brainer whenever you buy single tickets — it saves ~30% on hundreds of dollars of fares. So any "single ticket" strategy includes the $10.
+
+## Comparing the Realistic Options (at 4 weeks/month)
+
+**Option 1 – All single tickets**
+- C↔A: 20 × $5.2 = $104
+- C↔B (combined ticket is cheaper than $8.7 + $9.1): 16 × $15.9 = $254.40
+- Membership: $10
+- **Total = $368.40**
+
+**Option 2 – "C–A & C–D" pass ($175) + single D–B tickets**
+- Pass: $175 (covers all A trips + the C–D leg of B trips)
+- D↔B: 16 × $9.1 = $145.60
+- Membership: $10
+- **Total = $330.60**
+
+**Option 3 – Unlimited all lines**
+- **Total = $295** (no single tickets needed, so the member discount is irrelevant)
+
+## ✅ Cheapest: the all-lines unlimited pass — **$295/month**
+
+(If the pass itself requires membership, add $10 → $305; it's still the winner.)
+
+Worth noting: replacing the C–A leg with its own pass ($119) is never worth it — $104 in single tickets is cheaper. And the $193 D–B pass is far too expensive for your volume.
+
+## If You Work Less Than 4 Weeks/Month
+
+The unlimited pass is a **fixed** cost, while single tickets are **variable**. Per week of actual commuting, single tickets cost:
+
+- C↔A: 5 rides × $5.2 = $26
+- C↔B: 4 rides × $15.9 = $63.60
+- **= $89.60 per week**
+
+So the single-ticket strategy costs:
+$$10 + 89.60 \times w$$
+
+Setting this equal to the $295 pass:
+$$10 + 89.60w = 295 \Rightarrow w \approx 3.2 \text{ weeks}$$
+
+**Conclusion:**
+- If you commute **more than ~3.2 weeks/month** (essentially full-time): buy the **all-lines pass ($295)**.
+- If your average drops **below ~3.2 weeks/month** (long vacations, part-time, frequent travel, etc.): switch to **single tickets + the $10 membership**, costing about $89.60 per active commuting week.
+
+So roughly speaking: lose about **one full week or more per month** on average, and single tickets become the better deal.

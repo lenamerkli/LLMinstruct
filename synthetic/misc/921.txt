@@ -1,0 +1,65 @@
+§u§
+What happens when not all required ETS2 DLCs are installed when trying to use Promods?
+§a§
+Based on the ProMods forums and community discussions, here's what happens when you try to run ProMods without all the required map DLCs installed:
+
+## The mod will not load properly
+
+The ProMods team is explicit that this isn't supported: you can't run ProMods without the DLCs, because they use models and assets from the DLCs all over the map. This is a licensing/asset issue — because they are using SCS created map assets in their mod, which they are not allowed to distribute, their mod relies on the end user owning these DLCs.
+
+## Specific symptoms you'll see in-game
+
+1. **"Incompatible" mods in the Mod Manager** — Users report that when DLCs are missing, the mod components (Map, Media, Models, DLC Support, Definitions and Assets) show up marked as incompatible, with the message that "Dependencies: Some DLCs which are required by this mod are missing. Make sure you have all of them installed and activated".
+
+2. **The mod simply won't load/activate** — As one moderator put it bluntly, the short answer is no, you can not use ProMods without the map-DLC (at least not the current version).
+
+3. **Downgrade route (compatibility-breaking)** — There is technically an old workaround: you could downgrade your game all the way to ETS2 version 1.18 and play an old ProMods 1.91, though this is no longer possible via Steam, since Steam's oldest supported build has moved forward. This isn't practical for modern play.
+
+4. **Regional interdependency** — Missing one DLC can break unrelated regions too, since assets are shared. For instance, without France they could not do Spain, and without Italy they could not do Greece.
+
+## Why they require this
+
+The current version's dependency list makes this explicit: the DLC Support package requires all eight ProMods packages to function properly, and 8 DLCs (Going East!, Scandinavia, Vive La France!, Italia, Beyond the Baltic Sea, Road to the Black Sea, Iberia and Western Balkans) are required to run this mod, while the Special Transport DLC is compatible but not required.
+
+## Historical nuance
+
+It's worth noting that not every DLC is required *immediately* upon release — ProMods sometimes ships an interim version that works with or without a brand-new DLC before folding in a hard requirement in a later update. For example, when West Balkans launched, ProMods v2.67 and v2.68 explicitly stated "This version will work *with or without* the Balkan West DLC enabled" before a subsequent version made it mandatory. Similarly with Iberia, several consecutive ProMods versions stated "Iberia is compatible but not required" before it eventually became a hard requirement.
+
+**Bottom line:** if you're missing a required DLC, ProMods components will be flagged "incompatible" in the Mod Manager and the mod won't function — you either need to purchase the missing map DLC(s) or use an older ProMods/game version combo that predates that requirement.
+§u§
+What is the current price to buy all map expansions? Include current steam sale if applicable. Also search for 3rd party sites.
+§a§
+**On Steam during the current Summer Sale (running until approximately July 9, 2026), most ETS2 map expansion DLCs are heavily discounted.**
+
+### Current Map Expansions and Sale Prices (USD, approximate; varies slightly by region)
+Typical regular price for newer maps is $17.99; older ones are cheaper. Sale pricing (as of early July 2026):
+
+- **Nordic Horizons** (new northern Scandinavia expansion, released Nov 2025): ~$16.19 (–10% from $17.99).
+- **Greece** (released Dec 2024): ~$8.39 (–30% from $11.99).
+- **West Balkans**, **Iberia**, **Road to the Black Sea**, **Beyond the Baltic Sea**, **Italia**, **Vive la France!**: Each ~$8.99 (–50% from $17.99).
+- **Scandinavia** (older version) and **Going East!**: Each ~$4.99 (–50% from ~$9.99–$17.99 range).
+
+**Core 8 map DLCs required for current ProMods** (Going East!, Scandinavia, Vive la France!, Italia, Beyond the Baltic Sea, Road to the Black Sea, Iberia, Western/West Balkans) total roughly **$60–70** if purchased individually on sale. Adding the two newest (Greece + Nordic Horizons) brings the full current map set to around **$85–90**.
+
+### Best Value on Steam: Ultimate Edition Bundle
+The **Euro Truck Simulator 2 Ultimate Edition** is currently priced at **~$51.91** (around –50% to –55% off its regular ~$104+ bundle price). It includes:
+- The base game.
+- **All major map expansions** (Greece, Going East!, Scandinavia, Vive la France!, Italia, Iberia, West Balkans, Road to the Black Sea, Beyond the Baltic Sea — covering everything needed for ProMods plus more).
+- Multiple cargo packs (e.g., Special Transport, Heavy Cargo, Farm Machinery, High Power).
+- A large number of paint job packs, wheel tuning, cabin accessories, and more.
+
+This is **by far the cheapest and most complete option** for “all map expansions” during the sale — significantly less expensive than buying maps individually or even in smaller regional bundles (e.g., Baltic Bundle or Mediterranean Bundle, which offer extra discounts like –15% on groups of maps). Individual product prices for the bundle contents total over $115 at sale rates, so the bundle savings are substantial.
+
+Smaller bundles like the “Essentials Bundle” (base game + Going East! + Scandinavia) are also very cheap (~$16 in some reports) if you only want a starter set.
+
+**Note:** Prices are in USD and can vary by region/currency/VAT. Check your Steam cart or the DLC hub (https://store.steampowered.com/dlc/227300/Euro_Truck_Simulator_2/) for exact figures. The sale is tied to SCS Software’s Summer Sale event.
+
+### 3rd Party Sites and Key Resellers
+Comparator sites like **AllKeyShop**, **GG.deals**, or **IsThereAnyDeal** aggregate offers and frequently show individual map DLC Steam keys in the **$5–9 range** (e.g., $8.99 for most newer maps, $4.99 for Going East!), potentially bringing the full set of maps down to **~$40–70** depending on deals.
+
+- **Legitimate-ish retailers** (Fanatical, Green Man Gaming/GMG, Humble Bundle): Often match or beat Steam sale prices with bundles; safer for activation.
+- **Gray-market sites** (Eneba, GAMIVO, CDKeys, Kinguin, G2A): Can be cheaper (sometimes $5–7.50 per DLC or bundled “Map Booster Pack” style deals), but carry risks including region locks, invalid/revoked keys, or Steam account issues. Some older “Map Booster Pack” bundles grouped several maps at a discount.
+
+**Recommendation:** During the active Steam sale, the **Ultimate Edition bundle for ~$52** is the safest, best-value way to get all (or nearly all) map expansions plus a ton of extras. It beats piecing together individual keys or smaller bundles in most cases. For the absolute lowest price, use a price comparator and verify seller reputation/reviews, but Steam is preferable to avoid activation headaches. Always confirm compatibility with your ProMods version, as newer maps (Greece, Nordic Horizons) may become required over time.
+
+Prices fluctuate and sales end soon — check Steam and comparator sites directly for the latest offers in your region.

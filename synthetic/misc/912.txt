@@ -1,0 +1,214 @@
+§u§
+```
+    def generate_stream(
+        self,
+        conversation: T_CONVERSATION,
+        on_token: T_STREAM_CALLBACK,
+        cancel_event: t.Optional[threading.Event] = None,
+    ) -> T_COMPLETION:
+        """Stream tokens via on_token(content) and return the final T_COMPLETION.
+
+        If ``cancel_event`` is set, the stream is aborted early and a partial
+        T_COMPLETION is returned with whatever was accumulated so far.
+        """
+        # Compress before streaming
+        conversation = self._compress_conversation(conversation)
+
+        # Check cancellation before even starting the request
+        if cancel_event and cancel_event.is_set():
+            return {"text": "", "cost": 0.0, "thinking": ""}
+
+        model_name = self.model.replace('OpenRouter', '').replace('openrouter', '')
+        if model_name[0] == '/':
+            model_name = model_name[1:]
+        data = {
+            'model': model_name,
+            'messages': conversation,
+            'stream': True,
+            'stop': ['</tool_call>', '</invoke>'],
+            'provider': {'sort': 'price'},
+        }
+        print('=' * 30 + ' Begin OpenRouter Streaming Request ' + '=' * 30)
+        print({'model': model_name, 'messages': f'[{len(conversation)} messages]', 'stream': True})
+        print('=' * 30 + ' End OpenRouter Streaming Request ' + '=' * 30)
+
+        stream_request_headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + environ['OPENROUTER_API_KEY'],
+        }
+        stream_request_headers.update(self._attribution_headers())
+        response = request(
+            method='POST',
+            url='https://openrouter.ai/api/v1/chat/completions',
+            headers=stream_request_headers,
+            json=data,
+            verify='/etc/pki/tls/certs/ca-bundle.crt',
+            stream=True,
+        )
+
+        # Handle pre-stream HTTP errors
+        if response.status_code != 200:
+            raise Exception(f"OpenRouter error {response.status_code}: {response.text}")
+
+        full_content = ""
+        full_thinking = ""
+        total_cost = 0.0
+
+        buffer = bytearray()
+        stream_finished = False
+        try:
+            for chunk_bytes in response.iter_content(chunk_size=1024):
+                # Check for cancellation on each chunk
+                if cancel_event and cancel_event.is_set():
+                    print("\n[Stream cancelled by user]")
+                    break
+
+                if chunk_bytes:
+                    buffer.extend(chunk_bytes)
+
+                # Process all complete lines from the buffer
+                while True:
+                    nl_idx = buffer.find(b'\n')
+                    if nl_idx == -1:
+                        break
+
+                    line_bytes = buffer[:nl_idx]
+                    del buffer[:nl_idx + 1]
+
+                    # Decode the complete line (safe — no split multi-byte chars)
+                    line = line_bytes.decode('utf-8').rstrip('\r')
+
+                    if not line:
+                        continue
+
+                    # Skip SSE comments (e.g. ": OPENROUTER PROCESSING")
+                    if line.startswith(':'):
+                        continue
+
+                    if not line.startswith('data: '):
+                        continue
+
+                    data_str = line[6:]
+                    if data_str == '[DONE]':
+                        stream_finished = True
+                        break
+
+                    try:
+                        chunk = json.loads(data_str)
+
+                        # Check for mid-stream error
+                        if 'error' in chunk:
+                            print(f"Stream error: {chunk['error'].get('message', 'unknown error')}")
+                            stream_finished = True
+                            break
+
+                        delta = chunk.get('choices', [{}])[0].get('delta', {})
+
+                        # Accumulate content and thinking
+                        content = delta.get('content', '') or ''
+                        thinking = delta.get('reasoning', '') or ''
+
+                        if content:
+                            full_content += content
+                            print(content, end="", flush=True)
+                            on_token(content)
+
+                        if thinking:
+                            full_thinking += thinking
+
+                        # Grab usage/cost from any chunk that includes it
+                        usage = chunk.get('usage', {}) or {}
+                        if 'cost' in usage:
+                            total_cost = usage['cost']
+
+                    except json.JSONDecodeError:
+                        # Ignore malformed JSON chunks
+                        pass
+
+                if stream_finished:
+                    break
+        finally:
+            response.close()
+
+        print('\n' + '=' * 30 + ' End OpenRouter Streaming Response ' + '=' * 30)
+        full_content = self._fix_specific_responses(model_name, full_content)
+        return {
+            "text": full_content,
+            "cost": total_cost,
+            "thinking": full_thinking,
+        }
+```
+What do I have to change in this code so that if the models ends with `</tool_call>` or `</invoke>`, that string is appended at the end of the response?
+§a§
+Because OpenRouter (and the OpenAI standard it follows) strips the stop string from the final response and only returns a generic `finish_reason: "stop"`, the API won't tell you *which* stop string triggered the halt.
+
+However, because your stop sequences are closing XML tags (`</tool_call>` and `</invoke>`), we can use a highly reliable heuristic: **when the model stops, we check the generated text to see which tag is currently "open" (unclosed) and append the matching closing tag.**
+
+Here is how you can update your code. Look for the `try:` block inside your chunk processor and update the `json.loads` portion to this:
+
+```python
+                    try:
+                        chunk = json.loads(data_str)
+
+                        # Check for mid-stream error
+                        if 'error' in chunk:
+                            print(f"Stream error: {chunk['error'].get('message', 'unknown error')}")
+                            stream_finished = True
+                            break
+
+                        # Extract the choice object to get both delta and finish_reason
+                        choice = chunk.get('choices', [{}])[0]
+                        delta = choice.get('delta', {})
+
+                        # Accumulate content and thinking
+                        content = delta.get('content', '') or ''
+                        thinking = delta.get('reasoning', '') or ''
+
+                        if content:
+                            full_content += content
+                            print(content, end="", flush=True)
+                            on_token(content)
+
+                        if thinking:
+                            full_thinking += thinking
+
+                        # Grab usage/cost from any chunk that includes it
+                        usage = chunk.get('usage', {}) or {}
+                        if 'cost' in usage:
+                            total_cost = usage['cost']
+
+                        # --- NEW CODE: Detect stop and append the closing tag ---
+                        finish_reason = choice.get('finish_reason')
+                        if finish_reason == 'stop':
+                            # Find which tag is currently "open" (missing its closing pair)
+                            # We use '<tool_call' without '>' to safely catch tags with attributes like <tool_call name="xyz">
+                            open_tool_call = full_content.rfind('<tool_call') > full_content.rfind('</tool_call>')
+                            open_invoke = full_content.rfind('<invoke') > full_content.rfind('</invoke>')
+
+                            append_str = ""
+                            if open_tool_call and open_invoke:
+                                # If somehow both are open, pick the one opened most recently
+                                if full_content.rfind('<tool_call') > full_content.rfind('<invoke'):
+                                    append_str = '</tool_call>'
+                                else:
+                                    append_str = '</invoke>'
+                            elif open_tool_call:
+                                append_str = '</tool_call>'
+                            elif open_invoke:
+                                append_str = '</invoke>'
+
+                            if append_str:
+                                full_content += append_str
+                                print(append_str, end="", flush=True)
+                                on_token(append_str)
+                        # --------------------------------------------------------
+
+                    except json.JSONDecodeError:
+                        # Ignore malformed JSON chunks
+                        pass
+```
+
+### Why this approach is best:
+1. **Saves API Cost/Time:** By keeping the `stop` strings in your API payload, OpenRouter interrupts the generation entirely on their end as soon as the sequence is detected. This saves token generation costs and execution time.
+2. **Double Duty:** If the model somehow stops normally (e.g. finishes generation) but accidentally forgets to close the `<tool_call>` tag, this logic will fix the malformed output by cleanly appending the closing tag for you anyway!
+3. **Graceful Handling:** Because we append directly to `full_content` and trigger `on_token`, your end-user streaming callbacks receive the appended tags smoothly just like any other chunk. Once appended, the heuristic self-corrects (the tag is now closed), preventing duplicates if any trailing metadata chunks arrive.

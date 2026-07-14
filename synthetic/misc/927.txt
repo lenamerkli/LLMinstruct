@@ -1,0 +1,26 @@
+§u§
+Where can I put maps i downloaded for Beamng on linux with GE-Proton11-1?
+§a§
+If you’re running the **Windows version of BeamNG through GE-Proton11-1**, put downloaded **map ZIPs** here:
+
+```text
+<your Steam library>/steamapps/compatdata/284160/pfx/drive_c/users/steamuser/AppData/Local/BeamNG/BeamNG.drive/current/mods
+```
+
+BeamNG’s manual install instructions say to put mods in the `mods` folder inside the current user folder, and Proton stores each game’s Windows prefix in `steamapps/compatdata/[appid]/pfx`. BeamNG’s Steam app ID is `284160`.
+
+A couple of important bits:
+
+- **Leave the map as a `.zip`** — don’t extract it.
+- **Maps/levels use the same `mods` folder** as other mods; they’ll then show up in the **level selector**.
+- If you found older guides using something like `...BeamNG.drive/0.36/mods`, that’s because BeamNG changed the user-folder layout in **version 0.37** to use `current` instead.
+
+If you’re **not** using Proton and are running BeamNG’s **native Linux build**, the folder is instead:
+
+```text
+~/.local/share/BeamNG/BeamNG.drive/current/mods
+```
+
+
+
+If you want, I can help you find your **exact** path too—especially if your Steam library is on another drive or you’re using Flatpak Steam.

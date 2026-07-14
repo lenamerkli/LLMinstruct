@@ -1,0 +1,734 @@
+§u§
+```
+#!/usr/bin/env python3
+"""
+Headroom ChatML Compression Demo
+================================
+A tkinter GUI to paste a ChatML / JSON conversation, compress it with
+headroom-ai, and see a highlighted diff of what changed.
+
+pip install "headroom-ai[all]"
+python headroom_demo.py
+"""
+import json
+import re
+import difflib
+import tkinter as tk
+from tkinter import ttk, scrolledtext, messagebox
+from typing import List, Dict, Any
+
+try:
+    from headroom import compress, CompressConfig
+    HEADROOM_AVAILABLE = True
+except ImportError:
+    HEADROOM_AVAILABLE = False
+
+CHATML_RE = re.compile(
+    r"<\|im_start\|>(?P<role>system|user|assistant|tool|developer)\s*\n(?P<content>.*?)(?:<\|im_end\|>)",
+    re.DOTALL | re.IGNORECASE
+)
+
+SAMPLE_CONVERSATION = """<|im_start|>system
+You are a SRE debugging assistant.<|im_end|>
+<|im_start|>user
+Find the FATAL error in these logs, and tell me the user_id.<|im_end|>
+<|im_start|>assistant
+I'll scan the logs.<|im_end|>
+<|im_start|>tool
+2025-06-21 12:01:03 INFO auth.py:42 User login successful user_id=48192 ip=203.0.113.5
+2025-06-21 12:01:04 INFO auth.py:42 User login successful user_id=48192 ip=203.0.113.5
+2025-06-21 12:01:05 INFO auth.py:42 User login successful user_id=48192 ip=203.0.113.5
+2025-06-21 12:01:06 INFO db.py:118 Query OK duration=12ms
+2025-06-21 12:01:07 INFO db.py:118 Query OK duration=11ms
+2025-06-21 12:01:08 WARN  cache.py:55 Cache miss key=user:48192
+2025-06-21 12:01:09 INFO auth.py:42 User login successful user_id=48192 ip=203.0.113.5
+2025-06-21 12:01:12 ERROR payments.py:201 Charge failed user_id=48192 amount=49.99 code=card_declined
+2025-06-21 12:01:15 FATAL payments.py:244 Database connection pool exhausted user_id=48192 trace_id=a9f3c91
+2025-06-21 12:01:16 INFO  auth.py:42 User login successful user_id=48192 ip=203.0.113.5
+2025-06-21 12:01:17 INFO  auth.py:42 User login successful user_id=48192 ip=203.0.113.5
+2025-06-21 12:01:18 INFO  db.py:118 Query OK duration=14ms
+-- log truncated, 247 similar INFO lines omitted in this sample --
+2025-06-21 12:04:21 INFO auth.py:42 User login successful user_id=48192 ip=203.0.113.5
+2025-06-21 12:04:22 INFO auth.py:42 User login successful user_id=48192 ip=203.0.113.5
+<|im_end|>
+"""
+
+SAMPLE_JSON = [
+  {"role": "system", "content": "You are a helpful coding agent."},
+  {"role": "user", "content": "Summarize this tool output and find any errors."},
+  {"role": "tool", "content": "INFO auth login ok user_id=48192\n"*120 + "ERROR payments.py:201 Charge failed\nFATAL payments.py:244 DB pool exhausted user_id=48192\n" + "INFO ok\n"*80}
+]
+
+
+def parse_messages(text: str) -> List[Dict[str, Any]]:
+    text = text.strip()
+    if not text:
+        return []
+    # 1. Try JSON
+    try:
+        data = json.loads(text)
+        if isinstance(data, list):
+            return data
+        if isinstance(data, dict) and "messages" in data:
+            return data["messages"]
+    except Exception:
+        pass
+
+    # 2. Try ChatML <|im_start|>
+    matches = list(CHATML_RE.finditer(text))
+    if matches:
+        return [{"role": m.group("role").lower(), "content": m.group("content").strip()} for m in matches]
+
+    # 3. Simple role: blocks  "user: ... \n\nassistant: ..."
+    # Split on lines starting with a known role
+    simple_re = re.compile(r'^(system|user|assistant|tool|developer)\s*:\s*', re.IGNORECASE | re.MULTILINE)
+    parts = simple_re.split(text)
+    # parts = ['', 'user', ' content...', 'assistant', ' ...']
+    if len(parts) > 2:
+        messages = []
+        it = iter(parts[1:])
+        for role, content in zip(it, it):
+            # Actually zip trick is wrong, do manual
+            pass
+        # redo properly
+        messages = []
+        i = 1
+        while i < len(parts)-1:
+            role = parts[i].lower().strip()
+            content = parts[i+1].strip()
+            # content may contain next role at end? No, split removed it.
+            messages.append({"role": role, "content": content})
+            i += 2
+        if messages:
+            return messages
+
+    # 4. Fallback: single user message
+    return [{"role": "user", "content": text}]
+
+
+def messages_to_chatml(messages: List[Dict[str, Any]]) -> str:
+    out = []
+    for m in messages:
+        role = m.get("role", "user")
+        content = m.get("content", "")
+        # content may be list (multimodal) – stringify
+        if isinstance(content, list):
+            content = " ".join(
+                c.get("text", "") if isinstance(c, dict) else str(c)
+                for c in content
+            )
+        out.append(f"<|im_start|>{role}\n{content}\n<|im_end|>")
+    return "\n".join(out)
+
+
+class HeadroomDemo(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("Headroom – ChatML Compression Demo")
+        self.geometry("1180x760")
+        try:
+            self.tk.call("tk", "scaling", 1.25)
+        except Exception:
+            pass
+
+        self._build_ui()
+        if not HEADROOM_AVAILABLE:
+            messagebox.showwarning(
+                "headroom-ai not installed",
+                "pip install \"headroom-ai[all]\"\n\nThe demo will run, but compression will fail until you install it."
+            )
+
+    def _build_ui(self):
+        # Top toolbar
+        top = ttk.Frame(self, padding=(12, 10, 12, 6))
+        top.pack(fill="x")
+
+        ttk.Label(top, text="Model:").pack(side="left")
+        self.model_var = tk.StringVar(value="gpt-4o")
+        model_combo = ttk.Combobox(top, textvariable=self.model_var, width=28,
+            values=["gpt-4o", "claude-sonnet-4-5-20250929", "claude-opus-4-20250514", "gpt-4o-mini"], state="readonly")
+        model_combo.pack(side="left", padx=(6, 18))
+
+        self.compress_user_var = tk.BooleanVar(value=True)
+        ttk.Checkbutton(top, text="Compress user messages", variable=self.compress_user_var).pack(side="left", padx=8)
+
+        ttk.Label(top, text="Protect recent:").pack(side="left", padx=(18, 4))
+        self.protect_var = tk.StringVar(value="0")
+        ttk.Spinbox(top, from_=0, to=10, textvariable=self.protect_var, width=4).pack(side="left")
+
+        ttk.Label(top, text="Min tokens:").pack(side="left", padx=(12, 4))
+        self.min_tokens_var = tk.StringVar(value="10")
+        ttk.Entry(top, textvariable=self.min_tokens_var, width=6).pack(side="left")
+
+        ttk.Label(top, text="Target ratio:").pack(side="left", padx=(12, 4))
+        self.ratio_var = tk.StringVar(value="")
+        ttk.Entry(top, textvariable=self.ratio_var, width=6).pack(side="left")
+        ttk.Label(top, text="(blank = auto)", foreground="#666").pack(side="left", padx=(4,0))
+
+        ttk.Button(top, text="Compress  ⌘⏎", command=self.compress_action).pack(side="right", padx=(6,0))
+        ttk.Button(top, text="Sample log", command=self.load_sample).pack(side="right")
+        ttk.Button(top, text="Sample JSON", command=self.load_sample_json).pack(side="right", padx=6)
+
+        # Stats bar
+        stats_frame = ttk.Frame(self, padding=(12, 0, 12, 6))
+        stats_frame.pack(fill="x")
+        self.stats_var = tk.StringVar(value="Paste a ChatML / JSON conversation on the left, then Compress.")
+        ttk.Label(stats_frame, textvariable=self.stats_var, font=("Segoe UI", 10, "bold")).pack(side="left")
+        self.transforms_var = tk.StringVar(value="")
+        ttk.Label(stats_frame, textvariable=self.transforms_var, foreground="#444").pack(side="right")
+
+        # Main panes
+        paned = ttk.PanedWindow(self, orient=tk.HORIZONTAL)
+        paned.pack(fill="both", expand=True, padx=12, pady=(0,8))
+
+        # Left – input
+        left_frame = ttk.LabelFrame(paned, text=" Input – ChatML / JSON messages ", padding=8)
+        paned.add(left_frame, weight=1)
+        self.input_text = scrolledtext.ScrolledText(left_frame, wrap="word", undo=True,
+            font=("Consolas", 10), height=20)
+        self.input_text.pack(fill="both", expand=True)
+        self.input_text.insert("1.0", SAMPLE_CONVERSATION)
+        input_hint = ttk.Label(left_frame,
+            text="Supported: JSON list of messages, <|im_start|>role ... <|im_end|>, or role: ... blocks",
+            foreground="#666")
+        input_hint.pack(anchor="w", pady=(4,0))
+
+        # Right – output
+        right_frame = ttk.LabelFrame(paned, text=" Output – Compressed ", padding=8)
+        paned.add(right_frame, weight=1)
+
+        view_bar = ttk.Frame(right_frame)
+        view_bar.pack(fill="x", pady=(0,4))
+        self.view_mode = tk.StringVar(value="chatml")
+        ttk.Radiobutton(view_bar, text="ChatML", variable=self.view_mode, value="chatml", command=self.rerender_output).pack(side="left")
+        ttk.Radiobutton(view_bar, text="JSON", variable=self.view_mode, value="json", command=self.rerender_output).pack(side="left", padx=8)
+        self.show_diff_var = tk.BooleanVar(value=True)
+        ttk.Checkbutton(view_bar, text="Highlight changes", variable=self.show_diff_var, command=self.rerender_output).pack(side="left", padx=16)
+        ttk.Button(view_bar, text="Copy", command=self.copy_output).pack(side="right")
+
+        self.output_text = scrolledtext.ScrolledText(right_frame, wrap="word",
+            font=("Consolas", 10), height=20)
+        self.output_text.pack(fill="both", expand=True)
+
+        # Configure diff tags
+        self.output_text.tag_config("added", background="#d4f8d4")
+        self.output_text.tag_config("changed", background="#fff0b3")
+        self.output_text.tag_config("ccr", background="#ffe082", foreground="#5d4037")
+        self.output_text.tag_config("role", foreground="#1a56db", font=("Consolas", 10, "bold"))
+        self.output_text.tag_config("dim", foreground="#777")
+
+        # Bottom log
+        bottom = ttk.LabelFrame(self, text=" Diff / Retrieval markers ", padding=8)
+        bottom.pack(fill="x", padx=12, pady=(0,12))
+        self.diff_text = scrolledtext.ScrolledText(bottom, wrap="word", height=6, font=("Consolas", 9))
+        self.diff_text.pack(fill="x", expand=True)
+
+        # Keyboard shortcut
+        self.bind("<Control-Return>", lambda e: self.compress_action())
+        self.bind("<Command-Return>", lambda e: self.compress_action())
+
+        self.last_result = None
+        self.last_input_messages = []
+
+    def load_sample(self):
+        self.input_text.delete("1.0", "end")
+        self.input_text.insert("1.0", SAMPLE_CONVERSATION)
+
+    def load_sample_json(self):
+        self.input_text.delete("1.0", "end")
+        self.input_text.insert("1.0", json.dumps(SAMPLE_JSON, indent=2))
+
+    def compress_action(self):
+        if not HEADROOM_AVAILABLE:
+            messagebox.showerror("Missing dependency", "pip install \"headroom-ai[all]\"")
+            return
+        raw = self.input_text.get("1.0", "end-1c")
+        try:
+            messages = parse_messages(raw)
+            if not messages:
+                messagebox.showinfo("No messages", "Couldn't parse any messages.")
+                return
+            self.last_input_messages = messages
+        except Exception as e:
+            messagebox.showerror("Parse error", str(e))
+            return
+
+        # Build config
+        try:
+            protect_recent = int(self.protect_var.get() or 0)
+            min_tokens = int(self.min_tokens_var.get() or 10)
+            ratio_str = self.ratio_var.get().strip()
+            target_ratio = float(ratio_str) if ratio_str else None
+        except ValueError:
+            messagebox.showerror("Invalid option", "protect_recent / min_tokens / target_ratio must be numbers")
+            return
+
+        self.stats_var.set("Compressing…")
+        self.update_idletasks()
+
+        try:
+            result = compress(
+                messages,
+                model=self.model_var.get(),
+                compress_user_messages=self.compress_user_var.get(),
+                protect_recent=protect_recent,
+                min_tokens_to_compress=min_tokens,
+                target_ratio=target_ratio,
+            )
+        except Exception as e:
+            messagebox.showerror("Compression failed", str(e))
+            self.stats_var.set(f"Compression failed: {e}")
+            return
+
+        self.last_result = result
+        saved_pct = result.compression_ratio * 100
+        self.stats_var.set(
+            f"Tokens: {result.tokens_before} → {result.tokens_after}   "
+            f"Saved {result.tokens_saved}  ({saved_pct:.1f}%)"
+        )
+        self.transforms_var.set(" · ".join(result.transforms_applied) if result.transforms_applied else "no change")
+
+        self.rerender_output()
+
+    def rerender_output(self):
+        if not self.last_result:
+            return
+        result = self.last_result
+        mode = self.view_mode.get()
+        show_diff = self.show_diff_var.get()
+
+        if mode == "json":
+            original_str = json.dumps(self.last_input_messages, indent=2, ensure_ascii=False)
+            compressed_str = json.dumps(result.messages, indent=2, ensure_ascii=False)
+        else:
+            original_str = messages_to_chatml(self.last_input_messages)
+            compressed_str = messages_to_chatml(result.messages)
+
+        # Output pane
+        out = self.output_text
+        out.config(state="normal")
+        out.delete("1.0", "end")
+
+        if show_diff:
+            # Diff-highlight compressed text against original
+            sm = difflib.SequenceMatcher(None, original_str, compressed_str, autojunk=False)
+            for tag, i1, i2, j1, j2 in sm.get_opcodes():
+                chunk = compressed_str[j1:j2]
+                if not chunk:
+                    continue
+                if tag == "equal":
+                    out.insert("end", chunk)
+                else:  # replace / insert
+                    out.insert("end", chunk, "changed")
+        else:
+            out.insert("end", compressed_str)
+
+        # CCR marker highlighting – second pass, overlay
+        ccr_re = re.compile(r"<<ccr:[0-9a-f]+>>|\[\d+ lines (?:omitted|compressed)[^\]]*\]|Retrieve more: hash=[0-9a-f]+", re.IGNORECASE)
+        text_content = out.get("1.0", "end-1c")
+        for m in ccr_re.finditer(text_content):
+            start = f"1.0+{m.start()}c"
+            end = f"1.0+{m.end()}c"
+            out.tag_add("ccr", start, end)
+
+        # Role highlighting in ChatML mode
+        if mode == "chatml":
+            for m in re.finditer(r"<\|im_start\|>(\w+)", text_content):
+                start = f"1.0+{m.start()}c"
+                end = f"1.0+{m.end()}c"
+                out.tag_add("role", start, end)
+
+        out.config(state="disabled")
+
+        # Bottom diff / markers pane
+        diff_box = self.diff_text
+        diff_box.config(state="normal")
+        diff_box.delete("1.0", "end")
+        # Find CCR markers in compressed output
+        markers = ccr_re.findall(compressed_str)
+        if markers:
+            diff_box.insert("end", "Reversible compression markers found:\n", "bold")
+            for mk in sorted(set(markers))[:20]:
+                diff_box.insert("end", f"  • {mk}\n")
+            diff_box.insert("end", "\nThese are CCR retrieval hashes – the LLM can call headroom_retrieve() to get the original.\n", "dim")
+        else:
+            # Show a unified diff (truncated)
+            diff_lines = list(difflib.unified_diff(
+                original_str.splitlines(),
+                compressed_str.splitlines(),
+                fromfile="original",
+                tofile="compressed",
+                lineterm="",
+                n=2
+            ))
+            if diff_lines:
+                diff_box.insert("end", "\n".join(diff_lines[:180]))
+                if len(diff_lines) > 180:
+                    diff_box.insert("end", "\n... (truncated)")
+            else:
+                diff_box.insert("end", "No changes – input was below min_tokens threshold, or already optimal.")
+        diff_box.tag_config("bold", font=("Consolas", 9, "bold"))
+        diff_box.tag_config("dim", foreground="#666")
+        diff_box.config(state="disabled")
+
+    def copy_output(self):
+        text = self.output_text.get("1.0", "end-1c")
+        self.clipboard_clear()
+        self.clipboard_append(text)
+        self.stats_var.set("Copied output to clipboard.")
+
+
+if __name__ == "__main__":
+    app = HeadroomDemo()
+    app.mainloop()
+```
+Remove all diff logic and only display the raw output.
+§a§
+Got you — stripped all the diff logic. Output now just shows the raw compressed text (ChatML or JSON). Bottom pane only lists CCR/retrieval markers if they’re present.
+
+Here’s the updated code:
+
+```python
+#!/usr/bin/env python3
+"""
+Headroom ChatML Compression Demo
+================================
+A tkinter GUI to paste a ChatML / JSON conversation, compress it with
+headroom-ai, and see the raw compressed output.
+
+pip install "headroom-ai[all]"
+python headroom_demo.py
+"""
+import json
+import re
+import tkinter as tk
+from tkinter import ttk, scrolledtext, messagebox
+from typing import List, Dict, Any
+
+try:
+    from headroom import compress, CompressConfig
+    HEADROOM_AVAILABLE = True
+except ImportError:
+    HEADROOM_AVAILABLE = False
+
+CHATML_RE = re.compile(
+    r"<\|im_start\|>(?P<role>system|user|assistant|tool|developer)\s*\n(?P<content>.*?)(?:<\|im_end\|>)",
+    re.DOTALL | re.IGNORECASE
+)
+
+SAMPLE_CONVERSATION = """<|im_start|>system
+You are a SRE debugging assistant.<|im_end|>
+<|im_start|>user
+Find the FATAL error in these logs, and tell me the user_id.<|im_end|>
+<|im_start|>assistant
+I'll scan the logs.<|im_end|>
+<|im_start|>tool
+2025-06-21 12:01:03 INFO auth.py:42 User login successful user_id=48192 ip=203.0.113.5
+2025-06-21 12:01:04 INFO auth.py:42 User login successful user_id=48192 ip=203.0.113.5
+2025-06-21 12:01:05 INFO auth.py:42 User login successful user_id=48192 ip=203.0.113.5
+2025-06-21 12:01:06 INFO db.py:118 Query OK duration=12ms
+2025-06-21 12:01:07 INFO db.py:118 Query OK duration=11ms
+2025-06-21 12:01:08 WARN  cache.py:55 Cache miss key=user:48192
+2025-06-21 12:01:09 INFO auth.py:42 User login successful user_id=48192 ip=203.0.113.5
+2025-06-21 12:01:12 ERROR payments.py:201 Charge failed user_id=48192 amount=49.99 code=card_declined
+2025-06-21 12:01:15 FATAL payments.py:244 Database connection pool exhausted user_id=48192 trace_id=a9f3c91
+2025-06-21 12:01:16 INFO  auth.py:42 User login successful user_id=48192 ip=203.0.113.5
+2025-06-21 12:01:17 INFO  auth.py:42 User login successful user_id=48192 ip=203.0.113.5
+2025-06-21 12:01:18 INFO  db.py:118 Query OK duration=14ms
+-- log truncated, 247 similar INFO lines omitted in this sample --
+2025-06-21 12:04:21 INFO auth.py:42 User login successful user_id=48192 ip=203.0.113.5
+2025-06-21 12:04:22 INFO auth.py:42 User login successful user_id=48192 ip=203.0.113.5
+<|im_end|>
+"""
+
+SAMPLE_JSON = [
+  {"role": "system", "content": "You are a helpful coding agent."},
+  {"role": "user", "content": "Summarize this tool output and find any errors."},
+  {"role": "tool", "content": "INFO auth login ok user_id=48192\n"*120 + "ERROR payments.py:201 Charge failed\nFATAL payments.py:244 DB pool exhausted user_id=48192\n" + "INFO ok\n"*80}
+]
+
+
+def parse_messages(text: str) -> List[Dict[str, Any]]:
+    text = text.strip()
+    if not text:
+        return []
+    # 1. Try JSON
+    try:
+        data = json.loads(text)
+        if isinstance(data, list):
+            return data
+        if isinstance(data, dict) and "messages" in data:
+            return data["messages"]
+    except Exception:
+        pass
+
+    # 2. Try ChatML <|im_start|>
+    matches = list(CHATML_RE.finditer(text))
+    if matches:
+        return [{"role": m.group("role").lower(), "content": m.group("content").strip()} for m in matches]
+
+    # 3. Simple role: blocks  "user: ... \n\nassistant: ..."
+    simple_re = re.compile(r'^(system|user|assistant|tool|developer)\s*:\s*', re.IGNORECASE | re.MULTILINE)
+    parts = simple_re.split(text)
+    if len(parts) > 2:
+        messages = []
+        i = 1
+        while i < len(parts) - 1:
+            role = parts[i].lower().strip()
+            content = parts[i + 1].strip()
+            messages.append({"role": role, "content": content})
+            i += 2
+        if messages:
+            return messages
+
+    # 4. Fallback: single user message
+    return [{"role": "user", "content": text}]
+
+
+def messages_to_chatml(messages: List[Dict[str, Any]]) -> str:
+    out = []
+    for m in messages:
+        role = m.get("role", "user")
+        content = m.get("content", "")
+        # content may be list (multimodal) – stringify
+        if isinstance(content, list):
+            content = " ".join(
+                c.get("text", "") if isinstance(c, dict) else str(c)
+                for c in content
+            )
+        out.append(f"<|im_start|>{role}\n{content}\n<|im_end|>")
+    return "\n".join(out)
+
+
+class HeadroomDemo(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("Headroom – ChatML Compression Demo")
+        self.geometry("1180x760")
+        try:
+            self.tk.call("tk", "scaling", 1.25)
+        except Exception:
+            pass
+
+        self._build_ui()
+        if not HEADROOM_AVAILABLE:
+            messagebox.showwarning(
+                "headroom-ai not installed",
+                "pip install \"headroom-ai[all]\"\n\nThe demo will run, but compression will fail until you install it."
+            )
+
+    def _build_ui(self):
+        # Top toolbar
+        top = ttk.Frame(self, padding=(12, 10, 12, 6))
+        top.pack(fill="x")
+
+        ttk.Label(top, text="Model:").pack(side="left")
+        self.model_var = tk.StringVar(value="gpt-4o")
+        model_combo = ttk.Combobox(top, textvariable=self.model_var, width=28,
+            values=["gpt-4o", "claude-sonnet-4-5-20250929", "claude-opus-4-20250514", "gpt-4o-mini"], state="readonly")
+        model_combo.pack(side="left", padx=(6, 18))
+
+        self.compress_user_var = tk.BooleanVar(value=True)
+        ttk.Checkbutton(top, text="Compress user messages", variable=self.compress_user_var).pack(side="left", padx=8)
+
+        ttk.Label(top, text="Protect recent:").pack(side="left", padx=(18, 4))
+        self.protect_var = tk.StringVar(value="0")
+        ttk.Spinbox(top, from_=0, to=10, textvariable=self.protect_var, width=4).pack(side="left")
+
+        ttk.Label(top, text="Min tokens:").pack(side="left", padx=(12, 4))
+        self.min_tokens_var = tk.StringVar(value="10")
+        ttk.Entry(top, textvariable=self.min_tokens_var, width=6).pack(side="left")
+
+        ttk.Label(top, text="Target ratio:").pack(side="left", padx=(12, 4))
+        self.ratio_var = tk.StringVar(value="")
+        ttk.Entry(top, textvariable=self.ratio_var, width=6).pack(side="left")
+        ttk.Label(top, text="(blank = auto)", foreground="#666").pack(side="left", padx=(4, 0))
+
+        ttk.Button(top, text="Compress  ⌘⏎", command=self.compress_action).pack(side="right", padx=(6, 0))
+        ttk.Button(top, text="Sample log", command=self.load_sample).pack(side="right")
+        ttk.Button(top, text="Sample JSON", command=self.load_sample_json).pack(side="right", padx=6)
+
+        # Stats bar
+        stats_frame = ttk.Frame(self, padding=(12, 0, 12, 6))
+        stats_frame.pack(fill="x")
+        self.stats_var = tk.StringVar(value="Paste a ChatML / JSON conversation on the left, then Compress.")
+        ttk.Label(stats_frame, textvariable=self.stats_var, font=("Segoe UI", 10, "bold")).pack(side="left")
+        self.transforms_var = tk.StringVar(value="")
+        ttk.Label(stats_frame, textvariable=self.transforms_var, foreground="#444").pack(side="right")
+
+        # Main panes
+        paned = ttk.PanedWindow(self, orient=tk.HORIZONTAL)
+        paned.pack(fill="both", expand=True, padx=12, pady=(0, 8))
+
+        # Left – input
+        left_frame = ttk.LabelFrame(paned, text=" Input – ChatML / JSON messages ", padding=8)
+        paned.add(left_frame, weight=1)
+        self.input_text = scrolledtext.ScrolledText(left_frame, wrap="word", undo=True,
+            font=("Consolas", 10), height=20)
+        self.input_text.pack(fill="both", expand=True)
+        self.input_text.insert("1.0", SAMPLE_CONVERSATION)
+        input_hint = ttk.Label(left_frame,
+            text="Supported: JSON list of messages, <|im_start|>role ... <|im_end|>, or role: ... blocks",
+            foreground="#666")
+        input_hint.pack(anchor="w", pady=(4, 0))
+
+        # Right – output
+        right_frame = ttk.LabelFrame(paned, text=" Output – Compressed ", padding=8)
+        paned.add(right_frame, weight=1)
+
+        view_bar = ttk.Frame(right_frame)
+        view_bar.pack(fill="x", pady=(0, 4))
+        self.view_mode = tk.StringVar(value="chatml")
+        ttk.Radiobutton(view_bar, text="ChatML", variable=self.view_mode, value="chatml", command=self.rerender_output).pack(side="left")
+        ttk.Radiobutton(view_bar, text="JSON", variable=self.view_mode, value="json", command=self.rerender_output).pack(side="left", padx=8)
+        ttk.Button(view_bar, text="Copy", command=self.copy_output).pack(side="right")
+
+        self.output_text = scrolledtext.ScrolledText(right_frame, wrap="word",
+            font=("Consolas", 10), height=20)
+        self.output_text.pack(fill="both", expand=True)
+
+        # Tags for readability
+        self.output_text.tag_config("ccr", background="#ffe082", foreground="#5d4037")
+        self.output_text.tag_config("role", foreground="#1a56db", font=("Consolas", 10, "bold"))
+
+        # Bottom markers pane
+        bottom = ttk.LabelFrame(self, text=" Retrieval markers ", padding=8)
+        bottom.pack(fill="x", padx=12, pady=(0, 12))
+        self.markers_text = scrolledtext.ScrolledText(bottom, wrap="word", height=4, font=("Consolas", 9))
+        self.markers_text.pack(fill="x", expand=True)
+
+        # Keyboard shortcut
+        self.bind("<Control-Return>", lambda e: self.compress_action())
+        self.bind("<Command-Return>", lambda e: self.compress_action())
+
+        self.last_result = None
+        self.last_input_messages = []
+
+    def load_sample(self):
+        self.input_text.delete("1.0", "end")
+        self.input_text.insert("1.0", SAMPLE_CONVERSATION)
+
+    def load_sample_json(self):
+        self.input_text.delete("1.0", "end")
+        self.input_text.insert("1.0", json.dumps(SAMPLE_JSON, indent=2))
+
+    def compress_action(self):
+        if not HEADROOM_AVAILABLE:
+            messagebox.showerror("Missing dependency", "pip install \"headroom-ai[all]\"")
+            return
+        raw = self.input_text.get("1.0", "end-1c")
+        try:
+            messages = parse_messages(raw)
+            if not messages:
+                messagebox.showinfo("No messages", "Couldn't parse any messages.")
+                return
+            self.last_input_messages = messages
+        except Exception as e:
+            messagebox.showerror("Parse error", str(e))
+            return
+
+        # Build config
+        try:
+            protect_recent = int(self.protect_var.get() or 0)
+            min_tokens = int(self.min_tokens_var.get() or 10)
+            ratio_str = self.ratio_var.get().strip()
+            target_ratio = float(ratio_str) if ratio_str else None
+        except ValueError:
+            messagebox.showerror("Invalid option", "protect_recent / min_tokens / target_ratio must be numbers")
+            return
+
+        self.stats_var.set("Compressing…")
+        self.update_idletasks()
+
+        try:
+            result = compress(
+                messages,
+                model=self.model_var.get(),
+                compress_user_messages=self.compress_user_var.get(),
+                protect_recent=protect_recent,
+                min_tokens_to_compress=min_tokens,
+                target_ratio=target_ratio,
+            )
+        except Exception as e:
+            messagebox.showerror("Compression failed", str(e))
+            self.stats_var.set(f"Compression failed: {e}")
+            return
+
+        self.last_result = result
+        saved_pct = result.compression_ratio * 100
+        self.stats_var.set(
+            f"Tokens: {result.tokens_before} → {result.tokens_after}   "
+            f"Saved {result.tokens_saved}  ({saved_pct:.1f}%)"
+        )
+        self.transforms_var.set(" · ".join(result.transforms_applied) if result.transforms_applied else "no change")
+
+        self.rerender_output()
+
+    def rerender_output(self):
+        if not self.last_result:
+            return
+        result = self.last_result
+        mode = self.view_mode.get()
+
+        # Render raw compressed output
+        if mode == "json":
+            compressed_str = json.dumps(result.messages, indent=2, ensure_ascii=False)
+        else:
+            compressed_str = messages_to_chatml(result.messages)
+
+        # Output pane
+        out = self.output_text
+        out.config(state="normal")
+        out.delete("1.0", "end")
+
+        # Insert raw output
+        out.insert("end", compressed_str)
+
+        # Highlight CCR markers
+        ccr_re = re.compile(r"<<ccr:[0-9a-f]+>>|\[\d+ lines (?:omitted|compressed)[^\]]*\]|Retrieve more: hash=[0-9a-f]+", re.IGNORECASE)
+        text_content = out.get("1.0", "end-1c")
+        for m in ccr_re.finditer(text_content):
+            start = f"1.0+{m.start()}c"
+            end = f"1.0+{m.end()}c"
+            out.tag_add("ccr", start, end)
+
+        # Highlight roles in ChatML mode
+        if mode == "chatml":
+            for m in re.finditer(r"<\|im_start\|>(\w+)", text_content):
+                start = f"1.0+{m.start()}c"
+                end = f"1.0+{m.end()}c"
+                out.tag_add("role", start, end)
+
+        out.config(state="disabled")
+
+        # Markers pane
+        markers_box = self.markers_text
+        markers_box.config(state="normal")
+        markers_box.delete("1.0", "end")
+
+        markers = ccr_re.findall(compressed_str)
+        if markers:
+            markers_box.insert("end", "Reversible compression markers found:\n", "bold")
+            for mk in sorted(set(markers))[:20]:
+                markers_box.insert("end", f"  • {mk}\n")
+            markers_box.insert("end", "\nUse headroom_retrieve() with the hash to restore the original content.\n", "dim")
+        else:
+            markers_box.insert("end", "No CCR/retrieval markers in output.")
+
+        markers_box.tag_config("bold", font=("Consolas", 9, "bold"))
+        markers_box.tag_config("dim", foreground="#666")
+        markers_box.config(state="disabled")
+
+    def copy_output(self):
+        text = self.output_text.get("1.0", "end-1c")
+        self.clipboard_clear()
+        self.clipboard_append(text)
+        self.stats_var.set("Copied output to clipboard.")
+
+
+if __name__ == "__main__":
+    app = HeadroomDemo()
+    app.mainloop()
+```
+
+Let me know if you want to keep role/CCR highlighting or go completely plain.

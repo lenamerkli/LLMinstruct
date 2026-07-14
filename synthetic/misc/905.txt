@@ -1,0 +1,46 @@
+§u§
+```
+            json=data,
+            verify='/etc/pki/tls/certs/ca-bundle.crt',
+            stream=True,
+```
+How do I have to change the verify line to make the code work on debian instead of fedora?
+§a§
+On Debian-based systems, the CA bundle is located at a different path. Change the line to:
+
+```python
+verify='/etc/ssl/certs/ca-certificates.crt',
+```
+
+Here's the full context:
+
+```python
+            json=data,
+            verify='/etc/ssl/certs/ca-certificates.crt',
+            stream=True,
+```
+
+---
+
+**Common CA bundle paths by distro, for reference:**
+
+| Distro | Path |
+|---|---|
+| Fedora / RHEL / CentOS | `/etc/pki/tls/certs/ca-bundle.crt` |
+| Debian / Ubuntu | `/etc/ssl/certs/ca-certificates.crt` |
+| Alpine Linux | `/etc/ssl/cert.pem` |
+| Arch Linux | `/etc/ssl/certs/ca-certificates.crt` |
+
+---
+
+**Tip:** If you want your code to be **cross-platform** without hardcoding a path, you can use the [`certifi`](https://pypi.org/project/certifi/) package instead:
+
+```python
+import certifi
+
+            json=data,
+            verify=certifi.where(),
+            stream=True,
+```
+
+`certifi.where()` automatically returns the correct path to the CA bundle regardless of the OS.

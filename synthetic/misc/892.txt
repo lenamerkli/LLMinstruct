@@ -1,0 +1,13 @@
+§u§
+https://www.pcmag.com/news/norway-bans-ai-in-elementary-schools
+How is the ban worded? Is it worded in a way that branch prediction AI in CPUs is still allowed?
+§a§
+**Short answer:** The Norwegian measure is worded as an education-use/access rule, not as a hardware ban. So yes: **CPU branch prediction—even if implemented with ML/neural “AI” techniques—would still be allowed** under the wording as announced.
+
+**How it’s worded:** Norway’s official release calls it a **“new national recommendation”** and says that from autumn 2026 pupils in grades 1–7 should be shielded from **using AI themselves in schoolwork**. The key bullet is: **“På 1.–7. trinn skal elevene i all hovedsak ikke gis tilgang til kunstig intelligens”** — roughly, “In grades 1–7, pupils shall, as a general rule, not be given access to artificial intelligence.”
+
+The surrounding text makes the target pretty clear: it discusses **generative AI** in school, pupils using AI before they have basic reading/writing/math skills, and age-based guidance for when students may use AI tools. It also explicitly allows exceptions for pupils who need **AI-based tools** for reasons such as language learning or individualized instruction.
+
+So a CPU branch predictor is not what this is aimed at. A branch predictor is an internal processor mechanism that learns/predicts branch targets so the CPU can speculatively execute instructions; Intel describes these as microarchitectural predictors trained through program execution.  Students are not being “given access” to that as an AI tool, nor are they “using AI themselves” in schoolwork in the relevant sense.
+
+**Where the wording could matter:** The phrase “kunstlig intelligens” / “AI” is broad, so it could catch **student-facing AI features embedded in normal apps**—for example, a writing assistant, chatbot, image generator, or “AI help” button inside Google/Microsoft/Canva-style tools. But it is not worded as “no device may contain any AI-derived algorithm.” A laptop with a modern CPU, GPU, NPU, autocomplete firmware, etc. would not be banned merely because some component uses prediction or ML internally.

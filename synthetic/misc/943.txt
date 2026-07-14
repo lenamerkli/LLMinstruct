@@ -1,0 +1,2801 @@
+§u§
+app.py
+```
+from datetime import timedelta
+from dotenv import load_dotenv
+from flask import Flask, request, Response, send_from_directory
+from os import urandom
+from os.path import exists, join
+from requests import request as requests_send
+
+from database.main import database_init
+from admin.main import admin_blueprint
+from security.login import login_blueprint
+from storage.main import storage_blueprint
+from util.misc import DATE_FORMAT, DEVELOPMENT
+from util.logger import LogBasicConfig, setup_logger, GetLogger, LOG_INFO
+
+
+load_dotenv()
+
+app = Flask(__name__)
+
+if not exists(join(app.root_path, 'key.bin')):
+    with open(join(app.root_path, 'key.bin'), 'wb') as _f:
+        _f.write(urandom(64))
+with open(join(app.root_path, 'key.bin'), 'rb') as _f:
+    _secret_key = _f.read()
+app.secret_key = _secret_key
+
+if DEVELOPMENT:
+    app.config.update(
+        SESSION_COOKIE_NAME='session',
+        SESSION_COOKIE_HTTPONLY=True,
+        SESSION_COOKIE_SECURE=False,
+        SESSION_COOKIE_SAMESITE='Strict',
+        PERMANENT_SESSION_LIFETIME=timedelta(days=128),
+        MAX_CONTENT_LENGTH=None,  # no limit on request body (streaming uploads)
+    )
+else:
+    app.config.update(
+        SESSION_COOKIE_NAME='__Host-session',
+        SESSION_COOKIE_HTTPONLY=True,
+        SESSION_COOKIE_SECURE=True,
+        SESSION_COOKIE_SAMESITE='Strict',
+        PERMANENT_SESSION_LIFETIME=timedelta(days=128),
+        MAX_CONTENT_LENGTH=None,  # no limit on request body (streaming uploads)
+    )
+
+LogBasicConfig(filename='main.log', format='%(asctime)s\t%(message)s', datefmt=DATE_FORMAT, level=LOG_INFO)
+
+setup_logger('access', join(app.root_path, 'logs', 'access.log'))
+setup_logger('debug', join(app.root_path, 'logs', 'debug.log'))
+access_log = GetLogger('access')
+
+database_init(app)
+
+app.register_blueprint(login_blueprint)
+app.register_blueprint(storage_blueprint)
+app.register_blueprint(admin_blueprint)
+
+
+@app.errorhandler(404)
+def error_handler_404(*_, **__):
+    if DEVELOPMENT:
+        res = requests_send(
+            method=request.method,
+            url='http://' + request.url.replace(request.host_url, 'localhost:4200/'),  # noqa
+            headers={k: v for k, v in request.headers if k.lower() != 'host'},
+            data=request.get_data(),
+            cookies=request.cookies,
+            allow_redirects=True,
+        )
+        excluded_headers = ['content-encoding', 'content-length', 'transfer-encoding', 'connection']
+        headers = [
+            (k, v) for k, v in res.raw.headers.items()
+            if k.lower() not in excluded_headers
+        ]
+        response = Response(res.content, res.status_code, headers)  # noqa
+        return response
+    else:
+        path = request.path
+        if path and path.startswith('/'):
+            path = path[1:]
+        if path != '' and exists(join(app.root_path, 'web', path)):
+            return send_from_directory(join(app.root_path, 'web'), path), 200
+        else:
+            return send_from_directory(join(app.root_path, 'web'), 'index.html'), 200
+
+
+if __name__ == '__main__':
+    app.run('0.0.0.0', port=5000, debug=False)
+```
+
+storage/main.py
+```
+from datetime import datetime
+from flask import Blueprint, Response, request
+from logging import log
+from werkzeug.utils import secure_filename
+
+from database.classes.entry import Entry
+from database.classes.partition import Partition
+from database.classes.user import User
+from database.main import query_db
+from security.login import get_user_id
+from util.misc import DATE_FORMAT
+from util.rand import rand_id
+
+
+storage_blueprint = Blueprint('storage', __name__)
+
+
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+
+def _json_request():
+    """Parse JSON body, returning (data_dict, None) or (None, error_response)."""
+    try:
+        data = dict(request.get_json(silent=True) or {})
+    except Exception as e:
+        log(20, f"storage: invalid JSON: {e}")
+        return None, ({'error': 'Invalid JSON'}, 400)
+    return data, None
+
+
+def _auth_user():
+    """
+    Authenticate and return a User object.
+    Returns (user, None) or (None, error_response).
+    """
+    user_id = get_user_id()
+    if not user_id:
+        return None, ({'error': 'authentication error', 'message': 'Invalid session.'}, 401)
+    try:
+        user = User.load(user_id)
+    except ValueError:
+        return None, ({'error': 'authentication error', 'message': 'User not found.'}, 401)
+    return user, None
+
+
+def _get_partition_or_error(partition_id: str, user: User):
+    """Load a partition and check access. Returns (partition, None) or (None, error)."""
+    try:
+        part = Partition.load(partition_id)
+    except ValueError:
+        return None, ({'error': 'not found', 'message': 'Partition not found.'}, 404)
+    if not part.can_user_access(user):
+        return None, ({'error': 'forbidden', 'message': 'Access denied.'}, 403)
+    return part, None
+
+
+def _get_entry_or_error(entry_id: str, user_id: str):
+    """Load an entry and check access. Returns (entry, None) or (None, error)."""
+    try:
+        entry = Entry.load(entry_id)
+    except ValueError:
+        return None, ({'error': 'not found', 'message': 'Entry not found.'}, 404)
+    if not entry.can_user_access(user_id):
+        return None, ({'error': 'forbidden', 'message': 'Access denied.'}, 403)
+    return entry, None
+
+
+def _check_partition_edit(part: Partition, user: User):
+    """Return None if user can edit, else an error response tuple."""
+    if not part.can_user_edit(user):
+        return {'error': 'forbidden', 'message': 'Write access denied.'}, 403
+    return None
+
+
+def _check_entry_edit(entry: Entry, user_id: str):
+    """Return None if user can edit, else an error response tuple."""
+    if not entry.can_user_edit(user_id):
+        return {'error': 'forbidden', 'message': 'Write access denied.'}, 403
+    return None
+
+
+def _enrich_entry(entry: Entry, user_id: str) -> dict:
+    """Convert an entry to JSON and add ownership/permission fields."""
+    data = entry.to_json()
+    data['owned'] = entry.owner_id == user_id
+    data['can_write'] = entry.can_user_edit(user_id)
+    return data
+
+
+def _enrich_partition(part: Partition, user: User) -> dict:
+    """Convert a partition to JSON and add ownership/permission fields."""
+    data = part.to_json()
+    data['owned'] = part.owner_id == user.id_
+    data['can_write'] = part.can_user_edit(user)
+    return data
+
+
+def _sanitize_filename_for_header(name: str) -> str:
+    """Sanitize a filename for use in the Content-Disposition header."""
+    # secure_filename strips path separators and dangerous characters;
+    # if the result is empty (e.g. all characters were stripped), fall back
+    # to a safe default.
+    sanitized = secure_filename(name)
+    if not sanitized:
+        sanitized = 'download'
+    # Escape backslash and double-quote per RFC 6266
+    sanitized = sanitized.replace('\\', '\\\\').replace('"', '\\"')
+    return sanitized
+
+
+# ---------------------------------------------------------------------------
+# Partitions
+# ---------------------------------------------------------------------------
+
+@storage_blueprint.route('/api/v1/partitions', methods=['GET'])
+def r_partitions_get():
+    user, err = _auth_user()
+    if err:
+        return err
+
+    owned = query_db(
+        'SELECT id FROM partitions WHERE owner_id=? AND deleted IS NULL',
+        (user.id_,)
+    )
+    owned_ids = [row[0] for row in owned]
+
+    shared = query_db(
+        'SELECT ps.partition_id FROM partition_shares ps '
+        'JOIN partitions p ON p.id = ps.partition_id '
+        'WHERE ps.user_id=? AND p.deleted IS NULL',
+        (user.id_,)
+    )
+    shared_ids = [row[0] for row in shared]
+
+    all_ids = owned_ids + shared_ids
+    partitions_json = []
+    for pid in all_ids:
+        try:
+            p = Partition.load(pid)
+        except ValueError:
+            continue
+        partitions_json.append(_enrich_partition(p, user))
+
+    return {
+        'success': 'success',
+        'message': 'Partitions retrieved.',
+        'partitions': partitions_json,
+    }, 200
+
+
+@storage_blueprint.route('/api/v1/partitions/<partition_id>', methods=['GET'])
+def r_partitions_partition_get(partition_id: str):
+    user, err = _auth_user()
+    if err:
+        return err
+
+    part, err = _get_partition_or_error(partition_id, user)
+    if err:
+        return err
+
+    return {
+        'success': 'success',
+        'message': 'Partition retrieved.',
+        'partition': _enrich_partition(part, user),
+    }, 200
+
+
+@storage_blueprint.route('/api/v1/partitions/<partition_id>', methods=['DELETE'])
+def r_partitions_partition_delete(partition_id: str):
+    user, err = _auth_user()
+    if err:
+        return err
+
+    part, err = _get_partition_or_error(partition_id, user)
+    if err:
+        return err
+
+    edit_err = _check_partition_edit(part, user)
+    if edit_err:
+        return edit_err
+
+    part.deleted = datetime.now()
+    part.save()
+
+    return {
+        'success': 'success',
+        'message': 'Partition moved to trash.',
+    }, 200
+
+
+# ---------------------------------------------------------------------------
+# Entries — listing
+# ---------------------------------------------------------------------------
+
+@storage_blueprint.route('/api/v1/partitions/<partition_id>/entries', methods=['GET'])
+def r_partitions_partition_entries(partition_id: str):
+    user, err = _auth_user()
+    if err:
+        return err
+
+    part, err = _get_partition_or_error(partition_id, user)
+    if err:
+        return err
+
+    entries = part.root_entries()
+    entries_json = [_enrich_entry(e, user.id_) for e in entries]
+
+    return {
+        'success': 'success',
+        'message': 'Entries retrieved.',
+        'entries': entries_json,
+    }, 200
+
+
+@storage_blueprint.route('/api/v1/entries/<entry_id>/children', methods=['GET'])
+def r_entries_entry_children(entry_id: str):
+    user, err = _auth_user()
+    if err:
+        return err
+
+    entry, err = _get_entry_or_error(entry_id, user.id_)
+    if err:
+        return err
+
+    if entry.type_ != 'folder':
+        return {'error': 'invalid type', 'message': 'Entry is not a folder.'}, 400
+
+    result = query_db(
+        'SELECT id FROM entries WHERE parent_id=? AND deleted IS NULL',
+        (entry_id,)
+    )
+    children_json = []
+    for row in result:
+        try:
+            child = Entry.load(row[0])
+        except ValueError:
+            continue
+        children_json.append(_enrich_entry(child, user.id_))
+
+    return {
+        'success': 'success',
+        'message': 'Children retrieved.',
+        'entries': children_json,
+    }, 200
+
+
+@storage_blueprint.route('/api/v1/entries/<entry_id>', methods=['GET'])
+def r_entries_entry_get(entry_id: str):
+    user, err = _auth_user()
+    if err:
+        return err
+
+    entry, err = _get_entry_or_error(entry_id, user.id_)
+    if err:
+        return err
+
+    return {
+        'success': 'success',
+        'message': 'Entry retrieved.',
+        'entry': _enrich_entry(entry, user.id_),
+    }, 200
+
+
+@storage_blueprint.route('/api/v1/entries/<entry_id>/path', methods=['GET'])
+def r_entries_entry_path(entry_id: str):
+    user, err = _auth_user()
+    if err:
+        return err
+
+    entry, err = _get_entry_or_error(entry_id, user.id_)
+    if err:
+        return err
+
+    path_parts = [_enrich_entry(entry, user.id_)]
+    current = entry
+    while current.parent_id:
+        try:
+            parent = Entry.load(current.parent_id)
+        except ValueError:
+            break
+        if not parent.can_user_access(user.id_):
+            break
+        path_parts.insert(0, _enrich_entry(parent, user.id_))
+        current = parent
+
+    # Prepend the root partition
+    partition = entry.get_partition()
+    path_parts.insert(0, _enrich_partition(partition, user))
+
+    return {
+        'success': 'success',
+        'message': 'Path retrieved.',
+        'path': path_parts,
+    }, 200
+
+
+# ---------------------------------------------------------------------------
+# Entries — creation
+# ---------------------------------------------------------------------------
+
+@storage_blueprint.route('/api/v1/entries', methods=['POST'])
+def r_entries():
+    """Create a folder or symlink entry."""
+    user, err = _auth_user()
+    if err:
+        return err
+
+    data, err = _json_request()
+    if err:
+        return err
+
+    entry_type = data.get('type_', 'folder')
+    if entry_type not in ('folder', 'link'):
+        return {'error': 'validation', 'message': 'type_ must be "folder" or "link".'}, 400
+
+    name = (data.get('name') or '').strip()
+    if not name:
+        return {'error': 'validation', 'message': 'Entry name is required.'}, 400
+
+    partition_id = data.get('partition_id', '')
+    if not partition_id:
+        return {'error': 'validation', 'message': 'partition_id is required.'}, 400
+
+    part, err = _get_partition_or_error(partition_id, user)
+    if err:
+        return err
+
+    edit_err = _check_partition_edit(part, user)
+    if edit_err:
+        return edit_err
+
+    parent_id = data.get('parent_id') or None
+
+    if parent_id:
+        parent_entry, parent_err = _get_entry_or_error(parent_id, user.id_)
+        if parent_err:
+            return parent_err
+        if parent_entry.type_ != 'folder':
+            return {'error': 'invalid type', 'message': 'Parent must be a folder.'}, 400
+
+    if entry_type == 'folder':
+        entry = Entry(
+            type_='folder',
+            name=name,
+            parent_id=parent_id,
+            owner_id=user.id_,
+            partition_id=partition_id,
+        )
+        entry.save()
+    else:  # link
+        target_id = data.get('target_id') or None
+        target_partition_id = data.get('target_partition_id') or None
+        if not target_id and not target_partition_id:
+            return {'error': 'validation', 'message': 'Link requires target_id or target_partition_id.'}, 400
+        entry = Entry(
+            type_='link',
+            name=name,
+            parent_id=parent_id,
+            owner_id=user.id_,
+            partition_id=partition_id,
+            target_id=target_id,
+            target_partition_id=target_partition_id,
+        )
+        entry.save()
+
+    return {
+        'success': 'success',
+        'message': 'Entry created.',
+        'entry': _enrich_entry(entry, user.id_),
+    }, 201
+
+
+@storage_blueprint.route('/api/v1/entries/<parent_id>/upload', methods=['POST'])
+def r_etnries_parent_upload(parent_id: str):
+    """
+    Upload a file.  ``parent_id`` can be a folder entry id or a partition id
+    (for uploading directly into a partition root).
+
+    The file is streamed directly into the content-addressed store — no
+    intermediate temp file on the OS tmp partition.
+    """
+    user, err = _auth_user()
+    if err:
+        return err
+
+    partition, actual_parent_id, err = _resolve_upload_target(parent_id, user)
+    if err:
+        return err
+
+    if 'file' not in request.files:
+        return {'error': 'validation', 'message': 'No file provided.'}, 400
+
+    file = request.files['file']
+    if not file.filename or file.filename.strip() == '':
+        return {'error': 'validation', 'message': 'File has no name.'}, 400
+
+    name = file.filename.strip()
+
+    try:
+        entry = Entry.create_file_stream(
+            stream=file.stream,
+            partition=partition,
+            owner_id=user.id_,
+            parent_id=actual_parent_id,
+            name=name,
+        )
+    except Exception as ex:
+        log(20, f"storage: upload failed: {ex}")
+        return {'error': 'upload failed', 'message': str(ex)}, 500
+
+    entry.save()
+
+    return {
+        'success': 'success',
+        'message': 'File uploaded.',
+        'entry': _enrich_entry(entry, user.id_),
+    }, 201
+
+
+@storage_blueprint.route('/api/v1/entries/<parent_id>/upload-batch', methods=['POST'])
+def r_entries_parent_upload_batch(parent_id: str):
+    """
+    Upload multiple files at once. ``parent_id`` can be a folder entry id or
+    a partition id. A ``relative_paths`` form field (one per file) may
+    accompany each file to recreate a directory structure.
+
+    Each file is streamed directly into the content-addressed store — no
+    temporary copy lands in the OS tmp directory.
+    """
+    user, err = _auth_user()
+    if err:
+        return err
+
+    partition, actual_parent_id, err = _resolve_upload_target(parent_id, user)
+    if err:
+        return err
+
+    uploaded_files = request.files.getlist('files')
+    if not uploaded_files:
+        return {'error': 'validation', 'message': 'No files provided.'}, 400
+
+    # relative_paths is an optional list that matches the file list index.
+    relative_paths = request.form.getlist('relative_paths')
+
+    results = []
+    errors_list = []
+
+    for idx, file in enumerate(uploaded_files):
+        if not file.filename or file.filename.strip() == '':
+            continue
+
+        rel_path = relative_paths[idx] if idx < len(relative_paths) else None
+        current_parent_id = actual_parent_id
+        if rel_path:
+            parts = rel_path.strip().split('/')
+            if len(parts) > 1:
+                for dir_name in parts[:-1]:
+                    if not dir_name:
+                        continue
+                    current_parent_id = _ensure_folder(
+                        name=dir_name,
+                        partition=partition,
+                        parent_id=current_parent_id,
+                        owner_id=user.id_,
+                    )
+            name = parts[-1] if parts[-1] else file.filename.strip()
+        else:
+            name = file.filename.strip()
+
+        if not name:
+            continue
+
+        try:
+            entry = Entry.create_file_stream(
+                stream=file.stream,
+                partition=partition,
+                owner_id=user.id_,
+                parent_id=current_parent_id,
+                name=name,
+            )
+            entry.save()
+            results.append(_enrich_entry(entry, user.id_))
+        except Exception as ex:
+            log(20, f"storage: batch upload failed for {name}: {ex}")
+            errors_list.append({'file': name, 'error': str(ex)})
+
+    status_code = 201 if results else 500
+    body = {
+        'success': 'success' if results else 'error',
+        'message': f'{len(results)} file(s) uploaded, {len(errors_list)} error(s).',
+        'entries': results,
+    }
+    if errors_list:
+        body['upload_errors'] = errors_list
+    return body, status_code
+
+
+def _resolve_upload_target(parent_id: str, user):
+    """Shared helper: validate *parent_id* and return (partition, parent_id_or_None, error_tuple).
+
+    Returns (partition, actual_parent_id, None) on success, or (None, None, error_response) on failure.
+    """
+    parent_entry = None
+    try:
+        parent_entry = Entry.load(parent_id)
+    except ValueError:
+        pass
+
+    if parent_entry:
+        if parent_entry.type_ != 'folder':
+            return None, None, ({'error': 'invalid type', 'message': 'Parent must be a folder.'}, 400)
+        part, err = _get_partition_or_error(parent_entry.partition_id, user)
+        if err:
+            return None, None, err
+        if not parent_entry.can_user_edit(user.id_):
+            return None, None, ({'error': 'forbidden', 'message': 'Write access denied.'}, 403)
+        return part, parent_entry.id_, None
+
+    part, err = _get_partition_or_error(parent_id, user)
+    if err:
+        return None, None, err
+    edit_err = _check_partition_edit(part, user)
+    if edit_err:
+        return None, None, edit_err
+    return part, None, None
+
+
+def _ensure_folder(name: str, partition, parent_id, owner_id: str) -> str:
+    """Return the id of an existing folder with *name* under *parent_id*, or
+    create it and return the new id."""
+    existing = query_db(
+        'SELECT id FROM entries WHERE type=? AND name=? AND parent_id=? '
+        'AND partition_id=? AND deleted IS NULL',
+        ('folder', name, parent_id, partition.id_),
+        True,
+    )
+    if existing:
+        return existing[0]
+
+    folder = Entry(
+        type_='folder',
+        name=name,
+        parent_id=parent_id,
+        owner_id=owner_id,
+        partition_id=partition.id_,
+    )
+    folder.save()
+    return folder.id_
+
+
+# ---------------------------------------------------------------------------
+# Entries — download
+# ---------------------------------------------------------------------------
+
+@storage_blueprint.route('/api/v1/entries/<entry_id>/download', methods=['GET'])
+def r_entries_entry_download(entry_id: str):
+    user, err = _auth_user()
+    if err:
+        return err
+
+    entry, err = _get_entry_or_error(entry_id, user.id_)
+    if err:
+        return err
+
+    if entry.type_ != 'file':
+        return {'error': 'invalid type', 'message': 'Entry is not a file.'}, 400
+
+    content = entry.read()
+    entry.save()
+
+    safe_name = _sanitize_filename_for_header(entry.name)
+
+    return Response(
+        content,
+        mimetype='application/octet-stream',
+        headers={
+            'Content-Disposition': f'attachment; filename="{safe_name}"',
+            'Content-Length': str(entry.size or len(content)),
+        },
+    ), 200
+
+
+# ---------------------------------------------------------------------------
+# Entries — update / rename / move
+# ---------------------------------------------------------------------------
+
+@storage_blueprint.route('/api/v1/entries/<entry_id>', methods=['PUT'])
+def r_entries_entry_put(entry_id: str):
+    user, err = _auth_user()
+    if err:
+        return err
+
+    entry, err = _get_entry_or_error(entry_id, user.id_)
+    if err:
+        return err
+
+    edit_err = _check_entry_edit(entry, user.id_)
+    if edit_err:
+        return edit_err
+
+    data, err = _json_request()
+    if err:
+        return err
+
+    if 'name' in data:
+        name = (data['name'] or '').strip()
+        if name:
+            entry.name = name
+
+    if 'parent_id' in data:
+        new_parent_id = data['parent_id'] or None
+        if new_parent_id:
+            new_parent, parent_err = _get_entry_or_error(new_parent_id, user.id_)
+            if parent_err:
+                return parent_err
+            if new_parent.type_ != 'folder':
+                return {'error': 'invalid type', 'message': 'New parent must be a folder.'}, 400
+            if new_parent.partition_id != entry.partition_id:
+                return {'error': 'validation', 'message': 'Cannot move entry across partitions.'}, 400
+        entry.parent_id = new_parent_id
+
+    entry.update_edited()
+    entry.save()
+
+    return {
+        'success': 'success',
+        'message': 'Entry updated.',
+        'entry': _enrich_entry(entry, user.id_),
+    }, 200
+
+
+# ---------------------------------------------------------------------------
+# Entries — delete / restore
+# ---------------------------------------------------------------------------
+
+@storage_blueprint.route('/api/v1/entries/<entry_id>', methods=['DELETE'])
+def r_entries_entry_delete(entry_id: str):
+    user, err = _auth_user()
+    if err:
+        return err
+
+    entry, err = _get_entry_or_error(entry_id, user.id_)
+    if err:
+        return err
+
+    edit_err = _check_entry_edit(entry, user.id_)
+    if edit_err:
+        return edit_err
+
+    entry.deleted = datetime.now()
+    entry.save()
+
+    return {
+        'success': 'success',
+        'message': 'Entry moved to trash.',
+    }, 200
+
+
+@storage_blueprint.route('/api/v1/entries/<entry_id>/restore', methods=['POST'])
+def r_entries_entry_restore(entry_id: str):
+    user, err = _auth_user()
+    if err:
+        return err
+
+    # Load the entry without the usual access check — restore requires strict
+    # ownership, not just write access via sharing.
+    try:
+        entry = Entry.load(entry_id)
+    except ValueError:
+        return {'error': 'not found', 'message': 'Entry not found.'}, 404
+
+    if entry.owner_id != user.id_:
+        return {'error': 'forbidden', 'message': 'Only the owner can restore.'}, 403
+
+    if not entry.deleted:
+        return {'error': 'invalid', 'message': 'Entry is not in trash.'}, 400
+
+    entry.deleted = None
+    entry.update_edited()
+    entry.save()
+
+    return {
+        'success': 'success',
+        'message': 'Entry restored.',
+        'entry': _enrich_entry(entry, user.id_),
+    }, 200
+
+
+# ---------------------------------------------------------------------------
+# Trash
+# ---------------------------------------------------------------------------
+
+@storage_blueprint.route('/api/v1/trash', methods=['GET'])
+def r_trash():
+    user, err = _auth_user()
+    if err:
+        return err
+
+    result = query_db(
+        'SELECT id FROM entries WHERE owner_id=? AND deleted IS NOT NULL',
+        (user.id_,)
+    )
+    entries_json = []
+    for row in result:
+        try:
+            e = Entry.load(row[0])
+        except ValueError:
+            continue
+        entries_json.append(_enrich_entry(e, user.id_))
+
+    return {
+        'success': 'success',
+        'message': 'Trash retrieved.',
+        'entries': entries_json,
+    }, 200
+
+
+# ---------------------------------------------------------------------------
+# Sharing — partitions
+# ---------------------------------------------------------------------------
+
+@storage_blueprint.route('/api/v1/partitions/<partition_id>/share', methods=['GET'])
+def r_partitions_partition_share_list(partition_id: str):
+    user, err = _auth_user()
+    if err:
+        return err
+
+    part, err = _get_partition_or_error(partition_id, user)
+    if err:
+        return err
+
+    if part.owner_id != user.id_:
+        return {'error': 'forbidden', 'message': 'Only the owner can view shares.'}, 403
+
+    result = query_db(
+        'SELECT ps.user_id, u.username, ps.allow_write, ps.created '
+        'FROM partition_shares ps '
+        'JOIN users u ON u.id = ps.user_id '
+        'WHERE ps.partition_id=?',
+        (partition_id,),
+    )
+    shares = [
+        {
+            'user_id': row[0],
+            'username': row[1],
+            'allow_write': bool(row[2]),
+            'created': row[3],
+        }
+        for row in result
+    ]
+    return {
+        'success': 'success',
+        'message': 'Partition shares retrieved.',
+        'shares': shares,
+    }, 200
+
+
+@storage_blueprint.route('/api/v1/partitions/<partition_id>/share', methods=['POST'])
+def r_partitions_partition_share(partition_id: str):
+    user, err = _auth_user()
+    if err:
+        return err
+
+    part, err = _get_partition_or_error(partition_id, user)
+    if err:
+        return err
+
+    if part.owner_id != user.id_:
+        return {'error': 'forbidden', 'message': 'Only the owner can share.'}, 403
+
+    data, err = _json_request()
+    if err:
+        return err
+
+    target_user_id = (data.get('user_id') or '').strip()
+    if not target_user_id:
+        return {'error': 'validation', 'message': 'user_id is required.'}, 400
+
+    if not query_db('SELECT id FROM users WHERE id=?', (target_user_id,), True):
+        return {'error': 'not found', 'message': 'Target user not found.'}, 404
+
+    allow_write = data.get('allow_write', 0)
+    if allow_write not in (0, 1):
+        allow_write = 0
+
+    existing = query_db(
+        'SELECT id FROM partition_shares WHERE partition_id=? AND user_id=?',
+        (partition_id, target_user_id),
+        True,
+    )
+    if existing:
+        query_db(
+            'UPDATE partition_shares SET allow_write=? WHERE id=?',
+            (allow_write, existing[0]),
+        )
+        share_id = existing[0]
+    else:
+        share_id = rand_id('pshare')
+        query_db(
+            'INSERT INTO partition_shares (id, partition_id, owner_id, user_id, created, allow_write) '
+            'VALUES (?, ?, ?, ?, ?, ?)',
+            (share_id, partition_id, user.id_, target_user_id,
+             datetime.now().strftime(DATE_FORMAT), allow_write),
+        )
+
+    return {
+        'success': 'success',
+        'message': 'Partition shared.',
+        'share_id': share_id,
+    }, 200
+
+
+@storage_blueprint.route('/api/v1/partitions/<partition_id>/share/<target_user_id>', methods=['DELETE'])
+def r_partitions_partition_share_user(partition_id: str, target_user_id: str):
+    user, err = _auth_user()
+    if err:
+        return err
+
+    part, err = _get_partition_or_error(partition_id, user)
+    if err:
+        return err
+
+    if part.owner_id != user.id_:
+        return {'error': 'forbidden', 'message': 'Only the owner can revoke shares.'}, 403
+
+    query_db(
+        'DELETE FROM partition_shares WHERE partition_id=? AND user_id=?',
+        (partition_id, target_user_id),
+    )
+
+    return {
+        'success': 'success',
+        'message': 'Partition share revoked.',
+    }, 200
+
+
+# ---------------------------------------------------------------------------
+# Sharing — entries
+# ---------------------------------------------------------------------------
+
+@storage_blueprint.route('/api/v1/entries/<entry_id>/share', methods=['GET'])
+def r_entries_entry_share_list(entry_id: str):
+    user, err = _auth_user()
+    if err:
+        return err
+
+    entry, err = _get_entry_or_error(entry_id, user.id_)
+    if err:
+        return err
+
+    if entry.owner_id != user.id_:
+        return {'error': 'forbidden', 'message': 'Only the owner can view shares.'}, 403
+
+    result = query_db(
+        'SELECT es.user_id, u.username, es.allow_write, es.created '
+        'FROM entry_shares es '
+        'JOIN users u ON u.id = es.user_id '
+        'WHERE es.entry_id=?',
+        (entry_id,),
+    )
+    shares = [
+        {
+            'user_id': row[0],
+            'username': row[1],
+            'allow_write': bool(row[2]),
+            'created': row[3],
+        }
+        for row in result
+    ]
+    return {
+        'success': 'success',
+        'message': 'Entry shares retrieved.',
+        'shares': shares,
+    }, 200
+
+
+@storage_blueprint.route('/api/v1/entries/<entry_id>/share', methods=['POST'])
+def r_entries_entry_share(entry_id: str):
+    user, err = _auth_user()
+    if err:
+        return err
+
+    entry, err = _get_entry_or_error(entry_id, user.id_)
+    if err:
+        return err
+
+    if entry.owner_id != user.id_:
+        return {'error': 'forbidden', 'message': 'Only the owner can share.'}, 403
+
+    data, err = _json_request()
+    if err:
+        return err
+
+    target_user_id = (data.get('user_id') or '').strip()
+    if not target_user_id:
+        return {'error': 'validation', 'message': 'user_id is required.'}, 400
+
+    if not query_db('SELECT id FROM users WHERE id=?', (target_user_id,), True):
+        return {'error': 'not found', 'message': 'Target user not found.'}, 404
+
+    allow_write = data.get('allow_write', 0)
+    if allow_write not in (0, 1):
+        allow_write = 0
+
+    existing = query_db(
+        'SELECT id FROM entry_shares WHERE entry_id=? AND user_id=?',
+        (entry_id, target_user_id),
+        True,
+    )
+    if existing:
+        query_db(
+            'UPDATE entry_shares SET allow_write=? WHERE id=?',
+            (allow_write, existing[0]),
+        )
+        share_id = existing[0]
+    else:
+        share_id = rand_id('eshare')
+        query_db(
+            'INSERT INTO entry_shares (id, entry_id, owner_id, user_id, created, allow_write) '
+            'VALUES (?, ?, ?, ?, ?, ?)',
+            (share_id, entry_id, user.id_, target_user_id,
+             datetime.now().strftime(DATE_FORMAT), allow_write),
+        )
+
+    return {
+        'success': 'success',
+        'message': 'Entry shared.',
+        'share_id': share_id,
+    }, 200
+
+
+@storage_blueprint.route(
+    '/api/v1/entries/<entry_id>/share/<target_user_id>', methods=['DELETE'],
+)
+def r_entries_entry_share_user(entry_id: str, target_user_id: str):
+    user, err = _auth_user()
+    if err:
+        return err
+
+    entry, err = _get_entry_or_error(entry_id, user.id_)
+    if err:
+        return err
+
+    if entry.owner_id != user.id_:
+        return {'error': 'forbidden', 'message': 'Only the owner can revoke shares.'}, 403
+
+    query_db(
+        'DELETE FROM entry_shares WHERE entry_id=? AND user_id=?',
+        (entry_id, target_user_id),
+    )
+
+    return {
+        'success': 'success',
+        'message': 'Entry share revoked.',
+    }, 200
+
+
+@storage_blueprint.route('/api/v1/shared', methods=['GET'])
+def r_shared():
+    user, err = _auth_user()
+    if err:
+        return err
+
+    shared_partitions = query_db(
+        'SELECT partition_id, allow_write FROM partition_shares WHERE user_id=?',
+        (user.id_,),
+    )
+    shared_entries = query_db(
+        'SELECT entry_id, allow_write FROM entry_shares WHERE user_id=?',
+        (user.id_,),
+    )
+
+    partitions = []
+    for row in shared_partitions:
+        try:
+            p = Partition.load(row[0])
+            d = p.to_json()
+            d['can_write'] = bool(row[1])
+            partitions.append(d)
+        except ValueError:
+            continue
+
+    entries = []
+    for row in shared_entries:
+        try:
+            e = Entry.load(row[0])
+            d = e.to_json()
+            d['can_write'] = bool(row[1])
+            entries.append(d)
+        except ValueError:
+            continue
+
+    return {
+        'success': 'success',
+        'message': 'Shared items retrieved.',
+        'partitions': partitions,
+        'entries': entries,
+    }, 200
+
+
+# ---------------------------------------------------------------------------
+# Search
+# ---------------------------------------------------------------------------
+
+@storage_blueprint.route('/api/v1/search', methods=['GET'])
+def r_search():
+    user, err = _auth_user()
+    if err:
+        return err
+
+    q = (request.args.get('q') or '').strip()
+    if not q:
+        return {'error': 'validation', 'message': 'Query parameter "q" is required.'}, 400
+
+    partition_filter = (request.args.get('partition_id') or '').strip()
+
+    owned = query_db('SELECT id FROM partitions WHERE owner_id=?', (user.id_,))
+    shared = query_db('SELECT partition_id FROM partition_shares WHERE user_id=?', (user.id_,))
+    accessible_ids = set(row[0] for row in owned) | set(row[0] for row in shared)
+
+    if partition_filter and partition_filter not in accessible_ids:
+        return {'error': 'forbidden', 'message': 'Access to partition denied.'}, 403
+
+    like_q = f'%{q}%'
+    if partition_filter:
+        result = query_db(
+            'SELECT id FROM entries WHERE name LIKE ? AND partition_id=? AND deleted IS NULL',
+            (like_q, partition_filter),
+        )
+    else:
+        if not accessible_ids:
+            return {
+                'success': 'success',
+                'message': 'Search complete.',
+                'entries': [],
+            }, 200
+        placeholders = ','.join('?' * len(accessible_ids))
+        result = query_db(
+            f'SELECT id FROM entries WHERE name LIKE ? '
+            f'AND partition_id IN ({placeholders}) AND deleted IS NULL',
+            (like_q,) + tuple(accessible_ids),
+        )
+
+    entries_json = []
+    for row in result:
+        try:
+            e = Entry.load(row[0])
+        except ValueError:
+            continue
+        if e.can_user_access(user.id_):
+            entries_json.append(_enrich_entry(e, user.id_))
+
+    return {
+        'success': 'success',
+        'message': 'Search complete.',
+        'entries': entries_json,
+    }, 200
+
+
+# ---------------------------------------------------------------------------
+# Recent
+# ---------------------------------------------------------------------------
+
+@storage_blueprint.route('/api/v1/recent', methods=['GET'])
+def r_recent():
+    user, err = _auth_user()
+    if err:
+        return err
+
+    owned = query_db('SELECT id FROM partitions WHERE owner_id=?', (user.id_,))
+    shared = query_db('SELECT partition_id FROM partition_shares WHERE user_id=?', (user.id_,))
+    accessible_ids = set(row[0] for row in owned) | set(row[0] for row in shared)
+
+    if not accessible_ids:
+        return {
+            'success': 'success',
+            'message': 'Recent entries retrieved.',
+            'entries': [],
+        }, 200
+
+    limit = 50
+    placeholders = ','.join('?' * len(accessible_ids))
+    result = query_db(
+        f'SELECT id FROM entries WHERE partition_id IN ({placeholders}) '
+        f'AND deleted IS NULL ORDER BY viewed DESC LIMIT ?',
+        tuple(accessible_ids) + (limit,),
+    )
+
+    entries_json = []
+    for row in result:
+        try:
+            e = Entry.load(row[0])
+        except ValueError:
+            continue
+        if e.can_user_access(user.id_):
+            entries_json.append(_enrich_entry(e, user.id_))
+
+    return {
+        'success': 'success',
+        'message': 'Recent entries retrieved.',
+        'entries': entries_json,
+    }, 200
+
+
+# ---------------------------------------------------------------------------
+# Usage
+# ---------------------------------------------------------------------------
+
+@storage_blueprint.route('/api/v1/usage', methods=['GET'])
+def r_usage():
+    user, err = _auth_user()
+    if err:
+        return err
+
+    owned = query_db(
+        'SELECT id, capacity FROM partitions WHERE owner_id=? AND deleted IS NULL',
+        (user.id_,)
+    )
+
+    total_capacity = 0
+    total_used = 0
+    partitions_detail = []
+
+    for row in owned:
+        pid, capacity = row[0], row[1]
+        total_capacity += capacity
+        size_row = query_db(
+            'SELECT COALESCE(SUM(size), 0) FROM entries '
+            'WHERE partition_id=? AND type=? AND deleted IS NULL',
+            (pid, 'file'),
+            True,
+        )
+        used = size_row[0] if size_row else 0
+        total_used += used
+        partitions_detail.append({
+            'partition_id': pid,
+            'capacity': capacity,
+            'used': used,
+        })
+
+    return {
+        'success': 'success',
+        'message': 'Usage retrieved.',
+        'total_capacity': total_capacity,
+        'total_used': total_used,
+        'partitions': partitions_detail,
+    }, 200
+```
+
+storage.service.ts
+```
+import { HttpClient, HttpEvent, HttpEventType, HttpUploadProgressEvent } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { map, share } from 'rxjs/operators';
+
+import { Entry, EntriesResponse, EntryDto, EntryResponse, PathResponse } from '../type/entry';
+import { Partition, PartitionDto, PartitionResponse, PartitionsResponse } from '../type/partition';
+import { Share, ShareCreatedResponse, SharesResponse } from '../type/share';
+import { Usage, UsageResponse } from '../type/usage';
+
+export interface PathItem {
+  isPartition: boolean;
+  partition?: Partition;
+  entry?: Entry;
+}
+
+export interface SimpleResponse {
+  success?: string;
+  message?: string;
+  error?: string;
+}
+
+export interface BatchUploadError {
+  file: string;
+  error: string;
+}
+
+export interface BatchUploadResponse {
+  success?: string;
+  message?: string;
+  error?: string;
+  entries: EntryDto[];
+  upload_errors?: BatchUploadError[];
+}
+
+/** Emitted for every real-time upload progress tick. */
+export interface UploadProgress {
+  /** How many whole files have completed uploading (estimated during transfer). */
+  filesDone: number;
+  /** Total files in the batch. */
+  filesTotal: number;
+  /** Bytes uploaded across all files so far. */
+  bytesUploaded: number;
+  /** Total bytes across all files. */
+  bytesTotal: number;
+  /** Percentage 0–100 (overall). */
+  percent: number;
+  /** Human-readable current speed (e.g. "2.3 MB/s"). */
+  speed: string;
+}
+
+@Injectable({
+  providedIn: 'root',
+})
+export class StorageService {
+  private readonly http = inject(HttpClient);
+
+  /** Active XHR reference so we can abort an in-flight batch upload. */
+  private activeUploadXhr: XMLHttpRequest | null = null;
+
+  // --- Partitions ---------------------------------------------------------
+
+  getPartitions(): Observable<Partition[]> {
+    return this.http
+      .get<PartitionsResponse>('/api/v1/partitions')
+      .pipe(map((res) => res.partitions.map((p) => new Partition(p))));
+  }
+
+  getPartition(partitionId: string): Observable<Partition> {
+    return this.http
+      .get<PartitionResponse>(`/api/v1/partitions/${partitionId}`)
+      .pipe(map((res) => new Partition(res.partition)));
+  }
+
+  deletePartition(partitionId: string): Observable<SimpleResponse> {
+    return this.http.delete<SimpleResponse>(`/api/v1/partitions/${partitionId}`);
+  }
+
+  // --- Entries — listing ---------------------------------------------------
+
+  getPartitionEntries(partitionId: string): Observable<Entry[]> {
+    return this.http
+      .get<EntriesResponse>(`/api/v1/partitions/${partitionId}/entries`)
+      .pipe(map((res) => res.entries.map((e) => new Entry(e))));
+  }
+
+  getEntryChildren(entryId: string): Observable<Entry[]> {
+    return this.http
+      .get<EntriesResponse>(`/api/v1/entries/${entryId}/children`)
+      .pipe(map((res) => res.entries.map((e) => new Entry(e))));
+  }
+
+  getEntry(entryId: string): Observable<Entry> {
+    return this.http
+      .get<EntryResponse>(`/api/v1/entries/${entryId}`)
+      .pipe(map((res) => new Entry(res.entry)));
+  }
+
+  getEntryPath(entryId: string): Observable<PathItem[]> {
+    return this.http.get<PathResponse>(`/api/v1/entries/${entryId}/path`).pipe(
+      map((res) =>
+        res.path.map((item) => {
+          const record = item as Record<string, unknown>;
+          if ('type_' in record) {
+            return { isPartition: false, entry: new Entry(record as unknown as EntryDto) };
+          }
+          return { isPartition: true, partition: new Partition(record as unknown as PartitionDto) };
+        }),
+      ),
+    );
+  }
+
+  // --- Entries — creation ---------------------------------------------------
+
+  createFolder(name: string, partitionId: string, parentId: string | null): Observable<Entry> {
+    return this.http
+      .post<EntryResponse>('/api/v1/entries', {
+        type_: 'folder',
+        name,
+        partition_id: partitionId,
+        parent_id: parentId,
+      })
+      .pipe(map((res) => new Entry(res.entry)));
+  }
+
+  createLink(
+    name: string,
+    partitionId: string,
+    parentId: string | null,
+    targetId: string | null,
+    targetPartitionId: string | null,
+  ): Observable<Entry> {
+    return this.http
+      .post<EntryResponse>('/api/v1/entries', {
+        type_: 'link',
+        name,
+        partition_id: partitionId,
+        parent_id: parentId,
+        target_id: targetId,
+        target_partition_id: targetPartitionId,
+      })
+      .pipe(map((res) => new Entry(res.entry)));
+  }
+
+  uploadFile(parentOrPartitionId: string, file: File): Observable<Entry> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    return this.http
+      .post<EntryResponse>(`/api/v1/entries/${parentOrPartitionId}/upload`, formData)
+      .pipe(map((res) => new Entry(res.entry)));
+  }
+
+  /**
+   * Upload a batch of files in a SINGLE multipart request using
+   * Angular's HttpClient with `reportProgress: true`.
+   *
+   * Returns an Observable of HttpEvent that yields progress events
+   * and a final HttpResponse. The component subscribes and updates
+   * the progress bar in real time.
+   *
+   * All files are packed into one request targeting the existing
+   * /upload-batch backend endpoint. This avoids the per-request
+   * overhead (and gunicorn worker timeouts) of uploading files
+   * one-by-one.
+   */
+  uploadBatch(
+    parentOrPartitionId: string,
+    files: File[],
+    relativePaths: string[],
+  ): Observable<HttpEvent<BatchUploadResponse>> {
+    const uploadUrl = `/api/v1/entries/${parentOrPartitionId}/upload-batch`;
+    const formData = new FormData();
+    for (const file of files) {
+      formData.append('files', file, file.name);
+    }
+    for (const rp of relativePaths) {
+      formData.append('relative_paths', rp);
+    }
+
+    return this.http.post<BatchUploadResponse>(uploadUrl, formData, {
+      reportProgress: true,
+      observe: 'events',
+    }).pipe(share());
+  }
+
+  /**
+   * Abort the currently in-flight batch upload, if any.
+   *
+   * Angular's HttpClient does not expose a direct cancel API, so we
+   * instruct the component to unsubscribe from the observable chain.
+   */
+  cancelActiveUpload(): void {
+    // HttpClient subscriptions auto-cancel when unsubscribed.
+  }
+
+  /**
+   * Convenience: emit progress snapshots from an HttpEvent stream.
+   * Returns two Subjects that the component can subscribe to.
+   */
+  uploadBatchWithProgress(
+    parentOrPartitionId: string,
+    files: File[],
+    relativePaths: string[],
+  ): {
+    progress$: Subject<UploadProgress>;
+    response$: Subject<BatchUploadResponse>;
+  } {
+    const progress$ = new Subject<UploadProgress>();
+    const response$ = new Subject<BatchUploadResponse>();
+
+    const fileCount = files.length;
+    const totalBytes = files.reduce((acc, f) => acc + f.size, 0);
+
+    let lastTickTime = Date.now();
+    let lastTickBytes = 0;
+
+    const sub = this.uploadBatch(parentOrPartitionId, files, relativePaths).subscribe({
+      next: (event: HttpEvent<BatchUploadResponse>) => {
+        if (event.type === HttpEventType.UploadProgress) {
+          const loaded = (event as HttpUploadProgressEvent).loaded;
+          const total = (event as HttpUploadProgressEvent).total ?? totalBytes;
+
+          // Calculate speed
+          const now = Date.now();
+          const elapsed = (now - lastTickTime) / 1000;
+          const bytesInWindow = loaded - lastTickBytes;
+          const speedBps = elapsed > 0 ? bytesInWindow / elapsed : 0;
+          lastTickTime = now;
+          lastTickBytes = loaded;
+
+          const speedStr = this._formatSpeed(speedBps);
+
+          const estimatedFiles =
+            total > 0 ? Math.round((loaded / total) * fileCount) : 0;
+
+          progress$.next({
+            filesDone: estimatedFiles,
+            filesTotal: fileCount,
+            bytesUploaded: loaded,
+            bytesTotal: total,
+            percent: total > 0 ? Math.round((loaded / total) * 100) : 0,
+            speed: speedStr,
+          });
+        } else if (event.type === HttpEventType.Response) {
+          const body = event.body as BatchUploadResponse;
+          const realDone = body?.entries?.length ?? 0;
+
+          progress$.next({
+            filesDone: realDone,
+            filesTotal: fileCount,
+            bytesUploaded: totalBytes,
+            bytesTotal: totalBytes,
+            percent: 100,
+            speed: '',
+          });
+          progress$.complete();
+
+          response$.next(body);
+          response$.complete();
+        }
+      },
+      error: (err: unknown) => {
+        progress$.complete();
+        let message = 'Upload failed.';
+        if (typeof err === 'object' && err !== null && 'message' in err) {
+          message = (err as { message: string }).message;
+        } else if (typeof err === 'string') {
+          message = err;
+        }
+        response$.next({
+          success: 'error',
+          message,
+          entries: [],
+          upload_errors: [{ file: '', error: message }],
+        });
+        response$.complete();
+      },
+      complete: () => {
+        // Response already handled — nothing extra to do.
+      },
+    });
+
+    // Attach the subscription for cleanup.
+    (response$ as { _sub?: typeof sub })._sub = sub;
+
+    return { progress$, response$ };
+  }
+
+  private _formatSpeed(bytesPerSecond: number): string {
+    if (bytesPerSecond <= 0) {
+      return '';
+    }
+    const units = ['B/s', 'kB/s', 'MB/s', 'GB/s'];
+    let size = bytesPerSecond;
+    let unitIdx = 0;
+    while (size >= 1000 && unitIdx < units.length - 1) {
+      size /= 1000;
+      unitIdx++;
+    }
+    return `${size.toFixed(1)} ${units[unitIdx]}`;
+  }
+
+  // --- Entries — download ---------------------------------------------------
+
+  downloadEntry(entryId: string): Observable<Blob> {
+    return this.http.get(`/api/v1/entries/${entryId}/download`, { responseType: 'blob' });
+  }
+
+  // --- Entries — update -------------------------------------------------
+
+  renameEntry(entryId: string, name: string): Observable<Entry> {
+    return this.http
+      .put<EntryResponse>(`/api/v1/entries/${entryId}`, { name })
+      .pipe(map((res) => new Entry(res.entry)));
+  }
+
+  moveEntry(entryId: string, parentId: string | null): Observable<Entry> {
+    return this.http
+      .put<EntryResponse>(`/api/v1/entries/${entryId}`, { parent_id: parentId })
+      .pipe(map((res) => new Entry(res.entry)));
+  }
+
+  // --- Entries — delete / restore -------------------------------------------
+
+  deleteEntry(entryId: string): Observable<SimpleResponse> {
+    return this.http.delete<SimpleResponse>(`/api/v1/entries/${entryId}`);
+  }
+
+  restoreEntry(entryId: string): Observable<Entry> {
+    return this.http
+      .post<EntryResponse>(`/api/v1/entries/${entryId}/restore`, {})
+      .pipe(map((res) => new Entry(res.entry)));
+  }
+
+  // --- Trash ---------------------------------------------------------------
+
+  getTrash(): Observable<Entry[]> {
+    return this.http
+      .get<EntriesResponse>('/api/v1/trash')
+      .pipe(map((res) => res.entries.map((e) => new Entry(e))));
+  }
+
+  // --- Sharing — partitions --------------------------------------------------
+
+  getPartitionShares(partitionId: string): Observable<Share[]> {
+    return this.http
+      .get<SharesResponse>(`/api/v1/partitions/${partitionId}/share`)
+      .pipe(map((res) => res.shares.map((s) => new Share(s))));
+  }
+
+  sharePartition(partitionId: string, userId: string, allowWrite: boolean): Observable<string> {
+    return this.http
+      .post<ShareCreatedResponse>(`/api/v1/partitions/${partitionId}/share`, {
+        user_id: userId,
+        allow_write: allowWrite ? 1 : 0,
+      })
+      .pipe(map((res) => res.share_id));
+  }
+
+  revokePartitionShare(partitionId: string, userId: string): Observable<SimpleResponse> {
+    return this.http.delete<SimpleResponse>(`/api/v1/partitions/${partitionId}/share/${userId}`);
+  }
+
+  // --- Sharing — entries --------------------------------------------------
+
+  getEntryShares(entryId: string): Observable<Share[]> {
+    return this.http
+      .get<SharesResponse>(`/api/v1/entries/${entryId}/share`)
+      .pipe(map((res) => res.shares.map((s) => new Share(s))));
+  }
+
+  shareEntry(entryId: string, userId: string, allowWrite: boolean): Observable<string> {
+    return this.http
+      .post<ShareCreatedResponse>(`/api/v1/entries/${entryId}/share`, {
+        user_id: userId,
+        allow_write: allowWrite ? 1 : 0,
+      })
+      .pipe(map((res) => res.share_id));
+  }
+
+  revokeEntryShare(entryId: string, userId: string): Observable<SimpleResponse> {
+    return this.http.delete<SimpleResponse>(`/api/v1/entries/${entryId}/share/${userId}`);
+  }
+
+  // --- Shared with me --------------------------------------------------
+
+  getShared(): Observable<{ partitions: Partition[]; entries: Entry[] }> {
+    return this.http
+      .get<{
+        partitions: PartitionDto[];
+        entries: EntryDto[];
+      }>('/api/v1/shared')
+      .pipe(
+        map((res) => ({
+          partitions: res.partitions.map((p) => new Partition(p)),
+          entries: res.entries.map((e) => new Entry(e)),
+        })),
+      );
+  }
+
+  // --- Search ----------------------------------------------------------
+
+  search(q: string, partitionId?: string): Observable<Entry[]> {
+    const params: Record<string, string> = { q };
+    if (partitionId) {
+      params['partition_id'] = partitionId;
+    }
+    return this.http
+      .get<EntriesResponse>('/api/v1/search', { params })
+      .pipe(map((res) => res.entries.map((e) => new Entry(e))));
+  }
+
+  // --- Recent ------------------------------------------------------------
+
+  getRecent(): Observable<Entry[]> {
+    return this.http
+      .get<EntriesResponse>('/api/v1/recent')
+      .pipe(map((res) => res.entries.map((e) => new Entry(e))));
+  }
+
+  // --- Usage ---------------------------------------------------------------
+
+  getUsage(): Observable<Usage> {
+    return this.http.get<UsageResponse>('/api/v1/usage').pipe(map((res) => new Usage(res)));
+  }
+}
+```
+
+file-browser.ts
+```
+import { DatePipe } from '@angular/common';
+import { DestroyRef, Component, computed, inject, signal, WritableSignal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { combineLatest, Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+
+import { ConfirmDialog, ConfirmDialogData } from '../../component/confirm-dialog/confirm-dialog';
+import {
+  FolderPickerDialog,
+  FolderPickerDialogData,
+  FolderPickerResult,
+} from '../../component/folder-picker-dialog/folder-picker-dialog';
+import { NamePromptDialog, NamePromptDialogData } from '../../component/name-prompt-dialog/name-prompt-dialog';
+import { ShareDialog, ShareDialogData } from '../../component/share-dialog/share-dialog';
+import { BrowserRow, entryToRow, partitionToRow } from '../../other/browser-row';
+import { formatBytes } from '../../other/format-bytes';
+import { PathItem, StorageService, UploadProgress } from '../../service/storage.service';
+import { Subscription } from 'rxjs';
+import { Entry } from '../../type/entry';
+import { Partition } from '../../type/partition';
+
+type Mode = 'root' | 'partition' | 'folder' | 'trash' | 'shared' | 'recent';
+
+interface Crumb {
+  label: string;
+  link: string[] | null;
+}
+
+const SECTION_TITLES: Record<Mode, string> = {
+  root: 'Home',
+  partition: '',
+  folder: '',
+  trash: 'Trash',
+  shared: 'Shared with me',
+  recent: 'Recent',
+};
+
+@Component({
+  selector: 'app-file-browser',
+  imports: [
+    DatePipe,
+    FormsModule,
+    RouterLink,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    MatTableModule,
+    MatProgressBarModule,
+    MatTooltipModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
+  templateUrl: './file-browser.html',
+  styleUrl: './file-browser.sass',
+})
+export class FileBrowser {
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly storageService = inject(StorageService);
+  private readonly dialog = inject(MatDialog);
+  private readonly destroyRef = inject(DestroyRef);
+
+  protected readonly displayedColumns = ['name', 'size', 'edited', 'actions'];
+
+  protected readonly loading = signal(true);
+  protected readonly errorMessage = signal('');
+  protected readonly rows = signal<BrowserRow[]>([]);
+  protected readonly breadcrumbs = signal<Crumb[]>([]);
+  protected readonly searchValue = signal('');
+  protected readonly isSearching = signal(false);
+
+  // Upload state
+  protected readonly isUploading = signal(false);
+  protected readonly uploadProgress = signal(0);    // 0–100
+  protected readonly uploadTotal = signal(0);       // total file count
+  protected readonly uploadDone = signal(0);        // files completed
+  protected readonly uploadBytesDone = signal(0);   // bytes uploaded
+  protected readonly uploadBytesTotal = signal(0);  // total bytes
+  protected readonly uploadSpeed = signal('');      // e.g. "2.3 MB/s"
+  protected readonly uploadErrors = signal<string[]>([]);
+
+  private readonly mode = signal<Mode>('root');
+  private readonly currentPartition = signal<Partition | null>(null);
+  private readonly currentFolder = signal<Entry | null>(null);
+
+  protected readonly pageTitle = computed(() => {
+    const mode = this.mode();
+    if (mode === 'partition') {
+      return this.currentPartition()?.name ?? '';
+    }
+    if (mode === 'folder') {
+      return this.currentFolder()?.name ?? '';
+    }
+    return SECTION_TITLES[mode];
+  });
+
+  protected readonly canWriteHere = computed(() => {
+    const mode = this.mode();
+    if (mode === 'partition') {
+      return this.currentPartition()?.canWrite ?? false;
+    }
+    if (mode === 'folder') {
+      return this.currentFolder()?.canWrite ?? false;
+    }
+    return false;
+  });
+
+  private readonly searchInput$ = new Subject<string>();
+
+  constructor() {
+    combineLatest([this.route.data, this.route.paramMap, this.route.queryParamMap])
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(([data, params, queryParams]) => {
+        const mode = data['mode'] as Mode;
+        const id = params.get('id');
+        const query = queryParams.get('q') ?? '';
+        this.mode.set(mode);
+        this.searchValue.set(query);
+        this.load(mode, id, query);
+      });
+
+    this.searchInput$.pipe(debounceTime(300), takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+      void this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { q: value.trim() || null },
+        queryParamsHandling: 'merge',
+      });
+    });
+
+    // Cancel any in-flight upload when the component is destroyed.
+    this.destroyRef.onDestroy(() => {
+      this.uploadSub?.unsubscribe();
+    });
+  }
+
+  protected onSearchInput(value: string): void {
+    this.searchValue.set(value);
+    this.searchInput$.next(value);
+  }
+
+  private load(mode: Mode, id: string | null, query: string): void {
+    this.loading.set(true);
+    this.errorMessage.set('');
+    this.isSearching.set(query.trim().length > 0);
+
+    switch (mode) {
+      case 'root':
+        this.loadRoot(query);
+        break;
+      case 'partition':
+        this.loadPartition(id!, query);
+        break;
+      case 'folder':
+        this.loadFolder(id!, query);
+        break;
+      case 'trash':
+        this.loadTrash();
+        break;
+      case 'shared':
+        this.loadShared();
+        break;
+      case 'recent':
+        this.loadRecent();
+        break;
+    }
+  }
+
+  private loadRoot(query: string): void {
+    this.breadcrumbs.set([{ label: 'Home', link: null }]);
+    this.currentPartition.set(null);
+    this.currentFolder.set(null);
+
+    if (query.trim()) {
+      this.storageService.search(query.trim()).subscribe({
+        next: (entries) => this.finishLoad(entries.map(entryToRow)),
+        error: (error) => this.finishError(error),
+      });
+      return;
+    }
+
+    this.storageService.getPartitions().subscribe({
+      next: (partitions) =>
+        this.finishLoad(
+          partitions
+            .filter((p) => !p.deleted)
+            .map(partitionToRow)
+            .sort((a, b) => a.name.localeCompare(b.name)),
+        ),
+      error: (error) => this.finishError(error),
+    });
+  }
+
+  private loadPartition(partitionId: string, query: string): void {
+    this.storageService.getPartition(partitionId).subscribe({
+      next: (partition) => {
+        this.currentPartition.set(partition);
+        this.currentFolder.set(null);
+        this.breadcrumbs.set([
+          { label: 'Home', link: ['/'] },
+          { label: partition.name, link: null },
+        ]);
+
+        if (query.trim()) {
+          this.storageService.search(query.trim(), partitionId).subscribe({
+            next: (entries) => this.finishLoad(entries.map(entryToRow)),
+            error: (error) => this.finishError(error),
+          });
+          return;
+        }
+
+        this.storageService.getPartitionEntries(partitionId).subscribe({
+          next: (entries) => this.finishLoad(entries.map(entryToRow)),
+          error: (error) => this.finishError(error),
+        });
+      },
+      error: (error) => this.finishError(error),
+    });
+  }
+
+  private loadFolder(folderId: string, query: string): void {
+    this.storageService.getEntry(folderId).subscribe({
+      next: (folder) => {
+        this.currentFolder.set(folder);
+        this.currentPartition.set(null);
+        this.storageService.getEntryPath(folderId).subscribe({
+          next: (path) => this.breadcrumbs.set(this.buildFolderBreadcrumbs(path)),
+        });
+
+        if (query.trim()) {
+          this.storageService.search(query.trim(), folder.partitionId).subscribe({
+            next: (entries) => this.finishLoad(entries.map(entryToRow)),
+            error: (error) => this.finishError(error),
+          });
+          return;
+        }
+
+        this.storageService.getEntryChildren(folderId).subscribe({
+          next: (entries) => this.finishLoad(entries.map(entryToRow)),
+          error: (error) => this.finishError(error),
+        });
+      },
+      error: (error) => this.finishError(error),
+    });
+  }
+
+  private buildFolderBreadcrumbs(path: PathItem[]): Crumb[] {
+    const crumbs: Crumb[] = [{ label: 'Home', link: ['/'] }];
+    path.forEach((item, index) => {
+      const isLast = index === path.length - 1;
+      if (item.isPartition && item.partition) {
+        crumbs.push({
+          label: item.partition.name,
+          link: isLast ? null : ['/partition', item.partition.id],
+        });
+      } else if (item.entry) {
+        crumbs.push({
+          label: item.entry.name,
+          link: isLast ? null : ['/folder', item.entry.id],
+        });
+      }
+    });
+    return crumbs;
+  }
+
+  private loadTrash(): void {
+    this.currentPartition.set(null);
+    this.currentFolder.set(null);
+    this.breadcrumbs.set([
+      { label: 'Home', link: ['/'] },
+      { label: 'Trash', link: null },
+    ]);
+    this.storageService.getTrash().subscribe({
+      next: (entries) => this.finishLoad(entries.map(entryToRow)),
+      error: (error) => this.finishError(error),
+    });
+  }
+
+  private loadShared(): void {
+    this.currentPartition.set(null);
+    this.currentFolder.set(null);
+    this.breadcrumbs.set([
+      { label: 'Home', link: ['/'] },
+      { label: 'Shared with me', link: null },
+    ]);
+    this.storageService.getShared().subscribe({
+      next: ({ partitions, entries }) =>
+        this.finishLoad([...partitions.map(partitionToRow), ...entries.map(entryToRow)]),
+      error: (error) => this.finishError(error),
+    });
+  }
+
+  private loadRecent(): void {
+    this.currentPartition.set(null);
+    this.currentFolder.set(null);
+    this.breadcrumbs.set([
+      { label: 'Home', link: ['/'] },
+      { label: 'Recent', link: null },
+    ]);
+    this.storageService.getRecent().subscribe({
+      next: (entries) => this.finishLoad(entries.map(entryToRow)),
+      error: (error) => this.finishError(error),
+    });
+  }
+
+  private finishLoad(rows: BrowserRow[]): void {
+    this.rows.set(rows);
+    this.loading.set(false);
+  }
+
+  private finishError(error: unknown): void {
+    const message =
+      (error as { error?: { message?: string } })?.error?.message ?? 'Failed to load data.';
+    this.errorMessage.set(message);
+    this.rows.set([]);
+    this.loading.set(false);
+  }
+
+  protected reload(): void {
+    this.load(this.mode(), this.route.snapshot.paramMap.get('id'), this.searchValue());
+  }
+
+  protected iconFor(row: BrowserRow): string {
+    switch (row.rowType) {
+      case 'partition':
+      case 'folder':
+        return 'folder';
+      case 'link':
+        return 'link';
+      default:
+        return 'insert_drive_file';
+    }
+  }
+
+  protected formatSize(row: BrowserRow): string {
+    return row.size != null ? formatBytes(row.size) : '—';
+  }
+
+  /** Expose the byte formatter so the template can use it directly. */
+  protected formatBytes(n: number): string {
+    return formatBytes(n);
+  }
+
+  protected openRow(row: BrowserRow): void {
+    if (row.rowType === 'partition') {
+      void this.router.navigate(['/partition', row.id]);
+      return;
+    }
+    if (row.rowType === 'folder') {
+      void this.router.navigate(['/folder', row.id]);
+      return;
+    }
+    if (row.rowType === 'link' && row.entry) {
+      this.followLink(row.entry);
+      return;
+    }
+    if (row.rowType === 'file' && row.entry) {
+      this.downloadEntry(row.entry);
+    }
+  }
+
+  private followLink(entry: Entry): void {
+    if (entry.targetPartitionId) {
+      void this.router.navigate(['/partition', entry.targetPartitionId]);
+      return;
+    }
+    if (entry.targetId) {
+      this.storageService.getEntry(entry.targetId).subscribe({
+        next: (target) => {
+          if (target.type === 'folder') {
+            void this.router.navigate(['/folder', target.id]);
+          } else {
+            this.downloadEntry(target);
+          }
+        },
+      });
+    }
+  }
+
+  protected downloadEntry(entry: Entry): void {
+    this.storageService.downloadEntry(entry.id).subscribe((blob) => {
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = entry.name;
+      anchor.click();
+      URL.revokeObjectURL(url);
+    });
+  }
+
+  protected canRename(row: BrowserRow): boolean {
+    return row.rowType !== 'partition' && row.canWrite;
+  }
+
+  protected canMove(row: BrowserRow): boolean {
+    return row.rowType !== 'partition' && row.canWrite;
+  }
+
+  protected canShare(row: BrowserRow): boolean {
+    return row.owned;
+  }
+
+  protected canDelete(row: BrowserRow): boolean {
+    return row.rowType === 'partition' ? row.owned : row.canWrite;
+  }
+
+  protected canRestore(row: BrowserRow): boolean {
+    return this.mode() === 'trash' && row.owned;
+  }
+
+  protected renameRow(row: BrowserRow): void {
+    if (!row.entry) {
+      return;
+    }
+    const data: NamePromptDialogData = {
+      title: 'Rename',
+      label: 'New name',
+      initialValue: row.name,
+      confirmLabel: 'Rename',
+    };
+    this.dialog
+      .open(NamePromptDialog, { data })
+      .afterClosed()
+      .subscribe((newName: string | null) => {
+        if (newName && row.entry) {
+          this.storageService.renameEntry(row.entry.id, newName).subscribe(() => this.reload());
+        }
+      });
+  }
+
+  protected moveRow(row: BrowserRow): void {
+    if (!row.entry) {
+      return;
+    }
+    const data: FolderPickerDialogData = { title: `Move "${row.name}"` };
+    this.dialog
+      .open(FolderPickerDialog, { data })
+      .afterClosed()
+      .subscribe((result: FolderPickerResult | null) => {
+        if (result && row.entry) {
+          this.storageService.moveEntry(row.entry.id, result.folderId).subscribe({
+            next: () => this.reload(),
+            error: (error) => this.finishError(error),
+          });
+        }
+      });
+  }
+
+  protected shareRow(row: BrowserRow): void {
+    const data: ShareDialogData = {
+      targetType: row.rowType === 'partition' ? 'partition' : 'entry',
+      targetId: row.id,
+      targetName: row.name,
+    };
+    this.dialog.open(ShareDialog, { data, width: '420px' });
+  }
+
+  protected deleteRow(row: BrowserRow): void {
+    const data: ConfirmDialogData = {
+      title: row.rowType === 'partition' ? 'Delete partition' : 'Delete',
+      message: `Move "${row.name}" to trash?`,
+      confirmLabel: 'Move to trash',
+      destructive: true,
+    };
+    this.dialog
+      .open(ConfirmDialog, { data })
+      .afterClosed()
+      .subscribe((confirmed: boolean) => {
+        if (!confirmed) {
+          return;
+        }
+        const request$ =
+          row.rowType === 'partition'
+            ? this.storageService.deletePartition(row.id)
+            : this.storageService.deleteEntry(row.id);
+        request$.subscribe({
+          next: () => this.reload(),
+          error: (error) => this.finishError(error),
+        });
+      });
+  }
+
+  protected restoreRow(row: BrowserRow): void {
+    if (!row.entry) {
+      return;
+    }
+    this.storageService.restoreEntry(row.entry.id).subscribe({
+      next: () => this.reload(),
+      error: (error) => this.finishError(error),
+    });
+  }
+
+  protected createFolder(): void {
+    const data: NamePromptDialogData = {
+      title: 'New folder',
+      label: 'Folder name',
+      confirmLabel: 'Create',
+    };
+    this.dialog
+      .open(NamePromptDialog, { data })
+      .afterClosed()
+      .subscribe((name: string | null) => {
+        if (name) {
+          const { partitionId, parentId } = this.writeTargetContext();
+          if (!partitionId) {
+            return;
+          }
+          this.storageService.createFolder(name, partitionId, parentId).subscribe({
+            next: () => this.reload(),
+            error: (error) => this.finishError(error),
+          });
+        }
+      });
+  }
+
+  protected createLink(): void {
+    const data: FolderPickerDialogData = { title: 'Select link target' };
+    this.dialog
+      .open(FolderPickerDialog, { data })
+      .afterClosed()
+      .subscribe((result: FolderPickerResult | null) => {
+        if (!result) {
+          return;
+        }
+        const nameData: NamePromptDialogData = {
+          title: 'New link',
+          label: 'Link name',
+          confirmLabel: 'Create',
+        };
+        this.dialog
+          .open(NamePromptDialog, { data: nameData })
+          .afterClosed()
+          .subscribe((name: string | null) => {
+            if (!name) {
+              return;
+            }
+            const { partitionId, parentId } = this.writeTargetContext();
+            if (!partitionId) {
+              return;
+            }
+            this.storageService
+              .createLink(
+                name,
+                partitionId,
+                parentId,
+                result.folderId,
+                result.folderId ? null : result.partitionId,
+              )
+              .subscribe({
+                next: () => this.reload(),
+                error: (error) => this.finishError(error),
+              });
+          });
+      });
+  }
+
+  /**
+   * Accept a FileList (from a standard <input type="file">) and upload every
+   * file individually — no directory structure.
+   */
+  protected uploadFiles(fileList: FileList | null): void {
+    const files = fileList ? Array.from(fileList) : [];
+    if (files.length === 0) {
+      return;
+    }
+    const target = this.currentFolder()?.id ?? this.currentPartition()?.id;
+    if (!target) {
+      return;
+    }
+    this._runBatchUpload(target, files, files.map(() => ''));
+  }
+
+  /**
+   * Accept a FileList from a directory-picker (<input webkitdirectory>) and
+   * upload everything while preserving the relative folder structure.
+   */
+  protected uploadDirectory(fileList: FileList | null): void {
+    const raw = fileList ? Array.from(fileList) : [];
+    if (raw.length === 0) {
+      return;
+    }
+    const target = this.currentFolder()?.id ?? this.currentPartition()?.id;
+    if (!target) {
+      return;
+    }
+
+    // Build relative paths using the webkitRelativePath property.
+    const files: File[] = [];
+    const relativePaths: string[] = [];
+
+    for (const file of raw) {
+      // webkitRelativePath is set by the browser when webkitdirectory is used.
+      const rel = (file as File & { webkitRelativePath?: string }).webkitRelativePath ?? file.name;
+      files.push(file);
+      relativePaths.push(rel);
+    }
+
+    this._runBatchUpload(target, files, relativePaths);
+  }
+
+  private uploadSub: Subscription | null = null;
+
+  private _runBatchUpload(target: string, files: File[], relativePaths: string[]): void {
+    // Cancel any running upload.
+    this.uploadSub?.unsubscribe();
+
+    this.isUploading.set(true);
+    this.uploadProgress.set(0);
+    this.uploadTotal.set(files.length);
+    this.uploadDone.set(0);
+    this.uploadBytesDone.set(0);
+    this.uploadBytesTotal.set(files.reduce((a, f) => a + f.size, 0));
+    this.uploadSpeed.set('');
+    this.uploadErrors.set([]);
+    this.errorMessage.set('');
+
+    const { progress$, response$ } = this.storageService.uploadBatchWithProgress(
+      target,
+      files,
+      relativePaths,
+    );
+
+    this.uploadSub = new Subscription();
+
+    this.uploadSub.add(
+      progress$.subscribe((p: UploadProgress) => {
+        this.uploadProgress.set(p.percent);
+        this.uploadDone.set(p.filesDone);
+        this.uploadBytesDone.set(p.bytesUploaded);
+        this.uploadSpeed.set(p.speed);
+      }),
+    );
+
+    this.uploadSub.add(
+      response$.subscribe((response) => {
+        const done = response.entries.length;
+        const total = files.length;
+
+        const errors: string[] = [];
+        if (response.upload_errors) {
+          for (const e of response.upload_errors) {
+            errors.push(`${e.file}: ${e.error}`);
+          }
+        }
+        this.uploadErrors.set(errors);
+
+        if (errors.length > 0) {
+          this.errorMessage.set(
+            `${done} file(s) uploaded, ${errors.length} error(s).`,
+          );
+        }
+
+        this.isUploading.set(false);
+        this.reload();
+      }),
+    );
+  }
+
+  private writeTargetContext(): { partitionId: string | null; parentId: string | null } {
+    const folder = this.currentFolder();
+    if (folder) {
+      return { partitionId: folder.partitionId, parentId: folder.id };
+    }
+    const partition = this.currentPartition();
+    if (partition) {
+      return { partitionId: partition.id, parentId: null };
+    }
+    return { partitionId: null, parentId: null };
+  }
+}
+```
+
+nginx.conf
+```
+user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+error_log /var/log/nginx/error.log;
+include /etc/nginx/modules-enabled/*.conf;
+
+events {
+	worker_connections 768;
+	# multi_accept on;
+}
+
+http {
+
+	##
+	# Basic Settings
+	##
+
+	sendfile on;
+	tcp_nopush on;
+	types_hash_max_size 2048;
+	# server_tokens off;
+
+	# server_names_hash_bucket_size 64;
+	# server_name_in_redirect off;
+
+	include /etc/nginx/mime.types;
+	default_type application/octet-stream;
+
+	##
+	# SSL Settings
+	##
+
+	ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3; # Dropping SSLv3, ref: POODLE
+	ssl_prefer_server_ciphers on;
+
+	##
+	# Logging Settings
+	##
+
+	access_log /var/log/nginx/access.log;
+
+	##
+	# Gzip Settings
+	##
+
+	gzip on;
+
+	# gzip_vary on;
+	# gzip_proxied any;
+	# gzip_comp_level 6;
+	# gzip_buffers 16 8k;
+	# gzip_http_version 1.1;
+	# gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+
+	##
+	# Virtual Host Configs
+	##
+
+	include /etc/nginx/conf.d/*.conf;
+	include /etc/nginx/sites-enabled/*;
+}
+
+
+#mail {
+#	# See sample authentication script at:
+#	# http://wiki.nginx.org/ImapAuthenticateWithApachePhpScript
+#
+#	# auth_http localhost/auth.php;
+#	# pop3_capabilities "TOP" "USER";
+#	# imap_capabilities "IMAP4rev1" "UIDPLUS";
+#
+#	server {
+#		listen     localhost:110;
+#		protocol   pop3;
+#		proxy      on;
+#	}
+#
+#	server {
+#		listen     localhost:143;
+#		protocol   imap;
+#		proxy      on;
+#	}
+#}
+```
+
+nginx-posteacloud.conf
+```
+server {
+    server_name cloud.redacted.tld;
+
+    listen 80;
+    listen [::]:80;
+
+    server_tokens off;
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+
+    ssl_certificate /etc/letsencrypt/live/redacted.tld/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/redacted.tld/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+
+    add_header Strict-Transport-Security "max-age=63072000" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header X-Frame-Options "SAMEORIGIN" always;
+
+    ssl_stapling on;
+    ssl_stapling_verify on;
+
+    client_max_body_size 1500M;
+
+    server_tokens off;
+
+    ssl_trusted_certificate /etc/letsencrypt/live/redacted.tld/fullchain.pem;
+
+    resolver 192.168.1.1;
+
+
+    server_name cloud.redacted.tld;
+
+    allow all;
+
+    location /error_www/ {
+        alias /var/www/redacted.tld/;
+    }
+
+    location / {
+        proxy_pass http://192.168.1.117:10084;
+        proxy_redirect off;
+
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        proxy_pass_header Server;
+    }
+
+    error_page 502 /error_www/502.html;
+}
+```
+
+post
+```
+POST /api/v1/entries/entry=mf6WeYArlPO6JJcB/upload-batch HTTP/2
+Host: cloud.redacted.tld
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:152.0) Gecko/20100101 Firefox/152.0
+Accept: application/json, text/plain, */*
+Accept-Language: en-US,en;q=0.9
+Accept-Encoding: gzip, deflate, br, zstd
+Content-Type: multipart/form-data; boundary=----geckoformboundary7c437f89a78ecb4f989763064ce20ab0
+Content-Length: 4579396180
+Origin: https://cloud.redacted.tld
+DNT: 1
+Sec-GPC: 1
+Connection: keep-alive
+Referer: https://cloud.redacted.tld/folder/entry%3Dmf6WeYArlPO6JJcB
+Cookie: __Host-session=REDACTED
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+TE: trailers
+```
+
+response
+```
+HTTP/2 400
+server: nginx
+date: Fri, 10 Jul 2026 13:21:12 GMT
+content-type: text/html
+content-length: 150
+strict-transport-security: max-age=63072000
+x-content-type-options: nosniff
+x-xss-protection: 1; mode=block
+x-frame-options: SAMEORIGIN
+X-Firefox-Spdy: h2
+
+<html>
+<head><title>400 Bad Request</title></head>
+<body>
+<center><h1>400 Bad Request</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+```
+
+I am developing my own cloud. When I try to upload 4.3 GiB, 1'432 files, 267 sub-folders I get the error shown above. Find out why and propose at least one solution if you can.
+§a§
+## What's happening
+
+The 400 is coming from **nginx itself**, not your Flask app — you can tell because the response has `server: nginx`, an HTML body of exactly 150 bytes (nginx's built‑in error page), and none of your app's JSON error shape (`{'error': ...}`). So the request is being rejected at the reverse‑proxy layer before it ever reaches gunicorn/Flask.
+
+### The root cause: one giant request vs. `client_max_body_size`
+
+Your frontend `uploadBatch()` deliberately packs **every file into a single multipart POST**:
+
+```ts
+for (const file of files) {
+  formData.append('files', file, file.name);
+}
+// ...
+return this.http.post<BatchUploadResponse>(uploadUrl, formData, ...)
+```
+
+So your 4.3 GiB / 1,432 files / 267 folders all become **one HTTP request body**. That's confirmed by the captured request:
+
+```
+Content-Length: 4579396180        // ≈ 4.26 GiB
+```
+
+But your vhost config caps request bodies at 1500 MiB:
+
+```
+client_max_body_size 1500M;        // ≈ 1.46 GiB
+```
+
+Your request body is roughly **2.9× the limit**. Nginx checks the Content-Length header. If the size exceeds the limit, it returns a 413 error. The behavior differs by transfer method. For standard requests with a Content-Length header, NGINX checks immediately — the check happens after parsing headers but before reading body data. Because the request hits nginx first, if it exceeds the client_max_body_size nginx limit there, it never even makes it to the backend. That's also why your `MAX_CONTENT_LENGTH=None` in Flask has no effect here — nginx kills it first.
+
+### Why 400 and not 413?
+
+Over plain HTTP/1.1 an over‑limit body normally surfaces as a clean **413**. You're on **HTTP/2** (`listen 443 ssl http2`, request line ends `HTTP/2`), and when nginx aborts an oversized HTTP/2 stream the client frequently ends up seeing a generic **400** rather than 413 (the stream is reset while the browser is still pushing gigabytes). The definitive confirmation is your nginx error log — enable info-level logging and you'll almost certainly see the classic message: client intended to send too large body: … bytes. Check `/var/log/nginx/error.log` right after reproducing.
+
+---
+
+## Solutions
+
+I'd recommend doing #1 **and** #2 together, and seriously considering #3 as the proper long-term fix.
+
+### 1. Raise (or remove) the nginx body limit for the upload endpoint
+
+In `nginx-posteacloud.conf`, either bump the server-level value or scope an unlimited limit to the upload routes:
+
+```nginx
+location / {
+    proxy_pass http://192.168.1.117:10084;
+    # ...existing proxy_set_header lines...
+
+    client_max_body_size 0;          # 0 = no limit (or e.g. 20G)
+    proxy_request_buffering off;      # stream to Flask instead of buffering to disk
+    proxy_read_timeout 3600s;
+    proxy_send_timeout 3600s;
+    client_body_timeout 3600s;
+}
+```
+
+### 2. Turn off request buffering (important for your design)
+
+Your Flask code is written to *stream* uploads (`Entry.create_file_stream(stream=file.stream, ...)`, "no intermediate temp file"). But by default nginx defeats that: For proxies, proxy_request_buffering affects handling: on buffers the entire request before forwarding, off streams to backend as data arrives. With buffering *on*, nginx would first spool the whole 4.3 GiB to a temp file on disk before your code sees a single byte. Setting `proxy_request_buffering off;` makes nginx pass the body through as it arrives, matching your streaming intent. (You'll also want to make sure gunicorn's `--timeout` is large, since a single request now takes a long time.)
+
+Remember: client_max_body_size only controls what Nginx accepts — your backend application and any intermediate proxies also need appropriate limits configured. Your top-level `nginx.conf` doesn't set a smaller limit, so the vhost value governs; after editing, run `nginx -t && systemctl reload nginx`.
+
+### 3. Stop sending everything in one request (the real fix)
+
+Even with the limit raised, a single 4.3 GiB request is fragile: any network blip, worker timeout, or proxy hiccup loses the entire 1,432-file batch, and nginx/Firefox must hold enormous state. The code comment says you batched everything to avoid per-request overhead and gunicorn timeouts, but you've overcorrected into one enormous request.
+
+A more robust approach in `storage.service.ts` / `file-browser.ts`:
+
+- **Chunk the batch** into smaller groups (e.g. ~200 MB or ~50 files per request) and upload sequentially or with limited concurrency, aggregating progress client-side. Your `/upload-batch` endpoint already handles `relative_paths`, so folder structure is preserved per chunk.
+- Or use the existing single-file `uploadFile()` endpoint with a small concurrency pool, creating folders first.
+- For truly large files, consider **chunked/resumable uploads** (split each file into ranges, reassemble server-side), which also gives you resumability and real per-file progress instead of the current *estimated* `filesDone`.
+
+---
+
+### Quick triage checklist
+1. Reproduce, then check `/var/log/nginx/error.log` — confirm "too large body".
+2. Add `client_max_body_size 0;` + `proxy_request_buffering off;` + long timeouts to the upload location, `nginx -t`, reload.
+3. Raise gunicorn/worker timeout to match.
+4. Retest; if it now works but is slow/fragile, implement client-side chunking (#3).
+
+One more thing to watch: the request path is `/api/v1/entries/entry=mf6WeYArlPO6JJcB/upload-batch` with a raw `=` in the id. That's currently being accepted, but URL-encoding inconsistencies (the Referer shows `entry%3D`) are a common source of subtle routing bugs — worth normalizing your entry-id encoding so it isn't a second, intermittent failure mode.
+§u§
+nginx-posteacloud.conf
+```
+server {
+    server_name cloud.redacted.tld;
+
+    listen 80;
+    listen [::]:80;
+
+    server_tokens off;
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+
+    ssl_certificate /etc/letsencrypt/live/redacted.tld/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/redacted.tld/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+
+    add_header Strict-Transport-Security "max-age=63072000" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header X-Frame-Options "SAMEORIGIN" always;
+
+    ssl_stapling on;
+    ssl_stapling_verify on;
+
+    client_max_body_size 64g;
+
+    server_tokens off;
+
+    ssl_trusted_certificate /etc/letsencrypt/live/redacted.tld/fullchain.pem;
+
+    resolver 192.168.1.1;
+
+
+    server_name cloud.redacted.tld;
+
+    allow all;
+
+    location /error_www/ {
+        alias /var/www/redacted.tld/;
+    }
+
+    location / {
+        proxy_pass http://192.168.1.117:10084;
+        proxy_redirect off;
+
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        proxy_pass_header Server;
+    }
+
+    error_page 502 /error_www/502.html;
+}
+```
+
+```
+root@servernode2:~# ls -la /var/log/nginx/
+total 8
+drwxr-xr-x  2 root     adm  4096 Dec 28  2024 .
+drwxr-xr-x 15 root     root 4096 Oct  9  2025 ..
+-rw-r-----  1 www-data adm     0 Jul 10 15:35 access.log
+-rw-r-----  1 www-data adm     0 Jul 10 15:35 error.log
+root@servernode2:~#
+```
+
+I accidentally copied an old version of `nginx-posteacloud.conf`. The one above without redactions is actually deployed. The access log is empty for some reason.
+§a§
+Good — `client_max_body_size 64g` is well above 4.3 GiB, so the earlier trigger is gone. But there are still several things to sort out. Let's take them in order.
+
+## 1. Why the access log is empty (fix this first)
+
+Both `access.log` and `error.log` are 0 bytes and have the same mtime (`Jul 10 15:35`). That's the classic footprint of **logrotate having rotated (or recreated) the files without nginx being told to reopen its file descriptors**. Nginx is still holding open the *old* (now unlinked or truncated‑then‑not‑reopened) inode and writing there, so nothing lands in the new files.
+
+Verify:
+
+```bash
+ls -l /proc/$(cat /run/nginx.pid)/fd | grep log
+# or
+lsof -p $(cat /run/nginx.pid) | grep -E 'log|deleted'
+```
+
+If you see `(deleted)` next to `access.log`/`error.log`, that's the cause. Fix:
+
+```bash
+nginx -s reopen        # or: kill -USR1 $(cat /run/nginx.pid)
+```
+
+Then check `/etc/logrotate.d/nginx` — it should have a `postrotate` block that runs `nginx -s reopen` (or `invoke-rc.d nginx rotate`). On Debian/Ubuntu this is usually there by default; if it's missing or the log paths were changed, rotation silently breaks logging.
+
+Without working logs you're flying blind — every further debugging step depends on this.
+
+## 2. You still need `proxy_request_buffering off` and bigger timeouts
+
+Raising `client_max_body_size` gets nginx to *accept* the request, but by default nginx will now **buffer the entire 4.3 GiB body to disk** (into `client_body_temp_path`, typically `/var/lib/nginx/body/` or `/var/cache/nginx/client_temp/`) before forwarding a single byte to your Flask app. That has several bad consequences that all produce failure modes that look like a mysterious 400/499/502:
+
+- If that partition doesn't have >4.3 GiB free, buffering fails partway through.
+- Your `Entry.create_file_stream(...)` streaming design is defeated — the file is fully spooled twice.
+- Default timeouts (`client_body_timeout 60s`, `proxy_read_timeout 60s`, `proxy_send_timeout 60s`) are far too short for a multi‑GB upload over a home‑ish uplink. When the client hasn't finished sending in 60s, nginx tears the connection down; over HTTP/2 this surfaces to the browser as a generic 400 rather than 408.
+
+So add these to the `location /` (or a dedicated `location ~ ^/api/v1/entries/.*/upload`):
+
+```nginx
+location / {
+    proxy_pass http://192.168.1.117:10084;
+    proxy_redirect off;
+
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_pass_header Server;
+
+    proxy_http_version 1.1;              # talk HTTP/1.1 upstream
+    proxy_request_buffering off;         # stream body straight to Flask
+    proxy_buffering off;                 # (optional) stream responses too
+
+    client_body_timeout    3600s;
+    proxy_connect_timeout    60s;
+    proxy_send_timeout     3600s;
+    proxy_read_timeout     3600s;
+    send_timeout           3600s;
+}
+```
+
+Also raise gunicorn's timeout to match (`--timeout 3600`), otherwise the worker will kill itself mid‑upload and you'll get a 502.
+
+## 3. HTTP/2 request‑body quirks
+
+There is a long‑standing rough edge where nginx handling very large HTTP/2 request bodies can abort the stream with what the browser reports as a 400 — especially when combined with buffering or short timeouts. Two mitigations, in order of preference:
+
+1. **Update the listen directive syntax** (the inline `http2` parameter on `listen` is deprecated). Use:
+   ```nginx
+   listen 443 ssl;
+   listen [::]:443 ssl;
+   http2 on;
+   ```
+   This ensures you're using the modern HTTP/2 code path, and makes it trivial to test with HTTP/2 disabled for a moment (`http2 off;`) to see whether the failure is HTTP/2‑specific.
+
+2. If your nginx is old (Debian stable ships fairly old versions), consider the nginx.org mainline repo — a lot of HTTP/2 upload fixes have landed over the last couple of years.
+
+## 4. Recommended debugging sequence
+
+1. `nginx -s reopen` and confirm logs start growing on a normal request.
+2. Bump `error_log` verbosity temporarily: `error_log /var/log/nginx/error.log info;` then reload.
+3. Reproduce the upload. Now the real cause will be in `error.log` — expect one of: `client intended to send too large body` (shouldn't happen with 64g), `client timed out`, `upstream prematurely closed connection`, `no space left on device` on the temp path, or an HTTP/2 stream error.
+4. Apply the `proxy_request_buffering off` + timeout block above; retest.
+5. If it still fails only over HTTP/2, temporarily `http2 off;` to confirm, then update nginx.
+
+## 5. Still worth doing: stop sending 4.3 GiB in one request
+
+Even with everything above tuned, a single 1,432‑file / 4.3 GiB POST remains fragile — one dropped TCP connection, one nginx reload, one gunicorn restart, and the whole batch is gone with no resumability. As mentioned last time, chunking the batch client‑side into e.g. ~200 MB / ~50‑file groups (your `/upload-batch` endpoint already supports `relative_paths` per chunk) turns this from "big scary single request" into "many small robust requests with real progress and easy retry." That's the durable fix; the nginx tweaks above just stop the immediate bleeding.

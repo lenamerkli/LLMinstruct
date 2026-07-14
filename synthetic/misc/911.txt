@@ -1,0 +1,75 @@
+§u§
+I got a new job. It is split between two cities: A and B. I am living in city C. I want to take the train to commute. An average two and a half times a week I need to commute to city A and back. An average two times a week I need to commute to city B via city D. Based on the following fares, find the cheapest option for me:
+
+- C one-way to A: 5.2$
+- C one-way to B via D (combined ticket): 15.9$
+- C one-way to D: 8.7$
+- D one-way to B: 9.1$
+- unlimited between C and A per month: 119$
+- unlimited between both C and A and C and D per month: 175$
+- unlimited between D and B per month: 193$
+- unlimited on all lines: 295$
+
+The prices in the other direction for one-way tickets are the same. One-way and unlimited on certain lines can be combined. The one-way fares include the members discount; they would be almost exactly 30% more expensive otherwise. The public transit membership costs only 10$ per month for me because of the company I will work for pays the rest. Also include information on how the result would differ if I worked less than 4 weeks per month on average.
+§a§
+For a standard work month, the cheapest option by far is the **Unlimited on all lines pass for $295/month**.
+
+Here is the step-by-step breakdown of your commute needs, cost comparisons, and the exact tipping point for months where you work fewer than 4 weeks.
+
+---
+
+### 1. Your Weekly Commute Baseline
+First, let's establish how many one-way trips you take in an average week:
+* **City C $\leftrightarrow$ City A:** 2.5 round trips = **5 one-way trips/week**
+* **City C $\leftrightarrow$ City B (via D):** 2 round trips = **4 one-way trips/week**
+
+*Note on City B trips:* Using the combined ticket ($15.90) is cheaper than buying separate tickets for C $\to$ D ($8.70) and D $\to$ B ($9.10), which would total $17.80 per trip.
+
+If you pay per trip using the **$10/month membership discount**, your weekly pay-as-you-go (PAYG) cost is:
+* **C $\leftrightarrow$ A:** 5 trips $\times$ $5.20 = **$26.00**
+* **C $\leftrightarrow$ B:** 4 trips $\times$ $15.90 = **$63.60**
+* **Total Weekly Cost:** **$89.60/week**
+
+---
+
+### 2. Standard Month Comparison (Average 4.33 Weeks)
+There are an average of 4.33 weeks in a month ($52 \text{ weeks} / 12 \text{ months}$). Here is how the different strategies compare:
+
+#### **Option 1: Unlimited All-Lines Pass (WINNER)**
+* **Cost: $295.00**
+* *No $10 membership needed.*
+
+#### **Option 2: Hybrid Pass (C $\leftrightarrow$ A & C $\leftrightarrow$ D Pass + PAYG D $\leftrightarrow$ B)**
+You buy the $175 pass covering C $\leftrightarrow$ A and C $\leftrightarrow$ D, then pay per ride for the D $\leftrightarrow$ B leg (4 trips/week @ $9.10).
+* Pass Cost: $175.00
+* Membership: $10.00
+* D $\leftrightarrow$ B Trips ($36.40/wk $\times$ 4.33 wks): $157.61
+* **Total Cost: $342.61**
+
+#### **Option 3: Pure Pay-As-You-Go (with $10 Membership)**
+* Membership: $10.00
+* Trips ($89.60/wk $\times$ 4.33 wks): $387.97
+* **Total Cost: $397.97**
+
+*(Note: Single-line passes like the $119 C $\leftrightarrow$ A pass are not worth it; paying per ride for C $\leftrightarrow$ A only costs $112.58 in a full month).*
+
+---
+
+### 3. What if you work less than 4 weeks per month?
+
+If you take vacation, sick leave, or work part-time in a given month, your cheapest option will shift from the **All-Lines Pass ($295)** to **Pure Pay-As-You-Go + $10 Membership**.
+
+*(Interestingly, the hybrid combination passes are **never** the cheapest option at any number of weeks worked).*
+
+#### **The Break-Even Formula:**
+We set the All-Lines Pass equal to the Pay-As-You-Go formula:
+$$\$295 = \$10 \text{ (membership)} + (\$89.60 \times \text{Weeks Worked})$$
+$$\text{Weeks Worked} = \mathbf{3.18 \text{ weeks}}$$
+
+Since you commute an average of **4.5 days per week** (2.5 days to A + 2 days to B), 3.18 weeks translates to **14.3 commute days**.
+
+### Summary Rule of Thumb to Save Money:
+At the beginning of any month, count how many actual days you plan to commute to either office:
+
+1. **If you will commute 15 days or more:** Buy the **$295 All-Lines Pass**.
+2. **If you will commute 14 days or fewer:** Pay the **$10 membership** and buy discounted **One-Way Tickets** as you go. *(Even if you only commute for 1 week in a month, the $10 membership pays for itself immediately).*

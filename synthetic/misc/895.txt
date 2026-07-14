@@ -1,0 +1,227 @@
+§u§
+How can I use QEMU to run an AI agent inside of it? I need to programmatically control the VM from the host. For docker, I use a small flask server app that runs inside of the container. Would something like that be possible with QEMU?
+§a§
+Great, this is a well-covered topic. Here is a comprehensive breakdown of all the approaches you can use:
+
+---
+
+# Running an AI Agent in QEMU and Controlling it Programmatically
+
+Yes, absolutely — running a Flask-style server inside the QEMU VM works great, and there are actually several layered approaches you can combine. Here's the full picture:
+
+---
+
+## The Two Layers of Control
+
+When working with QEMU, you have two distinct control surfaces:
+
+1. **VM-level control (from host → QEMU process):** Manage the VM itself — pause, snapshot, reset, etc.
+2. **Guest-level control (from host → inside the VM):** Execute commands, run your agent, read output, etc.
+
+Your Flask server idea maps to **Layer 2** and is completely viable. Let's cover both.
+
+---
+
+## Layer 1: Controlling the QEMU VM Process — QMP
+
+The **QEMU Monitor Protocol (QMP)** is a well-defined, versioned, machine-usable API that presents a rich interface to other tools to create, control, and manage Virtual Machines.
+
+There are two kinds of monitor: the standard monitor targeting human users (sometimes called HMP) and the control monitor using the JSON-based QEMU Machine Protocol (QMP).
+
+### Starting QEMU with a QMP socket
+
+Start a QEMU guest listening on a socket like so:
+```bash
+qemu-system-x86_64 -m 1024 -hda /path/to/image.qcow2 -qmp unix:/tmp/qmp-sock,server,nowait
+```
+
+Since QMP uses JSON, you must initialize the communication by sending `{"execute": "qmp_capabilities"}` to complete the capabilities negotiation.
+
+### Python QMP Library
+
+**`qemu.qmp`** is a QEMU Monitor Protocol library written in Python using `asyncio`. It is used to send QMP messages to running QEMU emulators.
+
+This library can be used to communicate with QEMU emulators, the QEMU Guest Agent (QGA), the QEMU Storage Daemon (QSD), or any other utility or application that speaks QMP.
+
+Install it with:
+```bash
+pip install qemu.qmp
+```
+
+Example usage:
+```python
+import asyncio
+from qemu.qmp import QMPClient
+
+async def main():
+    client = QMPClient("my-vm")
+    await client.connect("/tmp/qmp-sock")
+
+    # Query VM run state
+    result = await client.execute("query-status")
+    print(result)
+
+    # Pause the VM
+    await client.execute("stop")
+
+    # Resume the VM
+    await client.execute("cont")
+
+    # Take a snapshot
+    await client.execute("savevm", {"name": "agent-checkpoint"})
+
+    await client.disconnect()
+
+asyncio.run(main())
+```
+
+The library can connect to the UNIX socket, query the VM's runstate, and print it out; for more complex usages that make full advantage of monitoring asynchronous events, refer to the online documentation.
+
+---
+
+## Layer 2: Controlling the Guest (Inside the VM) — Your Flask Idea + More
+
+This is where you run your AI agent and interact with it. You have three good options:
+
+### Option A: Flask/HTTP Server Inside the VM (Your Existing Pattern ✅)
+
+This is the **most direct analogy** to your Docker setup and works perfectly. Here's how:
+
+1. **Inside the VM**, run a Flask app (e.g., on port `5000`):
+```python
+# agent_server.py (runs inside QEMU VM)
+from flask import Flask, request, jsonify
+import subprocess
+
+app = Flask(__name__)
+
+@app.route("/exec", methods=["POST"])
+def execute():
+    cmd = request.json.get("command")
+    result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+    return jsonify({"stdout": result.stdout, "stderr": result.stderr, "returncode": result.returncode})
+
+@app.route("/health", methods=["GET"])
+def health():
+    return jsonify({"status": "ok"})
+
+app.run(host="0.0.0.0", port=5000)
+```
+
+2. **On the host**, expose the port via QEMU's built-in user-mode networking:
+```bash
+qemu-system-x86_64 \
+  -m 2048 \
+  -hda agent.qcow2 \
+  -netdev user,id=net0,hostfwd=tcp::8080-:5000 \
+  -device virtio-net-pci,netdev=net0 \
+  -qmp unix:/tmp/qmp-sock,server,nowait
+```
+The `-hostfwd` flag forwards `host:8080 → guest:5000`.
+
+3. **From the host**, call the agent:
+```python
+import requests
+
+resp = requests.post("http://localhost:8080/exec", json={"command": "ls /tmp"})
+print(resp.json())
+```
+
+### Option B: SSH — Direct and Reliable
+
+SSH is a clean and universally supported alternative to a Flask server. You can use it programmatically from the host with `paramiko` or `subprocess`:
+
+```bash
+# Start QEMU with SSH port forwarded
+qemu-system-x86_64 \
+  -m 2048 \
+  -hda agent.qcow2 \
+  -netdev user,id=net0,hostfwd=tcp::2222-:22 \
+  -device virtio-net-pci,netdev=net0
+```
+
+```python
+import paramiko
+
+ssh = paramiko.SSHClient()
+ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+ssh.connect("localhost", port=2222, username="agent", password="pass")
+
+stdin, stdout, stderr = ssh.exec_command("python3 run_agent.py")
+print(stdout.read().decode())
+ssh.close()
+```
+
+There's even a Model Context Protocol (MCP) server specifically for controlling QEMU VMs via SSH — it enables LLMs to interact with VMs through mouse/keyboard control, screenshots, and SSH command execution.
+
+### Option C: QEMU Guest Agent (QGA) — Deep Integration
+
+The QEMU Guest Agent runs as a daemon inside the VM and communicates with the host over a `virtio-serial` channel (not TCP), making it very efficient and available even without network.
+
+The `qemu.qmp` library can communicate with the QEMU Guest Agent (QGA) in addition to QEMU emulators themselves.
+
+Start QEMU with a QGA channel:
+```bash
+qemu-system-x86_64 \
+  -m 2048 \
+  -hda agent.qcow2 \
+  -chardev socket,path=/tmp/qga.sock,server=on,wait=off,id=qga0 \
+  -device virtio-serial \
+  -device virtserialport,chardev=qga0,name=org.qemu.guest_agent.0 \
+  -qmp unix:/tmp/qmp-sock,server,nowait
+```
+
+Then from the host, use `qga` commands (via the QMP library or raw socket):
+```python
+import socket, json
+
+def qga_exec(sock_path, cmd_str):
+    s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    s.connect(sock_path)
+
+    # Execute a command inside the VM
+    cmd = json.dumps({"execute": "guest-exec", "arguments": {
+        "path": "/bin/bash",
+        "arg": ["-c", cmd_str],
+        "capture-output": True
+    }}) + "\n"
+    s.sendall(cmd.encode())
+    return json.loads(s.recv(4096))
+
+result = qga_exec("/tmp/qga.sock", "echo hello from agent")
+print(result)
+```
+
+---
+
+## Recommended Architecture for an AI Agent
+
+Here's how to put it all together:
+
+```
+┌──────────────────────────────────────────────┐
+│                  HOST                        │
+│                                              │
+│  ┌─────────────────┐   ┌──────────────────┐  │
+│  │  Your Orchestr. │   │  QEMU Process    │  │
+│  │  (Python/AI)    │──▶│  -qmp unix:...   │  │
+│  │                 │   │  -hostfwd :8080  │  │
+│  │  QMP Client     │   └────────┬─────────┘  │
+│  │  (pause/snap/   │            │            │
+│  │   restore)      │       ┌────▼──────────┐ │
+│  │                 │       │  GUEST VM     │ │
+│  │  HTTP Client ───┼──────▶│  Flask :5000  │ │
+│  │  (run agent     │       │  + AI Agent   │ │
+│  │   tasks)        │       └───────────────┘ │
+│  └─────────────────┘                         │
+└──────────────────────────────────────────────┘
+```
+
+| Control Need | Best Tool |
+|---|---|
+| Pause/resume/snapshot VM | QMP (`qemu.qmp` Python lib) |
+| Run commands in guest | Flask server or SSH |
+| Deep guest introspection | QEMU Guest Agent (QGA) |
+| Full AI computer-use | SSH + screenshot tools |
+
+The Flask approach you already know is the **simplest path to productivity** — just add `-hostfwd` to your QEMU launch command, and your existing patterns transfer almost 1:1 from Docker.

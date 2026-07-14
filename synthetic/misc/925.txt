@@ -1,0 +1,56 @@
+§u§
+```bash
+#!/bin/bash
+
+# Allow Python version to be overridden via environment variable
+PYTHON_VERSION="/usr/bin/python3"
+PYTHON_SCRIPT="/opt/thetacode/search_the_web.py"
+
+# Execute
+"$PYTHON_VERSION" "$PYTHON_SCRIPT" "$@"
+```
+Will overwriting actually work?
+§a§
+Short answer: **No.** As written, an environment variable named `PYTHON_VERSION` will *not* override anything, despite what the comment claims.
+
+## Why
+
+```bash
+PYTHON_VERSION="/usr/bin/python3"
+```
+
+This is an **unconditional assignment**. Every time the script runs, it clobbers whatever value `PYTHON_VERSION` had — including anything you set in the environment. So:
+
+```bash
+PYTHON_VERSION=/usr/bin/python3.11 ./search.sh   # ignored!
+```
+
+The exported value is immediately overwritten by the hard-coded path.
+
+## The fix
+
+Use parameter expansion with a default so the env var wins when present, and the fallback applies only when it's unset/empty:
+
+```bash
+# Use env var if set, otherwise fall back to default
+PYTHON_VERSION="${PYTHON_VERSION:-/usr/bin/python3}"
+```
+
+- `${VAR:-default}` → use `default` if `VAR` is unset **or empty**
+- `${VAR-default}` → use `default` only if `VAR` is unset (empty stays empty)
+
+You almost certainly want `:-` here.
+
+## A couple of side notes
+
+1. **Naming**: `PYTHON_VERSION` holds a *path to an interpreter*, not a version number. Something like `PYTHON_BIN` or `PYTHON` would be clearer.
+
+2. **Quoting**: `"$@"` is already correct — good, that preserves arguments with spaces.
+
+3. If you want it to work without the caller `export`ing it, they can still do inline:
+   ```bash
+   PYTHON_VERSION=/path/to/python ./search.sh args...
+   ```
+   which works with the `:-` fix even without `export`, because the variable is set in the script's environment for that invocation.
+
+Want me to show a slightly hardened version (with a check that the interpreter actually exists/is executable)?

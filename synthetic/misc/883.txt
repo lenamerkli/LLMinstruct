@@ -1,0 +1,133 @@
+§u§
+What environment variables do I have to set to make python requests and urllib use `/etc/pki/tls/certs/ca-bundle.crt`? Create some python code that I can paste at the top of the affected file.
+§a§
+## Environment Variables
+
+For `requests` and `urllib`, the relevant variables are:
+
+- **`REQUESTS_CA_BUNDLE`** — used by the `requests` library
+- **`SSL_CERT_FILE`** — used by Python's standard `ssl` module (which backs `urllib`)
+- **`CURL_CA_BUNDLE`** — used by `requests` as a fallback and by some other tools
+
+## Code to paste at the top of your file
+
+```python
+import os
+
+_CA_BUNDLE = "/etc/pki/tls/certs/ca-bundle.crt"
+
+os.environ.setdefault("REQUESTS_CA_BUNDLE", _CA_BUNDLE)  # requests
+os.environ.setdefault("SSL_CERT_FILE", _CA_BUNDLE)       # urllib / ssl
+os.environ.setdefault("CURL_CA_BUNDLE", _CA_BUNDLE)      # requests fallback / curl
+```
+
+## Important notes
+
+1. **Order matters for `SSL_CERT_FILE`.** Python's `ssl` module reads `SSL_CERT_FILE` when the default SSL context is *created*, not when it's used. To be safe, set these variables **before importing `requests`, `urllib`, `http.client`, `ssl`, etc.** Put this block at the very top, before any network-related imports.
+
+2. **`setdefault` vs forced override.** I used `os.environ.setdefault(...)` so that existing values in the environment are respected. If you want to *force* this bundle regardless, use direct assignment instead:
+
+   ```python
+   os.environ["REQUESTS_CA_BUNDLE"] = _CA_BUNDLE
+   os.environ["SSL_CERT_FILE"] = _CA_BUNDLE
+   os.environ["CURL_CA_BUNDLE"] = _CA_BUNDLE
+   ```
+
+3. **Optional sanity check** to fail early if the file is missing:
+
+   ```python
+   if not os.path.isfile(_CA_BUNDLE):
+       raise FileNotFoundError(f"CA bundle not found: {_CA_BUNDLE}")
+   ```
+
+## Alternative: per-request (no env vars)
+
+If you only need it for `requests` and prefer not to touch the environment:
+
+```python
+import requests
+requests.get("https://example.com", verify="/etc/pki/tls/certs/ca-bundle.crt")
+```
+
+But the environment-variable approach is best when you need it applied globally across both `requests` and `urllib`.
+§u§
+I still get `HTTPSConnectionPool(host='openaipublic.blob.core.windows.net', port=443): Max retries exceeded with url: /encodings/o200k_base.tiktoken (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1032)')))` using the tiktoken library.
+§a§
+The fact that `REQUESTS_CA_BUNDLE` didn't fix it tells us something useful. tiktoken downloads via `requests.get(...)` **without** a `verify=` argument, which means it *does* respect `REQUESTS_CA_BUNDLE`. So one of two things is happening:
+
+1. The env var isn't actually in effect, **or**
+2. `/etc/pki/tls/certs/ca-bundle.crt` genuinely does not contain the issuer that signed the cert your machine is seeing (very common behind a corporate TLS-intercepting proxy).
+
+Here's how to figure out which, and fix it.
+
+## Step 1: Confirm the bundle itself works
+
+Test outside Python first:
+
+```bash
+curl --cacert /etc/pki/tls/certs/ca-bundle.crt https://openaipublic.blob.core.windows.net/encodings/o200k_base.tiktoken -o /dev/null
+```
+
+- **If curl also fails** → your bundle is missing the needed CA (proxy interception). See Step 3.
+- **If curl succeeds** → it's a Python/env-var-timing problem. See Step 2.
+
+## Step 2: Force requests to use the bundle directly (timing-proof)
+
+Put this at the very top, **before importing tiktoken**:
+
+```python
+import os
+
+_CA_BUNDLE = "/etc/pki/tls/certs/ca-bundle.crt"
+assert os.path.isfile(_CA_BUNDLE), f"missing: {_CA_BUNDLE}"
+
+os.environ["REQUESTS_CA_BUNDLE"] = _CA_BUNDLE
+os.environ["SSL_CERT_FILE"] = _CA_BUNDLE
+os.environ["CURL_CA_BUNDLE"] = _CA_BUNDLE
+
+# Belt-and-suspenders: force the default verify path in requests' session,
+# in case the env var was read too late.
+import requests
+_orig_get = requests.get
+def _patched_get(*args, **kwargs):
+    kwargs.setdefault("verify", _CA_BUNDLE)
+    return _orig_get(*args, **kwargs)
+requests.get = _patched_get
+
+# Now import tiktoken
+import tiktoken
+```
+
+## Step 3: If the bundle is genuinely missing the CA (proxy case)
+
+The error `unable to get local issuer certificate` most often means a corporate proxy is re-signing TLS with its own root CA that isn't in your bundle. You need to **add that root CA** to the trust store:
+
+```bash
+# Export the proxy/root CA your org gave you, then:
+sudo cp my-corp-root-ca.crt /etc/pki/ca-trust/source/anchors/
+sudo update-ca-trust extract
+```
+
+This regenerates `/etc/pki/tls/certs/ca-bundle.crt` to include it. Re-run the curl test from Step 1.
+
+## Step 4 (alternative): pre-download to the cache
+
+If you can grab the file from somewhere that works, drop it in tiktoken's cache so it never makes the request:
+
+```bash
+export TIKTOKEN_CACHE_DIR=/path/to/cache
+```
+
+The cache filename is the SHA-1 hash of the blob URL. You can compute and place it:
+
+```python
+import hashlib
+url = "https://openaipublic.blob.core.windows.net/encodings/o200k_base.tiktoken"
+print(hashlib.sha1(url.encode()).hexdigest())  # this is the cache filename
+```
+
+Save the downloaded `.tiktoken` content into `$TIKTOKEN_CACHE_DIR/<that-hash>`.
+
+---
+
+**My bet:** run the `curl` command in Step 1. If it fails, this is a missing-CA / proxy issue (Step 3), not a Python configuration issue — and no amount of env-var tweaking will fix it until the right root CA is in the bundle.

@@ -1,0 +1,989 @@
+§u§
+My ETS2 game crashed. Where can I find the crash log? I am using fedora.
+§a§
+For Euro Truck Simulator 2 on Linux (including Fedora), the game log is stored in your user's local share directory. Look here:
+
+```
+~/.local/share/Euro Truck Simulator 2/game.log.txt
+```
+
+The full path expands to `/home/yourusername/.local/share/Euro Truck Simulator 2/game.log.txt`.
+
+**A few tips for finding it:**
+
+- `game.log.txt` is the main log file. It gets overwritten each time you launch the game, so grab it **right after** a crash before restarting, or copy it aside for safekeeping.
+- The `.local` folder is hidden by default. In a file manager, press **Ctrl+H** to reveal hidden files/folders, or just use the terminal.
+- You can quickly open it in the terminal with:
+  ```
+  cat ~/.local/share/"Euro Truck Simulator 2"/game.log.txt
+  ```
+  or open it in a text editor like:
+  ```
+  gnome-text-editor ~/.local/share/"Euro Truck Simulator 2"/game.log.txt
+  ```
+
+**If you're running the Windows version through Steam Proton** instead of the native Linux build, the log will instead be inside the Proton compatibility prefix, roughly at:
+
+```
+~/.local/share/Steam/steamapps/compatdata/227300/pfx/drive_c/users/steamuser/Documents/Euro Truck Simulator 2/game.log.txt
+```
+
+(`227300` is ETS2's Steam app ID.)
+
+When you open the log, look near the bottom for lines marked with `<ERROR>` or crash/exception messages — those usually point to the cause (often a mod, a graphics/driver issue, or a corrupted file). If you'd like, paste the relevant error lines here and I can help interpret them.
+§u§
+```
+00:00:32.147 : [mods] Active 28 mods (local: 8, workshop: 20)
+00:00:32.147 : [mods] Active workshop mod ID 3457801665 (name: Additional Customization - Volvo Tuning DLC, version: 1, author: Koneko)
+00:00:32.147 : [mods] Active workshop mod ID 3457796917 (name: Additional Customization - HS Schoch Accessory Pack, version: 1, author: Koneko)
+00:00:32.147 : [mods] Active workshop mod ID 3395529670 (name: Truckworks Volvo FH6 "Kelsa Kit", version: 1.0, author: TruckWorks)
+00:00:32.147 : [mods] Active workshop mod ID 2414629028 (name: Wieloch Krone Mini, version: V 1.0, author: Björn / xliebig@web.de)
+00:00:32.147 : [mods] Active workshop mod ID 3394342680 (name: Additional A.I. Drivers by PBX99, version: 1.1, author: PBX99)
+00:00:32.147 : [mods] Active workshop mod ID 2854398002 (name: ETS2 [Trailer] Wind Turbine Blade, version: 1.0, author: SASq)
+00:00:32.147 : [mods] Active workshop mod ID 648591060 (name: Sound Fixes Pack v26.51 - ETS2, version: 26.51, author: Drive Safely)
+00:00:32.147 : [mods] Active workshop mod ID 1236032431 (name: Real Traffic Density ETS2, version: 1.60.a, author: cip)
+00:00:32.147 : [mods] Active workshop mod ID 3287766210 (name: V1.50 ALL PARTS FOR YOUR TRUCKS (lights, beacons, horns). Works in multiplayer, truckersmp., version: Release 1.0, author: ZerGO)
+00:00:32.147 : [mods] Active workshop mod ID 926118980 (name: ETS2 [Tool] Construction Roof Grill + Led Bar, version: 1.0, author: SASq)
+00:00:32.147 : [mods] Active workshop mod ID 3280924116 (name: Scania.S_2024e Electronic rearview mirror, version: 1.58.x, author: 挞跋燕)
+00:00:32.147 : [mods] Active workshop mod ID 1764268887 (name: Next Generation Scania P G R S Pack, version: 2.7, author: Eugene)
+00:00:32.147 : [mods] Active workshop mod ID 2739658912 (name: [ETS2] Virotic LED Package, version: 3.6, author: Void)
+00:00:32.147 : [mods] Active workshop mod ID 3202206458 (name: SCANIA NG Heavy Transport, version: 1.54.0, author: hardy)
+00:00:32.147 : [mods] Active workshop mod ID 682472036 (name: Xantrios Signs-Pack, version: 2.0, author: Xantrios)
+00:00:32.147 : [mods] Active workshop mod ID 3201544958 (name: SCS Lowbeds for 10xN chassis, version: 1.54, author: Hardy)
+00:00:32.147 : [mods] Active workshop mod ID 3465099551 (name: Low Cab Heavy Cargo Pack for 12xN, version: 1.54.4, author: hardy)
+00:00:32.147 : [mods] Active workshop mod ID 774384307 (name: Realistic Vehicle Lights Mod v7.6, version: 7.6, author: Frkn64)
+00:00:32.147 : [mods] Active workshop mod ID 1787041596 (name: Realistic Rain v5.2.1, version: 5.2.1, author: Darkcaptain)
+00:00:32.147 : [mods] Active workshop mod ID 2637561037 (name: ProMods 2.83 Convoy Mode Support, version: 2.83, author: ProMods Team)
+00:00:32.147 : [mods] Active local mod promods-eu-dlcsupport-v283 (name: ProMods DLC Support Package, version: 2.83, author: ProMods Team)
+00:00:32.147 : [mods] Active local mod promods-eu-media-v283 (name: ProMods Media Package, version: 2.83, author: ProMods Team)
+00:00:32.147 : [mods] Active local mod promods-eu-model3-v283 (name: ProMods Models Package 3, version: 2.83, author: ProMods Team)
+00:00:32.147 : [mods] Active local mod promods-eu-model2-v283 (name: ProMods Models Package 2, version: 2.83, author: ProMods Team)
+00:00:32.147 : [mods] Active local mod promods-eu-model1-v283 (name: ProMods Models Package 1, version: 2.83, author: ProMods Team)
+00:00:32.147 : [mods] Active local mod promods-eu-assets-v283 (name: ProMods Assets Package, version: 2.83, author: ProMods Team)
+00:00:32.147 : [mods] Active local mod promods-eu-map-v283 (name: ProMods Map Package, version: 2.83, author: ProMods Team)
+00:00:32.147 : [mods] Active local mod promods-eu-def-v283 (name: ProMods Definition Package, version: 2.83, author: ProMods Team)
+00:00:32.147 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3457801665/universal mounted to mod pool.
+00:00:32.147 : [mod_package_manager] Mod "Additional Customization - Volvo Tuning DLC" has been mounted. (package_name: mod_workshop_package.00000000CE19DDC1, version: 1, source: Steam Workshop)
+00:00:32.148 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3457796917/universal mounted to mod pool.
+00:00:32.148 : [mod_package_manager] Mod "Additional Customization - HS Schoch Accessory Pack" has been mounted. (package_name: mod_workshop_package.00000000CE19CB35, version: 1, source: Steam Workshop)
+00:00:32.148 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3395529670/universal mounted to mod pool.
+00:00:32.148 : [mod_package_manager] Mod "Truckworks Volvo FH6 "Kelsa Kit"" has been mounted. (package_name: mod_workshop_package.00000000CA63ABC6, version: 1.0, source: Steam Workshop)
+00:00:32.148 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2414629028/universal mounted to mod pool.
+00:00:32.148 : [mod_package_manager] Mod "Wieloch Krone Mini" has been mounted. (package_name: mod_workshop_package.000000008FEC50A4, version: V 1.0, source: Steam Workshop)
+00:00:32.152 : [zipfs] ms2_content.zip: Created, 3697 entries
+00:00:32.152 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3394342680/ms2_content.zip mounted to mod pool.
+00:00:32.152 : [mod_package_manager] Mod "Additional A.I. Drivers by PBX99" has been mounted. (package_name: mod_workshop_package.00000000CA518F18, version: 1.1, source: Steam Workshop)
+00:00:32.152 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2854398002/universal mounted to mod pool.
+00:00:32.152 : [mod_package_manager] Mod "ETS2 [Trailer] Wind Turbine Blade" has been mounted. (package_name: mod_workshop_package.00000000AA22A832, version: 1.0, source: Steam Workshop)
+00:00:32.152 : [hashfs] sound.scs: Created, 2078 entries
+00:00:32.153 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/648591060/sound.scs mounted to mod pool.
+00:00:32.153 : [mod_package_manager] Mod "Sound Fixes Pack v26.51 - ETS2" has been mounted. (package_name: mod_workshop_package.0000000026A8B6D4, version: 26.51, source: Steam Workshop)
+00:00:32.154 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/1236032431/latest mounted to mod pool.
+00:00:32.154 : [mod_package_manager] Mod "Real Traffic Density ETS2" has been mounted. (package_name: mod_workshop_package.0000000049AC5BAF, version: 1.60.a, source: Steam Workshop)
+00:00:32.154 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3287766210/universal mounted to mod pool.
+00:00:32.154 : [mod_package_manager] Mod "V1.50 ALL PARTS FOR YOUR TRUCKS (lights, beacons, horns). Works in multiplayer, truckersmp." has been mounted. (package_name: mod_workshop_package.00000000C3F754C2, version: Release 1.0, source: Steam Workshop)
+00:00:32.154 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/926118980/universal mounted to mod pool.
+00:00:32.154 : [mod_package_manager] Mod "ETS2 [Tool] Construction Roof Grill + Led Bar" has been mounted. (package_name: mod_workshop_package.0000000037337444, version: 1.0, source: Steam Workshop)
+00:00:32.154 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3280924116/universal mounted to mod pool.
+00:00:32.154 : [mod_package_manager] Mod "Scania.S_2024e Electronic rearview mirror" has been mounted. (package_name: mod_workshop_package.00000000C38EEDD4, version: 1.58.x, source: Steam Workshop)
+00:00:32.160 : [zipfs] latest.zip: Created, 9453 entries
+00:00:32.164 : [zipfs] latest.zip: Created, requested subdirectory: base, 9453 entries (7892 entries in requested subdirectory)
+00:00:32.165 : [zipfs] latest.zip: Created, requested subdirectory: dlc_trailers, 9453 entries (64 entries in requested subdirectory)
+00:00:32.165 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/1764268887/latest.zip mounted to mod pool.
+00:00:32.165 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/1764268887/latest.zip mounted to mod pool.
+00:00:32.165 : [mod_package_manager] Mod "Next Generation Scania P G R S Pack" has been mounted. (package_name: mod_workshop_package.0000000069289B57, version: 2.7, source: Steam Workshop)
+00:00:32.165 : [zipfs] universal.zip: Created, 858 entries
+00:00:32.165 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2739658912/universal.zip mounted to mod pool.
+00:00:32.165 : [mod_package_manager] Mod "[ETS2] Virotic LED Package" has been mounted. (package_name: mod_workshop_package.00000000A34BE0A0, version: 3.6, source: Steam Workshop)
+00:00:32.166 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3202206458/universal mounted to mod pool.
+00:00:32.166 : [mod_package_manager] Mod "SCANIA NG Heavy Transport" has been mounted. (package_name: mod_workshop_package.00000000BEDDCAFA, version: 1.54.0, source: Steam Workshop)
+00:00:32.166 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/682472036/xantrios_signspack mounted to mod pool.
+00:00:32.166 : [mod_package_manager] Mod "Xantrios Signs-Pack" has been mounted. (package_name: mod_workshop_package.0000000028ADB264, version: 2.0, source: Steam Workshop)
+00:00:32.166 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3201544958/universal mounted to mod pool.
+00:00:32.166 : [mod_package_manager] Mod "SCS Lowbeds for 10xN chassis" has been mounted. (package_name: mod_workshop_package.00000000BED3B2FE, version: 1.54, source: Steam Workshop)
+00:00:32.166 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3465099551/universal mounted to mod pool.
+00:00:32.166 : [mod_package_manager] Mod "Low Cab Heavy Cargo Pack for 12xN" has been mounted. (package_name: mod_workshop_package.00000000CE89391F, version: 1.54.4, source: Steam Workshop)
+00:00:32.166 : [hashfs] universal.scs: Created, 76 entries
+00:00:32.166 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/774384307/universal.scs mounted to mod pool.
+00:00:32.166 : [mod_package_manager] Mod "Realistic Vehicle Lights Mod v7.6" has been mounted. (package_name: mod_workshop_package.000000002E282AB3, version: 7.6, source: Steam Workshop)
+00:00:32.167 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/1787041596/160_content mounted to mod pool.
+00:00:32.167 : [mod_package_manager] Mod "Realistic Rain v5.2.1" has been mounted. (package_name: mod_workshop_package.000000006A84173C, version: 5.2.1, source: Steam Workshop)
+00:00:32.167 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2637561037/160_content mounted to mod pool.
+00:00:32.167 : [mod_package_manager] Mod "ProMods 2.83 Convoy Mode Support" has been mounted. (package_name: mod_workshop_package.000000009D35FCCD, version: 2.83, source: Steam Workshop)
+00:00:32.167 : [zipfs] promods-eu-dlcsupport-v283.zip: Created, 21 entries
+00:00:32.167 : [zipfs] promods-eu-dlcsupport-v283.zip: Created, requested subdirectory: dlc_oversize, 21 entries (4 entries in requested subdirectory)
+00:00:32.167 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-dlcsupport-v283.zip mounted to mod pool.
+00:00:32.167 : [mod_package_manager] Mod "ProMods DLC Support Package" has been mounted. (package_name: promods-eu-dlcsupport-v283, version: 2.83, source: User mods)
+00:00:32.167 : [hashfs] promods-eu-media-v283.scs: Created, 21923 entries
+00:00:32.167 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-media-v283.scs mounted to mod pool.
+00:00:32.167 : [mod_package_manager] Mod "ProMods Media Package" has been mounted. (package_name: promods-eu-media-v283, version: 2.83, source: User mods)
+00:00:32.167 : [hashfs] promods-eu-model3-v283.scs: Created, 6793 entries
+00:00:32.167 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-model3-v283.scs mounted to mod pool.
+00:00:32.167 : [mod_package_manager] Mod "ProMods Models Package 3" has been mounted. (package_name: promods-eu-model3-v283, version: 2.83, source: User mods)
+00:00:32.167 : [hashfs] promods-eu-model2-v283.scs: Created, 30031 entries
+00:00:32.167 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-model2-v283.scs mounted to mod pool.
+00:00:32.167 : [mod_package_manager] Mod "ProMods Models Package 2" has been mounted. (package_name: promods-eu-model2-v283, version: 2.83, source: User mods)
+00:00:32.167 : [hashfs] promods-eu-model1-v283.scs: Created, 22577 entries
+00:00:32.167 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-model1-v283.scs mounted to mod pool.
+00:00:32.167 : [mod_package_manager] Mod "ProMods Models Package 1" has been mounted. (package_name: promods-eu-model1-v283, version: 2.83, source: User mods)
+00:00:32.168 : [hashfs] promods-eu-assets-v283.scs: Created, 56403 entries
+00:00:32.168 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-assets-v283.scs mounted to mod pool.
+00:00:32.168 : [mod_package_manager] Mod "ProMods Assets Package" has been mounted. (package_name: promods-eu-assets-v283, version: 2.83, source: User mods)
+00:00:32.196 : [zipfs] promods-eu-map-v283.scs: Created, 42145 entries
+00:00:32.197 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-map-v283.scs mounted to mod pool.
+00:00:32.197 : [mod_package_manager] Mod "ProMods Map Package" has been mounted. (package_name: promods-eu-map-v283, version: 2.83, source: User mods)
+00:00:32.199 : [zipfs] promods-eu-def-v283.scs: Created, 4035 entries
+00:00:32.199 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-def-v283.scs mounted to mod pool.
+00:00:32.199 : [mod_package_manager] Mod "ProMods Definition Package" has been mounted. (package_name: promods-eu-def-v283, version: 2.83, source: User mods)
+00:00:32.199 : <WARNING> [ufs] disabling pool lookup - incompatible hashes: /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-dlcsupport-v283.zip
+00:00:32.224 : [app_lcl] Localization module '/locale/en_gb/local_module.pm_cargo.sii' has been applied.
+00:00:32.236 : [app_lcl] Localization module '/locale/en_gb/local_module.pm_cities.sii' has been applied.
+00:00:32.237 : [app_lcl] Localization module '/locale/en_gb/local_module.pm_cutscene.sii' has been applied.
+00:00:32.238 : [app_lcl] Localization module '/locale/en_gb/local_module.pm_ferry.sii' has been applied.
+00:00:32.241 : <WARNING> [app_lcl] Failed to add token 'fp_be_natural98' from localization module '/locale/en_gb/local_module.pm_fuel.sii'! Localization with that token already defined.
+00:00:32.248 : <WARNING> [app_lcl] Failed to add token 'fp_xk_diesel' from localization module '/locale/en_gb/local_module.pm_fuel.sii'! Localization with that token already defined.
+00:00:32.254 : <WARNING> [app_lcl] Failed to add token 'fp_se_natural98' from localization module '/locale/en_gb/local_module.pm_fuel.sii'! Localization with that token already defined.
+00:00:32.255 : [app_lcl] Localization module '/locale/en_gb/local_module.pm_fuel.sii' has been applied.
+00:00:32.256 : [app_lcl] Localization module '/locale/en_gb/local_module.pm_loading.sii' has been applied.
+00:00:32.256 : [app_lcl] Localization module '/locale/en_gb/local_module.pm_map_lgd.sii' has been applied.
+00:00:32.261 : [app_lcl] Localization module '/locale/en_gb/local_module.pm_states.sii' has been applied.
+00:00:32.261 : [app_lcl] Localization module '/locale/en_gb/local_module.pm_ui_msg.sii' has been applied.
+00:00:32.262 : <WARNING> [app_lcl] Failed to add token 'badge' from localization module '/locale/en_gb/local_module.scania_ng.sii'! Localization with that token already defined.
+00:00:32.262 : [app_lcl] Localization module '/locale/en_gb/local_module.scania_ng.sii' has been applied.
+00:00:41.054 : game 0 0
+00:00:41.319 : <ERROR> Missing file: /unit/hookup/config/.sii
+00:00:42.969 : <WARNING> Missing default icon for cargo 'battery'.
+00:00:42.970 : <WARNING> Missing default icon for cargo 'chem_granule'.
+00:00:42.971 : <WARNING> Missing default icon for cargo 'chlorine_t'.
+00:00:42.976 : <WARNING> Missing default icon for cargo 'sugar_b'.
+00:00:42.977 : <WARNING> Missing default icon for cargo 'sulfur'.
+00:00:42.977 : <WARNING> Missing default icon for cargo 'sulfuric_t'.
+00:00:42.977 : <WARNING> Missing default icon for cargo 'aljoinery'.
+00:00:42.977 : <WARNING> Missing default icon for cargo 'aquariums'.
+00:00:42.978 : <WARNING> Missing default icon for cargo 'carengines'.
+00:00:42.978 : <WARNING> Missing default icon for cargo 'cement_dry'.
+00:00:42.978 : <WARNING> Missing default icon for cargo 'fl_furn'.
+00:00:42.978 : <WARNING> Missing default icon for cargo 'hardware'.
+00:00:42.978 : <WARNING> Missing default icon for cargo 'man_tr'.
+00:00:42.978 : <WARNING> Missing default icon for cargo 'soap'.
+00:00:42.978 : <WARNING> Missing default icon for cargo 'hs875hdxl'.
+00:00:42.978 : <WARNING> Missing default icon for cargo 'hs875hd'.
+00:00:42.978 : <WARNING> Missing default icon for cargo 'liebherr_lrb'.
+00:00:42.978 : <WARNING> Missing default icon for cargo 'liebherr_875'.
+00:00:42.978 : <WARNING> Missing default icon for cargo 'asphmill'.
+00:00:42.978 : <WARNING> Missing default icon for cargo 'piledr'.
+00:00:42.978 : <WARNING> Missing default icon for cargo 'sr220'.
+00:00:42.978 : <WARNING> Missing default icon for cargo 'wtb'.
+00:00:42.978 : <WARNING> Missing default icon for cargo 'art_dumper'.
+00:00:42.978 : <WARNING> Missing default icon for cargo 'tank'.
+00:00:42.978 : <WARNING> Missing default icon for cargo 'wagon'.
+00:00:42.980 : <ERROR> [unit] File '</home/lena/.local/share/Steam/steamapps/common/Euro Truck Simulator 2/dlc_oversize.scs | >/def/oversize_offer_data.mod_czloko.sii':
+00:00:42.980 : <ERROR> [unit] The unit 'spec_offer.ovesize_15e' of type 'oversize_offer_data' has dangling pointer (to 'route_data.ber_szcz1') in the attribute named 'route'.
+00:00:42.980 : <ERROR> [unit] File '</home/lena/.local/share/Steam/steamapps/common/Euro Truck Simulator 2/dlc_oversize.scs | >/def/oversize_offer_data.mod_czloko.sii':
+00:00:42.980 : <WARNING> [unit] The pointer to 'route_data.ber_szcz1' looks like dangling pointer.
+00:00:42.980 : <ERROR> [unit] File '</home/lena/.local/share/Steam/steamapps/common/Euro Truck Simulator 2/dlc_oversize.scs | >/def/oversize_offer_data.mod_czloko.sii':
+00:00:42.980 : <ERROR> [unit] The unit 'spec_offer.ovesize_57c' of type 'oversize_offer_data' has dangling pointer (to 'route_data.bre_tra1') in the attribute named 'route'.
+00:00:42.980 : <ERROR> [unit] File '</home/lena/.local/share/Steam/steamapps/common/Euro Truck Simulator 2/dlc_oversize.scs | >/def/oversize_offer_data.mod_czloko.sii':
+00:00:42.980 : <WARNING> [unit] The pointer to 'route_data.bre_tra1' looks like dangling pointer.
+00:00:42.980 : <ERROR> [unit] File '</home/lena/.local/share/Steam/steamapps/common/Euro Truck Simulator 2/dlc_oversize.scs | >/def/oversize_offer_data.mod_czloko.sii':
+00:00:42.980 : <ERROR> [unit] The unit 'spec_offer.ovesize_74' of type 'oversize_offer_data' has dangling pointer (to 'route_data.kas_ham1') in the attribute named 'route'.
+00:00:42.980 : <ERROR> [unit] File '</home/lena/.local/share/Steam/steamapps/common/Euro Truck Simulator 2/dlc_oversize.scs | >/def/oversize_offer_data.mod_czloko.sii':
+00:00:42.980 : <WARNING> [unit] The pointer to 'route_data.kas_ham1' looks like dangling pointer.
+00:00:43.047 : Collecting Vehicle definitions...
+00:00:43.051 : <WARNING> [accessory_trailer_body_data] Attribute 'cargo_custom_loads' in body 'shortfm.scs.lowbed.body' will become obsolete, please use 'cargo_custom_loads_path' instead, to specify storage folder of cargo custom loads units for this body!
+00:00:43.064 : Loaded traffic trailers of type 'truck_semi': 30
+00:00:43.065 : Loaded traffic trailers of type 'truck_long': 0
+00:00:43.066 : Loaded traffic trailers of type 'train_cargo': 13
+00:00:43.068 : Loaded traffic trailers of type 'car': 7
+00:00:43.069 : Loaded traffic trailers of type 'bus': 1
+00:00:43.073 : Loaded traffic trailers of type 'truck': 35
+00:00:43.082 : Loaded traffic trailers of type 'tram': 109
+00:00:43.092 : Loaded traffic trailers of type 'train': 171
+00:00:43.093 : <WARNING> [accessory_trailer_body_data] Attribute 'cargo_custom_loads' in body 'longfmo.scs.lowbed.body' will become obsolete, please use 'cargo_custom_loads_path' instead, to specify storage folder of cargo custom loads units for this body!
+00:00:43.093 : <WARNING> [accessory_trailer_body_data] Attribute 'cargo_custom_loads' in body 'shortfmo.scs.lowbed.body' will become obsolete, please use 'cargo_custom_loads_path' instead, to specify storage folder of cargo custom loads units for this body!
+00:00:43.093 : <WARNING> [accessory_trailer_body_data] Attribute 'cargo_custom_loads' in body 'longfm73.scs.lowbed.body' will become obsolete, please use 'cargo_custom_loads_path' instead, to specify storage folder of cargo custom loads units for this body!
+00:00:43.094 : Loaded traffic trailers of type 'special': 11
+00:00:43.103 : Loaded traffic vehicles of type 'car': 145
+00:00:43.105 : Loaded traffic vehicles of type 'car_custom': 56
+00:00:43.115 : Loaded traffic vehicles of type 'truck': 72
+00:00:43.117 : Loaded traffic vehicles of type 'truck_light': 48
+00:00:43.119 : Loaded traffic vehicles of type 'truck_medium': 14
+00:00:43.120 : Loaded traffic vehicles of type 'truck_heavy': 5
+00:00:43.120 : Loaded traffic vehicles of type 'truck_long': 0
+00:00:43.124 : Loaded traffic vehicles of type 'truck_custom': 35
+00:00:43.126 : Loaded traffic vehicles of type 'bus': 35
+00:00:43.129 : Loaded traffic vehicles of type 'bus_custom': 101
+00:00:43.131 : Loaded traffic vehicles of type 'tram': 65
+00:00:43.133 : Loaded traffic vehicles of type 'train': 39
+00:00:43.136 : Loaded traffic vehicles of type 'train_wire': 68
+00:00:43.136 : Loaded traffic vehicles of type 'train_custom': 5
+00:00:43.143 : Loaded traffic vehicles of type 'police': 98
+00:00:43.146 : Loaded traffic vehicles of type 'fire': 95
+00:00:43.148 : Loaded traffic vehicles of type 'medical': 61
+00:00:43.149 : Loaded traffic vehicles of type 'escort_front': 1
+00:00:43.150 : Loaded traffic vehicles of type 'escort_back': 1
+00:00:43.151 : Loaded traffic vehicles of type 'special': 10
+00:00:43.152 : Loaded traffic vehicles of type 'lubon': 1
+00:00:43.152 : Loaded traffic vehicles of type 'lubon2': 1
+00:00:43.153 : Loaded traffic vehicles of type 'komo': 1
+00:00:43.154 : Loaded traffic vehicles of type 'komo2': 1
+00:00:43.154 : Loaded traffic vehicles of type 'komo3': 1
+00:00:43.155 : Loaded traffic vehicles of type 'komo4': 1
+00:00:43.156 : Loaded traffic vehicles of type 'komo5': 1
+00:00:43.156 : Loaded traffic vehicles of type 'koz1': 1
+00:00:43.157 : Loaded traffic vehicles of type 'poz1': 1
+00:00:43.158 : Loaded traffic vehicles of type 'komo6': 1
+00:00:43.158 : Loaded traffic vehicles of type 'tp1': 1
+00:00:43.159 : Loaded traffic vehicles of type 'tp2': 1
+00:00:43.159 : Loaded traffic vehicles of type 'komo7': 1
+00:00:43.159 : Loaded traffic vehicles of type 'rok1': 1
+00:00:43.160 : Loaded traffic vehicles of type 'rok2': 1
+00:00:43.160 : Loaded traffic vehicles of type 'moto': 0
+00:00:43.160 : Loaded traffic vehicles of type 'sport': 0
+00:00:43.161 : Loaded traffic vehicles of type 'classic': 0
+00:00:43.161 : Loaded traffic vehicles of type 'truck_bdf': 0
+00:00:43.161 : Loaded addon hookups: 528
+00:00:43.161 : Linking cities with countries...
+00:00:43.340 : Collecting prefab descriptors...
+00:00:43.488 : Loading prefab descriptors...
+00:00:43.624 : Loading ferry connections...
+00:00:43.624 : Loading cargo trailer assignment...
+00:00:43.648 : Loading company cargo assignment...
+00:00:45.952 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.r_2016/accessory/f_fender/stock_blk_p_sensor.sii' in the read_only mode.
+00:00:45.952 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.r_2016/accessory/f_fender/stock_blk_p_sensor.sii' in the read_only mode.
+00:00:45.952 : <ERROR> load_unit() - Failed to open file (/def/vehicle/truck/scania.r_2016/accessory/f_fender/stock_blk_p_sensor.sii)
+00:00:45.954 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.r_2016/accessory/f_fender/stock_blk_p.sii' in the read_only mode.
+00:00:45.954 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.r_2016/accessory/f_fender/stock_blk_p.sii' in the read_only mode.
+00:00:45.954 : <ERROR> load_unit() - Failed to open file (/def/vehicle/truck/scania.r_2016/accessory/f_fender/stock_blk_p.sii)
+00:00:45.960 : <WARNING> Ignoring obsolete attribute 'drop_size_minimum' of unit '.scania.p_2016.pane.f_glasspane' (of type 'glass_pane_data').
+00:00:45.960 : <WARNING> Ignoring obsolete attribute 'drop_size_maximum' of unit '.scania.p_2016.pane.f_glasspane' (of type 'glass_pane_data').
+00:00:45.960 : <WARNING> Ignoring obsolete attribute 'drop_size_minimum' of unit '.scania.p_2016.pane.l_glasspane' (of type 'glass_pane_data').
+00:00:45.960 : <WARNING> Ignoring obsolete attribute 'drop_size_maximum' of unit '.scania.p_2016.pane.l_glasspane' (of type 'glass_pane_data').
+00:00:45.960 : <WARNING> Ignoring obsolete attribute 'drop_size_minimum' of unit '.scania.p_2016.pane.r_glasspane' (of type 'glass_pane_data').
+00:00:45.960 : <WARNING> Ignoring obsolete attribute 'drop_size_maximum' of unit '.scania.p_2016.pane.r_glasspane' (of type 'glass_pane_data').
+00:00:45.960 : <WARNING> Ignoring obsolete attribute 'drop_size_minimum' of unit '.scania.p_2016.pane.t_glasspane' (of type 'glass_pane_data').
+00:00:45.960 : <WARNING> Ignoring obsolete attribute 'drop_size_maximum' of unit '.scania.p_2016.pane.t_glasspane' (of type 'glass_pane_data').
+00:00:45.960 : <WARNING> [interior_data] More items defined in dashboard_color array then allowed, first 8 will be used, rest will be ignored!
+00:00:45.966 : <WARNING> Ignoring obsolete attribute 'drop_size_minimum' of unit '.scania.p_2016.pane.f_glasspane' (of type 'glass_pane_data').
+00:00:45.966 : <WARNING> Ignoring obsolete attribute 'drop_size_maximum' of unit '.scania.p_2016.pane.f_glasspane' (of type 'glass_pane_data').
+00:00:45.966 : <WARNING> Ignoring obsolete attribute 'drop_size_minimum' of unit '.scania.p_2016.pane.l_glasspane' (of type 'glass_pane_data').
+00:00:45.966 : <WARNING> Ignoring obsolete attribute 'drop_size_maximum' of unit '.scania.p_2016.pane.l_glasspane' (of type 'glass_pane_data').
+00:00:45.966 : <WARNING> Ignoring obsolete attribute 'drop_size_minimum' of unit '.scania.p_2016.pane.r_glasspane' (of type 'glass_pane_data').
+00:00:45.966 : <WARNING> Ignoring obsolete attribute 'drop_size_maximum' of unit '.scania.p_2016.pane.r_glasspane' (of type 'glass_pane_data').
+00:00:45.966 : <WARNING> Ignoring obsolete attribute 'drop_size_minimum' of unit '.scania.p_2016.pane.t_glasspane' (of type 'glass_pane_data').
+00:00:45.966 : <WARNING> Ignoring obsolete attribute 'drop_size_maximum' of unit '.scania.p_2016.pane.t_glasspane' (of type 'glass_pane_data').
+00:00:45.967 : <WARNING> [interior_data] More items defined in dashboard_color array then allowed, first 8 will be used, rest will be ignored!
+00:00:46.028 : <WARNING> Ignoring obsolete attribute 'texture' of unit '_nameless.transition.info0' (of type 'transition_info').
+00:00:46.028 : <WARNING> Ignoring obsolete attribute 'texture' of unit '_nameless.transition.info1' (of type 'transition_info').
+00:00:46.028 : <WARNING> Ignoring obsolete attribute 'texture' of unit '_nameless.transition.info0' (of type 'transition_info').
+00:00:46.028 : <WARNING> Ignoring obsolete attribute 'texture' of unit '_nameless.transition.info1' (of type 'transition_info').
+00:00:46.032 : <WARNING> Ignoring obsolete attribute 'texture' of unit '_nameless.transition.info0' (of type 'transition_info').
+00:00:46.032 : <WARNING> Ignoring obsolete attribute 'texture' of unit '_nameless.transition.info1' (of type 'transition_info').
+00:00:46.033 : <WARNING> Ignoring obsolete attribute 'texture' of unit '_nameless.transition.info0' (of type 'transition_info').
+00:00:46.033 : <WARNING> Ignoring obsolete attribute 'texture' of unit '_nameless.transition.info1' (of type 'transition_info').
+00:00:46.166 : [physx] @0: Starting server.
+00:00:46.166 : [physx] @0: Creating reporter.
+00:00:46.166 : [physx] @0: Created foundation version 1.0.0.
+00:00:46.166 : [physx] @0: Created physics version 3.4.3.
+00:00:46.166 : [physx] @0: Initialized extensions.
+00:00:46.167 : [physx] @0: Created CPU dispatcher with 2 threads and logical CPU affinities:
+00:00:46.167 : [physx] @0: CPU          0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26  27  28  29  30  31
+00:00:46.167 : [physx] @0: thread   0   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
+00:00:46.167 : [physx] @0: thread   1   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
+00:00:46.167 : [physx] @0: Created convex cooking.
+00:00:46.167 : [physx] @0: Created fast triangle cooking.
+00:00:46.167 : [physx] @0: Created optimal triangle cooking.
+00:00:46.167 : [physx] @0: Creating simulation filter.
+00:00:46.167 : [bullet] Starting server
+00:00:46.167 : [physx] @0: Creating debug draw.
+00:00:46.227 : Map '/map/europe.mbd' loading started ....
+00:00:46.456 : <WARNING> Excessive sector boundary detected! (sec+0014+0012, [59795, 55361])
+00:00:46.461 : <ERROR> [trigger_item] No actions set for item 0x384D42DC60800000
+00:00:46.467 : <WARNING> Unable to find 'city.winsen' for 'City' 0x4E829188570D7B3F
+00:00:46.491 : <ERROR> [trigger_item] No actions set for item 0x5FEA5FFE57800001
+00:00:46.491 : <ERROR> [trigger_item] No actions set for item 0x62F5BE7FF9000001
+00:00:46.697 : <ERROR> [trigger_item] No actions set for item 0x332D5EBC4D4E0002
+00:00:46.707 : <ERROR> [trigger_item] No actions set for item 0x5FF506711D0094F8
+00:00:46.865 : <WARNING> Unable to find 'city.volkhov' for 'City' 0x348D21949D0A0001
+00:00:46.865 : <WARNING> Unable to find 'city.volkhov' for 'City' 0x3D3D6AEC96CA0000
+00:00:46.865 : <WARNING> Unable to find 'city.volkhov' for 'City' 0x3D3D6B54A64A0000
+00:00:46.865 : <WARNING> Unable to find 'city.kirishi' for 'City' 0x3DE08B24E4160000
+00:00:46.865 : <WARNING> Unable to find 'city.kirishi' for 'City' 0x420FBBA887D60AC6
+00:00:46.903 : <ERROR> [trigger_item] No actions set for item 0x4E8291885ACDC552
+00:00:46.951 : <WARNING> Unable to find 'city.werlte' for 'City' 0x456B2570E7D102BC
+00:00:47.013 : <ERROR> Oversize trajectory order rule without active route checkpoint. uid: 0x504C6E7989000001
+00:00:47.013 : <ERROR> Oversize trajectory order rule without active route checkpoint. uid: 0x504C78415D800001
+00:00:47.729 : <ERROR> Missing generic load trailer point at company 'mercedesbenz.kecskemet' (0x53840368AE800002).
+00:00:47.771 : <ERROR> [traffic_area] Traffic area with uid 0x60688AD7409A0001 has no valid attributes set!
+00:00:47.792 : <ERROR> Missing generic unload trailer point at company 'deres_auto.nuuk' (0x52E512796B800002).
+00:00:47.792 : <ERROR> Missing generic unload trailer point at company 'royal_arctic.nuuk' (0x52E519C92C800002).
+00:00:47.813 : Map base sectors successfully loaded.
+00:00:47.813 : Map loaded
+00:00:47.958 : Loading save. Type: 0, slot: 0, path: <MEMFILE><UFS>/steam/profiles/6D65726B6C69/save/autosave/game.sii
+00:00:47.972 : <WARNING> Ignoring obsolete attribute 'sleeping_count' of unit '.D0.96.4447.00000000' (of type 'player').
+00:00:48.058 : <ERROR> [unit] The unit 'company.volatile.konstnr_br.linkoping' of type 'company' has dangling pointer (to 'company.permanent.konstnr_br') in the attribute named 'permanent_data'.
+00:00:48.059 : <ERROR> [unit] The unit 'company.volatile.konstnr_br.malmo' of type 'company' has dangling pointer (to 'company.permanent.konstnr_br') in the attribute named 'permanent_data'.
+00:00:48.060 : <WARNING> [unit] The pointer to 'company.permanent.konstnr_br' looks like dangling pointer.
+00:00:48.071 : Route data generation started.
+00:00:48.478 : <ERROR> [route_data_u::compute_nav_nodes] Checkpoints with the same order, route: bre_ren1, uid: 0x52A5A35EA190000 and 0x52A5979A3390000
+00:00:48.665 : Route data generation finished.
+00:00:48.665 : Economy reset - save version changed, assuming map mismatch
+00:00:48.675 : Economy reset - at least one referenced object is missing
+00:00:48.694 : Economy reset - company mismatch
+00:00:48.714 : Removing unoccupied 'garage.zwolle' because its garage items were not found.
+00:00:48.714 : Removing unoccupied 'garage.antwerp' because its garage items were not found.
+00:00:48.714 : Removing unoccupied 'garage.eindhoven' because its garage items were not found.
+00:00:48.801 : Road network navigation caching started.
+00:00:49.610 : Cached navigation loaded
+00:00:49.644 : Current profile saved.
+00:00:49.948 : Garage update started.
+00:00:49.949 : <ERROR> Sign 'pawnpoint449' references part 'sc' not found in model '/prefab/garage_scandinavia/garage_poor_sc.pmg'
+00:00:49.949 : <ERROR> Sign 'pawnpoint450' references part 'sc' not found in model '/prefab/garage_scandinavia/garage_poor_sc.pmg'
+00:00:49.951 : <ERROR> Garage spawn point not found! (sundsvall)
+00:00:49.954 : <ERROR> Unknown garage set ! Check xxxx_garages[] in game_data.sii.
+00:00:50.344 : Garage update finished.
+00:00:51.814 : <ERROR> [resource_task] Can not open '/vehicle/truck/scania_2016/wipers_r.pmd'
+00:00:51.814 : <ERROR> [resource_task] Can not open '/vehicle/truck/scania_2016/wipers_r.pmg'
+00:00:51.814 : <ERROR> [resource_task] Can not open '/vehicle/truck/scania_2016/win_open_r.pmd'
+00:00:51.814 : <ERROR> [resource_task] Can not open '/vehicle/truck/scania_2016/win_open_r.pmg'
+00:00:51.863 : <ERROR> [model] Model descriptor '/vehicle/truck/scania_2016/wipers_r.pmd' is malformed.
+00:00:51.864 : <ERROR> [model] Model geometry '/vehicle/truck/scania_2016/wipers_r.pmg' is malformed.
+00:00:51.864 : <ERROR> [model] Model descriptor '/vehicle/truck/scania_2016/win_open_r.pmd' is malformed.
+00:00:51.864 : <ERROR> [model] Model geometry '/vehicle/truck/scania_2016/win_open_r.pmg' is malformed.
+00:00:51.864 : <ERROR> [fs] Failed to open file '/vehicle/truck/scania_2016/wipers_r.pmd' in the read_only mode.
+00:00:51.864 : <ERROR> [ld] Failed to open '/vehicle/truck/scania_2016/wipers_r.pmd'.
+00:00:51.864 : <ERROR> model_template.cpp:735: fn: Failed to load model descriptor (.pmd) or model geometry (.pmg) for '/vehicle/truck/scania_2016/wipers_r.pmg'.
+```
+Game version is 1.60.1.7
+§a§
+**The crash is caused by your "Next Generation Scania P G R S Pack" (workshop ID 1764268887, version 2.7).**
+
+The log ends exactly at the point where the game tries to load broken model files for that truck:
+
+- `wipers_r.pmd` / `wipers_r.pmg`
+- `win_open_r.pmd` / `win_open_r.pmg`
+
+These files were moved or restructured by SCS in version 1.60. The mod is very old and no longer compatible without a patch.
+
+### Quick Fix
+1. Subscribe to this compatibility fix on Steam Workshop:
+   **SCANIA NG Fixes For Eugene PGRS** (ID 3642514869)
+
+2. In the mod manager, place this fix **directly after** (below) the main "Next Generation Scania P G R S Pack".
+
+3. Restart the game and test.
+
+There is also an updated temporary fix pack on the SCS Forums (updated July 2026) that covers both the Scania pack and the rigid chassis addon. Search for “[1.60] Fix for Next Gen Scania P G R S” on the SCS forum if the Workshop version doesn’t fully solve it.
+
+### Other Issues in Your Log
+- **Oversize DLC errors** (`mod_czloko.sii`, dangling pointers to `route_data.ber_szcz1`, `bre_tra1`, etc.): This usually comes from an old special transport / oversize job mod conflicting with the official *Oversize* DLC. Many people see these errors. You may need to disable any old “Special Transport”, “czloko”, or custom oversize job mods.
+- ProMods 2.83 is the current version for 1.60, so that part is fine (the localization warnings are common and usually harmless).
+- You have many heavy cargo / lowbed / realistic lights / rain mods. Some of them are quite old and may cause secondary problems.
+- The economy reset and garage cleaning at the start of the log is normal when you change map mods or have incompatibilities.
+
+### Recommended Next Steps
+1. Add the Scania NG fix and test.
+2. If it still crashes, **temporarily disable the entire Scania NG pack** (and any other Scania-specific mods like the 2024e mirror or Truckworks Kelsa Kit) to confirm this is the cause.
+3. Check for updates on these mods:
+   - Additional Customization packs by Koneko
+   - Hardy’s low cab / lowbed packs
+   - Virotic LED, Realistic Vehicle Lights, Realistic Rain
+
+Would you like me to help you build a cleaner mod list or look at a new log after applying the Scania fix? Just paste the new crash log (or the bottom ~100 lines) if it still fails.
+§u§
+00:00:28.130 : Profile type: PC_steam_cloud
+00:00:28.159 : New profile selected: 'lena'
+00:00:31.818 : [hashfs] promods-eu-assets-v283.scs: Created, 56403 entries
+00:00:31.818 : [zipfs] promods-eu-def-v283.scs: Created, 4035 entries
+00:00:31.818 : [zipfs] promods-eu-dlcsupport-v283.zip: Created, 21 entries
+00:00:31.818 : [zipfs] promods-eu-dlcsupport-v283.zip: Created, requested subdirectory: dlc_feldbinder, 21 entries (7 entries in requested subdirectory)
+00:00:31.818 : [zipfs] promods-eu-dlcsupport-v283.zip: Created, requested subdirectory: dlc_krone, 21 entries (7 entries in requested subdirectory)
+00:00:31.818 : [zipfs] promods-eu-dlcsupport-v283.zip: Created, requested subdirectory: dlc_oversize, 21 entries (4 entries in requested subdirectory)
+00:00:31.823 : [zipfs] promods-eu-map-v283.scs: Created, 42145 entries
+00:00:31.823 : [hashfs] promods-eu-media-v283.scs: Created, 21923 entries
+00:00:31.823 : [hashfs] promods-eu-model1-v283.scs: Created, 22577 entries
+00:00:31.823 : [hashfs] promods-eu-model2-v283.scs: Created, 30031 entries
+00:00:31.824 : [hashfs] promods-eu-model3-v283.scs: Created, 6793 entries
+00:00:31.826 : [zipfs] ms2_content.zip: Created, 3697 entries
+00:00:31.826 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3394342680/ms2_content.zip mounted to mod pool.
+00:00:31.826 : [zipfs] ms2_content.zip: Unmounted
+00:00:31.827 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3457796917/universal mounted to mod pool.
+00:00:31.827 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3457801665/universal mounted to mod pool.
+00:00:31.827 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/926118980/universal mounted to mod pool.
+00:00:31.827 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2854398002/universal mounted to mod pool.
+00:00:31.827 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3465099551/universal mounted to mod pool.
+00:00:31.833 : [zipfs] latest.zip: Created, 9453 entries
+00:00:31.839 : [zipfs] latest.zip: Created, requested subdirectory: base, 9453 entries (7892 entries in requested subdirectory)
+00:00:31.840 : [zipfs] latest.zip: Created, requested subdirectory: dlc_hs_schoch, 9453 entries (475 entries in requested subdirectory)
+00:00:31.841 : [zipfs] latest.zip: Created, requested subdirectory: dlc_mighty_griffin, 9453 entries (843 entries in requested subdirectory)
+00:00:31.841 : [zipfs] latest.zip: Created, requested subdirectory: dlc_toys, 9453 entries (175 entries in requested subdirectory)
+00:00:31.841 : [zipfs] latest.zip: Created, requested subdirectory: dlc_trailers, 9453 entries (64 entries in requested subdirectory)
+00:00:31.841 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/1764268887/latest.zip mounted to mod pool.
+00:00:31.841 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/1764268887/latest.zip mounted to mod pool.
+00:00:31.841 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/1764268887/latest.zip mounted to mod pool.
+00:00:31.841 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/1764268887/latest.zip mounted to mod pool.
+00:00:31.841 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/1764268887/latest.zip mounted to mod pool.
+00:00:31.841 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/1764268887/latest.zip mounted to mod pool.
+00:00:31.841 : [zipfs] latest.zip: Unmounted
+00:00:31.841 : [zipfs] latest.zip: Unmounted
+00:00:31.841 : [zipfs] latest.zip: Unmounted
+00:00:31.841 : [zipfs] latest.zip: Unmounted
+00:00:31.841 : [zipfs] latest.zip: Unmounted
+00:00:31.841 : [zipfs] latest.zip: Unmounted
+00:00:31.842 : [hashfs] universal.scs: Created, 1371 entries
+00:00:31.843 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2177645059/universal.scs mounted to mod pool.
+00:00:31.843 : [hashfs] universal.scs: Unmounted.
+00:00:31.843 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2637561037/160_content mounted to mod pool.
+00:00:31.843 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/1236032431/latest mounted to mod pool.
+00:00:31.843 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/1787041596/160_content mounted to mod pool.
+00:00:31.843 : [hashfs] universal.scs: Created, 76 entries
+00:00:31.843 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/774384307/universal.scs mounted to mod pool.
+00:00:31.843 : [hashfs] universal.scs: Unmounted.
+00:00:31.845 : [zipfs] latest.zip: Created, 2153 entries
+00:00:31.846 : [zipfs] latest.zip: Created, requested subdirectory: base, 2153 entries (1759 entries in requested subdirectory)
+00:00:31.846 : [zipfs] latest.zip: Created, requested subdirectory: dlc_forest_harvesting, 2153 entries (24 entries in requested subdirectory)
+00:00:31.847 : [zipfs] latest.zip: Created, requested subdirectory: dlc_hs_schoch, 2153 entries (158 entries in requested subdirectory)
+00:00:31.847 : [zipfs] latest.zip: Created, requested subdirectory: dlc_mighty_griffin, 2153 entries (209 entries in requested subdirectory)
+00:00:31.847 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3642514869/latest.zip mounted to mod pool.
+00:00:31.847 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3642514869/latest.zip mounted to mod pool.
+00:00:31.847 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3642514869/latest.zip mounted to mod pool.
+00:00:31.847 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3642514869/latest.zip mounted to mod pool.
+00:00:31.847 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3642514869/latest.zip mounted to mod pool.
+00:00:31.847 : [zipfs] latest.zip: Unmounted
+00:00:31.847 : [zipfs] latest.zip: Unmounted
+00:00:31.847 : [zipfs] latest.zip: Unmounted
+00:00:31.847 : [zipfs] latest.zip: Unmounted
+00:00:31.847 : [zipfs] latest.zip: Unmounted
+00:00:31.847 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3716051926/universal mounted to mod pool.
+00:00:31.847 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3716051926/universal/base mounted to mod pool.
+00:00:31.847 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3716051926/universal/dlc_farm_machinery mounted to mod pool.
+00:00:31.847 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3716051926/universal/dlc_forest_harvesting mounted to mod pool.
+00:00:31.847 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3716051926/universal/dlc_hs_schoch mounted to mod pool.
+00:00:31.847 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3716051926/universal/dlc_mighty_griffin mounted to mod pool.
+00:00:31.847 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3716051926/universal/dlc_oversize mounted to mod pool.
+00:00:31.847 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3280924116/universal mounted to mod pool.
+00:00:31.848 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3201544958/universal mounted to mod pool.
+00:00:31.848 : [hashfs] sound.scs: Created, 2078 entries
+00:00:31.849 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/648591060/sound.scs mounted to mod pool.
+00:00:31.849 : [hashfs] sound.scs: Unmounted.
+00:00:31.850 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3395529670/universal mounted to mod pool.
+00:00:31.850 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3287766210/universal mounted to mod pool.
+00:00:31.850 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2414629028/universal mounted to mod pool.
+00:00:31.850 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/682472036/xantrios_signspack mounted to mod pool.
+00:00:31.851 : [zipfs] universal.zip: Created, 546 entries
+00:00:31.851 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2421393956/universal.zip mounted to mod pool.
+00:00:31.851 : [zipfs] universal.zip: Unmounted
+00:00:31.877 : [zipfs] universal.zip: Created, 42863 entries
+00:00:31.877 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2547989482/universal.zip mounted to mod pool.
+00:00:31.877 : [zipfs] universal.zip: Unmounted
+00:00:31.882 : [zipfs] latest.zip: Created, 3432 entries
+00:00:31.882 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2436047420/latest.zip mounted to mod pool.
+00:00:31.882 : [zipfs] latest.zip: Unmounted
+00:00:31.882 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3551975261/universal mounted to mod pool.
+00:00:31.883 : [zipfs] universal.zip: Created, 858 entries
+00:00:31.883 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2739658912/universal.zip mounted to mod pool.
+00:00:31.883 : [zipfs] universal.zip: Unmounted
+00:00:31.886 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-def-v283.scs mounted to mod pool.
+00:00:31.886 : [mod_package_manager] Mod "ProMods Definition Package" has been mounted. (package_name: promods-eu-def-v283, version: 2.83, source: User mods)
+00:00:31.886 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-map-v283.scs mounted to mod pool.
+00:00:31.886 : [mod_package_manager] Mod "ProMods Map Package" has been mounted. (package_name: promods-eu-map-v283, version: 2.83, source: User mods)
+00:00:31.886 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-assets-v283.scs mounted to mod pool.
+00:00:31.886 : [mod_package_manager] Mod "ProMods Assets Package" has been mounted. (package_name: promods-eu-assets-v283, version: 2.83, source: User mods)
+00:00:31.886 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-model1-v283.scs mounted to mod pool.
+00:00:31.886 : [mod_package_manager] Mod "ProMods Models Package 1" has been mounted. (package_name: promods-eu-model1-v283, version: 2.83, source: User mods)
+00:00:31.886 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-model2-v283.scs mounted to mod pool.
+00:00:31.886 : [mod_package_manager] Mod "ProMods Models Package 2" has been mounted. (package_name: promods-eu-model2-v283, version: 2.83, source: User mods)
+00:00:31.886 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-model3-v283.scs mounted to mod pool.
+00:00:31.886 : [mod_package_manager] Mod "ProMods Models Package 3" has been mounted. (package_name: promods-eu-model3-v283, version: 2.83, source: User mods)
+00:00:31.886 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-media-v283.scs mounted to mod pool.
+00:00:31.886 : [mod_package_manager] Mod "ProMods Media Package" has been mounted. (package_name: promods-eu-media-v283, version: 2.83, source: User mods)
+00:00:31.887 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-dlcsupport-v283.zip mounted to mod pool.
+00:00:31.887 : [mod_package_manager] Mod "ProMods DLC Support Package" has been mounted. (package_name: promods-eu-dlcsupport-v283, version: 2.83, source: User mods)
+00:00:31.887 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2637561037/160_content mounted to mod pool.
+00:00:31.887 : [mod_package_manager] Mod "ProMods 2.83 Convoy Mode Support" has been mounted. (package_name: mod_workshop_package.000000009D35FCCD, version: 2.83, source: Steam Workshop)
+00:00:31.887 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/1787041596/160_content mounted to mod pool.
+00:00:31.887 : [mod_package_manager] Mod "Realistic Rain v5.2.1" has been mounted. (package_name: mod_workshop_package.000000006A84173C, version: 5.2.1, source: Steam Workshop)
+00:00:31.918 : [zipfs] promods-eu-def-v283.scs: Unmounted
+00:00:31.918 : [zipfs] promods-eu-dlcsupport-v283.zip: Unmounted
+00:00:31.918 : [zipfs] promods-eu-dlcsupport-v283.zip: Unmounted
+00:00:31.918 : [zipfs] promods-eu-dlcsupport-v283.zip: Unmounted
+00:00:31.918 : [zipfs] promods-eu-dlcsupport-v283.zip: Unmounted
+00:00:31.918 : [hashfs] promods-eu-media-v283.scs: Unmounted.
+00:00:31.918 : [hashfs] promods-eu-model3-v283.scs: Unmounted.
+00:00:31.918 : [hashfs] promods-eu-model2-v283.scs: Unmounted.
+00:00:31.918 : [hashfs] promods-eu-model1-v283.scs: Unmounted.
+00:00:31.918 : [hashfs] promods-eu-assets-v283.scs: Unmounted.
+00:00:31.918 : [zipfs] promods-eu-map-v283.scs: Unmounted
+00:00:31.918 : [hashfs] universal.scs: Created, 76 entries
+00:00:31.919 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/774384307/universal.scs mounted to mod pool.
+00:00:31.919 : [mod_package_manager] Mod "Realistic Vehicle Lights Mod v7.6" has been mounted. (package_name: mod_workshop_package.000000002E282AB3, version: 7.6, source: Steam Workshop)
+00:00:31.950 : [hashfs] universal.scs: Unmounted.
+00:00:32.085 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3716051926/universal mounted to mod pool.
+00:00:32.085 : [mod_package_manager] Mod "Scania NG Flatcab & Heavy Pack" has been mounted. (package_name: mod_workshop_package.00000000DD7E73D6, version: 1.59.2, source: Steam Workshop)
+00:00:32.086 : [zipfs] latest.zip: Created, 2153 entries
+00:00:32.086 : [zipfs] latest.zip: Created, requested subdirectory: base, 2153 entries (1759 entries in requested subdirectory)
+00:00:32.086 : [zipfs] latest.zip: Created, requested subdirectory: dlc_forest_harvesting, 2153 entries (24 entries in requested subdirectory)
+00:00:32.086 : [zipfs] latest.zip: Created, requested subdirectory: dlc_hs_schoch, 2153 entries (158 entries in requested subdirectory)
+00:00:32.086 : [zipfs] latest.zip: Created, requested subdirectory: dlc_mighty_griffin, 2153 entries (209 entries in requested subdirectory)
+00:00:32.086 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3642514869/latest.zip mounted to mod pool.
+00:00:32.086 : [mod_package_manager] Mod "SCANIA NG Fixes For Eugene PGRS" has been mounted. (package_name: mod_workshop_package.00000000D91C5DB5, version: 26.06.20, source: Steam Workshop)
+00:00:32.086 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3201544958/universal mounted to mod pool.
+00:00:32.086 : [mod_package_manager] Mod "SCS Lowbeds for 10xN chassis" has been mounted. (package_name: mod_workshop_package.00000000BED3B2FE, version: 1.54, source: Steam Workshop)
+00:00:32.087 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/682472036/xantrios_signspack mounted to mod pool.
+00:00:32.087 : [mod_package_manager] Mod "Xantrios Signs-Pack" has been mounted. (package_name: mod_workshop_package.0000000028ADB264, version: 2.0, source: Steam Workshop)
+00:00:32.088 : [zipfs] latest.zip: Created, 9453 entries
+00:00:32.090 : [zipfs] latest.zip: Created, requested subdirectory: base, 9453 entries (7892 entries in requested subdirectory)
+00:00:32.090 : [zipfs] latest.zip: Created, requested subdirectory: dlc_hs_schoch, 9453 entries (475 entries in requested subdirectory)
+00:00:32.090 : [zipfs] latest.zip: Created, requested subdirectory: dlc_mighty_griffin, 9453 entries (843 entries in requested subdirectory)
+00:00:32.091 : [zipfs] latest.zip: Created, requested subdirectory: dlc_toys, 9453 entries (175 entries in requested subdirectory)
+00:00:32.091 : [zipfs] latest.zip: Created, requested subdirectory: dlc_trailers, 9453 entries (64 entries in requested subdirectory)
+00:00:32.091 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/1764268887/latest.zip mounted to mod pool.
+00:00:32.091 : [mod_package_manager] Mod "Next Generation Scania P G R S Pack" has been mounted. (package_name: mod_workshop_package.0000000069289B57, version: 2.7, source: Steam Workshop)
+00:00:32.102 : [zipfs] latest.zip: Unmounted
+00:00:32.102 : [zipfs] latest.zip: Unmounted
+00:00:32.102 : [zipfs] latest.zip: Unmounted
+00:00:32.102 : [zipfs] latest.zip: Unmounted
+00:00:32.102 : [zipfs] latest.zip: Unmounted
+00:00:32.102 : [zipfs] latest.zip: Unmounted
+00:00:32.102 : [zipfs] latest.zip: Unmounted
+00:00:32.102 : [zipfs] latest.zip: Unmounted
+00:00:32.102 : [zipfs] latest.zip: Unmounted
+00:00:32.102 : [zipfs] latest.zip: Unmounted
+00:00:32.102 : [zipfs] latest.zip: Unmounted
+00:00:33.386 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3465099551/universal mounted to mod pool.
+00:00:33.386 : [mod_package_manager] Mod "Low Cab Heavy Cargo Pack for 12xN" has been mounted. (package_name: mod_workshop_package.00000000CE89391F, version: 1.54.4, source: Steam Workshop)
+00:00:34.268 : [zipfs] universal.zip: Created, 858 entries
+00:00:34.268 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2739658912/universal.zip mounted to mod pool.
+00:00:34.268 : [mod_package_manager] Mod "[ETS2] Virotic LED Package" has been mounted. (package_name: mod_workshop_package.00000000A34BE0A0, version: 3.6, source: Steam Workshop)
+00:00:34.269 : [zipfs] universal.zip: Unmounted
+00:00:34.587 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3280924116/universal mounted to mod pool.
+00:00:34.587 : [mod_package_manager] Mod "Scania.S_2024e Electronic rearview mirror" has been mounted. (package_name: mod_workshop_package.00000000C38EEDD4, version: 1.58.x, source: Steam Workshop)
+00:00:34.620 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/926118980/universal mounted to mod pool.
+00:00:34.620 : [mod_package_manager] Mod "ETS2 [Tool] Construction Roof Grill + Led Bar" has been mounted. (package_name: mod_workshop_package.0000000037337444, version: 1.0, source: Steam Workshop)
+00:00:39.240 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3287766210/universal mounted to mod pool.
+00:00:39.240 : [mod_package_manager] Mod "V1.50 ALL PARTS FOR YOUR TRUCKS (lights, beacons, horns). Works in multiplayer, truckersmp." has been mounted. (package_name: mod_workshop_package.00000000C3F754C2, version: Release 1.0, source: Steam Workshop)
+00:00:39.273 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/1236032431/latest mounted to mod pool.
+00:00:39.273 : [mod_package_manager] Mod "Real Traffic Density ETS2" has been mounted. (package_name: mod_workshop_package.0000000049AC5BAF, version: 1.60.a, source: Steam Workshop)
+00:00:39.306 : [hashfs] sound.scs: Created, 2078 entries
+00:00:39.307 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/648591060/sound.scs mounted to mod pool.
+00:00:39.307 : [mod_package_manager] Mod "Sound Fixes Pack v26.51 - ETS2" has been mounted. (package_name: mod_workshop_package.0000000026A8B6D4, version: 26.51, source: Steam Workshop)
+00:00:39.308 : [hashfs] sound.scs: Unmounted.
+00:00:39.524 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2854398002/universal mounted to mod pool.
+00:00:39.524 : [mod_package_manager] Mod "ETS2 [Trailer] Wind Turbine Blade" has been mounted. (package_name: mod_workshop_package.00000000AA22A832, version: 1.0, source: Steam Workshop)
+00:00:39.525 : [zipfs] ms2_content.zip: Created, 3697 entries
+00:00:39.525 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3394342680/ms2_content.zip mounted to mod pool.
+00:00:39.525 : [mod_package_manager] Mod "Additional A.I. Drivers by PBX99" has been mounted. (package_name: mod_workshop_package.00000000CA518F18, version: 1.1, source: Steam Workshop)
+00:00:39.556 : [zipfs] ms2_content.zip: Unmounted
+00:00:39.774 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2414629028/universal mounted to mod pool.
+00:00:39.774 : [mod_package_manager] Mod "Wieloch Krone Mini" has been mounted. (package_name: mod_workshop_package.000000008FEC50A4, version: V 1.0, source: Steam Workshop)
+00:00:40.140 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3395529670/universal mounted to mod pool.
+00:00:40.140 : [mod_package_manager] Mod "Truckworks Volvo FH6 "Kelsa Kit"" has been mounted. (package_name: mod_workshop_package.00000000CA63ABC6, version: 1.0, source: Steam Workshop)
+00:00:40.140 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3457796917/universal mounted to mod pool.
+00:00:40.140 : [mod_package_manager] Mod "Additional Customization - HS Schoch Accessory Pack" has been mounted. (package_name: mod_workshop_package.00000000CE19CB35, version: 1, source: Steam Workshop)
+00:00:40.140 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3457801665/universal mounted to mod pool.
+00:00:40.140 : [mod_package_manager] Mod "Additional Customization - Volvo Tuning DLC" has been mounted. (package_name: mod_workshop_package.00000000CE19DDC1, version: 1, source: Steam Workshop)
+00:00:40.858 : [zipfs] universal.zip: Created, 546 entries
+00:00:40.858 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2421393956/universal.zip mounted to mod pool.
+00:00:40.858 : [mod_package_manager] Mod "[1.60] Krone Profi Box Carrier Pack [Krone DLC required]" has been mounted. (package_name: mod_workshop_package.0000000090538A24, version: 1.6.5.3, source: Steam Workshop)
+00:00:40.864 : [zipfs] universal.zip: Created, 42863 entries
+00:00:40.864 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2547989482/universal.zip mounted to mod pool.
+00:00:40.864 : [mod_package_manager] Mod "[1.60] Krone Swap Body Pack (Mod Dependency) [Krone DLC required]" has been mounted. (package_name: mod_workshop_package.0000000097DF3BEA, version: 1.4.6.5, source: Steam Workshop)
+00:00:40.882 : [zipfs] universal.zip: Unmounted
+00:00:40.882 : [zipfs] universal.zip: Unmounted
+00:00:53.618 : [zipfs] latest.zip: Created, 3432 entries
+00:00:53.618 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2436047420/latest.zip mounted to mod pool.
+00:00:53.618 : [mod_package_manager] Mod "[1.60] Swap Body Carrier Chassis Pack [Krone DLC required]" has been mounted. (package_name: mod_workshop_package.000000009133223C, version: 1.5.9.4, source: Steam Workshop)
+00:00:53.618 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3551975261/universal mounted to mod pool.
+00:00:53.618 : [mod_package_manager] Mod "[ETS2] Smooth Keyboard Steering" has been mounted. (package_name: mod_workshop_package.00000000D3B6D75D, version: 1.1, source: Steam Workshop)
+00:00:53.619 : [hashfs] universal.scs: Created, 1371 entries
+00:00:53.619 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2177645059/universal.scs mounted to mod pool.
+00:00:53.619 : [mod_package_manager] Mod "No Limits Mod v1.4 for Special Transport DLC" has been mounted. (package_name: mod_workshop_package.0000000081CC3A03, version: 1.4, source: Steam Workshop)
+00:00:53.620 : [zipfs] latest.zip: Unmounted
+00:00:53.620 : [hashfs] universal.scs: Unmounted.
+00:02:25.678 : Current profile saved.
+00:02:26.067 : mm_flush_repeatedly
+00:02:26.068 : Requested profile is already current profile.
+00:02:26.093 : New profile selected: 'merkli'
+00:02:28.914 : [mods] Active 29 mods (local: 8, workshop: 21)
+00:02:28.914 : [mods] Active workshop mod ID 3457801665 (name: Additional Customization - Volvo Tuning DLC, version: 1, author: Koneko)
+00:02:28.914 : [mods] Active workshop mod ID 3457796917 (name: Additional Customization - HS Schoch Accessory Pack, version: 1, author: Koneko)
+00:02:28.914 : [mods] Active workshop mod ID 3395529670 (name: Truckworks Volvo FH6 "Kelsa Kit", version: 1.0, author: TruckWorks)
+00:02:28.914 : [mods] Active workshop mod ID 2414629028 (name: Wieloch Krone Mini, version: V 1.0, author: Björn / xliebig@web.de)
+00:02:28.914 : [mods] Active workshop mod ID 3394342680 (name: Additional A.I. Drivers by PBX99, version: 1.1, author: PBX99)
+00:02:28.914 : [mods] Active workshop mod ID 2854398002 (name: ETS2 [Trailer] Wind Turbine Blade, version: 1.0, author: SASq)
+00:02:28.914 : [mods] Active workshop mod ID 648591060 (name: Sound Fixes Pack v26.51 - ETS2, version: 26.51, author: Drive Safely)
+00:02:28.914 : [mods] Active workshop mod ID 1236032431 (name: Real Traffic Density ETS2, version: 1.60.a, author: cip)
+00:02:28.914 : [mods] Active workshop mod ID 3287766210 (name: V1.50 ALL PARTS FOR YOUR TRUCKS (lights, beacons, horns). Works in multiplayer, truckersmp., version: Release 1.0, author: ZerGO)
+00:02:28.914 : [mods] Active workshop mod ID 926118980 (name: ETS2 [Tool] Construction Roof Grill + Led Bar, version: 1.0, author: SASq)
+00:02:28.914 : [mods] Active workshop mod ID 3280924116 (name: Scania.S_2024e Electronic rearview mirror, version: 1.58.x, author: 挞跋燕)
+00:02:28.914 : [mods] Active workshop mod ID 3642514869 (name: SCANIA NG Fixes For Eugene PGRS, version: 26.06.20, author: I am Nobita)
+00:02:28.914 : [mods] Active workshop mod ID 1764268887 (name: Next Generation Scania P G R S Pack, version: 2.7, author: Eugene)
+00:02:28.914 : [mods] Active workshop mod ID 2739658912 (name: [ETS2] Virotic LED Package, version: 3.6, author: Void)
+00:02:28.914 : [mods] Active workshop mod ID 682472036 (name: Xantrios Signs-Pack, version: 2.0, author: Xantrios)
+00:02:28.914 : [mods] Active workshop mod ID 3201544958 (name: SCS Lowbeds for 10xN chassis, version: 1.54, author: Hardy)
+00:02:28.914 : [mods] Active workshop mod ID 3465099551 (name: Low Cab Heavy Cargo Pack for 12xN, version: 1.54.4, author: hardy)
+00:02:28.914 : [mods] Active workshop mod ID 3716051926 (name: Scania NG Flatcab & Heavy Pack, version: 1.59.2, author: hardy)
+00:02:28.914 : [mods] Active workshop mod ID 774384307 (name: Realistic Vehicle Lights Mod v7.6, version: 7.6, author: Frkn64)
+00:02:28.914 : [mods] Active workshop mod ID 1787041596 (name: Realistic Rain v5.2.1, version: 5.2.1, author: Darkcaptain)
+00:02:28.914 : [mods] Active workshop mod ID 2637561037 (name: ProMods 2.83 Convoy Mode Support, version: 2.83, author: ProMods Team)
+00:02:28.914 : [mods] Active local mod promods-eu-dlcsupport-v283 (name: ProMods DLC Support Package, version: 2.83, author: ProMods Team)
+00:02:28.914 : [mods] Active local mod promods-eu-media-v283 (name: ProMods Media Package, version: 2.83, author: ProMods Team)
+00:02:28.914 : [mods] Active local mod promods-eu-model3-v283 (name: ProMods Models Package 3, version: 2.83, author: ProMods Team)
+00:02:28.914 : [mods] Active local mod promods-eu-model2-v283 (name: ProMods Models Package 2, version: 2.83, author: ProMods Team)
+00:02:28.914 : [mods] Active local mod promods-eu-model1-v283 (name: ProMods Models Package 1, version: 2.83, author: ProMods Team)
+00:02:28.914 : [mods] Active local mod promods-eu-assets-v283 (name: ProMods Assets Package, version: 2.83, author: ProMods Team)
+00:02:28.914 : [mods] Active local mod promods-eu-map-v283 (name: ProMods Map Package, version: 2.83, author: ProMods Team)
+00:02:28.914 : [mods] Active local mod promods-eu-def-v283 (name: ProMods Definition Package, version: 2.83, author: ProMods Team)
+00:02:28.914 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3457801665/universal mounted to mod pool.
+00:02:28.914 : [mod_package_manager] Mod "Additional Customization - Volvo Tuning DLC" has been mounted. (package_name: mod_workshop_package.00000000CE19DDC1, version: 1, source: Steam Workshop)
+00:02:28.915 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3457796917/universal mounted to mod pool.
+00:02:28.915 : [mod_package_manager] Mod "Additional Customization - HS Schoch Accessory Pack" has been mounted. (package_name: mod_workshop_package.00000000CE19CB35, version: 1, source: Steam Workshop)
+00:02:28.915 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3395529670/universal mounted to mod pool.
+00:02:28.915 : [mod_package_manager] Mod "Truckworks Volvo FH6 "Kelsa Kit"" has been mounted. (package_name: mod_workshop_package.00000000CA63ABC6, version: 1.0, source: Steam Workshop)
+00:02:28.915 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2414629028/universal mounted to mod pool.
+00:02:28.915 : [mod_package_manager] Mod "Wieloch Krone Mini" has been mounted. (package_name: mod_workshop_package.000000008FEC50A4, version: V 1.0, source: Steam Workshop)
+00:02:28.918 : [zipfs] ms2_content.zip: Created, 3697 entries
+00:02:28.918 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3394342680/ms2_content.zip mounted to mod pool.
+00:02:28.918 : [mod_package_manager] Mod "Additional A.I. Drivers by PBX99" has been mounted. (package_name: mod_workshop_package.00000000CA518F18, version: 1.1, source: Steam Workshop)
+00:02:28.918 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2854398002/universal mounted to mod pool.
+00:02:28.918 : [mod_package_manager] Mod "ETS2 [Trailer] Wind Turbine Blade" has been mounted. (package_name: mod_workshop_package.00000000AA22A832, version: 1.0, source: Steam Workshop)
+00:02:28.918 : [hashfs] sound.scs: Created, 2078 entries
+00:02:28.919 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/648591060/sound.scs mounted to mod pool.
+00:02:28.919 : [mod_package_manager] Mod "Sound Fixes Pack v26.51 - ETS2" has been mounted. (package_name: mod_workshop_package.0000000026A8B6D4, version: 26.51, source: Steam Workshop)
+00:02:28.920 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/1236032431/latest mounted to mod pool.
+00:02:28.920 : [mod_package_manager] Mod "Real Traffic Density ETS2" has been mounted. (package_name: mod_workshop_package.0000000049AC5BAF, version: 1.60.a, source: Steam Workshop)
+00:02:28.920 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3287766210/universal mounted to mod pool.
+00:02:28.920 : [mod_package_manager] Mod "V1.50 ALL PARTS FOR YOUR TRUCKS (lights, beacons, horns). Works in multiplayer, truckersmp." has been mounted. (package_name: mod_workshop_package.00000000C3F754C2, version: Release 1.0, source: Steam Workshop)
+00:02:28.920 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/926118980/universal mounted to mod pool.
+00:02:28.920 : [mod_package_manager] Mod "ETS2 [Tool] Construction Roof Grill + Led Bar" has been mounted. (package_name: mod_workshop_package.0000000037337444, version: 1.0, source: Steam Workshop)
+00:02:28.920 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3280924116/universal mounted to mod pool.
+00:02:28.920 : [mod_package_manager] Mod "Scania.S_2024e Electronic rearview mirror" has been mounted. (package_name: mod_workshop_package.00000000C38EEDD4, version: 1.58.x, source: Steam Workshop)
+00:02:28.921 : [zipfs] latest.zip: Created, 2153 entries
+00:02:28.922 : [zipfs] latest.zip: Created, requested subdirectory: base, 2153 entries (1759 entries in requested subdirectory)
+00:02:28.922 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3642514869/latest.zip mounted to mod pool.
+00:02:28.922 : [mod_package_manager] Mod "SCANIA NG Fixes For Eugene PGRS" has been mounted. (package_name: mod_workshop_package.00000000D91C5DB5, version: 26.06.20, source: Steam Workshop)
+00:02:28.928 : [zipfs] latest.zip: Created, 9453 entries
+00:02:28.936 : [zipfs] latest.zip: Created, requested subdirectory: base, 9453 entries (7892 entries in requested subdirectory)
+00:02:28.936 : [zipfs] latest.zip: Created, requested subdirectory: dlc_trailers, 9453 entries (64 entries in requested subdirectory)
+00:02:28.936 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/1764268887/latest.zip mounted to mod pool.
+00:02:28.936 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/1764268887/latest.zip mounted to mod pool.
+00:02:28.936 : [mod_package_manager] Mod "Next Generation Scania P G R S Pack" has been mounted. (package_name: mod_workshop_package.0000000069289B57, version: 2.7, source: Steam Workshop)
+00:02:28.937 : [zipfs] universal.zip: Created, 858 entries
+00:02:28.937 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2739658912/universal.zip mounted to mod pool.
+00:02:28.937 : [mod_package_manager] Mod "[ETS2] Virotic LED Package" has been mounted. (package_name: mod_workshop_package.00000000A34BE0A0, version: 3.6, source: Steam Workshop)
+00:02:28.938 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/682472036/xantrios_signspack mounted to mod pool.
+00:02:28.938 : [mod_package_manager] Mod "Xantrios Signs-Pack" has been mounted. (package_name: mod_workshop_package.0000000028ADB264, version: 2.0, source: Steam Workshop)
+00:02:28.938 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3201544958/universal mounted to mod pool.
+00:02:28.938 : [mod_package_manager] Mod "SCS Lowbeds for 10xN chassis" has been mounted. (package_name: mod_workshop_package.00000000BED3B2FE, version: 1.54, source: Steam Workshop)
+00:02:28.938 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3465099551/universal mounted to mod pool.
+00:02:28.938 : [mod_package_manager] Mod "Low Cab Heavy Cargo Pack for 12xN" has been mounted. (package_name: mod_workshop_package.00000000CE89391F, version: 1.54.4, source: Steam Workshop)
+00:02:28.938 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3716051926/universal/base mounted to mod pool.
+00:02:28.938 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/3716051926/universal/dlc_oversize mounted to mod pool.
+00:02:28.938 : [mod_package_manager] Mod "Scania NG Flatcab & Heavy Pack" has been mounted. (package_name: mod_workshop_package.00000000DD7E73D6, version: 1.59.2, source: Steam Workshop)
+00:02:28.938 : [hashfs] universal.scs: Created, 76 entries
+00:02:28.938 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/774384307/universal.scs mounted to mod pool.
+00:02:28.938 : [mod_package_manager] Mod "Realistic Vehicle Lights Mod v7.6" has been mounted. (package_name: mod_workshop_package.000000002E282AB3, version: 7.6, source: Steam Workshop)
+00:02:28.938 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/1787041596/160_content mounted to mod pool.
+00:02:28.939 : [mod_package_manager] Mod "Realistic Rain v5.2.1" has been mounted. (package_name: mod_workshop_package.000000006A84173C, version: 5.2.1, source: Steam Workshop)
+00:02:28.939 : [fs] device /home/lena/.local/share/Steam/steamapps/workshop/content/227300/2637561037/160_content mounted to mod pool.
+00:02:28.939 : [mod_package_manager] Mod "ProMods 2.83 Convoy Mode Support" has been mounted. (package_name: mod_workshop_package.000000009D35FCCD, version: 2.83, source: Steam Workshop)
+00:02:28.939 : [zipfs] promods-eu-dlcsupport-v283.zip: Created, 21 entries
+00:02:28.939 : [zipfs] promods-eu-dlcsupport-v283.zip: Created, requested subdirectory: dlc_oversize, 21 entries (4 entries in requested subdirectory)
+00:02:28.939 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-dlcsupport-v283.zip mounted to mod pool.
+00:02:28.939 : [mod_package_manager] Mod "ProMods DLC Support Package" has been mounted. (package_name: promods-eu-dlcsupport-v283, version: 2.83, source: User mods)
+00:02:28.939 : [hashfs] promods-eu-media-v283.scs: Created, 21923 entries
+00:02:28.939 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-media-v283.scs mounted to mod pool.
+00:02:28.939 : [mod_package_manager] Mod "ProMods Media Package" has been mounted. (package_name: promods-eu-media-v283, version: 2.83, source: User mods)
+00:02:28.939 : [hashfs] promods-eu-model3-v283.scs: Created, 6793 entries
+00:02:28.939 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-model3-v283.scs mounted to mod pool.
+00:02:28.939 : [mod_package_manager] Mod "ProMods Models Package 3" has been mounted. (package_name: promods-eu-model3-v283, version: 2.83, source: User mods)
+00:02:28.939 : [hashfs] promods-eu-model2-v283.scs: Created, 30031 entries
+00:02:28.939 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-model2-v283.scs mounted to mod pool.
+00:02:28.939 : [mod_package_manager] Mod "ProMods Models Package 2" has been mounted. (package_name: promods-eu-model2-v283, version: 2.83, source: User mods)
+00:02:28.940 : [hashfs] promods-eu-model1-v283.scs: Created, 22577 entries
+00:02:28.940 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-model1-v283.scs mounted to mod pool.
+00:02:28.940 : [mod_package_manager] Mod "ProMods Models Package 1" has been mounted. (package_name: promods-eu-model1-v283, version: 2.83, source: User mods)
+00:02:28.940 : [hashfs] promods-eu-assets-v283.scs: Created, 56403 entries
+00:02:28.940 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-assets-v283.scs mounted to mod pool.
+00:02:28.940 : [mod_package_manager] Mod "ProMods Assets Package" has been mounted. (package_name: promods-eu-assets-v283, version: 2.83, source: User mods)
+00:02:28.967 : [zipfs] promods-eu-map-v283.scs: Created, 42145 entries
+00:02:28.967 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-map-v283.scs mounted to mod pool.
+00:02:28.967 : [mod_package_manager] Mod "ProMods Map Package" has been mounted. (package_name: promods-eu-map-v283, version: 2.83, source: User mods)
+00:02:28.970 : [zipfs] promods-eu-def-v283.scs: Created, 4035 entries
+00:02:28.970 : [fs] device /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-def-v283.scs mounted to mod pool.
+00:02:28.970 : [mod_package_manager] Mod "ProMods Definition Package" has been mounted. (package_name: promods-eu-def-v283, version: 2.83, source: User mods)
+00:02:28.970 : <WARNING> [ufs] disabling pool lookup - incompatible hashes: /home/lena/.local/share/Euro Truck Simulator 2/mod/promods-eu-dlcsupport-v283.zip
+00:02:28.992 : [app_lcl] Localization module '/locale/en_gb/local_module.pm_cargo.sii' has been applied.
+00:02:29.005 : [app_lcl] Localization module '/locale/en_gb/local_module.pm_cities.sii' has been applied.
+00:02:29.006 : [app_lcl] Localization module '/locale/en_gb/local_module.pm_cutscene.sii' has been applied.
+00:02:29.007 : [app_lcl] Localization module '/locale/en_gb/local_module.pm_ferry.sii' has been applied.
+00:02:29.009 : <WARNING> [app_lcl] Failed to add token 'fp_be_natural98' from localization module '/locale/en_gb/local_module.pm_fuel.sii'! Localization with that token already defined.
+00:02:29.021 : <WARNING> [app_lcl] Failed to add token 'fp_xk_diesel' from localization module '/locale/en_gb/local_module.pm_fuel.sii'! Localization with that token already defined.
+00:02:29.029 : <WARNING> [app_lcl] Failed to add token 'fp_se_natural98' from localization module '/locale/en_gb/local_module.pm_fuel.sii'! Localization with that token already defined.
+00:02:29.031 : [app_lcl] Localization module '/locale/en_gb/local_module.pm_fuel.sii' has been applied.
+00:02:29.032 : [app_lcl] Localization module '/locale/en_gb/local_module.pm_loading.sii' has been applied.
+00:02:29.032 : [app_lcl] Localization module '/locale/en_gb/local_module.pm_map_lgd.sii' has been applied.
+00:02:29.037 : [app_lcl] Localization module '/locale/en_gb/local_module.pm_states.sii' has been applied.
+00:02:29.037 : [app_lcl] Localization module '/locale/en_gb/local_module.pm_ui_msg.sii' has been applied.
+00:02:29.038 : [app_lcl] Localization module '/locale/en_gb/local_module.scania_ng.sii' has been applied.
+00:02:36.336 : game 0 0
+00:02:36.577 : <ERROR> Missing file: /unit/hookup/config/.sii
+00:02:38.292 : <WARNING> Missing default icon for cargo 'battery'.
+00:02:38.293 : <WARNING> Missing default icon for cargo 'chem_granule'.
+00:02:38.293 : <WARNING> Missing default icon for cargo 'chlorine_t'.
+00:02:38.297 : <WARNING> Missing default icon for cargo 'sugar_b'.
+00:02:38.297 : <WARNING> Missing default icon for cargo 'sulfur'.
+00:02:38.297 : <WARNING> Missing default icon for cargo 'sulfuric_t'.
+00:02:38.298 : <WARNING> Missing default icon for cargo 'aljoinery'.
+00:02:38.298 : <WARNING> Missing default icon for cargo 'aquariums'.
+00:02:38.298 : <WARNING> Missing default icon for cargo 'carengines'.
+00:02:38.298 : <WARNING> Missing default icon for cargo 'cement_dry'.
+00:02:38.298 : <WARNING> Missing default icon for cargo 'fl_furn'.
+00:02:38.298 : <WARNING> Missing default icon for cargo 'hardware'.
+00:02:38.298 : <WARNING> Missing default icon for cargo 'man_tr'.
+00:02:38.298 : <WARNING> Missing default icon for cargo 'soap'.
+00:02:38.299 : <WARNING> Missing default icon for cargo 'hs875hdxl'.
+00:02:38.299 : <WARNING> Missing default icon for cargo 'hs875hd'.
+00:02:38.299 : <WARNING> Missing default icon for cargo 'liebherr_lrb'.
+00:02:38.299 : <WARNING> Missing default icon for cargo 'liebherr_875'.
+00:02:38.299 : <WARNING> Missing default icon for cargo 'asphmill'.
+00:02:38.299 : <WARNING> Missing default icon for cargo 'piledr'.
+00:02:38.299 : <WARNING> Missing default icon for cargo 'sr220'.
+00:02:38.299 : <WARNING> Missing default icon for cargo 'wtb'.
+00:02:38.299 : <WARNING> Missing default icon for cargo 'art_dumper'.
+00:02:38.299 : <WARNING> Missing default icon for cargo 'tank'.
+00:02:38.299 : <WARNING> Missing default icon for cargo 'wagon'.
+00:02:38.301 : <ERROR> [unit] File '</home/lena/.local/share/Steam/steamapps/common/Euro Truck Simulator 2/dlc_oversize.scs | >/def/oversize_offer_data.mod_czloko.sii':
+00:02:38.301 : <ERROR> [unit] The unit 'spec_offer.ovesize_15e' of type 'oversize_offer_data' has dangling pointer (to 'route_data.ber_szcz1') in the attribute named 'route'.
+00:02:38.301 : <ERROR> [unit] File '</home/lena/.local/share/Steam/steamapps/common/Euro Truck Simulator 2/dlc_oversize.scs | >/def/oversize_offer_data.mod_czloko.sii':
+00:02:38.301 : <WARNING> [unit] The pointer to 'route_data.ber_szcz1' looks like dangling pointer.
+00:02:38.301 : <ERROR> [unit] File '</home/lena/.local/share/Steam/steamapps/common/Euro Truck Simulator 2/dlc_oversize.scs | >/def/oversize_offer_data.mod_czloko.sii':
+00:02:38.301 : <ERROR> [unit] The unit 'spec_offer.ovesize_57c' of type 'oversize_offer_data' has dangling pointer (to 'route_data.bre_tra1') in the attribute named 'route'.
+00:02:38.301 : <ERROR> [unit] File '</home/lena/.local/share/Steam/steamapps/common/Euro Truck Simulator 2/dlc_oversize.scs | >/def/oversize_offer_data.mod_czloko.sii':
+00:02:38.301 : <WARNING> [unit] The pointer to 'route_data.bre_tra1' looks like dangling pointer.
+00:02:38.301 : <ERROR> [unit] File '</home/lena/.local/share/Steam/steamapps/common/Euro Truck Simulator 2/dlc_oversize.scs | >/def/oversize_offer_data.mod_czloko.sii':
+00:02:38.301 : <ERROR> [unit] The unit 'spec_offer.ovesize_74' of type 'oversize_offer_data' has dangling pointer (to 'route_data.kas_ham1') in the attribute named 'route'.
+00:02:38.301 : <ERROR> [unit] File '</home/lena/.local/share/Steam/steamapps/common/Euro Truck Simulator 2/dlc_oversize.scs | >/def/oversize_offer_data.mod_czloko.sii':
+00:02:38.301 : <WARNING> [unit] The pointer to 'route_data.kas_ham1' looks like dangling pointer.
+00:02:38.364 : Collecting Vehicle definitions...
+00:02:38.368 : <WARNING> [accessory_trailer_body_data] Attribute 'cargo_custom_loads' in body 'shortfm.scs.lowbed.body' will become obsolete, please use 'cargo_custom_loads_path' instead, to specify storage folder of cargo custom loads units for this body!
+00:02:38.382 : Loaded traffic trailers of type 'truck_semi': 30
+00:02:38.383 : Loaded traffic trailers of type 'truck_long': 0
+00:02:38.384 : Loaded traffic trailers of type 'train_cargo': 13
+00:02:38.386 : Loaded traffic trailers of type 'car': 7
+00:02:38.387 : Loaded traffic trailers of type 'bus': 1
+00:02:38.391 : Loaded traffic trailers of type 'truck': 35
+00:02:38.397 : Loaded traffic trailers of type 'tram': 109
+00:02:38.404 : Loaded traffic trailers of type 'train': 171
+00:02:38.405 : <WARNING> [accessory_trailer_body_data] Attribute 'cargo_custom_loads' in body 'longfmo.scs.lowbed.body' will become obsolete, please use 'cargo_custom_loads_path' instead, to specify storage folder of cargo custom loads units for this body!
+00:02:38.405 : <WARNING> [accessory_trailer_body_data] Attribute 'cargo_custom_loads' in body 'shortfmo.scs.lowbed.body' will become obsolete, please use 'cargo_custom_loads_path' instead, to specify storage folder of cargo custom loads units for this body!
+00:02:38.405 : <WARNING> [accessory_trailer_body_data] Attribute 'cargo_custom_loads' in body 'longfm73.scs.lowbed.body' will become obsolete, please use 'cargo_custom_loads_path' instead, to specify storage folder of cargo custom loads units for this body!
+00:02:38.406 : Loaded traffic trailers of type 'special': 11
+00:02:38.418 : Loaded traffic vehicles of type 'car': 145
+00:02:38.421 : Loaded traffic vehicles of type 'car_custom': 56
+00:02:38.433 : Loaded traffic vehicles of type 'truck': 72
+00:02:38.436 : Loaded traffic vehicles of type 'truck_light': 48
+00:02:38.437 : Loaded traffic vehicles of type 'truck_medium': 14
+00:02:38.438 : Loaded traffic vehicles of type 'truck_heavy': 5
+00:02:38.439 : Loaded traffic vehicles of type 'truck_long': 0
+00:02:38.442 : Loaded traffic vehicles of type 'truck_custom': 35
+00:02:38.444 : Loaded traffic vehicles of type 'bus': 35
+00:02:38.447 : Loaded traffic vehicles of type 'bus_custom': 101
+00:02:38.450 : Loaded traffic vehicles of type 'tram': 65
+00:02:38.452 : Loaded traffic vehicles of type 'train': 39
+00:02:38.456 : Loaded traffic vehicles of type 'train_wire': 68
+00:02:38.457 : Loaded traffic vehicles of type 'train_custom': 5
+00:02:38.462 : Loaded traffic vehicles of type 'police': 98
+00:02:38.464 : Loaded traffic vehicles of type 'fire': 95
+00:02:38.466 : Loaded traffic vehicles of type 'medical': 61
+00:02:38.466 : Loaded traffic vehicles of type 'escort_front': 1
+00:02:38.467 : Loaded traffic vehicles of type 'escort_back': 1
+00:02:38.468 : Loaded traffic vehicles of type 'special': 10
+00:02:38.469 : Loaded traffic vehicles of type 'lubon': 1
+00:02:38.469 : Loaded traffic vehicles of type 'lubon2': 1
+00:02:38.469 : Loaded traffic vehicles of type 'komo': 1
+00:02:38.470 : Loaded traffic vehicles of type 'komo2': 1
+00:02:38.470 : Loaded traffic vehicles of type 'komo3': 1
+00:02:38.471 : Loaded traffic vehicles of type 'komo4': 1
+00:02:38.471 : Loaded traffic vehicles of type 'komo5': 1
+00:02:38.472 : Loaded traffic vehicles of type 'koz1': 1
+00:02:38.472 : Loaded traffic vehicles of type 'poz1': 1
+00:02:38.472 : Loaded traffic vehicles of type 'komo6': 1
+00:02:38.473 : Loaded traffic vehicles of type 'tp1': 1
+00:02:38.473 : Loaded traffic vehicles of type 'tp2': 1
+00:02:38.474 : Loaded traffic vehicles of type 'komo7': 1
+00:02:38.474 : Loaded traffic vehicles of type 'rok1': 1
+00:02:38.475 : Loaded traffic vehicles of type 'rok2': 1
+00:02:38.475 : Loaded traffic vehicles of type 'moto': 0
+00:02:38.476 : Loaded traffic vehicles of type 'sport': 0
+00:02:38.476 : Loaded traffic vehicles of type 'classic': 0
+00:02:38.476 : Loaded traffic vehicles of type 'truck_bdf': 0
+00:02:38.476 : Loaded addon hookups: 531
+00:02:38.477 : Linking cities with countries...
+00:02:38.654 : Collecting prefab descriptors...
+00:02:38.825 : Loading prefab descriptors...
+00:02:38.967 : Loading ferry connections...
+00:02:38.968 : Loading cargo trailer assignment...
+00:02:38.994 : Loading company cargo assignment...
+00:02:41.390 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.p_2016/accessory/f_inlay_cab/painted.sii' in the read_only mode.
+00:02:41.390 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.p_2016/accessory/f_inlay_cab/painted.sii' in the read_only mode.
+00:02:41.390 : <ERROR> load_unit() - Failed to open file (/def/vehicle/truck/scania.p_2016/accessory/f_inlay_cab/painted.sii)
+00:02:41.390 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.p_2016/accessory/f_inlay_chs/painted.sii' in the read_only mode.
+00:02:41.390 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.p_2016/accessory/f_inlay_chs/painted.sii' in the read_only mode.
+00:02:41.390 : <ERROR> load_unit() - Failed to open file (/def/vehicle/truck/scania.p_2016/accessory/f_inlay_chs/painted.sii)
+00:02:41.390 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.p_2016/accessory/f_intake_cab/painted.sii' in the read_only mode.
+00:02:41.390 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.p_2016/accessory/f_intake_cab/painted.sii' in the read_only mode.
+00:02:41.390 : <ERROR> load_unit() - Failed to open file (/def/vehicle/truck/scania.p_2016/accessory/f_intake_cab/painted.sii)
+00:02:41.390 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.p_2016/accessory/f_intake_chs/painted.sii' in the read_only mode.
+00:02:41.390 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.p_2016/accessory/f_intake_chs/painted.sii' in the read_only mode.
+00:02:41.390 : <ERROR> load_unit() - Failed to open file (/def/vehicle/truck/scania.p_2016/accessory/f_intake_chs/painted.sii)
+00:02:41.390 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.p_2016/accessory/f_intk_b_cab/painted.sii' in the read_only mode.
+00:02:41.391 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.p_2016/accessory/f_intk_b_cab/painted.sii' in the read_only mode.
+00:02:41.391 : <ERROR> load_unit() - Failed to open file (/def/vehicle/truck/scania.p_2016/accessory/f_intk_b_cab/painted.sii)
+00:02:41.391 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.p_2016/accessory/f_intk_b_chs/painted.sii' in the read_only mode.
+00:02:41.391 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.p_2016/accessory/f_intk_b_chs/painted.sii' in the read_only mode.
+00:02:41.391 : <ERROR> load_unit() - Failed to open file (/def/vehicle/truck/scania.p_2016/accessory/f_intk_b_chs/painted.sii)
+00:02:41.391 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.p_2016/accessory/f_logo/underlit.sii' in the read_only mode.
+00:02:41.391 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.p_2016/accessory/f_logo/underlit.sii' in the read_only mode.
+00:02:41.391 : <ERROR> load_unit() - Failed to open file (/def/vehicle/truck/scania.p_2016/accessory/f_logo/underlit.sii)
+00:02:41.391 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.p_2016/accessory/f_wnd_frame/painted.sii' in the read_only mode.
+00:02:41.391 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.p_2016/accessory/f_wnd_frame/painted.sii' in the read_only mode.
+00:02:41.391 : <ERROR> load_unit() - Failed to open file (/def/vehicle/truck/scania.p_2016/accessory/f_wnd_frame/painted.sii)
+00:02:41.392 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.p_2016/accessory/s_panel/painted_full.sii' in the read_only mode.
+00:02:41.392 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.p_2016/accessory/s_panel/painted_full.sii' in the read_only mode.
+00:02:41.392 : <ERROR> load_unit() - Failed to open file (/def/vehicle/truck/scania.p_2016/accessory/s_panel/painted_full.sii)
+00:02:41.399 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.p_2016/accessory/r_chs_cover/chs_c_mg_6x24_dia.sii' in the read_only mode.
+00:02:41.399 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.p_2016/accessory/r_chs_cover/chs_c_mg_6x24_dia.sii' in the read_only mode.
+00:02:41.399 : <ERROR> load_unit() - Failed to open file (/def/vehicle/truck/scania.p_2016/accessory/r_chs_cover/chs_c_mg_6x24_dia.sii)
+00:02:41.403 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.r_2016/accessory/badge/r500_s.sii' in the read_only mode.
+00:02:41.403 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.r_2016/accessory/badge/r500_s.sii' in the read_only mode.
+00:02:41.403 : <ERROR> load_unit() - Failed to open file (/def/vehicle/truck/scania.r_2016/accessory/badge/r500_s.sii)
+00:02:41.406 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.r_2016/accessory/f_fender/stock_blk_p.sii' in the read_only mode.
+00:02:41.406 : <ERROR> [fs] Failed to open file '/def/vehicle/truck/scania.r_2016/accessory/f_fender/stock_blk_p.sii' in the read_only mode.
+00:02:41.406 : <ERROR> load_unit() - Failed to open file (/def/vehicle/truck/scania.r_2016/accessory/f_fender/stock_blk_p.sii)
+00:02:41.477 : <WARNING> Ignoring obsolete attribute 'texture' of unit '_nameless.transition.info0' (of type 'transition_info').
+00:02:41.477 : <WARNING> Ignoring obsolete attribute 'texture' of unit '_nameless.transition.info1' (of type 'transition_info').
+00:02:41.478 : <WARNING> Ignoring obsolete attribute 'texture' of unit '_nameless.transition.info0' (of type 'transition_info').
+00:02:41.478 : <WARNING> Ignoring obsolete attribute 'texture' of unit '_nameless.transition.info1' (of type 'transition_info').
+00:02:41.481 : <WARNING> Ignoring obsolete attribute 'texture' of unit '_nameless.transition.info0' (of type 'transition_info').
+00:02:41.481 : <WARNING> Ignoring obsolete attribute 'texture' of unit '_nameless.transition.info1' (of type 'transition_info').
+00:02:41.482 : <WARNING> Ignoring obsolete attribute 'texture' of unit '_nameless.transition.info0' (of type 'transition_info').
+00:02:41.482 : <WARNING> Ignoring obsolete attribute 'texture' of unit '_nameless.transition.info1' (of type 'transition_info').
+00:02:41.599 : [physx] @0: Starting server.
+00:02:41.599 : [physx] @0: Creating reporter.
+00:02:41.599 : [physx] @0: Created foundation version 1.0.0.
+00:02:41.599 : [physx] @0: Created physics version 3.4.3.
+00:02:41.599 : [physx] @0: Initialized extensions.
+00:02:41.600 : [physx] @0: Created CPU dispatcher with 2 threads and logical CPU affinities:
+00:02:41.600 : [physx] @0: CPU          0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26  27  28  29  30  31
+00:02:41.600 : [physx] @0: thread   0   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
+00:02:41.600 : [physx] @0: thread   1   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
+00:02:41.600 : [physx] @0: Created convex cooking.
+00:02:41.600 : [physx] @0: Created fast triangle cooking.
+00:02:41.600 : [physx] @0: Created optimal triangle cooking.
+00:02:41.600 : [physx] @0: Creating simulation filter.
+00:02:41.600 : [bullet] Starting server
+00:02:41.600 : [physx] @0: Creating debug draw.
+00:02:41.664 : Map '/map/europe.mbd' loading started ....
+00:02:41.868 : <WARNING> Excessive sector boundary detected! (sec+0014+0012, [59795, 55361])
+00:02:41.873 : <ERROR> [trigger_item] No actions set for item 0x384D42DC60800000
+00:02:41.879 : <WARNING> Unable to find 'city.winsen' for 'City' 0x4E829188570D7B3F
+00:02:41.900 : <ERROR> [trigger_item] No actions set for item 0x5FEA5FFE57800001
+00:02:41.901 : <ERROR> [trigger_item] No actions set for item 0x62F5BE7FF9000001
+00:02:42.095 : <ERROR> [trigger_item] No actions set for item 0x332D5EBC4D4E0002
+00:02:42.107 : <ERROR> [trigger_item] No actions set for item 0x5FF506711D0094F8
+00:02:42.270 : <WARNING> Unable to find 'city.volkhov' for 'City' 0x348D21949D0A0001
+00:02:42.270 : <WARNING> Unable to find 'city.volkhov' for 'City' 0x3D3D6AEC96CA0000
+00:02:42.270 : <WARNING> Unable to find 'city.volkhov' for 'City' 0x3D3D6B54A64A0000
+00:02:42.270 : <WARNING> Unable to find 'city.kirishi' for 'City' 0x3DE08B24E4160000
+00:02:42.270 : <WARNING> Unable to find 'city.kirishi' for 'City' 0x420FBBA887D60AC6
+00:02:42.305 : <ERROR> [trigger_item] No actions set for item 0x4E8291885ACDC552
+00:02:42.339 : <WARNING> Unable to find 'city.werlte' for 'City' 0x456B2570E7D102BC
+00:02:42.408 : <ERROR> Oversize trajectory order rule without active route checkpoint. uid: 0x504C6E7989000001
+00:02:42.408 : <ERROR> Oversize trajectory order rule without active route checkpoint. uid: 0x504C78415D800001
+00:02:43.110 : <ERROR> Missing generic load trailer point at company 'mercedesbenz.kecskemet' (0x53840368AE800002).
+00:02:43.147 : <ERROR> [traffic_area] Traffic area with uid 0x60688AD7409A0001 has no valid attributes set!
+00:02:43.165 : <ERROR> Missing generic unload trailer point at company 'deres_auto.nuuk' (0x52E512796B800002).
+00:02:43.165 : <ERROR> Missing generic unload trailer point at company 'royal_arctic.nuuk' (0x52E519C92C800002).
+00:02:43.186 : Map base sectors successfully loaded.
+00:02:43.187 : Map loaded
+00:02:43.325 : Loading save. Type: 0, slot: 0, path: <MEMFILE><UFS>/steam/profiles/6D65726B6C69/save/autosave/game.sii
+00:02:43.340 : <WARNING> Ignoring obsolete attribute 'sleeping_count' of unit '.D0.96.4447.00000000' (of type 'player').
+00:02:43.429 : <ERROR> [unit] The unit 'company.volatile.konstnr_br.linkoping' of type 'company' has dangling pointer (to 'company.permanent.konstnr_br') in the attribute named 'permanent_data'.
+00:02:43.429 : <ERROR> [unit] The unit 'company.volatile.konstnr_br.malmo' of type 'company' has dangling pointer (to 'company.permanent.konstnr_br') in the attribute named 'permanent_data'.
+00:02:43.430 : <WARNING> [unit] The pointer to 'company.permanent.konstnr_br' looks like dangling pointer.
+00:02:43.442 : Route data generation started.
+00:02:43.873 : <ERROR> [route_data_u::compute_nav_nodes] Checkpoints with the same order, route: bre_ren1, uid: 0x52A5A35EA190000 and 0x52A5979A3390000
+00:02:44.073 : Route data generation finished.
+00:02:44.073 : Economy reset - save version changed, assuming map mismatch
+00:02:44.081 : Economy reset - at least one referenced object is missing
+00:02:44.100 : Economy reset - company mismatch
+00:02:44.121 : Removing unoccupied 'garage.zwolle' because its garage items were not found.
+00:02:44.121 : Removing unoccupied 'garage.antwerp' because its garage items were not found.
+00:02:44.121 : Removing unoccupied 'garage.eindhoven' because its garage items were not found.
+00:02:44.194 : Road network navigation caching started.
+00:02:44.999 : Cached navigation loaded
+00:02:45.044 : Current profile saved.
+00:02:45.361 : Garage update started.
+00:02:45.362 : <ERROR> Sign 'pawnpoint449' references part 'sc' not found in model '/prefab/garage_scandinavia/garage_poor_sc.pmg'
+00:02:45.362 : <ERROR> Sign 'pawnpoint450' references part 'sc' not found in model '/prefab/garage_scandinavia/garage_poor_sc.pmg'
+00:02:45.364 : <ERROR> Garage spawn point not found! (sundsvall)
+00:02:45.367 : <ERROR> Unknown garage set ! Check xxxx_garages[] in game_data.sii.
+00:02:45.731 : Garage update finished.
+00:02:47.049 : <ERROR> [resource_task] Can not open '/vehicle/truck/scania_2016/win_open_r.pmg'
+00:02:47.049 : <ERROR> [resource_task] Can not open '/vehicle/truck/scania_2016/win_open_r.pmd'
+00:02:47.082 : <ERROR> [model] Model descriptor '/vehicle/truck/scania_2016/win_open_r.pmd' is malformed.
+00:02:47.082 : <ERROR> [model] Model geometry '/vehicle/truck/scania_2016/win_open_r.pmg' is malformed.
+00:02:47.082 : <ERROR> [fs] Failed to open file '/vehicle/truck/scania_2016/win_open_r.pmd' in the read_only mode.
+00:02:47.082 : <ERROR> [ld] Failed to open '/vehicle/truck/scania_2016/win_open_r.pmd'.
+00:02:47.082 : <ERROR> model_template.cpp:735: fn: Failed to load model descriptor (.pmd) or model geometry (.pmg) for '/vehicle/truck/scania_2016/win_open_r.pmg'.
+§a§
+## Progress Made, But Fix is Incomplete
+
+Good news: The fix mod **did** resolve the `wipers_r` errors from before. However, **`win_open_r.pmd`/`.pmg` is still failing**, meaning the fix mod only covers part of the missing files. The game is still crashing at the same Scania NG model loading point.
+
+---
+
+### New Issues Introduced
+
+You also now have a **second wave of Scania errors** that weren't in the first log, all related to `scania.p_2016` accessories:
+
+- `f_inlay_cab/painted.sii`
+- `f_intake_cab/painted.sii`
+- `f_logo/underlit.sii`
+- `f_wnd_frame/painted.sii`
+- `s_panel/painted_full.sii`
+- `r_chs_cover/chs_c_mg_6x24_dia.sii`
+- `badge/r500_s.sii`
+
+These are almost certainly coming from your new **"Scania NG Flatcab & Heavy Pack"** (ID 3716051926, version **1.59.2**) — note its version number. It was built for 1.59, not 1.60, and is referencing accessory definition files that SCS restructured in the 1.60 update.
+
+---
+
+### Summary of What's Still Broken
+
+| Problem | Cause |
+|---|---|
+| `win_open_r.pmd/.pmg` missing | Fix mod (3642514869) is incomplete — doesn't cover this file |
+| Multiple `painted.sii`, `underlit.sii` etc. missing | **Scania NG Flatcab & Heavy Pack** v1.59.2 is incompatible with 1.60 |
+| `f_fender/stock_blk_p.sii` missing | Eugene PGRS pack still partially broken even with fix |
+
+---
+
+### Recommended Actions
+
+1. **Disable both** the **Eugene PGRS pack** (1764268887) and the **Scania NG Flatcab & Heavy Pack** (3716051926) for now. The fix mod alone is not enough for a stable 1.60 experience.
+
+2. **Keep the fix mod** (3642514869) installed but inactive for now — check its Workshop page for updates, as the author may push a more complete version.
+
+3. **Also verify** the "No Limits Mod for Special Transport DLC" (2177645059) — this is a new addition in this log and is a likely contributor to the `mod_czloko.sii` oversize route dangling pointer errors you're seeing.
+
+4. **Check for updates** on the Flatcab & Heavy Pack — the author (hardy) has been actively maintaining mods, so a 1.60 version may already exist or be coming soon.
+
+---
+
+### Other Observations
+
+- **Profile switch in this log**: The log starts with profile `lena` (which appears to load and exit cleanly), then switches to profile `merkli` which is where the crash occurs. Make sure the mod lists between the two profiles are consistent if you're sharing mods.
+- The `garage.sundsvall` and `pawnpoint sc` errors are ProMods-related and typically harmless — they won't cause a crash.
+- The `konstnr_br` company dangling pointer errors are save-file related and will clear themselves after an economy reset.

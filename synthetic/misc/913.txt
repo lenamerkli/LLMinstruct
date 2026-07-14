@@ -1,0 +1,156 @@
+§u§
+```
+options = content.split('<tool_call>', 1)[-1].split('</tool_call>', 1)[0].strip()
+tool_name = options.split('<tool_name>', 1)[-1].split('</tool_name>', 1)[0].strip()
+
+match tool_name:
+            case 'read_file':
+                path = self._parse_tool_param(options, 'path')
+                start_line = int(self._parse_tool_param(options, 'start_line', '1') or '1')
+                end_line = int(self._parse_tool_param(options, 'end_line', '1000') or '1000')
+                start_char = int(self._parse_tool_param(options, 'start_char', '0') or '0')
+                end_char = int(self._parse_tool_param(options, 'end_char', '100000') or '100000')
+                max_chars = int(self._parse_tool_param(options, 'max_chars', '1000000') or '1000000')
+                return self._tool_read_file(path, start_line, end_line, start_char, end_char, max_chars)
+            case 'write_to_file':
+                path = self._parse_tool_param(options, 'path')
+                content = self._parse_tool_param(options, 'content')
+                return self._tool_write_to_file(path, content)
+            case 'replace_in_file':
+                path = self._parse_tool_param(options, 'path')
+                search = self._parse_tool_param(options, 'search')
+                replace = self._parse_tool_param(options, 'replace')
+                return self._tool_replace_in_file(path, search, replace)
+            case 'bash':
+                command = self._parse_tool_param(options, 'command')
+                timeout = int(self._parse_tool_param(options, 'timeout', '60') or '60')
+                directory = self._parse_tool_param(options, 'directory', '/home/agent/')
+                venv = self._parse_tool_param(options, 'venv')
+                max_chars = int(self._parse_tool_param(options, 'max_chars', '100000') or '100000')
+                return self._tool_bash(command, timeout, directory, venv, max_chars)
+            case _:
+                return f'Unknown tool: {tool_name}'
+
+    # ------------------------------------------------------------------
+    # Helpers
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _parse_tool_param(options: str, param_name: str, default_value: str = '') -> str:
+        """Extract a parameter value from the tool call XML."""
+        open_tag = f'<{param_name}>'
+        close_tag = f'</{param_name}>'
+        if open_tag in options and close_tag in options:
+            return options.split(open_tag, 1)[-1].split(close_tag, 1)[0].strip()
+        return default_value
+```
+These are code snippets that I copied from a codebase. Format them as a standalone. This is to show how this part of the code works, not the make it actually work.
+§a§
+Here's the code formatted as a standalone demonstration:
+
+```python
+# ======================================================================
+# Tool Call Dispatcher & Parser
+# ======================================================================
+#
+# This module parses XML-formatted tool calls from a language model's
+# output and dispatches them to the appropriate handler.
+#
+# Expected input format:
+#
+#  <tool_call>
+#    <tool_name>bash</tool_name>
+#    <command>echo hello</command>
+#    <timeout>30</timeout>
+#  </tool_call>
+#
+# ======================================================================
+
+
+# ------------------------------------------------------------------
+# XML Parameter Parser
+# ------------------------------------------------------------------
+
+def _parse_tool_param(options: str, param_name: str, default_value: str = '') -> str:
+    """Extract a parameter value from the tool call XML.
+
+    Args:
+        options:      The full text between <tool_call> and </tool_call>.
+        param_name:   The XML tag name (e.g. 'command', 'path').
+        default_value: Fallback if the tag is not found.
+
+    Returns:
+        The string content of the requested XML tag, or the default.
+    """
+    open_tag = f'<{param_name}>'
+    close_tag = f'</{param_name}>'
+    if open_tag in options and close_tag in options:
+        return options.split(open_tag, 1)[-1].split(close_tag, 1)[0].strip()
+    return default_value
+
+
+# ------------------------------------------------------------------
+# Tool Dispatcher
+# ------------------------------------------------------------------
+
+def dispatch_tool_call(content: str) -> str:
+    """Parse a tool call from the model output and execute it.
+
+    Args:
+        content: Raw text that may contain a <tool_call>…</tool_call> block.
+
+    Returns:
+        A string result from the dispatched tool, or an error message.
+    """
+    # --- Extract the inner XML of the tool call ---
+    options = content.split('<tool_call>', 1)[-1].split('</tool_call>', 1)[0].strip()
+    tool_name = _parse_tool_param(options, 'tool_name')
+
+    match tool_name:
+
+        # ---- Read a file (with optional line/char range) ----
+        case 'read_file':
+            path       = _parse_tool_param(options, 'path')
+            start_line = int(_parse_tool_param(options, 'start_line', '1') or '1')
+            end_line   = int(_parse_tool_param(options, 'end_line', '1000') or '1000')
+            start_char = int(_parse_tool_param(options, 'start_char', '0') or '0')
+            end_char   = int(_parse_tool_param(options, 'end_char', '100000') or '100000')
+            max_chars  = int(_parse_tool_param(options, 'max_chars', '1000000') or '1000000')
+            return _tool_read_file(path, start_line, end_line, start_char, end_char, max_chars)
+
+        # ---- Write content to a file ----
+        case 'write_to_file':
+            path    = _parse_tool_param(options, 'path')
+            content = _parse_tool_param(options, 'content')
+            return _tool_write_to_file(path, content)
+
+        # ---- Find-and-replace inside a file ----
+        case 'replace_in_file':
+            path    = _parse_tool_param(options, 'path')
+            search  = _parse_tool_param(options, 'search')
+            replace = _parse_tool_param(options, 'replace')
+            return _tool_replace_in_file(path, search, replace)
+
+        # ---- Run a shell command ----
+        case 'bash':
+            command   = _parse_tool_param(options, 'command')
+            timeout   = int(_parse_tool_param(options, 'timeout', '60') or '60')
+            directory = _parse_tool_param(options, 'directory', '/home/agent/')
+            venv      = _parse_tool_param(options, 'venv')
+            max_chars = int(_parse_tool_param(options, 'max_chars', '100000') or '100000')
+            return _tool_bash(command, timeout, directory, venv, max_chars)
+
+        # ---- Unknown tool ----
+        case _:
+            return f'Unknown tool: {tool_name}'
+```
+
+**How it works at a glance:**
+
+| Step | What happens |
+|---|---|
+| **1. Extract** | The raw text is split on `<tool_call>` / `</tool_call>` to isolate the XML payload. |
+| **2. Identify** | `<tool_name>` is parsed to decide which handler to call. |
+| **3. Parse params** | `_parse_tool_param` uses simple string splitting to pull out each `<tag>value</tag>` pair, with optional defaults. |
+| **4. Dispatch** | A `match`/`case` block routes to the correct tool function (`read_file`, `write_to_file`, `replace_in_file`, `bash`). |
+| **5. Fallback** | Any unrecognized tool name returns a plain error string. |

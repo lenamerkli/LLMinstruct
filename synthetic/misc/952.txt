@@ -1,0 +1,80 @@
+§u§
+Wie kann ich aus meinem Outlook Web alle E-Mails exportieren und herunterladen (als Backup)?
+§a§
+# E-Mails aus Outlook Web exportieren – Anleitung
+
+Es gibt mehrere Wege, um alle E-Mails aus Outlook im Web als Backup zu sichern. Hier die wichtigsten Methoden:
+
+## Methode 1: Postfach direkt über Outlook Web exportieren (einfachste Variante)
+
+Outlook.com bietet eine eingebaute Exportfunktion direkt im Browser:
+
+1. Melden Sie sich von einem Browser aus bei Ihrem Outlook-Konto an.
+2. Klicken Sie auf das Einstellungen-Symbol > Allgemein > Datenschutz & Daten > Postfach exportieren nacheinander.
+3. Dann können Sie E-Mails aus Outlook Online manuell herunterladen, nachdem der Vorgang abgeschlossen ist.
+
+**Wichtige Hinweise:**
+- Dieser Vorgang kann bis zu 4 Tage dauern, was zeitaufwändig ist, insbesondere wenn Sie sie dringend benötigen.
+- Das Ergebnis ist eine PST-Datei. Sie können nur die Outlook-Desktop-App oder andere exklusive Apps verwenden, um die Outlook PST-Dateien zu öffnen.
+- Wenn Sie unter Allgemein > Datenschutz und Daten keine Schaltfläche zum Exportieren von Postfächern haben, kann dies daran liegen, dass Ihr Postfach diese Funktion nicht unterstützt. Derzeit unterstützt die Exportfunktion in Neu Outlook nur Postfächer mit Microsoft-Domänen (Outlook, Hotmail, Live, msn) und einige Exchange-Protokolle für Geschäfts- und Studentenkonten.
+
+## Methode 2: Über die Outlook-Desktop-App in PST exportieren (zuverlässigste Variante)
+
+Die zuverlässigste Methode ist der Export über die klassische Outlook-Desktop-Version. Um Ihr Outlook.com-Postfach zu exportieren, benötigen Sie eine Desktop-Version von Outlook. Wenn auf Ihrem Gerät noch keine Desktop-Version installiert ist, können Sie sich für eine kostenlose 30-tägige Testversion von Microsoft 365 anmelden.
+
+**Schritte:**
+1. Installieren Sie Outlook Desktop und fügen Sie Ihr Outlook.com-Konto hinzu.
+2. Standardmäßig ist Outlook so eingestellt, dass E-Mails der letzten 12 Monate heruntergeladen werden. Wenn Sie alle E-Mails exportieren möchten, öffnen Sie Outlook, wählen Sie Kontoeinstellungen > Kontoname und Synchronisierungseinstellungen und schieben Sie den Regler auf „Alle".
+3. Wählen Sie oben in klassischem Outlook „Datei". Wählen Sie Öffnen & Exportieren > Importieren/Exportieren. Wählen Sie „In eine Datei exportieren" > Weiter.
+4. Wählen Sie hier Persönliche Ordnerdatei (.pst) und klicken Sie auf Weiter. Wählen Sie dann den Ordner im PST-Format und klicken Sie auf Weiter. Klicken Sie auf die Schaltfläche Durchsuchen, wählen Sie aus, wo Sie die Datei speichern möchten, und klicken Sie schließlich auf Exportieren.
+
+**Wichtig:** Stellen Sie sicher, dass Sie die .pst-Datei nicht an einen OneDrive-Speicherort exportieren. Wenn Sie eine automatische Synchronisierung haben, achten Sie darauf, dass sie nicht mit einem OneDrive-Speicherort synchronisiert wird. OneDrive blockiert die automatische Synchronisierung von Outlook .pst-Dateien.
+
+## Methode 3: Einzelne E-Mails als PDF speichern (Druckfunktion)
+
+Für einzelne wichtige Mails geeignet, aber nicht für ein Komplett-Backup:
+
+1. Gehen Sie zum Outlook-Web und wählen Sie die E-Mail aus, die Sie herunterladen möchten. Klicken Sie dann auf „Drucken" in der oberen Leiste.
+2. Wählen Sie „Microsoft Print to PDF" unter „Drucker" aus und überprüfen Sie die Druckeinstellungen. Klicken Sie abschließend unten auf „Drucken", um den Download zu starten.
+
+Der Nachteil ist jedoch, dass Sie immer nur eine E-Mail auf einmal exportieren können. Wenn Sie also viele E-Mails herunterladen müssen, müssen Sie die gleichen Vorgänge wiederholt ausführen.
+
+## Methode 4: Weiterleitung an ein anderes Konto
+
+Ein alternativer Ansatz zum Exportieren von E-Mails aus der Outlook Web App besteht darin, sie an neue Nachrichten anzuhängen und an sich selbst zu senden. Dies ist nützlich, wenn Sie nur eine kleine Anzahl von E-Mails benötigen, kann jedoch zeitaufwändig sein.
+
+## Methode 5: Drittanbieter-Software
+
+Tools wie BitRecover, MultCloud oder AOMEI Backupper bieten flexible Exportoptionen. Die Software erlaubt das Sichern von Outlook-Web-E-Mails inklusive Betreff, Datum, Uhrzeit, Textformatierung, Inline-Bildern usw. und sichert alle Outlook.com-Ordner, also Posteingang, Junk-Mail, Entwürfe, Gesendete Elemente, Gelöschte Elemente, Archiv etc.
+
+---
+
+## Meine Empfehlung
+
+Für ein vollständiges, dauerhaftes Backup empfehle ich **Methode 2 (Export über Outlook Desktop in eine PST-Datei)**, da dies die offizielle Microsoft-Methode ist und alle Ordner, Anhänge und Metadaten erhält. Sie können regelmäßig all Ihre E-Mails, Kontakte und Kalender an einem sicheren Ort sichern.
+
+**Tipp:** Speichern Sie die PST-Datei zusätzlich auf einer externen Festplatte oder einem USB-Stick (nicht in OneDrive!), um auch bei einem Computerausfall geschützt zu sein.
+§u§
+Werden beim Export zu .pst in der Desktop app auch alle Anhänge gespeichert?
+§a§
+**Ja, Anhänge werden vollständig mit in der PST-Datei gespeichert!** Hier ist die offizielle Bestätigung von Microsoft:
+
+Wenn Outlook E-Mails in eine PST-Datei exportiert, enthält diese auch etwaige Anlagen. Wenn Sie also eine PST-Datei importieren, werden die Anhänge wieder angezeigt.
+
+### Was wird gespeichert?
+
+Die PST-Datei dient als Speicherort für **E-Mails, Kontakte, Kalendereinträge und Anhänge** und fungiert als portables, clientseitiges und serverunabhängiges Archiv.
+
+Wenn Sie den Export abschließen, enthält die Datei eine Kopie Ihrer **E-Mails, Kontakte und Kalender** bis zu dem Datum, an dem Sie die Datei erstellt haben.
+
+### Was wird **nicht** exportiert?
+
+Metadaten wie Ordnereigenschaften (z. B. Ansichten, Berechtigungen und Einstellungen für die AutoArchivierung), **Nachrichtenregeln** sowie **Listen mit blockierten Absendern** werden von Outlook jedoch **nicht** exportiert.
+
+### Wichtiger Hinweis
+
+Wenn Outlook E-Mails, Kontakte und Kalenderinformationen in eine PST-Datei exportiert, wird lediglich eine **Kopie** der Informationen erstellt – nichts wird aus Outlook gelöscht. Sie können Ihre E-Mails, Kontakte und Kalender in Outlook weiterhin anzeigen und haben auch weiterhin Zugriff darauf.
+
+---
+
+**Kurz zusammengefasst:** Sie müssen sich keine Sorgen machen – alle Anhänge werden automatisch zusammen mit den E-Mails in der PST-Datei gesichert. 📎✅

@@ -1,0 +1,41 @@
+§u§
+How does the ClinePass work?
+§a§
+ClinePass is a subscription plan from Cline (the open-source AI coding agent). Here's how it works:
+
+## What it is
+ClinePass is a low-cost monthly subscription that pairs Cline's agent harness with a curated set of open-weight models and 2-5x the standard API rate limits, across every surface Cline runs on. It costs $9.99/month and unlocks 2-5x API rate limits.
+
+## How you use it
+The flow is: (a) create an account and subscribe to ClinePass, (b) install Cline, (c) select ClinePass as the provider, and (d) start coding. ClinePass is a separate provider in Cline — after subscribing, you select ClinePass wherever you configure your provider. It works across CLI, VS Code, JetBrains, and SDK, while still letting you bring your own keys, local models, or any other provider alongside it.
+
+## What's included
+Included models are GLM 5.2, Kimi K2.7 Code, Kimi K2.6, DeepSeek V4 Pro, DeepSeek V4 Flash, MiniMax M3, MiMo V2.5 Pro, MiMo V2.5, Qwen3.7-Max, and Qwen3.7-Plus — the model list is maintained by the Cline team, and you can switch between models without changing API keys or logging into different portals; the subscription includes access to all listed models.
+
+## Under the hood
+All API calls are routed through ClinePass, which handles authentication, load balancing, and routing to the specific model requested. This means you bypass the need to create accounts, generate keys, or manage billing for each individual provider (Z.ai, Moonshot AI, DeepSeek, etc.). It's a flat monthly subscription, so you are not charged individual API prices, though usage is subject to 5-hour rolling, weekly, and monthly limits.
+
+You can also use it programmatically: the API uses the same OpenAI-compatible Chat Completions format as the rest of Cline's API, and you can create an API key from Settings > API Keys in app.cline.bot. In fact, it works outside Cline too — you can use your ClinePass API key with any OpenAI-compatible coding agent.
+
+## Other details
+- Cline itself remains open source, and bring-your-own-key workflows still work — ClinePass is an optional paid plan for curated included models, higher quotas, and simpler setup.
+- There's currently a Product Hunt launch offer at $1.99 for the first month, after which it renews at the standard $9.99/month rate unless you cancel.
+- You can cancel through your account settings before the next renewal and keep access through the end of the current subscription term.
+§u§
+So it is a replacement for paying each API?
+§a§
+Yes — but only for the specific open-weight models it includes. Here's the nuance:
+
+## What it replaces
+
+For the curated lineup, it does replace per-provider payments. Users bypass the need to create accounts, generate keys, or manage billing for each individual provider (Z.ai, Moonshot AI, DeepSeek, etc.), and the model is one sign-up, one payment method, one API key — the subscription handles the rest. Since ClinePass is a flat monthly subscription, you are not charged the individual API prices for those models.
+
+## What it doesn't replace
+
+1. **It's not unlimited.** It's a subscription with quotas, not an "all you can eat" pass — usage is subject to 5-hour rolling, weekly, and monthly limits. The published per-model API prices still matter as reference prices showing the underlying per-1M-token rates for each model, which help you understand how usage is measured against your ClinePass quota.
+
+2. **It only covers the curated open-weight models.** If you want Claude, GPT, Gemini, or anything else outside the lineup, you still pay those providers separately — if your team already uses OpenAI, Anthropic, Google, local models, or any other provider, ClinePass sits alongside that setup.
+
+3. **It doesn't replace Cline's pay-as-you-go option either.** ClinePass is a separate provider from Cline (usage-billing) — you can use both independently: subscribe to ClinePass for 2-5x API rate limits, or use Cline (usage-billing) for pay-as-you-go access.
+
+**Bottom line:** think of it as consolidating what would otherwise be ~6 separate provider bills (Z.ai, Moonshot, DeepSeek, MiniMax, MiMo, Qwen) into one flat $9.99/month fee with capped-but-generous usage — not a universal replacement for all API spending.

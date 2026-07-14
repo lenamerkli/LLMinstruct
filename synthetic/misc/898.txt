@@ -1,0 +1,428 @@
+§u§
+I am trying to install debian 13 in a VM managed by virt-manager. For all tested apt mirrors, debian 13 reports `Bad archive mirror`. Below is the `virtual network` configuration.
+```
+<network connections="1">
+  <name>default</name>
+  <uuid>7d4795f1-2b44-4408-b072-a31d8034d18e</uuid>
+  <forward mode="nat">
+    <nat>
+      <port start="1024" end="65535"/>
+    </nat>
+  </forward>
+  <bridge name="virbr0" stp="on" delay="0"/>
+  <mac address="52:54:00:9a:1d:1f"/>
+  <ip address="192.168.122.1" netmask="255.255.255.0">
+    <dhcp>
+      <range start="192.168.122.2" end="192.168.122.254"/>
+    </dhcp>
+  </ip>
+</network>
+```
+§a§
+The virtual network configuration you provided is the standard, perfectly valid default NAT network for `libvirt`/`virt-manager`.
+
+When the Debian installer reports **`Bad archive mirror`**, it almost never means the mirror itself is actually bad. Instead, it is a generic error meaning **the installer's package manager (apt) cannot communicate with the mirror.**
+
+Here are the most common reasons this happens in `virt-manager` and how to fix them.
+
+### Step 1: Diagnose the issue from the Installer
+When you hit the "Bad archive mirror" error screen, do not reboot. Instead:
+1. Press **`Ctrl + Alt + F2`** (or F3) to drop into the installer's root shell.
+2. Press **Enter** to activate the console.
+3. Try to ping an IP address to test routing: `ping -c 3 8.8.8.8`
+4. Try to ping a domain to test DNS: `ping -c 3 deb.debian.org`
+
+Based on what fails, follow the corresponding solution below. *(To return to the GUI installer, press `Ctrl + Alt + F1` or `F5`).*
+
+---
+
+### Cause 1: Host Firewall is Blocking NAT/Forwarding (Most Common)
+If `ping 8.8.8.8` fails, your host machine is not allowing the VM's traffic to reach the internet.
+
+**Fixing IP Forwarding:**
+Ensure your host OS has IP forwarding enabled:
+```bash
+sudo sysctl -w net.ipv4.ip_forward=1
+```
+*(To make this permanent, edit `/etc/sysctl.conf` and uncomment `net.ipv4.ip_forward=1`)*
+
+**Fixing Host Firewall (UFW):**
+If you are using UFW on your host, it drops forwarded packets by default, which breaks `virt-manager` networks.
+1. Open the UFW config file: `sudo nano /etc/default/ufw`
+2. Find `DEFAULT_FORWARD_POLICY` and change it from `"DROP"` to `"ACCEPT"`.
+3. Reload UFW: `sudo ufw reload`
+
+**Fixing Host Firewall (Firewalld):**
+If using Firewalld, ensure the `libvirt` zone is active and `virbr0` is trusted:
+```bash
+sudo firewall-cmd --zone=trusted --change-interface=virbr0
+```
+
+---
+
+### Cause 2: DNS Resolution Failure (systemd-resolved conflict)
+If `ping 8.8.8.8` works but `ping deb.debian.org` fails, the VM has internet access but cannot resolve domain names. This often happens because the host uses `systemd-resolved` (common in modern Linux) which listens on `127.0.0.53`, and `libvirt`'s internal `dnsmasq` fails to forward DNS requests to it correctly.
+
+**The Fix:** Force the virtual network to use external DNS servers.
+1. On your host, edit the virtual network:
+   ```bash
+   sudo virsh net-edit default
+   ```
+2. Add a `<dns>` block just above the `<ip>` block, specifying external forwarders (like Google's or Cloudflare's):
+   ```xml
+   <network connections="1">
+     <name>default</name>
+     <uuid>7d4795f1-2b44-4408-b072-a31d8034d18e</uuid>
+     <forward mode="nat">
+       <nat>
+         <port start="1024" end="65535"/>
+       </nat>
+     </forward>
+     <bridge name="virbr0" stp="on" delay="0"/>
+     <mac address="52:54:00:9a:1d:1f"/>
+
+     <!-- ADD THIS DNS BLOCK -->
+     <dns>
+       <forwarder addr="8.8.8.8"/>
+       <forwarder addr="1.1.1.1"/>
+     </dns>
+
+     <ip address="192.168.122.1" netmask="255.255.255.0">
+       <dhcp>
+         <range start="192.168.122.2" end="192.168.122.254"/>
+       </dhcp>
+     </ip>
+   </network>
+   ```
+3. Restart the virtual network to apply the changes:
+   ```bash
+   sudo virsh net-destroy default
+   sudo virsh net-start default
+   ```
+4. Restart your Debian VM installation.
+
+---
+
+### Cause 3: Outdated Installation Media & System Clock
+Debian checks the GPG signatures and expiration dates on the mirror's `Release` files via HTTPS.
+* **System Clock:** If the VM's clock is drastically wrong, the SSL certificates or GPG signatures will be evaluated as invalid. You can check the VM's time by typing `date` in the `Ctrl+Alt+F2` console. If it's wrong, you can temporarily set it using `date -s "YYYY-MM-DD HH:MM:SS"`.
+* **Outdated ISO:** If you downloaded a Daily/Weekly build of Debian 13 (Trixie) a long time ago, the repository structures may have changed, or the expected repository keys in the old ISO may have expired. Download the absolute newest `netinst` ISO available.
+§u§
+With OCR:
+```
+BusyBox v1.37.0 (Debian 1:1.37.0-6+b8) built-in shell Cash)
+Enter ‘help’ for a list of built-in commands.
+~ # ping -c 8.8.8.8
+ping: invalid number °8.8.8.8"
+~ # ping -c 3 8.8.8.8
+PING 8.8.6.8 (8.8.8.8): 56 data bytes
+“C
+——— 8.8.8.8 ping statistics ——-
+3 packets transmitted, 0 packets received, 100% packet loss
+~ # ping -c 3 deb.debian.org
+PING deb.debian.org (151.101.2.132): 56 data bytes
+——- deb.debian.org ping statistics —-——
+3 packets transmitted, 0 packets received, 100% packet loss
+~ # ip addr show
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue qlen 1000
+link’ loopback 00:00:00:600:00:00 brd 00:00:00:00:00:00
+inet 127.0.0.1/8 scope host lo
+valid_lft forever preferred_lft forever
+inet6 ::17128 scope host
+valid_lft forever preferred_lft forever
+2: enpis@: <BROADCAST, MULTICAST, UP, LOWER_UP> mtu 1500 qdisc fq_codel qlen 1000
+linkvether 52:54:00:7e:8f:2f brd FFIfF FP FL LL LL
+inet 192.168.122.101724 scope global enpis0
+valid_lft forever preferred_lft forever
+inet6 fe8O: 5054: ff: fere:8f2F/64 scope link
+valid_lft forever preferred_lft forever
+```
+§a§
+Your OCR output tells us exactly where the problem is. Let's analyze it:
+
+### Diagnosis
+
+1. ✅ **DHCP works**: The VM got `192.168.122.101/24` on `enp1s0` — so `libvirt`'s `dnsmasq` is serving leases correctly.
+2. ✅ **DNS works**: `ping deb.debian.org` resolved to `151.101.2.132`. If DNS were broken, you'd get "bad address" instead. So you can **rule out Cause 2** from my previous answer.
+3. ❌ **Routing/NAT is broken**: Both `ping 8.8.8.8` and the ping to the resolved IP show **100% packet loss**. The VM cannot reach anything outside `virbr0`.
+
+This is **Cause 1: the host is not forwarding/NAT-ing packets from the VM to the outside world.**
+
+### Action Plan (on the host, not the VM)
+
+**Step 1 — Verify the VM has a default gateway.** Back in the BusyBox shell, run:
+```sh
+ip route
+```
+You should see `default via 192.168.122.1 dev enp1s0`. If that line is missing, DHCP didn't push a gateway (unusual, but possible). Assuming it's present, continue.
+
+**Step 2 — Check IP forwarding on the host:**
+```bash
+sysctl net.ipv4.ip_forward
+```
+If it returns `0`, enable it:
+```bash
+sudo sysctl -w net.ipv4.ip_forward=1
+echo 'net.ipv4.ip_forward=1' | sudo tee /etc/sysctl.d/99-libvirt-forward.conf
+```
+
+**Step 3 — Check your host's firewall.** This is the most likely culprit. Run on the host:
+```bash
+sudo iptables -L FORWARD -n -v
+sudo nft list ruleset | grep -i -E 'forward|virbr|masquerade'
+```
+
+Then apply the fix matching your host distro:
+
+- **UFW (Ubuntu/Debian desktops):** Edit `/etc/default/ufw`, set `DEFAULT_FORWARD_POLICY="ACCEPT"`, then `sudo ufw reload`.
+- **firewalld (Fedora/RHEL/openSUSE):**
+  ```bash
+  sudo firewall-cmd --permanent --zone=libvirt --add-interface=virbr0
+  sudo firewall-cmd --reload
+  ```
+- **Docker installed on host?** Docker aggressively sets `FORWARD` policy to `DROP` and inserts rules that break libvirt NAT. Test by temporarily stopping Docker:
+  ```bash
+  sudo systemctl stop docker docker.socket
+  sudo virsh net-destroy default && sudo virsh net-start default
+  ```
+  If pings start working, you'll need a permanent workaround (e.g., add a rule allowing `virbr0` to forward, or run `sudo iptables -I DOCKER-USER -i virbr0 -j ACCEPT`).
+
+**Step 4 — Verify NAT masquerading rule exists on the host:**
+```bash
+sudo iptables -t nat -L LIBVIRT_PRT -n -v
+```
+You should see a `MASQUERADE` rule for `192.168.122.0/24`. If it's missing, restart libvirt's networking:
+```bash
+sudo virsh net-destroy default
+sudo virsh net-start default
+sudo systemctl restart libvirtd
+```
+
+**Step 5 — Test from the host itself** to confirm host networking is healthy:
+```bash
+ping -c 3 8.8.8.8
+```
+If the host itself can't reach the internet, the VM obviously can't either — fix the host's connection first.
+
+### Quick test after each change
+From the VM's BusyBox shell:
+```sh
+ping -c 3 192.168.122.1   # gateway (should always work)
+ping -c 3 8.8.8.8         # tests NAT + forwarding
+```
+Once `8.8.8.8` responds, go back to the installer (`Ctrl+Alt+F1` or `F5`) and retry the mirror step.
+
+My strong bet given the symptoms (DHCP ✅, DNS ✅, ICMP to outside ❌) is **Docker on the host** or **a strict FORWARD policy in iptables/nftables**. Start there.
+§u§
+```
+
+░▒▓ 🎩       ▓▒░ ◦•················································································································································································································•◦ ░▒▓   196ms ▓▒░
+··• sysctl net.ipv4.ip_forward
+net.ipv4.ip_forward = 1
+
+░▒▓ 🎩       ▓▒░ ◦•··································································································································································································•◦ ░▒▓   6ms ▓▒░
+··• sudo iptables -L FORWARD -n -v
+[sudo] password for lena:
+Chain FORWARD (policy DROP 172 packets, 12064 bytes)
+ pkts bytes target     prot opt in     out     source               destination
+  172 12064 DOCKER-USER  all  --  *      *       0.0.0.0/0            0.0.0.0/0
+  172 12064 DOCKER-FORWARD  all  --  *      *       0.0.0.0/0            0.0.0.0/0
+
+░▒▓ 🎩       ▓▒░ ◦•······························································································································································································•◦ ░▒▓   5s646ms ▓▒░
+··• sudo nft list ruleset | grep -i -E 'forward|virbr|masquerade'
+                iifname "virbr0" jump mangle_PRE_policy_allow-host-ipv6
+                iifname "virbr0" jump mangle_PRE_libvirt
+                iifname "virbr0" return
+                iifname "virbr0" jump nat_PRE_policy_allow-host-ipv6
+                iifname "virbr0" jump nat_PRE_libvirt
+                iifname "virbr0" return
+                iifname "br-b72e3478ccde" oifname "br-b72e3478ccde" jump nat_POST_policy_docker-forwarding
+                iifname "docker0" oifname "br-b72e3478ccde" jump nat_POST_policy_docker-forwarding
+                iifname "virbr0" oifname "br-b72e3478ccde" jump nat_POST_policy_docker-forwarding
+                iifname "virbr0" oifname "br-b72e3478ccde" jump nat_POST_docker
+                iifname "virbr0" oifname "br-b72e3478ccde" return
+                iifname "enp109s0" oifname "br-b72e3478ccde" jump nat_POST_policy_docker-forwarding
+                oifname "br-b72e3478ccde" jump nat_POST_policy_docker-forwarding
+                iifname "br-b72e3478ccde" oifname "docker0" jump nat_POST_policy_docker-forwarding
+                iifname "docker0" oifname "docker0" jump nat_POST_policy_docker-forwarding
+                iifname "virbr0" oifname "docker0" jump nat_POST_policy_docker-forwarding
+                iifname "virbr0" oifname "docker0" jump nat_POST_docker
+                iifname "virbr0" oifname "docker0" return
+                iifname "enp109s0" oifname "docker0" jump nat_POST_policy_docker-forwarding
+                oifname "docker0" jump nat_POST_policy_docker-forwarding
+                iifname "br-b72e3478ccde" oifname "virbr0" jump nat_POST_libvirt
+                iifname "br-b72e3478ccde" oifname "virbr0" return
+                iifname "docker0" oifname "virbr0" jump nat_POST_libvirt
+                iifname "docker0" oifname "virbr0" return
+                iifname "virbr0" oifname "virbr0" jump nat_POST_libvirt
+                iifname "virbr0" oifname "virbr0" return
+                iifname "enp109s0" oifname "virbr0" jump nat_POST_libvirt
+                iifname "enp109s0" oifname "virbr0" return
+                oifname "virbr0" jump nat_POST_libvirt
+                oifname "virbr0" return
+                iifname "virbr0" oifname "enp109s0" jump nat_POST_trusted
+                iifname "virbr0" oifname "enp109s0" return
+                iifname "virbr0" jump nat_POST_trusted
+                iifname "virbr0" return
+                oifname "virbr0" jump nat_OUT_libvirt
+                oifname "virbr0" return
+        chain filter_FORWARD {
+                type filter hook forward priority filter + 10; policy accept;
+                jump filter_FORWARD_POLICIES
+                iifname "virbr0" jump filter_IN_policy_allow-host-ipv6
+                iifname "virbr0" jump filter_IN_libvirt
+                iifname "virbr0" accept
+        chain filter_FORWARD_POLICIES {
+                iifname "br-b72e3478ccde" oifname "br-b72e3478ccde" jump filter_FWD_policy_docker-forwarding
+                iifname "br-b72e3478ccde" oifname "docker0" jump filter_FWD_policy_docker-forwarding
+                iifname "br-b72e3478ccde" oifname "virbr0" jump filter_FWD_docker
+                iifname "br-b72e3478ccde" oifname "virbr0" accept
+                iifname "docker0" oifname "br-b72e3478ccde" jump filter_FWD_policy_docker-forwarding
+                iifname "docker0" oifname "docker0" jump filter_FWD_policy_docker-forwarding
+                iifname "docker0" oifname "virbr0" jump filter_FWD_docker
+                iifname "docker0" oifname "virbr0" accept
+                iifname "virbr0" oifname "br-b72e3478ccde" jump filter_FWD_policy_docker-forwarding
+                iifname "virbr0" oifname "br-b72e3478ccde" jump filter_FWD_libvirt
+                iifname "virbr0" oifname "br-b72e3478ccde" accept
+                iifname "virbr0" oifname "docker0" jump filter_FWD_policy_docker-forwarding
+                iifname "virbr0" oifname "docker0" jump filter_FWD_libvirt
+                iifname "virbr0" oifname "docker0" accept
+                iifname "virbr0" oifname "virbr0" jump filter_FWD_libvirt
+                iifname "virbr0" oifname "virbr0" accept
+                iifname "virbr0" oifname "enp109s0" jump filter_FWD_libvirt
+                iifname "virbr0" oifname "enp109s0" accept
+                iifname "virbr0" jump filter_FWD_libvirt
+                iifname "virbr0" accept
+                iifname "enp109s0" oifname "br-b72e3478ccde" jump filter_FWD_policy_docker-forwarding
+                iifname "enp109s0" oifname "docker0" jump filter_FWD_policy_docker-forwarding
+                iifname "enp109s0" oifname "virbr0" jump filter_FWD_trusted
+                iifname "enp109s0" oifname "virbr0" accept
+                oifname "br-b72e3478ccde" jump filter_FWD_policy_docker-forwarding
+                oifname "docker0" jump filter_FWD_policy_docker-forwarding
+                oifname "virbr0" jump filter_FWD_trusted
+                oifname "virbr0" accept
+                oifname "virbr0" jump filter_OUT_libvirt
+                oifname "virbr0" return
+        chain filter_FWD_policy_docker-forwarding {
+                jump filter_FWD_policy_docker-forwarding_pre
+                jump filter_FWD_policy_docker-forwarding_log
+                jump filter_FWD_policy_docker-forwarding_deny
+                jump filter_FWD_policy_docker-forwarding_allow
+                jump filter_FWD_policy_docker-forwarding_post
+        chain filter_FWD_policy_docker-forwarding_pre {
+        chain filter_FWD_policy_docker-forwarding_log {
+        chain filter_FWD_policy_docker-forwarding_deny {
+        chain filter_FWD_policy_docker-forwarding_allow {
+        chain filter_FWD_policy_docker-forwarding_post {
+        chain nat_POST_policy_docker-forwarding {
+                jump nat_POST_policy_docker-forwarding_pre
+                jump nat_POST_policy_docker-forwarding_log
+                jump nat_POST_policy_docker-forwarding_deny
+                jump nat_POST_policy_docker-forwarding_allow
+                jump nat_POST_policy_docker-forwarding_post
+        chain nat_POST_policy_docker-forwarding_pre {
+        chain nat_POST_policy_docker-forwarding_log {
+        chain nat_POST_policy_docker-forwarding_deny {
+        chain nat_POST_policy_docker-forwarding_allow {
+        chain nat_POST_policy_docker-forwarding_post {
+# Warning: table ip nat is managed by iptables-nft, do not touch!
+# Warning: table ip filter is managed by iptables-nft, do not touch!
+                ip saddr 172.17.0.0/16 oifname != "docker0" counter packets 1 bytes 280 masquerade
+                ip saddr 172.30.0.0/16 oifname != "br-b72e3478ccde" counter packets 1 bytes 280 masquerade
+        chain DOCKER-FORWARD {
+        chain FORWARD {
+                type filter hook forward priority filter; policy drop;
+                counter packets 172 bytes 12064 jump DOCKER-FORWARD
+# Warning: table ip6 nat is managed by iptables-nft, do not touch!
+        chain DOCKER-FORWARD {
+        chain FORWARD {
+                type filter hook forward priority filter; policy accept;
+                counter packets 0 bytes 0 jump DOCKER-FORWARD
+        chain forward {
+                type filter hook forward priority filter; policy accept;
+                ip saddr 192.168.122.0/24 iif "virbr0" counter packets 172 bytes 12064 accept
+                iif "virbr0" counter packets 0 bytes 0 reject
+                oif "virbr0" ip daddr 192.168.122.0/24 ct state established,related counter packets 0 bytes 0 accept
+                oif "virbr0" counter packets 0 bytes 0 reject
+                iif "virbr0" oif "virbr0" counter packets 0 bytes 0 accept
+                meta l4proto tcp ip saddr 192.168.122.0/24 ip daddr != 192.168.122.0/24 counter packets 0 bytes 0 masquerade to :1024-65535
+                meta l4proto udp ip saddr 192.168.122.0/24 ip daddr != 192.168.122.0/24 counter packets 1 bytes 830 masquerade to :1024-65535
+                ip saddr 192.168.122.0/24 ip daddr != 192.168.122.0/24 counter packets 0 bytes 0 masquerade
+        chain forward {
+                type filter hook forward priority filter; policy accept;
+
+░▒▓ 🎩       ▓▒░ ◦•·································································································································································································•◦ ░▒▓   54ms ▓▒░
+··• virsh net-list --all
+ Name   State   Autostart   Persistent
+----------------------------------------
+
+
+░▒▓ 🎩       ▓▒░ ◦•·································································································································································································•◦ ░▒▓   71ms ▓▒░
+··• ip addr show virbr0
+8: virbr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc htb state DOWN group default qlen 1000
+    link/ether 52:54:00:9a:1d:1f brd ff:ff:ff:ff:ff:ff
+    inet 192.168.122.1/24 brd 192.168.122.255 scope global virbr0
+       valid_lft forever preferred_lft forever
+
+░▒▓ 🎩       ▓▒░ ◦•·································································································································································································•◦ ░▒▓   19ms ▓▒░
+··• sudo ufw status verbose
+sudo: ufw: command not found
+
+░▒▓ 🎩       ▓▒░ ◦•·······
+```
+§a§
+The information you provided confirms the exact cause. You have a **classic conflict between Docker and Libvirt/Firewalld.**
+
+### The Diagnosis
+1.  **IP Forwarding is enabled** (`net.ipv4.ip_forward = 1`), which is good.
+2.  **The Smoking Gun:** Your `iptables` output shows `Chain FORWARD (policy DROP)`.
+3.  **The Proof:** Look at the packet counters. Your `iptables` FORWARD chain shows **172 packets dropped**. Your `nftables` libvirt chain shows **172 packets accepted**.
+    *   **What happened:** Libvirt's firewall rules told the kernel "This packet is okay!" but Docker's firewall rules (which set the global policy to DROP) told the kernel "I don't recognize this packet, drop it!"
+    *   In Linux, if two firewall systems are running and one says "Allow" but the other says "Drop," **Drop always wins.**
+
+### The Quick Fix (Immediate)
+Run these commands on your **host** to tell the firewall to explicitly allow traffic coming from and going to your virtual bridge:
+
+```bash
+sudo iptables -I FORWARD -i virbr0 -j ACCEPT
+sudo iptables -I FORWARD -o virbr0 -j ACCEPT
+```
+
+*Note: You don't need to restart the VM. Try the "Network Mirror" step in the Debian installer again immediately after running these.*
+
+---
+
+### The Permanent Fix
+The commands above will disappear when you reboot. Since you are using **firewalld** (as seen in your `nft list` output), you should use it to make the fix permanent.
+
+1.  **Assign the interface to the libvirt zone:**
+    ```bash
+    sudo firewall-cmd --zone=libvirt --add-interface=virbr0 --permanent
+    ```
+
+2.  **Enable Masquerading (NAT) for the zone:**
+    ```bash
+    sudo firewall-cmd --zone=libvirt --add-masquerade --permanent
+    ```
+
+3.  **Reload the firewall:**
+    ```bash
+    sudo firewall-cmd --reload
+    ```
+
+### Why did `virsh net-list` show nothing?
+You likely ran it as a standard user. Libvirt manages virtual networks at the **system** level. To see your networks, you must use `sudo` or connect to the system URI:
+
+```bash
+sudo virsh net-list --all
+# OR
+virsh -c qemu:///system net-list --all
+```
+
+### Summary of what to do in the Debian Installer:
+Once you've run the `iptables` commands on the host:
+1.  Go back to the Debian installer.
+2.  Select **"Go Back"** or **"Retry"** on the Mirror screen.
+3.  It should now reach the mirrors successfully.
+
+**Pro-tip for Debian 13 (Trixie):** Since Trixie is the current "Testing" branch, the installer might occasionally struggle with specific mirrors if they are mid-sync. If the default `deb.debian.org` fails *after* fixing the firewall, try a specific regional mirror (like `ftp.us.debian.org` or similar).

@@ -1,0 +1,128 @@
+§u§
+What happens when not all required ETS2 DLCs are installed when trying to use Promods?
+§a§
+Here's a detailed breakdown of what happens when you try to use ProMods in ETS2 without all the required DLCs installed:
+
+---
+
+### 🔴 The Mod Shows as Incompatible in Mod Manager
+
+When you load ETS2 and go into the Mod Manager, all ProMods files (Map, Media, Models, DLC Support, Definitions, Assets) will be marked as **incompatible**. Each of them will display the message: *"Dependencies: Some DLCs which are required by this mod are missing. Make sure you have all of them installed and activated."*
+
+---
+
+### 🚫 You Cannot Load the Mod At All
+
+You simply **can't even load the mod**. There is a DLC dependency in the `manifest.sii` file from the mod files that marks the files as incompatible in the Mod Manager when you don't have the required DLCs or game version.
+
+---
+
+### 🗺️ Why Are All DLCs Required?
+
+ProMods cannot run without the required DLCs because they use **models and assets from the DLCs all over the map**. For instance, without the France DLC they could not do Spain, and without the Italy DLC they could not do Greece.
+
+ProMods uses game assets from **all** of the map DLCs, which is why each one is required as new versions are released.
+
+---
+
+### 📋 Required DLCs (for modern ProMods versions)
+
+You must make sure you have all of the following installed and activated: `dlc_east`, `dlc_north`, `dlc_fr`, `dlc_it`, `dlc_balt`, `dlc_balkan_e`, `dlc_balkan_w`, `dlc_iberia`.
+
+---
+
+### 🕹️ Is There Any Workaround?
+
+If you want to play ProMods without all DLCs, you would have to **downgrade ETS2 to version 1.18** and play **ProMods 1.91**, but this is not recommended as you would miss many new ETS2 and ProMods features and would likely encounter many bugs.
+
+Additionally, downgrading to version 1.18 via Steam is no longer easily possible, as the lowest version accessible through Steam is ETS2 **1.26**.
+
+---
+
+In short, missing even one required map DLC will prevent ProMods from loading entirely, and there is no supported way around it for modern versions of the mod.
+§u§
+What is the current price to buy all map expansions? Include current steam sale if applicable. Also search for 3rd party sites.
+§a§
+# 💰 Current Price for All ProMods-Required ETS2 Map DLCs
+
+Good timing — the **Steam Summer Sale is currently active**, and most ETS2 map DLCs are heavily discounted. Here's the breakdown:
+
+---
+
+## 🎮 Steam Prices (Current Sale)
+
+The 8 map DLCs required by ProMods are: **Going East!, Scandinavia, Vive la France!, Italia, Beyond the Baltic Sea, Road to the Black Sea, West Balkans, and Iberia**.
+
+Based on current Steam data:
+
+| DLC | Base Price | Sale |
+|---|---|---|
+| Going East! | $17.99 | ~50% off |
+| Scandinavia | $17.99 | ~50% off |
+| Vive la France! | $17.99 | ~50% off |
+| Italia | $17.99 | ~50% off |
+| Beyond the Baltic Sea | $17.99 | ~50% off |
+| Road to the Black Sea | $17.99 | ~50% off |
+| West Balkans | $17.99 | 50% off |
+| Iberia | $17.99 | 50% off |
+
+**Estimated total at ~50% sale: ~$72 USD** (vs. ~$144 at full price)
+
+A full-price map expansion runs $17.99, and sales can effectively double your buying power.
+
+---
+
+## 🏆 Best Steam Option: Ultimate Edition Bundle
+
+Rather than buying individually, consider the **Ultimate Edition** — currently at **50% off**. It includes:
+
+The Ultimate Edition includes the base game, plus map expansions: Greece, Going East!, Scandinavia, Vive La France!, Italia, Iberia, West Balkans, Road to the Black Sea, Beyond The Baltic Sea, and cargo packs like Special Transport, High Power Cargo Pack, and Farm Machinery.
+
+This covers **every ProMods-required map DLC** plus extras — almost always the cheapest route.
+
+---
+
+## ⚠️ Note on Nordic Horizons
+
+If you're running the very latest ProMods version, it may also require **Nordic Horizons** (released Nov 27, 2025). This one is barely discounted:
+- Nordic Horizons on Steam is currently at only $17.99 (lowest price available on Steam)
+- Historical low was $16.19 on May 24, 2026
+
+It's **not** included in the Ultimate Edition bundle yet, so you'd need to buy it separately if required.
+
+---
+
+## 🛒 Third-Party Keyshops
+
+Several trusted key resellers stock ETS2 DLCs, often cheaper than Steam even during sales:
+
+### 🔹 GG.deals (price aggregator)
+Green price tags indicate historically lowest prices and active sales — a great feature for bargain hunters. It compares offers from both official retailers and keyshops.
+
+### 🔹 Allkeyshop (price aggregator)
+For Nordic Horizons specifically: The best price for Nordic Horizons PC is €17.94 at G2A, with 0.3% off.
+
+### 🔹 Gocdkeys
+As of June 2026, the best price found for Nordic Horizons was €16.36.
+
+### 🔹 Eneba
+Eneba offers Euro Truck Simulator 2 Steam Key DLCs/expansions at great prices on all downloadable in-game content offers.
+
+### 🔹 Kinguin
+Sells all major ETS2 map DLCs as Steam CD keys, including bundles like the Map Booster Pack (Going East + Scandinavia + Vive la France + Italia).
+
+### 🔹 LootBar
+Older ETS2 DLCs regularly reach deep discounts during Steam seasonal sales — Going East! and Beyond the Baltic Sea have both dropped to the €1.99–€2.99 range, while newer expansions like West Balkans and Greece hold higher prices longer.
+
+### 🔹 Instant Gaming
+Also lists all map DLCs with typical 10–30% savings over Steam base pricing.
+
+---
+
+## 💡 Recommendation
+
+1. **Cheapest legitimate route right now:** Grab the **Ultimate Edition at 50% off** during the Steam Summer Sale — it covers everything ProMods needs (except possibly Nordic Horizons).
+2. **If you already own the base game:** Compare individual DLC prices on GG.deals or Allkeyshop — third-party keyshops sometimes beat even Steam's 50% sale, especially on older DLCs like Going East! and Beyond the Baltic Sea.
+3. **Warning:** Packs often cost less on Steam than in any keyshop, which is better for those who prefer obtaining content from trusted sources. Some third-party keyshops (particularly gray-market ones like G2A/Kinguin) carry risks of revoked keys, so weigh price savings against reliability.
+
+Prices fluctuate — check GG.deals or SteamDB in real time before purchasing to confirm the current best offer.

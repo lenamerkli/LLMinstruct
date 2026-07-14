@@ -1,0 +1,185 @@
+§u§
+```typescript
+import {Component, ElementRef, Input, Renderer2} from '@angular/core';
+import katex from 'katex';
+
+@Component({
+  selector: 'app-latex',
+  imports: [],
+  templateUrl: './latex.html',
+  styleUrl: './latex.scss',
+})
+export class Latex {
+  @Input() content?: string;
+
+  constructor(
+      private host: ElementRef<HTMLElement>,
+      private renderer: Renderer2
+    ) {}
+
+  ngAfterViewInit(): void {
+    const el = this.host.nativeElement;
+
+    // Use content input if provided, otherwise fall back to projected content
+    const raw = this.content ?? el.textContent ?? '';
+    const trimmed = raw.trim();
+    console.log(raw)
+
+    // Clear original text before inserting rendered math
+    el.innerHTML = '';
+
+    if (!trimmed) {
+      return;
+    }
+
+    // Detect inline vs block by delimiters:
+    // - `$...$` => inline
+    // - `$$...$$` => block
+    // - otherwise:
+    //     * multiline / environments like \begin{equation*} => block
+    //     * other single line => inline
+    let displayMode: boolean;
+    let latex = trimmed;
+
+    if (trimmed.startsWith('$$') && trimmed.endsWith('$$')) {
+      displayMode = true;
+      latex = trimmed.slice(2, -2).trim();
+    } else if (trimmed.startsWith('$') && trimmed.endsWith('$')) {
+      displayMode = false;
+      latex = trimmed.slice(1, -1).trim();
+    } else {
+      const looksMultiline = trimmed.includes('\n');
+      const looksLikeDisplayEnv = trimmed.includes('\\begin{equation') || trimmed.includes('\\[');
+
+      displayMode = looksMultiline || looksLikeDisplayEnv;
+    }
+
+    // Make the host behave like inline / block accordingly
+    this.renderer.setStyle(el, 'display', displayMode ? 'block' : 'inline');
+
+    try {
+      katex.render(latex, el, {
+        displayMode,
+        throwOnError: false,
+      });
+    } catch (err) {
+      // Fallback: if KaTeX fails, just show the original text
+      console.error('KaTeX render error:', err);
+      el.textContent = raw;
+    }
+  }
+}
+```
+How can I improve the display mode detection?
+§a§
+To improve the detection logic, you should move away from simple string checking (which is brittle) and move towards **Explicit Mode Control** (allowing the user to override the auto-detection) combined with a more **robust regex-based detection**.
+
+Here is how you can improve your implementation:
+
+### 1. Key Improvements
+*   **Explicit Mode Input:** Add a `mode` input (`'inline' | 'block' | 'auto'`). This is essential because heuristics can never be 100% accurate for every edge case.
+*   **Use `ngOnChanges`:** Instead of only `ngAfterViewInit`, use `ngOnChanges` so that if the `content` input changes dynamically, the math re-renders.
+*   **Standard LaTeX Delimiter Support:** Add support for `\[...\]` (display) and `\(...\)` (inline), which are the standard LaTeX delimiters often used in academic environments.
+*   **Regex Cleaning:** Clean up the logic to handle delimiters more cleanly.
+
+### Updated Component
+
+```typescript
+import {Component, ElementRef, Input, Renderer2, OnChanges, SimpleChanges} from '@angular/core';
+import katex from 'katex';
+
+@Component({
+  selector: 'app-latex',
+  standalone: true,
+  template: '', // Empty template, we manipulate the host element directly
+})
+export class Latex implements OnChanges {
+  @Input() content?: string;
+  @Input() mode: 'auto' | 'inline' | 'block' = 'auto';
+
+  constructor(
+    private host: ElementRef<HTMLElement>,
+    private renderer: Renderer2
+  ) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['content'] || changes['mode']) {
+      this.render();
+    }
+  }
+
+  private render(): void {
+    const el = this.host.nativeElement;
+    const raw = (this.content ?? el.textContent ?? '').trim();
+
+    if (!raw) {
+      el.innerHTML = '';
+      return;
+    }
+
+    // 1. Determine mode
+    let { displayMode, latex } = this.parseLatex(raw);
+
+    // 2. Override if mode is explicitly set
+    if (this.mode !== 'auto') {
+      displayMode = this.mode === 'block';
+    }
+
+    // 3. Update host styling
+    this.renderer.setStyle(el, 'display', displayMode ? 'block' : 'inline');
+
+    try {
+      katex.render(latex, el, {
+        displayMode,
+        throwOnError: false,
+      });
+    } catch (err) {
+      console.error('KaTeX render error:', err);
+      el.textContent = raw;
+    }
+  }
+
+  private parseLatex(raw: string): { displayMode: boolean; latex: string } {
+    // Check for Block delimiters: $$...$$ or \[...\]
+    if ((raw.startsWith('$$') && raw.endsWith('$$')) ||
+        (raw.startsWith('\\[') && raw.endsWith('\\]'))) {
+      return {
+        displayMode: true,
+        latex: raw.slice(2, -2).trim()
+      };
+    }
+
+    // Check for Inline delimiters: $...$ or \(...\)
+    if ((raw.startsWith('$') && raw.endsWith('$')) ||
+        (raw.startsWith('\\(') && raw.endsWith('\\)'))) {
+      return {
+        displayMode: false,
+        latex: raw.slice(2, -2).trim() // handles \$ and \(
+      };
+    }
+
+    // Fallback: Check for multiline or specific environments
+    const isBlock = raw.includes('\n') ||
+                    raw.includes('\\begin{') ||
+                    raw.includes('\\[');
+
+    return { displayMode: isBlock, latex: raw };
+  }
+}
+```
+
+### Why this is better:
+
+1.  **`ngOnChanges` vs `ngAfterViewInit`**: Your original code only ran the logic once when the component initialized. If the `content` property changes (e.g., from an Observable or a parent update), the math wouldn't update. `ngOnChanges` fixes this.
+2.  **`[mode]` Input**: Users can now force a rendering mode: `<app-latex [content]="myFormula" mode="block"></app-latex>`. This is the single most important fix for production applications where heuristics fail.
+3.  **Standard Delimiters**: Adding `\[` and `\(` makes the component compatible with standard LaTeX export formats (like those used in Pandoc, Overleaf, or MathJax).
+4.  **Separation of Concerns**: The `parseLatex` method extracts the logic from the rendering method, making it easier to unit test.
+
+### A note on `textContent`
+Using `el.textContent` is generally safe in Angular components, but keep in mind that if your component is used as:
+```html
+<app-latex>
+  $$x^2$$
+</app-latex>
+```
+The `el.textContent` will include the newlines and indentation around the LaTeX. You should trim the input string consistently (as done above) to ensure KaTeX parses the LaTeX code correctly without extra whitespace characters that might interfere with rendering.
