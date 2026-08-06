@@ -382,8 +382,7 @@ def process_thetacode(dir_path, project_name, synthetic, mistakes):
             messages = json.load(f)
             messages2 = []
             for message in messages:
-                messages2.append({'role': 'user', 'content': message['content']})
-                messages2.append({'role': 'assistant', 'content': message['content']})
+                messages2.append({'role': message['role'], 'content': message['content']})
             data.append({'messages': messages2, 'project': project_name, 'synthetic': synthetic, 'mistakes': mistakes})
     return data
 
