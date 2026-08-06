@@ -1,0 +1,89 @@
+§u§
+I want to create a huggingface dataset with a lot of data. I heard parquet is recommended. Is that true? How can I use several parquet files and configure the readme config so that the data viewer works?
+§a§
+Yes — **Parquet is indeed the recommended format** for Hugging Face datasets, especially for large data. Here's why, and how to set it up so the Data Viewer works correctly.
+
+## Why Parquet is recommended
+
+A few reasons stand out from the official docs:
+
+1. **Native/preferred format for the Hub**: If the dataset only contains data files, load_dataset() automatically infers how to load the data files from their extensions (json, csv, parquet, txt, etc.), and Datasets will use an appropriate DatasetBuilder based on the data files format.
+
+2. **Viewer size limits are relaxed for Parquet**: This restriction only applies for datasets over 5GB that are not natively in Parquet format or that have not been auto-converted to Parquet. In other words, non-Parquet datasets over 5GB may have limited viewer support, but Parquet datasets don't have this restriction — the viewer can handle much larger Parquet datasets.
+
+3. **Automatic conversion**: Even if you upload CSV/JSON, the Hub auto-converts it to Parquet behind the scenes for the viewer, but starting natively in Parquet skips that step and avoids conversion errors on huge files.
+
+## Structuring multiple Parquet files
+
+### Option 1: Naming convention (no YAML needed)
+The simplest approach — a dataset with a supported structure and file format (.txt, .csv, .parquet, .jsonl, .mp3, .jpg, .zip etc.) are loaded automatically with load_dataset(), and it'll have a dataset viewer on its dataset page on the Hub.
+
+For multiple files per split, you can just use directories:
+```
+my_dataset_repository/
+├── README.md
+└── data/
+    ├── train-00000-of-00004.parquet
+    ├── train-00001-of-00004.parquet
+    ├── train-00002-of-00004.parquet
+    ├── train-00003-of-00004.parquet
+    ├── test-00000-of-00001.parquet
+```
+If no YAML is provided, Datasets searches for certain patterns in the dataset repository to automatically infer the dataset splits, following an order of patterns, beginning with the custom filename split format to treating all files as a single split if no pattern is found. The `train-*`/`test-*`/`validation-*` naming convention (with the `-NNNNN-of-NNNNN` shard suffix) is the standard the Hub itself uses when it auto-converts datasets, so it's the safest bet for auto-detection.
+
+### Option 2: Explicit YAML `configs` field (more control)
+If you want explicit control over which files map to which split — or you have multiple **subsets/configurations** of your dataset — add a YAML block at the top of your `README.md`:
+
+If you have multiple files and want to define which file goes into which split, you can use YAML at the top of your README.md.
+
+Basic example with explicit file paths:
+```yaml
+---
+configs:
+  - config_name: default
+    data_files:
+      - split: train
+        path: "data/train-*.parquet"
+      - split: test
+        path: "data/test-*.parquet"
+---
+```
+
+Note that config_name field is required even if you have a single subset.
+
+You can also glob multiple shard files under one split path, as shown above with `train-*.parquet`.
+
+### Option 3: Multiple subsets/configurations
+If your dataset has several independent "subsets" (e.g., different languages, tasks, or domains), each with its own train/test splits, you can define them all in one YAML block: It is also possible to define multiple subsets (also called "configurations") for the same dataset, e.g. if the dataset has various independent files. Each config gets its own dropdown in the Dataset Viewer on the Hugging Face Hub.
+
+```yaml
+---
+configs:
+  - config_name: english
+    data_files:
+      - split: train
+        path: "en/train-*.parquet"
+      - split: test
+        path: "en/test-*.parquet"
+  - config_name: french
+    data_files:
+      - split: train
+        path: "fr/train-*.parquet"
+      - split: test
+        path: "fr/test-*.parquet"
+---
+```
+
+## Making sure the Viewer works
+
+A few extra tips:
+
+- For Parquet files, use smaller row groups and include a page index (write_page_index=True) so the Viewer can read only what it needs. Avoid very large values in the first rows (very long strings, large JSON blobs, base64 payloads). Move large payloads to separate files when possible. Split very large files into smaller shards or splits, then re-upload. This matters a lot for performance/errors on huge datasets.
+- If you're storing images or audio inside Parquet, make sure your image columns are of type struct, with a binary field "bytes" for the image data and a string field "path" for the image file name or path, and specify the feature types of the columns directly in YAML in the README header. Note though: Parquet is recommended for small images (<1MB per image) and small row groups (100 rows per row group, which is what datasets uses for images); for larger images it's recommended to use the WebDataset format, or share the original image files. Same guidance applies to audio.
+- If something's not rendering, check the error message: If you see Error code: TooBigContentError, then the dataset viewer could not read a preview within its limits — common messages include "Parquet error: Scan size limit exceeded" and "The size of the content of the first rows exceeds the maximum supported size."
+- You can always double check config validity by referencing the official example repos — there's a whole collection at `datasets-examples/manual-configuration` showing minimal working YAML configs for these exact scenarios (single split files, multiple files per split via glob patterns, and multiple subsets).
+
+### TL;DR recommended workflow for "a lot of data"
+1. Convert your data to Parquet, sharded into reasonably sized files (e.g., ~200–500MB each), using row groups with a page index for large files.
+2. Name/organize files using the `train-NNNNN-of-NNNNN.parquet` convention under a `data/` folder (or per-subset folders if you have multiple configs).
+3. Add a `configs:` YAML block at the top of `README.md` only if you need explicit split mapping or multiple subsets — otherwise the naming convention alone is enough for the Viewer to work automatically.

@@ -1,0 +1,6 @@
+§u§
+<attach:055b82c45816973250d06807f45b3e8a45611b6b84105a1f5b9ff8a6360ae2ed>latex
+§a§
+```latex
+A : \quad \begin{pmatrix} x' \\ y' \end{pmatrix} = M \cdot \begin{pmatrix} x \\ y \end{pmatrix} + \vec{v} \qquad \text{wobei } M = \begin{pmatrix} 0.6 & 0.8 \\ -0.8 & 0.6 \end{pmatrix}
+```

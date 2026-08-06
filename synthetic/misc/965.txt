@@ -1,0 +1,158 @@
+§u§
+```
+from dotenv import load_dotenv
+from sqlite3 import Connection, connect
+from time import sleep
+from traceback import print_exc
+from modules import MODULES
+from util.judge import JudgeLLM
+from util.llm import LLaMaCPP, get_llm
+
+load_dotenv()
+
+
+JUDGE_NAME = 'gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf'
+GPU_JUDGE = True
+with open('MODELS.txt') as f:
+    MODELS = f.read().split('\n')
+
+
+def model_completed_check(db: Connection, model: str) -> bool:
+    """
+    Check if a model has already been evaluated
+
+    :param db: A sqlite3 database connection
+    :param model: The model to check
+    :return: True if the model has already been evaluated, False otherwise
+    """
+    for module in MODULES:
+        if db.execute('SELECT id FROM evaluation WHERE model = ? AND module = ?', (model, str(module.__name__))).fetchone() is None:
+            return False
+    return True
+
+
+def main() -> None:
+    """
+    Run the evaluation
+    :return: None
+    """
+    with connect('database.sqlite3') as db:
+        judge = JudgeLLM()
+        judge.set_model(JUDGE_NAME)
+        judge_offload = GPU_JUDGE
+        try:
+            judge.load_model(seed=65536, cpu_only=(not GPU_JUDGE), print_log=True, context=12288)
+            while judge.is_loading() or not judge.is_running():
+                sleep(1)
+            for model in MODELS:
+                model = model.strip()
+                if model_completed_check(db, model):
+                    print(f"Model {model} has already been evaluated")
+                    continue
+                if model == '':
+                    continue
+                if model.startswith('OpenRouter/') and not judge_offload:
+                    judge.stop()
+                    while judge.process_is_alive():
+                        sleep(1)
+                    judge.load_model(seed=65536, cpu_only=False, print_log=False, context=4096)
+                    judge_offload = True
+                    sleep(3)
+                    while judge.is_loading() or not judge.is_running():
+                        sleep(1)
+                    sleep(1)
+                try:
+                    llm = get_llm(model)
+                except Exception as e:
+                    print(f"Failed to get LLM {model}: {e}")
+                    print_exc()
+                    continue
+                print(f"Loaded LLM {model}")
+                try:
+                    if isinstance(llm, LLaMaCPP):
+                        sleep(4)
+                        llm.load_model(threads=32, print_log=False, cpu_only=GPU_JUDGE)
+                    else:
+                        llm.load_model()
+                    sleep(3)
+                    while llm.is_loading() or not llm.is_running():
+                        sleep(1)
+                    sleep(1)
+                    for module in MODULES:
+                        try:
+                            module_name = str(module.__name__)
+                            print(f"Evaluating {model} on {module_name}")
+                            if db.execute('SELECT id FROM evaluation WHERE model = ? AND module = ?', (model, module_name)).fetchone() is not None:
+                                print(f"Already evaluated {model} on {module_name}")
+                                continue
+                            else:
+                                result: float = module(db, llm, judge)
+                                db.execute('INSERT INTO evaluation (model, module, category, subcategory, points) VALUES (?, ?, ?, ?, ?)', (model, module_name, module_name.split('__')[0], module_name.split('__')[1], result))
+                                db.commit()
+                        except Exception as e:
+                            print(f"An unexpected error occurred with {model} on {module_name}: {e}")
+                            print_exc()
+                            sleep(4)
+                except Exception as e:
+                    print(f"An unexpected error occurred with {model}: {e}")
+                    print_exc()
+                finally:
+                    llm.stop()
+                    if isinstance(llm, LLaMaCPP):
+                        while llm.process_is_alive():
+                            sleep(1)
+        finally:
+            judge.stop()
+
+
+if __name__ == '__main__':
+    main()
+```
+Why is there both a `GPU_JUDGE` as well as a `judge_offload` variable?
+§a§
+`GPU_JUDGE` is a static configuration flag (set once at startup) that controls the *initial* placement of the judge model:
+
+- `cpu_only=(not GPU_JUDGE)` when the judge is first loaded,
+- and later when a local `LLaMaCPP` target model is loaded.
+
+`judge_offload` is a *mutable runtime flag* that tracks whether the judge has already been moved onto the GPU. It is only consulted (and mutated) inside the special-case block that handles `OpenRouter/` models:
+
+```python
+judge_offload = GPU_JUDGE          # start in the same state as the config
+...
+if model.startswith('OpenRouter/') and not judge_offload:
+    ... stop judge, reload it with cpu_only=False ...
+    judge_offload = True
+```
+
+In other words, when `GPU_JUDGE=False` the judge normally runs on CPU, but the first time an OpenRouter (remote) target is encountered the code opportunistically moves the judge onto the now-free GPU and remembers that it has done so. The two variables therefore serve different purposes—one is a user setting, the other is dynamic state that avoids repeatedly reloading the judge.
+§u§
+So when I set `GPU_JUDGE` to false, it will always stay on CPU?
+§a§
+No — with `GPU_JUDGE = False`, the judge starts on CPU, but it will **not** always stay there.
+
+Look at the logic:
+
+```python
+judge_offload = GPU_JUDGE   # = False
+
+...
+
+if model.startswith('OpenRouter/') and not judge_offload:
+    judge.stop()
+    ...
+    judge.load_model(seed=65536, cpu_only=False, ...)  # <-- GPU
+    judge_offload = True
+```
+
+When `GPU_JUDGE = False`:
+
+- The judge is initially loaded on **CPU** (`cpu_only=(not GPU_JUDGE)` → `cpu_only=True`).
+- Local `LLaMaCPP` target models load with `cpu_only=GPU_JUDGE` → `cpu_only=False`, i.e., on the **GPU** (the judge stays out of the way on CPU).
+- But the **first time an `OpenRouter/` model is reached**, since `judge_offload` is still `False`, the judge gets stopped and reloaded with `cpu_only=False` → moved to the **GPU**, and `judge_offload` is set to `True` so this happens only once.
+
+The reasoning: OpenRouter models are remote (they don't use your local GPU), so the GPU is free — the code opportunistically moves the judge onto it for faster judging.
+
+So it stays on CPU **only until the first OpenRouter model** in your `MODELS` list. After that, it's permanently on GPU for the rest of the run.
+
+If you have **no** `OpenRouter/` models in your list, then yes — it stays on CPU the whole time.

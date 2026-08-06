@@ -1,0 +1,129 @@
+§u§
+How can I create and use a global value like this in python:
+function A creates a db connection and calls function B without the db as argument.
+function B calls C, ... function Q calls R.
+function R somehow get access the db connection instance.
+§a§
+The safest way to avoid passing the connection through every function is to use a **context-local value** rather than a normal module global. `contextvars.ContextVar` works correctly across nested calls and is also safe for separate threads and async tasks.
+
+```python
+from contextvars import ContextVar
+from contextlib import contextmanager
+
+_current_db = ContextVar("current_db")
+
+
+@contextmanager
+def db_context():
+    db = create_db_connection()
+
+    token = _current_db.set(db)
+    try:
+        yield db
+    finally:
+        _current_db.reset(token)
+        db.close()
+
+
+def get_db():
+    try:
+        return _current_db.get()
+    except LookupError:
+        raise RuntimeError("No database connection is active")
+
+
+def A():
+    with db_context():
+        B()
+
+
+def B():
+    C()
+
+
+def C():
+    # ...
+    Q()
+
+
+def Q():
+    R()
+
+
+def R():
+    db = get_db()
+    db.execute("SELECT * FROM users")
+```
+
+Example connection factory:
+
+```python
+import sqlite3
+
+def create_db_connection():
+    return sqlite3.connect("example.db")
+```
+
+Calling:
+
+```python
+A()
+```
+
+results in `R()` being able to retrieve the connection without receiving it as an argument.
+
+## Why not use a normal global?
+
+You could do this:
+
+```python
+db = None
+
+def A():
+    global db
+    db = create_db_connection()
+    B()
+
+def R():
+    db.execute(...)
+```
+
+But this is problematic because:
+
+- concurrent calls can overwrite each other's connection;
+- cleanup is easy to forget;
+- tests become harder to isolate;
+- nested operations are difficult to handle safely.
+
+`ContextVar` avoids those issues by making the value local to the current execution context.
+
+## Often preferable: pass the dependency explicitly
+
+For application code, the clearest design is usually dependency injection:
+
+```python
+def A():
+    db = create_db_connection()
+    try:
+        B(db)
+    finally:
+        db.close()
+
+
+def B(db):
+    C(db)
+
+
+def C(db):
+    Q(db)
+
+
+def Q(db):
+    R(db)
+
+
+def R(db):
+    db.execute(...)
+```
+
+This is more verbose, but makes dependencies explicit and is generally easier to test. Use `ContextVar` when passing the value through many layers would be impractical, such as request-scoped database connections, tracing IDs, or transaction context.

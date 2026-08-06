@@ -1,0 +1,182 @@
+§u§
+beautifulsoup get contents of div with class="mw-content-ltr mw-parser-output"
+§a§
+Here are several ways to get the contents of that specific div using BeautifulSoup:
+
+## Method 1: Using `find()` with class_ parameter
+
+```python
+from bs4 import BeautifulSoup
+import requests
+
+# Assuming you have HTML content
+url = "your_url_here"
+response = requests.get(url)
+soup = BeautifulSoup(response.content, 'html.parser')
+
+# Get the div with specific classes
+div_content = soup.find('div', class_='mw-content-ltr mw-parser-output')
+
+if div_content:
+    # Get all contents
+    print(div_content.prettify())
+```
+
+## Method 2: Using CSS selector
+
+```python
+# Using CSS selector
+div_content = soup.select_one('div.mw-content-ltr.mw-parser-output')
+
+if div_content:
+    print(div_content.text)  # Get text only
+    print(div_content)  # Get full HTML
+```
+
+## Method 3: Get specific elements within the div
+
+```python
+div_content = soup.find('div', class_='mw-content-ltr mw-parser-output')
+
+if div_content:
+    # Get all paragraphs
+    paragraphs = div_content.find_all('p')
+    for p in paragraphs:
+        print(p.text)
+
+    # Get all links
+    links = div_content.find_all('a')
+    for link in links:
+        print(link.get('href'))
+
+    # Get all headings
+    headings = div_content.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
+    for heading in headings:
+        print(heading.text)
+```
+
+## Method 4: Using a function to filter
+
+```python
+def has_classes(tag):
+    classes = tag.get('class', [])
+    return 'mw-content-ltr' in classes and 'mw-parser-output' in classes
+
+div_content = soup.find(has_classes)
+
+if div_content:
+    print(div_content)
+```
+
+## Method 5: Extract text with structure preservation
+
+```python
+div_content = soup.find('div', class_='mw-content-ltr mw-parser-output')
+
+if div_content:
+    # Get text while preserving some structure
+    for element in div_content.descendants:
+        if element.name in ['p', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
+            print(f"{element.name}: {element.get_text(strip=True)}")
+```
+
+## Complete working example
+
+```python
+from bs4 import BeautifulSoup
+import requests
+
+# Example URL (you can replace this)
+url = "https://en.wikipedia.org/wiki/Python_(programming_language)"
+
+try:
+    response = requests.get(url)
+    response.raise_for_status()
+
+    soup = BeautifulSoup(response.content, 'html.parser')
+    div_content = soup.find('div', class_='mw-content-ltr mw-parser-output')
+
+    if div_content:
+        # Option 1: Get clean text
+        clean_text = div_content.get_text(separator='\n', strip=True)
+        print("Clean text:", clean_text[:500])  # First 500 characters
+
+        # Option 2: Get specific sections
+        # Remove unwanted elements first (if needed)
+        for unwanted in div_content.find_all(['sup', 'table']):
+            unwanted.decompose()
+
+        # Now get cleaned HTML
+        cleaned_html = div_content.prettify()
+
+    else:
+        print("Div not found")
+
+except requests.RequestException as e:
+    print(f"Error fetching URL: {e}")
+```
+
+Choose the method that best fits your needs:
+- Use **Method 1** for simplicity
+- Use **Method 2** if you prefer CSS selectors
+- Use **Method 3** for extracting specific elements
+- Use **Method 5** for structured text extraction
+§u§
+How can I get then get a barebones html from that? So no styles, classes, ... Also do not include divs.
+§a§
+If you want barebones HTML from that div (no classes, no styles, no IDs, and no `<div>` tags at all), the easiest way is to:
+
+1. Grab the div
+2. Unwrap all `<div>` elements so they don't remain
+3. Strip all attributes except the ones you actually need (like `href` for links or `src`/`alt` for images)
+4. Remove unwanted junk (scripts, styles, etc.)
+5. Return just the inner HTML, without the outer `<div>` wrapper
+
+Here's a working example:
+
+```python
+from bs4 import BeautifulSoup
+import requests
+
+url = "https://en.wikipedia.org/wiki/Python_(programming_language)"
+response = requests.get(url)
+soup = BeautifulSoup(response.content, "html.parser")
+
+content = soup.find("div", class_="mw-content-ltr mw-parser-output")
+
+if not content:
+    bare_html = ""
+else:
+    # Remove unwanted elements first
+    for unwanted in content.find_all(["script", "style", "noscript", "form", "iframe"]):
+        unwanted.decompose()
+
+    # Clean tags: unwrap divs, and strip most attributes
+    for tag in content.find_all(True):
+        if tag.name == "div":
+            tag.unwrap()
+            continue
+
+        # Whitelist only useful attributes
+        allowed_attrs = {}
+        if tag.name == "a" and tag.get("href"):
+            allowed_attrs["href"] = tag["href"]
+        if tag.name == "img":
+            if tag.get("src"):
+                allowed_attrs["src"] = tag["src"]
+            if tag.get("alt"):
+                allowed_attrs["alt"] = tag["alt"]
+        tag.attrs = allowed_attrs
+
+    # Get HTML without the outer <div>
+    bare_html = content.decode_contents()
+```
+
+## Notes on this approach
+
+- `decode_contents()` gives you just the inner HTML, so the original `<div class="mw-content-ltr mw-parser-output">` won't be included.
+- `tag.unwrap()` removes every `<div>` inside and lifts its children up, so you won't have nested divs left behind.
+- We're only keeping `href` on `<a>`, and `src`/`alt` on `<img>`. Everything else (`class`, `id`, `style`, `data-*`, etc.) is dropped.
+- If you want to strip even more (e.g. remove tables, citations, or infoboxes), just add those tag names to the `unwanted` list with `.decompose()`.
+
+If you want plain text instead of HTML later, you can also do `BeautifulSoup(bare_html, "html.parser").get_text("\n", strip=True)`.

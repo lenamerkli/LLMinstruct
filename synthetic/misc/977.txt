@@ -1,0 +1,74 @@
+§u§
+I am using fedora linux. Is there a way I can copy a file without the actual data being copied unless something edits the copy?
+§a§
+Yes! What you're looking for is called a **copy-on-write (CoW) clone**, also known as a **reflink copy**. Fedora is actually one of the best distros for this because it uses **Btrfs** as its default filesystem (since Fedora 33), which has native support for this feature.
+
+---
+
+## Using `cp --reflink`
+
+Simply use the `--reflink` option with `cp`:
+
+```bash
+cp --reflink=auto source.file destination.file
+```
+
+### Options for `--reflink`:
+
+| Flag                  | Behavior                                                                 |
+|-----------------------|--------------------------------------------------------------------------|
+| `--reflink=auto`      | Tries a CoW clone; falls back to a normal copy if the filesystem doesn't support it. |
+| `--reflink=always`    | Forces a CoW clone; **fails** if the filesystem doesn't support it.      |
+| `--reflink=never`     | Always does a traditional full copy.                                     |
+
+---
+
+## How It Works
+
+1. **No data is duplicated initially.** Both the original and the "copy" point to the same underlying data blocks on disk.
+2. **It's nearly instant**, even for huge files, because no actual data is copied.
+3. **When either file is modified**, only the changed blocks are written as new blocks (this is the "copy-on-write" part). The other file remains unchanged.
+4. Both files are completely independent from the user's perspective — it's not like a symlink or hardlink.
+
+---
+
+## Example
+
+```bash
+# Create a 1GB test file
+dd if=/dev/zero of=bigfile.bin bs=1M count=1024
+
+# Reflink copy — nearly instant!
+cp --reflink=always bigfile.bin bigfile_copy.bin
+```
+
+You'll notice the copy is created almost instantly regardless of file size, and `df` will show that very little additional disk space was consumed.
+
+---
+
+## Filesystem Support
+
+| Filesystem | Reflink Support |
+|------------|:---------------:|
+| **Btrfs**  | ✅ Yes          |
+| **XFS**    | ✅ Yes (if created with `reflink=1`, which is the default in recent `mkfs.xfs`) |
+| ext4       | ❌ No           |
+| tmpfs      | ❌ No           |
+
+Since Fedora defaults to Btrfs, you should be good to go on your root filesystem out of the box. You can verify your filesystem type with:
+
+```bash
+df -Th /path/to/your/file
+```
+
+---
+
+## Making It the Default
+
+If you want `cp` to always *try* reflink first, you can add an alias to your `~/.bashrc`:
+
+```bash
+alias cp='cp --reflink=auto'
+```
+
+This way every copy attempt will use CoW when possible, and fall back to a regular copy otherwise.

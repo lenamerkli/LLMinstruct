@@ -1,0 +1,375 @@
+§u§
+I want to create a LLM dataset that Swiss-AI can use for their Apertus models. How should I structure the dataset?
+§a§
+Below is a practical structure that should be easy for Swiss-AI/Apertus-style pipelines to inspect, filter, document, and convert into training data. I don’t see a public “dataset contribution spec” from Swiss-AI, so treat this as a **best-practice format aligned with their public Apertus data/code conventions**, then contact them at `llm-requests@swiss-ai.org` before doing a large release. Apertus emphasizes open weights, open data, documented training details, compliant/open training data, opt-out respect, and PII/copyright request handling, so legal/provenance metadata matters as much as the text itself.
+
+## 1. Use two layers: canonical data + training views
+
+Structure the repository like this:
+
+```text
+my-apertus-dataset/
+  README.md                  # dataset card / datasheet
+  LICENSE                    # dataset license
+  CITATION.cff
+  CHANGELOG.md
+  checksums.sha256
+
+  data/
+    pretrain/
+      train-00000.parquet
+      train-00001.parquet
+      validation-00000.parquet
+    sft/
+      train-00000.jsonl
+      validation-00000.jsonl
+    preference/
+      train-00000.jsonl
+    multimodal/
+      train-00000.jsonl
+
+  media/                     # only if multimodal
+    images/...
+    audio/...
+
+  metadata/
+    sources.parquet           # source-level provenance
+    licenses.parquet
+    opt_outs.parquet          # removed/blocked source ids/domains
+    removals.parquet          # takedown/removal log: id + reason, not content
+    quality_report.json
+    pii_report.json
+    dedup_report.json
+
+  scripts/
+    prepare.py
+    validate.py
+    pii_scan.py
+    deduplicate.py
+```
+
+For large corpora, prefer **Parquet with zstd compression**, sharded into manageable files. Swiss-AI’s public pretraining reconstruction scripts use DataTrove-style readers/writers, including Parquet input/output and zstd-compressed Parquet outputs; their tokenizer example accepts Hugging Face datasets or JSONL and defaults to a `text` column.
+
+---
+
+## 2. Pretraining / continued-pretraining format
+
+For raw document-style language modeling, make each row one coherent document, article, page, chapter, code file, transcript, etc. The minimum usable schema is:
+
+```json
+{
+  "id": "mydataset:doc:000000001",
+  "text": "Full clean document text goes here...",
+  "media": [],
+  "metadata": {
+    "source": "example_corpus",
+    "source_url": "https://...",
+    "language": "de-CH",
+    "script": "Latn",
+    "license": "CC-BY-4.0",
+    "rights_basis": "original_author_permission",
+    "created_at": "2024-05-18",
+    "collected_at": "2026-08-01",
+    "sha256": "…",
+    "dedup_group": "…",
+    "pii_status": "scanned_redacted",
+    "quality_score": 0.91
+  }
+}
+```
+
+**Required columns:**
+
+| Column | Type | Purpose |
+|---|---:|---|
+| `id` | string | Stable unique document id. |
+| `text` | string | The training text. Use UTF-8, preserve meaningful paragraphs/newlines. |
+| `metadata` | object/map | Provenance, language, license, filtering info. |
+| `media` | list | Empty for text-only; useful for compatibility with multimodal conventions. |
+
+Swiss-AI’s public provenance-FLAN adapter converts input into a DataTrove-like object with `text`, `id`, `media`, and `metadata`, so that schema is a good target.
+
+**Do not pre-tokenize as the primary release.** Release clean text plus scripts. Swiss-AI can tokenize with the Apertus tokenizer/training stack; their public Megatron tokenization helper reads HF/JSONL data and tokenizes the chosen `text` column, adding model-specific formatting at tokenization time.
+
+---
+
+## 3. SFT / instruction/chat format
+
+For supervised fine-tuning, use one JSON object per conversation. Store the canonical version as structured messages, not as hand-rendered special-token text.
+
+```json
+{
+  "id": "mydataset:sft:000000001",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a helpful assistant for Swiss public-service information."
+    },
+    {
+      "role": "user",
+      "content": "Explain how direct democracy works in Switzerland."
+    },
+    {
+      "role": "assistant",
+      "content": "Switzerland uses instruments such as referendums and popular initiatives..."
+    }
+  ],
+  "metadata": {
+    "language": "en",
+    "license": "CC-BY-4.0",
+    "source": "human_written",
+    "reviewed_by_human": true,
+    "pii_status": "none_detected"
+  }
+}
+```
+
+Apertus has a custom chat format library; its docs define messages with roles `system`, `user`, `assistant`, and `tool`, and show both simple string content and structured mapping content.
+
+---
+
+## 4. Apertus-native structured assistant format
+
+If you want to support Apertus-style tool use or “thinking mode,” store assistant messages using the Apertus block structure. The public `apertus-format` docs define assistant blocks such as `thoughts`, `tool_calls`, `tool_outputs`, and `response`, and the Python library can format conversations for model consumption.
+
+Example:
+
+```json
+{
+  "id": "mydataset:tool:000000001",
+  "messages": [
+    {
+      "role": "system",
+      "content": {"text": "You are a careful research assistant."}
+    },
+    {
+      "role": "user",
+      "content": {
+        "parts": [
+          {"type": "text", "text": "Calculate the VAT on CHF 120 at 8.1%."}
+        ]
+      }
+    },
+    {
+      "role": "assistant",
+      "content": {
+        "blocks": [
+          {
+            "type": "tool_calls",
+            "calls": [
+              {
+                "name": "calculator",
+                "arguments": "{\"expression\":\"120 * 0.081\"}"
+              }
+            ]
+          },
+          {
+            "type": "tool_outputs",
+            "outputs": [
+              {"output": "{\"result\":9.72}"}
+            ]
+          },
+          {
+            "type": "response",
+            "text": "The VAT is CHF 9.72, so the total including VAT is CHF 129.72."
+          }
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "language": "en",
+    "license": "CC-BY-4.0",
+    "task": "calculation",
+    "tool_schema_version": "1.0"
+  }
+}
+```
+
+Keep assistant formatting consistent within a conversation: the Apertus format allows mixed system/user formats, but assistant messages in the same conversation should all be string-style or all structured-style.
+
+**Important:** Don’t include hidden/private chain-of-thought scraped from another model. If you include `thoughts`, make sure they are intentionally authored, licensable, safe to publish, and useful. For most SFT datasets, a `response` block is enough.
+
+---
+
+## 5. Preference / alignment format
+
+For DPO/ORPO/RLHF-style training, use prompt + chosen/rejected responses:
+
+```json
+{
+  "id": "mydataset:pref:000000001",
+  "prompt": [
+    {"role": "user", "content": "Summarize this legal notice in plain German: ..."}
+  ],
+  "chosen": [
+    {"role": "assistant", "content": "Kurz gesagt: ..."}
+  ],
+  "rejected": [
+    {"role": "assistant", "content": "This document is about something else..."}
+  ],
+  "metadata": {
+    "language": "de",
+    "preference_basis": "human_label",
+    "annotator_count": 3,
+    "agreement": 0.82,
+    "license": "CC-BY-4.0"
+  }
+}
+```
+
+If the chosen/rejected responses use Apertus structured blocks, keep them structured in the same way as SFT.
+
+---
+
+## 6. Multimodal format for Apertus 1.5-style data
+
+Apertus 1.5 is documented as multimodal and accepts message content that can include text, images, and audio; the model card examples show `content` lists containing items like `{"type": "text"}`, `{"type": "image"}`, and `{"type": "audio"}`.
+
+Recommended JSONL:
+
+```json
+{
+  "id": "mydataset:mm:000000001",
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {"type": "image", "path": "media/images/sign_0001.jpg"},
+        {"type": "text", "text": "Transcribe the sign and translate it into English."}
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": "The sign says “Ausgang”. In English, that means “Exit”."
+    }
+  ],
+  "media": [
+    {
+      "path": "media/images/sign_0001.jpg",
+      "sha256": "…",
+      "mime_type": "image/jpeg",
+      "license": "CC-BY-4.0",
+      "rights_basis": "own_work",
+      "alt_text": "A sign with the German word Ausgang."
+    }
+  ],
+  "metadata": {
+    "language": "de",
+    "task": "ocr_translation"
+  }
+}
+```
+
+For audio, include sampling rate, transcript license, speaker consent status, and whether voices are anonymized.
+
+---
+
+## 7. Metadata Swiss-AI is likely to care about
+
+At document level, include:
+
+```json
+"metadata": {
+  "source": "name of corpus",
+  "source_url": "original URL if applicable",
+  "source_id": "original source identifier",
+  "domain": "example.ch",
+  "language": "rm",
+  "language_confidence": 0.98,
+  "script": "Latn",
+  "country_or_region": "CH",
+  "license": "CC-BY-4.0",
+  "copyright_owner": "…",
+  "rights_basis": "public_domain | own_work | permission | open_license",
+  "commercial_use_allowed": true,
+  "attribution_required": true,
+  "created_at": "YYYY-MM-DD",
+  "collected_at": "YYYY-MM-DD",
+  "pii_status": "none_detected | redacted | excluded",
+  "toxicity_score": 0.02,
+  "quality_score": 0.91,
+  "dedup_hash": "…",
+  "source_hash": "…"
+}
+```
+
+At source level, maintain `metadata/sources.parquet`:
+
+| Field | Example |
+|---|---|
+| `source` | `swiss_local_news_open` |
+| `homepage` | source homepage |
+| `license` | `CC-BY-4.0` |
+| `crawl_allowed` | `true` |
+| `robots_checked_at` | `2026-08-01` |
+| `opt_out_contact` | email/form |
+| `takedown_policy` | summary |
+| `included_doc_count` | integer |
+| `excluded_doc_count` | integer |
+
+This is especially important because Apertus describes itself as compliant and trained while respecting data-owner opt-outs; their public pipeline also includes robots/ID filtering and PII formatting steps.
+
+---
+
+## 8. Dataset card / README checklist
+
+Your `README.md` should include:
+
+1. **Dataset summary** — what it contains, languages, modalities, size.
+2. **Intended use** — pretraining, SFT, preference training, evaluation, RAG, etc.
+3. **Schema** — exact columns and examples.
+4. **Splits** — train/validation/test counts and token estimates.
+5. **License and rights** — dataset license plus per-source licenses.
+6. **Provenance** — how data was collected/generated.
+7. **Consent/opt-out** — how removals are handled.
+8. **PII policy** — scanning/redaction method and known limitations.
+9. **Filtering** — deduplication, toxicity, quality, language ID.
+10. **Known biases/limitations**.
+11. **Reproducibility** — scripts, versions, checksums.
+12. **Contact** — maintainer email for corrections/removals.
+
+Apertus model cards explicitly list PII/copyright request channels and emphasize regular handling of deletion requests, so you should mirror that operationally for your dataset.
+
+---
+
+## 9. Quick validation rules
+
+Before publishing:
+
+```text
+[ ] Every row has a stable unique id.
+[ ] Every text row has non-empty UTF-8 text.
+[ ] Every row has language + license metadata.
+[ ] No unknown/proprietary copyrighted content unless you have permission.
+[ ] PII scan completed; emails, phone numbers, IDs, bank data, secrets removed or justified.
+[ ] Duplicates removed at document and paragraph level.
+[ ] Source-level opt-outs and removals are tracked.
+[ ] Train/validation/test splits do not leak near-duplicates.
+[ ] JSONL is valid one-object-per-line; Parquet schema is stable across shards.
+[ ] README, LICENSE, checksums, and preparation scripts are included.
+```
+
+## 10. Minimal “good” release
+
+If you want the simplest useful version, publish this:
+
+```text
+data/train-00000.parquet
+data/validation-00000.parquet
+README.md
+LICENSE
+metadata/sources.parquet
+scripts/validate.py
+```
+
+With Parquet columns:
+
+```text
+id: string
+text: string
+media: list
+metadata: struct/json
+```
+
+That gives Swiss-AI a clean base they can run through their own Apertus/DataTrove-style filtering, formatting, tokenization, and training stack.

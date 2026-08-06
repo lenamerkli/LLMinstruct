@@ -1,0 +1,76 @@
+§u§
+I have a file loaded in python as bytes. How can I detect the suffix (i.e. pdf, webp, mp4)?
+§a§
+To detect a file's type from raw bytes in Python, you need to inspect the file's **magic numbers** (signature bytes at the start of the file) rather than relying on a filename extension. Here are the main approaches:
+
+## Option 1: `filetype` library (pure Python, lightweight)
+
+```bash
+pip install filetype
+```
+
+```python
+import filetype
+
+data = open("something", "rb").read()  # or however you got the bytes
+
+kind = filetype.guess(data)
+if kind is None:
+    print("Cannot guess file type!")
+else:
+    print(f"Extension: {kind.extension}")  # e.g. 'pdf', 'webp', 'mp4'
+    print(f"MIME type: {kind.mime}")       # e.g. 'application/pdf'
+```
+
+This works directly on `bytes` objects (no need to write to disk first) and supports images, video, audio, archives, and documents including PDF, WEBP, and MP4.
+
+## Option 2: `python-magic` (wraps libmagic, very robust)
+
+```bash
+pip install python-magic
+# On Linux: sudo apt-get install libmagic1
+# On macOS: brew install libmagic
+# On Windows: pip install python-magic-bin
+```
+
+```python
+import magic
+
+data = open("something", "rb").read()
+
+mime = magic.from_buffer(data, mime=True)
+print(mime)  # e.g. 'application/pdf', 'image/webp', 'video/mp4'
+
+# Or get a human-readable description
+desc = magic.from_buffer(data)
+print(desc)
+```
+
+`python-magic` uses the same detection engine as the Unix `file` command and tends to recognize a broader range of formats.
+
+## Option 3: Manual magic-number check (no dependencies)
+
+If you only need to detect a few specific types, you can check the byte signatures yourself:
+
+```python
+def detect_type(data: bytes) -> str:
+    if data[:4] == b'%PDF':
+        return 'pdf'
+    if data[:4] == b'RIFF' and data[8:12] == b'WEBP':
+        return 'webp'
+    if data[4:8] == b'ftyp':  # MP4 files have 'ftyp' at offset 4
+        return 'mp4'
+    return 'unknown'
+
+print(detect_type(data))
+```
+
+This is fragile for edge cases (e.g., MP4 variants, other RIFF-based formats) but works fine for a small, known set of types.
+
+## Recommendation
+
+- For a **quick, dependency-light solution** covering common formats (including pdf, webp, mp4), use **`filetype`**.
+- For **maximum accuracy** across many obscure formats, use **`python-magic`** (requires installing `libmagic` as a system dependency).
+- For a **tiny, fixed set of formats** and zero dependencies, write your **own signature check**.
+
+Since you specifically care about detecting suffixes like `pdf`, `webp`, and `mp4`, `filetype.guess(data).extension` will likely be the simplest fit.

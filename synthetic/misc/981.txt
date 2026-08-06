@@ -1,0 +1,15 @@
+§u§
+If I cancel an OpenRouter stream request, will I still get the token count that is included in non-canceled requests?
+§a§
+Short answer: **not in the stream itself, but you can still retrieve it afterward.**
+
+**Why you won't get it in the stream:** Usage/token count information is included in the last SSE message for streaming responses. Since cancelling means aborting the connection, you terminate the stream before that final usage chunk ever arrives — so your client won't receive the token counts the way a completed stream would.
+
+**How to get the counts anyway:** OpenRouter still records the generation, and you can query it after the fact:
+
+1. Grab the generation ID — the generation ID is returned in the X-Generation-Id response header for all endpoints (chat completions, completions, responses, and messages), and it's also in the streamed chunks' `id` field.
+2. Query the `/api/v1/generation` endpoint — you can use the returned id to query for the generation stats (including token counts and cost) after the request is complete; this works for all models and requests, streaming and non-streaming. The response includes fields like `tokens_prompt`, `tokens_completion`, `native_tokens_prompt`, `native_tokens_completion`, and `total_cost`.
+
+**One caveat about what the counts will reflect:** it depends on whether the provider actually supports cancellation. For providers that support cancellation, aborting immediately stops model processing and billing — you only pay for the tokens generated before you aborted. But if the endpoint doesn't support cancellation, aborting your connection stops your client from reading the response, but the provider keeps generating upstream, and you can be billed for the full completion even though you disconnected early. So the completion token count you see in the generation stats may be either the partial or the full generation, depending on the provider.
+
+You can check per-provider support on the model page, where you can open the model, expand a provider in the providers list, and look for the Stream cancellation row — if it says Supported, aborting the connection stops processing and billing on that endpoint.

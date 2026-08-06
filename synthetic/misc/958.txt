@@ -1,0 +1,22 @@
+§u§
+What are the recommended sampling parameters for gemma-4-E4B-it-qat?
+§a§
+Here are the recommended sampling parameters for **gemma-4-E4B-it-qat**:
+
+The recommended sampling defaults for Gemma 4 QAT (applicable to all runtimes) are:
+
+| Parameter | Value |
+|-----------|-------|
+| **Temperature** | `1.0` |
+| **top_p** | `0.95` |
+| **top_k** | `64` |
+
+
+These are Google's recommended values for the QAT checkpoints. The 1.0 temperature is intentional — Gemma 4 is tuned for it.
+
+### Additional Notes
+
+- Compared to Gemma 3, the models use standard `system`, `assistant`, and `user` roles.
+- The E4B variant supports context windows of up to 128K tokens.
+- The model is compatible with llama.cpp, LM Studio, Jan, MLC LLM, and mobile GGUF runtimes.
+- When using llama.cpp, use the `--jinja` flag, and to disable thinking, pass `--chat-template-kwargs '{"enable_thinking":false}'`.

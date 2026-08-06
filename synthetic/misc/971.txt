@@ -1,0 +1,108 @@
+§u§
+```
+    model_name = llm.get_model().lower()
+    for i in ['openrouter/', 'publicai/', ':free']:
+        model_name = model_name.replace(i, '')
+    if model_name.endswith('.gguf'):
+        model_name = model_name.rsplit('-', 1)[0]
+    if model_name.startswith('openai'):
+        detected_company = 'OpenAI'
+    elif model_name.startswith('deepseek'):
+        detected_company = 'DeepSeek'
+    elif model_name.startswith('ministral') or model_name.startswith('mistral'):
+        detected_company = 'Mistral_ AI'
+    elif model_name.startswith('qwen') or model_name.startswith('alibaba'):
+        detected_company = 'Alibaba'
+    elif model_name.startswith('gemma') or model_name.startswith('gemini') or model_name.startswith('google'):
+        detected_company = 'Google'
+    elif model_name.startswith('z-ai'):
+        detected_company = 'Z.ai'
+    elif model_name.startswith('microsoft'):
+        detected_company = 'Microsoft'
+    elif model_name.startswith('llama') or model_name.startswith('meta'):
+        detected_company = 'Meta'
+    elif model_name.startswith('moonshotai'):
+        detected_company = 'Moonshot AI'
+    elif model_name.startswith('grok') or model_name.startswith('x-ai'):
+        detected_company = 'X.com'
+    elif model_name.startswith('anthropic'):
+        detected_company = 'Anthropic'
+    elif model_name.startswith('nvidia'):
+        detected_company = 'NVIDIA'
+    elif model_name.startswith('swiss-ai') or model_name.startswith('apertus'):
+        detected_company = 'EPFL and ETH Zurich'
+    elif model_name.startswith('ibm'):
+        detected_company = 'IBM'
+    elif model_name.startswith('baidu'):
+        detected_company = 'Baidu'
+    elif model_name.startswith('minimax'):
+        detected_company = 'MiniMax AI'
+    elif model_name.startswith('poolside'):
+        detected_company = 'Poolside AI'
+    elif model_name.startswith('cohere'):
+        detected_company = 'Cohere Inc.'
+    else:
+        raise NotImplementedError
+```
+refactor this python code
+§a§
+Here is the refactored version of your code.
+
+It replaces the repetitive `if-elif` ladder with a **data-driven lookup table** and leverages Python’s built-in ability for `str.startswith()` to accept a `tuple` of prefixes.
+
+### Refactored Code
+
+```python
+# 1. Define the prefix mapping as configuration data
+COMPANY_PREFIX_MAP = {
+    ('openai',): 'OpenAI',
+    ('deepseek',): 'DeepSeek',
+    ('ministral', 'mistral'): 'Mistral AI',  # Note: removed rogue underscore if unintended
+    ('qwen', 'alibaba'): 'Alibaba',
+    ('gemma', 'gemini', 'google'): 'Google',
+    ('z-ai',): 'Z.ai',
+    ('microsoft',): 'Microsoft',
+    ('llama', 'meta'): 'Meta',
+    ('moonshotai',): 'Moonshot AI',
+    ('grok', 'x-ai'): 'X.com',
+    ('anthropic',): 'Anthropic',
+    ('nvidia',): 'NVIDIA',
+    ('swiss-ai', 'apertus'): 'EPFL and ETH Zurich',
+    ('ibm',): 'IBM',
+    ('baidu',): 'Baidu',
+    ('minimax',): 'MiniMax AI',
+    ('poolside',): 'Poolside AI',
+    ('cohere',): 'Cohere Inc.',
+}
+
+def get_company_from_model(model_name: str) -> str:
+    """Cleans the model name and detects the creator/company."""
+    model_name = model_name.lower()
+
+    # Strip unwanted provider tags / suffixes
+    for noise in ('openrouter/', 'publicai/', ':free'):
+        model_name = model_name.replace(noise, '')
+
+    if model_name.endswith('.gguf'):
+        model_name = model_name.rsplit('-', 1)[0]
+
+    # Find the matching company
+    for prefixes, company in COMPANY_PREFIX_MAP.items():
+        if model_name.startswith(prefixes):
+            return company
+
+    raise NotImplementedError(f"No company mapping found for model: '{model_name}'")
+
+
+# Usage:
+detected_company = get_company_from_model(llm.get_model())
+```
+
+---
+
+### Key Improvements
+
+1. **Tuple-based `.startswith()`**: Python's `str.startswith()` natively accepts a `tuple` of strings (e.g., `model.startswith(('gemma', 'gemini'))`). This eliminates the need for chaining `or` conditions.
+2. **Separation of Data and Logic**: Adding, removing, or updating a model provider now only requires editing the `COMPANY_PREFIX_MAP` dictionary rather than touching the control flow.
+3. **Encapsulation**: Wrapped inside a function `get_company_from_model()` for reusability and easier unit testing.
+4. **Better Error Messaging**: `raise NotImplementedError(...)` now includes the unrecognized model name to make debugging easier.

@@ -1,0 +1,23 @@
+§u§
+`.idea/` is in my `.gitignore`. But several files in that folder are still in the staging area. How can I remove them from there?
+§a§
+`.gitignore` only affects **untracked** files. If `.idea/` files are already tracked, remove them from Git’s index while keeping them locally:
+
+```bash
+git rm -r --cached .idea/
+git commit -m "Stop tracking .idea files"
+```
+
+Because `.idea/` is ignored, Git should not stage those files again.
+
+If the files were **newly staged but never committed**, simply unstage them:
+
+```bash
+git restore --staged .idea/
+```
+
+Then verify:
+
+```bash
+git status
+```

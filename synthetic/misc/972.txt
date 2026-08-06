@@ -1,0 +1,225 @@
+§u§
+Create a plan on how to modify https://github.com/lenamerkli/ThetaCode/ to use it as part of an LLM benchmark. All other functionality is not needed. It cannot ask the user. LLM access is provided through an input argument Only docker support. it should have an entrypoint like this: `ThetaCode.generate(call_llm: t.Callable, base_directory: Path, project_directory: Path)`
+§a§
+Here’s the refactor plan I’d use.
+
+**High-level recommendation:** turn ThetaCode into a **small, stateless, docker-only agent library** and throw away the desktop app, persistence layer, local/vm execution paths, merge UI, and OpenRouter-specific LLM code. Right now the repo is centered around a Tkinter GUI in `src/app.py`, SQLite-backed project/chat/message storage in `src/storage.py`, a separate merge-back workflow in `src/merge.py`, multi-mode execution (`docker` / `local` / `vm`) in `src/main.py`, and an OpenRouter-specific LLM layer in `src/llm.py`.
+
+## 1) Target end state
+
+Expose exactly one public API:
+
+```python
+class ThetaCode:
+    @staticmethod
+    def generate(call_llm: t.Callable, base_directory: Path, project_directory: Path):
+        ...
+```
+
+Make it a **one-shot run**:
+1. validate paths
+2. start a disposable docker sandbox
+3. run the agent loop
+4. stop the container in `finally`
+5. return a structured result
+
+This is a better fit than the current instance-based API, which has `set_project()`, `start()`, `stop()`, and no `generate()` entrypoint.
+
+## 2) What to keep vs remove
+
+### Keep
+- The core “conversation → tool call → tool response → next step” loop from `Chat` in `src/main.py`.
+- The existing 4 useful tools:
+  - `read_file`
+  - `write_to_file`
+  - `replace_in_file`
+  - `bash`
+- The “one tool call at a time” XML protocol from the current system prompt.
+
+### Remove
+- `src/app.py` GUI
+- `src/storage.py` persistence
+- `src/merge.py` merge-back flow
+- `src/local_executor.py`
+- local/vm prompt variants
+- OpenRouter-specific `LLM` implementations
+- bundled web-search/examples/software extras
+- SSH / JetBrains gateway / custom network plumbing unless absolutely required
+
+## 3) Biggest behavioral changes you need
+
+### A. Remove all user interaction
+Today the prompt explicitly tells the model to use `ask_user` for clarification and even when it is finished, and the runtime returns `WAITING_FOR_USER` when that tool is called. Also, if the assistant responds without a tool call, the loop feeds back a parsing error instead of treating it as completion. So the current code has **no real non-interactive finish path**.
+
+**Change:**
+- delete `ask_user`
+- add a `done` tool, e.g.
+  - `<tool_name>done</tool_name>`
+  - `<status>success|blocked</status>`
+  - `<summary>...</summary>`
+
+That gives you deterministic benchmark termination.
+
+### B. Docker only
+Current code carries `docker`, `local`, and `vm` modes and chooses different prompts for them. For benchmark use, delete all non-docker branches and keep one prompt and one backend.
+
+### C. Replace built-in LLM access with a callable adapter
+`src/llm.py` is tied to OpenRouter and `OPENROUTER_API_KEY`, with request formatting, streaming, and response cleanup specific to that provider. For your benchmark, replace that with a thin adapter around the supplied `call_llm`.
+
+Recommended callable contract:
+
+```python
+CallLLM = Callable[[list[dict[str, str]]], str | dict]
+```
+
+Suggested normalization:
+- if it returns `str`, treat it as assistant content
+- if it returns `dict`, accept fields like `text`, `content`, `thinking`, `cost`
+
+## 4) Fix workspace semantics
+
+Right now docker-mode projects are copied into `~/.local/share/ThetaCode/projects/<name>/files`, and later `merge.py` compares that working copy with the original path and selectively copies changes back. That is a GUI workflow, not a benchmark workflow.
+
+**For benchmarks:**
+- do **not** create hidden working copies
+- do **not** use merge-back logic
+- treat `project_directory` as the editable worktree
+- use `base_directory` only for benchmark assets, task files, logs, and traces
+
+A good convention is:
+- mount `project_directory` as `/workspace/project` (rw)
+- mount `base_directory` as `/workspace/base` (ro, unless you need logs written there)
+
+## 5) Simplify the docker backend aggressively
+
+Current docker execution is more complex than you need:
+- fixed image/container/network names and fixed IP
+- per-user access token stored under `~/.local/share/ThetaCode`
+- custom bridge network
+- in-container Flask RPC server
+- SSH setup
+- extra mounts for software/examples/gateway
+- and there is already a transport mismatch: the client sends `cwd` but the Flask server reads `directory`, so the requested working directory is not actually wired correctly.
+
+### Preferred refactor
+Delete the Flask RPC layer and use:
+- `docker run` to create the sandbox
+- `docker exec` for `bash`
+- host-side Python for `read_file` / `write_to_file` / `replace_in_file`
+
+That removes:
+- container IP management
+- token auth
+- internal HTTP server
+- fixed port assumptions
+
+### If you want a smaller diff
+You can keep `src/docker/app.py`, but you still must:
+- fix `cwd` vs `directory`
+- generate unique container names per run
+- stop using a fixed network/IP
+- remove SSH/gateway extras
+- add path guards
+
+## 6) Add proper sandbox boundaries
+
+The current file endpoints in `src/docker/app.py` accept arbitrary paths and read/write whatever exists in the container filesystem. For a benchmark harness, that’s too open.
+
+Add path validation:
+- `project_directory`: read/write
+- `base_directory`: read-only, if exposed at all
+- reject anything outside those roots after `Path.resolve()`
+
+This prevents accidental writes outside the benchmark workspace and makes evaluation cleaner.
+
+## 7) Prompt changes
+
+Replace `system_default.md` with a benchmark-specific prompt:
+- mention only `/workspace/project` and `/workspace/base`
+- document only 5 tools:
+  - `read_file`
+  - `write_to_file`
+  - `replace_in_file`
+  - `bash`
+  - `done`
+- remove all references to:
+  - asking the user
+  - extra web-search tools
+  - bundled examples
+  - local/vm behavior
+
+I would keep the current “exact XML” style because the parser in `Chat` is simple and workable.
+
+## 8) Suggested file-level refactor
+
+### Replace / rewrite
+- `src/main.py` → split into:
+  - `thetacode/api.py` for `ThetaCode.generate`
+  - `thetacode/agent.py` for the loop + tool parser
+- `src/llm.py` → `thetacode/llm_adapter.py`
+- `src/docker.py` → `thetacode/sandbox.py`
+
+### Delete from runtime
+- `src/app.py`
+- `src/storage.py`
+- `src/merge.py`
+- `src/local_executor.py`
+- `src/prompts/system_default_local.md`
+- `src/prompts/system_default_vm.md`
+- likely `src/docker/app.py` and `src/docker/entrypoint.sh` if you switch to `docker exec`
+
+### Keep but simplify
+- `src/prompts/system_default.md` → replace contents
+- `src/docker/DOCKERFILE` → make minimal
+
+## 9) Slim the image and dependencies
+
+The current Dockerfile installs SSH, multiple JDKs, Playwright, Crawl4AI, and other extras, and `requirements.txt` contains a very large dependency set including Flask, Flet, LiteLLM, OpenAI, Playwright, and more. That is far more than a benchmark harness needs.
+
+For the benchmark version, keep only what the harness needs:
+- Python
+- bash
+- git
+- coreutils
+- whatever language/runtime the benchmark projects require
+
+If benchmark tasks are closed-world, also run the container with no outbound network and remove the web-search helpers entirely.
+
+## 10) Return a structured result
+
+Even though the method signature is fixed, I’d make it return a dataclass like:
+
+```python
+@dataclass
+class GenerateResult:
+    status: Literal["success", "blocked", "error", "max_steps"]
+    final_response: str
+    messages: list[dict[str, str]]
+    changed_files: list[Path]
+```
+
+That is much more useful for benchmarking than a bare string.
+
+## 11) One important assumption
+
+Because your desired API has no explicit `task` argument, define a fixed benchmark convention such as:
+- `base_directory / "task.md"` or
+- `base_directory / "instance.json"`
+
+and have `ThetaCode.generate(...)` load that automatically into the initial user message.
+
+## 12) Acceptance checklist
+
+You’re done when all of these are true:
+
+- `from thetacode import ThetaCode` works.
+- `ThetaCode.generate(call_llm, base_directory, project_directory)` is the only entrypoint needed.
+- no GUI, no SQLite, no hidden project copies, no merge-back step, no local/vm mode
+- the model cannot ask the user
+- the agent has a deterministic `done` path
+- each run uses an isolated disposable container
+- parallel benchmark runs do not collide on container names or global state
+- writes are confined to `project_directory`
+- container cleanup happens in `finally` even on failure
+
+If you want, I can turn this into a **file-by-file implementation checklist** or a **proposed new module layout with stub code** next.

@@ -1,0 +1,160 @@
+§u§
+How can I create and use a global value like this in python:
+function A creates a db connection and calls function B without the db as argument.
+function B calls C, ... function Q calls R.
+function R somehow get access the db connection instance.
+§a§
+You can achieve this using Python's **module-level globals**. Here's how to do it safely and cleanly:
+
+## Basic Approach: Module-Level Global
+
+```python
+# db_module.py - Create a separate module for your global state
+import sqlite3
+
+# This is your global variable
+_db_connection = None
+
+def create_db_connection():
+    """Function A: Creates the DB connection"""
+    global _db_connection
+    _db_connection = sqlite3.connect("mydb.db")
+    print("Database connection created")
+    return _db_connection
+
+def get_db_connection():
+    """Accessor function for the global connection"""
+    return _db_connection
+
+def function_B():
+    """Function B doesn't receive db as argument"""
+    print("In B, using global DB connection")
+    function_C()
+
+def function_C():
+    print("In C, using global DB connection")
+    # ... chain continues to function R
+
+def function_R():
+    """Function R can access the DB connection"""
+    db = get_db_connection()  # Get the global connection
+    if db:
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM users")
+        return cursor.fetchall()
+    else:
+        raise Exception("No database connection available")
+
+# In your main script:
+# from db_module import create_db_connection, function_B
+
+# create_db_connection()  # This sets the global
+# function_B()  # This chain will eventually use the connection in function R
+```
+
+## Better Approach: Context Manager/Safe Global
+
+```python
+# db_module.py
+import sqlite3
+from contextlib import contextmanager
+
+class DatabaseManager:
+    """Thread-safe way to manage global DB connection"""
+    _instance = None
+    _connection = None
+
+    @classmethod
+    def get_instance(cls):
+        if cls._instance is None:
+            cls._instance = cls()
+        return cls._instance
+
+    def get_connection(self):
+        if self._connection is None:
+            raise Exception("Database not initialized. Call create_connection() first.")
+        return self._connection
+
+    def create_connection(self, db_path="mydb.db"):
+        self._connection = sqlite3.connect(db_path)
+        return self._connection
+
+    def close(self):
+        if self._connection:
+            self._connection.close()
+            self._connection = None
+
+# Global accessor functions
+def get_db():
+    return DatabaseManager.get_instance().get_connection()
+
+def create_db(db_path="mydb.db"):
+    return DatabaseManager.get_instance().create_connection(db_path)
+
+# Now use it:
+# create_db()
+# function_B()  # This will work through the entire chain
+```
+
+## Alternative: Using threading.local() (Thread-Safe)
+
+```python
+import threading
+import sqlite3
+
+# Thread-local storage ensures each thread has its own connection
+_thread_local = threading.local()
+
+def get_db_connection():
+    """Get DB connection for current thread"""
+    if not hasattr(_thread_local, "connection"):
+        raise Exception("No database connection for this thread")
+    return _thread_local.connection
+
+def set_db_connection(conn):
+    """Set DB connection for current thread"""
+    _thread_local.connection = conn
+
+# Now any function in your call chain can do:
+def function_R():
+    db = get_db_connection()
+    cursor = db.cursor()
+    # ... use database
+```
+
+## Example Usage
+
+```python
+# main.py
+from db_module import create_db_connection, function_B
+
+def main():
+    # Function A creates the connection
+    create_db_connection()
+
+    # Call the chain - B -> C -> ... -> R
+    # All will have access to the global connection
+    function_B()
+
+    # Clean up when done
+    from db_module import get_db_connection
+    get_db_connection().close()
+
+if __name__ == "__main__":
+    main()
+```
+
+## ⚠️ Important Considerations
+
+1. **Thread Safety**: If using multiple threads, use `threading.local()` or connection pools
+2. **Testing**: Globals make testing harder. Consider dependency injection for unit tests
+3. **Lifecycle Management**: Ensure connections are properly closed
+4. **Exception Safety**: Use context managers (`with` statements) when possible
+
+## When to Use This Pattern
+
+- ✅ Simple scripts or small applications
+- ✅ When refactoring legacy code isn't feasible
+- ❌ Avoid in large applications - prefer dependency injection or service locators
+
+For larger applications, consider frameworks like Flask/Django that provide their own global request contexts, or use dependency injection patterns.

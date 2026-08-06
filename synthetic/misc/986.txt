@@ -1,0 +1,99 @@
+§u§
+```
+<li><a href="/w/Redstone_circuits/Transmission" title="Redstone circuits/Transmission">Redstone circuits/Transmission</a></li>
+<li><a href="/w/Redstone_circuits/Transmission/two-way_repeater" title="Redstone circuits/Transmission/two-way repeater">Redstone circuits/Transmission/two-way repeater</a></li>
+<li><a href="/w/Redstone_circuits/Transmission/vertical_digital_transmission" title="Redstone circuits/Transmission/vertical digital transmission">Redstone circuits/Transmission/vertical digital transmission</a></li>
+<li><a href="/w/Redstone_mechanics" title="Redstone mechanics">Redstone mechanics</a></li>
+<li><a href="/w/Reed_Smart:_AI_Detective" title="Reed Smart: AI Detective">Reed Smart: AI Detective</a></li>
+<li><a href="/w/Reed_Smart:_AI_Detective/An_Ode_to_Deception" title="Reed Smart: AI Detective/An Ode to Deception">Reed Smart: AI Detective/An Ode to Deception</a></li>
+<li><a href="/w/Reed_Smart:_AI_Detective/Dine_%26_Deceive" title="Reed Smart: AI Detective/Dine &amp; Deceive">Reed Smart: AI Detective/Dine &amp; Deceive</a></li>
+<li><a href="/w/Reed_Smart:_AI_Detective/The_Deepest_Fake" title="Reed Smart: AI Detective/The Deepest Fake">Reed Smart: AI Detective/The Deepest Fake</a></li>
+<li><a href="/w/Regeneration" title="Regeneration">Regeneration</a></li>
+<li><a href="/w/Region_file_format" title="Region file format">Region file format</a></li>
+<li><a href="/w/Reinforced_Deepslate" title="Reinforced Deepslate">Reinforced Deepslate</a></li>
+<li><a href="/w/Release_timeline" title="Release timeline">Release timeline</a></li>
+<li><a href="/w/Remove" title="Remove">Remove</a></li>
+<li><a href="/w/Removed_blocks" title="Removed blocks">Removed blocks</a></li>
+<li><a href="/w/Removed_features" title="Removed features">Removed features</a></li>
+<li><a href="/w/Removed_items" title="Removed items">Removed items</a></li>
+<li><a href="/w/Removed_textures" title="Removed textures">Removed textures</a></li>
+<li><a href="/w/RenderDragon" title="RenderDragon">RenderDragon</a></li>
+<li><a href="/w/Render_(disambiguation)" title="Render (disambiguation)">Render (disambiguation)</a></li>
+<li><a href="/w/Render_history" title="Render history">Render history</a></li>
+<li><a href="/w/Rendering" title="Rendering">Rendering</a></li>
+<li><a href="/w/Renewability" title="Renewability">Renewability</a></li>
+```
+to
+```
+https://minecraft.wiki/w/Redstone_circuits/Transmission
+https://minecraft.wiki/w/Redstone_circuits/Transmission/two-way_repeater
+https://minecraft.wiki/w/Redstone_circuits/Transmission/vertical_digital_transmission
+https://minecraft.wiki/w/Redstone_mechanic
+https://minecraft.wiki/w/Reed_Smart:_AI_Detective
+...
+```
+with
+```
+python3 convert.py input.txt output.txt
+```
+§a§
+Here's a Python script that extracts the `href` values and prepends the wiki domain:
+
+```python
+#!/usr/bin/env python3
+import re
+import sys
+
+def main():
+    if len(sys.argv) != 3:
+        print("Usage: python3 convert.py input.txt output.txt")
+        sys.exit(1)
+
+    input_file, output_file = sys.argv[1], sys.argv[2]
+    base_url = "https://minecraft.wiki"
+
+    # Match href="..." inside anchor tags
+    href_pattern = re.compile(r'href="([^"]+)"')
+
+    with open(input_file, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    urls = []
+    for match in href_pattern.findall(content):
+        urls.append(base_url + match)
+
+    with open(output_file, "w", encoding="utf-8") as f:
+        f.write("\n".join(urls) + "\n")
+
+    print(f"Wrote {len(urls)} URLs to {output_file}")
+
+if __name__ == "__main__":
+    main()
+```
+
+**Usage:**
+
+```bash
+python3 convert.py input.txt output.txt
+```
+
+**How it works:**
+- Reads the entire input file.
+- Uses a regex to find every `href="..."` value.
+- Prepends `https://minecraft.wiki` to each path (the paths already start with `/w/...`).
+- Writes one URL per line to the output file.
+
+**Sample output** (from your input):
+
+```
+https://minecraft.wiki/w/Redstone_circuits/Transmission
+https://minecraft.wiki/w/Redstone_circuits/Transmission/two-way_repeater
+https://minecraft.wiki/w/Redstone_circuits/Transmission/vertical_digital_transmission
+https://minecraft.wiki/w/Redstone_mechanics
+https://minecraft.wiki/w/Reed_Smart:_AI_Detective
+...
+```
+
+**Note:** In your example, `Redstone_mechanics` was shown as `Redstone_mechanic` (missing the trailing `s`). That appears to be a typo in your example, since the script preserves the exact `href` path (`/w/Redstone_mechanics`). If you actually want to strip a trailing character or transform names, let me know and I can adjust it.
+
+If your input might contain HTML entities in the URLs (like `%26` for `&`), the script keeps them as-is since they're already valid URL-encoded characters.

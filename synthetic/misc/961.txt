@@ -1,0 +1,30 @@
+§u§
+`.idea/` is in my `.gitignore`. But several files in that folder are still in the staging area. How can I remove them from there?
+§a§
+This happens because `.gitignore` only prevents Git from tracking *new, untracked* files—it doesn't affect files that are already staged or tracked. Since those `.idea/` files are already in the staging area, Git continues to track them regardless of the ignore rule.
+
+To remove them from the staging area (the index) while keeping the actual files on disk, use `git rm` with the `--cached` flag:
+
+```bash
+git rm -r --cached .idea/
+```
+
+Breaking this down:
+- `--cached` removes the files from the index/staging area **only**, leaving your working copy untouched (the files stay on your disk).
+- `-r` recurses into the directory, since `.idea/` contains multiple files.
+
+After running this, commit the change so the removal is recorded:
+
+```bash
+git commit -m "Remove .idea/ from tracking"
+```
+
+Once this is done, the `.idea/` entry in your `.gitignore` will take effect and Git will ignore those files going forward.
+
+**A note if the files were never committed** (i.e., only staged, never part of any commit): you could alternatively use `git reset` to unstage them:
+
+```bash
+git reset .idea/
+```
+
+Both approaches remove the files from staging without deleting them. Use `git rm -r --cached` if the files were previously committed and you want to stop tracking them; use `git reset` if you just staged them and want to unstage before the first commit.

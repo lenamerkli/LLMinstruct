@@ -1,0 +1,132 @@
+§u§
+```
+#!/bin/bash
+
+# Exit on error
+set -v
+set -e
+
+# Stop server
+supervisorctl stop create_plusplus
+
+# Variables
+ORIGIN=/home/server/create_plusplus/world
+BACKUP=/mnt/2/create_plusplus/world_backup/world
+
+# Create backup
+rsync -ac --delete "$ORIGIN" "$BACKUP"
+
+# Commit changes
+cd "$BACKUP"
+cd ..
+
+pwd
+ls -la
+
+git add .
+git commit -m "Backup: $(date +%Y-%m-%d_%H:%M:%S)"
+
+# Wait 10 seconds
+sleep 10
+
+# Restart computer
+/sbin/shutdown -r
+
+```
+How can I load a backup from a specific date and then make it okay again so that the backup script can run?
+§a§
+To restore a backup from a specific date and ensure your automated backup script continues to work seamlessly, you need to do three things:
+
+1. **Retrieve the old files from Git** and copy them to your live server.
+2. **Revert the backup repository** to its latest state so the next automated `rsync` doesn't get confused.
+3. **Restart the server.**
+
+Here is the step-by-step guide to doing this safely.
+
+### Step 1: Stop the server
+You must stop the server before replacing world files, otherwise, the server will overwrite your restored files or crash.
+```bash
+supervisorctl stop create_plusplus
+```
+
+### Step 2: Find the commit for the date you want
+Navigate to your backup repository and look at the Git log. Since your script uses timestamps for commit messages, it's very easy to find the one you want.
+```bash
+cd /mnt/2/create_plusplus/world_backup/
+git log --oneline
+```
+*Look through the list and copy the commit hash (the random string of letters/numbers) next to the date you want to restore.*
+
+### Step 3: Temporarily pull the old backup into the folder
+Use `git checkout` to temporarily revert the `world` folder inside the backup repo to the state it was in at that specific commit.
+```bash
+# Replace <commit-hash> with the hash you found in Step 2
+git checkout <commit-hash> -- world
+```
+*Note: This puts your repository in a temporary state where the `world` folder is from the past, but the rest of the repo is still in the present. This is safe and expected.*
+
+### Step 4: Copy the restored backup to the live server
+Use `rsync` to push the old backup back into the live server directory. Notice the trailing slashes `/`—this ensures the contents of the backup replace the contents of the live world cleanly.
+```bash
+rsync -ac --delete /mnt/2/create_plusplus/world_backup/world/ /home/server/create_plusplus/world/
+```
+
+### Step 5: Make the backup repository "okay" again
+This is the crucial step to answer your question. If you leave the repository as it is, the next time your backup script runs, Git will see the old files as changes and will create a messy commit history.
+
+You need to reset the backup directory back to the **latest** commit so it matches the live server's new (old) state.
+```bash
+# This tells Git to abandon the temporary checkout and restore the folder to the latest commit
+git checkout HEAD -- world
+
+# Now, sync the backup folder with the live server so they match perfectly
+rsync -ac --delete /home/server/create_plusplus/world/ /mnt/2/create_plusplus/world_backup/world/
+```
+*Because you are putting the live server files back into the backup folder, the next time your script runs, `rsync` will see that everything is already up-to-date, and the `git commit` will have nothing new to commit (which is perfectly fine).*
+
+### Step 6: Restart the server
+```bash
+supervisorctl start create_plusplus
+```
+
+---
+
+### 💡 Optional: One-Command Restore Script
+If you want to automate this in the future, you can create a `restore.sh` script that takes a commit hash as an argument:
+
+```bash
+#!/bin/bash
+
+# Exit on error
+set -e
+
+if [ -z "$1" ]; then
+  echo "Usage: ./restore.sh <commit-hash>"
+  echo "Run 'git log --oneline' in the backup dir to find the hash."
+  exit 1
+fi
+
+COMMIT_HASH=$1
+ORIGIN=/home/server/create_plusplus/world
+BACKUP=/mnt/2/create_plusplus/world_backup/world
+
+echo "Stopping server..."
+supervisorctl stop create_plusplus
+
+echo "Restoring backup from commit $COMMIT_HASH..."
+cd "$BACKUP"
+cd ..
+git checkout "$COMMIT_HASH" -- world
+
+echo "Copying restored world to live server..."
+rsync -ac --delete "$BACKUP/" "$ORIGIN/"
+
+echo "Resetting backup repo to latest state..."
+git checkout HEAD -- world
+rsync -ac --delete "$ORIGIN/" "$BACKUP/"
+
+echo "Starting server..."
+supervisorctl start create_plusplus
+
+echo "Restore complete!"
+```

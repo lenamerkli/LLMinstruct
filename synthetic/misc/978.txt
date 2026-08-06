@@ -1,0 +1,24 @@
+§u§
+llama cpp server reports the wrong number of input tokens (way too low). Model generates as usual.
+§a§
+This is almost certainly **prompt caching (KV cache reuse)**, not an actual bug — the number you're seeing is only the *newly processed* tokens, not the full prompt.
+
+## What's happening
+
+llama-server caches the KV state of previous prompts, and the parameter `cache_prompt: true` (default) instructs the server to cache the prompt. On follow-up requests in the same conversation, the server matches the shared prefix and only evaluates the new tail. You can see this in the logs: subsequent identical requests reuse the cached context on the slot — the log shows `n_prompt_tokens = 43` but then `kv cache rm [42, end)`, meaning only the mismatched tail gets re-evaluated.
+
+The "prompt eval time = X ms / N tokens" line and the `timings.prompt_n` field report only those re-evaluated tokens, so they look "way too low" while generation is completely normal — because the rest of your prompt is already sitting in the KV cache. When the cache hits well, llama.cpp restores a context checkpoint and only processes the new tail — e.g. "prompt eval time = 511.40 ms / 212 tokens" even for a huge coding prompt.
+
+## How to verify
+
+1. **Check the slot logs** — look for the `new prompt, ... n_prompt_tokens = N` (or `task.n_tokens = N`) line. That's the *real* full prompt size; the eval line below it shows only what was recomputed.
+2. **Check `tokens_cached` in the response** — the `tokens_cached` field in the response JSON indicates the number of tokens from the prompt that were re-used from a previous completion. Real total ≈ reported prompt tokens + cached tokens.
+3. **Test with cache disabled** — send `"cache_prompt": false` in the request (or start with `--no-cache-prompt`) and the reported count should jump to the full value.
+
+## If the number is actually wrong (e.g., zero) in your client
+
+If you're reading the count through a client/agent tool rather than raw JSON, note that a field-name mismatch is a known problem: llama.cpp server returns `prompt_tokens` (OpenAI format), but some clients expect `input_tokens`, causing displayed usage of 0 despite actual usage being tens of thousands of tokens. Check the raw HTTP response with `curl` — if `usage.prompt_tokens` there looks right, the issue is in the client, not llama.cpp.
+
+One more edge case: if you're using a **multimodal** model, image tokens are handled separately and token accounting can be off — mtmd workarounds complicate the cache logic and make prompt caching incompatible with mtmd, so counts around image inputs are less reliable.
+
+**TL;DR:** compare `usage.prompt_tokens` vs `n_prompt_tokens` in the server log vs `tokens_cached`. In ~90% of cases, "too low" = cache hit, and everything is working as intended.

@@ -1,0 +1,427 @@
+§u§
+```
+from dotenv import load_dotenv
+from sqlite3 import Connection, connect
+from time import sleep
+from traceback import print_exc
+from modules import MODULES
+from util.judge import JudgeLLM
+from util.llm import LLaMaCPP, get_llm
+
+load_dotenv()
+
+
+JUDGE_NAME = 'gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf'
+GPU_JUDGE = True
+with open('MODELS.txt') as f:
+    MODELS = f.read().split('\n')
+
+
+def model_completed_check(db: Connection, model: str) -> bool:
+    """
+    Check if a model has already been evaluated
+
+    :param db: A sqlite3 database connection
+    :param model: The model to check
+    :return: True if the model has already been evaluated, False otherwise
+    """
+    for module in MODULES:
+        if db.execute('SELECT id FROM evaluation WHERE model = ? AND module = ?', (model, str(module.__name__))).fetchone() is None:
+            return False
+    return True
+
+
+def main() -> None:
+    """
+    Run the evaluation
+    :return: None
+    """
+    with connect('database.sqlite3') as db:
+        judge = JudgeLLM()
+        judge.set_model(JUDGE_NAME)
+        judge_offload = GPU_JUDGE
+        try:
+            judge.load_model(seed=65536, cpu_only=(not GPU_JUDGE), print_log=True, context=16000)
+            while judge.is_loading() or not judge.is_running():
+                sleep(1)
+            for model in MODELS:
+                model = model.strip()
+                if model_completed_check(db, model):
+                    print(f"Model {model} has already been evaluated")
+                    continue
+                if model == '':
+                    continue
+                if model.startswith('OpenRouter/') and not judge_offload:
+                    judge.stop()
+                    while judge.process_is_alive():
+                        sleep(1)
+                    judge.load_model(seed=65536, cpu_only=False, print_log=False, context=16000)
+                    judge_offload = True
+                    sleep(3)
+                    while judge.is_loading() or not judge.is_running():
+                        sleep(1)
+                    sleep(1)
+                print(f"Loading LLM {model}")
+                try:
+                    llm = get_llm(model)
+                except Exception as e:
+                    print(f"Failed to get LLM {model}: {e}")
+                    print_exc()
+                    continue
+                try:
+                    if isinstance(llm, LLaMaCPP):
+                        sleep(4)
+                        llm.load_model(threads=32, print_log=False, cpu_only=GPU_JUDGE)
+                    else:
+                        llm.load_model()
+                    sleep(3)
+                    while llm.is_loading() or not llm.is_running():
+                        sleep(1)
+                    sleep(1)
+                    print(f"Loaded LLM {model}")
+                    for module in MODULES:
+                        try:
+                            module_name = str(module.__name__)
+                            print(f"Evaluating {model} on {module_name}")
+                            if db.execute('SELECT id FROM evaluation WHERE model = ? AND module = ?', (model, module_name)).fetchone() is not None:
+                                print(f"Already evaluated {model} on {module_name}")
+                                continue
+                            else:
+                                result: float = module(db, llm, judge)
+                                db.execute('INSERT INTO evaluation (model, module, category, subcategory, points) VALUES (?, ?, ?, ?, ?)', (model, module_name, module_name.split('__')[0], module_name.split('__')[1], result))
+                                db.commit()
+                        except Exception as e:
+                            print(f"An unexpected error occurred with {model} on {module_name}: {e}")
+                            print_exc()
+                            sleep(4)
+                except Exception as e:
+                    print(f"An unexpected error occurred with {model}: {e}")
+                    print_exc()
+                finally:
+                    llm.stop()
+                    if isinstance(llm, LLaMaCPP):
+                        while llm.process_is_alive():
+                            sleep(1)
+        finally:
+            judge.stop()
+
+
+if __name__ == '__main__':
+    main()
+```
+Refactor this entire file.
+§a§
+Here’s a cleaner, behavior-preserving refactor of the file.
+
+```python
+from __future__ import annotations
+
+import logging
+from dataclasses import dataclass
+from pathlib import Path
+from sqlite3 import Connection, connect
+from time import sleep
+from typing import Any, Callable, Protocol, Sequence
+
+from dotenv import load_dotenv
+
+from modules import MODULES
+from util.judge import JudgeLLM
+from util.llm import LLaMaCPP, get_llm
+
+load_dotenv()
+
+logger = logging.getLogger(__name__)
+
+DEFAULT_DATABASE_PATH = "database.sqlite3"
+DEFAULT_MODELS_PATH = "MODELS.txt"
+DEFAULT_JUDGE_NAME = "gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf"
+DEFAULT_SEED = 65536
+DEFAULT_JUDGE_CONTEXT = 16000
+DEFAULT_LLAMA_THREADS = 32
+
+POLL_INTERVAL_SECONDS = 1.0
+LLAMA_PRELOAD_DELAY_SECONDS = 4.0
+POST_LOAD_DELAY_SECONDS = 3.0
+POST_MODULE_ERROR_DELAY_SECONDS = 4.0
+
+EvaluationModule = Callable[[Connection, Any, JudgeLLM], float]
+
+
+class ManagedProcess(Protocol):
+    def is_loading(self) -> bool: ...
+    def is_running(self) -> bool: ...
+    def stop(self) -> None: ...
+    def process_is_alive(self) -> bool: ...
+
+
+@dataclass(frozen=True)
+class EvaluationConfig:
+    database_path: str = DEFAULT_DATABASE_PATH
+    models_path: str = DEFAULT_MODELS_PATH
+    judge_name: str = DEFAULT_JUDGE_NAME
+    judge_use_gpu: bool = True
+    judge_context: int = DEFAULT_JUDGE_CONTEXT
+    seed: int = DEFAULT_SEED
+    llama_threads: int = DEFAULT_LLAMA_THREADS
+    poll_interval: float = POLL_INTERVAL_SECONDS
+    llama_preload_delay: float = LLAMA_PRELOAD_DELAY_SECONDS
+    post_load_delay: float = POST_LOAD_DELAY_SECONDS
+    post_module_error_delay: float = POST_MODULE_ERROR_DELAY_SECONDS
+
+
+def load_models(models_path: str) -> list[str]:
+    return [
+        line.strip()
+        for line in Path(models_path).read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+
+
+def wait_until_ready(
+    process: ManagedProcess,
+    poll_interval: float,
+    *,
+    initial_delay: float = 0.0,
+) -> None:
+    if initial_delay > 0:
+        sleep(initial_delay)
+
+    while process.is_loading() or not process.is_running():
+        sleep(poll_interval)
+
+
+def wait_until_stopped(process: ManagedProcess, poll_interval: float) -> None:
+    while process.process_is_alive():
+        sleep(poll_interval)
+
+
+def parse_module_name(module_name: str) -> tuple[str, str]:
+    parts = module_name.split("__", maxsplit=1)
+    category = parts[0]
+    subcategory = parts[1] if len(parts) > 1 else ""
+    return category, subcategory
+
+
+class EvaluationRunner:
+    def __init__(
+        self,
+        config: EvaluationConfig,
+        modules: Sequence[EvaluationModule],
+    ) -> None:
+        self.config = config
+        self.modules = tuple(modules)
+        self.module_names = tuple(module.__name__ for module in self.modules)
+
+        self.judge = JudgeLLM()
+        self.judge.set_model(self.config.judge_name)
+        self.judge_on_gpu = False
+
+    def run(self) -> None:
+        with connect(self.config.database_path) as db:
+            self._start_judge(use_gpu=self.config.judge_use_gpu)
+
+            try:
+                for model in load_models(self.config.models_path):
+                    self._evaluate_model(db, model)
+            finally:
+                self._shutdown_judge()
+
+    def _start_judge(self, *, use_gpu: bool) -> None:
+        logger.info("Loading judge model %s", self.config.judge_name)
+
+        self.judge.load_model(
+            seed=self.config.seed,
+            cpu_only=not use_gpu,
+            print_log=True,
+            context=self.config.judge_context,
+        )
+        wait_until_ready(self.judge, self.config.poll_interval)
+
+        self.judge_on_gpu = use_gpu
+        logger.info("Judge model loaded")
+
+    def _restart_judge(self, *, use_gpu: bool) -> None:
+        logger.info("Restarting judge model (gpu=%s)", use_gpu)
+
+        self.judge.stop()
+        wait_until_stopped(self.judge, self.config.poll_interval)
+
+        self.judge.load_model(
+            seed=self.config.seed,
+            cpu_only=not use_gpu,
+            print_log=False,
+            context=self.config.judge_context,
+        )
+        wait_until_ready(
+            self.judge,
+            self.config.poll_interval,
+            initial_delay=self.config.post_load_delay,
+        )
+
+        self.judge_on_gpu = use_gpu
+        logger.info("Judge model restarted")
+
+    def _shutdown_judge(self) -> None:
+        try:
+            self.judge.stop()
+        except Exception:
+            logger.exception("Failed to stop judge cleanly")
+
+    def _evaluate_model(self, db: Connection, model: str) -> None:
+        if self._model_completed(db, model):
+            logger.info("Model %s has already been evaluated", model)
+            return
+
+        self._ensure_judge_mode_for_model(model)
+
+        logger.info("Loading LLM %s", model)
+
+        try:
+            llm = get_llm(model)
+        except Exception:
+            logger.exception("Failed to get LLM %s", model)
+            return
+
+        try:
+            self._load_llm(llm)
+            logger.info("Loaded LLM %s", model)
+
+            for module in self.modules:
+                self._evaluate_module(db, model, llm, module)
+
+        except Exception:
+            logger.exception("An unexpected error occurred with %s", model)
+
+        finally:
+            self._stop_llm(llm)
+
+    def _ensure_judge_mode_for_model(self, model: str) -> None:
+        if model.startswith("OpenRouter/") and not self.judge_on_gpu:
+            self._restart_judge(use_gpu=True)
+
+    def _load_llm(self, llm: Any) -> None:
+        if isinstance(llm, LLaMaCPP):
+            sleep(self.config.llama_preload_delay)
+            llm.load_model(
+                threads=self.config.llama_threads,
+                print_log=False,
+                cpu_only=self.config.judge_use_gpu,
+            )
+        else:
+            llm.load_model()
+
+        wait_until_ready(
+            llm,
+            self.config.poll_interval,
+            initial_delay=self.config.post_load_delay,
+        )
+
+    def _stop_llm(self, llm: Any) -> None:
+        try:
+            llm.stop()
+        except Exception:
+            logger.exception("Failed to stop LLM cleanly")
+
+        if isinstance(llm, LLaMaCPP):
+            try:
+                wait_until_stopped(llm, self.config.poll_interval)
+            except Exception:
+                logger.exception("Failed while waiting for LLaMaCPP process to stop")
+
+    def _evaluate_module(
+        self,
+        db: Connection,
+        model: str,
+        llm: Any,
+        module: EvaluationModule,
+    ) -> None:
+        module_name = module.__name__
+
+        if self._module_already_evaluated(db, model, module_name):
+            logger.info("Already evaluated %s on %s", model, module_name)
+            return
+
+        logger.info("Evaluating %s on %s", model, module_name)
+
+        try:
+            result = module(db, llm, self.judge)
+            category, subcategory = parse_module_name(module_name)
+
+            db.execute(
+                """
+                INSERT INTO evaluation (model, module, category, subcategory, points)
+                VALUES (?, ?, ?, ?, ?)
+                """,
+                (model, module_name, category, subcategory, result),
+            )
+            db.commit()
+
+        except Exception:
+            logger.exception(
+                "An unexpected error occurred with %s on %s",
+                model,
+                module_name,
+            )
+            sleep(self.config.post_module_error_delay)
+
+    def _model_completed(self, db: Connection, model: str) -> bool:
+        if not self.module_names:
+            return True
+
+        placeholders = ", ".join("?" for _ in self.module_names)
+        query = f"""
+            SELECT COUNT(DISTINCT module)
+            FROM evaluation
+            WHERE model = ?
+              AND module IN ({placeholders})
+        """
+
+        row = db.execute(query, (model, *self.module_names)).fetchone()
+        completed_count = row[0] if row is not None else 0
+        return completed_count == len(self.module_names)
+
+    @staticmethod
+    def _module_already_evaluated(
+        db: Connection,
+        model: str,
+        module_name: str,
+    ) -> bool:
+        row = db.execute(
+            "SELECT 1 FROM evaluation WHERE model = ? AND module = ? LIMIT 1",
+            (model, module_name),
+        ).fetchone()
+        return row is not None
+
+
+def main() -> None:
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s %(levelname)s %(message)s",
+    )
+
+    config = EvaluationConfig()
+    runner = EvaluationRunner(config=config, modules=MODULES)
+    runner.run()
+
+
+if __name__ == "__main__":
+    main()
+```
+
+What changed:
+- pulled config into a dataclass
+- removed import-time `MODELS.txt` parsing
+- centralized process waiting/restart logic
+- reduced nested `try/except/finally`
+- switched to `logging`
+- made module/category parsing safer
+- made “model completed” check more efficient
+
+One note: I intentionally preserved the original `LLaMaCPP` load behavior:
+
+```python
+cpu_only=self.config.judge_use_gpu
+```
+
+If that was actually a bug and you want the evaluated model to use GPU whenever available, I can give you a second version with that corrected too.

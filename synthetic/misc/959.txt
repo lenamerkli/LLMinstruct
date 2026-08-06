@@ -1,0 +1,58 @@
+§u§
+```
+ /usr/local/cuda/bin/../targets/x86_64-linux/include/crt/host_config.h:137:2:
+  error: #error -- unsupported GNU version! gcc versions later than 15 are
+  not supported! The nvcc flag '-allow-unsupported-compiler' can be used to
+  override this version check; however, using an unsupported host compiler
+  may cause compilation failure or incorrect run time execution.  Use at your
+  own risk.
+
+    137 | #error -- unsupported GNU version! gcc versions later than 15 are not supported! The nvcc flag '-allow-unsupported-compiler' can be used to override this version check; however, using an unsupported host compiler may cause compilation failure or incorrect run time execution. Use at your own risk.
+        |  ^~~~~
+
+  # --error 0x1 --
+```
+Fedora dnf downgrade gcc
+§a§
+Don't downgrade your system GCC — that can break other packages and dnf usually won't let you cross major versions anyway. The right fix on Fedora is to install the **compatibility GCC package** alongside your current one and point `nvcc` at it.
+
+## Recommended fix
+
+The Fedora version supported might ship with a newer compiler than what is actually supported by NVCC. This can be overcome by installing the GCC compatibility package and setting a few environment variables. Fedora ships older-major-version GCC as separate parallel-installable packages (e.g. `gcc15`, `gcc14`, `gcc13`).
+
+Since your error says GCC ≤ 15 is supported, install GCC 15 compat packages:
+
+```bash
+sudo dnf install gcc15 gcc15-c++
+```
+
+Then tell nvcc to use it as the host compiler:
+
+```bash
+export NVCC_CCBIN='g++-15'
+# or equivalently:
+export NVCC_PREPEND_FLAGS='-ccbin /usr/bin/g++-15'
+```
+
+Put that in `~/.bashrc` or `/etc/profile.d/cuda-gcc.sh` to make it permanent. Depending on the distribution, the package that needs to be installed is different, but the logic for configuring it is the same — it always ends up with configuring the NVCC_CCBIN environment variable.
+
+You can also pass it per-invocation:
+
+```bash
+nvcc -ccbin g++-15 mykernel.cu -o mykernel
+```
+
+Or in CMake:
+
+```bash
+cmake -DCMAKE_CUDA_HOST_COMPILER=/usr/bin/g++-15 ..
+```
+
+## Alternative: the `cuda-gcc` Copr package
+
+There's a convenience package that automates this. It's a cuda-gcc package which appears as a drop-in replacement for NVCC — originally a custom-built GCC, but now it simply uses the compatibility GCC package provided by Fedora, and it sets the necessary environment variable (`NVCC_CCBIN`) in `/etc/profile.d/cuda-gcc.sh` so that every time you invoke NVCC you use the compat compiler instead of the system one. It's from the negativo17/fedora-multimedia repo if you use that.
+
+## What NOT to do
+
+- `dnf downgrade gcc` won't work — Fedora's repos only contain one major version of the main `gcc` package per release.
+- `-allow-unsupported-compiler` bypasses the check but using an unsupported host compiler may cause compilation failure or incorrect run time execution. Use at your own risk — with GCC 16 you'll likely hit real header/parse errors, not just the version check.
