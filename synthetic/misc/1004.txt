@@ -1,0 +1,1502 @@
+§u§
+converter.py
+```
+"""
+Assetto Corsa (.kn5) -> BeamNG map converter.
+
+Stages:
+  1. Map collision
+  2. Textures
+  3. Sky and lighting
+  4. Fixing trees (only stem collision + model fixing)
+
+Axis conversion:  Assetto Corsa uses Y-up. BeamNG uses Z-up.
+    BeamNG = (ac_x, -ac_z, ac_y)
+"""
+import os
+import sys
+import posixpath
+import json
+import zipfile
+import uuid
+import numpy as np
+from io import BytesIO
+from PIL import Image
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from kn5_parser import load_kn5
+from dae_writer import DaeBuilder, sanitize_mat_name, url_safe, gen_uuid
+
+# --------------------------------------------------------------------------
+# Coordinate conversion AC -> BeamNG  (AC is Y-up, BeamNG is Z-up)
+# --------------------------------------------------------------------------
+def ac_to_beam(p):
+    x, y, z = p
+    return (x, -z, y)
+
+
+def ac_to_beam_normal(n):
+    x, y, z = n
+    return (x, -z, y)
+
+
+def build_world_matrices(scene):
+    n = len(scene.meshes)
+    world = [np.identity(4) for _ in range(n)]
+    for i, m in enumerate(scene.meshes):
+        M = np.array(m.matrix, dtype=float)
+        if m.parent >= 0:
+            M = np.matmul(world[m.parent], M)
+        world[i] = M
+    return world
+
+
+# --------------------------------------------------------------------------
+# Mesh gathering
+# --------------------------------------------------------------------------
+class TrackMesh:
+    def __init__(self):
+        self.name = ""
+        self.material = None
+        self.positions = None
+        self.normals = None
+        self.uvs = None
+        self.indices = None      # flat list
+        self.local_positions = None  # AC local (for tree stem classification)
+
+
+def gather_meshes(scene, z_offset=0.0):
+    world = build_world_matrices(scene)
+    result = []
+    for idx, m in enumerate(scene.meshes):
+        if m.type not in (2, 3):
+            continue
+        if len(m.positions) == 0 or len(m.indices) == 0:
+            continue
+        M = world[idx]
+        pos = np.zeros((len(m.positions), 3), dtype=float)
+        for i, p in enumerate(m.positions):
+            v = M.dot(np.array([p[0], p[1], p[2], 1.0]))
+            pbeam = ac_to_beam(v[:3])
+            pos[i] = (pbeam[0], pbeam[1], pbeam[2] + z_offset)
+        R = M[:3, :3]
+        nrm = np.zeros((len(m.normals), 3), dtype=float)
+        for i, n in enumerate(m.normals):
+            v = R.dot(np.array([n[0], n[1], n[2]]))
+            nrm[i] = ac_to_beam_normal(v)
+        tm = TrackMesh()
+        tm.name = m.name
+        tm.positions = pos
+        tm.normals = nrm
+        tm.uvs = np.array(m.uvs, dtype=float)
+        tm.indices = list(m.indices)
+        tm.local_positions = np.array(m.positions, dtype=float)
+        if 0 <= m.material_id < len(scene.materials):
+            tm.material = scene.materials[m.material_id]
+        result.append(tm)
+    return result
+
+
+def is_road_like(material):
+    if material is None:
+        return False
+    name = (material.name or "").strip().lower()
+    if material.is_tree or material.is_grass:
+        return False
+    if any(kw in name for kw in ("road", "curb", "kerb", "track", "asphalt",
+                                 "tarmac", "runoff", "nnnn", "gravel", "rocc",
+                                 "grass", "sand", "wall", "grail", "concrete",
+                                 "pittra", "pit")):
+        return True
+    return False
+
+
+def is_tree_material(material):
+    if material is None:
+        return False
+    if material.is_tree:
+        return True
+    # Some foliage props use a regular shader but a leaf texture.
+    name = (material.name or "").strip().lower()
+    return "leaf" in name or "leaves" in name or "foliage" in name or "bush" in name
+
+
+def is_water_material(material):
+    if material is None:
+        return False
+    name = (material.name or "").strip().lower()
+    return "water" in name or "wasser" in name
+
+
+# --------------------------------------------------------------------------
+# Collision: stem-only for trees, simplified for the rest
+# --------------------------------------------------------------------------
+def classify_by_mesh(tm):
+    if is_tree_material(tm.material):
+        return "tree"
+    if is_water_material(tm.material):
+        return "water"
+    # Everything that is not tree foliage or water gets real collision.
+    # (Tree leaves are handled separately as render-only, but their stems are
+    # already part of the dedicated collision mesh.)
+    return "collision"
+
+
+TREE_STEM_HEIGHT = 1.5       # meters of trunk collision
+TREE_STEM_MAX_WIDTH = 0.9    # meters; stems are narrow
+TREE_STEM_MIN_WIDTH = 0.15
+
+
+def make_stem_for_base(lpos, z_offset=0.0):
+    """Return (verts, tris) for a trunk collision cylinder at the base of a tree.
+    lpos is local (AC space, Y-up) vertices of the tree base cluster."""
+    y_min = lpos[:, 1].min()
+    # center of base
+    low = lpos[lpos[:, 1] < y_min + TREE_STEM_HEIGHT * 0.6]
+    if len(low) == 0:
+        low = lpos
+    cx = low[:, 0].mean()
+    cz = low[:, 2].mean()
+    span_x = low[:, 0].max() - low[:, 0].min()
+    span_z = low[:, 2].max() - low[:, 2].min()
+    radius = min(TREE_STEM_MAX_WIDTH,
+                 max(TREE_STEM_MIN_WIDTH, (span_x + span_z) / 4.0))
+    segs = 8
+    angles = np.linspace(0, 2 * np.pi, segs, endpoint=False)
+    base_pts = [(cx + radius * np.cos(a), y_min, cz + radius * np.sin(a))
+                for a in angles]
+    top_pts = [(cx + radius * np.cos(a), y_min + TREE_STEM_HEIGHT, cz + radius * np.sin(a))
+               for a in angles]
+    verts_ac = base_pts + top_pts
+    verts = np.array([ac_to_beam(v) for v in verts_ac], dtype=float)
+    verts[:, 2] += z_offset
+    n = segs
+    tris = []
+    for i in range(segs):
+        nxt = (i + 1) % segs
+        a, b = i, nxt
+        a2, b2 = n + i, n + nxt
+        tris.append((a, b, a2))
+        tris.append((b2, a2, b))
+    return verts, tris
+
+
+def make_tree_stem(tm, z_offset=0.0):
+    """Simplified lower-trunk collision for a single tree mesh (small instance)."""
+    lpos = tm.local_positions
+    y_min = lpos[:, 1].min()
+    low = lpos[lpos[:, 1] < y_min + 1.0]
+    if len(low) == 0:
+        low = lpos
+    cx = low[:, 0].mean()
+    cz = low[:, 2].mean()
+    span_x = low[:, 0].max() - low[:, 0].min()
+    span_z = low[:, 2].max() - low[:, 2].min()
+    radius = min(TREE_STEM_MAX_WIDTH, max(TREE_STEM_MIN_WIDTH, (span_x + span_z) / 4.0))
+    segs = 8
+    angles = np.linspace(0, 2 * np.pi, segs, endpoint=False)
+    base_pts = [(cx + radius * np.cos(a), y_min, cz + radius * np.sin(a))
+                for a in angles]
+    top_pts = [(cx + radius * np.cos(a), y_min + TREE_STEM_HEIGHT, cz + radius * np.sin(a))
+               for a in angles]
+    verts_ac = base_pts + top_pts
+    verts = np.array([ac_to_beam(v) for v in verts_ac], dtype=float)
+    verts[:, 2] += z_offset
+    n = segs
+    tris = []
+    for i in range(segs):
+        nxt = (i + 1) % segs
+        a, b = i, nxt
+        a2, b2 = n + i, n + nxt
+        # outward facing side
+        tris.append((a, b, a2))
+        tris.append((b2, a2, b))
+    nrm = np.zeros((len(verts), 3), dtype=float)
+    uv = np.zeros((len(verts), 2), dtype=float)
+    return verts, nrm, uv, tris
+
+
+# --------------------------------------------------------------------------
+# Visual + collision DAE construction
+# --------------------------------------------------------------------------
+def cluster_tree_base(tm, cell=4.0, z_offset=0.0):
+    """Cluster the lowest vertices of a big tree/billboard mesh into trunks.
+    Returns list of (verts, tris) in BeamNG coords."""
+    lpos = tm.local_positions
+    y_min = lpos[:, 1].min()
+    low = lpos[lpos[:, 1] < y_min + 2.0]
+    if len(low) == 0:
+        low = lpos
+    # simple grid clustering on xz
+    results = []
+    used = np.zeros(len(low), dtype=bool)
+    for i in range(len(low)):
+        if used[i]:
+            continue
+        # gather nearby
+        cluster_idx = np.where(
+            (np.abs(low[:, 0] - low[i, 0]) < cell) &
+            (np.abs(low[:, 2] - low[i, 2]) < cell))[0]
+        used[cluster_idx] = True
+        cl = low[cluster_idx]
+        cx = cl[:, 0].mean()
+        cz = cl[:, 2].mean()
+        span_x = cl[:, 0].max() - cl[:, 0].min()
+        span_z = cl[:, 2].max() - cl[:, 2].min()
+        radius = min(TREE_STEM_MAX_WIDTH,
+                     max(TREE_STEM_MIN_WIDTH, (span_x + span_z) / 4.0))
+        segs = 8
+        angles = np.linspace(0, 2 * np.pi, segs, endpoint=False)
+        base_pts = [(cx + radius * np.cos(a), y_min, cz + radius * np.sin(a))
+                    for a in angles]
+        top_pts = [(cx + radius * np.cos(a), y_min + TREE_STEM_HEIGHT,
+                    cz + radius * np.sin(a)) for a in angles]
+        verts_ac = base_pts + top_pts
+        verts = np.array([ac_to_beam(v) for v in verts_ac], dtype=float)
+        verts[:, 2] += z_offset
+        n = segs
+        tris = []
+        for k in range(segs):
+            nxt = (k + 1) % segs
+            a, b = k, nxt
+            a2, b2 = n + k, n + nxt
+            tris.append((a, b, a2))
+            tris.append((b2, a2, b))
+        results.append((verts, tris))
+    return results
+
+
+def build_daes(scene, texture_rel_map=None, shape_prefix="main", z_offset=0.0):
+    """Build render DAE (main.dae) with collision on solid surfaces,
+    a nocollision render DAE for decorative props, plus tree leaves/stems."""
+    texture_rel_map = texture_rel_map or {}
+    meshes = gather_meshes(scene, z_offset=z_offset)
+    from collections import defaultdict
+
+    main = DaeBuilder()        # solid: render + collision
+    nocol = DaeBuilder()       # decorative: render only
+    tree_leaves, tree_stems = build_tree_daes(
+        meshes, texture_rel_map, z_offset=z_offset)
+
+    # Keep each AC mesh as its own geometry (matches real BeamNG ports which
+    # have hundreds of geometries rather than a few giant merged ones).
+    seen_names = set()
+    for tm in meshes:
+        cat = classify_by_mesh(tm)
+        if cat == "tree":
+            continue
+        mat = tm.material
+        matname = url_safe(sanitize_mat_name(mat.name if mat else "default"))
+        img = None
+        if mat is not None:
+            diff = mat.textures.get("txDiffuse")
+            if diff:
+                img = dae_texture_path(diff, texture_rel_map)
+        transp = (mat.is_transparent if mat else False)
+        alpha_test = (mat.is_grass if mat else False)
+        if mat is not None:
+            # The AC shader exposes ksAlphaRef. A non-zero value means the
+            # original track used alpha testing for this surface (fences,
+            # foliage, grilles, etc.). Replicate that in BeamNG.
+            alpha_test = alpha_test or mat.props.get("ksAlphaRef", 0.0) != 0.0
+
+        db = main if (cat == "collision") else nocol
+        db.add_material(matname, image=img, transparent=transp,
+                        alpha_test=alpha_test)
+
+        flat = tm.indices
+        tris = [(flat[i], flat[i + 1], flat[i + 2])
+                for i in range(0, len(flat) - len(flat) % 3, 3)]
+        base = url_safe(sanitize_mat_name(tm.name))
+        # unique geometry name
+        gname = base
+        k = 2
+        while gname in seen_names:
+            gname = "%s_%d" % (base, k)
+            k += 1
+        seen_names.add(gname)
+        db.add_geometry(gname, tm.positions, tm.normals, tm.uvs, tris, matname)
+
+    return main, nocol, tree_leaves, tree_stems
+
+
+def build_tree_daes(meshes, texture_rel_map=None, z_offset=0.0):
+    """Split tree meshes into leaves (visual only, no collision) and stems
+    (collision only). Only the trunk/stem gets collision; foliage is never
+    part of the collision mesh."""
+    texture_rel_map = texture_rel_map or {}
+    tree_leaves = DaeBuilder()
+    tree_stems = DaeBuilder()
+    stem_mat_name = "tree_stem"
+    tree_stems.add_material(stem_mat_name, image=None)
+    leaf_uvs = []
+    leaf_tris = []
+    stem_verts, stem_tris = [], []
+    lv = 0
+    sv = 0
+
+    # Leaves may use different diffuse textures; bucket by source texture.
+    from collections import defaultdict
+    leaf_by_tex = defaultdict(lambda: DaeBuilder())
+    leaf_data = defaultdict(lambda: {"verts": [], "norms": [], "uvs": [],
+                                     "tris": [], "voff": 0, "mat": None})
+
+    for tm in meshes:
+        if not is_tree_material(tm.material):
+            continue
+        diff = tm.material.textures.get("txDiffuse") if tm.material else None
+        matname = "tree_leaves"
+        if diff:
+            matname = "tree_leaves_" + url_safe(sanitize_mat_name(os.path.splitext(diff)[0]))
+        db = leaf_by_tex[matname]
+        img = dae_texture_path(diff, texture_rel_map) if diff else None
+        db.add_material(matname, image=img, transparent=True)
+        d = leaf_data[matname]
+        d["verts"].append(tm.positions)
+        d["norms"].append(tm.normals)
+        d["uvs"].append(tm.uvs)
+        flat = tm.indices
+        off = d["voff"]
+        d["tris"].extend([(flat[i] + off, flat[i + 1] + off, flat[i + 2] + off)
+                          for i in range(0, len(flat) - len(flat) % 3, 3)])
+        d["voff"] += len(tm.positions)
+
+        # stem: one per tree instance / cluster (collision only)
+        if len(tm.positions) <= 300:
+            s_v, s_n, s_uv, s_t = make_tree_stem(tm, z_offset=z_offset)
+            stem_verts.append(s_v)
+            stem_tris.extend([(a + sv, b + sv, c + sv) for (a, b, c) in s_t])
+            sv += len(s_v)
+        else:
+            for s_v, s_t in cluster_tree_base(tm, z_offset=z_offset):
+                stem_verts.append(s_v)
+                stem_tris.extend([(a + sv, b + sv, c + sv) for (a, b, c) in s_t])
+                sv += len(s_v)
+
+    # assemble leaf builder (one geometry per leaf texture bucket)
+    leaf_geo_idx = 0
+    for matname, d in leaf_data.items():
+        for matn, mat in leaf_by_tex[matname].materials.items():
+            tree_leaves.add_material(matn, image=mat["image"], transparent=True,
+                                     alpha_test=True)
+        tree_leaves.add_geometry("tree_leaves_%d" % leaf_geo_idx,
+                                 np.concatenate(d["verts"]),
+                                 np.concatenate(d["norms"]),
+                                 np.concatenate(d["uvs"]),
+                                 d["tris"], matname)
+        leaf_geo_idx += 1
+
+    if stem_verts:
+        total_stem_v = sum(len(v) for v in stem_verts)
+        stem_uv = np.zeros((total_stem_v, 2), dtype=float)
+        stem_nrm = np.zeros((total_stem_v, 3), dtype=float)
+        tree_stems.add_geometry("tree_stems", np.concatenate(stem_verts),
+                                stem_nrm, stem_uv, stem_tris, stem_mat_name)
+
+    return tree_leaves, tree_stems
+
+
+# --------------------------------------------------------------------------
+# Texture extraction
+# --------------------------------------------------------------------------
+def extract_textures(scene, texture_bins, out_dir):
+    """Save textures as PNG. Returns dict raw_name -> posix relative path."""
+    os.makedirs(out_dir, exist_ok=True)
+    saved = {}
+    for raw_name, data in texture_bins.items():
+        safe = raw_name.replace("\\", "/")
+        stem, _ext = posixpath.splitext(safe)
+        rel = stem + ".png"
+        out_path = os.path.join(out_dir, *rel.split("/"))
+        os.makedirs(os.path.dirname(out_path), exist_ok=True)
+        try:
+            im = Image.open(BytesIO(data))
+            im = im.convert("RGBA")
+            # BeamNG textures must have power-of-two dimensions. Resize
+            # non-power-of-two images so the cooker can create DDS mips.
+            w, h = im.size
+            if w & (w - 1) or h & (h - 1):
+                nw = 1 << (w - 1).bit_length()
+                nh = 1 << (h - 1).bit_length()
+                im = im.resize((nw, nh), Image.LANCZOS)
+            im.save(out_path, "PNG")
+        except Exception:
+            # keep original extension and data as fallback
+            rel = safe
+            out_path = os.path.join(out_dir, *rel.split("/"))
+            os.makedirs(os.path.dirname(out_path), exist_ok=True)
+            with open(out_path, "wb") as f:
+                f.write(data)
+        saved[raw_name] = rel
+        saved[safe] = rel
+    return saved
+
+
+def dae_texture_path(diff, texture_rel_map):
+    """DAE <init_from> is relative to the DAE file in art/shapes, so prefix
+    ../textures/. Returns posix path or None."""
+    if not diff:
+        return None
+    safe = diff.replace("\\", "/")
+    rel = texture_rel_map.get(diff) or texture_rel_map.get(safe)
+    if not rel:
+        stem, _ext = posixpath.splitext(safe)
+        rel = stem + ".png"
+    return posixpath.join("..", "textures", rel)
+
+
+# --------------------------------------------------------------------------
+# materials.json
+# --------------------------------------------------------------------------
+def build_materials_json(dae_objects, level_name):
+    mats = {}
+    for mlist in dae_objects:
+        for matname, mat in mlist.materials.items():
+            if matname in mats:
+                continue
+            entry = {
+                "name": matname,
+                "mapTo": matname,
+                "class": "Material",
+                "persistentId": gen_uuid(),
+                "Stages": [{}] + [{}, {}, {}],
+            }
+            if mat["image"]:
+                img = mat["image"].replace("\\", "/")
+                if img.startswith("../textures/"):
+                    rel = img[len("../textures/"):]
+                else:
+                    rel = posixpath.basename(img)
+                entry["Stages"][0]["colorMap"] = (
+                    "/levels/%s/art/textures/%s" % (level_name, rel)
+                )
+            # Alpha-tested surfaces (AC ksAlphaRef > 0: fences, foliage,
+            # grilles) discard transparent texels while remaining opaque where
+            # covered. Trees additionally use true translucency so leaves look
+            # correct from both sides.
+            if mat["alpha_test"]:
+                entry["alphaTest"] = str(True).lower()
+                entry["translucentBlendOp"] = "None"
+                entry["alphaRef"] = 1
+                entry["doubleSided"] = str(True).lower()
+            if mat["transparent"]:
+                entry["translucentBlendOp"] = "PreMulAlpha"
+                entry["doubleSided"] = str(True).lower()
+            mats[matname] = entry
+    return mats
+
+
+# --------------------------------------------------------------------------
+# Main level json
+# --------------------------------------------------------------------------
+def build_level_json(level_name, spawn, has_water=False, z_offset=0.0):
+    sky_tod = [36.62, -62.5, 15.32 + z_offset]
+    sky_sun = [70.3, 4.5, 73.9 + z_offset]
+    js = {
+        "class": "SimGroup",
+        "name": "MissionGroup",
+        "enabled": "1",
+        "childs": [
+            {
+                "class": "SimGroup",
+                "name": "Sky",
+                "childs": [
+                    {
+                        "class": "TimeOfDay",
+                        "name": "tod",
+                        "position": sky_tod,
+                        "axisTilt": 10,
+                        "azimuthOverride": 0,
+                        "play": False,
+                        "startTime": 0.1,
+                        "time": 0.1,
+                    },
+                    {
+                        "class": "LevelInfo",
+                        "name": "theLevelInfo",
+                        "canvasClearColor": [1, 1, 1, 255],
+                        "enabled": "1",
+                        "fogAtmosphereHeight": 800,
+                        "fogColor": [0.74, 0.81, 0.92, 1],
+                        "fogDensity": 0.0006,
+                        "globalEnviromentMap": "BNG_Sky_02_cubemap",
+                        "gravity": -9.81,
+                        "soundAmbience": "AudioAmbienceDefault",
+                        "visibleDistance": 4500,
+                    },
+                    {
+                        "class": "ScatterSky",
+                        "name": "sunsky",
+                        "position": sky_sun,
+                        "ambientScale": [0.545, 0.545, 0.549, 1],
+                        "azimuth": 286.6,
+                        "colorize": [0.4235, 0.6078, 0.8666, 1],
+                        "colorizeAmount": 2,
+                        "elevation": 52.8,
+                        "exposure": 15,
+                        "fadeStartDistance": 1000,
+                        "flareType": "BNG_SunFlare_3",
+                        "fogScale": [0.694, 0.854, 0.992, 1],
+                        "lastSplitTerrainOnly": True,
+                        "logWeight": 0.99,
+                        "mieScattering": 0.00060753,
+                        "moonLightColor": [0.196, 0.196, 0.196, 1],
+                        "moonMat": "Moon_Glow_Mat",
+                        "moonScale": 0.03,
+                        "nightColor": [0.0235, 0.0235, 0.0235, 1],
+                        "nightCubemap": "BNG_Sky_Space",
+                        "nightFogColor": [0.0039, 0.0039, 0.0039, 1],
+                        "overDarkFactor": [40000, 8000, 1800, 650],
+                        "rayleighScattering": 0.01,
+                        "shadowDarkenColor": [0, 0, 0, 0],
+                        "shadowDistance": 1600,
+                        "shadowSoftness": 0.2,
+                        "skyBrightness": 11,
+                        "sunScale": [0.996, 0.901, 0.831, 1],
+                        "texSize": 1024,
+                        "useNightCubemap": True,
+                    },
+                ],
+            },
+            {
+                "class": "SimGroup",
+                "name": "CameraBookmarks",
+                "childs": [
+                    {
+                        "class": "CameraBookmark",
+                        "name": "overviewbookmark",
+                        "position": [spawn[0], spawn[1] + 20, spawn[2] + 80],
+                        "rotation": [0.4368, 0.1854, -0.8802, 51.49],
+                        "dataBlock": "CameraBookmarkMarker",
+                        "internalName": "NewCamera_0",
+                        "isAIControlled": "0",
+                    }
+                ],
+            },
+            {
+                "class": "SimGroup",
+                "name": "PlayerDropPoints",
+                "enabled": "1",
+                "childs": [
+                    {
+                        "class": "SpawnSphere",
+                        "name": "Grid",
+                        "position": list(spawn),
+                        "dataBlock": "SpawnSphereMarker",
+                        "enabled": "1",
+                        "autoSpawn": True,
+                        "radius": 1,
+                        "sphereWeight": "1",
+                        "spawnClass": "Player",
+                        "spawnTransform": True,
+                    }
+                ],
+            },
+            {
+                "class": "SimGroup",
+                "name": "TTObjs",
+                "childs": [
+                    {
+                        "class": "TSStatic",
+                        "name": "main_track",
+                        "shapeName": "/levels/%s/art/shapes/main.dae" % level_name,
+                        "position": [0, 0, 0],
+                        "rotationMatrix": [1, 0, 0, 0, 1, 0, 0, 0, 1],
+                        "scale": [1, 1, 1],
+                        "collisionType": "Visible Mesh Final",
+                        "decalType": "None",
+                        "isRenderEnabled": True,
+                        "locked": True,
+                        "dynamic": False,
+                    },
+                ],
+            },
+        ],
+    }
+
+    # tree leaves (visual only)
+    leaves_obj = {
+        "class": "TSStatic",
+        "name": "trees",
+        "shapeName": "/levels/%s/art/shapes/tree_leaves.dae" % level_name,
+        "position": [0, 0, 0],
+        "rotationMatrix": [1, 0, 0, 0, 1, 0, 0, 0, 1],
+        "scale": [1, 1, 1],
+        "collisionType": "None",
+        "decalType": "None",
+        "isRenderEnabled": True,
+        "locked": True,
+        "dynamic": False,
+    }
+    js["childs"][3]["childs"].append(leaves_obj)
+
+    # nocollision props (render only: glass, fences, ad boards, vehicles)
+    nocol_obj = {
+        "class": "TSStatic",
+        "name": "props_nocollision",
+        "shapeName": "/levels/%s/art/shapes/nocollision.dae" % level_name,
+        "position": [0, 0, 0],
+        "rotationMatrix": [1, 0, 0, 0, 1, 0, 0, 0, 1],
+        "scale": [1, 1, 1],
+        "collisionType": "None",
+        "decalType": "None",
+        "isRenderEnabled": True,
+        "locked": True,
+        "dynamic": False,
+    }
+    js["childs"][3]["childs"].append(nocol_obj)
+
+    # tree stems (collision only, stem-only)
+    stem_obj = {
+        "class": "TSStatic",
+        "name": "tree_stems",
+        "shapeName": "/levels/%s/art/shapes/tree_stems.dae" % level_name,
+        "position": [0, 0, 0],
+        "rotationMatrix": [1, 0, 0, 0, 1, 0, 0, 0, 1],
+        "scale": [1, 1, 1],
+        "collisionType": "Visible Mesh Final",
+        "decalType": "None",
+        "isRenderEnabled": False,
+        "canSaveDynamicFields": False,
+        "locked": True,
+        "dynamic": False,
+        "playAmbient": False,
+        "meshCulling": False,
+        "originSort": False,
+        "useInstanceRenderData": False,
+    }
+    js["childs"][3]["childs"].append(stem_obj)
+
+    return js
+
+
+# --------------------------------------------------------------------------
+# Orchestration
+# --------------------------------------------------------------------------
+def find_spawn(scene, fallback=(0.0, -5.0, 0.0), z_offset=0.0):
+    """Find a spawn point from AC_START nodes or road mesh center."""
+    # Look for AC_START_0 / START nodes
+    for m in scene.meshes:
+        if m.type == 1:
+            nm = m.name.upper()
+            if "START_0" in nm or "START" in nm and "TRACK" in nm:
+                t = m.matrix[3, :3]
+                return [float(t[0]), float(-t[2]), float(t[1]) + z_offset]
+    # Use road mesh center as fallback for spawn
+    try:
+        from converter import gather_meshes
+        mm = gather_meshes(scene, z_offset=z_offset)
+        road = [x for x in mm if x.material and "road" in
+                (x.material.name or "").lower()]
+        if road:
+            allp = np.concatenate([x.positions for x in road])
+            c = (allp.min(axis=0) + allp.max(axis=0)) / 2
+            return [float(c[0]), float(c[1]), float(c[2]) + 1.0]
+    except Exception:
+        pass
+    fb = list(fallback)
+    fb[2] += z_offset
+    return fb
+
+
+def write_items_hierarchy(levels_dir, level_json):
+    """Write the main/MissionGroup/... items.level.json structure that mirrors
+    main.level.json so BeamNG can load the scene objects."""
+    # We write TSStatic and SpawnSphere objects into
+    # main/MissionGroup/TTObjs/items.level.json
+    mission = [c for c in level_json["childs"] if c["name"] == "MissionGroup"]
+    root = {
+        "name": "MissionGroup",
+        "class": "SimGroup",
+        "persistentId": gen_uuid(),
+        "enabled": "1",
+    }
+
+    main_dir = os.path.join(levels_dir, "main")
+    mg_dir = os.path.join(main_dir, "MissionGroup")
+    os.makedirs(mg_dir, exist_ok=True)
+    with open(os.path.join(main_dir, "items.level.json"), "w") as f:
+        json.dump(root, f)
+
+    # group children from main.level.json
+    groups = {}
+    for child in level_json["childs"]:
+        gname = child["name"]
+        if gname == "MissionGroup":
+            continue
+        gdir = os.path.join(mg_dir, gname)
+        os.makedirs(gdir, exist_ok=True)
+        # write the group's items.level.json with ALL sub-objects (sky, spawn,
+        # statics) so the objects actually get instantiated by the loader.
+        group_items = []
+        for sub in child.get("childs", []):
+            entry = dict(sub)
+            entry["__parent"] = gname
+            entry["persistentId"] = gen_uuid()
+            # BeamNG needs spawnClass on SpawnSphere
+            if entry.get("class") == "SpawnSphere":
+                entry.setdefault("spawnClass", "Player")
+                entry.setdefault("spawnTransform", True)
+                entry.setdefault("dataBlock", "SpawnSphereMarker")
+            group_items.append(entry)
+        if group_items:
+            with open(os.path.join(gdir, "items.level.json"), "w") as f:
+                for it in group_items:
+                    f.write(json.dumps(it) + "\n")
+        # write group definition in parent
+        groups[gname] = {
+            "name": gname,
+            "class": "SimGroup",
+            "persistentId": gen_uuid(),
+            "__parent": "MissionGroup",
+        }
+
+    # write the parent index (MissionGroup/items.level.json)
+    with open(os.path.join(mg_dir, "items.level.json"), "w") as f:
+        for gname, g in groups.items():
+            f.write(json.dumps(g) + "\n")
+
+
+def convert(ac_kn5_path, beamng_level_dir, level_name):
+    print("[*] Loading KN5:", ac_kn5_path)
+    scene, texture_bins = load_kn5(ac_kn5_path, load_textures=True)
+    print("    textures=%d materials=%d meshes=%d"
+          % (len(scene.textures), len(scene.materials), len(scene.meshes)))
+
+    levels_dir = os.path.join(beamng_level_dir, "levels", level_name)
+    shapes_dir = os.path.join(levels_dir, "art", "shapes")
+    tex_dir = os.path.join(levels_dir, "art", "textures")
+    os.makedirs(shapes_dir, exist_ok=True)
+
+    # BeamNG does not support driving below Z=0. Shift the whole world up so
+    # the lowest point of the track sits at Z=0 (plus a small safety margin).
+    probe = gather_meshes(scene)
+    if probe:
+        z_min = float(min(np.min(tm.positions[:, 2]) for tm in probe))
+    else:
+        z_min = 0.0
+    z_offset = -z_min + 0.5
+    if z_offset < 0.0:
+        z_offset = 0.0
+    print("    world Z offset: %.2f (track min Z was %.2f)" % (z_offset, z_min))
+
+    # Stage 2: textures
+    print("[*] Stage 2: extracting textures...")
+    texture_rel_map = extract_textures(scene, texture_bins, tex_dir)
+
+    # Build daes (stages 1, 4)
+    print("[*] Stage 1/4: building meshes, collision, trees...")
+    main, nocol, tree_leaves, tree_stems = build_daes(
+        scene, texture_rel_map, z_offset=z_offset)
+
+    def _tris(db):
+        return sum(len(g["indices"]) for g in db.geometries)
+
+    print("    main.dae geometries=%d tris=%d" % (len(main.geometries), _tris(main)))
+    print("    nocollision.dae geometries=%d tris=%d" % (len(nocol.geometries), _tris(nocol)))
+    print("    tree_leaves.dae geometries=%d tris=%d" % (len(tree_leaves.geometries), _tris(tree_leaves)))
+    print("    tree_stems.dae geometries=%d tris=%d" % (len(tree_stems.geometries), _tris(tree_stems)))
+
+    # write shape files
+    shape_files = {
+        "main.dae": main,
+        "nocollision.dae": nocol,
+        "tree_leaves.dae": tree_leaves,
+        "tree_stems.dae": tree_stems,
+    }
+    for fname, db in shape_files.items():
+        xml = db.build()
+        with open(os.path.join(shapes_dir, fname), "w", encoding="utf-8") as f:
+            f.write(xml)
+        print("    wrote %s (%.1f MB)" % (fname, os.path.getsize(
+            os.path.join(shapes_dir, fname)) / 1e6))
+
+    # Stage 2: materials
+    print("[*] Stage 2: building materials.json...")
+    mats = build_materials_json([main, nocol, tree_leaves], level_name)
+    with open(os.path.join(levels_dir, "main.materials.json"), "w") as f:
+        json.dump(mats, f, indent=2)
+
+    # Stage 3: sky & lighting
+    print("[*] Stage 3: sky and lighting...")
+    spawn = find_spawn(scene, z_offset=z_offset)
+    print("    spawn point:", [round(v, 2) for v in spawn])
+    level_json = build_level_json(level_name, spawn, z_offset=z_offset)
+    with open(os.path.join(levels_dir, "main.level.json"), "w") as f:
+        json.dump(level_json, f, indent=2)
+
+    # items.level.json hierarchy mirroring main.level.json (modern loader)
+    write_items_hierarchy(levels_dir, level_json)
+
+    # info.json
+    info = {
+        "title": level_name,
+        "description": "Converted from Assetto Corsa",
+        "authors": "AC to BeamNG converter",
+        "size": [2048, 2048],
+        "suitablefor": "Racing",
+        "defaultSpawnPointName": "Grid",
+    }
+    with open(os.path.join(levels_dir, "info.json"), "w") as f:
+        json.dump(info, f, indent=2)
+
+    # level.json (configuration metadata)
+    level_cfg = {
+        "title": level_name,
+        "description": "Converted from Assetto Corsa to BeamNG",
+        "suitablefor": "Racing",
+        "authors": "AC to BeamNG converter",
+        "size": [2048, 2048],
+        "previews": [],
+    }
+    with open(os.path.join(levels_dir, "level.json"), "w") as f:
+        json.dump(level_cfg, f, indent=2)
+
+    print("[+] Done. Level written to:", levels_dir)
+
+
+def zip_level(level_dir, out_zip):
+    """Zip a level as a BeamNG mod (levels/<name>/...)."""
+    # level_dir is <out>/levels/<name>. BeamNG needs levels/<name>/... at the
+    # zip root, so relpath against the <out> directory (parent of levels/).
+    out_root = os.path.dirname(os.path.dirname(level_dir))
+    with zipfile.ZipFile(out_zip, "w", zipfile.ZIP_DEFLATED) as zf:
+        for root, dirs, files in os.walk(level_dir):
+            for fn in files:
+                full = os.path.join(root, fn)
+                rel = os.path.relpath(full, out_root)
+                zf.write(full, rel)
+    print("[+] Zipped:", out_zip)
+
+
+def main():
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("kn5")
+    ap.add_argument("--out", default=".")
+    ap.add_argument("--name", default=None)
+    ap.add_argument("--zip", action="store_true")
+    args = ap.parse_args()
+    if args.name is None:
+        base = os.path.splitext(os.path.basename(args.kn5))[0]
+        args.name = base.lower().replace(" ", "_")
+    convert(args.kn5, args.out, args.name)
+    if args.zip:
+        level_dir = os.path.join(args.out, "levels", args.name)
+        zip_level(level_dir, os.path.join(args.out, args.name + ".zip"))
+
+
+if __name__ == "__main__":
+    main()
+```
+
+kn5_parser.py
+```
+"""
+Assetto Corsa .kn5 file parser.
+
+Parses the binary .kn5 format into textures, materials, and a node hierarchy.
+This is based on publicly documented KN5 format details (see README / credits),
+originally derived from Chipicao's kn5 converter and MarvinSt's kn5-obj-converter.
+"""
+import os
+import struct
+import numpy as np
+
+
+class KN5Material:
+    def __init__(self):
+        self.name = ""
+        self.shader = ""
+        self.props = {}          # name -> float value
+        self.textures = {}       # sample name -> texture filename
+        self.is_transparent = False
+        self.is_tree = False
+        self.is_grass = False
+        self.tree_stem = False
+
+
+class KN5Mesh:
+    def __init__(self):
+        self.name = ""
+        self.type = 2            # 2 = mesh, 3 = skinned mesh, 1 = base
+        self.matrix = np.identity(4)
+        self.material_id = -1
+        self.positions = []      # list of (x,y,z)
+        self.normals = []
+        self.uvs = []
+        self.indices = []
+        self.parent = -1
+
+
+class KN5Scene:
+    def __init__(self):
+        self.textures = []       # list of (tex_name, bytes) -- lazily loaded
+        self.materials = []
+        self.meshes = []
+        self.root_meshes = []    # flatten list of top-level tree nodes
+
+
+def _read_string(f):
+    length = struct.unpack("<i", f.read(4))[0]
+    if length < 0 or length > 1_000_000:
+        raise Exception("Bad string length %d" % length)
+    data = f.read(length)
+    return data.decode("utf-8", errors="replace")
+
+
+def _read_nodes(f, node_list, parent_id, scene):
+    ntype = struct.unpack("<i", f.read(4))[0]
+    name = _read_string(f)
+    children_count = struct.unpack("<i", f.read(4))[0]
+    f.read(1)  # unknown byte
+
+    mesh = KN5Mesh()
+    mesh.name = name
+    mesh.type = ntype
+    mesh.parent = parent_id
+    mesh.matrix = np.identity(4)
+
+    if ntype == 1:  # base (transform) node
+        tmatrix = []
+        for _ in range(4):
+            row = struct.unpack("<4f", f.read(16))
+            tmatrix.append(row)
+        mesh.matrix = np.array(tmatrix)
+
+    elif ntype == 2:  # mesh node
+        f.read(3)  # unknown 3 bytes
+        vertex_count = struct.unpack("<i", f.read(4))[0]
+        positions = []
+        normals = []
+        uvs = []
+        for _ in range(vertex_count):
+            positions.append(struct.unpack("<3f", f.read(12)))
+            normals.append(struct.unpack("<3f", f.read(12)))
+            tex = struct.unpack("<2f", f.read(8))
+            uvs.append((tex[0], 1.0 - tex[1]))  # flip V
+            f.read(12)  # tangent (4 floats? actually 12 bytes here)
+        index_count = struct.unpack("<i", f.read(4))[0]
+        indices = struct.unpack("<%dH" % index_count, f.read(index_count * 2))
+        mat_id = struct.unpack("<i", f.read(4))[0]
+        f.read(29)  # misc rendering flags
+        mesh.positions = positions
+        mesh.normals = normals
+        mesh.uvs = uvs
+        mesh.indices = list(indices)
+        mesh.material_id = mat_id
+
+    elif ntype == 3:  # skinned mesh
+        f.read(3)
+        bone_count = struct.unpack("<i", f.read(4))[0]
+        for _ in range(bone_count):
+            _ = _read_string(f)
+            f.read(64)
+        vertex_count = struct.unpack("<i", f.read(4))[0]
+        positions = []
+        normals = []
+        uvs = []
+        for _ in range(vertex_count):
+            positions.append(struct.unpack("<3f", f.read(12)))
+            normals.append(struct.unpack("<3f", f.read(12)))
+            tex = struct.unpack("<2f", f.read(8))
+            uvs.append((tex[0], 1.0 - tex[1]))
+            f.read(44)  # tangents & weights
+        index_count = struct.unpack("<i", f.read(4))[0]
+        indices = struct.unpack("<%dH" % index_count, f.read(index_count * 2))
+        mat_id = struct.unpack("<i", f.read(4))[0]
+        f.read(12)
+        mesh.positions = positions
+        mesh.normals = normals
+        mesh.uvs = uvs
+        mesh.indices = list(indices)
+        mesh.material_id = mat_id
+
+    else:
+        raise Exception("Unknown node type %d (%s)" % (ntype, name))
+
+    node_list.append(mesh)
+    current_id = len(node_list) - 1
+
+    for _ in range(children_count):
+        _read_nodes(f, node_list, current_id, scene)
+
+    return node_list
+
+
+def load_kn5(path, output_texture_dir=None, load_textures=True):
+    """Parse a .kn5 file. Returns (KN5Scene, dict of texture_name->bytes)."""
+    scene = KN5Scene()
+    texture_bins = {}
+
+    with open(path, "rb") as f:
+        header = f.read(10)
+        magic, version = struct.unpack("<6s1I", header)
+        if not magic.startswith(b"sc6969"):
+            raise Exception("Not a KN5 file: %r" % magic)
+        if version > 5:
+            f.read(4)
+
+        # ---- Textures ----
+        tex_count = struct.unpack("<i", f.read(4))[0]
+        for _ in range(tex_count):
+            tex_type = struct.unpack("<i", f.read(4))[0]
+            tex_name = _read_string(f)
+            tex_size = struct.unpack("<i", f.read(4))[0]
+            data = f.read(tex_size)
+            scene.textures.append(tex_name)
+            texture_bins[tex_name] = data
+
+        # ---- Materials ----
+        mat_count = struct.unpack("<i", f.read(4))[0]
+        for _ in range(mat_count):
+            mat = KN5Material()
+            mat.name = _read_string(f)
+            mat.shader = _read_string(f)
+            ashort = struct.unpack("<h", f.read(2))[0]
+            if version > 4:
+                f.read(4)
+            prop_count = struct.unpack("<i", f.read(4))[0]
+            for _ in range(prop_count):
+                prop_name = _read_string(f)
+                prop_value = struct.unpack("<f", f.read(4))[0]
+                mat.props[prop_name] = prop_value
+                f.read(36)  # mv4f property value
+            tex_ref_count = struct.unpack("<i", f.read(4))[0]
+            for _ in range(tex_ref_count):
+                sample_name = _read_string(f)
+                sample_slot = struct.unpack("<i", f.read(4))[0]
+                tex_name = _read_string(f)
+                mat.textures[sample_name] = tex_name
+
+            shader = mat.shader.lower()
+            if any(shader.startswith(p) for p in (
+                    "ksperpixelat", "ksperpixelalpha", "ksskidmark",
+                    "ksflags", "ksgrass")):
+                mat.is_transparent = True
+            if shader == "ksgrass":
+                mat.is_grass = True
+            if shader == "kstree" or "tree" in shader:
+                mat.is_tree = True
+                mat.is_transparent = True
+            # Trees use the alpha of the diffuse for leaves typically.
+            scene.materials.append(mat)
+
+        # ---- Nodes ----
+        _read_nodes(f, scene.meshes, -1, scene)
+
+    # Save textures to disk if requested
+    if output_texture_dir:
+        os.makedirs(output_texture_dir, exist_ok=True)
+        for name, data in texture_bins.items():
+            safe = name.replace("\\", "/")
+            dest = os.path.join(output_texture_dir, safe)
+            os.makedirs(os.path.dirname(dest), exist_ok=True)
+            with open(dest, "wb") as out:
+                out.write(data)
+
+    return scene, texture_bins
+
+
+def world_transform(mesh, node_list):
+    """Return world (hierarchical) 4x4 matrix for a mesh."""
+    mats = {}
+    current = mesh
+    visited = []
+    # walk up to root
+    chain = []
+    idx = node_list.index(mesh)
+    pid = mesh.parent
+    while idx != -1:
+        chain.append(node_list[idx])
+        if node_list[idx].parent < 0:
+            break
+        idx = node_list[idx].parent
+    # chain[0] is the mesh, chain[-1] is root
+    M = np.identity(4)
+    for m in reversed(chain):
+        M = np.matmul(M, m.matrix)
+    return M
+
+
+def transform_point(p, M):
+    v = np.array([p[0], p[1], p[2], 1.0])
+    r = M.dot(v)
+    return r[0], r[1], r[2]
+
+
+def transform_normal(n, M):
+    v = np.array([n[0], n[1], n[2]])
+    # upper-left 3x3 (ignoring translation)
+    rot = M[:3, :3]
+    r = rot.dot(v)
+    return r[0], r[1], r[2]
+```
+
+dae_writer.py
+```
+"""
+Minimal, schema-correct COLLADA (.dae) writer for BeamNG static meshes.
+
+BeamNG uses COLLADA 1.4.1 with Z_UP. Materials are referenced by name and map
+to entries in main.materials.json via their "mapTo" attribute.
+
+Schema notes (matched against real BeamNG-content DAE files):
+  - <vertices> contains ONLY a POSITION input.
+  - NORMAL and TEXCOORD are <input> children of <triangles> with offsets.
+  - The <p> element interleaves vertex indices by input offset.
+  - ids/names must be URL-safe (no spaces).
+"""
+import re
+import uuid as _uuid
+
+
+def _xml_escape(s: str) -> str:
+    if s is None:
+        return ""
+    return (s.replace("&", "&amp;").replace('"', "&quot;")
+             .replace("<", "&lt;").replace(">", "&gt;"))
+
+
+def sanitize_mat_name(name: str) -> str:
+    """BeamNG material/mapTo names become JSON keys; keep them printable."""
+    out = []
+    for ch in name:
+        if ch.isalnum() or ch in "._- ":
+            out.append(ch)
+        else:
+            out.append("_")
+    s = "".join(out).strip()
+    if not s:
+        s = "material"
+    return s
+
+
+def url_safe(s: str) -> str:
+    """COLLADA ids referenced via URI fragments must not contain spaces."""
+    out = []
+    for ch in s:
+        if ch.isalnum() or ch in "._-":
+            out.append(ch)
+        else:
+            out.append("_")
+    result = "".join(out)
+    if result and (result[0].isdigit() or result[0] in "_-"):
+        result = "obj_" + result
+    return result
+
+
+class DaeBuilder:
+    def __init__(self):
+        self.materials = {}    # matname -> {image, transparent, alpha_test}
+        self.geometries = []   # list of dicts
+
+    def add_material(self, matname, image=None, transparent=False,
+                     alpha_test=False):
+        m = self.materials.setdefault(
+            matname, {"image": None, "transparent": False, "alpha_test": False})
+        if image and not m["image"]:
+            m["image"] = image
+        if transparent:
+            m["transparent"] = True
+        if alpha_test:
+            m["alpha_test"] = True
+
+    def add_geometry(self, name, positions, normals, uvs, indices, matname):
+        """positions (N,3), normals (N,3), uvs (N,2). indices: list of (a,b,c)
+        referencing positions/normals/uvs row indices."""
+        self.geometries.append({
+            "name": name,
+            "safe_name": url_safe(name),
+            "positions": positions,
+            "normals": normals,
+            "uvs": uvs,
+            "indices": indices,
+            "matname": matname,
+        })
+
+    def build(self, scene_name="Scene"):
+        parts = []
+        parts.append('<?xml version="1.0" encoding="utf-8"?>\n')
+        parts.append('<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" '
+                     'version="1.4.1" '
+                     'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n')
+        parts.append('  <asset>\n    <unit name="meter" meter="1"/>\n'
+                     '    <up_axis>Z_UP</up_axis>\n  </asset>\n')
+
+        # ---------------- images ----------------
+        images = {}
+        for matname, mat in self.materials.items():
+            if mat["image"] and mat["image"] not in images:
+                images[mat["image"]] = "image_%d" % len(images)
+        if images:
+            parts.append('  <library_images>\n')
+            for imgfile, img_id in images.items():
+                parts.append('    <image id="%s" name="%s">\n'
+                             '      <init_from>%s</init_from>\n    </image>\n'
+                             % (img_id, img_id, _xml_escape(imgfile)))
+            parts.append('  </library_images>\n')
+
+        # ---------------- effects ----------------
+        effects = {}
+        parts.append('  <library_effects>\n')
+        for idx, (matname, mat) in enumerate(self.materials.items()):
+            eid = "mat_effect_%d" % idx
+            safemat = url_safe(matname)
+            effects[matname] = (eid, safemat)
+            parts.append('    <effect id="%s" name="%s">\n'
+                         % (eid, _xml_escape(matname)))
+            imgfile = mat["image"]
+            parts.append('      <profile_COMMON>\n')
+            if imgfile:
+                surf = "surf_mat%d" % idx
+                samp = "samp_mat%d" % idx
+                parts.append('        <newparam sid="%s">\n'
+                             '          <surface type="2D">\n'
+                             '            <init_from>%s</init_from>\n'
+                             '          </surface>\n        </newparam>\n'
+                             % (surf, images[imgfile]))
+                parts.append('        <newparam sid="%s">\n'
+                             '          <sampler2D>\n'
+                             '            <source>%s</source>\n'
+                             '          </sampler2D>\n        </newparam>\n'
+                             % (samp, surf))
+                parts.append('        <technique sid="common">\n')
+                parts.append('          <lambert>\n')
+                parts.append('            <emission>\n'
+                             '              <color sid="emission">0 0 0 1</color>\n'
+                             '            </emission>\n')
+                parts.append('            <ambient>\n'
+                             '              <color sid="ambient">0 0 0 1</color>\n'
+                             '            </ambient>\n')
+                parts.append('            <diffuse>\n'
+                             '              <texture texture="%s" texcoord="UVMap"/>\n'
+                             '            </diffuse>\n' % samp)
+                if mat["transparent"] or mat["alpha_test"]:
+                    parts.append('            <transparent opaque="A_ONE">\n'
+                                 '              <texture texture="%s" texcoord="UVMap"/>\n'
+                                 '            </transparent>\n' % samp)
+                    parts.append('            <transparency>\n'
+                                 '              <float sid="transparency">0.5</float>\n'
+                                 '            </transparency>\n')
+                parts.append('            <index_of_refraction>\n'
+                             '              <float sid="index_of_refraction">1</float>\n'
+                             '            </index_of_refraction>\n')
+                parts.append('          </lambert>\n        </technique>\n')
+            else:
+                parts.append('        <technique sid="common">\n')
+                parts.append('          <lambert>\n')
+                parts.append('            <emission>\n'
+                             '              <color sid="emission">0 0 0 1</color>\n'
+                             '            </emission>\n')
+                parts.append('            <ambient>\n'
+                             '              <color sid="ambient">0 0 0 1</color>\n'
+                             '            </ambient>\n')
+                parts.append('            <diffuse>\n'
+                             '              <color sid="diffuse">0.5 0.5 0.5 1</color>\n'
+                             '            </diffuse>\n')
+                parts.append('            <index_of_refraction>\n'
+                             '              <float sid="index_of_refraction">1</float>\n'
+                             '            </index_of_refraction>\n')
+                parts.append('          </lambert>\n        </technique>\n')
+            parts.append('      </profile_COMMON>\n')
+            parts.append('    </effect>\n')
+        parts.append('  </library_effects>\n')
+
+        # ---------------- materials ----------------
+        parts.append('  <library_materials>\n')
+        for idx, matname in enumerate(self.materials.keys()):
+            eid, _ = effects[matname]
+            parts.append('    <material id="%s-material" name="%s">\n'
+                         '      <instance_effect url="#%s"/>\n    </material>\n'
+                         % (url_safe(matname), _xml_escape(matname), eid))
+        parts.append('  </library_materials>\n')
+
+        # ---------------- geometries ----------------
+        parts.append('  <library_geometries>\n')
+        for gi, geo in enumerate(self.geometries):
+            gid = geo["safe_name"] + "-mesh"
+            pos, nrm, uv = geo["positions"], geo["normals"], geo["uvs"]
+            ind = geo["indices"]
+            parts.append('    <geometry id="%s" name="%s">\n      <mesh>\n'
+                         % (gid, geo["safe_name"]))
+            parts.append('        <source id="%s-positions">\n'
+                         '          <float_array id="%s-positions-array" count="%d">'
+                         % (gid, gid, pos.size))
+            parts.append(' '.join(format(v, '.6g') for v in pos.ravel()))
+            parts.append('</float_array>\n')
+            parts.append('          <technique_common>\n'
+                         '            <accessor source="#%s-positions-array" count="%d" stride="3">\n'
+                         '              <param name="X" type="float"/>\n'
+                         '              <param name="Y" type="float"/>\n'
+                         '              <param name="Z" type="float"/>\n'
+                         '            </accessor>\n          </technique_common>\n'
+                         '        </source>\n' % (gid, len(pos)))
+            parts.append('        <source id="%s-normals">\n'
+                         '          <float_array id="%s-normals-array" count="%d">'
+                         % (gid, gid, nrm.size))
+            parts.append(' '.join(format(v, '.6g') for v in nrm.ravel()))
+            parts.append('</float_array>\n')
+            parts.append('          <technique_common>\n'
+                         '            <accessor source="#%s-normals-array" count="%d" stride="3">\n'
+                         '              <param name="X" type="float"/>\n'
+                         '              <param name="Y" type="float"/>\n'
+                         '              <param name="Z" type="float"/>\n'
+                         '            </accessor>\n          </technique_common>\n'
+                         '        </source>\n' % (gid, len(nrm)))
+            parts.append('        <source id="%s-map-0">\n'
+                         '          <float_array id="%s-map-0-array" count="%d">'
+                         % (gid, gid, uv.size))
+            parts.append(' '.join(format(v, '.6g') for v in uv.ravel()))
+            parts.append('</float_array>\n')
+            parts.append('          <technique_common>\n'
+                         '            <accessor source="#%s-map-0-array" count="%d" stride="2">\n'
+                         '              <param name="S" type="float"/>\n'
+                         '              <param name="T" type="float"/>\n'
+                         '            </accessor>\n          </technique_common>\n'
+                         '        </source>\n' % (gid, len(uv)))
+            # vertices: ONLY POSITION
+            parts.append('        <vertices id="%s-vertices">\n' % gid)
+            parts.append('          <input semantic="POSITION" source="#%s-positions"/>\n'
+                         % gid)
+            parts.append('        </vertices>\n')
+            if ind:
+                parts.append('        <triangles count="%d" material="%s">\n'
+                             % (len(ind), url_safe(geo["matname"])))
+                parts.append('          <input offset="0" semantic="VERTEX" '
+                             'source="#%s-vertices"/>\n' % gid)
+                parts.append('          <input offset="1" semantic="NORMAL" '
+                             'source="#%s-normals"/>\n' % gid)
+                parts.append('          <input offset="2" semantic="TEXCOORD" '
+                             'set="0" source="#%s-map-0"/>\n' % gid)
+                parts.append('          <p>')
+                flat = []
+                for (a, b, c) in ind:
+                    flat.append((a, a, a, b, b, b, c, c, c))
+                parts.append(' '.join(str(x) for tup in flat for x in tup))
+                parts.append('</p>\n        </triangles>\n')
+            parts.append('      </mesh>\n    </geometry>\n')
+        parts.append('  </library_geometries>\n')
+
+        # ---------------- visual scenes ----------------
+        parts.append('  <library_visual_scenes>\n')
+        parts.append('    <visual_scene id="%s" name="%s">\n'
+                     % (scene_name, scene_name))
+        for gi, geo in enumerate(self.geometries):
+            gid = geo["safe_name"] + "-mesh"
+            matname = geo["matname"]
+            parts.append('      <node id="node_%d_%s" name="%s" type="NODE">\n'
+                         '        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>\n'
+                         '        <instance_geometry url="#%s" name="%s">\n'
+                         '          <bind_material>\n'
+                         '            <technique_common>\n'
+                         % (gi, gid, geo["safe_name"], gid,
+                            geo["safe_name"]))
+            parts.append('              <instance_material symbol="%s" '
+                         'target="#%s-material">\n'
+                         '                <bind_vertex_input semantic="UVMap" '
+                         'input_semantic="TEXCOORD" input_set="0"/>\n'
+                         '              </instance_material>\n'
+                         % (url_safe(matname), url_safe(matname)))
+            parts.append('            </technique_common>\n          </bind_material>\n'
+                         '        </instance_geometry>\n      </node>\n')
+        parts.append('    </visual_scene>\n  </library_visual_scenes>\n')
+
+        parts.append('  <scene>\n    <instance_visual_scene url="#%s"/>\n  </scene>\n'
+                     % scene_name)
+        parts.append('</COLLADA>\n')
+        return "".join(parts)
+
+
+def gen_uuid():
+    return str(_uuid.uuid4())
+```
+
+Everything works, except that the see-through fences are not see-through and the trees are rectangular with a tree texture on either a solid green or black background when looking from the front/side. How can I solve these transparancy issues?
+§a§
+Looking at your code, the transparency bug isn't really in the DAE files (BeamNG mostly ignores COLLADA's own `<effect>`/`<transparent>` data for level statics) — it's in `build_materials_json()`. That's where BeamNG's actual renderer gets its alpha/blend settings, and it's missing the one flag that actually turns on alpha evaluation.
+
+## The core bug
+
+Your current code:
+
+```python
+if mat["alpha_test"]:
+    entry["alphaTest"] = str(True).lower()
+    entry["translucentBlendOp"] = "None"
+    entry["alphaRef"] = 1
+    entry["doubleSided"] = str(True).lower()
+if mat["transparent"]:
+    entry["translucentBlendOp"] = "PreMulAlpha"
+    entry["doubleSided"] = str(True).lower()
+```
+
+Notice that **`"translucent": true` is never set anywhere**. In BeamNG's material schema, `translucent` is the master switch that tells the renderer "evaluate alpha for this material at all" (routes it to the translucent/alpha-aware render path). `alphaTest`/`alphaRef`/`translucentBlendOp` are meaningless without it — the engine's official examples always pair them together, e.g. BeamNG's own glass-damage material sets alphaRef, alphaTest, translucent, and translucentBlendOp all together: "alphaRef": 20, "alphaTest": true, "castShadows": false, "dynamicCubemap": true, "translucent": true, "translucentBlendOp": "PreMulAlpha". Without `translucent: true`, the object is rendered as fully opaque, using only the raw diffuse texture — which is *exactly* your symptoms:
+
+- **Fences**: alpha data exists in the texture but is never consulted → solid opaque quad.
+- **Trees**: the leaf texture's alpha mask is ignored, so you see the raw diffuse image, including whatever flat color (green/black) the artist painted *behind* the leaf cutout in the texture atlas — that background was always meant to be hidden by alpha, and now isn't.
+
+There's a second, compounding problem: for tree materials, both `alpha_test` and `transparent` are `True` simultaneously, so your code sets `translucentBlendOp = "None"` (correct hard cutout) and then immediately **overwrites it** with `translucentBlendOp = "PreMulAlpha"` in the very next `if`. Foliage batched into one big mesh needs hard cutout (no sorting required) — full alpha blending on overlapping, unsorted leaf cards causes exactly the kind of "looks fine from some angles, wrong from others" glitching you're seeing.
+
+Also, JSON booleans should be real `true`/`false`, not the Python string `"true"` — you're writing `str(True).lower()` which serializes as the JSON *string* `"true"`, not the boolean. The documented examples all use actual booleans.
+
+## Fix
+
+```python
+def build_materials_json(dae_objects, level_name):
+    mats = {}
+    for mlist in dae_objects:
+        for matname, mat in mlist.materials.items():
+            if matname in mats:
+                continue
+            entry = {
+                "name": matname,
+                "mapTo": matname,
+                "class": "Material",
+                "persistentId": gen_uuid(),
+                "Stages": [{}] + [{}, {}, {}],
+            }
+            if mat["image"]:
+                img = mat["image"].replace("\\", "/")
+                if img.startswith("../textures/"):
+                    rel = img[len("../textures/"):]
+                else:
+                    rel = posixpath.basename(img)
+                entry["Stages"][0]["colorMap"] = (
+                    "/levels/%s/art/textures/%s" % (level_name, rel)
+                )
+
+            if mat["alpha_test"]:
+                # Hard cutout: fences, foliage. No sorting needed, no blend.
+                entry["alphaTest"] = True
+                entry["alphaRef"] = 90          # 0-255 scale; 1 is far too permissive
+                entry["translucent"] = True     # <-- the flag that was missing
+                entry["translucentBlendOp"] = "None"
+                entry["doubleSided"] = True
+            elif mat["transparent"]:
+                # True blended transparency: glass, water. Needs sorting.
+                entry["translucent"] = True
+                entry["translucentBlendOp"] = "PreMulAlpha"
+                entry["doubleSided"] = True
+
+            mats[matname] = entry
+    return mats
+```
+
+Key changes:
+1. `entry["translucent"] = True` is now actually set for both cutout and blend cases — this is what was silently disabling all transparency.
+2. `alpha_test` and `transparent` are now mutually exclusive (`elif`) so tree/fence cutout materials keep `translucentBlendOp = "None"` instead of being clobbered into a blend mode they don't want.
+3. `alphaRef` raised from `1` to a real threshold (~`90` out of 255) so you get a clean silhouette instead of an almost-everything-passes test.
+4. Real JSON booleans instead of stringified ones.
+
+## One more thing to check
+
+If after this fix the leaves/fences are *still* fully opaque, the alpha channel may be getting lost during KN5→PNG texture extraction — some AC textures are DDS with compressed alpha (DXT5/BC7), and Pillow's DDS plugin doesn't always decode every block-compression variant's alpha channel correctly. Quick sanity check in `extract_textures`:
+
+```python
+im = Image.open(BytesIO(data))
+print(raw_name, im.mode)   # should show "RGBA" already, not "RGB"
+im = im.convert("RGBA")
+```
+
+If `im.mode` comes back `"RGB"` for your foliage/fence textures (no alpha band at all), Pillow silently discarded the transparency during decode, and `convert("RGBA")` just fills alpha=255 everywhere — which would reproduce the same "solid" symptom even with the materials.json fix. In that case you'd need a more capable DDS decoder (e.g. `texture2ddecoder`, or shelling out to `texconv`/ImageMagick) for those specific compression formats before falling back to Pillow.

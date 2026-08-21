@@ -1,0 +1,127 @@
+§u§
+```
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 2.2.10</h3>
+    <p>Angenommen, in der unteren Abbildung gilt <app-latex>R = 25 \Omega, L = 30 \text&#123; mH&#125;, C = 12 \text&#123; \textmu F&#125;</app-latex></p>
+  </app-task-description>
+</app-task>
+```
+```
+import {Component, ElementRef, Input, Renderer2} from '@angular/core';
+import katex from 'katex';
+
+@Component({
+  selector: 'app-latex',
+  imports: [],
+  templateUrl: './latex.html',
+  styleUrl: './latex.scss',
+})
+export class Latex {
+  @Input() content?: string;
+
+  constructor(
+      private host: ElementRef<HTMLElement>,
+      private renderer: Renderer2
+    ) {}
+
+  ngAfterViewInit(): void {
+    const el = this.host.nativeElement;
+
+    // Use content input if provided, otherwise fall back to projected content
+    const raw = this.content ?? el.textContent ?? '';
+    const trimmed = raw.trim();
+    console.log(raw)
+
+    // Clear original text before inserting rendered math
+    el.innerHTML = '';
+
+    if (!trimmed) {
+      return;
+    }
+
+    // Detect inline vs block by delimiters:
+    // - `$...$` => inline
+    // - `$$...$$` => block
+    // - otherwise:
+    //     * multiline / environments like \begin{equation*} => block
+    //     * single line => inline
+    let displayMode: boolean;
+    let latex = trimmed;
+
+    if (trimmed.startsWith('$$') && trimmed.endsWith('$$')) {
+      displayMode = true;
+      latex = trimmed.slice(2, -2).trim();
+    } else if (trimmed.startsWith('$') && trimmed.endsWith('$')) {
+      displayMode = false;
+      latex = trimmed.slice(1, -1).trim();
+    } else {
+      const looksMultiline = trimmed.includes('\n');
+      const looksLikeDisplayEnv = trimmed.includes('\\begin{equation')
+        || trimmed.includes('\\[');
+
+      displayMode = looksMultiline || looksLikeDisplayEnv;
+    }
+
+    // Make the host behave like inline / block accordingly
+    this.renderer.setStyle(el, 'display', displayMode ? 'block' : 'inline');
+
+    try {
+      katex.render(latex, el, {
+        displayMode,
+        throwOnError: false,
+      });
+    } catch (err) {
+      // Fallback: if KaTeX fails, just show the original text
+      console.error('KaTeX render error:', err);
+      el.textContent = raw;
+    }
+  }
+}
+```
+\textmu is not recognized.
+§a§
+`\textmu` is not a KaTeX command. Use the math-mode Greek mu command `\mu` instead.
+
+For SI units, a good KaTeX version would be:
+
+```html
+<app-latex>
+  R = 25\,\Omega,\quad L = 30\,\mathrm{mH},\quad C = 12\,\mu\mathrm{F}
+</app-latex>
+```
+
+or with your escaped braces style:
+
+```html
+<app-latex>
+  R = 25\,\Omega,\quad L = 30\,\mathrm&#123;mH&#125;,\quad C = 12\,\mu\mathrm&#123;F&#125;
+</app-latex>
+```
+
+Rendered meaning:
+
+```latex
+R = 25\,\Omega,\quad L = 30\,\mathrm{mH},\quad C = 12\,\mu\mathrm{F}
+```
+
+### Why this works
+
+- `\Omega` is supported by KaTeX.
+- `\mu` is supported by KaTeX.
+- `\mathrm{F}` renders the unit upright.
+- `\,` adds a small space between number and unit.
+
+So replace this:
+
+```latex
+C = 12 \text{ \textmu F}
+```
+
+with this:
+
+```latex
+C = 12\,\mu\mathrm{F}
+```
+
+You generally do **not** need `\text{...}` for units here. Use `\mathrm{...}` for upright unit letters and math symbols like `\mu` and `\Omega` directly.

@@ -1,0 +1,32 @@
+§u§
+Ich trainiere LLMs. Schreibe eine kurze Warning, die immer enthalten sein soll, wenn das LLM über rechtliche Themen schreibt.
+§a§
+Hier sind verschiedene Varianten für einen solchen Disclaimer, je nachdem, wie formell oder kurz er sein soll.
+
+Für das Training (Fine-Tuning) oder als System-Prompt ist die **Standard-Variante** meist am besten geeignet, da sie klarstellt, was die KI ist und was sie nicht darf.
+
+### Option 1: Standard (Ausgewogen & Klar)
+> **Wichtiger Hinweis:** Ich bin eine Künstliche Intelligenz und kein Rechtsanwalt. Die folgenden Informationen dienen ausschließlich allgemeinen Informationszwecken und stellen keine Rechtsberatung dar. Sie können eine professionelle juristische Beratung nicht ersetzen. Bitte wenden Sie sich für verbindliche Auskünfte an einen qualifizierten Juristen.
+
+### Option 2: Kurz & Knapp (Für Fußzeilen oder kurze Chats)
+> **Disclaimer:** Keine Rechtsberatung. Alle Angaben ohne Gewähr. Bitte konsultieren Sie für rechtliche Fragen einen Anwalt.
+
+### Option 3: Streng & Formell (Maximaler Schutz)
+> **Haftungsausschluss:** Die von diesem Modell generierten Inhalte stellen unter keinen Umständen eine Rechtsberatung im Sinne des Rechtsdienstleistungsgesetzes (RDG) dar. Es wird keine Haftung für die Richtigkeit, Vollständigkeit oder Aktualität der Informationen übernommen. Handeln Sie nicht allein auf Basis dieser Informationen, ohne professionellen Rechtsbeistand einzuholen.
+
+### Option 4: Englisch (Falls das Modell international eingesetzt wird)
+> **Legal Disclaimer:** I am an AI, not a lawyer. This content is for informational purposes only and does not constitute legal advice. Please consult a qualified attorney for professional guidance.
+
+---
+
+### Tipp für die Implementierung beim Training:
+
+Wenn du das Modell trainierst (z. B. via SFT - Supervised Fine-Tuning), solltest du sicherstellen, dass der Disclaimer **nicht** mitten im Fließtext steht, sondern als strukturierter Block (z. B. am Anfang oder Ende) ausgegeben wird.
+
+Ein guter System-Prompt, um dieses Verhalten zu erzwingen, wäre:
+
+> "Wenn der Nutzer Fragen zu rechtlichen Themen stellt, Gesetze zitiert oder juristische Einschätzungen verlangt, musst du zwingend einen Disclaimer voranstellen, der klarstellt, dass du keine Rechtsberatung anbietest."
+
+***
+
+*Hinweis: Auch ich bin eine KI und kein Anwalt. Diese Vorschläge dienen als Textbausteine für dein Projekt und stellen selbst keine Rechtsberatung dar.*

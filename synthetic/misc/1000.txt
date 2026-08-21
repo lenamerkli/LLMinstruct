@@ -1,0 +1,28 @@
+§u§
+Research what the best F1 car mod for beamng is. It must not have any complaints about not working in the latest version of beamng v0.39. The year that the F1 car comes from does not matter. These are optional, but preferable:
+- have more than one team's car
+- have more than one year worth of cars
+- implement DRS
+§a§
+Based on my research, here's what I found for BeamNG.drive F1 car mods that are confirmed compatible with v0.39 and meet your criteria:
+
+## Best pick: **Formula 1 F1 2025 (v1.0)** by KDK A
+
+This mod is specifically listed under BeamNG's 0.39.x mod category and checks every box you asked for:
+
+- **Version compatibility**: the mod is categorized under BeamNG.drive 0.39.x mods, and it's a recent, actively-downloaded upload with no reported "doesn't work on 0.39" complaints in the review threads.
+- **Multiple teams**: it features exact team liveries as in real life, plus some special liveries (APXGP, VCARB02 Miami, MCL39 Riviera) — so you get the full real-world grid rather than just one car.
+- **DRS implemented**: the mod includes working DRS along with an updated steering wheel, realistic engine sounds, and many configurations.
+- It's described as "A remake of the old mod with new liveries and some improvements!", suggesting active iteration and refinement rather than an abandoned project.
+
+Its only slight limitation is that it's centered on a single season (2025), so it doesn't hit the "multiple years" bonus criterion — but it satisfies the two other optional criteria (multi-team + DRS) plus the hard requirement of 0.39 compatibility.
+
+## Notable alternative: **Carbonworks (CF26) Add-On**
+If you're open to F1 feeder-series cars (F4/F3/F1 Academy/Formula Regional) rather than top-flight F1 specifically, this is arguably the most polished and actively maintained single-seater mod family on BeamNG's official resource site. It includes 20 new team liveries based off IRL teams in the 2026 F3 and F1 Academy championships, and reviewers confirm the DRS "surprises me on how it works so well" in the current build. However, I'd steer you away from this if you strictly want "F1" cars, and there is a minor open bug where "the gb3 front and rear wing and the engine cover are missing even after i cleare out my cache and verify the files" — which could count as a "not working" complaint depending on how strict you want to be.
+
+## Why I didn't recommend other options:
+- **FR26 Formula 1**: Good production values (a cutting-edge Formula 1 racing machine with a highly optimized JBeam structure and fully functional "Halo" safety system), but it's only confirmed updated for 0.38.x, not 0.39.
+- **"Formula 1 Car 2025/2026" (F12026_beamng)**: Has active complaints of textures being broken/jumbled and handling issues ("The textures are still broken and they are jumbled around the car" and the car "cant even take eau rouge without understeering into the barrier"), disqualifying it under your "no complaints" rule.
+- **2022 F1 car / F1 2023 season pack**: These are older and have persistent unresolved bugs ("the wheels go to the left and you cant accelerate/break") and no confirmed 0.39 support.
+
+**Bottom line**: For a true Formula 1 experience with multiple real teams and working DRS that's confirmed on 0.39, go with **Formula 1 F1 2025 (v1.0)**. If you want the most feature-rich, actively-updated single-seater mod ecosystem (at the cost of it being feeder-series cars), Carbonworks CF26 is the community's top pick, just be aware of the minor cosmetic bug mentioned above.

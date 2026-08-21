@@ -1,0 +1,2170 @@
+§u§
+converter.py
+```
+"""
+Assetto Corsa (.kn5) -> BeamNG map converter.
+
+Stages:
+  1. Map collision
+  2. Textures
+  3. Sky and lighting
+  4. Fixing trees (only stem collision + model fixing)
+
+Axis conversion:  Assetto Corsa uses Y-up. BeamNG uses Z-up.
+    BeamNG = (ac_x, -ac_z, ac_y)
+"""
+import os
+import sys
+import json
+import zipfile
+import uuid
+import numpy as np
+from io import BytesIO
+from PIL import Image
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from kn5_parser import load_kn5
+from dae_writer import DaeBuilder, sanitize_mat_name, url_safe, gen_uuid
+
+# --------------------------------------------------------------------------
+# Coordinate conversion AC -> BeamNG  (AC is Y-up, BeamNG is Z-up)
+# --------------------------------------------------------------------------
+def ac_to_beam(p):
+    x, y, z = p
+    return (x, -z, y)
+
+
+def ac_to_beam_normal(n):
+    x, y, z = n
+    return (x, -z, y)
+
+
+def build_world_matrices(scene):
+    n = len(scene.meshes)
+    world = [np.identity(4) for _ in range(n)]
+    for i, m in enumerate(scene.meshes):
+        M = np.array(m.matrix, dtype=float)
+        if m.parent >= 0:
+            M = np.matmul(world[m.parent], M)
+        world[i] = M
+    return world
+
+
+# --------------------------------------------------------------------------
+# Mesh gathering
+# --------------------------------------------------------------------------
+class TrackMesh:
+    def __init__(self):
+        self.name = ""
+        self.material = None
+        self.positions = None
+        self.normals = None
+        self.uvs = None
+        self.indices = None      # flat list
+        self.local_positions = None  # AC local (for tree stem classification)
+
+
+def gather_meshes(scene):
+    world = build_world_matrices(scene)
+    result = []
+    for idx, m in enumerate(scene.meshes):
+        if m.type not in (2, 3):
+            continue
+        if len(m.positions) == 0 or len(m.indices) == 0:
+            continue
+        M = world[idx]
+        pos = np.zeros((len(m.positions), 3), dtype=float)
+        for i, p in enumerate(m.positions):
+            v = M.dot(np.array([p[0], p[1], p[2], 1.0]))
+            pos[i] = ac_to_beam(v[:3])
+        R = M[:3, :3]
+        nrm = np.zeros((len(m.normals), 3), dtype=float)
+        for i, n in enumerate(m.normals):
+            v = R.dot(np.array([n[0], n[1], n[2]]))
+            nrm[i] = ac_to_beam_normal(v)
+        tm = TrackMesh()
+        tm.name = m.name
+        tm.positions = pos
+        tm.normals = nrm
+        tm.uvs = np.array(m.uvs, dtype=float)
+        tm.indices = list(m.indices)
+        tm.local_positions = np.array(m.positions, dtype=float)
+        if 0 <= m.material_id < len(scene.materials):
+            tm.material = scene.materials[m.material_id]
+        result.append(tm)
+    return result
+
+
+def is_road_like(material):
+    if material is None:
+        return False
+    name = (material.name or "").strip().lower()
+    if material.is_tree or material.is_grass:
+        return False
+    if any(kw in name for kw in ("road", "curb", "kerb", "track", "asphalt",
+                                 "tarmac", "runoff", "nnnn", "gravel", "rocc",
+                                 "grass", "sand", "wall", "grail", "concrete",
+                                 "pittra", "pit")):
+        return True
+    return False
+
+
+def is_tree_material(material):
+    return bool(material is not None and material.is_tree)
+
+
+def is_water_material(material):
+    if material is None:
+        return False
+    name = (material.name or "").strip().lower()
+    return "water" in name or "wasser" in name
+
+
+# --------------------------------------------------------------------------
+# Collision: stem-only for trees, simplified for the rest
+# --------------------------------------------------------------------------
+def classify_by_mesh(tm):
+    if is_tree_material(tm.material):
+        return "tree"
+    if is_water_material(tm.material):
+        return "water"
+    if is_road_like(tm.material):
+        return "collision"   # gets collision
+    return "decor"           # no collision (far/detailed props)
+
+
+TREE_STEM_HEIGHT = 1.5       # meters of trunk collision
+TREE_STEM_MAX_WIDTH = 0.9    # meters; stems are narrow
+TREE_STEM_MIN_WIDTH = 0.15
+
+
+def make_stem_for_base(lpos):
+    """Return (verts, tris) for a trunk collision cylinder at the base of a tree.
+    lpos is local (AC space, Y-up) vertices of the tree base cluster."""
+    y_min = lpos[:, 1].min()
+    # center of base
+    low = lpos[lpos[:, 1] < y_min + TREE_STEM_HEIGHT * 0.6]
+    if len(low) == 0:
+        low = lpos
+    cx = low[:, 0].mean()
+    cz = low[:, 2].mean()
+    span_x = low[:, 0].max() - low[:, 0].min()
+    span_z = low[:, 2].max() - low[:, 2].min()
+    radius = min(TREE_STEM_MAX_WIDTH,
+                 max(TREE_STEM_MIN_WIDTH, (span_x + span_z) / 4.0))
+    segs = 8
+    angles = np.linspace(0, 2 * np.pi, segs, endpoint=False)
+    base_pts = [(cx + radius * np.cos(a), y_min, cz + radius * np.sin(a))
+                for a in angles]
+    top_pts = [(cx + radius * np.cos(a), y_min + TREE_STEM_HEIGHT, cz + radius * np.sin(a))
+               for a in angles]
+    verts_ac = base_pts + top_pts
+    verts = np.array([ac_to_beam(v) for v in verts_ac], dtype=float)
+    n = segs
+    tris = []
+    for i in range(segs):
+        nxt = (i + 1) % segs
+        a, b = i, nxt
+        a2, b2 = n + i, n + nxt
+        tris.append((a, b, a2))
+        tris.append((b2, a2, b))
+    return verts, tris
+
+
+def make_tree_stem(tm):
+    """Simplified lower-trunk collision for a single tree mesh (small instance)."""
+    lpos = tm.local_positions
+    y_min = lpos[:, 1].min()
+    low = lpos[lpos[:, 1] < y_min + 1.0]
+    if len(low) == 0:
+        low = lpos
+    cx = low[:, 0].mean()
+    cz = low[:, 2].mean()
+    span_x = low[:, 0].max() - low[:, 0].min()
+    span_z = low[:, 2].max() - low[:, 2].min()
+    radius = min(TREE_STEM_MAX_WIDTH, max(TREE_STEM_MIN_WIDTH, (span_x + span_z) / 4.0))
+    segs = 8
+    angles = np.linspace(0, 2 * np.pi, segs, endpoint=False)
+    base_pts = [(cx + radius * np.cos(a), y_min, cz + radius * np.sin(a))
+                for a in angles]
+    top_pts = [(cx + radius * np.cos(a), y_min + TREE_STEM_HEIGHT, cz + radius * np.sin(a))
+               for a in angles]
+    verts_ac = base_pts + top_pts
+    verts = np.array([ac_to_beam(v) for v in verts_ac], dtype=float)
+    n = segs
+    tris = []
+    for i in range(segs):
+        nxt = (i + 1) % segs
+        a, b = i, nxt
+        a2, b2 = n + i, n + nxt
+        # outward facing side
+        tris.append((a, b, a2))
+        tris.append((b2, a2, b))
+    nrm = np.zeros((len(verts), 3), dtype=float)
+    uv = np.zeros((len(verts), 2), dtype=float)
+    return verts, nrm, uv, tris
+
+
+# --------------------------------------------------------------------------
+# Visual + collision DAE construction
+# --------------------------------------------------------------------------
+def cluster_tree_base(tm, cell=4.0):
+    """Cluster the lowest vertices of a big tree/billboard mesh into trunks.
+    Returns list of (verts, tris) in BeamNG coords."""
+    lpos = tm.local_positions
+    y_min = lpos[:, 1].min()
+    low = lpos[lpos[:, 1] < y_min + 2.0]
+    if len(low) == 0:
+        low = lpos
+    # simple grid clustering on xz
+    results = []
+    used = np.zeros(len(low), dtype=bool)
+    for i in range(len(low)):
+        if used[i]:
+            continue
+        # gather nearby
+        cluster_idx = np.where(
+            (np.abs(low[:, 0] - low[i, 0]) < cell) &
+            (np.abs(low[:, 2] - low[i, 2]) < cell))[0]
+        used[cluster_idx] = True
+        cl = low[cluster_idx]
+        cx = cl[:, 0].mean()
+        cz = cl[:, 2].mean()
+        span_x = cl[:, 0].max() - cl[:, 0].min()
+        span_z = cl[:, 2].max() - cl[:, 2].min()
+        radius = min(TREE_STEM_MAX_WIDTH,
+                     max(TREE_STEM_MIN_WIDTH, (span_x + span_z) / 4.0))
+        segs = 8
+        angles = np.linspace(0, 2 * np.pi, segs, endpoint=False)
+        base_pts = [(cx + radius * np.cos(a), y_min, cz + radius * np.sin(a))
+                    for a in angles]
+        top_pts = [(cx + radius * np.cos(a), y_min + TREE_STEM_HEIGHT,
+                    cz + radius * np.sin(a)) for a in angles]
+        verts_ac = base_pts + top_pts
+        verts = np.array([ac_to_beam(v) for v in verts_ac], dtype=float)
+        n = segs
+        tris = []
+        for k in range(segs):
+            nxt = (k + 1) % segs
+            a, b = k, nxt
+            a2, b2 = n + k, n + nxt
+            tris.append((a, b, a2))
+            tris.append((b2, a2, b))
+        results.append((verts, tris))
+    return results
+
+
+def build_daes(scene, shape_prefix="main"):
+    """Build render DAE (main.dae) with collision on solid surfaces,
+    a nocollision render DAE for decorative props, plus tree leaves/stems."""
+    meshes = gather_meshes(scene)
+    from collections import defaultdict
+
+    main = DaeBuilder()        # solid: render + collision
+    nocol = DaeBuilder()       # decorative: render only
+    tree_leaves, tree_stems = build_tree_daes(meshes)
+
+    # Keep each AC mesh as its own geometry (matches real BeamNG ports which
+    # have hundreds of geometries rather than a few giant merged ones).
+    seen_names = set()
+    for tm in meshes:
+        cat = classify_by_mesh(tm)
+        if cat == "tree":
+            continue
+        mat = tm.material
+        matname = url_safe(sanitize_mat_name(mat.name if mat else "default"))
+        img = None
+        if mat is not None:
+            diff = mat.textures.get("txDiffuse")
+            if diff:
+                img = os.path.splitext(diff)[0] + ".png"
+        transp = (mat.is_transparent if mat else False)
+        alpha_test = (mat.is_grass if mat else False)
+
+        db = main if (cat == "collision") else nocol
+        db.add_material(matname, image=img, transparent=transp,
+                        alpha_test=alpha_test)
+
+        flat = tm.indices
+        tris = [(flat[i], flat[i + 1], flat[i + 2])
+                for i in range(0, len(flat) - len(flat) % 3, 3)]
+        base = url_safe(sanitize_mat_name(tm.name))
+        # unique geometry name
+        gname = base
+        k = 2
+        while gname in seen_names:
+            gname = "%s_%d" % (base, k)
+            k += 1
+        seen_names.add(gname)
+        db.add_geometry(gname, tm.positions, tm.normals, tm.uvs, tris, matname)
+
+    return main, nocol, tree_leaves, tree_stems
+
+
+def build_tree_daes(meshes):
+    """Split tree meshes into leaves (visual only, no collision) and stems
+    (collision only). Only the trunk/stem gets collision; foliage is never
+    part of the collision mesh."""
+    tree_leaves = DaeBuilder()
+    tree_stems = DaeBuilder()
+    stem_mat_name = "tree_stem"
+    tree_stems.add_material(stem_mat_name, image=None)
+    leaf_uvs = []
+    leaf_tris = []
+    stem_verts, stem_tris = [], []
+    lv = 0
+    sv = 0
+
+    # Leaves may use different diffuse textures; bucket by source texture.
+    from collections import defaultdict
+    leaf_by_tex = defaultdict(lambda: DaeBuilder())
+    leaf_data = defaultdict(lambda: {"verts": [], "norms": [], "uvs": [],
+                                     "tris": [], "voff": 0, "mat": None})
+
+    for tm in meshes:
+        if not is_tree_material(tm.material):
+            continue
+        diff = tm.material.textures.get("txDiffuse") if tm.material else None
+        matname = "tree_leaves"
+        if diff:
+            matname = "tree_leaves_" + url_safe(sanitize_mat_name(os.path.splitext(diff)[0]))
+        db = leaf_by_tex[matname]
+        img = os.path.splitext(diff)[0] + ".png" if diff else None
+        db.add_material(matname, image=img, transparent=True)
+        d = leaf_data[matname]
+        d["verts"].append(tm.positions)
+        d["norms"].append(tm.normals)
+        d["uvs"].append(tm.uvs)
+        flat = tm.indices
+        off = d["voff"]
+        d["tris"].extend([(flat[i] + off, flat[i + 1] + off, flat[i + 2] + off)
+                          for i in range(0, len(flat) - len(flat) % 3, 3)])
+        d["voff"] += len(tm.positions)
+
+        # stem: one per tree instance / cluster (collision only)
+        if len(tm.positions) <= 300:
+            s_v, s_n, s_uv, s_t = make_tree_stem(tm)
+            stem_verts.append(s_v)
+            stem_tris.extend([(a + sv, b + sv, c + sv) for (a, b, c) in s_t])
+            sv += len(s_v)
+        else:
+            for s_v, s_t in cluster_tree_base(tm):
+                stem_verts.append(s_v)
+                stem_tris.extend([(a + sv, b + sv, c + sv) for (a, b, c) in s_t])
+                sv += len(s_v)
+
+    # assemble leaf builder
+    for matname, d in leaf_data.items():
+        db = leaf_by_tex[matname]
+        db.add_geometry("tree_leaves_%d" % len(tree_leaves.geometries),
+                        np.concatenate(d["verts"]),
+                        np.concatenate(d["norms"]),
+                        np.concatenate(d["uvs"]),
+                        d["tris"], matname)
+        for matn, mat in db.materials.items():
+            tree_leaves.add_material(matn, image=mat["image"], transparent=True,
+                                     alpha_test=True)
+    # copy geometries over (rebuild indices offsets properly is complex,
+    # so instead just re-use the per-texture builders into one combined)
+    for matname, d in leaf_data.items():
+        db = leaf_by_tex[matname]
+        for g in db.geometries:
+            tree_leaves.geometries.append(g)
+
+    if stem_verts:
+        total_stem_v = sum(len(v) for v in stem_verts)
+        stem_uv = np.zeros((total_stem_v, 2), dtype=float)
+        stem_nrm = np.zeros((total_stem_v, 3), dtype=float)
+        tree_stems.add_geometry("tree_stems", np.concatenate(stem_verts),
+                                stem_nrm, stem_uv, stem_tris, stem_mat_name)
+
+    return tree_leaves, tree_stems
+
+
+# --------------------------------------------------------------------------
+# Texture extraction
+# --------------------------------------------------------------------------
+def extract_textures(scene, texture_bins, out_dir):
+    os.makedirs(out_dir, exist_ok=True)
+    saved = {}
+    for raw_name, data in texture_bins.items():
+        base = os.path.splitext(raw_name)[0]
+        out_path = os.path.join(out_dir, base + ".png")
+        try:
+            im = Image.open(BytesIO(data))
+            im = im.convert("RGBA")
+            im.save(out_path, "PNG")
+            saved[base] = out_path
+        except Exception:
+            fb = os.path.join(out_dir, raw_name)
+            with open(fb, "wb") as f:
+                f.write(data)
+            saved[base] = fb
+    return saved
+
+
+# --------------------------------------------------------------------------
+# materials.json
+# --------------------------------------------------------------------------
+def build_materials_json(dae_objects, tex_dir_rel):
+    mats = {}
+    for mlist in dae_objects:
+        for matname, mat in mlist.materials.items():
+            if matname in mats:
+                continue
+            entry = {
+                "name": matname,
+                "mapTo": matname,
+                "class": "Material",
+                "persistentId": gen_uuid(),
+                "Stages": [{}] + [{}, {}, {}],
+            }
+            if mat["image"]:
+                # colorMap resolves relative to the level root
+                base = os.path.splitext(mat["image"])[0]
+                entry["Stages"][0]["colorMap"] = os.path.join(tex_dir_rel, base)
+            if mat["transparent"] or mat["alpha_test"]:
+                entry["translucentBlendOp"] = "None"
+                entry["alphaTest"] = str(True).lower()
+                entry["doubleSided"] = str(True).lower()
+            mats[matname] = entry
+    return mats
+
+
+# --------------------------------------------------------------------------
+# Main level json
+# --------------------------------------------------------------------------
+def build_level_json(level_name, spawn, has_water=False):
+    js = {
+        "class": "SimGroup",
+        "name": "MissionGroup",
+        "enabled": "1",
+        "childs": [
+            {
+                "class": "SimGroup",
+                "name": "Sky",
+                "childs": [
+                    {
+                        "class": "TimeOfDay",
+                        "name": "tod",
+                        "position": [36.62, -62.5, 15.32],
+                        "axisTilt": 10,
+                        "azimuthOverride": 0,
+                        "play": False,
+                        "startTime": 0.1,
+                        "time": 0.1,
+                    },
+                    {
+                        "class": "LevelInfo",
+                        "name": "theLevelInfo",
+                        "canvasClearColor": [1, 1, 1, 255],
+                        "enabled": "1",
+                        "fogAtmosphereHeight": 800,
+                        "fogColor": [0.74, 0.81, 0.92, 1],
+                        "fogDensity": 0.0006,
+                        "globalEnviromentMap": "BNG_Sky_02_cubemap",
+                        "gravity": -9.81,
+                        "soundAmbience": "AudioAmbienceDefault",
+                        "visibleDistance": 4500,
+                    },
+                    {
+                        "class": "ScatterSky",
+                        "name": "sunsky",
+                        "position": [70.3, 4.5, 73.9],
+                        "ambientScale": [0.545, 0.545, 0.549, 1],
+                        "azimuth": 286.6,
+                        "colorize": [0.4235, 0.6078, 0.8666, 1],
+                        "colorizeAmount": 2,
+                        "elevation": 52.8,
+                        "exposure": 15,
+                        "fadeStartDistance": 1000,
+                        "flareType": "BNG_SunFlare_3",
+                        "fogScale": [0.694, 0.854, 0.992, 1],
+                        "lastSplitTerrainOnly": True,
+                        "logWeight": 0.99,
+                        "mieScattering": 0.00060753,
+                        "moonLightColor": [0.196, 0.196, 0.196, 1],
+                        "moonMat": "Moon_Glow_Mat",
+                        "moonScale": 0.03,
+                        "nightColor": [0.0235, 0.0235, 0.0235, 1],
+                        "nightCubemap": "BNG_Sky_Space",
+                        "nightFogColor": [0.0039, 0.0039, 0.0039, 1],
+                        "overDarkFactor": [40000, 8000, 1800, 650],
+                        "rayleighScattering": 0.01,
+                        "shadowDarkenColor": [0, 0, 0, 0],
+                        "shadowDistance": 1600,
+                        "shadowSoftness": 0.2,
+                        "skyBrightness": 11,
+                        "sunScale": [0.996, 0.901, 0.831, 1],
+                        "texSize": 1024,
+                        "useNightCubemap": True,
+                    },
+                ],
+            },
+            {
+                "class": "SimGroup",
+                "name": "CameraBookmarks",
+                "childs": [
+                    {
+                        "class": "CameraBookmark",
+                        "name": "overviewbookmark",
+                        "position": [spawn[0], spawn[1] + 20, spawn[2] + 80],
+                        "rotation": [0.4368, 0.1854, -0.8802, 51.49],
+                        "dataBlock": "CameraBookmarkMarker",
+                        "internalName": "NewCamera_0",
+                        "isAIControlled": "0",
+                    }
+                ],
+            },
+            {
+                "class": "SimGroup",
+                "name": "PlayerDropPoints",
+                "enabled": "1",
+                "childs": [
+                    {
+                        "class": "SpawnSphere",
+                        "name": "Grid",
+                        "position": list(spawn),
+                        "dataBlock": "SpawnSphereMarker",
+                        "enabled": "1",
+                        "autoSpawn": True,
+                        "radius": 1,
+                        "sphereWeight": "1",
+                        "spawnClass": "Player",
+                        "spawnTransform": True,
+                    }
+                ],
+            },
+            {
+                "class": "SimGroup",
+                "name": "TTObjs",
+                "childs": [
+                    {
+                        "class": "TSStatic",
+                        "name": "main_track",
+                        "shapeName": "/levels/%s/art/shapes/main.dae" % level_name,
+                        "position": [0, 0, 0],
+                        "rotationMatrix": [1, 0, 0, 0, 1, 0, 0, 0, 1],
+                        "scale": [1, 1, 1],
+                        "collisionType": "Visible Mesh",
+                        "decalType": "None",
+                        "isRenderEnabled": True,
+                        "locked": True,
+                        "dynamic": True,
+                    },
+                ],
+            },
+        ],
+    }
+
+    # tree leaves (visual only)
+    leaves_obj = {
+        "class": "TSStatic",
+        "name": "trees",
+        "shapeName": "/levels/%s/art/shapes/tree_leaves.dae" % level_name,
+        "position": [0, 0, 0],
+        "rotationMatrix": [1, 0, 0, 0, 1, 0, 0, 0, 1],
+        "scale": [1, 1, 1],
+        "collisionType": "None",
+        "decalType": "None",
+        "isRenderEnabled": True,
+        "locked": True,
+        "dynamic": True,
+    }
+    js["childs"][3]["childs"].append(leaves_obj)
+
+    # nocollision props (render only: glass, fences, ad boards, vehicles)
+    nocol_obj = {
+        "class": "TSStatic",
+        "name": "props_nocollision",
+        "shapeName": "/levels/%s/art/shapes/nocollision.dae" % level_name,
+        "position": [0, 0, 0],
+        "rotationMatrix": [1, 0, 0, 0, 1, 0, 0, 0, 1],
+        "scale": [1, 1, 1],
+        "collisionType": "None",
+        "decalType": "None",
+        "isRenderEnabled": True,
+        "locked": True,
+        "dynamic": True,
+    }
+    js["childs"][3]["childs"].append(nocol_obj)
+
+    # tree stems (collision only, stem-only)
+    stem_obj = {
+        "class": "TSStatic",
+        "name": "tree_stems",
+        "shapeName": "/levels/%s/art/shapes/tree_stems.dae" % level_name,
+        "position": [0, 0, 0],
+        "rotationMatrix": [1, 0, 0, 0, 1, 0, 0, 0, 1],
+        "scale": [1, 1, 1],
+        "collisionType": "Visible Mesh",
+        "decalType": "None",
+        "isRenderEnabled": False,
+        "locked": True,
+        "dynamic": True,
+    }
+    js["childs"][3]["childs"].append(stem_obj)
+
+    return js
+
+
+# --------------------------------------------------------------------------
+# Orchestration
+# --------------------------------------------------------------------------
+def find_spawn(scene, fallback=(0.0, -5.0, 0.0)):
+    """Find a spawn point from AC_START nodes or road mesh center."""
+    # Look for AC_START_0 / START nodes
+    for m in scene.meshes:
+        if m.type == 1:
+            nm = m.name.upper()
+            if "START_0" in nm or "START" in nm and "TRACK" in nm:
+                t = m.matrix[3, :3]
+                return [float(t[0]), float(-t[2]), float(t[1])]
+    # Use road mesh center as fallback for spawn
+    try:
+        from converter import gather_meshes
+        mm = gather_meshes(scene)
+        road = [x for x in mm if x.material and "road" in
+                (x.material.name or "").lower()]
+        if road:
+            allp = np.concatenate([x.positions for x in road])
+            c = (allp.min(axis=0) + allp.max(axis=0)) / 2
+            return [float(c[0]), float(c[1]), float(c[2]) + 1.0]
+    except Exception:
+        pass
+    return list(fallback)
+
+
+def write_items_hierarchy(levels_dir, level_json):
+    """Write the main/MissionGroup/... items.level.json structure that mirrors
+    main.level.json so BeamNG can load the scene objects."""
+    # We write TSStatic and SpawnSphere objects into
+    # main/MissionGroup/TTObjs/items.level.json
+    mission = [c for c in level_json["childs"] if c["name"] == "MissionGroup"]
+    root = {
+        "name": "MissionGroup",
+        "class": "SimGroup",
+        "persistentId": gen_uuid(),
+        "enabled": "1",
+    }
+
+    main_dir = os.path.join(levels_dir, "main")
+    mg_dir = os.path.join(main_dir, "MissionGroup")
+    os.makedirs(mg_dir, exist_ok=True)
+    with open(os.path.join(main_dir, "items.level.json"), "w") as f:
+        json.dump(root, f)
+
+    # group children from main.level.json
+    groups = {}
+    for child in level_json["childs"]:
+        gname = child["name"]
+        if gname == "MissionGroup":
+            continue
+        gdir = os.path.join(mg_dir, gname)
+        os.makedirs(gdir, exist_ok=True)
+        # write the group's items.level.json with ALL sub-objects (sky, spawn,
+        # statics) so the objects actually get instantiated by the loader.
+        group_items = []
+        for sub in child.get("childs", []):
+            entry = dict(sub)
+            entry["__parent"] = gname
+            entry["persistentId"] = gen_uuid()
+            # BeamNG needs spawnClass on SpawnSphere
+            if entry.get("class") == "SpawnSphere":
+                entry.setdefault("spawnClass", "Player")
+                entry.setdefault("spawnTransform", True)
+                entry.setdefault("dataBlock", "SpawnSphereMarker")
+            group_items.append(entry)
+        if group_items:
+            with open(os.path.join(gdir, "items.level.json"), "w") as f:
+                for it in group_items:
+                    f.write(json.dumps(it) + "\n")
+        # write group definition in parent
+        groups[gname] = {
+            "name": gname,
+            "class": "SimGroup",
+            "persistentId": gen_uuid(),
+            "__parent": "MissionGroup",
+        }
+
+    # write the parent index (MissionGroup/items.level.json)
+    with open(os.path.join(mg_dir, "items.level.json"), "w") as f:
+        for gname, g in groups.items():
+            f.write(json.dumps(g) + "\n")
+
+
+def convert(ac_kn5_path, beamng_level_dir, level_name):
+    print("[*] Loading KN5:", ac_kn5_path)
+    scene, texture_bins = load_kn5(ac_kn5_path, load_textures=True)
+    print("    textures=%d materials=%d meshes=%d"
+          % (len(scene.textures), len(scene.materials), len(scene.meshes)))
+
+    levels_dir = os.path.join(beamng_level_dir, "levels", level_name)
+    shapes_dir = os.path.join(levels_dir, "art", "shapes")
+    tex_dir = os.path.join(levels_dir, "art", "textures")
+    os.makedirs(shapes_dir, exist_ok=True)
+
+    # Stage 2: textures
+    print("[*] Stage 2: extracting textures...")
+    extract_textures(scene, texture_bins, tex_dir)
+
+    # Build daes (stages 1, 4)
+    print("[*] Stage 1/4: building meshes, collision, trees...")
+    main, nocol, tree_leaves, tree_stems = build_daes(scene)
+
+    # write shape files
+    shape_files = {
+        "main.dae": main,
+        "nocollision.dae": nocol,
+        "tree_leaves.dae": tree_leaves,
+        "tree_stems.dae": tree_stems,
+    }
+    for fname, db in shape_files.items():
+        xml = db.build()
+        with open(os.path.join(shapes_dir, fname), "w", encoding="utf-8") as f:
+            f.write(xml)
+        print("    wrote %s (%.1f MB)" % (fname, os.path.getsize(
+            os.path.join(shapes_dir, fname)) / 1e6))
+
+    # Stage 2: materials
+    print("[*] Stage 2: building materials.json...")
+    mats = build_materials_json([main, nocol, tree_leaves], "art/textures")
+    with open(os.path.join(levels_dir, "main.materials.json"), "w") as f:
+        json.dump(mats, f, indent=2)
+
+    # Stage 3: sky & lighting
+    print("[*] Stage 3: sky and lighting...")
+    spawn = find_spawn(scene)
+    print("    spawn point:", [round(v, 2) for v in spawn])
+    level_json = build_level_json(level_name, spawn)
+    with open(os.path.join(levels_dir, "main.level.json"), "w") as f:
+        json.dump(level_json, f, indent=2)
+
+    # items.level.json hierarchy mirroring main.level.json (modern loader)
+    write_items_hierarchy(levels_dir, level_json)
+
+    # info.json
+    info = {
+        "title": level_name,
+        "description": "Converted from Assetto Corsa",
+        "authors": "AC to BeamNG converter",
+        "size": [2048, 2048],
+        "suitablefor": "Racing",
+        "defaultSpawnPointName": "Grid",
+    }
+    with open(os.path.join(levels_dir, "info.json"), "w") as f:
+        json.dump(info, f, indent=2)
+
+    # level.json (configuration metadata)
+    level_cfg = {
+        "title": level_name,
+        "description": "Converted from Assetto Corsa to BeamNG",
+        "suitablefor": "Racing",
+        "authors": "AC to BeamNG converter",
+        "size": [2048, 2048],
+        "previews": [],
+    }
+    with open(os.path.join(levels_dir, "level.json"), "w") as f:
+        json.dump(level_cfg, f, indent=2)
+
+    print("[+] Done. Level written to:", levels_dir)
+
+
+def zip_level(level_dir, out_zip):
+    """Zip a level as a BeamNG mod (levels/<name>/...)."""
+    # level_dir is <out>/levels/<name>. BeamNG needs levels/<name>/... at the
+    # zip root, so relpath against the <out> directory (parent of levels/).
+    out_root = os.path.dirname(os.path.dirname(level_dir))
+    with zipfile.ZipFile(out_zip, "w", zipfile.ZIP_DEFLATED) as zf:
+        for root, dirs, files in os.walk(level_dir):
+            for fn in files:
+                full = os.path.join(root, fn)
+                rel = os.path.relpath(full, out_root)
+                zf.write(full, rel)
+    print("[+] Zipped:", out_zip)
+
+
+def main():
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("kn5")
+    ap.add_argument("--out", default=".")
+    ap.add_argument("--name", default=None)
+    ap.add_argument("--zip", action="store_true")
+    args = ap.parse_args()
+    if args.name is None:
+        base = os.path.splitext(os.path.basename(args.kn5))[0]
+        args.name = base.lower().replace(" ", "_")
+    convert(args.kn5, args.out, args.name)
+    if args.zip:
+        level_dir = os.path.join(args.out, "levels", args.name)
+        zip_level(level_dir, os.path.join(args.out, args.name + ".zip"))
+
+
+if __name__ == "__main__":
+    main()
+```
+
+dae_writer.py
+```
+"""
+Minimal, schema-correct COLLADA (.dae) writer for BeamNG static meshes.
+
+BeamNG uses COLLADA 1.4.1 with Z_UP. Materials are referenced by name and map
+to entries in main.materials.json via their "mapTo" attribute.
+
+Schema notes (matched against real BeamNG-content DAE files):
+  - <vertices> contains ONLY a POSITION input.
+  - NORMAL and TEXCOORD are <input> children of <triangles> with offsets.
+  - The <p> element interleaves vertex indices by input offset.
+  - ids/names must be URL-safe (no spaces).
+"""
+import re
+import uuid as _uuid
+
+
+def _xml_escape(s: str) -> str:
+    if s is None:
+        return ""
+    return (s.replace("&", "&amp;").replace('"', "&quot;")
+             .replace("<", "&lt;").replace(">", "&gt;"))
+
+
+def sanitize_mat_name(name: str) -> str:
+    """BeamNG material/mapTo names become JSON keys; keep them printable."""
+    out = []
+    for ch in name:
+        if ch.isalnum() or ch in "._- ":
+            out.append(ch)
+        else:
+            out.append("_")
+    s = "".join(out).strip()
+    if not s:
+        s = "material"
+    return s
+
+
+def url_safe(s: str) -> str:
+    """COLLADA ids referenced via URI fragments must not contain spaces."""
+    out = []
+    for ch in s:
+        if ch.isalnum() or ch in "._-":
+            out.append(ch)
+        else:
+            out.append("_")
+    result = "".join(out)
+    if result and (result[0].isdigit() or result[0] in "_-"):
+        result = "obj_" + result
+    return result
+
+
+class DaeBuilder:
+    def __init__(self):
+        self.materials = {}    # matname -> {image, transparent, alpha_test}
+        self.geometries = []   # list of dicts
+
+    def add_material(self, matname, image=None, transparent=False,
+                     alpha_test=False):
+        m = self.materials.setdefault(
+            matname, {"image": None, "transparent": False, "alpha_test": False})
+        if image and not m["image"]:
+            m["image"] = image
+        if transparent:
+            m["transparent"] = True
+        if alpha_test:
+            m["alpha_test"] = True
+
+    def add_geometry(self, name, positions, normals, uvs, indices, matname):
+        """positions (N,3), normals (N,3), uvs (N,2). indices: list of (a,b,c)
+        referencing positions/normals/uvs row indices."""
+        self.geometries.append({
+            "name": name,
+            "safe_name": url_safe(name),
+            "positions": positions,
+            "normals": normals,
+            "uvs": uvs,
+            "indices": indices,
+            "matname": matname,
+        })
+
+    def build(self, scene_name="Scene"):
+        parts = []
+        parts.append('<?xml version="1.0" encoding="utf-8"?>\n')
+        parts.append('<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" '
+                     'version="1.4.1" '
+                     'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n')
+        parts.append('  <asset>\n    <unit name="meter" meter="1"/>\n'
+                     '    <up_axis>Z_UP</up_axis>\n  </asset>\n')
+
+        # ---------------- images ----------------
+        images = {}
+        for matname, mat in self.materials.items():
+            if mat["image"] and mat["image"] not in images:
+                images[mat["image"]] = "image_%d" % len(images)
+        if images:
+            parts.append('  <library_images>\n')
+            for imgfile, img_id in images.items():
+                parts.append('    <image id="%s" name="%s">\n'
+                             '      <init_from>%s</init_from>\n    </image>\n'
+                             % (img_id, img_id, _xml_escape(imgfile)))
+            parts.append('  </library_images>\n')
+
+        # ---------------- effects ----------------
+        effects = {}
+        parts.append('  <library_effects>\n')
+        for idx, (matname, mat) in enumerate(self.materials.items()):
+            eid = "mat_effect_%d" % idx
+            safemat = url_safe(matname)
+            effects[matname] = (eid, safemat)
+            parts.append('    <effect id="%s" name="%s">\n'
+                         % (eid, _xml_escape(matname)))
+            imgfile = mat["image"]
+            parts.append('      <profile_COMMON>\n')
+            if imgfile:
+                surf = "surf_mat%d" % idx
+                samp = "samp_mat%d" % idx
+                parts.append('        <newparam sid="%s">\n'
+                             '          <surface type="2D">\n'
+                             '            <init_from>%s</init_from>\n'
+                             '          </surface>\n        </newparam>\n'
+                             % (surf, images[imgfile]))
+                parts.append('        <newparam sid="%s">\n'
+                             '          <sampler2D>\n'
+                             '            <source>%s</source>\n'
+                             '          </sampler2D>\n        </newparam>\n'
+                             % (samp, surf))
+                parts.append('        <technique sid="common">\n')
+                parts.append('          <blinn>\n')
+                parts.append('            <diffuse>\n'
+                             '              <texture texture="%s" texcoord="UVMap"/>\n'
+                             '            </diffuse>\n' % samp)
+                if mat["transparent"] or mat["alpha_test"]:
+                    parts.append('            <transparent opaque="A_ONE">\n'
+                                 '              <texture texture="%s" texcoord="UVMap"/>\n'
+                                 '            </transparent>\n' % samp)
+                    parts.append('            <transparency>\n'
+                                 '              <float sid="transparency">0.5</float>\n'
+                                 '            </transparency>\n')
+                parts.append('          </blinn>\n        </technique>\n')
+            else:
+                parts.append('        <technique sid="common">\n')
+                parts.append('          <blinn>\n')
+                parts.append('            <diffuse>\n'
+                             '              <color sid="diffuse">0.5 0.5 0.5 1</color>\n'
+                             '            </diffuse>\n')
+                parts.append('          </blinn>\n        </technique>\n')
+            parts.append('      </profile_COMMON>\n')
+            parts.append('    </effect>\n')
+        parts.append('  </library_effects>\n')
+
+        # ---------------- materials ----------------
+        parts.append('  <library_materials>\n')
+        for idx, matname in enumerate(self.materials.keys()):
+            eid, _ = effects[matname]
+            parts.append('    <material id="%s-material" name="%s">\n'
+                         '      <instance_effect url="#%s"/>\n    </material>\n'
+                         % (url_safe(matname), _xml_escape(matname), eid))
+        parts.append('  </library_materials>\n')
+
+        # ---------------- geometries ----------------
+        parts.append('  <library_geometries>\n')
+        for gi, geo in enumerate(self.geometries):
+            gid = geo["safe_name"] + "-mesh"
+            pos, nrm, uv = geo["positions"], geo["normals"], geo["uvs"]
+            ind = geo["indices"]
+            parts.append('    <geometry id="%s" name="%s">\n      <mesh>\n'
+                         % (gid, geo["safe_name"]))
+            parts.append('        <source id="%s-positions">\n'
+                         '          <float_array id="%s-positions-array" count="%d">'
+                         % (gid, gid, pos.size))
+            parts.append(' '.join(format(v, '.6g') for v in pos.ravel()))
+            parts.append('</float_array>\n')
+            parts.append('          <technique_common>\n'
+                         '            <accessor source="#%s-positions-array" count="%d" stride="3">\n'
+                         '              <param name="X" type="float"/>\n'
+                         '              <param name="Y" type="float"/>\n'
+                         '              <param name="Z" type="float"/>\n'
+                         '            </accessor>\n          </technique_common>\n'
+                         '        </source>\n' % (gid, len(pos)))
+            parts.append('        <source id="%s-normals">\n'
+                         '          <float_array id="%s-normals-array" count="%d">'
+                         % (gid, gid, nrm.size))
+            parts.append(' '.join(format(v, '.6g') for v in nrm.ravel()))
+            parts.append('</float_array>\n')
+            parts.append('          <technique_common>\n'
+                         '            <accessor source="#%s-normals-array" count="%d" stride="3">\n'
+                         '              <param name="X" type="float"/>\n'
+                         '              <param name="Y" type="float"/>\n'
+                         '              <param name="Z" type="float"/>\n'
+                         '            </accessor>\n          </technique_common>\n'
+                         '        </source>\n' % (gid, len(nrm)))
+            parts.append('        <source id="%s-map-0">\n'
+                         '          <float_array id="%s-map-0-array" count="%d">'
+                         % (gid, gid, uv.size))
+            parts.append(' '.join(format(v, '.6g') for v in uv.ravel()))
+            parts.append('</float_array>\n')
+            parts.append('          <technique_common>\n'
+                         '            <accessor source="#%s-map-0-array" count="%d" stride="2">\n'
+                         '              <param name="S" type="float"/>\n'
+                         '              <param name="T" type="float"/>\n'
+                         '            </accessor>\n          </technique_common>\n'
+                         '        </source>\n' % (gid, len(uv)))
+            # vertices: ONLY POSITION
+            parts.append('        <vertices id="%s-vertices">\n' % gid)
+            parts.append('          <input semantic="POSITION" source="#%s-positions"/>\n'
+                         % gid)
+            parts.append('        </vertices>\n')
+            if ind:
+                parts.append('        <triangles count="%d" material="%s">\n'
+                             % (len(ind), url_safe(geo["matname"])))
+                parts.append('          <input offset="0" semantic="VERTEX" '
+                             'source="#%s-vertices"/>\n' % gid)
+                parts.append('          <input offset="1" semantic="NORMAL" '
+                             'source="#%s-normals"/>\n' % gid)
+                parts.append('          <input offset="2" semantic="TEXCOORD" '
+                             'set="0" source="#%s-map-0"/>\n' % gid)
+                parts.append('          <p>')
+                flat = []
+                for (a, b, c) in ind:
+                    flat.append((a, a, a, b, b, b, c, c, c))
+                parts.append(' '.join(str(x) for tup in flat for x in tup))
+                parts.append('</p>\n        </triangles>\n')
+            parts.append('      </mesh>\n    </geometry>\n')
+        parts.append('  </library_geometries>\n')
+
+        # ---------------- visual scenes ----------------
+        parts.append('  <library_visual_scenes>\n')
+        parts.append('    <visual_scene id="%s" name="%s">\n'
+                     % (scene_name, scene_name))
+        for gi, geo in enumerate(self.geometries):
+            gid = geo["safe_name"] + "-mesh"
+            matname = geo["matname"]
+            parts.append('      <node id="%s" name="%s" type="NODE">\n'
+                         '        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>\n'
+                         '        <instance_geometry url="#%s" name="%s">\n'
+                         '          <bind_material>\n'
+                         '            <technique_common>\n'
+                         % (gid, geo["safe_name"], gid,
+                            geo["safe_name"]))
+            parts.append('              <instance_material symbol="%s" '
+                         'target="#%s-material">\n'
+                         '                <bind_vertex_input semantic="UVMap" '
+                         'input_semantic="TEXCOORD" input_set="0"/>\n'
+                         '              </instance_material>\n'
+                         % (url_safe(matname), url_safe(matname)))
+            parts.append('            </technique_common>\n          </bind_material>\n'
+                         '        </instance_geometry>\n      </node>\n')
+        parts.append('    </visual_scene>\n  </library_visual_scenes>\n')
+
+        parts.append('  <scene>\n    <instance_visual_scene url="#%s"/>\n  </scene>\n'
+                     % scene_name)
+        parts.append('</COLLADA>\n')
+        return "".join(parts)
+
+
+def gen_uuid():
+    return str(_uuid.uuid4())
+```
+
+kn5_parser.py
+```
+"""
+Assetto Corsa .kn5 file parser.
+
+Parses the binary .kn5 format into textures, materials, and a node hierarchy.
+This is based on publicly documented KN5 format details (see README / credits),
+originally derived from Chipicao's kn5 converter and MarvinSt's kn5-obj-converter.
+"""
+import os
+import struct
+import numpy as np
+
+
+class KN5Material:
+    def __init__(self):
+        self.name = ""
+        self.shader = ""
+        self.props = {}          # name -> float value
+        self.textures = {}       # sample name -> texture filename
+        self.is_transparent = False
+        self.is_tree = False
+        self.is_grass = False
+        self.tree_stem = False
+
+
+class KN5Mesh:
+    def __init__(self):
+        self.name = ""
+        self.type = 2            # 2 = mesh, 3 = skinned mesh, 1 = base
+        self.matrix = np.identity(4)
+        self.material_id = -1
+        self.positions = []      # list of (x,y,z)
+        self.normals = []
+        self.uvs = []
+        self.indices = []
+        self.parent = -1
+
+
+class KN5Scene:
+    def __init__(self):
+        self.textures = []       # list of (tex_name, bytes) -- lazily loaded
+        self.materials = []
+        self.meshes = []
+        self.root_meshes = []    # flatten list of top-level tree nodes
+
+
+def _read_string(f):
+    length = struct.unpack("<i", f.read(4))[0]
+    if length < 0 or length > 1_000_000:
+        raise Exception("Bad string length %d" % length)
+    data = f.read(length)
+    return data.decode("utf-8", errors="replace")
+
+
+def _read_nodes(f, node_list, parent_id, scene):
+    ntype = struct.unpack("<i", f.read(4))[0]
+    name = _read_string(f)
+    children_count = struct.unpack("<i", f.read(4))[0]
+    f.read(1)  # unknown byte
+
+    mesh = KN5Mesh()
+    mesh.name = name
+    mesh.type = ntype
+    mesh.parent = parent_id
+    mesh.matrix = np.identity(4)
+
+    if ntype == 1:  # base (transform) node
+        tmatrix = []
+        for _ in range(4):
+            row = struct.unpack("<4f", f.read(16))
+            tmatrix.append(row)
+        mesh.matrix = np.array(tmatrix)
+
+    elif ntype == 2:  # mesh node
+        f.read(3)  # unknown 3 bytes
+        vertex_count = struct.unpack("<i", f.read(4))[0]
+        positions = []
+        normals = []
+        uvs = []
+        for _ in range(vertex_count):
+            positions.append(struct.unpack("<3f", f.read(12)))
+            normals.append(struct.unpack("<3f", f.read(12)))
+            tex = struct.unpack("<2f", f.read(8))
+            uvs.append((tex[0], 1.0 - tex[1]))  # flip V
+            f.read(12)  # tangent (4 floats? actually 12 bytes here)
+        index_count = struct.unpack("<i", f.read(4))[0]
+        indices = struct.unpack("<%dH" % index_count, f.read(index_count * 2))
+        mat_id = struct.unpack("<i", f.read(4))[0]
+        f.read(29)  # misc rendering flags
+        mesh.positions = positions
+        mesh.normals = normals
+        mesh.uvs = uvs
+        mesh.indices = list(indices)
+        mesh.material_id = mat_id
+
+    elif ntype == 3:  # skinned mesh
+        f.read(3)
+        bone_count = struct.unpack("<i", f.read(4))[0]
+        for _ in range(bone_count):
+            _ = _read_string(f)
+            f.read(64)
+        vertex_count = struct.unpack("<i", f.read(4))[0]
+        positions = []
+        normals = []
+        uvs = []
+        for _ in range(vertex_count):
+            positions.append(struct.unpack("<3f", f.read(12)))
+            normals.append(struct.unpack("<3f", f.read(12)))
+            tex = struct.unpack("<2f", f.read(8))
+            uvs.append((tex[0], 1.0 - tex[1]))
+            f.read(44)  # tangents & weights
+        index_count = struct.unpack("<i", f.read(4))[0]
+        indices = struct.unpack("<%dH" % index_count, f.read(index_count * 2))
+        mat_id = struct.unpack("<i", f.read(4))[0]
+        f.read(12)
+        mesh.positions = positions
+        mesh.normals = normals
+        mesh.uvs = uvs
+        mesh.indices = list(indices)
+        mesh.material_id = mat_id
+
+    else:
+        raise Exception("Unknown node type %d (%s)" % (ntype, name))
+
+    node_list.append(mesh)
+    current_id = len(node_list) - 1
+
+    for _ in range(children_count):
+        _read_nodes(f, node_list, current_id, scene)
+
+    return node_list
+
+
+def load_kn5(path, output_texture_dir=None, load_textures=True):
+    """Parse a .kn5 file. Returns (KN5Scene, dict of texture_name->bytes)."""
+    scene = KN5Scene()
+    texture_bins = {}
+
+    with open(path, "rb") as f:
+        header = f.read(10)
+        magic, version = struct.unpack("<6s1I", header)
+        if not magic.startswith(b"sc6969"):
+            raise Exception("Not a KN5 file: %r" % magic)
+        if version > 5:
+            f.read(4)
+
+        # ---- Textures ----
+        tex_count = struct.unpack("<i", f.read(4))[0]
+        for _ in range(tex_count):
+            tex_type = struct.unpack("<i", f.read(4))[0]
+            tex_name = _read_string(f)
+            tex_size = struct.unpack("<i", f.read(4))[0]
+            data = f.read(tex_size)
+            scene.textures.append(tex_name)
+            texture_bins[tex_name] = data
+
+        # ---- Materials ----
+        mat_count = struct.unpack("<i", f.read(4))[0]
+        for _ in range(mat_count):
+            mat = KN5Material()
+            mat.name = _read_string(f)
+            mat.shader = _read_string(f)
+            ashort = struct.unpack("<h", f.read(2))[0]
+            if version > 4:
+                f.read(4)
+            prop_count = struct.unpack("<i", f.read(4))[0]
+            for _ in range(prop_count):
+                prop_name = _read_string(f)
+                prop_value = struct.unpack("<f", f.read(4))[0]
+                mat.props[prop_name] = prop_value
+                f.read(36)  # mv4f property value
+            tex_ref_count = struct.unpack("<i", f.read(4))[0]
+            for _ in range(tex_ref_count):
+                sample_name = _read_string(f)
+                sample_slot = struct.unpack("<i", f.read(4))[0]
+                tex_name = _read_string(f)
+                mat.textures[sample_name] = tex_name
+
+            shader = mat.shader.lower()
+            if any(shader.startswith(p) for p in (
+                    "ksperpixelat", "ksperpixelalpha", "ksskidmark",
+                    "ksflags", "ksgrass")):
+                mat.is_transparent = True
+            if shader == "ksgrass":
+                mat.is_grass = True
+            if shader == "kstree" or "tree" in shader:
+                mat.is_tree = True
+                mat.is_transparent = True
+            # Trees use the alpha of the diffuse for leaves typically.
+            scene.materials.append(mat)
+
+        # ---- Nodes ----
+        _read_nodes(f, scene.meshes, -1, scene)
+
+    # Save textures to disk if requested
+    if output_texture_dir:
+        os.makedirs(output_texture_dir, exist_ok=True)
+        for name, data in texture_bins.items():
+            safe = name.replace("\\", "/")
+            dest = os.path.join(output_texture_dir, safe)
+            os.makedirs(os.path.dirname(dest), exist_ok=True)
+            with open(dest, "wb") as out:
+                out.write(data)
+
+    return scene, texture_bins
+
+
+def world_transform(mesh, node_list):
+    """Return world (hierarchical) 4x4 matrix for a mesh."""
+    mats = {}
+    current = mesh
+    visited = []
+    # walk up to root
+    chain = []
+    idx = node_list.index(mesh)
+    pid = mesh.parent
+    while idx != -1:
+        chain.append(node_list[idx])
+        if node_list[idx].parent < 0:
+            break
+        idx = node_list[idx].parent
+    # chain[0] is the mesh, chain[-1] is root
+    M = np.identity(4)
+    for m in reversed(chain):
+        M = np.matmul(M, m.matrix)
+    return M
+
+
+def transform_point(p, M):
+    v = np.array([p[0], p[1], p[2], 1.0])
+    r = M.dot(v)
+    return r[0], r[1], r[2]
+
+
+def transform_normal(n, M):
+    v = np.array([n[0], n[1], n[2]])
+    # upper-left 3x3 (ignoring translation)
+    rot = M[:3, :3]
+    r = rot.dot(v)
+    return r[0], r[1], r[2]
+```
+
+beamng.log
+```
+4.954|I|GELua.| - core_input_bindings : { "core_input_actions", "core_input_categories", "core_multiseat", "tech_license", "core_versionUpdate" }
+4.954|I|GELua.| - core_camera : { "core_vehicle_manager", "core_environment" }
+4.954|I|GELua.| - ui_freeroamSelector_general : { "ui_gameplaySelector_tiles", "core_locales" }
+4.954|I|GELua.| - ui_vehicleSelector_detailsInteraction : { "ui_vehicleSelector_vehicleOperations", "ui_vehicleSelector_vehicleSpecifications" }
+4.954|I|GELua.| - freeroam_bigMapMode : { "gameplay_rawPois", "core_groundMarkers", "core_camera", "core_terrain", "freeroam_bigMapMarkers", "ui_pause_camera" }
+4.954|I|GELua.| - gameplay_traffic : { "gameplay_parking", "gameplay_police", "gameplay_taxi", "gameplay_traffic_trafficUtils", "core_vehicleActivePooling" }
+4.954|I|GELua.| - career_career : { "career_saveSystem", "core_recoveryPrompt", "gameplay_traffic" }
+4.954|I|GELua.| - ui_vehicleSelector_general : { "core_vehicles", "ui_vehicleSelector_detailsInteraction", "ui_vehicleSelector_tiles", "core_locales" }
+4.954|I|GELua.| - freeroam_bigMapPoiProvider : { "gameplay_missions_missions", "freeroam_bigMapMode", "gameplay_rawPois", "gameplay_playmodeMarkers" }
+4.954|I|GELua.| - core_sounds : { "core_camera", "core_settings_settings", "core_input_bindings" }
+4.954|I|GELua.| - gameplay_missions_missionManager : { "gameplay_traffic", "gameplay_police", "gameplay_parking", "ui_fadeScreen" }
+4.954|I|GELua.| - gameplay_markerInteraction : { "gameplay_missions_missions", "gameplay_missions_missionManager", "freeroam_bigMapMode", "gameplay_playmodeMarkers", "freeroam_bigMapPoiProvider", "ui_missionInfo" }
+4.954|I|GELua.| - gameplay_missions_missionScreen : { "gameplay_missions_missions", "gameplay_markerInteraction", "gameplay_playmodeMarkers" }
+4.954|I|GELua.| - editor_main : { "core_camera" }
+4.954|I|GELua.| - ui_bindingsLegend : { "core_input_actions", "core_input_bindings" }
+4.954|I|GELua.| - ui_gridSelector : { "ui_vehicleSelector_general", "ui_gameplaySelector_general", "ui_appSelector_general", "ui_freeroamSelector_general", "ui_quickraceSelector_general", "ui_lightRunnerSelector_general", "ui_busRouteSelector_general" }
+4.954|I|GELua.MPModManager.cleanUpSessionMods|Deleting all multiplayer mods
+4.954|I|GELua.MPModManager.cleanUpSessionMods|0 Mods cleaned up
+4.954|I|GELua.MPModManager.cleanUpSessionMods|Unloading extensions...
+4.954|E|GELua.MPCoreNetwork.send|Socket error: connection refused
+4.954|E|GELua.MPCoreNetwork.send|Stopped at index: 0 while trying to send 1 bytes of data.
+4.955|W|GELua.globals|set new global variable: "createRole"  to "function: 0x7f5d690b84d8"
+4.955|W|GELua.globals|=============== Stack Traceback >> START >>
+4.955|W|GELua.globals|(2) global C function 'require'
+4.955|W|GELua.globals|--------------- << END <<
+4.955|W|GELua.globals|
+4.955|W|GELua.globals|set new global variable: "removeRole"  to "function: 0x7f5d3ed6e0d8"
+4.955|W|GELua.globals|=============== Stack Traceback >> START >>
+4.955|W|GELua.globals|(2) global C function 'require'
+4.955|W|GELua.globals|--------------- << END <<
+4.955|W|GELua.globals|
+4.955|W|GELua.globals|set new global variable: "removeVehicleRole"  to "function: 0x7f5d933a7210"
+4.955|W|GELua.globals|=============== Stack Traceback >> START >>
+4.955|W|GELua.globals|(2) global C function 'require'
+4.955|W|GELua.globals|--------------- << END <<
+4.955|W|GELua.globals|
+4.955|W|GELua.|[This extension is quite slow and should be optimized] extensionLoadInternal MPVehicleGE: 68.13 ms
+4.957|D|GELua.core_versionUpdate.|Saving lastVersion to disk: "0.39.4.0.20972"
+4.961|D|vk-init|resetModeInternal begin (headless=false)
+4.962|D|vk-init|querying surface formats
+4.962|D|vk-init|surface formats: count=28, result=Success
+4.962|D|vk-init|querying surface capabilities
+4.962|D|vk-init|surface capabilities: result=Success, minExtent=1x1
+4.962|D|vk-init|querying present modes
+4.962|D|vk-init|present modes: count=4, result=Success
+4.967|D|vulkan|HDR surface selection: requested=false, osHdrEnabled=true, supported=true, best=scRGB, effective=LDR, swapchainColorspaceExt=true, hdrMetadataExt=true, chosenFormat=B8G8R8A8Unorm, chosenColorSpace=SrgbNonlinear, surfaceFormatCount=28
+4.967|D|vk-init|creating swapchain 2560x1600 format=B8G8R8A8Unorm minImageCount=3
+4.991|D|vk-init|swapchain created, result=Success
+4.992|D|vk-init|swapchain images acquired: count=3, result=Success
+4.992|D|vk-init|creating window render target 2560x1600
+4.997|D|vk-init|resetModeInternal done
+5.002|W|GELua.core_input_actions.|Action "bringToFront" uses 'onUp' instead of 'onDown', which adds input lag. If you're the author of this action, please double check and see if you can switch to 'onDown' instead.
+5.002|W|GELua.core_input_actions.|Action "toggleChat" uses 'onUp' instead of 'onDown', which adds input lag. If you're the author of this action, please double check and see if you can switch to 'onDown' instead.
+5.012|D|GELua.core_input_bindings.bindings|Loaded 309 bindings for device keyboard0
+5.012|D|GELua.core_input_bindings.bindings|Loaded 20 bindings for device mouse0
+5.188|D|GELua.core_cameraModes_relative.core_camera.relative|No refNodes found, using default fallback
+5.199|D|GELua.core_input_bindings.bindings|Loaded 309 bindings for device keyboard0
+5.200|D|GELua.core_input_bindings.bindings|Loaded 20 bindings for device mouse0
+5.203|D|cp|Copying from local to cloud: 'settings/cloud/settings.json'
+5.219|E|GELua.MPCoreNetwork.send|Socket error: closed
+6.202|E|GELua.MPCoreNetwork.send|Socket error: connection refused
+6.202|E|GELua.MPCoreNetwork.send|Stopped at index: 0 while trying to send 1 bytes of data.
+6.670|D|vk-init|resetModeInternal begin (headless=false)
+6.670|D|vk-init|querying surface formats
+6.670|D|vk-init|surface formats: count=28, result=Success
+6.670|D|vk-init|querying surface capabilities
+6.670|D|vk-init|surface capabilities: result=Success, minExtent=1x1
+6.670|D|vk-init|querying present modes
+6.670|D|vk-init|present modes: count=4, result=Success
+6.679|D|vulkan|HDR surface selection: requested=false, osHdrEnabled=true, supported=true, best=scRGB, effective=LDR, swapchainColorspaceExt=true, hdrMetadataExt=true, chosenFormat=B8G8R8A8Unorm, chosenColorSpace=SrgbNonlinear, surfaceFormatCount=28
+6.679|D|vk-init|creating swapchain 2560x1600 format=B8G8R8A8Unorm minImageCount=3
+6.688|D|vk-init|swapchain created, result=Success
+6.690|D|vk-init|swapchain images acquired: count=3, result=Success
+6.690|D|vk-init|creating window render target 2560x1600
+6.694|D|vk-init|resetModeInternal done
+7.212|D|cp|Copying from local to cloud: 'settings/cloud/settings.json'
+8.211|E|GELua.MPCoreNetwork.send|Socket error: closed
+8.346|D|vk-init|resetModeInternal begin (headless=false)
+8.346|D|vk-init|querying surface formats
+8.346|D|vk-init|surface formats: count=28, result=Success
+8.346|D|vk-init|querying surface capabilities
+8.346|D|vk-init|surface capabilities: result=Success, minExtent=1x1
+8.346|D|vk-init|querying present modes
+8.346|D|vk-init|present modes: count=4, result=Success
+8.351|D|vulkan|HDR surface selection: requested=false, osHdrEnabled=true, supported=true, best=scRGB, effective=LDR, swapchainColorspaceExt=true, hdrMetadataExt=true, chosenFormat=B8G8R8A8Unorm, chosenColorSpace=SrgbNonlinear, surfaceFormatCount=28
+8.351|D|vk-init|creating swapchain 1920x1172 format=B8G8R8A8Unorm minImageCount=3
+8.359|D|vk-init|swapchain created, result=Success
+8.362|D|vk-init|swapchain images acquired: count=3, result=Success
+8.362|D|vk-init|creating window render target 1920x1172
+8.365|D|vk-init|resetModeInternal done
+8.883|D|cp|Copying from local to cloud: 'settings/cloud/settings.json'
+9.613|D|GELua.util_richPresence.Rich Presence|Playing
+9.614|I|GELua.util_richPresence.Rich Presence|Setting activity to main_menu
+9.643|D|safeAreaNormalized|Safe area information not supported, using 1 as fallback
+9.645|W|CEF.MainGEUI#local://local/ui/ui-vue/dist/runtime.js:4|[Vue warn]: onBeforeUnmount is called when there is no active component instance to be associated with. Lifecycle injection APIs can only be used during execution of setup(). If you are using async setup(), make sure to register lifecycle hooks before the first await statement.
+9.650|D|GELua.core_modmanager.core_modmanager|getModsDisabledAfterUpdate: checkedOnce=true, setting=
+10.269|D|GELua.util_richPresence.Rich Presence|Playing
+10.334|E|GELua.MPCoreNetwork.send|Socket error: connection refused
+10.334|E|GELua.MPCoreNetwork.send|Stopped at index: 0 while trying to send 1 bytes of data.
+10.928|D|GELua.core_gamestate.gamestate|show main menu (true)
+10.929|D|GELua.util_richPresence.Rich Presence|Playing
+10.929|D|GELua.core_modmanager.core_modmanager|getModsDisabledAfterUpdate: checkedOnce=true, setting=
+10.934|D|GELua.ge_extensions_ui_router_managers_transitionManager.TransitionManager|Transition started: menu (transition_1_516b0963-740b-4976-95b6-c87a9ad30d40)
+10.949|D|GELua.core_modmanager.core_modmanager|getModsDisabledAfterUpdate: checkedOnce=true, setting=
+10.949|D|GELua.core_gamestate.gamestate|ui finished loading
+11.016|D|GELua.ge_extensions_ui_router_managers_transitionManager.Router|Router phase handoff -> routerStart for route: menu after 0.05s
+11.082|D|GELua.core_gamestate.gamestate|ui told us loading screen is now loaded
+11.083|D|GELua.ge_extensions_ui_router_managers_transitionManager.Router|Router phase routerStart -> mountReady for route: menu after 0.03s
+12.366|E|GELua.MPCoreNetwork.send|Socket error: closed
+12.682|D|GELua.ge_extensions_ui_router_managers_transitionManager.TransitionManager|Transition completed: transition_1_516b0963-740b-4976-95b6-c87a9ad30d40
+14.099|I|GELua.freeroam_freeroamConfigurator.freeroamConfigurator|Loaded configuration from settings/freeroamConfigurator.json
+14.099|D|GELua.ge_extensions_ui_router_managers_transitionManager.TransitionManager|Transition started: menu.freeroamLevels (transition_2_f5af7ea3-556b-4587-b237-d09aff7bd46c)
+14.216|D|GELua.ge_extensions_ui_router_managers_transitionManager.TransitionManager|Transition completed: transition_2_f5af7ea3-556b-4587-b237-d09aff7bd46c
+14.232|I|GELua.ui_freeroamSelector_general.|Reloading gameplay data for gameplay selector
+14.382|E|GELua.MPCoreNetwork.send|Socket error: connection refused
+14.382|E|GELua.MPCoreNetwork.send|Stopped at index: 0 while trying to send 1 bytes of data.
+15.549|I|GELua.freeroam_freeroamConfigurator.freeroamConfigurator|fetchSpawnPointTile: levelName=ac_interlagos_ruined, spawnPointName=Grid
+15.549|I|GELua.freeroam_freeroamConfigurator.freeroamConfigurator|fetchSpawnPointTile: using synthetic fallback tile for level ac_interlagos_ruined/Grid
+15.766|D|GELua.ge_extensions_ui_router_managers_transitionManager.TransitionManager|Transition started: menu.freeroamLevels.level (transition_3_3e5dff01-392c-4031-a2fd-55e96d35ece9)
+15.883|D|GELua.ge_extensions_ui_router_managers_transitionManager.TransitionManager|Transition completed: transition_3_3e5dff01-392c-4031-a2fd-55e96d35ece9
+16.399|E|GELua.MPCoreNetwork.send|Socket error: closed
+18.249|D|GELua.core_gamestate.gamestate|ui told us loading screen is now loaded
+18.251|I|GELua.freeroam_freeroamConfigurator.freeroamConfigurator|Saved configuration to settings/freeroamConfigurator.json
+18.311|I|GELua.core_vehiclePaints.|Found 255 paints, 46 paint collections, 57 multiPaintSetups in 2 paint libraries, 1 same-name paint names
+18.315|D|GELua.core_gamestate.gamestate|loading screen request from: freeroam; value before was: nil; first = true; loadingActive = true
+18.315|D|GELua.core_gamestate.gamestate|sending show loading screen
+18.315|D|GELua.core_gamestate.gamestate|exec fun direct
+18.353|I|GELua.core_quickAccess.|Loaded radial menu recent actions
+18.359|D|GELua.ge_extensions_gameplay_crawl_boundary.crawl_boundary|Reset boundary objects tracking
+18.359|D|GELua.gameplay_rawPois.|Raw Poi Lists Cleared. New Generation: 12
+18.359|D|GELua.core_gamestate.gamestate|loading screen request from: levels; value before was: nil; first = false; loadingActive = true
+18.359|D|GELua.core_gamestate.gamestate|exec fun direct
+18.359|D|GELua.core_gamestate.gamestate|loading screen request from: server.lua; value before was: nil; first = false; loadingActive = true
+18.359|D|GELua.core_gamestate.gamestate|exec fun direct
+18.359|I|GELua.levelLoading|Level loading: '/levels/ac_interlagos_ruined/'...
+18.376|D|LoadingManager|Starting to load objects for /levels/ac_interlagos_ruined/main/
+18.379|E|onAdd|ShapeBase::onAdd - no datablock on shape 18177:Player ()
+18.379|W|exec| (0): Register object failed for object  of class Player.
+18.420|I|ScatterSky|coordinate grid VB ready: 760 segments
+18.420|I|ScatterSky|equatorial grid VB ready: 816 segments
+18.420|I|ScatterSky|meridian VB ready: 76 segments
+18.420|I|ScatterSky|moon path VB ready: 72 segments
+18.421|I|ScatterSky|loaded 743 constellation segments
+18.426|I|ScatterSky|loaded 8404 stars (mag <= 6.5)
+18.427|I|ScatterSky|star VB ready: 8404 stars, 16808 tris
+18.427|I|ScatterSky|constellation VB ready: 743 segments
+18.427|I|ScatterSky|loaded 88 constellation labels
+18.428|D|LoadingManager|Loaded     1x engine.loading.stage.Environment::ScatterSky           in 0.043s (0.043s each; 0.043s total so far in this category)
+20.577|I|collada|Importing COLLADA: main.dae ...
+20.578|W|prepCollision|Performance: Mesh is using visible collision: /levels/ac_interlagos_ruined/art/shapes/main.dae - If that is intentional, please switch the mesh to 'Visible Mesh Final'
+20.762|I|collada|Importing COLLADA: tree_leaves.dae ...
+21.781|I|collada|Importing COLLADA: nocollision.dae ...
+21.859|I|collada|Importing COLLADA: tree_stems.dae ...
+21.859|W|prepCollision|Performance: Mesh is using visible collision: /levels/ac_interlagos_ruined/art/shapes/tree_stems.dae - If that is intentional, please switch the mesh to 'Visible Mesh Final'
+21.859|D|LoadingManager|Loaded     4x engine.loading.stage.Meshes::TSStatic             in 3.431s (0.858s each; 3.431s total so far in this category)
+21.859|I|_onObjectsReady|*** Built static data in 0.000s
+21.859|I|GELua.levelLoading|Level loaded: /levels/ac_interlagos_ruined/main.level.json
+21.859|I|PhysicsPlugin|Physics collision reloading...
+21.859|I|collisionCache|shared mesh cache: 0 unique meshes, 0 instances
+21.859|I|collisionCache|  unique 0.00mb, total (no sharing) 0.00mb, saved by sharing 0.00mb
+21.859|I|PhysicsPlugin|Physics collision reloaded in 0.000s (0 instances generated in 0.000s, using  0.00mb)
+21.860|I|GELua.spawn.lua|spawning pickup at initial position (-392.338226,-279.497070,16.246880)
+21.860|I|spawn|Spawning object 'pickup' with config: vehicles/pickup/d15_4wd_A.pc
+21.899|D|GELua.core_vehicle_manager.vehicleLoader|partConfigData [string] = "vehicles/pickup/d15_4wd_A.pc"
+22.184|W|GELua.core_licensePlateDesign.licensePlateDesign|could not find vehicles/common/licenseplates/ac_interlagos_ruined/licensePlate-default.sktemplate.json
+22.185|I|flexPaint|loaded 3 atlas fonts from art/sktemplates/fonts.json
+22.190|I|skiaGpu|Vulkan Graphite context ready in 5.2 ms (one-time); flex painter renders on GPU
+22.246|I|collada| # Mesh Cache rebuilt summary: 9 of 180 files freshly loaded, 0 files already in cache
+22.246|I|collada|1452 of 3899 meshes loaded -> 37.24 %
+22.265|D|GELua.core_vehicle_manager.loader|GE load time: 0.365686818 s
+22.411|D|GELua.core_cameraModes_relative.core_camera.relative|No refNodes found, using default fallback
+22.411|D|GELua.core_camera.|Camera switched to "orbit"
+22.422|D|GELua.util_richPresence.Rich Presence|Playing with Gavril D-Series
+22.423|W|GELua.core_input_actions.|Action "toggleChat" uses 'onUp' instead of 'onDown', which adds input lag. If you're the author of this action, please double check and see if you can switch to 'onDown' instead.
+22.423|W|GELua.core_input_actions.|Action "bringToFront" uses 'onUp' instead of 'onDown', which adds input lag. If you're the author of this action, please double check and see if you can switch to 'onDown' instead.
+22.431|D|GELua.core_input_bindings.bindings|Loaded 310 bindings for device keyboard0
+22.431|D|GELua.core_input_bindings.bindings|Loaded 20 bindings for device mouse0
+22.431|D|inputHelper|Step 2: No matches found for player 0, device 'keyboard0' (abandoning search on this device)
+22.431|D|inputHelper|          Failed to assign any FFB interface for action "steering" in vehicle 'pickup', vehicle ID 18191. Dumping the 0 binding candidates that were considered:
+22.431|D|logFFBInterfaces|Found 0 FFBInterface candidates (unsorted)
+22.431|D|inputHelper|Step 1: No matches found for player 0, device 'keyboard0', control 'up' (abandoning search on this device)
+22.431|D|inputHelper|Step 2: No matches found for player 0, device 'keyboard0' (abandoning search on this device)
+22.431|D|inputHelper|          Failed to assign any FFB interface for action "accelerate" in vehicle 'pickup', vehicle ID 18191. Dumping the 1 binding candidates that were considered:
+22.431|D|inputHelper|           * playerBinding: Player 0, devName "keyboard0", control "up"
+22.431|D|logFFBInterfaces|Found 0 FFBInterface candidates (unsorted)
+22.431|D|inputHelper|Step 1: No matches found for player 0, device 'keyboard0', control 'down' (abandoning search on this device)
+22.431|D|inputHelper|Step 2: No matches found for player 0, device 'keyboard0' (abandoning search on this device)
+22.431|D|inputHelper|          Failed to assign any FFB interface for action "brake" in vehicle 'pickup', vehicle ID 18191. Dumping the 1 binding candidates that were considered:
+22.431|D|inputHelper|           * playerBinding: Player 0, devName "keyboard0", control "down"
+22.431|D|logFFBInterfaces|Found 0 FFBInterface candidates (unsorted)
+22.431|D|inputHelper|Step 2: No matches found for player 0, device 'keyboard0' (abandoning search on this device)
+22.431|D|inputHelper|          Failed to assign any FFB interface for action "steering" in vehicle 'pickup', vehicle ID 18191. Dumping the 0 binding candidates that were considered:
+22.431|D|logFFBInterfaces|Found 0 FFBInterface candidates (unsorted)
+22.459|D|libbeamng.:18191|Checking for existence of platform-specific settings (platform='', path='/settings/.json')...
+22.460|D|libbeamng.default.init:18191|spawning vehicle /vehicles/pickup/
+22.492|D|libbeamng.loader:18191|Vehicle loading took: 4.1332419999982 ms
+22.502|D|libbeamng.controller.init:18191|Using relocated controller controller 'vehicleController' at '/vehicleController/vehicleController.lua', original file path: '/vehicleController.lua'
+22.524|D|GELua.util_richPresence.Rich Presence|Playing Freeroam with Gavril D-Series
+22.524|I|GELua.util_richPresence.Rich Presence|Setting activity to level_generic
+22.525|D|GELua.util_richPresence.Rich Presence|Playing Freeroam on Ac Interlagos Ruined with Gavril D-Series
+22.567|I|GELua.freeroam_freeroam.freeroam|Setting environment date to: 2026-06-20
+22.567|D|GELua.clientStartMission|starting levelPath: /levels/ac_interlagos_ruined/main.level.json
+22.567|D|GELua.freeroam_facilities.|Loaded facilities on level ac_interlagos_ruined (0 garages, 0 gasStations, 0 dealerships)
+22.568|I|GELua.core_environment.environment.nightLights|Registered 0 night lights, 0 night emissive TSStatics and 0 day/night intensity lights
+22.569|D|GELua.gameplay_achievement.gameplay_achievement|maybeSubmitStat: "meters_driven", 2116273.9187158
+22.569|D|GELua.gameplay_achievement.gameplay_achievement|maybeSubmitStat: "spawned_vehicle_stat", 0
+22.570|D|GELua.gameplay_achievement.gameplay_achievement|maybeSubmitStat: "air_time_minute", 36.407431102443
+22.570|D|GELua.gameplay_achievement.gameplay_achievement|maybeSubmitStat: "roll_over_stat", 31
+22.573|I|GELua.levelLoading|Loading screen disabled after 4.214s
+22.573|I|GELua.levelLoading|Level loaded in 4.214s: init 0.000s + datablocks 0.013s + materials 0.004s + objects 3.483s + ai.map 0.000s + decals 0.000s + physics 0.000s + cam 0.000s + player 0.662s + fade 0.052s
+22.573|D|GELua.core_gamestate.gamestate|loading screen request from: worldReadyState; value before was: nil; first = false; loadingActive = true
+22.573|D|GELua.core_gamestate.gamestate|exec fun direct
+22.574|I|GELua.ui_vehicleSelector_general.|Reloading vehicle data for vehicle selector
+22.700|D|GELua.serverConnection|Everything should be loaded setting worldReadyState to 1
+22.700|W|GELua.beammp_multiplayer.onWorldReadyState|1
+22.717|D|GELua.gameplay_playmodeMarkers.|Playmode markers/clusters cleared. New Generation: 12
+22.726|D|GELua.gameplay_missions_missions.|Found 544 file-based missions.
+22.729|D|GELua._lua_ge_extensions_gameplay_missions_proceduralMissionGenerators_timeTrialMissions.|Hid 0 prodecural TimeTrials missions because they were hidden by real missions.
+22.729|D|GELua.gameplay_missions_missions.|Found 0 procedural missions for level ac_interlagos_ruined.
+22.729|D|GELua.gameplay_crawl_saveSystem.crawl_save_system|Found 0 trail files in path: /levels/ac_interlagos_ruined/crawls/
+22.733|D|GELua.gamestate|Checking material finished loading
+22.733|D|GELua.core_gamestate.gamestate|show main menu (false)
+22.733|D|GELua.core_gamestate.gamestate|sending hide loading screen; showing main menu (false)
+22.733|W|GELua.beammp_multiplayer.onWorldReadyState|2
+22.734|D|GELua.ge_extensions_ui_router_managers_transitionManager.TransitionManager|Transition started: play (transition_4_4b9b1749-f398-484a-8859-953e9f446ba3)
+22.740|I|StarDbg|initStarShader ok: cbufferSize=208
+22.805|D|cp|Copying from local to cloud: 'settings/cloud/game-state.json'
+22.809|D|GELua.ge_extensions_ui_router_managers_transitionManager.Router|Router phase handoff -> routerStart for route: play after 0.02s
+22.845|D|inputHelper|Step 2: No matches found for player 0, device 'keyboard0' (abandoning search on this device)
+22.845|D|inputHelper|          Failed to assign any FFB interface for action "steering" in vehicle 'pickup', vehicle ID 18191. Dumping the 0 binding candidates that were considered:
+22.845|D|logFFBInterfaces|Found 0 FFBInterface candidates (unsorted)
+22.848|D|GELua.ge_extensions_ui_router_managers_transitionManager.Router|Router phase routerStart -> mountReady for route: play after 0.02s
+22.856|I|CEF.MainGEUI#local://local/ui/ui-vue/dist/base.js:58|Loading Screen: deactivating (false)
+22.878|D|GELua.ge_extensions_ui_router_managers_transitionManager.TransitionManager|Transition completed: transition_4_4b9b1749-f398-484a-8859-953e9f446ba3
+22.878|I|GELua.core_gamestate.gamestate|ui told us loading screen is unloaded: 1
+23.142|E|GELua.MPCoreNetwork.send|Socket error: connection refused
+23.142|E|GELua.MPCoreNetwork.send|Stopped at index: 0 while trying to send 1 bytes of data.
+24.398|D|OnBeforeContextMenu|MainGEUI | local://local/ui/entrypoints/main/index.html#/play
+24.398|D|OnContextMenuDismissed|MainGEUI | local://local/ui/entrypoints/main/index.html#/play
+24.921|E|GELua.MPCoreNetwork.send|Socket error: closed
+25.062|I|GELua.core_gamestate.gamestate|ui told us loading screen is unloaded: 2
+26.960|E|GELua.MPCoreNetwork.send|Socket error: connection refused
+26.960|E|GELua.MPCoreNetwork.send|Stopped at index: 0 while trying to send 1 bytes of data.
+28.202|D|GELua.gameplay_achievement.gameplay_achievement|maybeSubmitStat: "meters_driven", 2116274.9268167
+53.484|D|GELua.gameplay_achievement.gameplay_achievement|maybeSubmitStat: "meters_driven", 2116584.2463374
+56.312|D|GELua.core_camera.|Camera switched to "chase"
+57.328|D|GELua.core_camera.|Camera switched to "orbit"
+57.691|D|GELua.core_camera.|Camera switched to "driver"
+61.187|D|GELua.core_camera.|Camera switched to "driver"
+61.498|D|GELua.core_camera.|Camera switched to "orbit"
+69.563|D|GELua.ge_extensions_editor_api_gui.gui|initialize
+84.116|D|GELua.gameplay_achievement.gameplay_achievement|maybeSubmitStat: "meters_driven", 2116834.8726397
+```
+
+Why does the converted map `ac_interlagos_ruined` have no textures and no collisions?
+§a§
+Short version: **BeamNG is loading the level and the DAE files, but your generated references/config are wrong.**
+The log proves the DAEs are imported, but **zero physics collision instances** are created, and your texture paths point to files BeamNG is not actually finding.
+
+---
+
+## 1. The map is loading; the DAEs are not missing
+
+These log lines show BeamNG does find and import your shapes:
+
+```text
+20.577|I|collada|Importing COLLADA: main.dae ...
+20.762|I|collada|Importing COLLADA: tree_leaves.dae ...
+21.781|I|collada|Importing COLLADA: nocollision.dae ...
+21.859|I|collada|Importing COLLADA: tree_stems.dae ...
+```
+
+So this is **not** primarily a packaging/path-to-DAE issue.
+
+---
+
+# Why there are no collisions
+
+## Main smoking gun
+
+This line is the key:
+
+```text
+21.859|I|PhysicsPlugin|Physics collision reloading...
+21.859|I|collisionCache|shared mesh cache: 0 unique meshes, 0 instances
+21.859|I|PhysicsPlugin|Physics collision reloaded in 0.000s (0 instances generated...)
+```
+
+BeamNG imported your DAEs, but generated **0 collision instances**.
+
+---
+
+## Cause 1: your collidable TSStatics are marked `dynamic: True`
+
+In `build_level_json()` you create `main_track` like this:
+
+```python
+{
+    "class": "TSStatic",
+    "name": "main_track",
+    ...
+    "collisionType": "Visible Mesh",
+    ...
+    "dynamic": True,
+}
+```
+
+And `tree_stems` too:
+
+```python
+{
+    "class": "TSStatic",
+    "name": "tree_stems",
+    ...
+    "collisionType": "Visible Mesh",
+    "isRenderEnabled": False,
+    "dynamic": True,
+}
+```
+
+For level geometry, these should be **static**, not dynamic. Set them to `False` or remove the field.
+
+Also BeamNG itself warns you:
+
+```text
+Performance: Mesh is using visible collision: /levels/ac_interlagos_ruined/art/shapes/main.dae - If that is intentional, please switch the mesh to 'Visible Mesh Final'
+```
+
+So use:
+
+```python
+"collisionType": "Visible Mesh Final",
+"dynamic": False,
+```
+
+### Fix this in `build_level_json()`
+
+Change `main_track` to:
+
+```python
+{
+    "class": "TSStatic",
+    "name": "main_track",
+    "shapeName": "/levels/%s/art/shapes/main.dae" % level_name,
+    "position": [0, 0, 0],
+    "rotationMatrix": [1, 0, 0, 0, 1, 0, 0, 0, 1],
+    "scale": [1, 1, 1],
+    "collisionType": "Visible Mesh Final",
+    "decalType": "None",
+    "isRenderEnabled": True,
+    "locked": True,
+    "dynamic": False,
+}
+```
+
+And `tree_stems` to:
+
+```python
+{
+    "class": "TSStatic",
+    "name": "tree_stems",
+    "shapeName": "/levels/%s/art/shapes/tree_stems.dae" % level_name,
+    "position": [0, 0, 0],
+    "rotationMatrix": [1, 0, 0, 0, 1, 0, 0, 0, 1],
+    "scale": [1, 1, 1],
+    "collisionType": "Visible Mesh Final",
+    "decalType": "None",
+    "isRenderEnabled": False,
+    "locked": True,
+    "dynamic": False,
+}
+```
+
+You should probably set `dynamic: False` on the visual-only TSStatics too.
+
+---
+
+## Cause 2: your collision filtering may put too much into `nocollision.dae`
+
+This function is very restrictive:
+
+```python
+def classify_by_mesh(tm):
+    if is_tree_material(tm.material):
+        return "tree"
+    if is_water_material(tm.material):
+        return "water"
+    if is_road_like(tm.material):
+        return "collision"
+    return "decor"
+```
+
+Only materials matching `is_road_like()` get collision. Everything else becomes render-only.
+
+That means if the Assetto Corsa material names do not contain one of these keywords:
+
+```python
+"road", "curb", "kerb", "track", "asphalt",
+"tarmac", "runoff", "nnnn", "gravel", "rocc",
+"grass", "sand", "wall", "grail", "concrete",
+"pittra", "pit"
+```
+
+then that mesh goes to:
+
+```python
+nocollision.dae
+```
+
+with:
+
+```python
+"collisionType": "None"
+```
+
+So even after fixing `dynamic`, you may still have missing wall/terrain/building collisions.
+
+Add a debug print after building the DAEs:
+
+```python
+def count_tris(db):
+    return sum(len(g["indices"]) for g in db.geometries)
+
+print("    main collision geometries:", len(main.geometries), "tris:", count_tris(main))
+print("    nocollision geometries:", len(nocol.geometries), "tris:", count_tris(nocol))
+print("    tree stem geometries:", len(tree_stems.geometries), "tris:", count_tris(tree_stems))
+```
+
+If `main collision geometries` or `tris` is `0`, then your material classifier is the reason the road has no collision.
+
+A safer early version would be:
+
+```python
+def classify_by_mesh(tm):
+    mat = tm.material
+
+    if is_tree_material(mat):
+        return "tree"
+
+    if is_water_material(mat):
+        return "water"
+
+    if mat is not None:
+        name = (mat.name or "").lower()
+
+        # obvious visual-only stuff
+        if mat.is_transparent or mat.is_grass:
+            return "decor"
+
+        if any(kw in name for kw in (
+            "tree", "bush", "crowd", "people", "banner",
+            "flag", "wire", "line", "glass"
+        )):
+            return "decor"
+
+    # default opaque track geometry should collide
+    return "collision"
+```
+
+For an AC track conversion, it is usually better to start with **too much collision** and then remove bad objects later.
+
+---
+
+# Why there are no textures
+
+There are several texture path bugs.
+
+---
+
+## Cause 1: textures are extracted to `art/textures`, but the DAE points somewhere else
+
+You extract textures here:
+
+```python
+tex_dir = os.path.join(levels_dir, "art", "textures")
+extract_textures(scene, texture_bins, tex_dir)
+```
+
+So the real files become something like:
+
+```text
+/levels/ac_interlagos_ruined/art/textures/road_asphalt.png
+```
+
+But in `build_daes()` you assign:
+
+```python
+img = os.path.splitext(diff)[0] + ".png"
+```
+
+Then `dae_writer.py` writes:
+
+```xml
+<init_from>road_asphalt.png</init_from>
+```
+
+But the DAE file is in:
+
+```text
+/levels/ac_interlagos_ruined/art/shapes/main.dae
+```
+
+So this relative path points to:
+
+```text
+/levels/ac_interlagos_ruined/art/shapes/road_asphalt.png
+```
+
+not:
+
+```text
+/levels/ac_interlagos_ruined/art/textures/road_asphalt.png
+```
+
+So the DAE texture path is wrong.
+
+It should be something like:
+
+```text
+../textures/road_asphalt.png
+```
+
+or the material JSON should point to an absolute BeamNG path.
+
+---
+
+## Cause 2: `main.materials.json` removes the file extension
+
+In `build_materials_json()` you do this:
+
+```python
+base = os.path.splitext(mat["image"])[0]
+entry["Stages"][0]["colorMap"] = os.path.join(tex_dir_rel, base)
+```
+
+If `mat["image"]` is:
+
+```text
+road_asphalt.png
+```
+
+you write:
+
+```json
+"colorMap": "art/textures/road_asphalt"
+```
+
+That should be:
+
+```json
+"colorMap": "/levels/ac_interlagos_ruined/art/textures/road_asphalt.png"
+```
+
+or at least:
+
+```json
+"colorMap": "art/textures/road_asphalt.png"
+```
+
+Do **not** strip `.png`.
+
+---
+
+## Cause 3: on Windows, `os.path.join()` can write backslashes into BeamNG material paths
+
+This line:
+
+```python
+os.path.join(tex_dir_rel, base)
+```
+
+can produce:
+
+```text
+art/textures\road_asphalt
+```
+
+BeamNG paths should use forward slashes:
+
+```text
+art/textures/road_asphalt.png
+```
+
+Use `posixpath` for game paths, not `os.path`.
+
+---
+
+## Cause 4: `extract_textures()` returns a map, but you ignore it
+
+`extract_textures()` returns `saved`, but in `convert()` you ignore it:
+
+```python
+extract_textures(scene, texture_bins, tex_dir)
+```
+
+This is dangerous because if PIL fails to convert a texture, you fall back to writing the original file:
+
+```python
+fb = os.path.join(out_dir, raw_name)
+with open(fb, "wb") as f:
+    f.write(data)
+saved[base] = fb
+```
+
+But the material still references:
+
+```python
+base + ".png"
+```
+
+So if conversion failed and the actual written file is `.dds`, your material points to a nonexistent `.png`.
+
+---
+
+# Minimal texture fix
+
+Add this near the top of `converter.py`:
+
+```python
+import posixpath
+```
+
+Replace `extract_textures()` with this version:
+
+```python
+def extract_textures(scene, texture_bins, out_dir):
+    os.makedirs(out_dir, exist_ok=True)
+    saved_rel = {}
+
+    for raw_name, data in texture_bins.items():
+        safe_name = raw_name.replace("\\", "/")
+        stem, ext = posixpath.splitext(safe_name)
+
+        # Prefer PNG if Pillow can decode it.
+        rel_png = stem + ".png"
+        out_png = os.path.join(out_dir, *rel_png.split("/"))
+        os.makedirs(os.path.dirname(out_png), exist_ok=True)
+
+        try:
+            im = Image.open(BytesIO(data))
+            im = im.convert("RGBA")
+            im.save(out_png, "PNG")
+            saved_rel[raw_name] = rel_png
+            saved_rel[safe_name] = rel_png
+        except Exception:
+            # Fall back to original texture file.
+            rel_raw = safe_name
+            out_raw = os.path.join(out_dir, *rel_raw.split("/"))
+            os.makedirs(os.path.dirname(out_raw), exist_ok=True)
+
+            with open(out_raw, "wb") as f:
+                f.write(data)
+
+            saved_rel[raw_name] = rel_raw
+            saved_rel[safe_name] = rel_raw
+
+    return saved_rel
+```
+
+Then add this helper:
+
+```python
+def dae_texture_path(diff, texture_rel_map):
+    if not diff:
+        return None
+
+    safe = diff.replace("\\", "/")
+    rel = texture_rel_map.get(diff) or texture_rel_map.get(safe)
+
+    if not rel:
+        # fallback assumption
+        rel = posixpath.splitext(safe)[0] + ".png"
+
+    return posixpath.join("..", "textures", rel)
+```
+
+Change `build_daes()` signature:
+
+```python
+def build_daes(scene, texture_rel_map=None, shape_prefix="main"):
+```
+
+Inside it, change:
+
+```python
+if mat is not None:
+    diff = mat.textures.get("txDiffuse")
+    if diff:
+        img = os.path.splitext(diff)[0] + ".png"
+```
+
+to:
+
+```python
+if mat is not None:
+    diff = mat.textures.get("txDiffuse")
+    if diff:
+        img = dae_texture_path(diff, texture_rel_map or {})
+```
+
+Also change `build_tree_daes()` signature:
+
+```python
+def build_tree_daes(meshes, texture_rel_map=None):
+```
+
+and call it like this inside `build_daes()`:
+
+```python
+tree_leaves, tree_stems = build_tree_daes(meshes, texture_rel_map or {})
+```
+
+Inside `build_tree_daes()`, change:
+
+```python
+img = os.path.splitext(diff)[0] + ".png" if diff else None
+```
+
+to:
+
+```python
+img = dae_texture_path(diff, texture_rel_map or {}) if diff else None
+```
+
+Then in `convert()`:
+
+```python
+texture_rel_map = extract_textures(scene, texture_bins, tex_dir)
+
+main, nocol, tree_leaves, tree_stems = build_daes(scene, texture_rel_map)
+```
+
+---
+
+# Fix `main.materials.json`
+
+Change:
+
+```python
+def build_materials_json(dae_objects, tex_dir_rel):
+```
+
+to:
+
+```python
+def build_materials_json(dae_objects, level_name):
+```
+
+Then replace this:
+
+```python
+if mat["image"]:
+    # colorMap resolves relative to the level root
+    base = os.path.splitext(mat["image"])[0]
+    entry["Stages"][0]["colorMap"] = os.path.join(tex_dir_rel, base)
+```
+
+with:
+
+```python
+if mat["image"]:
+    img = mat["image"].replace("\\", "/")
+
+    # DAE image path is usually ../textures/foo.png.
+    if img.startswith("../textures/"):
+        rel = img[len("../textures/"):]
+    else:
+        rel = posixpath.basename(img)
+
+    entry["Stages"][0]["colorMap"] = (
+        "/levels/%s/art/textures/%s" % (level_name, rel)
+    )
+```
+
+Then change the call in `convert()` from:
+
+```python
+mats = build_materials_json([main, nocol, tree_leaves], "art/textures")
+```
+
+to:
+
+```python
+mats = build_materials_json([main, nocol, tree_leaves], level_name)
+```
+
+---
+
+# Also fix the collision JSON
+
+In `build_level_json()`, use:
+
+```python
+"collisionType": "Visible Mesh Final",
+"dynamic": False,
+```
+
+for `main_track` and `tree_stems`.
+
+For visual-only objects, use:
+
+```python
+"collisionType": "None",
+"dynamic": False,
+```
+
+---
+
+# Add sanity output
+
+Before writing the DAE files, add this:
+
+```python
+def count_tris(db):
+    return sum(len(g["indices"]) for g in db.geometries)
+
+print("    main.dae geometries:", len(main.geometries), "tris:", count_tris(main))
+print("    nocollision.dae geometries:", len(nocol.geometries), "tris:", count_tris(nocol))
+print("    tree_leaves.dae geometries:", len(tree_leaves.geometries), "tris:", count_tris(tree_leaves))
+print("    tree_stems.dae geometries:", len(tree_stems.geometries), "tris:", count_tris(tree_stems))
+```
+
+If you see:
+
+```text
+main.dae geometries: 0 tris: 0
+```
+
+then your material classifier is also preventing road collision from being exported.
+
+---
+
+## Summary
+
+Your map has no textures because:
+
+1. Textures are written to `art/textures`.
+2. The DAE points to `texture.png` beside the DAE in `art/shapes`.
+3. `main.materials.json` strips the `.png` extension.
+4. The texture extraction fallback can write `.dds` while materials still reference `.png`.
+5. `os.path.join()` can create backslash paths on Windows.
+
+Your map has no collisions because:
+
+1. BeamNG imported the DAEs but created `0` physics collision instances.
+2. Your collidable TSStatics are marked `"dynamic": True`.
+3. You are using `"Visible Mesh"` instead of `"Visible Mesh Final"`.
+4. Your classifier may be putting too many meshes into `nocollision.dae`.
+
+The first collision change I would make is:
+
+```python
+"collisionType": "Visible Mesh Final",
+"dynamic": False,
+```
+
+The first texture change I would make is: **preserve the actual extracted texture filename and write full `/levels/ac_interlagos_ruined/art/textures/...` paths with extensions in `main.materials.json`.**

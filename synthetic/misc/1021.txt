@@ -1,0 +1,23 @@
+§u§
+I am trying to create a google account inside of google play on grapheneos. It says that I need a SIM or eSIM in my device for phone number verification, even though I have a SIM installed and unlocked.
+§a§
+This is a known and very common issue on GrapheneOS. You are running into this because of how GrapheneOS handles Google apps to protect your privacy.
+
+### Why is this happening?
+On stock Android phones, Google Play Services is integrated into the system and has root-level access to your device's hardware. On GrapheneOS, Google Play Services is "sandboxed"—meaning it runs as a standard, unprivileged app.
+
+When you try to create a brand-new account directly inside the Google Play Store, Google attempts to perform a low-level hardware scan of your SIM card for anti-spam and verification purposes. Because GrapheneOS intentionally blocks apps from accessing these privileged hardware states and hardware identifiers, Google Play Services fails the check, falsely assuming there is no SIM card installed.
+
+### The Solution: Create the account in a web browser
+You cannot create the account directly through the Sandboxed Google Play app, but you can easily bypass this by creating the account in a web browser and then signing in.
+
+Here is the step-by-step workaround:
+1. **Close Google Play:** Force close the Google Play Store on your phone.
+2. **Open a Web Browser:** Open a browser (like Vanadium) on your phone, or use a completely separate computer. Using an "Incognito" or "Private" tab is highly recommended.
+3. **Create the Account:** Go to `google.com` or `gmail.com`, click **Sign In**, and then click **Create account**. Follow the prompts to create your new Google account.
+   * *Note:* If Google asks for a phone number for verification here, you can just manually type your phone number in. The browser won't try to physically scan your SIM card.
+4. **Sign in on Google Play:** Once your account is successfully created, go back to your phone, open the **Settings** app > **Passwords & accounts** > **Add account** > **Google** (or just open the Google Play Store). Enter the email and password you just created.
+
+Because you are now *signing in* rather than *creating a new account*, Google will not attempt the aggressive SIM hardware check, and the login will work perfectly.
+
+*Tip: If Google strictly demands a phone number on the web browser and you are trying to make an anonymous account without one, try connecting to a public Wi-Fi network or a different VPN server in an Incognito tab. Google's spam filters dictate whether a phone number is required based mostly on your IP address.*

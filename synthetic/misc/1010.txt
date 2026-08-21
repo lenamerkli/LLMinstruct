@@ -1,0 +1,270 @@
+§u§
+matura.html
+```
+<h2>Mathi Aufgaben auf Maturaniveau</h2>
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 1.2.1</h3>
+    <p>Entwickeln Sie den folgenden Term mithilfe dem binomischen Lehrsatz: <app-latex>\left(4d - \frac&#123;c&#125;&#123;d^2&#125;\right)^5</app-latex></p>
+  </app-task-description>
+  <app-task-solution>
+    <table>
+      <tr>
+        <th><app-latex>k</app-latex></th>
+        <th>Term</th>
+        <th>Vereinfacht</th>
+      </tr>
+      <tr>
+        <td><app-latex>k = 0</app-latex></td>
+        <td><app-latex>\binom&#123;5&#125;&#123;0&#125; \cdot (4d)^5 \cdot \left(-\frac&#123;c&#125;&#123;d^2&#125;\right)^0</app-latex></td>
+        <td><app-latex>= 1024d^5</app-latex></td>
+      </tr>
+      <tr>
+        <td><app-latex>k = 1</app-latex></td>
+        <td><app-latex>\binom&#123;5&#125;&#123;1&#125; \cdot (4d)^4 \cdot \left(-\frac&#123;c&#125;&#123;d^2&#125;\right)^1</app-latex></td>
+        <td><app-latex>= -1280c d^2</app-latex></td>
+      </tr>
+      <tr>
+        <td><app-latex>k = 2</app-latex></td>
+        <td><app-latex>\binom&#123;5&#125;&#123;2&#125; \cdot (4d)^3 \cdot \left(-\frac&#123;c&#125;&#123;d^2&#125;\right)^2</app-latex></td>
+        <td><app-latex>= 640\frac&#123;c^2&#125;&#123;d&#125;</app-latex></td>
+      </tr>
+      <tr>
+        <td><app-latex>k = 3</app-latex></td>
+        <td><app-latex>\binom&#123;5&#125;&#123;3&#125; \cdot (4d)^2 \cdot \left(-\frac&#123;c&#125;&#123;d^2&#125;\right)^3</app-latex></td>
+        <td><app-latex>= -160\frac&#123;c^3&#125;&#123;d^4&#125;</app-latex></td>
+      </tr>
+      <tr>
+        <td><app-latex>k = 4</app-latex></td>
+        <td><app-latex>\binom&#123;5&#125;&#123;4&#125; \cdot (4d)^1 \cdot \left(-\frac&#123;c&#125;&#123;d^2&#125;\right)^4</app-latex></td>
+        <td><app-latex>= 20\frac&#123;c^4&#125;&#123;d^7&#125;</app-latex></td>
+      </tr>
+      <tr>
+        <td><app-latex>k = 5</app-latex></td>
+        <td><app-latex>\binom&#123;5&#125;&#123;5&#125; \cdot (4d)^0 \cdot \left(-\frac&#123;c&#125;&#123;d^2&#125;\right)^5</app-latex></td>
+        <td><app-latex>= -\frac&#123;c^5&#125;&#123;d^&#123;10&#125;&#125;</app-latex></td>
+      </tr>
+    </table>
+    <p>
+      <app-latex>\left(4d - \frac&#123;c&#125;&#123;d^2&#125;\right)^5 = 1024d^5 - 1280c d^2 + 640\frac&#123;c^2&#125;&#123;d&#125; - 160\frac&#123;c^3&#125;&#123;d^4&#125; + 20\frac&#123;c^4&#125;&#123;d^7&#125; - \frac&#123;c^5&#125;&#123;d^&#123;10&#125;&#125;</app-latex>
+    </p>
+  </app-task-solution>
+</app-task>
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 1.2.2</h3>
+    <p>Das gerade Prisma <app-latex>A B C D E F</app-latex> mit dreieckiger Grundfläche wird durch die Punkte <app-latex>A(33|18|40), E(0|12|0), F(-7|-12|15), M(\frac&#123;17&#125;&#123;2&#125;|9|\frac&#123;55&#125;&#123;2&#125;)</app-latex> bestimmt, wobei <app-latex>M</app-latex> der Mittelpunkt der Seitenfläche <app-latex>C B E F</app-latex> ist.</p>
+    <img src="1-2-2-1.png" alt="" [style.height]="'8em'">
+    <p>Berechnen Sie die Koordinaten der Eckpunkte <app-latex>B</app-latex> und <app-latex>C</app-latex> und zeigen Sie, dass <app-latex>D</app-latex> die Koordinaten <app-latex>(9|0|0)</app-latex> hat.</p>
+  </app-task-description>
+  <app-task-solution>
+    <p><app-latex>\vec&#123;EM&#125; = \begin&#123;pmatrix&#125; \frac&#123;17&#125;&#123;2&#125; \\ 9 \\ \frac&#123;55&#125;&#123;2&#125; \end&#123;pmatrix&#125; - \begin&#123;pmatrix&#125; 0 \\ 12 \\ 0 \end&#123;pmatrix&#125; = \begin&#123;pmatrix&#125; \frac&#123;17&#125;&#123;2&#125; \\ -3 \\ \frac&#123;55&#125;&#123;2&#125; \end&#123;pmatrix&#125;</app-latex></p>
+    <p><app-latex>\vec&#123;0C&#125; = \vec&#123;0E&#125; + 2 \cdot \vec&#123;EM&#125; = \begin&#123;pmatrix&#125; 0 \\ 12 \\ 0 \end&#123;pmatrix&#125; + 2 \cdot \begin&#123;pmatrix&#125; \frac&#123;17&#125;&#123;2&#125; \\ -3 \\ \frac&#123;55&#125;&#123;2&#125; \end&#123;pmatrix&#125; = \begin&#123;pmatrix&#125; 17 \\ 6 \\ 55 \end&#123;pmatrix&#125;</app-latex></p>
+    <p><app-latex>C(17|6|55)</app-latex></p>
+    <p><app-latex>\vec&#123;FC&#125; = \begin&#123;pmatrix&#125; 17 \\ 6 \\ 55 \end&#123;pmatrix&#125; - \begin&#123;pmatrix&#125; -7 \\ -12 \\ 15 \end&#123;pmatrix&#125; = \begin&#123;pmatrix&#125; 24 \\ 18 \\ 40 \end&#123;pmatrix&#125;</app-latex></p>
+    <p><app-latex>\vec&#123;EB&#125; = \vec&#123;FC&#125;</app-latex></p>
+    <p><app-latex>\vec&#123;0B&#125; = \vec&#123;0E&#125; + \vec&#123;EB&#125; = \begin&#123;pmatrix&#125; 0 \\ 12 \\ 0 \end&#123;pmatrix&#125; + \begin&#123;pmatrix&#125; 24 \\ 18 \\ 40 \end&#123;pmatrix&#125; = \begin&#123;pmatrix&#125; 24 \\ 30 \\ 40 \end&#123;pmatrix&#125;</app-latex></p>
+    <p><app-latex>B(24|30|40)</app-latex></p>
+    <p><app-latex>\vec&#123;DA&#125; = \vec&#123;FC&#125;</app-latex></p>
+    <p><app-latex>\vec&#123;0D&#125; = \vec&#123;0A&#125; - \vec&#123;DA&#125; = \begin&#123;pmatrix&#125; 33 \\ 18 \\ 40 \end&#123;pmatrix&#125; - \begin&#123;pmatrix&#125; 24 \\ 18 \\ 40 \end&#123;pmatrix&#125; = \begin&#123;pmatrix&#125; 9 \\ 0 \\ 0 \end&#123;pmatrix&#125;</app-latex></p>
+    <p><app-latex>D(9|0|0)</app-latex></p>
+  </app-task-solution>
+</app-task>
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 1.2.3 (Fortführung von 1.2.2)</h3>
+    <p>Zeigen Sie, dass das Dreieck <app-latex>DEF</app-latex> beim Eckpunkt <app-latex>D</app-latex> einen rechten Winkel hat.</p>
+  </app-task-description>
+  <app-task-solution>
+    <p><app-latex>\vec&#123;DE&#125; \cdot \vec&#123;DF&#125; = \begin&#123;pmatrix&#125; -9 \\ 12 \\ 0 \end&#123;pmatrix&#125; \cdot \begin&#123;pmatrix&#125; -16 \\ -12 \\ 15 \end&#123;pmatrix&#125; = (-9) \cdot (-16) + 12 \cdot (-12) + 0 \cdot 15 = 144 - 144 + 0 = 0</app-latex></p>
+    <p>Da das Skalarprodukt <app-latex>\vec&#123;DE&#125; \cdot \vec&#123;DF&#125; = 0</app-latex> ist, gilt <app-latex>\angle&#123;EDF&#125; = 90\degree</app-latex></p>
+  </app-task-solution>
+</app-task>
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 1.2.4 (Fortführung von 1.2.2)</h3>
+    <p>Berechnen Sie das Volumen des Prismas <app-latex>A B C D E F</app-latex>.</p>
+  </app-task-description>
+  <app-task-solution>
+    <p><app-latex>|\vec&#123;DE&#125;| = \sqrt&#123;(-9)^2+12^2+0^2&#125;=\sqrt&#123;225&#125;=15</app-latex></p>
+    <p><app-latex>|\vec&#123;DF&#125;| = \sqrt&#123;(-16)^2+(-12)^2+15^2&#125; = \sqrt&#123;256+144+225&#125;=\sqrt&#123;625&#125;=25</app-latex></p>
+    <p><app-latex>|\vec&#123;DA&#125;| = \sqrt&#123;24^2+18^2+40^2&#125; = \sqrt&#123;576+324+1600&#125;=\sqrt&#123;2500&#125;=50</app-latex></p>
+    <p><app-latex>\frac&#123;1&#125;&#123;2&#125; \cdot |\vec&#123;DE&#125;| \cdot |\vec&#123;DF&#125;| \cdot |\vec&#123;DA&#125;| = \frac&#123;1&#125;&#123;2&#125; \cdot 15 \cdot 25 \cdot 50 = 9375</app-latex></p>
+  </app-task-solution>
+</app-task>
+```
+
+OCR
+```
+
+# Teil 1: Aufgabenstellungen (Bild 1)
+
+* **a.** Berechnen Sie die Koordinaten der Eckpunkte $B$ und $C$ und zeigen Sie, dass $D$ die Koordinaten $D(9 / 0 / 0)$ hat.
+* **b.** Zeigen Sie, dass das Dreieck $DEF$ beim Eckpunkt $D$ einen rechten Winkel hat und berechnen Sie das Volumen des Prismas $ABCDEF$.
+* **c.** Stellen Sie die Koordinatengleichung der Ebene $\mathcal{E}_{AEM}$ auf.
+* **d.** Die Gerade $g$ verläuft durch den Schwerpunkt $S$ des Dreiecks $DEF$ und durch den Punkt $M$. Unter welchem Winkel schneidet die Gerade $g$ die $xz$-Ebene?
+* **e.** Die Gerade $h$ verläuft durch die Punkte $C$ und $E$. Bestimmen Sie den minimalen Abstand der Geraden $h$ vom Punkt $D$.
+
+---
+
+# Teil 2: Lösungen (Bilder 2 & 3)
+
+### Lösung zu Aufgabenteil c.
+
+$$
+\begin{vmatrix}
+33a & +18b & +40c & +d & = 0 \\
+    & +12b &      & +d & = 0 \\
+8.5a & +9b  & +27.5c & +d & = 0
+\end{vmatrix}
+$$
+
+*Division durch $d$ und Umbenennung der Variablen ergibt ein $3\times3$-System, das mit dem Rechner gelöst werden kann:*
+
+$$
+\begin{vmatrix}
+33\frac{a}{d} & +18\frac{b}{d} & +40\frac{c}{d} & +1 & = 0 \\
+              & +12\frac{b}{d} &                & +1 & = 0 \\
+8.5\frac{a}{d} & +9\frac{b}{d}  & +27.5\frac{c}{d} & +1 & = 0
+\end{vmatrix}
+\quad \rightarrow \quad
+\begin{vmatrix}
+33a' & +18b' & +40c' & = -1 \\
+     & 12b'  &       & = -1 \\
+8.5a' & +9b'  & +27.5c' & = -1
+\end{vmatrix}
+$$
+
+**Taschenrechner:**
+$$a' = \frac{19}{454} \quad b' = -\frac{1}{12} \quad c' = -\frac{5}{227}$$
+
+$$
+\begin{aligned}
+\rightarrow \mathcal{E}_{AEM} &: \frac{19}{454}x - \frac{1}{12}y - \frac{5}{227}z = -1 \quad \Big/ \cdot 6 \cdot 454 \\
+\rightarrow \mathcal{E}_{AEM} &: \mathbf{114x - 227y - 60z + 2724 = 0}
+\end{aligned}
+$$
+
+---
+
+### Lösung zu Aufgabenteil d.
+
+$$
+\overrightarrow{OS} = \frac{1}{3}\left(\overrightarrow{OD} + \overrightarrow{OE} + \overrightarrow{OF}\right) = \frac{1}{3}\left( \begin{bmatrix} 9 \\ 0 \\ 0 \end{bmatrix} + \begin{bmatrix} 0 \\ 12 \\ 0 \end{bmatrix} + \begin{bmatrix} -7 \\ -12 \\ 15 \end{bmatrix} \right) = \frac{1}{3} \begin{bmatrix} 2 \\ 0 \\ 15 \end{bmatrix} \quad \rightarrow \quad \underline{\underline{S\left( \frac{2}{3} \;\middle|\; 0 \;\middle|\; 5 \right)}}
+$$
+
+**Richtungsvektor von $g$:**
+$$
+\overrightarrow{MS} = \begin{bmatrix} \frac{2}{3} \\ 0 \\ 5 \end{bmatrix} - \begin{bmatrix} \frac{17}{2} \\ 9 \\ \frac{55}{2} \end{bmatrix} = \begin{bmatrix} -\frac{47}{6} \\ -9 \\ -\frac{45}{2} \end{bmatrix} \quad \parallel \quad \begin{bmatrix} -47 \\ -54 \\ -135 \end{bmatrix}
+$$
+
+**Normalenvektor der $xz$-Ebene:**
+$$
+\vec{n}_{xz} = \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix}
+$$
+
+---
+
+### Lösung zu Aufgabenteil e.
+
+**Gerade $h$ durch $E$ und $C$:**
+$$
+h: \begin{bmatrix} x \\ y \\ z \end{bmatrix} = \begin{bmatrix} 0 \\ 12 \\ 0 \end{bmatrix} + r \begin{bmatrix} 17 \\ -6 \\ 55 \end{bmatrix}
+$$
+
+**$\mathcal{E}$ = Normalebene durch $h$, die den Punkt $D$ enthält:**
+$$
+\mathcal{E}: 17x - 6y + 55z + d = 0
+$$
+
+$$
+D(9 \mid 0 \mid 0) \in \mathcal{E} \quad \rightarrow \quad \underline{d = -153}
+$$
+
+**Schnittpunkt von $h$ und $\mathcal{E}$:**
+$$
+17 \cdot 17r - 6 \cdot (12 - 6r) + 55 \cdot 55r - 153 = 0 \quad \rightarrow \quad \underline{\underline{r = \frac{9}{134}}}
+$$
+
+$$
+\overrightarrow{OQ} = \begin{bmatrix} 0 \\ 12 \\ 0 \end{bmatrix} + \frac{9}{134} \cdot \begin{bmatrix} 17 \\ -6 \\ 55 \end{bmatrix} = \begin{bmatrix} \frac{153}{134} \\ \frac{1554}{134} \\ \frac{495}{134} \end{bmatrix}
+$$
+
+$$
+\overrightarrow{DQ} = \begin{bmatrix} \frac{153}{134} \\ \frac{1554}{134} \\ \frac{495}{134} \end{bmatrix} - \begin{bmatrix} 9 \\ 0 \\ 0 \end{bmatrix} = \begin{bmatrix} \frac{-1053}{134} \\ \frac{1554}{134} \\ \frac{495}{134} \end{bmatrix}
+$$
+
+**Minimaler Abstand:**
+$$
+|\overrightarrow{DQ}| = \frac{75}{134}\sqrt{670} \approx \underline{\underline{14.49}}
+$$
+```
+Füge diese Aufgaben zu `matura.html` hinzu. Beachte den Stil und Aufbau der bestehenden Aufgaben.
+§a§
+Hier sind die drei neuen Aufgaben als `<app-task>`-Blöcke, die du nach dem letzten `</app-task>` (nach Aufgabe 1.2.4) in deine `matura.html` einfügen kannst. Ich habe den Stil und die Struktur der bestehenden Aufgaben übernommen und alle mathematischen Ausdrücke mit `<app-latex>` formatiert.
+
+```html
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 1.2.5</h3>
+    <p>Stellen Sie die Koordinatengleichung der Ebene <app-latex>\mathcal{E}_{AEM}</app-latex> auf.</p>
+  </app-task-description>
+  <app-task-solution>
+    <p>Allgemeine Ebenengleichung: <app-latex>ax + by + cz + d = 0</app-latex></p>
+    <p>Punkt <app-latex>A(33|18|40)</app-latex>: <app-latex>33a + 18b + 40c + d = 0</app-latex></p>
+    <p>Punkt <app-latex>E(0|12|0)</app-latex>: <app-latex>12b + d = 0</app-latex></p>
+    <p>Punkt <app-latex>M(\frac{17}{2}|9|\frac{55}{2})</app-latex>: <app-latex>\frac{17}{2}a + 9b + \frac{55}{2}c + d = 0</app-latex></p>
+    <p>Division durch <app-latex>d</app-latex> und Umbenennung der Variablen ergibt ein <app-latex>3\times 3</app-latex>-System, das mit dem Rechner gelöst werden kann:</p>
+    <p><app-latex>33a' + 18b' + 40c' + 1 = 0</app-latex></p>
+    <p><app-latex>12b' + 1 = 0</app-latex></p>
+    <p><app-latex>\frac{17}{2}a' + 9b' + \frac{55}{2}c' + 1 = 0</app-latex></p>
+    <p>Taschenrechner: <app-latex>a' = \frac{19}{454}, \quad b' = -\frac{1}{12}, \quad c' = -\frac{5}{227}</app-latex></p>
+    <p><app-latex>\Rightarrow \mathcal{E}_{AEM}: \frac{19}{454}x - \frac{1}{12}y - \frac{5}{227}z = -1 \quad \Big/ \cdot 6 \cdot 454</app-latex></p>
+    <p><app-latex>\Rightarrow \mathcal{E}_{AEM}: 114x - 227y - 60z + 2724 = 0</app-latex></p>
+  </app-task-solution>
+</app-task>
+
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 1.2.6</h3>
+    <p>Die Gerade <app-latex>g</app-latex> verläuft durch den Schwerpunkt <app-latex>S</app-latex> des Dreiecks <app-latex>DEF</app-latex> und durch den Punkt <app-latex>M</app-latex>. Unter welchem Winkel schneidet die Gerade <app-latex>g</app-latex> die <app-latex>xz</app-latex>-Ebene?</p>
+  </app-task-description>
+  <app-task-solution>
+    <p><app-latex>\overrightarrow{OS} = \frac{1}{3}\left(\overrightarrow{OD} + \overrightarrow{OE} + \overrightarrow{OF}\right) = \frac{1}{3}\left( \begin{pmatrix} 9 \\ 0 \\ 0 \end{pmatrix} + \begin{pmatrix} 0 \\ 12 \\ 0 \end{pmatrix} + \begin{pmatrix} -7 \\ -12 \\ 15 \end{pmatrix} \right) = \frac{1}{3} \begin{pmatrix} 2 \\ 0 \\ 15 \end{pmatrix} \Rightarrow S\left( \frac{2}{3} \middle| 0 \middle| 5 \right)</app-latex></p>
+    <p>Richtungsvektor von <app-latex>g</app-latex>:</p>
+    <p><app-latex>\overrightarrow{MS} = \begin{pmatrix} \frac{2}{3} \\ 0 \\ 5 \end{pmatrix} - \begin{pmatrix} \frac{17}{2} \\ 9 \\ \frac{55}{2} \end{pmatrix} = \begin{pmatrix} -\frac{47}{6} \\ -9 \\ -\frac{45}{2} \end{pmatrix} \parallel \begin{pmatrix} -47 \\ -54 \\ -135 \end{pmatrix}</app-latex></p>
+    <p>Normalenvektor der <app-latex>xz</app-latex>-Ebene: <app-latex>\vec{n}_{xz} = \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix}</app-latex></p>
+    <p>Für den Winkel <app-latex>\alpha</app-latex> zwischen Gerade und Ebene gilt:</p>
+    <p><app-latex>\sin \alpha = \frac{|\vec{n} \cdot \vec{u}|}{|\vec{n}| \cdot |\vec{u}|}</app-latex> mit <app-latex>\vec{u} = (-47, -54, -135)^T</app-latex></p>
+    <p><app-latex>|\vec{n} \cdot \vec{u}| = |0 \cdot (-47) + 1 \cdot (-54) + 0 \cdot (-135)| = 54</app-latex></p>
+    <p><app-latex>|\vec{n}| = 1, \quad |\vec{u}| = \sqrt{(-47)^2 + (-54)^2 + (-135)^2} = \sqrt{23350}</app-latex></p>
+    <p><app-latex>\sin \alpha = \frac{54}{\sqrt{23350}} \Rightarrow \alpha = \arcsin\left( \frac{54}{\sqrt{23350}} \right) \approx 20.7^\circ</app-latex></p>
+  </app-task-solution>
+</app-task>
+
+<app-task>
+  <app-task-description>
+    <h3>Aufgabe 1.2.7</h3>
+    <p>Die Gerade <app-latex>h</app-latex> verläuft durch die Punkte <app-latex>C</app-latex> und <app-latex>E</app-latex>. Bestimmen Sie den minimalen Abstand der Geraden <app-latex>h</app-latex> vom Punkt <app-latex>D</app-latex>.</p>
+  </app-task-description>
+  <app-task-solution>
+    <p>Gerade <app-latex>h</app-latex> durch <app-latex>E</app-latex> und <app-latex>C</app-latex>:</p>
+    <p><app-latex>h: \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} 0 \\ 12 \\ 0 \end{pmatrix} + r \begin{pmatrix} 17 \\ -6 \\ 55 \end{pmatrix}</app-latex></p>
+    <p>Normalebene <app-latex>\mathcal{E}</app-latex> durch <app-latex>h</app-latex>, die den Punkt <app-latex>D</app-latex> enthält:</p>
+    <p><app-latex>\mathcal{E}: 17x - 6y + 55z + d = 0</app-latex></p>
+    <p><app-latex>D(9|0|0) \in \mathcal{E} \Rightarrow 17 \cdot 9 - 6 \cdot 0 + 55 \cdot 0 + d = 0 \Rightarrow d = -153</app-latex></p>
+    <p>Schnittpunkt <app-latex>Q</app-latex> von <app-latex>h</app-latex> und <app-latex>\mathcal{E}</app-latex>:</p>
+    <p><app-latex>17 \cdot 17r - 6(12 - 6r) + 55 \cdot 55r - 153 = 0 \Rightarrow 3350r - 225 = 0 \Rightarrow r = \frac{9}{134}</app-latex></p>
+    <p><app-latex>\overrightarrow{OQ} = \begin{pmatrix} 0 \\ 12 \\ 0 \end{pmatrix} + \frac{9}{134} \begin{pmatrix} 17 \\ -6 \\ 55 \end{pmatrix} = \begin{pmatrix} \frac{153}{134} \\ \frac{1554}{134} \\ \frac{495}{134} \end{pmatrix}</app-latex></p>
+    <p><app-latex>\overrightarrow{DQ} = \begin{pmatrix} \frac{153}{134} \\ \frac{1554}{134} \\ \frac{495}{134} \end{pmatrix} - \begin{pmatrix} 9 \\ 0 \\ 0 \end{pmatrix} = \begin{pmatrix} -\frac{1053}{134} \\ \frac{1554}{134} \\ \frac{495}{134} \end{pmatrix}</app-latex></p>
+    <p>Minimaler Abstand:</p>
+    <p><app-latex>|\overrightarrow{DQ}| = \frac{1}{134}\sqrt{1053^2 + 1554^2 + 495^2} = \frac{75}{134}\sqrt{670} \approx 14.49</app-latex></p>
+  </app-task-solution>
+</app-task>
+```
+
+**Hinweise:**
+- Die neuen Aufgaben setzen die Nummerierung mit 1.2.5, 1.2.6 und 1.2.7 fort.
+- In Aufgabe 1.2.6 wurde die fehlende Winkelberechnung ergänzt (im OCR-Text war sie nicht explizit ausgeführt).
+- Alle mathematischen Ausdrücke verwenden `<app-latex>` wie in den bestehenden Aufgaben.
+- Die Punkte und Vektoren sind im gleichen Stil (z. B. `A(33|18|40)`, `\begin{pmatrix}`) formatiert.

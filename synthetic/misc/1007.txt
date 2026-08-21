@@ -1,0 +1,53 @@
+§u§
+<attach:3eef86ea2b5e5531e29e0b614ac10b3cfcb7a4704485e18e899a0488eba56f76>zu latex
+§a§
+Hier ist der LaTeX-Code für die drei Beträge und die Volumenformel (mit `\underbrace` für die Beschriftungen „Grundfläche“ und „Höhe“):
+
+```latex
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+
+\begin{document}
+
+\begin{align*}
+\left|\overline{DE}\right| &= \sqrt{(-9)^2+12^2+0^2}=\sqrt{225}=15 \\[4pt]
+\left|\overline{DF}\right| &= \sqrt{(-16)^2+(-12)^2+15^2}
+ = \sqrt{256+144+225}=\sqrt{625}=25 \\[4pt]
+\left|\overline{DA}\right| &= \sqrt{24^2+18^2+40^2}
+ = \sqrt{576+324+1600}=\sqrt{2500}=50
+\end{align*}
+
+\medskip
+\noindent
+$\displaystyle
+\text{Volumen}
+= \underbrace{\frac{1}{2}\,\overline{DE}\cdot\overline{DF}}_{\displaystyle\text{Grundfläche}}
+  \cdot \underbrace{\overline{DA}}_{\displaystyle\text{Höhe}}
+= \frac{1}{2}\cdot 15\cdot 25\cdot 50 = 9375
+$
+
+\end{document}
+```
+
+**Hinweise**
+
+- `\left|\overline{DE}\right|` erzeugt die Betragsstriche um den Vektor/ die Länge.
+- `\underbrace{...}_{\text{...}}` zeichnet die geschweifte Klammer und setzt den Text darunter.
+- Falls du die drei Zeilen nicht als `align*` sondern einzeln als `equation` haben willst, kannst du einfach `\\` durch Zeilenumbrüche in einem `gather*` ersetzen.
+
+Wenn du nur das reine Mathe-Beispiel (ohne Dokumentenkopf) brauchst, reicht dieser Teil:
+
+```latex
+\begin{align*}
+\left|\overline{DE}\right| &= \sqrt{(-9)^2+12^2+0^2}=\sqrt{225}=15 \\
+\left|\overline{DF}\right| &= \sqrt{(-16)^2+(-12)^2+15^2}=\sqrt{256+144+225}=\sqrt{625}=25 \\
+\left|\overline{DA}\right| &= \sqrt{24^2+18^2+40^2}=\sqrt{576+324+1600}=\sqrt{2500}=50
+\end{align*}
+
+\text{Volumen} = \underbrace{\tfrac12\overline{DE}\,\overline{DF}}_{\text{Grundfläche}}
+  \cdot \underbrace{\overline{DA}}_{\text{Höhe}}
+  = \tfrac12\cdot 15\cdot 25\cdot 50 = 9375
+```

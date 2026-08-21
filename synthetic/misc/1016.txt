@@ -1,0 +1,650 @@
+§u§
+```
+Python 3.13.14 (main, Jun 11 2026, 00:00:00) [GCC 16.1.1 20260515 (Red Hat 16.1.1-2)] on linux
+from miner_u_pro import pdf_to_markdown
+pdf_to_markdown('/home/lena/Downloads/SPS_Zusammenfassung_2025-06-10.pdf')
+MinerU: extracting page 1/3
+Predict: 100%|██████████| 1/1 [00:13<00:00, 13.88s/it]
+2026-08-20 11:38:48.743 | DEBUG    | mineru_vl_utils.mineru_client:parse_layout_output:239 - Layout raw output:
+<|box_start|>290 196 709 222<|box_end|><|ref_start|>title<|ref_end|><|rotate_up|>
+<|box_start|>443 245 552 260<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>443 274 552 289<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>194 322 411 339<|box_end|><|ref_start|>title<|ref_end|><|rotate_up|>
+<|box_start|>194 353 802 369<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>194 382 802 398<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>194 353 802 398<|box_end|><|ref_start|>list<|ref_end|><|rotate_up|>
+<|box_start|>221 400 802 414<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>221 416 802 430<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>221 432 802 446<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>221 400 802 446<|box_end|><|ref_start|>list<|ref_end|><|rotate_up|>
+<|box_start|>194 460 802 474<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>221 476 802 490<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>221 492 802 507<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>221 509 802 523<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>221 525 802 540<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>221 476 802 540<|box_end|><|ref_start|>list<|ref_end|><|rotate_up|>
+<|box_start|>194 584 347 601<|box_end|><|ref_start|>title<|ref_end|><|rotate_up|>
+<|box_start|>221 616 456 632<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>221 641 535 655<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>221 666 461 680<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>221 690 589 706<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>221 616 589 706<|box_end|><|ref_start|>list<|ref_end|><|rotate_up|>
+<|box_start|>193 728 554 748<|box_end|><|ref_start|>title<|ref_end|><|rotate_up|>
+<|box_start|>194 759 397 776<|box_end|><|ref_start|>title<|ref_end|><|rotate_up|>
+<|box_start|>193 785 648 801<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>380 806 617 839<|box_end|><|ref_start|>equation<|ref_end|><|rotate_up|>
+<|box_start|>193 844 292 857<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>493 880 504 892<|box_end|><|ref_start|>page_number<|ref_end|><|rotate_up|>
+Predict: 100%|██████████| 25/25 [00:04<00:00,  5.66it/s]
+MinerU: extracting page 2/3
+Predict: 100%|██████████| 1/1 [00:11<00:00, 11.25s/it]
+2026-08-20 11:39:04.434 | DEBUG    | mineru_vl_utils.mineru_client:parse_layout_output:239 - Layout raw output:
+<|box_start|>219 151 714 246<|box_end|><|ref_start|>list<|ref_end|><|rotate_up|>
+<|box_start|>220 151 636 168<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>220 178 714 195<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>221 205 381 221<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>221 231 414 246<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>193 258 696 275<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>435 286 565 318<|box_end|><|ref_start|>equation<|ref_end|><|rotate_up|>
+<|box_start|>193 327 789 344<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>412 357 587 373<|box_end|><|ref_start|>equation<|ref_end|><|rotate_up|>
+<|box_start|>193 386 251 400<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>219 412 714 455<|box_end|><|ref_start|>list<|ref_end|><|rotate_up|>
+<|box_start|>220 412 714 430<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>221 440 461 455<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>395 465 604 494<|box_end|><|ref_start|>equation<|ref_end|><|rotate_up|>
+<|box_start|>192 499 801 530<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>416 530 582 572<|box_end|><|ref_start|>equation_block<|ref_end|><|rotate_up|>
+<|box_start|>471 530 528 547<|box_end|><|ref_start|>equation<|ref_end|><|rotate_up|>
+<|box_start|>416 555 582 571<|box_end|><|ref_start|>equation<|ref_end|><|rotate_up|>
+<|box_start|>194 589 341 606<|box_end|><|ref_start|>title<|ref_end|><|rotate_up|>
+<|box_start|>193 614 663 630<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>447 641 552 673<|box_end|><|ref_start|>equation<|ref_end|><|rotate_up|>
+<|box_start|>429 683 567 697<|box_end|><|ref_start|>title<|ref_end|><|rotate_up|>
+<|box_start|>193 717 491 734<|box_end|><|ref_start|>title<|ref_end|><|rotate_up|>
+<|box_start|>378 740 622 810<|box_end|><|ref_start|>equation_block<|ref_end|><|rotate_up|>
+<|box_start|>384 740 613 772<|box_end|><|ref_start|>equation<|ref_end|><|rotate_up|>
+<|box_start|>377 778 621 810<|box_end|><|ref_start|>equation<|ref_end|><|rotate_up|>
+<|box_start|>492 880 505 892<|box_end|><|ref_start|>page_number<|ref_end|><|rotate_up|>
+Predict: 100%|██████████| 23/23 [00:06<00:00,  3.42it/s]
+MinerU: extracting page 3/3
+Predict: 100%|██████████| 1/1 [00:07<00:00,  7.33s/it]
+2026-08-20 11:39:18.516 | DEBUG    | mineru_vl_utils.mineru_client:parse_layout_output:239 - Layout raw output:
+<|box_start|>193 148 404 167<|box_end|><|ref_start|>title<|ref_end|><|rotate_up|>
+<|box_start|>193 180 473 195<|box_end|><|ref_start|>title<|ref_end|><|rotate_up|>
+<|box_start|>451 201 548 233<|box_end|><|ref_start|>equation<|ref_end|><|rotate_up|>
+<|box_start|>448 238 551 270<|box_end|><|ref_start|>equation<|ref_end|><|rotate_up|>
+<|box_start|>192 275 803 340<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>193 358 307 374<|box_end|><|ref_start|>title<|ref_end|><|rotate_up|>
+<|box_start|>192 383 802 415<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>454 429 546 443<|box_end|><|ref_start|>equation<|ref_end|><|rotate_up|>
+<|box_start|>193 461 377 477<|box_end|><|ref_start|>title<|ref_end|><|rotate_up|>
+<|box_start|>192 486 802 533<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>450 532 548 560<|box_end|><|ref_start|>equation<|ref_end|><|rotate_up|>
+<|box_start|>193 575 336 592<|box_end|><|ref_start|>title<|ref_end|><|rotate_up|>
+<|box_start|>219 600 763 643<|box_end|><|ref_start|>list<|ref_end|><|rotate_up|>
+<|box_start|>220 600 763 617<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>221 627 576 643<|box_end|><|ref_start|>text<|ref_end|><|rotate_up|>
+<|box_start|>418 657 580 674<|box_end|><|ref_start|>equation<|ref_end|><|rotate_up|>
+<|box_start|>492 880 504 892<|box_end|><|ref_start|>page_number<|ref_end|><|rotate_up|>
+Predict: 100%|██████████| 16/16 [00:04<00:00,  3.21it/s]
+'[SPS] Zusammenfassung 2025-06-10\n\nLena Merkli\n\n9. Juni 2025\n\nInhaltsverzeichnis\n\n1 Lernziele 1\n\n2 Schwingkreise (LC-Kreise) 1\n\n2.1 Gesamtenergie 1\n\n2.2 Frequenz 2\n\n2.3 Schwingung der Energie 2\n\n3 Wechselstrom 3\n\n3.1 Ohmscher Widerstand 3\n\n3.2 Spule 3\n\n3.3 Kondensator 3\n\n3.4 Leistung 3\n\n1 Lernziele\n\n• Schwingkreise (LC-Kreise)\n\n- Wechselstrom: Einfache Stromkreise\n\n• Wechselstrom: LCR-Kreise\n\n- Wechselstrom: Leistung des Wechselstroms\n\n2 Schwingkreise (LC-Kreise)\n\n2.1 Gesamtenergie\n\nDie Gesamtenergie eines Schwingkreises lässt sich durch\n\n\\[\nE _ {t o t} = E _ {m} + E _ {p} = \\frac {L i ^ {2}}{2} + \\frac {q ^ {2}}{2 C}\n\\]\n\nausdrücken.\n\n1\n\n- \\(E_{m}\\) ist die Energie des Magnetfelds in der Spule.\n\n- \\(E_{p}\\) ist die Energie des elektrischen Feldes im Kondensator.\n\n- \\( q \\) ist die Ladung.\n\n- \\(i\\) ist die Stromstärke.\n\nFür einen idealen Schwingkreis (ohne Wärmeproduktion) gilt:\n\n\\[\nL \\frac {d ^ {2} q}{d t ^ {2}} + \\frac {1}{C} q = 0\n\\]\n\nDiese Differenzialgleichung ist analog zur Schwingung eines Federpendels.\n\n\\[\nq (t) = \\hat {q} * \\cos (\\omega t + \\phi)\n\\]\n\nwobei:\n\n- \\(\\hat{q}\\) ist die Amplitude der Ladungsschwingung (Scheitelwert)\n\n- \\(\\phi\\) ist eine Phasenkonstante\n\n\\[\ni = \\frac {d q}{d t} = - \\hat {q} * \\sin (\\omega t + \\phi)\n\\]\n\nDer Betrag der Amplitude (Scheitelwert) dieser sinusförmigen Stromschwingung:\n\n\\[\n\\begin{array}{l} \\hat {i} = \\omega \\hat {q} \\\\ i (t) = - \\hat {i} \\sin (\\omega t + \\phi) \\\\ \\end{array}\n\\]\n\n2.2 Frequenz\n\nFür die Frequenz eines ungedämpften Schwingkreises gilt:\n\n\\[\nf = \\frac {1}{2 \\pi \\sqrt {L C}}\n\\]\n\nJ. J. Thomson\n\n2.3 Schwingung der Energie\n\n\\[\n\\begin{array}{l} E _ {p} = \\frac {q ^ {2}}{2 C} = \\frac {\\hat {q} ^ {2}}{2 C} \\cos^ {2} (\\omega t + \\phi) \\\\ E _ {m} = \\frac {1}{2} L i ^ {2} = \\frac {\\hat {q} ^ {2}}{2 C} \\sin^ {2} (\\omega t + \\phi) \\\\ \\end{array}\n\\]\n\n2\n\n3 Wechselstrom\n\n3.1 Ohmscher Widerstand\n\n\\[\nI _ {e f f} = \\frac {1}{\\sqrt {2}} \\hat {i}\n\\]\n\n\\[\nU _ {e f f} = \\frac {1}{\\sqrt {2}} \\hat {u}\n\\]\n\nUnter der effektiven Stromstärke und der effektiven Spannung eines Wechselstromes versteht man diejenige Stromstärke bzw. Spannung, die ein Gleichstrom mit derselben Leistung aufweist. Die Scheitelleistung ist  \\( \\sqrt{2} \\)  mal so gross.\n\n3.2 Spule\n\nSchaltet man eine Spule der Induktivität L in einen Wechselstromkreis, so folgt der Strom der Generatorspannung um eine Viertelperiode nach.\n\n\\[\nZ _ {L} = \\omega * L\n\\]\n\n3.3 Kondensator\n\nSchaltet man einen Kondensator der Kapazität C in einen Wechselstromkreis, so eilt der Strom der Generatorspannung um eine Viertelperiode voraus.\n\n\\[\nZ _ {C} = \\frac {1}{\\omega * C}\n\\]\n\n3.4 Leistung\n\n- \\(\\bar{P}\\) ist der zeitliche Mittelwert der Leistung und die Wirkleistung.\n\n- \\(\\cos(\\phi)\\) ist der Leistungs- und Wirkfaktor.\n\n\\[\n\\bar {P} = U _ {e f f} I _ {e f f} \\cos (\\phi)\n\\]\n\n3'
+x = _
+print(x)
+[SPS] Zusammenfassung 2025-06-10
+Lena Merkli
+9. Juni 2025
+Inhaltsverzeichnis
+1 Lernziele 1
+2 Schwingkreise (LC-Kreise) 1
+2.1 Gesamtenergie 1
+2.2 Frequenz 2
+2.3 Schwingung der Energie 2
+3 Wechselstrom 3
+3.1 Ohmscher Widerstand 3
+3.2 Spule 3
+3.3 Kondensator 3
+3.4 Leistung 3
+1 Lernziele
+• Schwingkreise (LC-Kreise)
+- Wechselstrom: Einfache Stromkreise
+• Wechselstrom: LCR-Kreise
+- Wechselstrom: Leistung des Wechselstroms
+2 Schwingkreise (LC-Kreise)
+2.1 Gesamtenergie
+Die Gesamtenergie eines Schwingkreises lässt sich durch
+\[
+E _ {t o t} = E _ {m} + E _ {p} = \frac {L i ^ {2}}{2} + \frac {q ^ {2}}{2 C}
+\]
+ausdrücken.
+1
+- \(E_{m}\) ist die Energie des Magnetfelds in der Spule.
+- \(E_{p}\) ist die Energie des elektrischen Feldes im Kondensator.
+- \( q \) ist die Ladung.
+- \(i\) ist die Stromstärke.
+Für einen idealen Schwingkreis (ohne Wärmeproduktion) gilt:
+\[
+L \frac {d ^ {2} q}{d t ^ {2}} + \frac {1}{C} q = 0
+\]
+Diese Differenzialgleichung ist analog zur Schwingung eines Federpendels.
+\[
+q (t) = \hat {q} * \cos (\omega t + \phi)
+\]
+wobei:
+- \(\hat{q}\) ist die Amplitude der Ladungsschwingung (Scheitelwert)
+- \(\phi\) ist eine Phasenkonstante
+\[
+i = \frac {d q}{d t} = - \hat {q} * \sin (\omega t + \phi)
+\]
+Der Betrag der Amplitude (Scheitelwert) dieser sinusförmigen Stromschwingung:
+\[
+\begin{array}{l} \hat {i} = \omega \hat {q} \\ i (t) = - \hat {i} \sin (\omega t + \phi) \\ \end{array}
+\]
+2.2 Frequenz
+Für die Frequenz eines ungedämpften Schwingkreises gilt:
+\[
+f = \frac {1}{2 \pi \sqrt {L C}}
+\]
+J. J. Thomson
+2.3 Schwingung der Energie
+\[
+\begin{array}{l} E _ {p} = \frac {q ^ {2}}{2 C} = \frac {\hat {q} ^ {2}}{2 C} \cos^ {2} (\omega t + \phi) \\ E _ {m} = \frac {1}{2} L i ^ {2} = \frac {\hat {q} ^ {2}}{2 C} \sin^ {2} (\omega t + \phi) \\ \end{array}
+\]
+2
+3 Wechselstrom
+3.1 Ohmscher Widerstand
+\[
+I _ {e f f} = \frac {1}{\sqrt {2}} \hat {i}
+\]
+\[
+U _ {e f f} = \frac {1}{\sqrt {2}} \hat {u}
+\]
+Unter der effektiven Stromstärke und der effektiven Spannung eines Wechselstromes versteht man diejenige Stromstärke bzw. Spannung, die ein Gleichstrom mit derselben Leistung aufweist. Die Scheitelleistung ist  \( \sqrt{2} \)  mal so gross.
+3.2 Spule
+Schaltet man eine Spule der Induktivität L in einen Wechselstromkreis, so folgt der Strom der Generatorspannung um eine Viertelperiode nach.
+\[
+Z _ {L} = \omega * L
+\]
+3.3 Kondensator
+Schaltet man einen Kondensator der Kapazität C in einen Wechselstromkreis, so eilt der Strom der Generatorspannung um eine Viertelperiode voraus.
+\[
+Z _ {C} = \frac {1}{\omega * C}
+\]
+3.4 Leistung
+- \(\bar{P}\) ist der zeitliche Mittelwert der Leistung und die Wirkleistung.
+- \(\cos(\phi)\) ist der Leistungs- und Wirkfaktor.
+\[
+\bar {P} = U _ {e f f} I _ {e f f} \cos (\phi)
+\]
+3
+```
+```
+"""MinerU2.5-Pro PDF-to-Markdown extraction using the `transformers` backend.
+
+This module wraps `mineru-vl-utils` so a whole PDF can be turned into Markdown.
+The model, processor and client are loaded lazily once and reused across calls.
+"""
+
+from functools import lru_cache
+from pathlib import Path
+
+from pdf2image import convert_from_path
+
+MODEL_NAME = "opendatalab/MinerU2.5-Pro-2605-1.2B"
+PDF_DPI = 144
+
+
+@lru_cache(maxsize=1)
+def _client():
+    """Load the MinerU2.5-Pro model/processor/client once (singleton)."""
+    from transformers import AutoProcessor, Qwen2VLForConditionalGeneration
+    from mineru_vl_utils import MinerUClient
+
+    model = Qwen2VLForConditionalGeneration.from_pretrained(
+        MODEL_NAME, dtype="auto", device_map="auto"
+    )
+    processor = AutoProcessor.from_pretrained(MODEL_NAME, use_fast=True)
+    return MinerUClient(
+        backend="transformers",
+        model=model,
+        processor=processor,
+        image_analysis=False,  # set True to enable image/chart analysis
+    )
+
+
+def pdf_to_markdown(
+    pdf_path: str,
+    max_pages: int | None = None,
+    dpi: int = PDF_DPI,
+) -> str:
+    """Convert a PDF into Markdown via MinerU2.5-Pro.
+
+    Args:
+        pdf_path: Path to the PDF file.
+        max_pages: Optional cap on the number of pages to process (None = all).
+        dpi: Render resolution for page images fed to the model.
+
+    Returns:
+        The concatenated Markdown of all processed pages.
+    """
+    path = Path(pdf_path)
+    if not path.exists():
+        raise FileNotFoundError(f"PDF not found: {pdf_path}")
+
+    from mineru_vl_utils.post_process import json2md
+
+    images = convert_from_path(
+        str(path),
+        dpi=dpi,
+        first_page=1,
+        last_page=max_pages,
+    )
+
+    client = _client()
+    pages: list[str] = []
+    for index, image in enumerate(images, start=1):
+        print(f"MinerU: extracting page {index}/{len(images)}")
+        content_list = client.two_step_extract(image)
+        pages.append(json2md(content_list))
+
+    return "\n\n".join(pages)
+```
+Why is it just text + equations, but no markdown?
+§a§
+I'll inspect how MinerU's `json2md` and the two-step extract pipeline turn layout detections into Markdown.Next I’ll check the official `json2md` implementation and example outputs.Checking how the full MinerU pipeline builds Markdown vs. this lightweight `json2md`.**Short answer:** `json2md` does almost no Markdown formatting. It only concatenates each block’s `content` with blank lines. Layout types like `title` / `list` are ignored for syntax.
+
+## Root cause
+
+Your pipeline is:
+
+1. `client.two_step_extract(image)` → list of `ContentBlock`s (`type`, `bbox`, `content`, …)
+2. `json2md(content_list)` → string
+
+The implementation of `json2md` is effectively:
+
+```python
+def json2md(json_data):
+    content_list = []
+    last_text_contd_idx = -1
+    for bbox_info in json_data:
+        ctype = bbox_info.get("type", "text")
+        content = bbox_info["content"]
+        if content:
+            if bbox_info.get("merge_prev", False) and last_text_contd_idx >= 0:
+                # optional space + merge into previous text
+                ...
+            else:
+                content_list.append(content)
+                if ctype == "text":
+                    last_text_contd_idx = len(content_list) - 1
+    return "\n\n".join(content_list)
+```
+
+So it:
+
+- **does** join blocks with `\n\n`
+- **does** merge truncated text via `merge_prev`
+- **does not** turn `title` / `doc_title` / `paragraph_title` into `#` / `##`
+- **does not** turn `list` / `list_item` into `-` / `1.` lists
+- **does not** drop or special-case `page_number` (that’s why bare `1`, `2`, `3` show up)
+
+Equations look “Markdown-ish” only because post-process wraps them:
+
+```python
+# in post_process
+block.content = _add_equation_brackets(...)  # → \[ ... \]
+```
+
+Titles are recognized as plain strings (`"2.1 Gesamtenergie"`), not as `# 2.1 Gesamtenergie`. Any `•` / `-` you see came from the OCR/VLM text itself, not from type→Markdown mapping.
+
+Layout detection *does* see structure (your debug log has `title`, `list`, `equation`, …). That structure is just not used when building the string.
+
+`mineru-vl-utils` is a thin VLM wrapper. The full [MinerU](https://github.com/opendatalab/MinerU) toolkit does more end-to-end Markdown assembly; this helper does not.
+
+## What you’re seeing is expected
+
+| Detected type | What lands in MD today |
+|---|---|
+| `title` | plain text |
+| `text` | plain text |
+| `list` / items | plain text (bullets only if in the content) |
+| `equation` | `\[ ... \]` |
+| `page_number` | `"1"`, `"2"`, … |
+| `table` | HTML (if present) |
+
+So the result is “text + equations”, not structured Markdown.
+
+## Fix: map types yourself
+
+Replace or wrap `json2md` with something that uses `type`:
+
+```python
+from mineru_vl_utils.structs import BlockType
+
+SKIP_TYPES = {
+    BlockType.PAGE_NUMBER,
+    BlockType.HEADER,
+    BlockType.FOOTER,
+    BlockType.PAGE_FOOTNOTE,
+    BlockType.EQUATION_BLOCK,  # usually a container; content is in child equations
+    BlockType.LIST,            # container; items are separate (if present)
+}
+
+TITLE_LEVEL = {
+    BlockType.DOC_TITLE: 1,
+    BlockType.TITLE: 2,
+    BlockType.PARAGRAPH_TITLE: 3,
+}
+
+def blocks_to_markdown(blocks) -> str:
+    parts: list[str] = []
+    last_text_idx = -1
+
+    for b in blocks:
+        t = b.get("type") or b.type
+        c = b.get("content") if isinstance(b, dict) else b.content
+        if not c or not str(c).strip():
+            continue
+        if t in SKIP_TYPES:
+            continue
+
+        c = str(c).strip()
+
+        # truncated paragraph merge (same idea as upstream json2md)
+        merge_prev = bool(b.get("merge_prev", False)) if isinstance(b, dict) else False
+        if merge_prev and last_text_idx >= 0 and t == BlockType.TEXT:
+            prev = parts[last_text_idx]
+            # CJK: no space; otherwise one space
+            if any("\u4e00" <= ch <= "\u9fff" for ch in c):
+                parts[last_text_idx] = prev + c
+            else:
+                parts[last_text_idx] = prev + " " + c
+            continue
+
+        if t in TITLE_LEVEL:
+            parts.append("#" * TITLE_LEVEL[t] + " " + c.lstrip("#").strip())
+            last_text_idx = -1
+        elif t == BlockType.LIST_ITEM:
+            line = c if c.startswith(("-", "*", "•", "·")) or c[:2].rstrip(".").isdigit() else f"- {c}"
+            parts.append(line.replace("•", "-").replace("·", "-"))
+            last_text_idx = -1
+        elif t == BlockType.EQUATION:
+            if not c.startswith("\\["):
+                c = f"\\[\n{c}\n\\]"
+            parts.append(c)
+            last_text_idx = -1
+        elif t == BlockType.TABLE:
+            parts.append(c)  # already HTML from post_process
+            last_text_idx = -1
+        elif t in (BlockType.CODE, BlockType.ALGORITHM):
+            parts.append(f"```\n{c}\n```")
+            last_text_idx = -1
+        else:
+            parts.append(c)
+            if t == BlockType.TEXT:
+                last_text_idx = len(parts) - 1
+            else:
+                last_text_idx = -1
+
+    return "\n\n".join(parts)
+```
+
+Wire it in:
+
+```python
+# pages.append(json2md(content_list))
+pages.append(blocks_to_markdown(content_list))
+```
+
+Optional: dump one page’s blocks to see types vs content:
+
+```python
+content_list = client.two_step_extract(image)
+for b in content_list:
+    print(b.get("type"), repr((b.get("content") or "")[:80]))
+```
+
+You’ll see titles as `title` + plain text, which confirms the gap is only in the MD builder.
+
+## Extra notes
+
+1. **Lists:** Layout often emits a parent `list` plus line `text`s (or `list_item`s). Upstream post-process even does `list_item → text`. Bullets may be missing unless you add them from type or from geometry.
+2. **Heading levels:** The model doesn’t always distinguish `doc_title` vs `paragraph_title`; mapping all `title` → `##` is usually fine for notes like yours.
+3. **Full MinerU:** For production PDF→MD (TOC, better lists, paratext handling), the full `mineru` package is the intended path; `mineru-vl-utils` + `json2md` is deliberately minimal.
+4. **Your sample** already has good equation extraction and readable text; it’s mainly missing structural Markdown markers.
+
+**Bottom line:** Not a model failure — `json2md` never turns layout types into Markdown. Add a small type-aware formatter (as above) and you’ll get real headings, lists, and cleaner notes.
+§u§
+What about Full MinerU?
+§a§
+## Full MinerU is the better solution here
+
+Your current code uses **`mineru-vl-utils` directly**, which exposes the lower-level VLM output. Full MinerU adds the missing document-processing stages:
+
+- whole-document rather than isolated-page processing
+- heading-level assignment
+- Markdown rendering of titles as `#`, `##`, etc.
+- page-header/footer/page-number removal from the main Markdown
+- image and chart extraction
+- HTML table rendering
+- fenced code blocks
+- `middle.json`, `content_list.json`, and `content_list_v2.json`
+- cross-page post-processing
+
+Its renderer explicitly converts title blocks into Markdown headings.
+
+One limitation: Full MinerU preserves lists structurally in its JSON output, but the VLM Markdown renderer does not always synthesize perfect `-` markers. It primarily renders each detected list item on a separate line. Consequently, headings will improve substantially, while lists may still need minor post-processing.
+
+## Installation
+
+I recommend installing it in a separate environment:
+
+```bash
+uv venv --python 3.13 .venv-mineru
+source .venv-mineru/bin/activate
+
+uv pip install -U "mineru[all]"
+mineru --version
+```
+
+Full MinerU currently declares support for Python 3.10 through 3.13, including Python 3.13 on Linux.
+
+## Run it using the VLM backend
+
+This is closest to your existing MinerU2.5-Pro setup:
+
+```bash
+mineru \
+  -p /home/lena/Downloads/SPS_Zusammenfassung_2025-06-10.pdf \
+  -o /home/lena/Downloads/mineru-output \
+  -b vlm-engine \
+  --image-analysis false
+```
+
+The result should be located at approximately:
+
+```text
+/home/lena/Downloads/mineru-output/
+└── SPS_Zusammenfassung_2025-06-10/
+    └── vlm/
+        ├── SPS_Zusammenfassung_2025-06-10.md
+        ├── SPS_Zusammenfassung_2025-06-10_content_list.json
+        ├── SPS_Zusammenfassung_2025-06-10_content_list_v2.json
+        ├── SPS_Zusammenfassung_2025-06-10_middle.json
+        └── images/
+```
+
+The `vlm` output-directory convention is defined by Full MinerU itself.
+
+You no longer need:
+
+- `pdf2image`
+- manual per-page iteration
+- `MinerUClient`
+- `json2md`
+
+Full MinerU directly accepts the PDF and generates the final Markdown and structured files.
+
+## Alternatively: use the recommended hybrid backend
+
+Full MinerU currently defaults to `hybrid-engine`:
+
+```bash
+mineru \
+  -p /home/lena/Downloads/SPS_Zusammenfassung_2025-06-10.pdf \
+  -o /home/lena/Downloads/mineru-output \
+  -b hybrid-engine
+```
+
+For maximum processing effort:
+
+```bash
+mineru \
+  -p /home/lena/Downloads/SPS_Zusammenfassung_2025-06-10.pdf \
+  -o /home/lena/Downloads/mineru-output \
+  -b hybrid-engine \
+  --effort high
+```
+
+The hybrid backend combines native PDF text extraction with VLM-based structure analysis. For a digitally generated physics summary like yours, I would try **`hybrid-engine` first**, because it can reuse the embedded text while retaining VLM layout and formula processing. The current CLI uses `hybrid-engine` as its default backend.
+
+Its output Markdown should be under:
+
+```text
+mineru-output/
+└── SPS_Zusammenfassung_2025-06-10/
+    └── hybrid_auto/
+        └── SPS_Zusammenfassung_2025-06-10.md
+```
+
+## Expected improvement
+
+Instead of:
+
+```text
+2 Schwingkreise (LC-Kreise)
+
+2.1 Gesamtenergie
+```
+
+you should get something closer to:
+
+```markdown
+# 2 Schwingkreise (LC-Kreise)
+
+## 2.1 Gesamtenergie
+```
+
+Full MinerU’s renderer performs this conversion using the detected title level:
+
+```python
+title_level = get_title_level(para_block)
+para_text = f'{"#" * title_level} {merge_para_with_text(para_block)}'
+```
+
+It also limits generated title depths to levels 1–4.
+
+Equations will normally use the configured Markdown/LaTeX delimiters, with `$$ ... $$` as the current default for display equations. Images use Markdown image references, tables can be rendered as embedded HTML, and code blocks use fences.
+
+## Drop-in Python wrapper
+
+Because the documented interfaces are currently the CLI and FastAPI service, the safest Python integration is a small wrapper around the CLI rather than importing MinerU’s internal modules:
+
+```python
+"""Full MinerU PDF-to-Markdown wrapper."""
+
+from pathlib import Path
+import subprocess
+
+
+def pdf_to_markdown(
+    pdf_path: str,
+    output_dir: str | None = None,
+    max_pages: int | None = None,
+    backend: str = "hybrid-engine",
+    effort: str = "medium",
+) -> str:
+    """Convert a PDF to Markdown using the full MinerU pipeline.
+
+    The output directory is retained because the generated Markdown may
+    reference extracted images relative to that directory.
+    """
+    path = Path(pdf_path).expanduser().resolve()
+
+    if not path.is_file():
+        raise FileNotFoundError(f"PDF not found: {path}")
+
+    if path.suffix.lower() != ".pdf":
+        raise ValueError(f"Expected a PDF file: {path}")
+
+    if max_pages is not None and max_pages < 1:
+        raise ValueError("max_pages must be at least 1")
+
+    if output_dir is None:
+        output = path.parent / f"{path.stem}_mineru"
+    else:
+        output = Path(output_dir).expanduser().resolve()
+
+    output.mkdir(parents=True, exist_ok=True)
+
+    command = [
+        "mineru",
+        "-p",
+        str(path),
+        "-o",
+        str(output),
+        "-b",
+        backend,
+    ]
+
+    if backend.startswith("hybrid"):
+        command.extend(["--effort", effort])
+
+    # MinerU's page indexes are zero-based and --end is inclusive.
+    if max_pages is not None:
+        command.extend(["--end", str(max_pages - 1)])
+
+    subprocess.run(command, check=True)
+
+    # The exact intermediate directory depends on the selected backend.
+    markdown_files = list(output.rglob(f"{path.stem}.md"))
+
+    if not markdown_files:
+        raise RuntimeError(
+            f"MinerU completed but no Markdown file was found under {output}"
+        )
+
+    if len(markdown_files) > 1:
+        markdown_files.sort(
+            key=lambda candidate: candidate.stat().st_mtime_ns,
+            reverse=True,
+        )
+
+    markdown_path = markdown_files[0]
+    return markdown_path.read_text(encoding="utf-8")
+```
+
+Usage:
+
+```python
+from miner_u_full import pdf_to_markdown
+
+markdown = pdf_to_markdown(
+    "/home/lena/Downloads/SPS_Zusammenfassung_2025-06-10.pdf",
+    backend="hybrid-engine",
+    effort="high",
+)
+
+print(markdown)
+```
+
+For an exact comparison with your current VLM extraction:
+
+```python
+markdown = pdf_to_markdown(
+    "/home/lena/Downloads/SPS_Zusammenfassung_2025-06-10.pdf",
+    backend="vlm-engine",
+)
+```
+
+**Recommendation:** use Full MinerU with `hybrid-engine` first. Use `vlm-engine` when you specifically want extraction driven entirely by MinerU2.5-Pro.

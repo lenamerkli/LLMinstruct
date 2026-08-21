@@ -1,0 +1,55 @@
+§u§
+Create a very good prompt for the following task:
+- the LLM receives a wiki text
+- it should create question and answer pairs based on that text. These should be useful in LLM training and easily extractable.
+§a§
+Here is a highly effective, production-ready prompt designed to generate high-quality QA pairs for LLM training.
+
+It assigns a clear persona, sets strict quality rules (to ensure the data is actually useful for training), and enforces a strict JSON output format (to ensure easy extraction via automated pipelines).
+
+***
+
+### The Prompt
+
+```text
+You are an expert AI data annotator and curriculum designer specializing in creating high-quality instruction-tuning datasets for Large Language Models.
+
+Your task is to carefully read the provided Wikipedia text and generate diverse, high-quality Question and Answer (QA) pairs based strictly on the information it contains.
+
+### Quality Guidelines for QA Pairs:
+To ensure these pairs are useful for LLM training, strictly adhere to the following rules:
+1. **Self-Contained Questions**: Questions must make complete sense on their own. Do not use ambiguous pronouns like "he", "she", "it", or "the city". Always use the specific names, entities, or concepts mentioned in the text.
+2. **Strict Grounding**: The answers must be derived entirely from the provided text. Do not introduce outside knowledge or hallucinate facts.
+3. **Diverse Question Types**: Create a mix of different question types to create a well-rounded dataset. Include:
+   - *Factual Extraction*: Simple retrieval of specific facts, dates, or names.
+   - *Summarization*: Asking for the main idea or a summary of a specific section.
+   - *Reasoning/Explanation*: "Why" or "How" questions that require combining multiple pieces of information from the text.
+4. **Detailed Answers**: Answers should be well-written, complete sentences. For reasoning or explanation questions, the answers should be thorough and helpful.
+5. **Coverage**: Ensure the questions cover different parts of the provided text, not just the first paragraph.
+
+### Output Format:
+Your output must be easily extractable by an automated parser. You must output ONLY a valid JSON array of objects. Do not include any conversational filler, markdown formatting blocks (like ```json), or explanations before or after the JSON.
+
+Use the following exact schema:
+[
+  {
+    "question_type": "factual | summarization | reasoning",
+    "question": "<The self-contained question>",
+    "answer": "<The detailed, well-written answer>"
+  }
+]
+
+### Input Text:
+<text>
+[INSERT WIKIPEDIA TEXT HERE]
+</text>
+```
+
+***
+
+### Why this prompt works so well for LLM Data Generation:
+
+1. **"Self-Contained" Rule**: This is the #1 mistake naive LLMs make when generating QA data. If a model reads an article about Abraham Lincoln, it might generate the question: *"When was he born?"*. During training, an LLM will see *"When was he born?"* without the context of the article, rendering the training data useless. This prompt explicitly forces entity resolution.
+2. **Categorized Diversity**: By forcing the LLM to classify and generate different `question_type`s (factual, summarization, reasoning), you prevent the LLM from being lazy and just asking basic trivia questions. It forces the creation of complex, instruction-tuning-style data.
+3. **Strict Formatting & Extraction**: By explicitly forbidding markdown wrappers (like \`\`\`json) and conversational filler ("Here is your output:"), you can pass the LLM's response directly into Python's `json.loads()` without needing complex regex cleanup.
+4. **XML Tagging (`<text>`)**: Enclosing the input text in XML tags prevents prompt injection and helps the model separate its system instructions from the payload it needs to analyze.

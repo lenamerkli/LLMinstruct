@@ -1,0 +1,4 @@
+§u§
+Use very few sentences (or just one) to cover what LLM knowledge cutoff is and that the consequences are.
+§a§
+An LLM's knowledge cutoff is the date after which its training data ends, meaning it has no built-in awareness of events, facts, or developments occurring afterward. As a consequence, it may give outdated answers, miss recent events, or confidently state information that has since changed—unless supplemented by tools like web search.

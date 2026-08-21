@@ -1,0 +1,108 @@
+§u§
+<attach:101f24da013d9c95e732783cd002b801784395d29eb15e7798a0bba7d972be8f><attach:196e934bcd2cf4cd1a9266d8d448a92adca16fb08790b8e425cd684f78b6f355><attach:4773434ce6e27534c2cd949a861be7bd27ffdf2da13b93756dc2f0a01ead7ad4>Extrahiere den Inhalt.
+§a§
+Hier ist die vollständige und strukturierte Extraktion des Inhalts aus den bereitgestellten Bildern (Aufgabenstellungen und die dazugehörigen Lösungen).
+
+---
+
+# Teil 1: Aufgabenstellungen (Bild 1)
+
+* **a.** Berechnen Sie die Koordinaten der Eckpunkte $B$ und $C$ und zeigen Sie, dass $D$ die Koordinaten $D(9 / 0 / 0)$ hat.
+* **b.** Zeigen Sie, dass das Dreieck $DEF$ beim Eckpunkt $D$ einen rechten Winkel hat und berechnen Sie das Volumen des Prismas $ABCDEF$.
+* **c.** Stellen Sie die Koordinatengleichung der Ebene $\mathcal{E}_{AEM}$ auf.
+* **d.** Die Gerade $g$ verläuft durch den Schwerpunkt $S$ des Dreiecks $DEF$ und durch den Punkt $M$. Unter welchem Winkel schneidet die Gerade $g$ die $xz$-Ebene?
+* **e.** Die Gerade $h$ verläuft durch die Punkte $C$ und $E$. Bestimmen Sie den minimalen Abstand der Geraden $h$ vom Punkt $D$.
+
+---
+
+# Teil 2: Lösungen (Bilder 2 & 3)
+
+### Lösung zu Aufgabenteil c.
+
+$$
+\begin{vmatrix}
+33a & +18b & +40c & +d & = 0 \\
+    & +12b &      & +d & = 0 \\
+8.5a & +9b  & +27.5c & +d & = 0
+\end{vmatrix}
+$$
+
+*Division durch $d$ und Umbenennung der Variablen ergibt ein $3\times3$-System, das mit dem Rechner gelöst werden kann:*
+
+$$
+\begin{vmatrix}
+33\frac{a}{d} & +18\frac{b}{d} & +40\frac{c}{d} & +1 & = 0 \\
+              & +12\frac{b}{d} &                & +1 & = 0 \\
+8.5\frac{a}{d} & +9\frac{b}{d}  & +27.5\frac{c}{d} & +1 & = 0
+\end{vmatrix}
+\quad \rightarrow \quad
+\begin{vmatrix}
+33a' & +18b' & +40c' & = -1 \\
+     & 12b'  &       & = -1 \\
+8.5a' & +9b'  & +27.5c' & = -1
+\end{vmatrix}
+$$
+
+**Taschenrechner:**
+$$a' = \frac{19}{454} \quad b' = -\frac{1}{12} \quad c' = -\frac{5}{227}$$
+
+$$
+\begin{aligned}
+\rightarrow \mathcal{E}_{AEM} &: \frac{19}{454}x - \frac{1}{12}y - \frac{5}{227}z = -1 \quad \Big/ \cdot 6 \cdot 454 \\
+\rightarrow \mathcal{E}_{AEM} &: \mathbf{114x - 227y - 60z + 2724 = 0}
+\end{aligned}
+$$
+
+---
+
+### Lösung zu Aufgabenteil d.
+
+$$
+\overrightarrow{OS} = \frac{1}{3}\left(\overrightarrow{OD} + \overrightarrow{OE} + \overrightarrow{OF}\right) = \frac{1}{3}\left( \begin{bmatrix} 9 \\ 0 \\ 0 \end{bmatrix} + \begin{bmatrix} 0 \\ 12 \\ 0 \end{bmatrix} + \begin{bmatrix} -7 \\ -12 \\ 15 \end{bmatrix} \right) = \frac{1}{3} \begin{bmatrix} 2 \\ 0 \\ 15 \end{bmatrix} \quad \rightarrow \quad \underline{\underline{S\left( \frac{2}{3} \;\middle|\; 0 \;\middle|\; 5 \right)}}
+$$
+
+**Richtungsvektor von $g$:**
+$$
+\overrightarrow{MS} = \begin{bmatrix} \frac{2}{3} \\ 0 \\ 5 \end{bmatrix} - \begin{bmatrix} \frac{17}{2} \\ 9 \\ \frac{55}{2} \end{bmatrix} = \begin{bmatrix} -\frac{47}{6} \\ -9 \\ -\frac{45}{2} \end{bmatrix} \quad \parallel \quad \begin{bmatrix} -47 \\ -54 \\ -135 \end{bmatrix}
+$$
+
+**Normalenvektor der $xz$-Ebene:**
+$$
+\vec{n}_{xz} = \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix}
+$$
+
+---
+
+### Lösung zu Aufgabenteil e.
+
+**Gerade $h$ durch $E$ und $C$:**
+$$
+h: \begin{bmatrix} x \\ y \\ z \end{bmatrix} = \begin{bmatrix} 0 \\ 12 \\ 0 \end{bmatrix} + r \begin{bmatrix} 17 \\ -6 \\ 55 \end{bmatrix}
+$$
+
+**$\mathcal{E}$ = Normalebene durch $h$, die den Punkt $D$ enthält:**
+$$
+\mathcal{E}: 17x - 6y + 55z + d = 0
+$$
+
+$$
+D(9 \mid 0 \mid 0) \in \mathcal{E} \quad \rightarrow \quad \underline{d = -153}
+$$
+
+**Schnittpunkt von $h$ und $\mathcal{E}$:**
+$$
+17 \cdot 17r - 6 \cdot (12 - 6r) + 55 \cdot 55r - 153 = 0 \quad \rightarrow \quad \underline{\underline{r = \frac{9}{134}}}
+$$
+
+$$
+\overrightarrow{OQ} = \begin{bmatrix} 0 \\ 12 \\ 0 \end{bmatrix} + \frac{9}{134} \cdot \begin{bmatrix} 17 \\ -6 \\ 55 \end{bmatrix} = \begin{bmatrix} \frac{153}{134} \\ \frac{1554}{134} \\ \frac{495}{134} \end{bmatrix}
+$$
+
+$$
+\overrightarrow{DQ} = \begin{bmatrix} \frac{153}{134} \\ \frac{1554}{134} \\ \frac{495}{134} \end{bmatrix} - \begin{bmatrix} 9 \\ 0 \\ 0 \end{bmatrix} = \begin{bmatrix} \frac{-1053}{134} \\ \frac{1554}{134} \\ \frac{495}{134} \end{bmatrix}
+$$
+
+**Minimaler Abstand:**
+$$
+|\overrightarrow{DQ}| = \frac{75}{134}\sqrt{670} \approx \underline{\underline{14.49}}
+$$

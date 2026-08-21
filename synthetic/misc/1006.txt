@@ -1,0 +1,33 @@
+§u§
+<attach:3eef86ea2b5e5531e29e0b614ac10b3cfcb7a4704485e18e899a0488eba56f76>zu latex
+§a§
+Hier ist der LaTeX-Code für den Inhalt des Bildes:
+
+```latex
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[english,german]{babel}
+
+\begin{document}
+
+\[ |DE| = \sqrt{(-9)^2 + 12^2 + 0^2} = \sqrt{225} = \underline{15} \]
+
+\bigskip
+Matura 2015 BC Lösungen angepasst.docx
+\bigskip
+
+\[ |DF| = \sqrt{(-16)^2 + (-12)^2 + 15^2} = \sqrt{256 + 144 + 225} = \sqrt{625} = \underline{25} \]
+
+\[ |DA| = \sqrt{24^2 + 18^2 + 40^2} = \sqrt{576 + 324 + 1600} = \sqrt{2500} = \underline{50} \]
+
+\[ Volumen = \underbrace{\frac{1}{2} \cdot DE \cdot DF}_{Grundfläche} \cdot \underset{Höhe}{DA} = \frac{1}{2} \cdot 15 \cdot 25 \cdot 50 = \underline{\underline{9375}} \]
+
+\end{document}
+```
+
+### Hinweise zum Code:
+- **`\underbrace{...}_{...}`**: Erzeugt die geschwungene Klammer unter dem Ausdruck mit dem darunterstehenden Text ("Grundfläche").
+- **`\underset{...}{...}`**: Platziert den Text "Höhe" direkt unter die Variable $DA$.
+- **`\underline{\underline{...}}`**: Erzeugt die doppelte Unterstreichung für das Ergebnis des Volumens.
+- **`amsmath`**: Dieses Paket wird für die komplexeren Mathemodus-Umgebungen (wie `\underbrace`) benötigt.

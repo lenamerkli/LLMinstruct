@@ -1,0 +1,30 @@
+§u§
+ublock origin on librewolf windows: youtube wont load comments as well as more than one batch of recommendations
+§a§
+# What you're seeing is a known YouTube anti‑adblock tactic, not a LibreWolf/uBO bug
+
+Starting around mid‑February 2026, this exact behavior has been widely reported. YouTube has been having trouble loading the comment section under its videos – some think that this is an anti-adblock measure, and multiple users on Reddit are reporting encountering the issue. For some, the video description also fails to load, not just the comments.
+
+Since February 2026, AdGuard has reported that YouTube is deliberately withholding comments and video descriptions from some visitors it detects are running an ad blocker, rather than the feature simply breaking by accident, and multiple tech outlets covered the same pattern shortly after, describing it as an enforcement tactic rather than a bug. YouTube increasingly suppresses interface features for blocker users. Widespread 2026 reporting confirmed users experiencing missing comments, hidden descriptions, and broken homepage layouts solely because an active ad blocker was detected.
+
+Your problem with recommendations not paginating past the first batch fits the same pattern — it's the homepage/feed layout being broken by the anti‑adblock check.
+
+## Things to try (from least to most invasive)
+
+1. **Refresh the page.** People have tried multiple workarounds — refreshing the page seems to work occasionally, which suggests that this is a regular site issue; however, the most reliable "workaround" discovered so far is turning off the ad blocker. Many reports have piled up over the past few days, and the "solution" appears to be to simply refresh the page.
+
+2. **Toggle Restricted Mode on and then off** while signed in. Some users report this resets whatever state is triggering the block — click your profile photo → Restricted Mode → turn it on, then turn it back off. Doing that was sufficient to resolve the issue.
+
+3. **Update uBO's filter lists** (uBO dashboard → Filter lists → "Purge all caches" then "Update now"). The uBO/AdGuard teams typically push counter‑fixes quickly when YouTube changes their detection script.
+
+4. **Clear YouTube cookies/site data** in LibreWolf for youtube.com, then reload. Note that LibreWolf clears cookies on shutdown by default, so a browser restart may also help.
+
+5. **Check for extension conflicts.** A built-in tracking shield, VPN filtering, or leftover blocker state can trigger YouTube's warning, and secondary privacy extensions routinely trigger the exact same anti-adblock wall as dedicated ad blockers. LibreWolf's built‑in resistFingerprinting and strict RFP/ETP settings can also interact with YouTube's detection — try loosening the shield for youtube.com temporarily to see if the layout returns.
+
+6. **Fallback options** if it stays broken: use FreeTube, a Piped/Invidious instance, or watch via the embed URL. A simple trick is to modify the video URL — this forces YouTube to load the video in an embedded player, bypassing the adblock detection in many cases.
+
+## The bigger picture
+
+YouTube's war on adblockers has been going on for a long while, as it's gone from "throttling" videos to glitching content for users, and over the weekend YouTube users noticed strange occurrences when the comments vanished — it looks like it's the latest tactic in its adblocker war. What's curious is that even some YouTube Premium subscribers are affected — with previous anti-adblock measures Google spared Premium users, but this time they may have suffered some collateral damage.
+
+Also worth noting for context: Firefox with uBO is reportedly working fine for many users, so LibreWolf + uBO on Firefox's engine is currently one of the better‑positioned combinations — which suggests you just got caught in a rollout wave. Keep uBO's filters updated and the fix will typically arrive within days.

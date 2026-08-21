@@ -1,0 +1,103 @@
+§u§
+========
+## What I found
+
+- __Angular 21 app__ in `app/`, standalone components, path-based routing (`provideRouter(routes)`), `<base href="/">` in `index.html`.
+
+- __Build__ (`npm run build`) outputs to `app/dist/app/browser/` with hashed files: `index.html`, `main-*.js`, `styles-*.css`, plus assets from `public/`.
+
+- __Images to encode:__
+
+  - `favicon.ico` — referenced in `index.html` via `<link rel="icon" href="favicon.ico">`
+  - `1-2-2-1.png` — referenced in `matura.html` as `<img src="1-2-2-1.png">`, which gets compiled __inside the JS bundle__ (so the script must replace it in the JS, not just HTML).
+
+- __KaTeX fonts__ (`styles.scss` → `@import 'katex/dist/katex.min.css'`) pull in ~60 `url(fonts/KaTeX_*.woff2|woff|ttf)` references. A fresh build emits these as separate files, so they must also be inlined for the math to render properly offline.
+
+- The current `dist/` is __stale__ (built 16:09, `1-2-2-1.png` added 16:54 and is missing from it), so the script must run the build itself.
+
+## Proposed plan: `build_offline.py`
+
+A __stdlib-only__ Python script (`subprocess`, `pathlib`, `re`, `base64`, `mimetypes`, `html`) placed at the repo root that:
+
+1. __Runs the build__ — `npm run build` (production) in `app/`.
+2. __Locates output__ — globs `app/dist/app/browser/index.html`, `main-*.js`, `styles-*.css` (hashed names, so no hardcoding).
+3. __Inlines CSS__ — replaces `<link rel="stylesheet" href="styles-*.css">` with `<style>…</style>`.
+4. __Inlines JS__ — replaces `<script src="main-*.js" type="module">` with `<script type="module">…</script>`.
+5. __Inlines all local assets__ — walks the build output for image/font files (`.png .jpg .jpeg .gif .svg .webp .ico .avif .woff2 .woff .ttf .otf .eot`), base64-encodes them, and replaces every reference (in `src=`, `href=`, `url(…)`, and bare/relative paths inside the inlined JS/CSS) with a correct-MIME `data:` URI. This covers both images *and* KaTeX fonts.
+6. __Neutralizes `<base href="/">`__ so the single file resolves assets correctly under `file://`.
+7. __Writes__ the result to `app/dist/app/browser/index-offline.html` (configurable via `--out`).
+
+## One open question — offline navigation
+
+Because the app uses __path-based routing__ with `<base href="/">`, opening the single file via `file://` renders the start page and in-page clicks work, but __deep-linking/reloading a sub-route__ (e.g. `Mathi/Matura`) breaks. Hash routing (`withHashLocation()`) fixes this cleanly.
+
+Got it — I'll include the hash-routing change. Here's the final plan.
+
+## Final plan
+
+### 1. Source change — enable hash routing (`app/src/app/app.config.ts`)
+Edit to import `withHashLocation` and pass it to `provideRouter`:
+
+```ts
+import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { provideRouter, withHashLocation } from '@angular/router';
+
+import { routes } from './app.routes';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideRouter(routes, withHashLocation())
+  ]
+};
+```
+
+This makes routes `#/Mathi/Matura`, so the app navigates correctly when opened as `file://…/index-offline.html`.
+
+### 2. New script — `build_offline.py` (repo root, stdlib only)
+Steps:
+1. Run `npm run build` (production) in `app/`.
+2. Glob `app/dist/app/browser/` for `index.html`, `main-*.js`, `styles-*.css` (hashed names handled dynamically).
+3. Inline the `<link rel="stylesheet">` → `<style>…</style>` and `<script src="…" type="module">` → `<script type="module">…</script>`.
+4. Enumerate all image/font assets in the output (`.png .jpg .jpeg .gif .svg .webp .ico .avif .woff2 .woff .ttf .otf .eot`), base64-encode them, and replace every reference (in `src=`, `href=`, `url(…)`, and bare/relative paths inside the inlined JS/CSS) with a correctly-typed `data:` URI — this covers `favicon.ico`, `1-2-2-1.png`, and all KaTeX fonts.
+5. Remove `<base href="/">`.
+6. Write `app/dist/app/browser/index-offline.html` (overridable via `--out PATH`).
+
+### 3. Validation
+- Run the script and confirm it produces a single self-contained HTML.
+- Verify the output contains no remaining `src="…"`/`href="…"` local-asset references and that images/fonts are `data:` URIs.
+- Optionally open/check `index-offline.html` for correct size and content.
+
+---
+
+This plan requires edits (to `app.config.ts` and creating `build_offline.py`) and running the build. Please **toggle to Act mode** so I can implement it.
+
+========
+
+Will this plan work to create a python script that compiles the angular project into a single html for offline use?
+§a§
+Yes — **this plan should work**, with one important qualification: it works cleanly **if the built app is fully self-contained in the browser output and does not leave any extra JS chunks to be fetched later**. The routing change is also the right fix: Angular officially supports `provideRouter(routes, withHashLocation())`, which uses the URL fragment (`#/...`) instead of path/history routing, and Angular’s default path strategy depends on base-href/path handling. That is exactly why deep-link reloads break under `file://` with path-based routes and why hash routing fixes them.
+
+The **build/inlining part of your plan matches Angular’s build behavior**. Angular’s `ng build` uses the application builder, production is the default build mode, the `public/` directory is copied into the output as static assets, and CSS resources such as images and fonts are emitted as separate fingerprinted files. So your decision to **rebuild first**, then inline JS/CSS, then replace emitted asset URLs (including the KaTeX font files) is the correct sequence.
+
+The **main caveat** is chunking. Angular supports lazy loading with `loadComponent` / `loadChildren`, and those lazy parts compile into **separate JavaScript chunks** that are requested later. If that exists now or gets introduced later, inlining only `main-*.js` will stop being sufficient. Angular’s docs also say that eagerly referenced route components are included in the same bundle, so your current approach is fine **only if the app stays eagerly loaded**.
+
+So my practical verdict is:
+
+- **Yes, the plan is valid.**
+- **Yes, the hash-routing change is the right offline-navigation fix.**
+- **But** I would change one requirement from
+  “inline `main-*.js` and `styles-*.css`”
+  to
+  **“inline every local script/style the built app needs, and fail loudly if unresolved JS chunks remain.”**
+  That last recommendation is an inference from Angular’s documented build and routing behavior.
+
+Two small improvements I’d suggest:
+
+1. **Scan `index.html` for local `<script>` and stylesheet references instead of assuming filenames.**
+   That makes the script resilient if Angular emits a different initial bundle set later.
+
+2. **After inlining, verify there are no remaining local URLs** except deliberate external ones.
+   In practice, treat leftover relative `.js`, `.css`, font, or image references as a build failure.
+
+So: **for the app you described, yes, this is a sound plan and should produce a single offline HTML file.** The only real risk is future lazy-loaded JS chunks. If you want, I can also sketch the exact logic for `build_offline.py` so it’s robust against that case.

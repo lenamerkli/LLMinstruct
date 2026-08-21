@@ -1,0 +1,67 @@
+§u§
+python requests get 1GB csv and parse it (RAM only) to either dict or list[list]
+§a§
+You can do this entirely in RAM with `requests` + `csv` (no disk writes).
+A 1GB CSV will consume **several GB** of RAM once turned into a Python `list[list]` or `dict` because of Python object overhead, so make sure your machine has enough memory.
+
+### Minimal working example (list of lists)
+
+```python
+import requests
+import csv
+import io
+
+url = "https://example.com/huge.csv"
+
+resp = requests.get(url, stream=True, timeout=60)
+resp.raise_for_status()
+
+# Decode on the fly (RAM only)
+csv_text = resp.text          # or resp.content.decode("utf-8", errors="replace")
+
+reader = csv.reader(io.StringIO(csv_text))
+data = list(reader)           # ← list[list[str]]
+
+print(f"Rows: {len(data)}")
+print(data[0])                # header or first row
+```
+
+### Dict version (`csv.DictReader`)
+
+```python
+resp = requests.get(url, stream=True, timeout=60)
+resp.raise_for_status()
+
+csv_text = resp.text
+reader = csv.DictReader(io.StringIO(csv_text))
+data = list(reader)           # list[dict[str, str]]
+
+print(data[0])
+```
+
+### Memory-efficient streaming version (still ends up in RAM)
+
+If you want to avoid the giant intermediate string, you can stream line-by-line:
+
+```python
+import requests
+import csv
+from io import StringIO
+
+resp = requests.get(url, stream=True)
+resp.raise_for_status()
+
+# Use iter_lines() – still loads everything when you do list(...)
+lines = (line.decode("utf-8") for line in resp.iter_lines())
+reader = csv.reader(lines)
+data = list(reader)
+```
+
+### Tips & warnings
+
+- `resp.text` (or `resp.content`) will allocate ~1 GB. The final `list`/`dict` will usually be **2–4× larger**.
+- Add `headers={"User-Agent": "..."}` if the server is picky.
+- For very large files consider `pandas.read_csv` with `chunksize` + `low_memory=False`, but that still ends up in RAM if you concatenate everything.
+- If you later need to reduce memory, use `dtype` hints or switch to `polars` / `pyarrow`.
+
+That’s it — pure in-memory download + parse.

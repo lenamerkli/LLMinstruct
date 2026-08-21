@@ -1,0 +1,665 @@
+§u§
+========
+# Getting Started
+
+## **1. Compatibility**
+
+BeamMP is fully compatible with Windows and Linux, compatibility with MacOS is being worked on.
+However, both Linux and MacOS are secondary platforms, this means bugs are to be expected.
+
+!!!warning
+
+    BeamMP will not work with pirated or outdated versions of BeamNG.drive.
+    The BeamMP support team does not offer support for issues with pirated / outdated copies.
+
+---
+
+## **2. Installation**
+
+### **2a. Windows Installation**
+
+!!!note
+
+    As of April 1st, 2026, the MSI installer is an "unrecognized app" according to Windows Defender SmartScreen.
+
+    To bypass this warning, click 'More info', then click 'Run anyway'.
+
+1. Go to [beammp.com](https://beammp.com/) and click the 'Download Now' button.
+2. Run the `BeamMP_Installer.msi` installer and follow the instructions.
+3. The BeamMP Launcher icon should appear on your desktop. If not, just search for “BeamMP” in the Windows search bar.
+
+!!!note
+
+      As you are loading into a map with multiple vehicles spawned it might take longer than expected to join.
+
+### **2b. Linux Installation**
+
+Currently you need to build the Launcher yourself.
+In order to do this, you need a basic understanding of how to build an application.
+
+Make sure you have basic development tools installed, often found in packages, for example:
+
+- Debian/Ubuntu: `sudo apt install build-essential`
+- Fedora: `sudo dnf install cmake gcc gcc-c++ make perl perl-IPC-Cmd perl-FindBin perl-File-Compare perl-File-Copy kernel-headers kernel-devel`
+- Arch: `sudo pacman -S base-devel`
+- openSUSE: `zypper in -t pattern devel-basis`
+- SteamOS (Arch): `sudo pacman -S base-devel linux-api-headers glibc libconfig` (You also need to do `sudo steamos-readonly disable` but make sure to enable it again after installing the packages)
+
+
+Clone `vcpkg`, bootstrap it and add it to PATH
+
+1.
+```bash
+git clone https://github.com/microsoft/vcpkg.git
+```
+
+2.
+```bash
+./vcpkg/bootstrap-vcpkg.sh
+```
+
+3.
+```bash
+export VCPKG_ROOT="$(pwd)/vcpkg"
+export PATH=$VCPKG_ROOT:$PATH
+```
+
+
+Clone the BeamMP-Launcher Repository to your system using `git`, for example:
+`git clone https://github.com/BeamMP/BeamMP-Launcher.git`
+[Additional information about cloning a GitHub Repo](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
+
+If you've used the example clone command we provided, you can use `cd BeamMP-Launcher` to go to the project's root directory.
+
+Checkout the tag that was used for the [latest release](https://github.com/BeamMP/BeamMP-Launcher/releases/latest). For example, if `v2.8.0` is used in the latest release, then do `git checkout v2.8.0`
+
+In the root directory of the project,
+
+1.
+```cmake
+cmake . -B bin -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-linux
+```
+
+2.
+```cmake
+cmake --build bin --parallel
+```
+
+!!!note ""
+
+      Should you run out of RAM while building, you can ommit the --parallel instruction, it will then use less RAM due to building only on one CPU thread.
+
+!!!note ""
+
+      By not specifying `-DCMAKE_BUILD_TYPE=Release` you are building a debug version, which is larger in filesize but does not contain the launcher-can-only-connect-to-a-server-once bug
+
+!!!note "Fedora Users"
+    If vcpkg fails during OpenSSL compilation with kernel headers errors, ensure all dependencies are installed:
+    ```bash
+    sudo dnf install kernel-headers kernel-devel gcc gcc-c++ make perl
+    ```
+    Then clean the vcpkg cache:
+    ```bash
+    rm -rf $VCPKG_ROOT/buildtrees/openssl
+    ```
+    And retry the cmake configuration command.
+
+Move the finished application out of the `/bin` folder into its own folder and run it from there:
+```bash
+mkdir -p ~/beammp-launcher
+cp bin/BeamMP-Launcher ~/beammp-launcher/
+cd ~/beammp-launcher
+./BeamMP-Launcher
+```
+
+The native Linux BeamMP-Launcher will start and use native Linux BeamNG.drive
+
+### **2c. Using beamNG.drive with Proton**
+
+Should you want to use the native linux BeamMP-Launcher together with BeamNG.drive running through Proton, you can do so:
+
+Run the BeamMP-Launcher using the argument ` --no-launch` (This will prevent the Launcher from starting native linux BeamNG.drive). Further information about launcher arguments can be found in the [Development Environment Setup](../guides/beammp-dev/beammp-dev.md)
+
+Change the userfolder location of Proton-BeamNG.drive to the location of Linux-BeamNG.drive (since the native linux BeamMP-Launcher currently only writes into the Linux-BeamNG.drive userfolder)
+
+This can be done for example by creating a symlink
+
+- Note the Linux-BeamNG.drive userfolder location (this is usually found in `~/.local/share/BeamNG/BeamNG.drive`) and rename it, for example to `BeamNG.drive_old`
+- Note the Proton-BeamNG.drive userfolder location (this is usually found in `~/.local/share/Steam/steamapps/compatdata/284160/pfx/drive_c/users/steamuser/AppData/Local/BeamNG/BeamNG.drive`)
+- Create a symlink between both userfolders `ln -s ~/.local/share/Steam/steamapps/compatdata/284160/pfx/drive_c/users/steamuser/AppData/Local/BeamNG/BeamNG.drive ~/.local/share/BeamNG`
+
+With the symlink in place between the userfolders and the launcher compiled, you can have Steam run the game via Proton, while also automatically executing the launcher with the following replacement for your launch options for the vanilla game, found in the game's Properties window in its entry in Steam:
+
+- `~/BeamMP/BeamMP-Launcher --no-launch & %command% ; killall BeamMP-Launcher`
+
+Note that this assumes you put the launcher's binary you compiled earlier into `/home/user/BeamMP/`, so change it to match where you put the finished binary, and you will need to re-compile the launcher with the correct git branch each time a launcher update is released.
+
+!!! tip "Adding an emoji-font to get in-text emojis"
+
+    In order to get emojis to show up in either the serverlist (As part of a servers customised name) or in the ingame chat, you need to have a font that contains emojis.
+
+    This can be done for example by adding the [Linux-port of the Windows Segoe-UI emoji font](https://github.com/mrbvrz/segoe-ui-linux)
+
+### **2d. Updating the Launcher**
+
+If you already built the launcher and want to update it:
+
+```bash
+export VCPKG_ROOT="$(pwd)/vcpkg"
+cd BeamMP-Launcher
+git fetch --tags
+```
+Checkout the tag that was used for the [latest release](https://github.com/BeamMP/BeamMP-Launcher/releases/latest). For example, if `v2.8.0` is used in the latest release, then do `git checkout v2.8.0`
+```
+cmake . -B bin -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-linux
+cmake --build bin --parallel
+cp bin/BeamMP-Launcher ~/beammp-launcher/
+cd ~/beammp-launcher
+./BeamMP-Launcher
+```
+
+
+---
+
+## **3. Using BeamMP**
+
+1. Once you have started the launcher, you should see a terminal window. Shortly after, the standard BeamNG launcher should start. **Do not** close the terminal window.
+2. In the BeamNG.drive main menu, click the `Repository` button and check to make sure that `multiplayerbeammp` is **the only** enabled mod.
+3. Return to the main menu, click on 'More..' and the 'Multiplayer' button to start multiplayer.
+4. You will be prompted to login or play as a guest (not all servers will allow guests). You can create an account on our [forum](https://forum.beammp.com) and then login to BeamMP with the same credentials.
+5. Select any server you like, and press `Connect`. Enjoy!
+
+---
+
+## **4. Known Issues**
+
+- The native linux BeamMP-Launcher currently can only connect to a server once, after disconnecting you need to restart the launcher. You can do that without closing the game inbetween
+- If you don’t see the “Multiplayer” button. Make sure that the BeamMP mod is present and activated in the “Mod Manager” then try pressing CTRL + L.
+- VPNs of any type may cause connection issues.
+- If the Launcher reports any errors, read the [FAQ](https://forum.beammp.com/c/faq/35).
+
+Should you need further help with installation, you are welcome to create a post on our [forum](https://forum.beammp.com) or ask on our [Discord server](https://discord.gg/beammp).
+========
+I am trying to install the BeamMP launcher
+```
+
+░▒▓ 🎩       ▓▒░ ◦•················································································································································································································•◦ ░▒▓   243ms ▓▒░
+··• sudo dnf install cmake gcc gcc-c++ make perl perl-IPC-Cmd perl-FindBin perl-File-Compare perl-File-Copy kernel-headers kernel-devel
+[sudo] password for lena:
+Updating and loading repositories:
+ Terra 44                                                                                                                                                                                                           100% |   2.3 KiB/s |   1.4 KiB |  00m01s
+ gitlab.com_paulcarroty_vscodium_repo                                                                                                                                                                               100% |   7.4 KiB/s |   3.8 KiB |  00m01s
+Repositories loaded.
+Package "cmake-4.3.0-1.fc44.x86_64" is already installed.
+Package "gcc-16.1.1-2.fc44.x86_64" is already installed.
+Package "gcc-c++-16.1.1-2.fc44.x86_64" is already installed.
+Package "make-1:4.4.1-12.fc44.x86_64" is already installed.
+Package "perl-IPC-Cmd-2:1.04-522.fc44.noarch" is already installed.
+Package "perl-FindBin-1.54-524.fc44.noarch" is already installed.
+Package "perl-File-Compare-1.100.800-524.fc44.noarch" is already installed.
+Package "perl-File-Copy-2.41-524.fc44.noarch" is already installed.
+Package "kernel-headers-7.1.4-200.nobara.fc44.x86_64" is already installed.
+Package "kernel-devel-7.0.11-200.nobara.fc43.x86_64" is already installed.
+Package "kernel-devel-7.1.3-200.nobara.fc44.x86_64" is already installed.
+Package "kernel-devel-7.1.4-200.nobara.fc44.x86_64" is already installed.
+
+Package                                                                                Arch               Version                                                                                Repository                                             Size
+Installing:
+ perl                                                                                  x86_64             4:5.42.2-524.fc44                                                                      nobara                                              0.0   B
+Installing dependencies:
+ perl-Archive-Tar                                                                      noarch             0:3.12-1.fc44                                                                          nobara                                            157.9 KiB
+ perl-Archive-Zip                                                                      noarch             0:1.68-18.fc44                                                                         nobara                                            291.1 KiB
+ perl-Attribute-Handlers                                                               noarch             0:1.03-524.fc44                                                                        nobara                                             39.9 KiB
+ perl-CPAN                                                                             noarch             0:2.38-522.fc44                                                                        nobara                                              1.9 MiB
+ perl-Compress-Bzip2                                                                   x86_64             0:2.28-25.fc44                                                                         nobara                                            142.5 KiB
+ perl-Compress-Raw-Lzma                                                                x86_64             0:2.221-1.fc44                                                                         nobara                                            145.8 KiB
+ perl-Config-Extensions                                                                noarch             0:0.03-524.fc44                                                                        nobara                                              2.7 KiB
+ perl-Config-Perl-V                                                                    noarch             0:0.39-1.fc44                                                                          nobara                                             26.0 KiB
+ perl-DBM_Filter                                                                       noarch             0:0.07-524.fc44                                                                        nobara                                             28.7 KiB
+ perl-Data-Section                                                                     noarch             0:0.200008-9.fc44                                                                      nobara                                             42.7 KiB
+ perl-Devel-Peek                                                                       x86_64             0:1.36-524.fc44                                                                        nobara                                             43.4 KiB
+ perl-Devel-SelfStubber                                                                noarch             0:1.06-524.fc44                                                                        nobara                                              6.8 KiB
+ perl-Devel-Size                                                                       x86_64             0:0.86-1.fc44                                                                          nobara                                             42.0 KiB
+ perl-Dumpvalue                                                                        noarch             0:2.27-524.fc44                                                                        nobara                                             19.8 KiB
+ perl-Encode-devel                                                                     x86_64             4:3.21-521.fc44                                                                        nobara                                             99.6 KiB
+ perl-ExtUtils-CBuilder                                                                noarch             1:0.280242-521.fc44                                                                    nobara                                             97.3 KiB
+ perl-ExtUtils-Embed                                                                   noarch             0:1.35-524.fc44                                                                        nobara                                             15.6 KiB
+ perl-ExtUtils-Miniperl                                                                noarch             0:1.14-524.fc44                                                                        nobara                                              8.3 KiB
+ perl-File-DosGlob                                                                     x86_64             0:1.12-524.fc44                                                                        nobara                                             20.7 KiB
+ perl-File-Fetch                                                                       noarch             0:1.08-4.fc44                                                                          nobara                                             60.3 KiB
+ perl-File-HomeDir                                                                     noarch             0:1.006-16.fc44                                                                        nobara                                            119.3 KiB
+ perl-FileCache                                                                        noarch             0:1.10-524.fc44                                                                        nobara                                              7.5 KiB
+ perl-GDBM_File                                                                        x86_64             1:1.24-524.fc44                                                                        nobara                                             79.5 KiB
+ perl-I18N-Collate                                                                     noarch             0:1.02-524.fc44                                                                        nobara                                              7.1 KiB
+ perl-IO-Compress-Lzma                                                                 noarch             0:2.217-1.fc44                                                                         nobara                                            217.1 KiB
+ perl-IO-Zlib                                                                          noarch             1:1.15-521.fc44                                                                        nobara                                             25.7 KiB
+ perl-Math-BigInt-FastCalc                                                             x86_64             0:0.502.000-521.fc44                                                                   nobara                                             43.9 KiB
+ perl-Memoize                                                                          noarch             0:1.17-524.fc44                                                                        nobara                                             64.7 KiB
+ perl-Module-Build                                                                     noarch             2:0.42.34-10.fc44                                                                      nobara                                            654.2 KiB
+ perl-Module-CoreList-tools                                                            noarch             1:5.20260601-1.fc44                                                                    nobara                                             18.6 KiB
+ perl-Module-Loaded                                                                    noarch             1:0.08-524.fc44                                                                        nobara                                              5.0 KiB
+ perl-Module-Signature                                                                 noarch             0:0.93-3.fc44                                                                          nobara                                            136.5 KiB
+ perl-NEXT                                                                             noarch             0:0.69-524.fc44                                                                        nobara                                             23.6 KiB
+ perl-Net                                                                              noarch             0:1.04-524.fc44                                                                        nobara                                             22.4 KiB
+ perl-Net-Ping                                                                         noarch             0:2.76-521.fc44                                                                        nobara                                            134.2 KiB
+ perl-ODBM_File                                                                        x86_64             0:1.20-524.fc44                                                                        nobara                                             28.4 KiB
+ perl-Perl-OSType                                                                      noarch             0:1.010-522.fc44                                                                       nobara                                             32.8 KiB
+ perl-PerlIO-via-QuotedPrint                                                           noarch             0:0.10-521.fc44                                                                        nobara                                             30.2 KiB
+ perl-Pod-Checker                                                                      noarch             4:1.77-521.fc44                                                                        nobara                                             52.2 KiB
+ perl-Pod-Functions                                                                    noarch             0:1.14-524.fc44                                                                        nobara                                             14.4 KiB
+ perl-Search-Dict                                                                      noarch             0:1.08-524.fc44                                                                        nobara                                              4.7 KiB
+ perl-SelfLoader                                                                       noarch             0:1.28-524.fc44                                                                        nobara                                             22.2 KiB
+ perl-Software-License                                                                 noarch             0:0.104007-3.fc44                                                                      nobara                                            500.7 KiB
+ perl-Term-Complete                                                                    noarch             0:1.403-524.fc44                                                                       nobara                                              5.8 KiB
+ perl-Test                                                                             noarch             0:1.31-524.fc44                                                                        nobara                                             37.0 KiB
+ perl-Text-Abbrev                                                                      noarch             0:1.02-524.fc44                                                                        nobara                                              3.1 KiB
+ perl-Text-Diff                                                                        noarch             0:1.45-25.fc44                                                                         nobara                                             83.0 KiB
+ perl-Thread                                                                           noarch             0:3.06-524.fc44                                                                        nobara                                             12.1 KiB
+ perl-Thread-Semaphore                                                                 noarch             0:2.13-524.fc44                                                                        nobara                                             10.0 KiB
+ perl-Tie-File                                                                         noarch             0:1.10-524.fc44                                                                        nobara                                             85.6 KiB
+ perl-Tie-Memoize                                                                      noarch             0:1.1-524.fc44                                                                         nobara                                              6.2 KiB
+ perl-Time                                                                             noarch             0:1.04-524.fc44                                                                        nobara                                              9.8 KiB
+ perl-User-pwent                                                                       noarch             0:1.05-524.fc44                                                                        nobara                                             17.1 KiB
+ perl-autouse                                                                          noarch             0:1.11-524.fc44                                                                        nobara                                              5.9 KiB
+ perl-bignum                                                                           noarch             0:0.67-522.fc44                                                                        nobara                                            133.1 KiB
+ perl-blib                                                                             noarch             0:1.07-524.fc44                                                                        nobara                                              3.2 KiB
+ perl-debugger                                                                         noarch             0:1.60-524.fc44                                                                        nobara                                            403.2 KiB
+ perl-diagnostics                                                                      noarch             0:1.40-524.fc44                                                                        nobara                                            471.0 KiB
+ perl-encoding-warnings                                                                noarch             0:0.14-524.fc44                                                                        nobara                                             10.1 KiB
+ perl-inc-latest                                                                       noarch             2:0.500-32.fc44                                                                        nobara                                             34.6 KiB
+ perl-less                                                                             noarch             0:0.03-524.fc44                                                                        nobara                                              4.9 KiB
+ perl-libnetcfg                                                                        noarch             4:5.42.2-524.fc44                                                                      nobara                                             16.9 KiB
+ perl-local-lib                                                                        noarch             0:2.000029-11.fc44                                                                     nobara                                            117.6 KiB
+ perl-macros                                                                           noarch             4:5.42.2-524.fc44                                                                      nobara                                              5.5 KiB
+ perl-perlfaq                                                                          noarch             0:5.20250619-521.fc44                                                                  nobara                                            733.6 KiB
+ perl-ph                                                                               x86_64             0:5.42.2-524.fc44                                                                      nobara                                            278.7 KiB
+ perl-sort                                                                             noarch             0:2.06-524.fc44                                                                        nobara                                              4.8 KiB
+ perl-utils                                                                            noarch             0:5.42.2-524.fc44                                                                      nobara                                             97.0 KiB
+ perl-vmsish                                                                           noarch             0:1.04-524.fc44                                                                        nobara                                              6.6 KiB
+Installing weak dependencies:
+ perl-CPAN-DistnameInfo                                                                noarch             0:0.12-34.fc44                                                                         nobara                                             10.6 KiB
+
+Transaction Summary:
+ Installing:        71 packages
+
+Total size of inbound packages is 4 MiB. Need to download 4 MiB.
+After this operation, 8 MiB extra will be used (install 8 MiB, remove 0 B).
+Is this ok [y/N]: y
+[ 1/71] perl-4:5.42.2-524.fc44.x86_64                                                                                                                                                                               100% |  63.2 KiB/s |  13.4 KiB |  00m00s
+[ 2/71] perl-CPAN-0:2.38-522.fc44.noarch                                                                                                                                                                            100% |   2.4 MiB/s | 567.2 KiB |  00m00s
+[ 3/71] perl-ExtUtils-CBuilder-1:0.280242-521.fc44.noarch                                                                                                                                                           100% | 212.6 KiB/s |  50.6 KiB |  00m00s
+[ 4/71] perl-File-Fetch-0:1.08-4.fc44.noarch                                                                                                                                                                        100% | 200.5 KiB/s |  30.9 KiB |  00m00s
+[ 5/71] perl-Math-BigInt-FastCalc-0:0.502.000-521.fc44.x86_64                                                                                                                                                       100% | 201.0 KiB/s |  28.1 KiB |  00m00s
+[ 6/71] perl-IO-Zlib-1:1.15-521.fc44.noarch                                                                                                                                                                         100% | 123.6 KiB/s |  19.6 KiB |  00m00s
+[ 7/71] perl-Net-Ping-0:2.76-521.fc44.noarch                                                                                                                                                                        100% | 326.0 KiB/s |  49.6 KiB |  00m00s
+[ 8/71] perl-Perl-OSType-0:1.010-522.fc44.noarch                                                                                                                                                                    100% | 155.8 KiB/s |  22.9 KiB |  00m00s
+[ 9/71] perl-PerlIO-via-QuotedPrint-0:0.10-521.fc44.noarch                                                                                                                                                          100% | 152.0 KiB/s |  21.7 KiB |  00m00s
+[10/71] perl-Pod-Checker-4:1.77-521.fc44.noarch                                                                                                                                                                     100% | 213.6 KiB/s |  31.6 KiB |  00m00s
+[11/71] perl-bignum-0:0.67-522.fc44.noarch                                                                                                                                                                          100% | 330.7 KiB/s |  48.9 KiB |  00m00s
+[12/71] perl-perlfaq-0:5.20250619-521.fc44.noarch                                                                                                                                                                   100% |   2.5 MiB/s | 378.6 KiB |  00m00s
+[13/71] perl-Compress-Bzip2-0:2.28-25.fc44.x86_64                                                                                                                                                                   100% | 441.7 KiB/s |  67.1 KiB |  00m00s
+[14/71] perl-Archive-Zip-0:1.68-18.fc44.noarch                                                                                                                                                                      100% | 667.0 KiB/s | 111.4 KiB |  00m00s
+[15/71] perl-Devel-Size-0:0.86-1.fc44.x86_64                                                                                                                                                                        100% | 192.4 KiB/s |  30.6 KiB |  00m00s
+[16/71] perl-File-HomeDir-0:1.006-16.fc44.noarch                                                                                                                                                                    100% | 390.0 KiB/s |  59.3 KiB |  00m00s
+[17/71] perl-Module-Build-2:0.42.34-10.fc44.noarch                                                                                                                                                                  100% |   1.6 MiB/s | 251.3 KiB |  00m00s
+[18/71] perl-Module-Signature-0:0.93-3.fc44.noarch                                                                                                                                                                  100% | 569.2 KiB/s |  87.7 KiB |  00m00s
+[19/71] perl-local-lib-0:2.000029-11.fc44.noarch                                                                                                                                                                    100% | 438.8 KiB/s |  66.3 KiB |  00m00s
+[20/71] perl-Software-License-0:0.104007-3.fc44.noarch                                                                                                                                                              100% | 995.9 KiB/s | 150.4 KiB |  00m00s
+[21/71] perl-inc-latest-2:0.500-32.fc44.noarch                                                                                                                                                                      100% | 130.6 KiB/s |  23.2 KiB |  00m00s
+[22/71] perl-Text-Diff-0:1.45-25.fc44.noarch                                                                                                                                                                        100% | 275.9 KiB/s |  40.0 KiB |  00m00s
+[23/71] perl-Data-Section-0:0.200008-9.fc44.noarch                                                                                                                                                                  100% | 172.6 KiB/s |  25.0 KiB |  00m00s
+[24/71] perl-Archive-Tar-0:3.12-1.fc44.noarch                                                                                                                                                                       100% | 506.3 KiB/s |  71.9 KiB |  00m00s
+[25/71] perl-Compress-Raw-Lzma-0:2.221-1.fc44.x86_64                                                                                                                                                                100% | 409.2 KiB/s |  59.7 KiB |  00m00s
+[26/71] perl-IO-Compress-Lzma-0:2.217-1.fc44.noarch                                                                                                                                                                 100% | 436.2 KiB/s |  77.2 KiB |  00m00s
+[27/71] perl-Dumpvalue-0:2.27-524.fc44.noarch                                                                                                                                                                       100% | 123.1 KiB/s |  18.1 KiB |  00m00s
+[28/71] perl-User-pwent-0:1.05-524.fc44.noarch                                                                                                                                                                      100% | 133.2 KiB/s |  19.3 KiB |  00m00s
+[29/71] perl-autouse-0:1.11-524.fc44.noarch                                                                                                                                                                         100% |  95.6 KiB/s |  13.6 KiB |  00m00s
+[30/71] perl-Attribute-Handlers-0:1.03-524.fc44.noarch                                                                                                                                                              100% | 192.1 KiB/s |  27.9 KiB |  00m00s
+[31/71] perl-Config-Extensions-0:0.03-524.fc44.noarch                                                                                                                                                               100% |  84.3 KiB/s |  12.0 KiB |  00m00s
+[32/71] perl-Config-Perl-V-0:0.39-1.fc44.noarch                                                                                                                                                                     100% | 151.9 KiB/s |  21.6 KiB |  00m00s
+[33/71] perl-DBM_Filter-0:0.07-524.fc44.noarch                                                                                                                                                                      100% | 187.6 KiB/s |  27.0 KiB |  00m00s
+[34/71] perl-Devel-Peek-0:1.36-524.fc44.x86_64                                                                                                                                                                      100% | 215.9 KiB/s |  31.7 KiB |  00m00s
+[35/71] perl-Devel-SelfStubber-0:1.06-524.fc44.noarch                                                                                                                                                               100% |  97.3 KiB/s |  14.1 KiB |  00m00s
+[36/71] perl-Encode-devel-4:3.21-521.fc44.x86_64                                                                                                                                                                    100% | 277.0 KiB/s |  41.0 KiB |  00m00s
+[37/71] perl-ExtUtils-Miniperl-0:1.14-524.fc44.noarch                                                                                                                                                               100% |  94.3 KiB/s |  14.8 KiB |  00m00s
+[38/71] perl-ExtUtils-Embed-0:1.35-524.fc44.noarch                                                                                                                                                                  100% |  96.5 KiB/s |  17.5 KiB |  00m00s
+[39/71] perl-File-DosGlob-0:1.12-524.fc44.x86_64                                                                                                                                                                    100% | 124.2 KiB/s |  19.3 KiB |  00m00s
+[40/71] perl-FileCache-0:1.10-524.fc44.noarch                                                                                                                                                                       100% |  93.0 KiB/s |  14.5 KiB |  00m00s
+[41/71] perl-GDBM_File-1:1.24-524.fc44.x86_64                                                                                                                                                                       100% | 284.7 KiB/s |  42.4 KiB |  00m00s
+[42/71] perl-I18N-Collate-0:1.02-524.fc44.noarch                                                                                                                                                                    100% |  89.5 KiB/s |  14.0 KiB |  00m00s
+[43/71] perl-Memoize-0:1.17-524.fc44.noarch                                                                                                                                                                         100% | 300.7 KiB/s |  46.3 KiB |  00m00s
+[44/71] perl-Module-CoreList-tools-1:5.20260601-1.fc44.noarch                                                                                                                                                       100% | 128.6 KiB/s |  18.9 KiB |  00m00s
+[45/71] perl-Module-Loaded-1:0.08-524.fc44.noarch                                                                                                                                                                   100% |  85.5 KiB/s |  13.2 KiB |  00m00s
+[46/71] perl-NEXT-0:0.69-524.fc44.noarch                                                                                                                                                                            100% | 141.9 KiB/s |  20.7 KiB |  00m00s
+[47/71] perl-ODBM_File-0:1.20-524.fc44.x86_64                                                                                                                                                                       100% | 155.2 KiB/s |  22.5 KiB |  00m00s
+[48/71] perl-Net-0:1.04-524.fc44.noarch                                                                                                                                                                             100% | 131.3 KiB/s |  22.5 KiB |  00m00s
+[49/71] perl-Pod-Functions-0:1.14-524.fc44.noarch                                                                                                                                                                   100% | 101.7 KiB/s |  14.4 KiB |  00m00s
+[50/71] perl-Search-Dict-0:1.08-524.fc44.noarch                                                                                                                                                                     100% |  86.9 KiB/s |  12.8 KiB |  00m00s
+[51/71] perl-SelfLoader-0:1.28-524.fc44.noarch                                                                                                                                                                      100% | 147.3 KiB/s |  21.2 KiB |  00m00s
+[52/71] perl-Term-Complete-0:1.403-524.fc44.noarch                                                                                                                                                                  100% |  87.5 KiB/s |  12.8 KiB |  00m00s
+[53/71] perl-Test-0:1.31-524.fc44.noarch                                                                                                                                                                            100% | 195.4 KiB/s |  28.3 KiB |  00m00s
+[54/71] perl-Text-Abbrev-0:1.02-524.fc44.noarch                                                                                                                                                                     100% |  80.1 KiB/s |  11.9 KiB |  00m00s
+[55/71] perl-Thread-0:3.06-524.fc44.noarch                                                                                                                                                                          100% | 122.7 KiB/s |  17.8 KiB |  00m00s
+[56/71] perl-Thread-Semaphore-0:2.13-524.fc44.noarch                                                                                                                                                                100% | 107.2 KiB/s |  15.4 KiB |  00m00s
+[57/71] perl-Tie-File-0:1.10-524.fc44.noarch                                                                                                                                                                        100% | 307.4 KiB/s |  43.0 KiB |  00m00s
+[58/71] perl-Tie-Memoize-0:1.1-524.fc44.noarch                                                                                                                                                                      100% |  99.9 KiB/s |  13.9 KiB |  00m00s
+[59/71] perl-Time-0:1.04-524.fc44.noarch                                                                                                                                                                            100% | 116.9 KiB/s |  16.6 KiB |  00m00s
+[60/71] perl-blib-0:1.07-524.fc44.noarch                                                                                                                                                                            100% |  80.7 KiB/s |  12.2 KiB |  00m00s
+[61/71] perl-debugger-0:1.60-524.fc44.noarch                                                                                                                                                                        100% | 905.9 KiB/s | 133.2 KiB |  00m00s
+[62/71] perl-diagnostics-0:1.40-524.fc44.noarch                                                                                                                                                                     100% |   1.5 MiB/s | 220.3 KiB |  00m00s
+[63/71] perl-encoding-warnings-0:0.14-524.fc44.noarch                                                                                                                                                               100% | 114.2 KiB/s |  16.3 KiB |  00m00s
+[64/71] perl-libnetcfg-4:5.42.2-524.fc44.noarch                                                                                                                                                                     100% | 111.1 KiB/s |  16.1 KiB |  00m00s
+[65/71] perl-less-0:0.03-524.fc44.noarch                                                                                                                                                                            100% |  75.4 KiB/s |  13.0 KiB |  00m00s
+[66/71] perl-macros-4:5.42.2-524.fc44.noarch                                                                                                                                                                        100% |  86.8 KiB/s |  12.1 KiB |  00m00s
+[67/71] perl-ph-0:5.42.2-524.fc44.x86_64                                                                                                                                                                            100% | 334.8 KiB/s |  50.9 KiB |  00m00s
+[68/71] perl-sort-0:2.06-524.fc44.noarch                                                                                                                                                                            100% |  85.9 KiB/s |  13.0 KiB |  00m00s
+[69/71] perl-utils-0:5.42.2-524.fc44.noarch                                                                                                                                                                         100% | 362.8 KiB/s |  52.2 KiB |  00m00s
+[70/71] perl-vmsish-0:1.04-524.fc44.noarch                                                                                                                                                                          100% |  87.7 KiB/s |  13.9 KiB |  00m00s
+[71/71] perl-CPAN-DistnameInfo-0:0.12-34.fc44.noarch                                                                                                                                                                100% |  90.0 KiB/s |  14.2 KiB |  00m00s
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+[71/71] Total                                                                                                                                                                                                       100% | 928.5 KiB/s |   3.6 MiB |  00m04s
+Running transaction
+[ 1/73] Verify package files                                                                                                                                                                                        100% |   3.3 KiB/s |  71.0   B |  00m00s
+[ 2/73] Prepare transaction                                                                                                                                                                                         100% | 112.0   B/s |  71.0   B |  00m01s
+[ 3/73] Installing perl-Perl-OSType-0:1.010-522.fc44.noarch                                                                                                                                                         100% |   1.2 MiB/s |  34.3 KiB |  00m00s
+[ 4/73] Installing perl-ExtUtils-CBuilder-1:0.280242-521.fc44.noarch                                                                                                                                                100% |   7.7 MiB/s | 102.1 KiB |  00m00s
+[ 5/73] Installing perl-SelfLoader-0:1.28-524.fc44.noarch                                                                                                                                                           100% |   2.0 MiB/s |  22.6 KiB |  00m00s
+[ 6/73] Installing perl-ExtUtils-Embed-0:1.35-524.fc44.noarch                                                                                                                                                       100% |   1.4 MiB/s |  16.1 KiB |  00m00s
+[ 7/73] Installing perl-autouse-0:1.11-524.fc44.noarch                                                                                                                                                              100% | 706.2 KiB/s |   6.4 KiB |  00m00s
+[ 8/73] Installing perl-User-pwent-0:1.05-524.fc44.noarch                                                                                                                                                           100% |   1.6 MiB/s |  17.9 KiB |  00m00s
+[ 9/73] Installing perl-Dumpvalue-0:2.27-524.fc44.noarch                                                                                                                                                            100% |   2.2 MiB/s |  20.2 KiB |  00m00s
+[10/73] Installing perl-Text-Diff-0:1.45-25.fc44.noarch                                                                                                                                                             100% |   9.2 MiB/s |  85.1 KiB |  00m00s
+[11/73] Installing perl-Net-Ping-0:2.76-521.fc44.noarch                                                                                                                                                             100% |  16.5 MiB/s | 135.3 KiB |  00m00s
+[12/73] Installing perl-IO-Zlib-1:1.15-521.fc44.noarch                                                                                                                                                              100% |   3.7 MiB/s |  26.7 KiB |  00m00s
+[13/73] Installing perl-Module-Signature-0:0.93-3.fc44.noarch                                                                                                                                                       100% |   4.5 MiB/s | 138.8 KiB |  00m00s
+[14/73] Installing perl-ExtUtils-Miniperl-0:1.14-524.fc44.noarch                                                                                                                                                    100% |   1.1 MiB/s |   8.8 KiB |  00m00s
+[15/73] Installing perl-Devel-SelfStubber-0:1.06-524.fc44.noarch                                                                                                                                                    100% | 918.0 KiB/s |   7.3 KiB |  00m00s
+[16/73] Installing perl-vmsish-0:1.04-524.fc44.noarch                                                                                                                                                               100% | 871.1 KiB/s |   7.0 KiB |  00m00s
+[17/73] Installing perl-utils-0:5.42.2-524.fc44.noarch                                                                                                                                                              100% |   3.6 MiB/s |  98.6 KiB |  00m00s
+[18/73] Installing perl-sort-0:2.06-524.fc44.noarch                                                                                                                                                                 100% | 654.8 KiB/s |   5.2 KiB |  00m00s
+[19/73] Installing perl-ph-0:5.42.2-524.fc44.x86_64                                                                                                                                                                 100% |  19.8 MiB/s | 284.0 KiB |  00m00s
+[20/73] Installing perl-macros-4:5.42.2-524.fc44.noarch                                                                                                                                                             100% | 641.9 KiB/s |   5.8 KiB |  00m00s
+[21/73] Installing perl-libnetcfg-4:5.42.2-524.fc44.noarch                                                                                                                                                          100% | 559.3 KiB/s |  17.3 KiB |  00m00s
+[22/73] Installing perl-less-0:0.03-524.fc44.noarch                                                                                                                                                                 100% | 666.5 KiB/s |   5.3 KiB |  00m00s
+[23/73] Installing perl-encoding-warnings-0:0.14-524.fc44.noarch                                                                                                                                                    100% |   1.3 MiB/s |  10.7 KiB |  00m00s
+[24/73] Installing perl-diagnostics-0:1.40-524.fc44.noarch                                                                                                                                                          100% |  22.0 MiB/s | 472.1 KiB |  00m00s
+[25/73] Installing perl-debugger-0:1.60-524.fc44.noarch                                                                                                                                                             100% |  49.4 MiB/s | 404.3 KiB |  00m00s
+[26/73] Installing perl-blib-0:1.07-524.fc44.noarch                                                                                                                                                                 100% | 454.6 KiB/s |   3.6 KiB |  00m00s
+[27/73] Installing perl-Time-0:1.04-524.fc44.noarch                                                                                                                                                                 100% |   1.1 MiB/s |  10.9 KiB |  00m00s
+[28/73] Installing perl-Tie-Memoize-0:1.1-524.fc44.noarch                                                                                                                                                           100% | 845.7 KiB/s |   6.8 KiB |  00m00s
+[29/73] Installing perl-Tie-File-0:1.10-524.fc44.noarch                                                                                                                                                             100% |  12.0 MiB/s |  86.2 KiB |  00m00s
+[30/73] Installing perl-Thread-Semaphore-0:2.13-524.fc44.noarch                                                                                                                                                     100% |   1.5 MiB/s |  10.6 KiB |  00m00s
+[31/73] Installing perl-Thread-0:3.06-524.fc44.noarch                                                                                                                                                               100% |   1.5 MiB/s |  12.5 KiB |  00m00s
+[32/73] Installing perl-Text-Abbrev-0:1.02-524.fc44.noarch                                                                                                                                                          100% | 403.6 KiB/s |   3.6 KiB |  00m00s
+[33/73] Installing perl-Test-0:1.31-524.fc44.noarch                                                                                                                                                                 100% |   4.6 MiB/s |  37.4 KiB |  00m00s
+[34/73] Installing perl-Term-Complete-0:1.403-524.fc44.noarch                                                                                                                                                       100% | 790.0 KiB/s |   6.3 KiB |  00m00s
+[35/73] Installing perl-Search-Dict-0:1.08-524.fc44.noarch                                                                                                                                                          100% | 578.6 KiB/s |   5.2 KiB |  00m00s
+[36/73] Installing perl-Pod-Functions-0:1.14-524.fc44.noarch                                                                                                                                                        100% |   2.1 MiB/s |  14.8 KiB |  00m00s
+[37/73] Installing perl-ODBM_File-0:1.20-524.fc44.x86_64                                                                                                                                                            100% |   3.6 MiB/s |  29.6 KiB |  00m00s
+[38/73] Installing perl-Net-0:1.04-524.fc44.noarch                                                                                                                                                                  100% |   2.6 MiB/s |  23.9 KiB |  00m00s
+[39/73] Installing perl-NEXT-0:0.69-524.fc44.noarch                                                                                                                                                                 100% |   2.6 MiB/s |  24.0 KiB |  00m00s
+[40/73] Installing perl-Module-Loaded-1:0.08-524.fc44.noarch                                                                                                                                                        100% | 616.8 KiB/s |   5.6 KiB |  00m00s
+[41/73] Installing perl-Module-CoreList-tools-1:5.20260601-1.fc44.noarch                                                                                                                                            100% | 742.3 KiB/s |  19.3 KiB |  00m00s
+[42/73] Installing perl-Memoize-0:1.17-524.fc44.noarch                                                                                                                                                              100% |   7.2 MiB/s |  66.8 KiB |  00m00s
+[43/73] Installing perl-I18N-Collate-0:1.02-524.fc44.noarch                                                                                                                                                         100% | 954.6 KiB/s |   7.6 KiB |  00m00s
+[44/73] Installing perl-GDBM_File-1:1.24-524.fc44.x86_64                                                                                                                                                            100% |   7.9 MiB/s |  80.6 KiB |  00m00s
+[45/73] Installing perl-FileCache-0:1.10-524.fc44.noarch                                                                                                                                                            100% | 986.8 KiB/s |   7.9 KiB |  00m00s
+[46/73] Installing perl-File-DosGlob-0:1.12-524.fc44.x86_64                                                                                                                                                         100% |   2.4 MiB/s |  22.0 KiB |  00m00s
+[47/73] Installing perl-Encode-devel-4:3.21-521.fc44.x86_64                                                                                                                                                         100% |   3.8 MiB/s | 101.1 KiB |  00m00s
+[48/73] Installing perl-Devel-Peek-0:1.36-524.fc44.x86_64                                                                                                                                                           100% |   5.5 MiB/s |  44.8 KiB |  00m00s
+[49/73] Installing perl-DBM_Filter-0:0.07-524.fc44.noarch                                                                                                                                                           100% |   3.3 MiB/s |  30.7 KiB |  00m00s
+[50/73] Installing perl-Config-Perl-V-0:0.39-1.fc44.noarch                                                                                                                                                          100% |   3.0 MiB/s |  27.6 KiB |  00m00s
+[51/73] Installing perl-Config-Extensions-0:0.03-524.fc44.noarch                                                                                                                                                    100% | 404.3 KiB/s |   3.2 KiB |  00m00s
+[52/73] Installing perl-Attribute-Handlers-0:1.03-524.fc44.noarch                                                                                                                                                   100% |   4.4 MiB/s |  40.5 KiB |  00m00s
+[53/73] Installing perl-Compress-Raw-Lzma-0:2.221-1.fc44.x86_64                                                                                                                                                     100% |  12.1 MiB/s | 148.4 KiB |  00m00s
+[54/73] Installing perl-IO-Compress-Lzma-0:2.217-1.fc44.noarch                                                                                                                                                      100% |  19.7 MiB/s | 222.2 KiB |  00m00s
+[55/73] Installing perl-Archive-Tar-0:3.12-1.fc44.noarch                                                                                                                                                            100% |   6.3 MiB/s | 160.3 KiB |  00m00s
+[56/73] Installing perl-Data-Section-0:0.200008-9.fc44.noarch                                                                                                                                                       100% |   5.4 MiB/s |  44.1 KiB |  00m00s
+[57/73] Installing perl-Software-License-0:0.104007-3.fc44.noarch                                                                                                                                                   100% |  33.4 MiB/s | 513.2 KiB |  00m00s
+[58/73] Installing perl-inc-latest-2:0.500-32.fc44.noarch                                                                                                                                                           100% |   4.4 MiB/s |  36.3 KiB |  00m00s
+[59/73] Installing perl-Module-Build-2:0.42.34-10.fc44.noarch                                                                                                                                                       100% |  16.2 MiB/s | 663.2 KiB |  00m00s
+[60/73] Installing perl-local-lib-0:2.000029-11.fc44.noarch                                                                                                                                                         100% |  14.7 MiB/s | 120.4 KiB |  00m00s
+[61/73] Installing perl-File-HomeDir-0:1.006-16.fc44.noarch                                                                                                                                                         100% |  10.1 MiB/s | 123.8 KiB |  00m00s
+[62/73] Installing perl-Devel-Size-0:0.86-1.fc44.x86_64                                                                                                                                                             100% |   4.7 MiB/s |  43.8 KiB |  00m00s
+[63/73] Installing perl-Compress-Bzip2-0:2.28-25.fc44.x86_64                                                                                                                                                        100% |  15.8 MiB/s | 145.2 KiB |  00m00s
+[64/73] Installing perl-Archive-Zip-0:1.68-18.fc44.noarch                                                                                                                                                           100% |  11.6 MiB/s | 297.8 KiB |  00m00s
+[65/73] Installing perl-perlfaq-0:5.20250619-521.fc44.noarch                                                                                                                                                        100% |  80.1 MiB/s | 737.9 KiB |  00m00s
+[66/73] Installing perl-bignum-0:0.67-522.fc44.noarch                                                                                                                                                               100% |  16.7 MiB/s | 136.5 KiB |  00m00s
+[67/73] Installing perl-Pod-Checker-4:1.77-521.fc44.noarch                                                                                                                                                          100% |   1.9 MiB/s |  53.5 KiB |  00m00s
+[68/73] Installing perl-PerlIO-via-QuotedPrint-0:0.10-521.fc44.noarch                                                                                                                                               100% |   4.5 MiB/s |  32.1 KiB |  00m00s
+[69/73] Installing perl-Math-BigInt-FastCalc-0:0.502.000-521.fc44.x86_64                                                                                                                                            100% |   5.1 MiB/s |  46.8 KiB |  00m00s
+[70/73] Installing perl-File-Fetch-0:1.08-4.fc44.noarch                                                                                                                                                             100% |   6.7 MiB/s |  61.3 KiB |  00m00s
+[71/73] Installing perl-4:5.42.2-524.fc44.x86_64                                                                                                                                                                    100% |  13.5 KiB/s | 124.0   B |  00m00s
+[72/73] Installing perl-CPAN-0:2.38-522.fc44.noarch                                                                                                                                                                 100% |  43.1 MiB/s |   1.9 MiB |  00m00s
+[73/73] Installing perl-CPAN-DistnameInfo-0:0.12-34.fc44.noarch                                                                                                                                                     100% |  12.8 KiB/s |  11.6 KiB |  00m01s
+Complete!
+
+░▒▓ 🎩       ▓▒░ ◦•·············································································································································································································•◦ ░▒▓   23s279ms ▓▒░
+··• cd Do
+Documents/ Downloads/
+
+░▒▓ 🎩       ▓▒░ ◦•·············································································································································································································•◦ ░▒▓   23s279ms ▓▒░
+··• git
+ clone https://github.com/microsoft/vcpkg.git
+usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]
+           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]
+           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]
+           <command> [<args>]
+
+These are common Git commands used in various situations:
+
+start a working area (see also: git help tutorial)
+   clone      Clone a repository into a new directory
+   init       Create an empty Git repository or reinitialize an existing one
+
+work on the current change (see also: git help everyday)
+   add        Add file contents to the index
+   mv         Move or rename a file, a directory, or a symlink
+   restore    Restore working tree files
+   rm         Remove files from the working tree and from the index
+
+examine the history and state (see also: git help revisions)
+   bisect     Use binary search to find the commit that introduced a bug
+   diff       Show changes between commits, commit and working tree, etc
+   grep       Print lines matching a pattern
+   log        Show commit logs
+   show       Show various types of objects
+   status     Show the working tree status
+
+grow, mark and tweak your common history
+   backfill   Download missing objects in a partial clone
+   branch     List, create, or delete branches
+   commit     Record changes to the repository
+   history    EXPERIMENTAL: Rewrite history
+   merge      Join two or more development histories together
+   rebase     Reapply commits on top of another base tip
+   reset      Set `HEAD` or the index to a known state
+   switch     Switch branches
+   tag        Create, list, delete or verify tags
+
+collaborate (see also: git help workflows)
+   fetch      Download objects and refs from another repository
+   pull       Fetch from and integrate with another repository or a local branch
+   push       Update remote refs along with associated objects
+
+'git help -a' and 'git help -g' list available subcommands and some
+concept guides. See 'git help <command>' or 'git help <concept>'
+to read about a specific subcommand or concept.
+See 'git help git' for an overview of the system.
+bash: clone: command not found...
+
+░▒▓ 🎩       ▓▒░ ◦•················································································································································································································•◦ ░▒▓   173ms ▓▒░
+··• git clone https://github.com/microsoft/vcpkg.git
+Cloning into 'vcpkg'...
+remote: Enumerating objects: 335654, done.
+remote: Counting objects: 100% (593/593), done.
+remote: Compressing objects: 100% (291/291), done.
+remote: Total 335654 (delta 478), reused 305 (delta 302), pack-reused 335061 (from 4)
+Receiving objects: 100% (335654/335654), 108.56 MiB | 34.44 MiB/s, done.
+Resolving deltas: 100% (223580/223580), done.
+
+░▒▓ 🎩       ▓▒░ ◦•·············································································································································································································•◦ ░▒▓   10s753ms ▓▒░
+··• ./vcpkg/bootstrap-vcpkg.sh
+Downloading vcpkg-glibc...
+vcpkg package management program version 2026-07-27-98d7cb0cf1f4686a3e43aa5672b6230c1d56bce8
+
+See LICENSE.txt for license information.
+Telemetry
+---------
+vcpkg collects usage data in order to help us improve your experience.
+The data collected by Microsoft is anonymous.
+You can opt-out of telemetry by re-running the bootstrap-vcpkg script with -disableMetrics,
+passing --disable-metrics to vcpkg on the command line,
+or by setting the VCPKG_DISABLE_METRICS environment variable.
+
+Read more about vcpkg telemetry at https://learn.microsoft.com/vcpkg/about/privacy
+Read the Microsoft Privacy Statement at https://go.microsoft.com/fwlink/?LinkId=521839
+
+░▒▓ 🎩       ▓▒░ ◦•················································································································································································································•◦ ░▒▓   524ms ▓▒░
+··• ./vcpkg/bootstrap-vcpkg.sh -disableMetrics
+Downloading vcpkg-glibc...
+vcpkg package management program version 2026-07-27-98d7cb0cf1f4686a3e43aa5672b6230c1d56bce8
+
+See LICENSE.txt for license information.
+
+░▒▓ 🎩       ▓▒░ ◦•················································································································································································································•◦ ░▒▓   231ms ▓▒░
+··• ./vcpkg/bootstrap-vcpkg.sh --disableMetrics
+Downloading vcpkg-glibc...
+vcpkg package management program version 2026-07-27-98d7cb0cf1f4686a3e43aa5672b6230c1d56bce8
+
+See LICENSE.txt for license information.
+
+░▒▓ 🎩       ▓▒░ ◦•················································································································································································································•◦ ░▒▓   190ms ▓▒░
+··• nano .bash
+.bash_history      .bash_logout       .bash_profile      .bash_profile.bak  .bashrc
+
+░▒▓ 🎩       ▓▒░ ◦•················································································································································································································•◦ ░▒▓   190ms ▓▒░
+··• nano .bashrc
+
+░▒▓ 🎩       ▓▒░ ◦•·············································································································································································································•◦ ░▒▓   50s954ms ▓▒░
+··• git clone https://github.com/BeamMP/BeamMP-Launcher.git
+Cloning into 'BeamMP-Launcher'...
+remote: Enumerating objects: 5228, done.
+remote: Counting objects: 100% (1537/1537), done.
+remote: Compressing objects: 100% (384/384), done.
+remote: Total 5228 (delta 1361), reused 1153 (delta 1153), pack-reused 3691 (from 5)
+Receiving objects: 100% (5228/5228), 7.77 MiB | 40.61 MiB/s, done.
+Resolving deltas: 100% (3456/3456), done.
+
+░▒▓ 🎩       ▓▒░ ◦•···············································································································································································································•◦ ░▒▓   1s88ms ▓▒░
+··• cd BeamMP-Launcher/
+
+░▒▓ 🎩  …/BeamMP-Launcher    master  ▓▒░ ◦•··························································································································································································•◦ ░▒▓   8ms ▓▒░
+··• git checkout v2.8.0
+Note: switching to 'v2.8.0'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at f30a88e Bump version to 2.8.0
+
+░▒▓ 🎩  …/BeamMP-Launcher    HEAD  ▓▒░ ◦•···························································································································································································•◦ ░▒▓   24ms ▓▒░
+··• cmake . -B bin -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-linux
+CMake Error at /usr/share/cmake/Modules/CMakeDetermineSystem.cmake:159 (message):
+  Could not find toolchain file:
+
+   "/scripts/buildsystems/vcpkg.cmake"
+Call Stack (most recent call first):
+  CMakeLists.txt:3 (project)
+
+
+CMake Error: CMake was unable to find a build program corresponding to "Unix Makefiles".  CMAKE_MAKE_PROGRAM is not set.  You probably need to select a different build tool.
+CMake Error: CMAKE_C_COMPILER not set, after EnableLanguage
+CMake Error: CMAKE_CXX_COMPILER not set, after EnableLanguage
+-- Configuring incomplete, errors occurred!
+
+░▒▓ 🎩  …/BeamMP-Launcher    HEAD  ▓▒░ ◦•···························································································································································································•◦ ░▒▓   56ms ▓▒░
+··• sudo
+ dnf install kernel-headers kernel-devel gcc gcc-c++ make perl
+usage: sudo -h | -K | -k | -V
+usage: sudo -v [-ABkNnS] [-g group] [-h host] [-p prompt] [-u user]
+usage: sudo -l [-ABkNnS] [-g group] [-h host] [-p prompt] [-U user]
+            [-u user] [command [arg ...]]
+usage: sudo [-ABbEHkNnPS] [-r role] [-t type] [-C num] [-D directory]
+            [-g group] [-h host] [-p prompt] [-R directory] [-T timeout]
+            [-u user] [VAR=value] [-i | -s] [command [arg ...]]
+usage: sudo -e [-ABkNnS] [-r role] [-t type] [-C num] [-D directory]
+            [-g group] [-h host] [-p prompt] [-R directory] [-T timeout]
+            [-u user] file ...
+The requested operation requires superuser privileges. Please log in as a user with elevated rights, or use the "--assumeno" or "--downloadonly" options to run the command without modifying the system state.
+
+░▒▓ 🎩  …/BeamMP-Launcher    HEAD  ▓▒░ ◦•···························································································································································································•◦ ░▒▓   54ms ▓▒░
+··• sudo  dnf install kernel-headers kernel-devel gcc gcc-c++ make perl
+Updating and loading repositories:
+Repositories loaded.
+Package "kernel-headers-7.1.4-200.nobara.fc44.x86_64" is already installed.
+Package "kernel-devel-7.0.11-200.nobara.fc43.x86_64" is already installed.
+Package "kernel-devel-7.1.3-200.nobara.fc44.x86_64" is already installed.
+Package "kernel-devel-7.1.4-200.nobara.fc44.x86_64" is already installed.
+Package "gcc-16.1.1-2.fc44.x86_64" is already installed.
+Package "gcc-c++-16.1.1-2.fc44.x86_64" is already installed.
+Package "make-1:4.4.1-12.fc44.x86_64" is already installed.
+Package "perl-4:5.42.2-524.fc44.x86_64" is already installed.
+
+Nothing to do.
+
+░▒▓ 🎩  …/BeamMP-Launcher    HEAD  ▓▒░ ◦•························································································································································································•◦ ░▒▓   1s365ms ▓▒░
+··•
+```
+§a§
+The error you are seeing—`Could not find toolchain file: "/scripts/buildsystems/vcpkg.cmake"`—happens because the environment variable **`$VCPKG_ROOT` is empty** in your current terminal session.
+
+Even though you added it to your `.bashrc`, those changes don't take effect in the current window until you "reload" the file or set the variable manually.
+
+### How to fix it
+
+Follow these steps in your current terminal window:
+
+#### 1. Set the variable manually
+Since you are currently inside the `BeamMP-Launcher` folder, and you cloned `vcpkg` in the folder above it, run this command:
+```bash
+export VCPKG_ROOT="$(pwd)/../vcpkg"
+```
+
+#### 2. Verify it is set
+Run this command to make sure the path looks correct:
+```bash
+echo $VCPKG_ROOT
+```
+*(It should print the full path to your vcpkg folder.)*
+
+#### 3. Run the CMake command again
+Now that the variable is defined, the command from the guide will work:
+```cmake
+cmake . -B bin -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-linux
+```
+
+#### 4. Build the application
+Once configuration finishes, run the build command:
+```cmake
+cmake --build bin --parallel
+```
+
+---
+
+### Why did this happen?
+1. **The `.bashrc` issue:** When you edit `.bashrc`, it only affects **new** terminal windows you open. If you want the current window to recognize the changes you made with `nano`, you must run `source ~/.bashrc`.
+2. **Compiler Errors:** The error message about `CMAKE_C_COMPILER not set` is a "false flag"—CMake often reports this when the Toolchain file (vcpkg) is missing, as it gives up before it even looks for your compiler. Once `$VCPKG_ROOT` is fixed, those errors will disappear.
+
+### Next time you open a terminal
+To make sure this works forever, ensure your `.bashrc` has the **absolute path** to the vcpkg folder, not a relative one. It should look something like this:
+`export VCPKG_ROOT="/home/lena/vcpkg"` (replace `lena` with your actual username).

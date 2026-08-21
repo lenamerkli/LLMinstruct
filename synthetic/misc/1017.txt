@@ -1,0 +1,781 @@
+§u§
+```
+Python 3.13.14 (main, Jun 11 2026, 00:00:00) [GCC 16.1.1 20260515 (Red Hat 16.1.1-2)] on linux
+from miner_u_pro import pdf_to_markdown
+pdf_to_markdown('/home/lena/Downloads/SPS_Zusammenfassung_2025-06-10.pdf')
+2026-08-20 12:00:54.741 | INFO     | mineru.cli.client:run_orchestrated_cli:953 - Started local mineru-api at http://127.0.0.1:34437
+2026-08-20 12:00:56.608 | INFO     | __main__:create_app:236 - Request concurrency limited to 3
+Start MinerU FastAPI Service: http://127.0.0.1:34437
+API documentation: http://127.0.0.1:34437/docs
+INFO:     Started server process [25590]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:34437 (Press CTRL+C to quit)
+2026-08-20 12:00:56.753 | INFO     | mineru.cli.client:run_planned_task:832 - Submitting batch 1/1 | 1 document, 3 pages in this batch | 3 pages total | task#1 [SPS_Zusammenfassung_2025-06-10]
+2026-08-20 12:00:57.394 | INFO     | mineru.utils.engine_utils:get_vlm_engine:34 - Using vllm-async-engine as the inference engine for VLM.
+WARNING 08-20 12:00:58 [config.py:70] Support for Transformers v4 is deprecated. The Transformers v4 codepath will become unmaintained in vLLM v0.22.0 and will be removed in vLLM v0.24.0. Please upgrade to Transformers v5: pip install --upgrade transformers
+2026-08-20 12:00:59.684 | INFO     | mineru.backend.vlm.utils:enable_custom_logits_processors:56 - compute_capability: 8.9 >= 8.0 and vllm version: 0.21.0 >= 0.10.1, enable custom_logits_processors
+INFO 08-20 12:00:59 [model.py:568] Resolved architecture: Qwen2VLForConditionalGeneration
+INFO 08-20 12:00:59 [model.py:1697] Using max model len 8192
+INFO 08-20 12:00:59 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 08-20 12:00:59 [vllm.py:886] Asynchronous scheduling is enabled.
+INFO 08-20 12:00:59 [kernel.py:212] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+WARNING 08-20 12:01:02 [system_utils.py:157] We must use the `spawn` multiprocessing start method. Overriding VLLM_WORKER_MULTIPROC_METHOD to 'spawn'. See https://docs.vllm.ai/en/latest/usage/troubleshooting.html#python-multiprocessing for more information. Reasons: CUDA is initialized
+WARNING 08-20 12:01:05 [config.py:70] Support for Transformers v4 is deprecated. The Transformers v4 codepath will become unmaintained in vLLM v0.22.0 and will be removed in vLLM v0.24.0. Please upgrade to Transformers v5: pip install --upgrade transformers
+(EngineCore pid=25751) INFO 08-20 12:01:06 [core.py:109] Initializing a V1 LLM engine (v0.21.0) with config: model='/home/lena/.cache/huggingface/hub/models--opendatalab--MinerU2.5-Pro-2605-1.2B/snapshots/bff20d4ae2bf202df9f45284b4d43681555a97ed', speculative_config=None, tokenizer='/home/lena/.cache/huggingface/hub/models--opendatalab--MinerU2.5-Pro-2605-1.2B/snapshots/bff20d4ae2bf202df9f45284b4d43681555a97ed', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=8192, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=False, quantization=None, quantization_config=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=0, served_model_name=/home/lena/.cache/huggingface/hub/models--opendatalab--MinerU2.5-Pro-2605-1.2B/snapshots/bff20d4ae2bf202df9f45284b4d43681555a97ed, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'ir_enable_torch_wrap': True, 'splitting_ops': ['vllm::unified_attention_with_output', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::gdn_attention_core_xpu', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::deepseek_v4_attention', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'compile_sizes': [], 'compile_ranges_endpoints': [2048], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False, 'fuse_act_padding': False}, 'max_cudagraph_capture_size': 256, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': False, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native']), enable_flashinfer_autotune=False, moe_backend='auto')
+(EngineCore pid=25751) INFO 08-20 12:01:07 [parallel_state.py:1410] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://192.168.1.137:48425 backend=nccl
+(EngineCore pid=25751) INFO 08-20 12:01:07 [parallel_state.py:1723] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore pid=25751) INFO 08-20 12:01:09 [topk_topp_sampler.py:45] Using FlashInfer for top-p & top-k sampling.
+(EngineCore pid=25751) The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+(EngineCore pid=25751) INFO 08-20 12:01:10 [gpu_model_runner.py:4857] Starting to load model /home/lena/.cache/huggingface/hub/models--opendatalab--MinerU2.5-Pro-2605-1.2B/snapshots/bff20d4ae2bf202df9f45284b4d43681555a97ed...
+(EngineCore pid=25751) INFO 08-20 12:01:10 [cuda.py:427] Using backend AttentionBackendEnum.FLASH_ATTN for vit attention
+(EngineCore pid=25751) INFO 08-20 12:01:10 [mm_encoder_attention.py:372] Using AttentionBackendEnum.FLASH_ATTN for MMEncoderAttention.
+(EngineCore pid=25751) INFO 08-20 12:01:10 [vllm.py:886] Asynchronous scheduling is enabled.
+(EngineCore pid=25751) INFO 08-20 12:01:10 [kernel.py:212] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+(EngineCore pid=25751) INFO 08-20 12:01:11 [cuda.py:372] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(EngineCore pid=25751) INFO 08-20 12:01:11 [flash_attn.py:641] Using FlashAttention version 2
+(EngineCore pid=25751) INFO 08-20 12:01:11 [weight_utils.py:938] Filesystem type for checkpoints: BTRFS. Checkpoint size: 2.15 GiB. Available RAM: 45.35 GiB.
+(EngineCore pid=25751) INFO 08-20 12:01:11 [weight_utils.py:961] Auto-prefetch is disabled because the filesystem (BTRFS) is not a recognized network FS (NFS/Lustre). If you want to force prefetching, start vLLM with --safetensors-load-strategy=prefetch.
+Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:00<00:00,  3.87it/s]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:00<00:00,  3.87it/s]
+(EngineCore pid=25751)
+(EngineCore pid=25751) INFO 08-20 12:01:11 [default_loader.py:397] Loading weights took 0.28 seconds
+(EngineCore pid=25751) INFO 08-20 12:01:11 [gpu_model_runner.py:4959] Model loading took 2.16 GiB memory and 0.550744 seconds
+(EngineCore pid=25751) INFO 08-20 12:01:12 [gpu_model_runner.py:5920] Encoder cache will be initialized with a budget of 8192 tokens, and profiled with 1 video items of the maximum feature size.
+In file included from /usr/include/python3.13/pyconfig.h:6,
+                 from /usr/include/python3.13/Python.h:14,
+                 from /tmp/tmp25wdqm8g/cuda_utils.c:7:
+/usr/include/python3.13/pyconfig-64.h:1968:9: warning: ‘_POSIX_C_SOURCE’ redefined
+ 1968 | #define _POSIX_C_SOURCE 200809L
+      |         ^~~~~~~~~~~~~~~
+In file included from /usr/include/bits/libc-header-start.h:33,
+                 from /usr/include/stdlib.h:26,
+                 from /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda.h:56,
+                 from /tmp/tmp25wdqm8g/cuda_utils.c:1:
+/usr/include/features.h:319:10: note: this is the location of the previous definition
+  319 | # define _POSIX_C_SOURCE        202405L
+      |          ^~~~~~~~~~~~~~~
+In file included from /usr/include/python3.13/pyconfig.h:6,
+                 from /usr/include/python3.13/Python.h:14,
+                 from /tmp/tmpqtf_ipxj/__triton_launcher.c:7:
+/usr/include/python3.13/pyconfig-64.h:1968:9: warning: ‘_POSIX_C_SOURCE’ redefined
+ 1968 | #define _POSIX_C_SOURCE 200809L
+      |         ^~~~~~~~~~~~~~~
+In file included from /usr/include/bits/libc-header-start.h:33,
+                 from /usr/include/stdlib.h:26,
+                 from /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda.h:56,
+                 from /tmp/tmpqtf_ipxj/__triton_launcher.c:2:
+/usr/include/features.h:319:10: note: this is the location of the previous definition
+  319 | # define _POSIX_C_SOURCE        202405L
+      |          ^~~~~~~~~~~~~~~
+(EngineCore pid=25751) INFO 08-20 12:01:19 [backends.py:1089] Using cache directory: /home/lena/.cache/vllm/torch_compile_cache/68d614698d/rank_0_0/backbone for vLLM's torch.compile
+(EngineCore pid=25751) INFO 08-20 12:01:19 [backends.py:1148] Dynamo bytecode transform time: 3.28 s
+(EngineCore pid=25751) INFO 08-20 12:01:22 [backends.py:378] Cache the graph of compile range (1, 2048) for later use
+(EngineCore pid=25751) [rank0]:W0820 12:01:22.697000 25751 .venv-mineru/lib/python3.13/site-packages/torch/_inductor/utils.py:1731] Not enough SMs to use max_autotune_gemm mode
+(EngineCore pid=25751) INFO 08-20 12:01:26 [backends.py:393] Compiling a graph for compile range (1, 2048) takes 6.76 s
+(EngineCore pid=25751) INFO 08-20 12:01:28 [decorators.py:708] saved AOT compiled function to /home/lena/.cache/vllm/torch_compile_cache/torch_aot_compile/834c9a893525d4edf1e58777d6f3e67822d1e56efc1263226f7261c41c4269f3/rank_0_0/model
+(EngineCore pid=25751) INFO 08-20 12:01:28 [monitor.py:53] torch.compile took 12.67 s in total
+(EngineCore pid=25751) INFO 08-20 12:01:28 [monitor.py:81] Initial profiling/warmup run took 0.44 s
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] EngineCore failed to start.
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] Traceback (most recent call last):
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/flashinfer/jit/cpp_ext.py", line 332, in run_ninja
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     subprocess.run(
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     ~~~~~~~~~~~~~~^
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]         command,
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]         ^^^^^^^^
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     ...<4 lines>...
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]         text=True,
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]         ^^^^^^^^^^
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     )
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     ^
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/usr/lib64/python3.13/subprocess.py", line 577, in run
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     raise CalledProcessError(retcode, process.args,
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]                              output=stdout, stderr=stderr)
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] subprocess.CalledProcessError: Command '['ninja', '-v', '-C', '/home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling', '-f', '/home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/build.ninja']' returned non-zero exit status 1.
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] The above exception was the direct cause of the following exception:
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] Traceback (most recent call last):
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/engine/core.py", line 1114, in run_engine_core
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     return func(*args, **kwargs)
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/engine/core.py", line 880, in __init__
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     super().__init__(
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     ~~~~~~~~~~~~~~~~^
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]         vllm_config,
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]         ^^^^^^^^^^^^
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     ...<3 lines>...
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]         internal_dp_balancing,
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]         ^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     )
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     ^
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/engine/core.py", line 128, in __init__
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     return func(*args, **kwargs)
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/engine/core.py", line 250, in _initialize_kv_caches
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     available_gpu_memory = self.model_executor.determine_available_memory()
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/executor/abstract.py", line 147, in determine_available_memory
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     return self.collective_rpc("determine_available_memory")
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]            ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/executor/uniproc_executor.py", line 93, in collective_rpc
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     result = run_method(self.driver_worker, method, args, kwargs)
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/serial_utils.py", line 510, in run_method
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     return func(*args, **kwargs)
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     return func(*args, **kwargs)
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/worker/gpu_worker.py", line 392, in determine_available_memory
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     self.model_runner.profile_run()
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/worker/gpu_model_runner.py", line 5955, in profile_run
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     output = self._dummy_sampler_run(last_hidden_states)
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     return func(*args, **kwargs)
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/worker/gpu_model_runner.py", line 5775, in _dummy_sampler_run
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     raise e
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/worker/gpu_model_runner.py", line 5743, in _dummy_sampler_run
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     sampler_output = self.sampler(
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]         logits=logits, sampling_metadata=dummy_metadata
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     )
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     return self._call_impl(*args, **kwargs)
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     return forward_call(*args, **kwargs)
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/sample/sampler.py", line 97, in forward
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     sampled, processed_logprobs = self.sample(logits, sampling_metadata)
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]                                   ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/sample/sampler.py", line 272, in sample
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     random_sampled, processed_logprobs = self.topk_topp_sampler(
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]                                          ~~~~~~~~~~~~~~~~~~~~~~^
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]         logits,
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]         ^^^^^^^
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     ...<2 lines>...
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]         sampling_metadata.top_p,
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]         ^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     )
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     ^
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     return self._call_impl(*args, **kwargs)
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     return forward_call(*args, **kwargs)
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/sample/ops/topk_topp_sampler.py", line 157, in forward_cuda
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     return flashinfer_sample(logits.contiguous(), k, p, generators), None
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]            ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/sample/ops/topk_topp_sampler.py", line 447, in flashinfer_sample
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     next_token_ids = flashinfer.sampling.top_k_top_p_sampling_from_logits(
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]         logits, k, p, deterministic=True
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     )
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/flashinfer/sampling.py", line 1400, in top_k_top_p_sampling_from_logits
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     masked_logits = top_k_mask_logits(logits, top_k)
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/flashinfer/sampling.py", line 1806, in top_k_mask_logits
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     return get_sampling_module().top_k_mask_logits(
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]            ~~~~~~~~~~~~~~~~~~~^^
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/flashinfer/sampling.py", line 54, in get_sampling_module
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     module = gen_sampling_module().build_and_load()
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/flashinfer/jit/core.py", line 318, in build_and_load
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     self.build(verbose, need_lock=False)
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/flashinfer/jit/core.py", line 304, in build
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     run_ninja(self.build_dir, self.ninja_path, verbose)
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/flashinfer/jit/cpp_ext.py", line 344, in run_ninja
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]     raise RuntimeError(msg) from e
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] RuntimeError: Ninja build failed. Ninja output:
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] ninja: Entering directory `/home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling'
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] [1/4] /usr/bin/nvcc --generate-dependencies-with-compile --dependency-output /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_renorm.cuda.o.d -DPy_LIMITED_API=0x03090000 -D_GLIBCXX_USE_CXX11_ABI=1 -isystem /usr/include/python3.13 -isystem /usr/include/cccl -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/tools/util/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/spdlog/include --compiler-options=-fPIC --expt-relaxed-constexpr -static-global-template-stub=false -gencode=arch=compute_89,code=sm_89 -DFLASHINFER_ENABLE_FP8_E8M0 -DFLASHINFER_ENABLE_FP4_E2M1 -std=c++17 --threads=1 -use_fast_math -DFLASHINFER_ENABLE_F16 -DFLASHINFER_ENABLE_BF16 -DFLASHINFER_ENABLE_FP8_E4M3 -DFLASHINFER_ENABLE_FP8_E5M2 -DNDEBUG -O3 -c /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc/renorm.cu -o /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_renorm.cuda.o
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] FAILED: [code=1] /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_renorm.cuda.o
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] /usr/bin/nvcc --generate-dependencies-with-compile --dependency-output /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_renorm.cuda.o.d -DPy_LIMITED_API=0x03090000 -D_GLIBCXX_USE_CXX11_ABI=1 -isystem /usr/include/python3.13 -isystem /usr/include/cccl -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/tools/util/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/spdlog/include --compiler-options=-fPIC --expt-relaxed-constexpr -static-global-template-stub=false -gencode=arch=compute_89,code=sm_89 -DFLASHINFER_ENABLE_FP8_E8M0 -DFLASHINFER_ENABLE_FP4_E2M1 -std=c++17 --threads=1 -use_fast_math -DFLASHINFER_ENABLE_F16 -DFLASHINFER_ENABLE_BF16 -DFLASHINFER_ENABLE_FP8_E4M3 -DFLASHINFER_ENABLE_FP8_E5M2 -DNDEBUG -O3 -c /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc/renorm.cu -o /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_renorm.cuda.o
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] In file included from /usr/include/cuda_runtime.h:82,
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]                  from <command-line>:
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] /usr/include/crt/host_config.h:137:2: error: #error -- unsupported GNU version! gcc versions later than 15 are not supported! The nvcc flag '-allow-unsupported-compiler' can be used to override this version check; however, using an unsupported host compiler may cause compilation failure or incorrect run time execution. Use at your own risk.
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   137 | #error -- unsupported GNU version! gcc versions later than 15 are not supported! The nvcc flag '-allow-unsupported-compiler' can be used to override this version check; however, using an unsupported host compiler may cause compilation failure or incorrect run time execution. Use at your own risk.
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]       |  ^~~~~
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] In file included from /usr/include/cooperative_groups.h:55,
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]                  from /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/include/flashinfer/air_top_p.cuh:22,
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]                  from /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc/renorm.cu:16:
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] /usr/include/cooperative_groups/details/info.h:50:10: fatal error: nv/target: No such file or directory
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]    50 | #include <nv/target>
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]       |          ^~~~~~~~~~~
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] compilation terminated.
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] [2/4] /usr/bin/nvcc --generate-dependencies-with-compile --dependency-output /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_sampling.cuda.o.d -DPy_LIMITED_API=0x03090000 -D_GLIBCXX_USE_CXX11_ABI=1 -isystem /usr/include/python3.13 -isystem /usr/include/cccl -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/tools/util/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/spdlog/include --compiler-options=-fPIC --expt-relaxed-constexpr -static-global-template-stub=false -gencode=arch=compute_89,code=sm_89 -DFLASHINFER_ENABLE_FP8_E8M0 -DFLASHINFER_ENABLE_FP4_E2M1 -std=c++17 --threads=1 -use_fast_math -DFLASHINFER_ENABLE_F16 -DFLASHINFER_ENABLE_BF16 -DFLASHINFER_ENABLE_FP8_E4M3 -DFLASHINFER_ENABLE_FP8_E5M2 -DNDEBUG -O3 -c /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc/sampling.cu -o /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_sampling.cuda.o
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] FAILED: [code=1] /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_sampling.cuda.o
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] /usr/bin/nvcc --generate-dependencies-with-compile --dependency-output /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_sampling.cuda.o.d -DPy_LIMITED_API=0x03090000 -D_GLIBCXX_USE_CXX11_ABI=1 -isystem /usr/include/python3.13 -isystem /usr/include/cccl -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/tools/util/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/spdlog/include --compiler-options=-fPIC --expt-relaxed-constexpr -static-global-template-stub=false -gencode=arch=compute_89,code=sm_89 -DFLASHINFER_ENABLE_FP8_E8M0 -DFLASHINFER_ENABLE_FP4_E2M1 -std=c++17 --threads=1 -use_fast_math -DFLASHINFER_ENABLE_F16 -DFLASHINFER_ENABLE_BF16 -DFLASHINFER_ENABLE_FP8_E4M3 -DFLASHINFER_ENABLE_FP8_E5M2 -DNDEBUG -O3 -c /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc/sampling.cu -o /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_sampling.cuda.o
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] In file included from /usr/include/cuda_runtime.h:82,
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]                  from <command-line>:
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] /usr/include/crt/host_config.h:137:2: error: #error -- unsupported GNU version! gcc versions later than 15 are not supported! The nvcc flag '-allow-unsupported-compiler' can be used to override this version check; however, using an unsupported host compiler may cause compilation failure or incorrect run time execution. Use at your own risk.
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   137 | #error -- unsupported GNU version! gcc versions later than 15 are not supported! The nvcc flag '-allow-unsupported-compiler' can be used to override this version check; however, using an unsupported host compiler may cause compilation failure or incorrect run time execution. Use at your own risk.
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]       |  ^~~~~
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] In file included from /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc/sampling.cu:16:
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/include/flashinfer/sampling.cuh:20:10: fatal error: curand.h: No such file or directory
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]    20 | #include <curand.h>
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]       |          ^~~~~~~~~~
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] compilation terminated.
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] [3/4] /usr/bin/nvcc --generate-dependencies-with-compile --dependency-output /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_flashinfer_sampling_binding.cuda.o.d -DPy_LIMITED_API=0x03090000 -D_GLIBCXX_USE_CXX11_ABI=1 -isystem /usr/include/python3.13 -isystem /usr/include/cccl -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/tools/util/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/spdlog/include --compiler-options=-fPIC --expt-relaxed-constexpr -static-global-template-stub=false -gencode=arch=compute_89,code=sm_89 -DFLASHINFER_ENABLE_FP8_E8M0 -DFLASHINFER_ENABLE_FP4_E2M1 -std=c++17 --threads=1 -use_fast_math -DFLASHINFER_ENABLE_F16 -DFLASHINFER_ENABLE_BF16 -DFLASHINFER_ENABLE_FP8_E4M3 -DFLASHINFER_ENABLE_FP8_E5M2 -DNDEBUG -O3 -c /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc/flashinfer_sampling_binding.cu -o /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_flashinfer_sampling_binding.cuda.o
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] FAILED: [code=1] /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_flashinfer_sampling_binding.cuda.o
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] /usr/bin/nvcc --generate-dependencies-with-compile --dependency-output /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_flashinfer_sampling_binding.cuda.o.d -DPy_LIMITED_API=0x03090000 -D_GLIBCXX_USE_CXX11_ABI=1 -isystem /usr/include/python3.13 -isystem /usr/include/cccl -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/tools/util/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/spdlog/include --compiler-options=-fPIC --expt-relaxed-constexpr -static-global-template-stub=false -gencode=arch=compute_89,code=sm_89 -DFLASHINFER_ENABLE_FP8_E8M0 -DFLASHINFER_ENABLE_FP4_E2M1 -std=c++17 --threads=1 -use_fast_math -DFLASHINFER_ENABLE_F16 -DFLASHINFER_ENABLE_BF16 -DFLASHINFER_ENABLE_FP8_E4M3 -DFLASHINFER_ENABLE_FP8_E5M2 -DNDEBUG -O3 -c /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc/flashinfer_sampling_binding.cu -o /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_flashinfer_sampling_binding.cuda.o
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] In file included from /usr/include/cuda_runtime.h:82,
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]                  from <command-line>:
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] /usr/include/crt/host_config.h:137:2: error: #error -- unsupported GNU version! gcc versions later than 15 are not supported! The nvcc flag '-allow-unsupported-compiler' can be used to override this version check; however, using an unsupported host compiler may cause compilation failure or incorrect run time execution. Use at your own risk.
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]   137 | #error -- unsupported GNU version! gcc versions later than 15 are not supported! The nvcc flag '-allow-unsupported-compiler' can be used to override this version check; however, using an unsupported host compiler may cause compilation failure or incorrect run time execution. Use at your own risk.
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]       |  ^~~~~
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140] ninja: build stopped: subcommand failed.
+(EngineCore pid=25751) ERROR 08-20 12:01:29 [core.py:1140]
+(EngineCore pid=25751) Process EngineCore:
+(EngineCore pid=25751) Traceback (most recent call last):
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/flashinfer/jit/cpp_ext.py", line 332, in run_ninja
+(EngineCore pid=25751)     subprocess.run(
+(EngineCore pid=25751)     ~~~~~~~~~~~~~~^
+(EngineCore pid=25751)         command,
+(EngineCore pid=25751)         ^^^^^^^^
+(EngineCore pid=25751)     ...<4 lines>...
+(EngineCore pid=25751)         text=True,
+(EngineCore pid=25751)         ^^^^^^^^^^
+(EngineCore pid=25751)     )
+(EngineCore pid=25751)     ^
+(EngineCore pid=25751)   File "/usr/lib64/python3.13/subprocess.py", line 577, in run
+(EngineCore pid=25751)     raise CalledProcessError(retcode, process.args,
+(EngineCore pid=25751)                              output=stdout, stderr=stderr)
+(EngineCore pid=25751) subprocess.CalledProcessError: Command '['ninja', '-v', '-C', '/home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling', '-f', '/home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/build.ninja']' returned non-zero exit status 1.
+(EngineCore pid=25751)
+(EngineCore pid=25751) The above exception was the direct cause of the following exception:
+(EngineCore pid=25751)
+(EngineCore pid=25751) Traceback (most recent call last):
+(EngineCore pid=25751)   File "/usr/lib64/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+(EngineCore pid=25751)     self.run()
+(EngineCore pid=25751)     ~~~~~~~~^^
+(EngineCore pid=25751)   File "/usr/lib64/python3.13/multiprocessing/process.py", line 108, in run
+(EngineCore pid=25751)     self._target(*self._args, **self._kwargs)
+(EngineCore pid=25751)     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/engine/core.py", line 1144, in run_engine_core
+(EngineCore pid=25751)     raise e
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/engine/core.py", line 1114, in run_engine_core
+(EngineCore pid=25751)     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=25751)     return func(*args, **kwargs)
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/engine/core.py", line 880, in __init__
+(EngineCore pid=25751)     super().__init__(
+(EngineCore pid=25751)     ~~~~~~~~~~~~~~~~^
+(EngineCore pid=25751)         vllm_config,
+(EngineCore pid=25751)         ^^^^^^^^^^^^
+(EngineCore pid=25751)     ...<3 lines>...
+(EngineCore pid=25751)         internal_dp_balancing,
+(EngineCore pid=25751)         ^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=25751)     )
+(EngineCore pid=25751)     ^
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/engine/core.py", line 128, in __init__
+(EngineCore pid=25751)     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=25751)     return func(*args, **kwargs)
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/engine/core.py", line 250, in _initialize_kv_caches
+(EngineCore pid=25751)     available_gpu_memory = self.model_executor.determine_available_memory()
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/executor/abstract.py", line 147, in determine_available_memory
+(EngineCore pid=25751)     return self.collective_rpc("determine_available_memory")
+(EngineCore pid=25751)            ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/executor/uniproc_executor.py", line 93, in collective_rpc
+(EngineCore pid=25751)     result = run_method(self.driver_worker, method, args, kwargs)
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/serial_utils.py", line 510, in run_method
+(EngineCore pid=25751)     return func(*args, **kwargs)
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=25751)     return func(*args, **kwargs)
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/worker/gpu_worker.py", line 392, in determine_available_memory
+(EngineCore pid=25751)     self.model_runner.profile_run()
+(EngineCore pid=25751)     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/worker/gpu_model_runner.py", line 5955, in profile_run
+(EngineCore pid=25751)     output = self._dummy_sampler_run(last_hidden_states)
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=25751)     return func(*args, **kwargs)
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/worker/gpu_model_runner.py", line 5775, in _dummy_sampler_run
+(EngineCore pid=25751)     raise e
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/worker/gpu_model_runner.py", line 5743, in _dummy_sampler_run
+(EngineCore pid=25751)     sampler_output = self.sampler(
+(EngineCore pid=25751)         logits=logits, sampling_metadata=dummy_metadata
+(EngineCore pid=25751)     )
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+(EngineCore pid=25751)     return self._call_impl(*args, **kwargs)
+(EngineCore pid=25751)            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+(EngineCore pid=25751)     return forward_call(*args, **kwargs)
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/sample/sampler.py", line 97, in forward
+(EngineCore pid=25751)     sampled, processed_logprobs = self.sample(logits, sampling_metadata)
+(EngineCore pid=25751)                                   ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/sample/sampler.py", line 272, in sample
+(EngineCore pid=25751)     random_sampled, processed_logprobs = self.topk_topp_sampler(
+(EngineCore pid=25751)                                          ~~~~~~~~~~~~~~~~~~~~~~^
+(EngineCore pid=25751)         logits,
+(EngineCore pid=25751)         ^^^^^^^
+(EngineCore pid=25751)     ...<2 lines>...
+(EngineCore pid=25751)         sampling_metadata.top_p,
+(EngineCore pid=25751)         ^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=25751)     )
+(EngineCore pid=25751)     ^
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+(EngineCore pid=25751)     return self._call_impl(*args, **kwargs)
+(EngineCore pid=25751)            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+(EngineCore pid=25751)     return forward_call(*args, **kwargs)
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/sample/ops/topk_topp_sampler.py", line 157, in forward_cuda
+(EngineCore pid=25751)     return flashinfer_sample(logits.contiguous(), k, p, generators), None
+(EngineCore pid=25751)            ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/sample/ops/topk_topp_sampler.py", line 447, in flashinfer_sample
+(EngineCore pid=25751)     next_token_ids = flashinfer.sampling.top_k_top_p_sampling_from_logits(
+(EngineCore pid=25751)         logits, k, p, deterministic=True
+(EngineCore pid=25751)     )
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/flashinfer/sampling.py", line 1400, in top_k_top_p_sampling_from_logits
+(EngineCore pid=25751)     masked_logits = top_k_mask_logits(logits, top_k)
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/flashinfer/sampling.py", line 1806, in top_k_mask_logits
+(EngineCore pid=25751)     return get_sampling_module().top_k_mask_logits(
+(EngineCore pid=25751)            ~~~~~~~~~~~~~~~~~~~^^
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/flashinfer/sampling.py", line 54, in get_sampling_module
+(EngineCore pid=25751)     module = gen_sampling_module().build_and_load()
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/flashinfer/jit/core.py", line 318, in build_and_load
+(EngineCore pid=25751)     self.build(verbose, need_lock=False)
+(EngineCore pid=25751)     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/flashinfer/jit/core.py", line 304, in build
+(EngineCore pid=25751)     run_ninja(self.build_dir, self.ninja_path, verbose)
+(EngineCore pid=25751)     ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=25751)   File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/flashinfer/jit/cpp_ext.py", line 344, in run_ninja
+(EngineCore pid=25751)     raise RuntimeError(msg) from e
+(EngineCore pid=25751) RuntimeError: Ninja build failed. Ninja output:
+(EngineCore pid=25751) ninja: Entering directory `/home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling'
+(EngineCore pid=25751) [1/4] /usr/bin/nvcc --generate-dependencies-with-compile --dependency-output /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_renorm.cuda.o.d -DPy_LIMITED_API=0x03090000 -D_GLIBCXX_USE_CXX11_ABI=1 -isystem /usr/include/python3.13 -isystem /usr/include/cccl -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/tools/util/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/spdlog/include --compiler-options=-fPIC --expt-relaxed-constexpr -static-global-template-stub=false -gencode=arch=compute_89,code=sm_89 -DFLASHINFER_ENABLE_FP8_E8M0 -DFLASHINFER_ENABLE_FP4_E2M1 -std=c++17 --threads=1 -use_fast_math -DFLASHINFER_ENABLE_F16 -DFLASHINFER_ENABLE_BF16 -DFLASHINFER_ENABLE_FP8_E4M3 -DFLASHINFER_ENABLE_FP8_E5M2 -DNDEBUG -O3 -c /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc/renorm.cu -o /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_renorm.cuda.o
+(EngineCore pid=25751) FAILED: [code=1] /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_renorm.cuda.o
+(EngineCore pid=25751) /usr/bin/nvcc --generate-dependencies-with-compile --dependency-output /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_renorm.cuda.o.d -DPy_LIMITED_API=0x03090000 -D_GLIBCXX_USE_CXX11_ABI=1 -isystem /usr/include/python3.13 -isystem /usr/include/cccl -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/tools/util/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/spdlog/include --compiler-options=-fPIC --expt-relaxed-constexpr -static-global-template-stub=false -gencode=arch=compute_89,code=sm_89 -DFLASHINFER_ENABLE_FP8_E8M0 -DFLASHINFER_ENABLE_FP4_E2M1 -std=c++17 --threads=1 -use_fast_math -DFLASHINFER_ENABLE_F16 -DFLASHINFER_ENABLE_BF16 -DFLASHINFER_ENABLE_FP8_E4M3 -DFLASHINFER_ENABLE_FP8_E5M2 -DNDEBUG -O3 -c /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc/renorm.cu -o /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_renorm.cuda.o
+(EngineCore pid=25751) In file included from /usr/include/cuda_runtime.h:82,
+(EngineCore pid=25751)                  from <command-line>:
+(EngineCore pid=25751) /usr/include/crt/host_config.h:137:2: error: #error -- unsupported GNU version! gcc versions later than 15 are not supported! The nvcc flag '-allow-unsupported-compiler' can be used to override this version check; however, using an unsupported host compiler may cause compilation failure or incorrect run time execution. Use at your own risk.
+(EngineCore pid=25751)   137 | #error -- unsupported GNU version! gcc versions later than 15 are not supported! The nvcc flag '-allow-unsupported-compiler' can be used to override this version check; however, using an unsupported host compiler may cause compilation failure or incorrect run time execution. Use at your own risk.
+(EngineCore pid=25751)       |  ^~~~~
+(EngineCore pid=25751) In file included from /usr/include/cooperative_groups.h:55,
+(EngineCore pid=25751)                  from /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/include/flashinfer/air_top_p.cuh:22,
+(EngineCore pid=25751)                  from /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc/renorm.cu:16:
+(EngineCore pid=25751) /usr/include/cooperative_groups/details/info.h:50:10: fatal error: nv/target: No such file or directory
+(EngineCore pid=25751)    50 | #include <nv/target>
+(EngineCore pid=25751)       |          ^~~~~~~~~~~
+(EngineCore pid=25751) compilation terminated.
+(EngineCore pid=25751) [2/4] /usr/bin/nvcc --generate-dependencies-with-compile --dependency-output /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_sampling.cuda.o.d -DPy_LIMITED_API=0x03090000 -D_GLIBCXX_USE_CXX11_ABI=1 -isystem /usr/include/python3.13 -isystem /usr/include/cccl -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/tools/util/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/spdlog/include --compiler-options=-fPIC --expt-relaxed-constexpr -static-global-template-stub=false -gencode=arch=compute_89,code=sm_89 -DFLASHINFER_ENABLE_FP8_E8M0 -DFLASHINFER_ENABLE_FP4_E2M1 -std=c++17 --threads=1 -use_fast_math -DFLASHINFER_ENABLE_F16 -DFLASHINFER_ENABLE_BF16 -DFLASHINFER_ENABLE_FP8_E4M3 -DFLASHINFER_ENABLE_FP8_E5M2 -DNDEBUG -O3 -c /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc/sampling.cu -o /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_sampling.cuda.o
+(EngineCore pid=25751) FAILED: [code=1] /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_sampling.cuda.o
+(EngineCore pid=25751) /usr/bin/nvcc --generate-dependencies-with-compile --dependency-output /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_sampling.cuda.o.d -DPy_LIMITED_API=0x03090000 -D_GLIBCXX_USE_CXX11_ABI=1 -isystem /usr/include/python3.13 -isystem /usr/include/cccl -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/tools/util/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/spdlog/include --compiler-options=-fPIC --expt-relaxed-constexpr -static-global-template-stub=false -gencode=arch=compute_89,code=sm_89 -DFLASHINFER_ENABLE_FP8_E8M0 -DFLASHINFER_ENABLE_FP4_E2M1 -std=c++17 --threads=1 -use_fast_math -DFLASHINFER_ENABLE_F16 -DFLASHINFER_ENABLE_BF16 -DFLASHINFER_ENABLE_FP8_E4M3 -DFLASHINFER_ENABLE_FP8_E5M2 -DNDEBUG -O3 -c /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc/sampling.cu -o /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_sampling.cuda.o
+(EngineCore pid=25751) In file included from /usr/include/cuda_runtime.h:82,
+(EngineCore pid=25751)                  from <command-line>:
+(EngineCore pid=25751) /usr/include/crt/host_config.h:137:2: error: #error -- unsupported GNU version! gcc versions later than 15 are not supported! The nvcc flag '-allow-unsupported-compiler' can be used to override this version check; however, using an unsupported host compiler may cause compilation failure or incorrect run time execution. Use at your own risk.
+(EngineCore pid=25751)   137 | #error -- unsupported GNU version! gcc versions later than 15 are not supported! The nvcc flag '-allow-unsupported-compiler' can be used to override this version check; however, using an unsupported host compiler may cause compilation failure or incorrect run time execution. Use at your own risk.
+(EngineCore pid=25751)       |  ^~~~~
+(EngineCore pid=25751) In file included from /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc/sampling.cu:16:
+(EngineCore pid=25751) /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/include/flashinfer/sampling.cuh:20:10: fatal error: curand.h: No such file or directory
+(EngineCore pid=25751)    20 | #include <curand.h>
+(EngineCore pid=25751)       |          ^~~~~~~~~~
+(EngineCore pid=25751) compilation terminated.
+(EngineCore pid=25751) [3/4] /usr/bin/nvcc --generate-dependencies-with-compile --dependency-output /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_flashinfer_sampling_binding.cuda.o.d -DPy_LIMITED_API=0x03090000 -D_GLIBCXX_USE_CXX11_ABI=1 -isystem /usr/include/python3.13 -isystem /usr/include/cccl -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/tools/util/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/spdlog/include --compiler-options=-fPIC --expt-relaxed-constexpr -static-global-template-stub=false -gencode=arch=compute_89,code=sm_89 -DFLASHINFER_ENABLE_FP8_E8M0 -DFLASHINFER_ENABLE_FP4_E2M1 -std=c++17 --threads=1 -use_fast_math -DFLASHINFER_ENABLE_F16 -DFLASHINFER_ENABLE_BF16 -DFLASHINFER_ENABLE_FP8_E4M3 -DFLASHINFER_ENABLE_FP8_E5M2 -DNDEBUG -O3 -c /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc/flashinfer_sampling_binding.cu -o /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_flashinfer_sampling_binding.cuda.o
+(EngineCore pid=25751) FAILED: [code=1] /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_flashinfer_sampling_binding.cuda.o
+(EngineCore pid=25751) /usr/bin/nvcc --generate-dependencies-with-compile --dependency-output /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_flashinfer_sampling_binding.cuda.o.d -DPy_LIMITED_API=0x03090000 -D_GLIBCXX_USE_CXX11_ABI=1 -isystem /usr/include/python3.13 -isystem /usr/include/cccl -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/tvm_ffi/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/cutlass/tools/util/include -isystem /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/spdlog/include --compiler-options=-fPIC --expt-relaxed-constexpr -static-global-template-stub=false -gencode=arch=compute_89,code=sm_89 -DFLASHINFER_ENABLE_FP8_E8M0 -DFLASHINFER_ENABLE_FP4_E2M1 -std=c++17 --threads=1 -use_fast_math -DFLASHINFER_ENABLE_F16 -DFLASHINFER_ENABLE_BF16 -DFLASHINFER_ENABLE_FP8_E4M3 -DFLASHINFER_ENABLE_FP8_E5M2 -DNDEBUG -O3 -c /home/lena/Documents/python/distilled-web/.venv-mineru/lib/python3.13/site-packages/flashinfer/data/csrc/flashinfer_sampling_binding.cu -o /home/lena/.cache/flashinfer/0.6.8.post1/89/cached_ops/sampling/csrc_flashinfer_sampling_binding.cuda.o
+(EngineCore pid=25751) In file included from /usr/include/cuda_runtime.h:82,
+(EngineCore pid=25751)                  from <command-line>:
+(EngineCore pid=25751) /usr/include/crt/host_config.h:137:2: error: #error -- unsupported GNU version! gcc versions later than 15 are not supported! The nvcc flag '-allow-unsupported-compiler' can be used to override this version check; however, using an unsupported host compiler may cause compilation failure or incorrect run time execution. Use at your own risk.
+(EngineCore pid=25751)   137 | #error -- unsupported GNU version! gcc versions later than 15 are not supported! The nvcc flag '-allow-unsupported-compiler' can be used to override this version check; however, using an unsupported host compiler may cause compilation failure or incorrect run time execution. Use at your own risk.
+(EngineCore pid=25751)       |  ^~~~~
+(EngineCore pid=25751) ninja: build stopped: subcommand failed.
+(EngineCore pid=25751)
+[rank0]:[W820 12:01:30.304384567 ProcessGroupNCCL.cpp:1575] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+2026-08-20 12:01:30.944 | ERROR    | __main__:_process_task:1154 - Async task failed: cae19186-8793-4126-a9bc-f7bd875107ad
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/mineru/cli/fast_api.py", line 1474, in <module>
+    main()
+    └ <Command main>
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/click/core.py", line 1569, in __call__
+    return self.main(*args, **kwargs)
+           │    │     │       └ {}
+           │    │     └ ()
+           │    └ <function Command.main at 0x7ff64ade0fe0>
+           └ <Command main>
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/click/core.py", line 1490, in main
+    rv = self.invoke(ctx)
+         │    │      └ <click.core.Context object at 0x7ff40cf352b0>
+         │    └ <function Command.invoke at 0x7ff64ade0cc0>
+         └ <Command main>
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/click/core.py", line 1353, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           │   │      │    │           │   └ {'host': '127.0.0.1', 'port': 34437, 'reload': False, 'allow_public_http_client': False, 'enable_vlm_preload': False}
+           │   │      │    │           └ <click.core.Context object at 0x7ff40cf352b0>
+           │   │      │    └ <function main at 0x7ff40cf8e5c0>
+           │   │      └ <Command main>
+           │   └ <function Context.invoke at 0x7ff64add3ec0>
+           └ <click.core.Context object at 0x7ff40cf352b0>
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/click/core.py", line 907, in invoke
+    return callback(*args, **kwargs)
+           │         │       └ {'host': '127.0.0.1', 'port': 34437, 'reload': False, 'allow_public_http_client': False, 'enable_vlm_preload': False}
+           │         └ ()
+           └ <function main at 0x7ff40cf8e5c0>
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/click/decorators.py", line 34, in new_func
+    return f(get_current_context(), *args, **kwargs)
+           │ │                       │       └ {'host': '127.0.0.1', 'port': 34437, 'reload': False, 'allow_public_http_client': False, 'enable_vlm_preload': False}
+           │ │                       └ ()
+           │ └ <function get_current_context at 0x7ff64ad9dda0>
+           └ <function main at 0x7ff40cf8e8e0>
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/mineru/cli/fast_api.py", line 1470, in main
+    server.run()
+    │      └ <function Server.run at 0x7ff64ae7d940>
+    └ <uvicorn.server.Server object at 0x7ff40cf35a90>
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/uvicorn/server.py", line 77, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+           │           │    │             │                      │    │      └ <function Config.get_loop_factory at 0x7ff64ae7d120>
+           │           │    │             │                      │    └ <uvicorn.config.Config object at 0x7ff40cf35550>
+           │           │    │             │                      └ <uvicorn.server.Server object at 0x7ff40cf35a90>
+           │           │    │             └ None
+           │           │    └ <function Server.serve at 0x7ff64ae7d9e0>
+           │           └ <uvicorn.server.Server object at 0x7ff40cf35a90>
+           └ <function run at 0x7ff64b38ef20>
+  File "/usr/lib64/python3.13/asyncio/runners.py", line 196, in run
+    return runner.run(main)
+           │      │   └ <coroutine object Server.serve at 0x7ff40cfd2880>
+           │      └ <function Runner.run at 0x7ff64b0802c0>
+           └ <asyncio.runners.Runner object at 0x7ff40cf36120>
+  File "/usr/lib64/python3.13/asyncio/runners.py", line 119, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<Server.serve() running at /home/lena/Documents/python/distilled-web/.venv-mineru/lib64/pyth...
+           │    │     └ <cyfunction Loop.run_until_complete at 0x7ff40cff4e80>
+           │    └ <uvloop.Loop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x7ff40cf36120>
+> File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/mineru/cli/fast_api.py", line 1144, in _process_task
+    await self._run_task(task)
+          │    │         └ AsyncParseTask(task_id='cae19186-8793-4126-a9bc-f7bd875107ad', status='failed', backend='hybrid-engine', file_names=['SPS_Zus...
+          │    └ <function AsyncTaskManager._run_task at 0x7ff40d0a1d00>
+          └ <__main__.AsyncTaskManager object at 0x7ff40c50c830>
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/mineru/cli/fast_api.py", line 1174, in _run_task
+    await run_parse_job(
+          └ <function run_parse_job at 0x7ff40d0a1080>
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/mineru/cli/fast_api.py", line 866, in run_parse_job
+    await aio_do_parse(**parse_kwargs)
+          │              └ {'output_dir': '/tmp/mineru-api-client-_z4vl6de/output/cae19186-8793-4126-a9bc-f7bd875107ad', 'pdf_file_names': ['SPS_Zusamme...
+          └ <function aio_do_parse at 0x7ff40d079080>
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/mineru/cli/common.py", line 846, in aio_do_parse
+    await _async_process_hybrid(
+          └ <function _async_process_hybrid at 0x7ff40d078ea0>
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/mineru/cli/common.py", line 595, in _async_process_hybrid
+    middle_json, infer_result = await aio_hybrid_doc_analyze(
+                                      └ <function aio_doc_analyze at 0x7ff3ee95b240>
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/mineru/backend/hybrid/hybrid_analyze.py", line 1116, in aio_doc_analyze
+    predictor = await _get_model_async(backend, model_path, server_url, **kwargs)
+                      │                │        │           │             └ {}
+                      │                │        │           └ None
+                      │                │        └ None
+                      │                └ 'vllm-async-engine'
+                      └ <function _get_model_async at 0x7ff5267204a0>
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/mineru/backend/vlm/vlm_analyze.py", line 271, in _get_model_async
+    return await asyncio.to_thread(
+                 │       └ <function to_thread at 0x7ff64b083ce0>
+                 └ <module 'asyncio' from '/usr/lib64/python3.13/asyncio/__init__.py'>
+  File "/usr/lib64/python3.13/asyncio/threads.py", line 26, in to_thread
+    return await loop.run_in_executor(None, func_call)
+                 │    │                     └ functools.partial(<built-in method run of _contextvars.Context object at 0x7ff3ffc8c640>, <bound method ModelSingleton.get_mo...
+                 │    └ <cyfunction Loop.run_in_executor at 0x7ff40cff6140>
+                 └ <uvloop.Loop running=True closed=False debug=False>
+  File "/usr/lib64/python3.13/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             │        │            └ None
+             │        └ None
+             └ None
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/mineru/backend/vlm/vlm_analyze.py", line 174, in get_model
+    vllm_async_llm = AsyncLLM.from_engine_args(AsyncEngineArgs(**kwargs))
+                     │        │                │                 └ {'gpu_memory_utilization': 0.7, 'model': '/home/lena/.cache/huggingface/hub/models--opendatalab--MinerU2.5-Pro-2605-1.2B/snap...
+                     │        │                └ <class 'vllm.engine.arg_utils.AsyncEngineArgs'>
+                     │        └ <classmethod(<function AsyncLLM.from_engine_args at 0x7ff3d4e2e5c0>)>
+                     └ <class 'vllm.v1.engine.async_llm.AsyncLLM'>
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/engine/async_llm.py", line 246, in from_engine_args
+    return cls(
+           └ <class 'vllm.v1.engine.async_llm.AsyncLLM'>
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/engine/async_llm.py", line 146, in __init__
+    self.engine_core = EngineCoreClient.make_async_mp_client(
+    │                  │                └ <staticmethod(<function EngineCoreClient.make_async_mp_client at 0x7ff3dd1ed8a0>)>
+    │                  └ <class 'vllm.v1.engine.core_client.EngineCoreClient'>
+    └ <vllm.v1.engine.async_llm.AsyncLLM object at 0x7ff3d4e746e0>
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+    return func(*args, **kwargs)
+           │     │       └ {'vllm_config': VllmConfig(model_config=ModelConfig(model='/home/lena/.cache/huggingface/hub/models--opendatalab--MinerU2.5-P...
+           │     └ ()
+           └ <function EngineCoreClient.make_async_mp_client at 0x7ff3dd1ed760>
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/engine/core_client.py", line 130, in make_async_mp_client
+    return AsyncMPClient(*client_args)
+           │              └ (VllmConfig(model_config=ModelConfig(model='/home/lena/.cache/huggingface/hub/models--opendatalab--MinerU2.5-Pro-2605-1.2B/sn...
+           └ <class 'vllm.v1.engine.core_client.AsyncMPClient'>
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+    return func(*args, **kwargs)
+           │     │       └ {}
+           │     └ (<vllm.v1.engine.core_client.AsyncMPClient object at 0x7ff3cbad5010>, VllmConfig(model_config=ModelConfig(model='/home/lena/....
+           └ <function AsyncMPClient.__init__ at 0x7ff3dd001d00>
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/engine/core_client.py", line 900, in __init__
+    super().__init__(
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/engine/core_client.py", line 535, in __init__
+    with launch_core_engines(
+         └ <function launch_core_engines at 0x7ff3dd1e5080>
+  File "/usr/lib64/python3.13/contextlib.py", line 148, in __exit__
+    next(self.gen)
+         │    └ <generator object launch_core_engines at 0x7ff3cba1d120>
+         └ <contextlib._GeneratorContextManager object at 0x7ff3adc191d0>
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/engine/utils.py", line 1128, in launch_core_engines
+    wait_for_engine_startup(
+    └ <function wait_for_engine_startup at 0x7ff3dd1e5120>
+  File "/home/lena/Documents/python/distilled-web/.venv-mineru/lib64/python3.13/site-packages/vllm/v1/engine/utils.py", line 1187, in wait_for_engine_startup
+    raise RuntimeError(
+RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [25590]
+Error: 1 task(s) failed while processing documents:
+- task#1 (SPS_Zusammenfassung_2025-06-10): Task cae19186-8793-4126-a9bc-f7bd875107ad failed for task#1 [SPS_Zusammenfassung_2025-06-10]: {"task_id": "cae19186-8793-4126-a9bc-f7bd875107ad", "status": "failed", "backend": "hybrid-engine", "file_names": ["SPS_Zusammenfassung_2025-06-10"], "created_at": "2026-08-20T10:00:56.767635+00:00", "started_at": "2026-08-20T10:00:56.767990+00:00", "completed_at": "2026-08-20T10:01:30.944749+00:00", "error": "Engine core initialization failed. See root cause above. Failed core proc(s): {}", "status_url": "http://127.0.0.1:34437/tasks/cae19186-8793-4126-a9bc-f7bd875107ad", "result_url": "http://127.0.0.1:34437/tasks/cae19186-8793-4126-a9bc-f7bd875107ad/result", "queued_ahead": 0}
+Traceback (most recent call last):
+  File "<input>", line 1, in <module>
+  File "/home/lena/Documents/python/distilled-web/miner_u_pro.py", line 136, in pdf_to_markdown
+    subprocess.run(command, check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.13/subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/home/lena/Documents/python/distilled-web/.venv-mineru/bin/mineru', '-p', '/home/lena/Downloads/SPS_Zusammenfassung_2025-06-10.pdf', '-o', '/tmp/tmpe0lvjpt6', '-b', 'hybrid-engine', '--effort', 'medium']' returned non-zero exit status 1.
+```
+```
+"""Full MinerU PDF-to-Markdown extraction wrapper.
+
+This module invokes the MinerU CLI to convert documents (PDFs, images, etc.) into Markdown.
+It automatically resolves the MinerU binary from local virtual environments (such as `.venv-mineru`)
+or the system PATH.
+"""
+
+from __future__ import annotations
+
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import tempfile
+
+# Predefined paths to look for the mineru binary
+_PROJECT_ROOT = Path(__file__).resolve().parent
+_CANDIDATE_BINARIES = [
+    _PROJECT_ROOT / ".venv-mineru" / "bin" / "mineru",
+    _PROJECT_ROOT / ".venv" / "bin" / "mineru",
+]
+
+
+def _find_mineru_executable() -> str:
+    """Locate the mineru CLI executable."""
+    # Check custom environment variable override first if set
+    custom_bin = os.environ.get("MINERU_BIN")
+    if custom_bin and Path(custom_bin).is_file():
+        return custom_bin
+
+    for candidate in _CANDIDATE_BINARIES:
+        if candidate.is_file() and os.access(candidate, os.X_OK):
+            return str(candidate)
+
+    which_bin = shutil.which("mineru")
+    if which_bin:
+        return which_bin
+
+    raise FileNotFoundError(
+        "Could not find the 'mineru' executable. "
+        "Please ensure it is installed in .venv-mineru or available in PATH."
+    )
+
+
+def pdf_to_markdown(
+    pdf_path: str | Path,
+    output_dir: str | Path | None = None,
+    max_pages: int | None = None,
+    start_page: int | None = None,
+    backend: str = "hybrid-engine",
+    effort: str = "medium",
+    image_analysis: bool | None = None,
+    method: str | None = None,
+    lang: str | None = None,
+    formula: bool = True,
+    table: bool = True,
+) -> str:
+    """Convert a PDF to Markdown using the full MinerU pipeline.
+
+    Args:
+        pdf_path: Path to the input PDF file.
+        output_dir: Directory where MinerU output files (Markdown, images, JSONs) are stored.
+                    If None, a temporary directory is used and cleaned up after reading.
+        max_pages: Optional cap on the number of pages to process. (e.g. max_pages=5 processes pages 0..4).
+        start_page: Optional 0-based starting page index.
+        backend: MinerU backend ('hybrid-engine', 'vlm-engine', 'pipeline', etc.).
+        effort: Hybrid parsing effort ('medium' or 'high').
+        image_analysis: Enable image/chart analysis.
+        method: Method for parsing PDF ('auto', 'txt', 'ocr').
+        lang: Language hint for OCR ('ch', 'korean', etc.).
+        formula: Enable formula parsing.
+        table: Enable table parsing.
+
+    Returns:
+        The generated Markdown string.
+    """
+    path = Path(pdf_path).expanduser().resolve()
+    if not path.is_file():
+        raise FileNotFoundError(f"PDF not found: {path}")
+
+    if max_pages is not None and max_pages < 1:
+        raise ValueError("max_pages must be at least 1")
+    if start_page is not None and start_page < 0:
+        raise ValueError("start_page must be non-negative")
+
+    mineru_bin = _find_mineru_executable()
+
+    is_temp_output = output_dir is None
+    temp_dir_obj: tempfile.TemporaryDirectory | None = None
+
+    if is_temp_output:
+        temp_dir_obj = tempfile.TemporaryDirectory()
+        target_output = Path(temp_dir_obj.name)
+    else:
+        target_output = Path(output_dir).expanduser().resolve()
+        target_output.mkdir(parents=True, exist_ok=True)
+
+    try:
+        command = [
+            mineru_bin,
+            "-p",
+            str(path),
+            "-o",
+            str(target_output),
+            "-b",
+            backend,
+        ]
+
+        if backend.startswith("hybrid"):
+            command.extend(["--effort", effort])
+
+        if start_page is not None:
+            command.extend(["-s", str(start_page)])
+
+        # MinerU's page indexes are zero-based and --end is inclusive.
+        if max_pages is not None:
+            start_offset = start_page or 0
+            end_page = start_offset + max_pages - 1
+            command.extend(["-e", str(end_page)])
+
+        if image_analysis is not None:
+            command.extend(["--image-analysis", str(image_analysis).lower()])
+
+        if method is not None:
+            command.extend(["-m", method])
+
+        if lang is not None:
+            command.extend(["-l", lang])
+
+        if not formula:
+            command.extend(["-f", "false"])
+
+        if not table:
+            command.extend(["-t", "false"])
+
+        subprocess.run(command, check=True)
+
+        # Locate the generated markdown file
+        markdown_files = list(target_output.rglob(f"{path.stem}.md"))
+        if not markdown_files:
+            # Fallback in case the output filename stem differs slightly or subfolder structure varies
+            markdown_files = list(target_output.rglob("*.md"))
+
+        if not markdown_files:
+            raise RuntimeError(
+                f"MinerU completed but no Markdown file was found under {target_output}"
+            )
+
+        if len(markdown_files) > 1:
+            markdown_files.sort(
+                key=lambda candidate: candidate.stat().st_mtime_ns,
+                reverse=True,
+            )
+
+        markdown_path = markdown_files[0]
+        return markdown_path.read_text(encoding="utf-8")
+
+    finally:
+        if temp_dir_obj is not None:
+            temp_dir_obj.cleanup()
+```
+```
+nvidia-smi
+Thu Aug 20 12:02:35 2026
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 595.91.07              Driver Version: 595.91.07      CUDA Version: 13.2     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 4070 ...    Off |   00000000:01:00.0  On |                  N/A |
+| N/A   45C    P8              3W /   95W |      81MiB /   8188MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A            3622    C+G   /usr/bin/kwin_wayland                     7MiB |
++-----------------------------------------------------------------------------------------+
+```
+§a§
+## What happened
+
+MinerU itself is fine — the vLLM engine loaded the model, compiled the graph, and then died during the **sampler warmup**, when FlashInfer tried to JIT-compile its sampling CUDA kernels with your system `nvcc`. Two independent problems show up in the ninja log:
+
+1. **GCC too new for nvcc:**
+   ```
+   /usr/include/crt/host_config.h:137:2: error: #error -- unsupported GNU version!
+   gcc versions later than 15 are not supported!
+   ```
+   You're on GCC 16.1.1 (Fedora), which your CUDA toolkit's host-compiler check rejects.
+
+2. **Incomplete CUDA headers:**
+   ```
+   fatal error: nv/target: No such file or directory
+   fatal error: curand.h: No such file or directory
+   ```
+   The distro-packaged toolkit at `/usr/include` is missing the cuRAND development headers and (parts of) the CCCL/libcu++ headers, so even with the GCC check bypassed the build would fail.
+
+The rest of the pipeline (FlashAttention, torch.compile/Triton) worked — only the FlashInfer sampler build is broken.
+
+## Fix 1: skip FlashInfer sampling (fastest, recommended)
+
+vLLM only uses FlashInfer here for top-k/top-p sampling, and it's enabled by default when the hardware supports it — setting it to 0 opts out explicitly and forces the PyTorch-native path. When disabled you'll just see a warning that it's falling back to the PyTorch-native implementation of top-p & top-k sampling — for a 1.2B model parsing a few pages the performance difference is negligible.
+
+Since your wrapper launches `mineru` with `subprocess.run` (which inherits the environment), either export it in your shell:
+
+```bash
+export VLLM_USE_FLASHINFER_SAMPLER=0
+```
+
+or set it in Python before calling `pdf_to_markdown`:
+
+```python
+import os
+os.environ["VLLM_USE_FLASHINFER_SAMPLER"] = "0"
+```
+
+You could also bake it into `miner_u_pro.py` by passing `env` to `subprocess.run`:
+
+```python
+env = {**os.environ, "VLLM_USE_FLASHINFER_SAMPLER": "0"}
+subprocess.run(command, check=True, env=env)
+```
+
+## Fix 2: make the JIT build actually work (if you want FlashInfer)
+
+If you'd rather keep the FlashInfer sampler:
+
+- **Avoid local compilation entirely** by installing FlashInfer's prebuilt kernel packages into the venv (`flashinfer-cubin` and `flashinfer-jit-cache`, matching your FlashInfer version). Then nvcc is never invoked at runtime.
+- **Or install a complete, self-contained CUDA toolkit** instead of relying on Fedora's `/usr/bin/nvcc` + `/usr/include` split packages — e.g. the official NVIDIA toolkit under `/usr/local/cuda` — and set `CUDA_HOME=/usr/local/cuda` (plus its `bin` on `PATH`) for the venv. That brings `curand.h` and `nv/target` with it.
+- **Handle the GCC 16 problem** by giving nvcc an older host compiler (`sudo dnf install gcc15`, or whatever compat GCC your CUDA version supports) and pointing nvcc at it, e.g. `export NVCC_PREPEND_FLAGS="-ccbin /usr/bin/g++-15"`. The `-allow-unsupported-compiler` flag mentioned in the error only silences the check — with GCC 16 you may still hit real compile errors, so a compat GCC is safer.
+
+Note that missing-header/toolchain problems only need to be solved if you go this route — Fix 1 sidesteps all of it, and given you're on an 8 GB RTX 4070 laptop GPU running a small OCR model, that's almost certainly the pragmatic choice. One env var and your `pdf_to_markdown` call should run to completion.

@@ -1,0 +1,49 @@
+§u§
+angular 22 literal curly bracket {
+§a§
+To display a literal curly brace in an Angular template (Angular 2 through the latest versions), the issue is that Angular's template compiler treats `{{ }}` as interpolation syntax, so you need to escape the braces.
+
+## Main approaches
+
+**1. Interpolation with a string literal (most common)**
+
+Displaying braces in templates requires `{{ '{' }}test{{ '}' }}`. This is the most readable and widely compatible method:
+
+```html
+<p>{{ '{' }}This text is wrapped in literal braces{{ '}' }}</p>
+```
+
+The `{{ '{' }}` method has been consistent since Angular 2. The newer control flow syntax (@if, @for, @switch) provides better template organization, and while the escaping mechanism itself remains unchanged, modern Angular offers superior type safety and compile-time error detection.
+
+**2. HTML entities**
+
+You can use `&#123;` for `{` and `&#125;` for `}`. Since these are HTML entities, the browser renders them as literal braces and Angular never tries to parse them as interpolation:
+
+```html
+<p>&#123;This is in braces&#125;</p>
+```
+
+**3. `ngNonBindable` for whole blocks**
+
+The `ngNonBindable` directive works well for entire blocks of code examples, but it disables all binding in that section. This is useful when displaying code samples or JSON:
+
+```html
+<pre ngNonBindable>{ "key": "value" }</pre>
+```
+
+## Important note for Angular's new control flow (v17+)
+
+Since Angular 17 introduced the block syntax, it's the **`@` character** (used by `@if`, `@for`, `@switch`, `@defer`) that now has special meaning, not standalone braces. In plain text, single `{` and `}` characters generally render fine — problems mainly occur when the compiler sees `{{` (interpolation). If you need a literal `@`, escape it with `&#64;`.
+
+A quick summary:
+
+| Need to display | Use |
+|---|---|
+| `{` | `{{ '{' }}` or `&#123;` |
+| `}` | `{{ '}' }}` or `&#125;` |
+| `{{ ... }}` literally | `{{ '{{' }} ... {{ '}}' }}` or `ngNonBindable` |
+| `@` (control flow) | `&#64;` |
+
+One caveat about your TypeScript code versus your template: validators and error messages in TypeScript don't use template interpolation—they're plain strings, so use regular string literals without escaping. You only need to escape braces when displaying them in your HTML template.
+
+For most cases, `{{ '{' }}` or the HTML entity `&#123;` will be your simplest solution.

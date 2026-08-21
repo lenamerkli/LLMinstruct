@@ -1,0 +1,16 @@
+§u§
+What is the latest version of the minecraft mod `modernfix` for fabric 1.20.1 that support fabric loader 0.16.9?
+§a§
+Based on my research, here's what I found regarding ModernFix and Fabric Loader compatibility:
+
+**Latest overall ModernFix version for Fabric 1.20.1:** ModernFix 5.25.1+mc1.20.1 was published on Modrinth on Nov 8, 2025, and supports 1.20.1 Fabric.
+
+**However, this will NOT work with Fabric Loader 0.16.9.** Around January 2025, ModernFix's codebase changed its minimum Fabric Loader requirement. Confirmed evidence from a user's crash log shows: "Mod 'ModernFix' (modernfix) 5.20.2+mc1.21.4 requires version 0.16.10 or later of mod 'Fabric Loader' (fabricloader), but only the wrong version is present: 0.16.9!"
+
+The corresponding 1.20.1 release, ModernFix 5.20.2+mc1.20.1, supports 1.20.1 Fabric and was published on Jan 26, 2025, and shares the same underlying loader-version dependency bump as the 1.21.4 build referenced in the crash report (ModernFix's Fabric loader minimum version requirement is enforced project-wide, not per-Minecraft-version).
+
+**What this means for you:**
+- Any ModernFix Fabric 1.20.1 build from **5.20.2 onward** (including the current latest, 5.25.1) requires **Fabric Loader 0.16.10 or newer**, and will fail to launch on 0.16.9.
+- The **last ModernFix Fabric 1.20.1 version compatible with Loader 0.16.9** would be one released **before** the 5.20.2 update (i.e., prior to Jan 26, 2025) — for example, ModernFix 5.17.0+mc1.20.1, published Apr 24, 2024, is confirmed to predate this change, though there may be slightly newer point releases (e.g., in the 5.18.x–5.19.x range) between that and 5.20.2 that also still work — I wasn't able to pin down the exact final pre-bump build number from available sources.
+
+**Recommendation:** If you must stay on Fabric Loader 0.16.9, install ModernFix version **5.19.x or earlier** (safely, 5.17.0 is confirmed compatible) for Minecraft 1.20.1 Fabric, or alternatively just update your Fabric Loader to 0.16.10+ (which is fully backward-compatible with 1.20.1) so you can use the latest ModernFix 5.25.1.

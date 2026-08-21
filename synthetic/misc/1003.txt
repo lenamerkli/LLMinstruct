@@ -1,0 +1,302 @@
+§u§
+How does RL for fine-tuning LLMs work?
+§a§
+At a high level, **RL fine-tuning for LLMs** means:
+
+> instead of only teaching the model to imitate examples, you also **score its outputs** and update it to produce **higher-scoring outputs more often**.
+
+That’s the core idea.
+
+## The intuition
+
+Normal supervised fine-tuning says:
+
+- “Here is the right answer; copy this pattern.”
+
+RL-style fine-tuning says:
+
+- “Generate an answer.”
+- “I’ll give that answer a reward score.”
+- “Now become more likely to generate answers like the high-reward ones.”
+
+For LLMs, this is usually used after pretraining and often after supervised instruction tuning.
+
+---
+
+## How an LLM becomes an RL problem
+
+In RL terms:
+
+- **State** = the prompt plus the tokens generated so far
+- **Action** = the next token
+- **Policy** = the LLM’s probability distribution over next tokens
+- **Episode** = generating a whole completion
+- **Reward** = a score for the completion
+
+So when the model answers a prompt, it is effectively taking a sequence of actions, one token at a time, until it finishes.
+
+---
+
+## The usual pipeline: RLHF
+
+The classic setup is **RLHF**: Reinforcement Learning from Human Feedback.
+
+### 1. Pretrain the base model
+First, train the LLM in the standard way on lots of text with next-token prediction.
+
+### 2. Supervised fine-tune (SFT)
+Then train it on examples like:
+
+- prompt → good assistant response
+
+This gives you a decent instruction-following model.
+
+### 3. Collect preference data
+Humans compare outputs from the model:
+
+- Response A vs Response B
+- Which one is better?
+
+So instead of needing a perfect target answer every time, you just need judgments like:
+
+- “A is more helpful”
+- “B is safer”
+- “A is more correct”
+
+### 4. Train a reward model
+Use those comparisons to train another model that predicts a scalar reward:
+
+- prompt + response → score
+
+This reward model becomes a stand-in for human preferences.
+
+### 5. Run RL on the LLM
+Now the LLM generates answers to prompts.
+The reward model scores them.
+Then the LLM is updated to increase expected reward.
+
+That’s the RL part.
+
+---
+
+## What the update is trying to do
+
+The model is usually optimized to do something like:
+
+- get high reward
+- **while not drifting too far** from the original supervised model
+
+That second part matters a lot.
+
+If you only optimize reward, the model may exploit weird loopholes in the reward model. So training usually includes a **KL penalty** or similar regularization:
+
+- “Be better according to reward”
+- “But stay reasonably close to the reference policy”
+
+A common objective is roughly:
+
+\[
+\max_\pi \; \mathbb{E}[R(x,y)] - \beta \, \mathrm{KL}(\pi \,\|\, \pi_{ref})
+\]
+
+where:
+
+- \(x\) = prompt
+- \(y\) = generated response
+- \(R\) = reward score
+- \(\pi\) = current model
+- \(\pi_{ref}\) = reference model, often the SFT model
+
+---
+
+## How credit gets assigned to tokens
+
+A response gets one overall score, but it contains many tokens.
+So how does the model know which tokens were “good”?
+
+RL algorithms handle this with **credit assignment**.
+
+In practice:
+
+- the model samples a full response
+- receives a reward
+- the update increases probability of tokens that led to better-than-expected outcomes
+- and decreases probability of tokens in worse-than-expected outputs
+
+This is often done with **policy gradient** methods.
+
+For LLMs, the model doesn’t necessarily know “this exact sentence caused the reward.”
+It just learns statistically that certain generation patterns tend to score better.
+
+---
+
+## PPO and similar methods
+
+The best-known algorithm here is **PPO** (Proximal Policy Optimization).
+
+Why PPO?
+
+- It stabilizes updates
+- Prevents the policy from changing too fast
+- Works reasonably well with large sequence models
+
+In LLM training, PPO usually looks like:
+
+1. Sample prompts
+2. Generate completions with the current model
+3. Score completions with a reward model
+4. Estimate advantages
+5. Update the model so high-advantage outputs become more likely
+6. Clip updates / regularize with KL
+
+More recently, variants like **GRPO** and other simplified RL objectives are also used.
+
+---
+
+## A concrete example
+
+Suppose the prompt is:
+
+> “Explain photosynthesis to a 10-year-old.”
+
+The model generates 4 candidate answers.
+
+A reward system might prefer answers that are:
+
+- correct
+- clear
+- age-appropriate
+- non-toxic
+- concise
+
+If one answer is especially good, RL training nudges the model so that in the future it is more likely to generate similar answers for similar prompts.
+
+Over many prompts, this shifts the whole policy toward preferred behavior.
+
+---
+
+## Why use RL instead of only supervised fine-tuning?
+
+Because many goals are hard to express as exact target outputs.
+
+For example:
+
+- helpfulness
+- harmlessness
+- honesty
+- style
+- strategic reasoning quality
+- tool-use success
+- code that passes tests
+
+There may be many acceptable answers, and ranking them is easier than writing a single “correct” one.
+
+RL is useful when:
+
+- you can **score** outputs,
+- but you can’t easily provide a perfect label.
+
+---
+
+## Where the reward comes from
+
+The reward can come from different sources:
+
+### Human feedback
+Humans rank outputs.
+
+### AI feedback
+A stronger model judges outputs.
+This is often called **RLAIF**.
+
+### Verifiable rewards
+Useful for tasks with objective checks:
+
+- code passes tests
+- math answer matches the solution
+- tool call succeeded
+- SQL query returns correct result
+
+This kind of RL can work especially well because the reward is less subjective.
+
+---
+
+## RL for reasoning models
+
+For reasoning-heavy models, RL is often used on tasks with **checkable outcomes**:
+
+- math
+- coding
+- logic
+- tool use
+
+The model tries different reasoning paths, and if the final answer is correct, that trajectory gets rewarded.
+
+This can improve performance because RL encourages the model to discover action sequences that lead to success, even if they weren’t heavily represented in supervised data.
+
+---
+
+## Important caveats
+
+### 1. Reward hacking
+If the reward model is imperfect, the LLM may learn to exploit it.
+
+Example:
+- sounding confident instead of being correct
+- being overly verbose because verbosity correlates with preference scores
+
+### 2. Distribution shift
+The reward model only knows what it was trained on.
+If the policy changes a lot, the reward model may become unreliable.
+
+### 3. Training instability
+RL is noisier and more expensive than standard supervised training.
+
+### 4. Alignment tradeoffs
+Optimizing for one thing can hurt another:
+- safer but less useful
+- more polite but less direct
+- more detailed but less accurate
+
+---
+
+## Is DPO the same as RL?
+
+Not exactly.
+
+**DPO** (Direct Preference Optimization) is often discussed alongside RLHF, but it is **not standard online RL**.
+It uses preference data directly to optimize the policy without separately running a reward model + PPO loop.
+
+So:
+
+- **RLHF/PPO** = explicit reward model + RL updates
+- **DPO** = direct preference-based optimization, often simpler
+
+In practice, many modern systems use a mix of:
+
+- SFT
+- preference optimization
+- RL on verifiable tasks
+
+---
+
+## The shortest accurate summary
+
+RL fine-tuning for LLMs works like this:
+
+1. Start with a pretrained or supervised-tuned language model.
+2. Have it generate responses.
+3. Score those responses with humans, a reward model, or an automatic verifier.
+4. Update the model so high-scoring responses become more likely.
+5. Regularize it so it doesn’t drift too far or exploit the reward.
+
+---
+
+## One-sentence intuition
+
+**Supervised fine-tuning teaches an LLM to imitate good answers; RL fine-tuning teaches it to prefer answers that score well under a chosen objective.**
+
+If you want, I can also give:
+1. a **mathy explanation with policy gradients**,
+2. a **PPO-for-LLMs walkthrough**, or
+3. a **comparison of RLHF vs DPO vs GRPO**.

@@ -1,0 +1,87 @@
+§u§
+Create a huggingface dataset config for this structure:
+```
+distilled-web/
+├── .gitattributes
+├── .gitignore
+├── sources.txt
+├── data/
+│   ├── pretrain/
+│   │   ├── 00001.parquet
+│   │   ├── 00002.parquet
+│   │   └── 00003.parquet
+│   └── train/
+│       └── 00001.parquet
+└── media/
+    ├── image/          (hundreds of hash-named image files: .png, .webp, .jpg)
+    └── other/
+```
+§a§
+Here's a Hugging Face dataset configuration (the YAML front matter for your `README.md` dataset card) that maps your `distilled-web/` structure into loadable configs and splits:
+
+```yaml
+---
+license: apache-2.0
+pretty_name: Distilled Web
+task_categories:
+  - text-generation
+language:
+  - en
+configs:
+  - config_name: pretrain
+    data_files:
+      - split: train
+        path: "data/pretrain/*.parquet"
+  - config_name: train
+    data_files:
+      - split: train
+        path: "data/train/*.parquet"
+---
+```
+
+## How this maps to your structure
+
+- **`config_name: pretrain`** → globs all three files (`00001.parquet`, `00002.parquet`, `00003.parquet`) in `data/pretrain/`.
+- **`config_name: train`** → globs `00001.parquet` in `data/train/`.
+- The `media/` folder (images in `media/image/` and files in `media/other/`) is **not** auto-loaded by the Parquet loader. Your parquet rows should reference these media files by relative path (e.g. a column like `image_path: "media/image/<hash>.png"`), and you resolve/load them in your own code.
+
+## A few important notes
+
+**1. Config vs. split choice.** I made `pretrain` and `train` two separate **configs** because they appear to represent different corpora/stages. If instead you want them as two **splits of a single dataset**, use this form:
+
+```yaml
+---
+configs:
+  - config_name: default
+    data_files:
+      - split: pretrain
+        path: "data/pretrain/*.parquet"
+      - split: train
+        path: "data/train/*.parquet"
+---
+```
+
+Loading then looks like:
+```python
+from datasets import load_dataset
+ds = load_dataset("your-username/distilled-web", split="pretrain")
+```
+vs. the two-config version:
+```python
+ds = load_dataset("your-username/distilled-web", "pretrain")
+```
+
+**2. `.gitattributes`** — make sure large binaries (images + parquet) are tracked by Git LFS. A typical entry set:
+```gitattributes
+*.parquet filter=lfs diff=lfs merge=lfs -text
+*.png     filter=lfs diff=lfs merge=lfs -text
+*.webp    filter=lfs diff=lfs merge=lfs -text
+*.jpg     filter=lfs diff=lfs merge=lfs -text
+```
+(HF repos auto-generate a `.gitattributes` that already LFS-tracks common binary/parquet extensions, so verify yours covers `.webp`.)
+
+**3. Embedding images natively (optional).** If you'd rather have the `Image` feature type work out of the box (so `ds[0]["image"]` returns a PIL image), the cleanest path is to bake the images into the parquet as an `Image()` column at build time rather than keeping them as loose files in `media/`. The loose-file layout you have is fine for a "manifest + assets" design, but the standard Parquet loader won't join them automatically.
+
+**4. `sources.txt` and `.gitignore`** are metadata/tooling files and are correctly ignored by the dataset loader — no config entry needed.
+
+Would you like me to fill in a complete dataset card (with column/feature descriptions, dataset summary, and usage examples) once you share the parquet schema?

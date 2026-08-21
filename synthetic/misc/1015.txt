@@ -1,0 +1,91 @@
+§u§
+```
+except Exception as e:
+```
+print full exception trace and continue
+§a§
+# Print Full Exception Trace and Continue
+
+Here are several ways to print the full exception traceback while continuing execution:
+
+## Method 1: Using `traceback.print_exc()` (Simplest)
+
+```python
+import traceback
+
+try:
+    # your code here
+    risky_operation()
+except Exception as e:
+    traceback.print_exc()
+    continue  # if inside a loop
+```
+
+## Method 2: Using `logging` (Recommended for production)
+
+```python
+import logging
+
+logging.basicConfig(level=logging.ERROR)
+
+try:
+    risky_operation()
+except Exception as e:
+    logging.exception("An error occurred")  # automatically includes traceback
+    continue
+```
+
+## Method 3: Get traceback as a string
+
+```python
+import traceback
+
+try:
+    risky_operation()
+except Exception as e:
+    error_trace = traceback.format_exc()
+    print(error_trace)
+    continue
+```
+
+## Method 4: More control with `traceback` module
+
+```python
+import traceback
+import sys
+
+try:
+    risky_operation()
+except Exception as e:
+    traceback.print_exception(type(e), e, e.__traceback__)
+    continue
+```
+
+## Complete Example (in a loop)
+
+```python
+import traceback
+
+items = [1, 2, 0, 4]
+
+for item in items:
+    try:
+        result = 10 / item
+        print(f"Result: {result}")
+    except Exception as e:
+        print(f"Error processing {item}:")
+        traceback.print_exc()
+        continue  # move to next iteration
+```
+
+## Notes
+
+| Method | Best For |
+|--------|----------|
+| `traceback.print_exc()` | Quick debugging |
+| `logging.exception()` | Production apps |
+| `traceback.format_exc()` | Storing/sending error text |
+
+**Important:** `continue` only works inside a loop. If you're not in a loop and just want to keep running, simply omit `continue` — the code will proceed naturally after the `except` block.
+
+Let me know your specific context (loop, function, etc.) if you'd like a tailored solution!
