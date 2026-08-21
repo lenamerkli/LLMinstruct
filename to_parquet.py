@@ -37,6 +37,150 @@ PAGE_OFFSETS = {
     "wilhelm-tell": +4,               # page N → file N+4
 }
 
+THETACODE_TOOLS: list[dict[str, t.Any]] = [
+    {
+        "type": "function",
+        "function": {
+            "name": "bash",
+            "description": "Execute a bash shell command.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "command": {
+                        "type": "string",
+                        "description": "The command to execute"
+                    },
+                    "timeout": {
+                        "type": "integer",
+                        "description": "The timeout for the command in seconds",
+                        "default": 60
+                    },
+                    "directory": {
+                        "type": "string",
+                        "description": "The working directory to execute the command in",
+                        "default": "/home/agent/"
+                    },
+                    "venv": {
+                        "type": "string",
+                        "description": "The python virtual environment to execute the command in"
+                    },
+                    "max_chars": {
+                        "type": "integer",
+                        "description": "The maximum number of characters of output. It will cut off the entire tool response, not just stdout.",
+                        "default": 100000
+                    }
+                },
+                "required": ["command"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "read_file",
+            "description": "Read the contents of a file. If both start_line and start_char are provided, the one further from the start will be used. If both end_line and end_char are provided, the one further from the end will be used.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "type": "string",
+                        "description": "The path to the file to read"
+                    },
+                    "start_line": {
+                        "type": "integer",
+                        "description": "The line to start reading from, 1-indexed",
+                        "default": 1
+                    },
+                    "end_line": {
+                        "type": "integer",
+                        "description": "The line to end reading at",
+                        "default": 1000
+                    },
+                    "max_chars": {
+                        "type": "integer",
+                        "description": "The maximum number of characters to read",
+                        "default": 1000000
+                    },
+                    "start_char": {
+                        "type": "integer",
+                        "description": "The character to start reading from, 0-indexed",
+                        "default": 0
+                    },
+                    "end_char": {
+                        "type": "integer",
+                        "description": "The character to end reading at",
+                        "default": 100000
+                    }
+                },
+                "required": ["path"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "write_to_file",
+            "description": "Write contents to a file. The file will be newly created or completely overwritten.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "type": "string",
+                        "description": "The path to the file to create or overwrite"
+                    },
+                    "content": {
+                        "type": "string",
+                        "description": "The content to write"
+                    }
+                },
+                "required": ["path", "content"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "replace_in_file",
+            "description": "This is the main method to edit files.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "type": "string",
+                        "description": "The path to the file to edit"
+                    },
+                    "search": {
+                        "type": "string",
+                        "description": "The content to replace (must match exactly, no regex search)"
+                    },
+                    "replace": {
+                        "type": "string",
+                        "description": "The content to write"
+                    }
+                },
+                "required": ["path", "search", "replace"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "ask_user",
+            "description": "Ask the user a question. Use for clarification or if you are stuck somewhere. Also use this tool call if you are finished, just ask if the user is satisfied with your work.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "question": {
+                        "type": "string",
+                        "description": "The question to ask the user."
+                    }
+                },
+                "required": ["question"]
+            }
+        }
+    }
+]
+
 
 def count_tokens(messages: t.List[t.Dict], tokenizer, template_env=None) -> int:
     encoded_input = tokenizer.apply_chat_template(messages, tokenize=True, template_env=template_env)
@@ -380,10 +524,31 @@ def process_thetacode(dir_path, project_name, synthetic, mistakes):
     for file in pathlib.Path(dir_path).glob('*.json'):
         with open(file, 'r') as f:
             messages = json.load(f)
-            messages2 = []
-            for message in messages:
-                messages2.append({'role': message['role'], 'content': message['content']})
+        is_new_format = any(
+            message.get('tool_calls') or message.get('role') == 'tool'
+            for message in messages
+        )
+        if not is_new_format:
+            # Old format: plain role/content passthrough
+            messages2 = [{'role': message['role'], 'content': message['content']} for message in messages]
             data.append({'messages': messages2, 'project': project_name, 'synthetic': synthetic, 'mistakes': mistakes})
+            continue
+        # New format (OpenAI-style tool calling): normalize like process_drawback_chess_directory
+        for message in messages:
+            if 'tool_calls' in message:
+                tool_calls = message['tool_calls']
+                del message['tool_calls']
+                if tool_calls:
+                    if 'attachments' not in message:
+                        message['attachments'] = []
+                    message['attachments'].append({'type': 'application/json/tool_call', 'value': json.dumps(tool_calls[0])})
+        if len(messages) > 1:
+            messages[0]['attachments'] = [{'type': 'application/json/tools', 'value': json.dumps(THETACODE_TOOLS)}]
+            # Tool outputs become user messages
+            for message in messages:
+                for key in ['id', 'chat_id', 'thinking', 'cost', 'llm_model', 'created_at', 'tool_call_id', 'name']:
+                    message.pop(key, None)
+            data.append({'messages': messages, 'project': project_name, 'synthetic': synthetic, 'mistakes': mistakes})
     return data
 
 
