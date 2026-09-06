@@ -1,0 +1,57 @@
+§u§
+how does microsoft teams route real phone calls to the teams app?
+§a§
+Microsoft Teams routes real phone calls (PSTN - Public Switched Telephone Network) to the Teams app through several methods:
+
+## Main Routing Methods
+
+**1. Microsoft Calling Plans**
+- Microsoft acts as your phone carrier and provides phone numbers directly
+- Calls come into Microsoft's telephony infrastructure and are routed directly to your Teams client
+- Simplest setup but only available in certain countries
+
+**2. Direct Routing**
+- You connect your own SIP trunk provider or existing phone system to Teams
+- Uses a **Session Border Controller (SBC)** - a certified device that sits between your telephony provider and Microsoft Teams
+- The SBC converts traditional phone signals to SIP (Session Initiation Protocol) that Teams understands
+- Call flow: PSTN → Your carrier → SBC → Microsoft 365 → Teams app
+
+**3. Operator Connect**
+- Your telecom operator connects directly to Microsoft's infrastructure
+- Similar to Direct Routing but managed by the carrier
+- No SBC required on your end
+
+## How the Technical Routing Works
+
+1. **Incoming call arrives** at Microsoft's cloud infrastructure via one of the methods above
+2. **Teams Phone System** (Microsoft's cloud PBX) receives the SIP signaling
+3. The system **looks up the user** associated with that phone number in your tenant
+4. **Signaling is sent** to all devices where that user is signed into Teams
+5. The **Teams app rings** on those devices (desktop, mobile, web)
+6. **Media path** is established using secure RTP (Real-time Transport Protocol) for the actual voice stream
+
+The calls use VoIP protocols (primarily SIP for signaling and SRTP for media) once they reach Microsoft's infrastructure, allowing them to ring in the Teams app just like any other Teams call.
+§u§
+does it work when using the web app on linux or when using winboat?
+§a§
+Yes, making and receiving real PSTN phone calls works in both scenarios, but the experience and the way the technology operates are completely different between the two.
+
+Here is how PSTN calling works in both setups on a Linux machine:
+
+### 1. Using the Teams Web App (PWA) on Linux
+Since Microsoft retired the native Linux desktop client, the Progressive Web App (PWA) running through **Google Chrome** or **Microsoft Edge** is the official way to use Teams on Linux.
+
+*   **Does PSTN calling work?** Yes. As long as your account has a Teams Phone license and calling plan, you can dial out to landlines and receive incoming phone calls directly in the browser.
+*   **How it works:** The browser uses WebRTC to handle the audio and microphone, while Teams connects to Microsoft's cloud PBX exactly as it would on a desktop app. Microsoft recently updated the web experience to allow you to "pop out" active calls into their own separate browser windows so you can multi-task.
+*   **The drawbacks:** Because it is a web app, you are subject to browser limitations. If you completely close your browser (rather than leaving it running in the background), you will not receive incoming call notifications. Furthermore, hardware integration (like dedicated call answer/end buttons on a USB headset) usually does not work as seamlessly as it does on a native desktop client.
+
+### 2. Using WinBoat on Linux
+**WinBoat** is an open-source tool that spins up a lightweight Windows virtual machine inside a Docker container (using KVM) and uses Remote Desktop Protocol (FreeRDP) to seamlessly project the application windows onto your Linux desktop.
+
+*   **Does PSTN calling work?** Yes. When you run Teams through WinBoat, you are actually running the **full, official Windows desktop client** of Microsoft Teams, just seamlessly integrated into your Linux desktop environment.
+*   **Hardware Passthrough:** WinBoat officially supports USB and hardware passthrough. It routes your Linux host's microphone, speakers, and webcam into the Windows container. Therefore, Teams recognizes your hardware and can route PSTN calls flawlessly.
+*   **The benefits:** You get the full feature set of the Windows desktop app, including reliable background notifications, advanced background blur/video effects, and better headset integrations that are often missing in the Linux Web App.
+*   **The drawbacks:** Because WinBoat relies on a virtual machine and RDP streaming, there is a large resource overhead (you are essentially running Windows in the background). Additionally, you may occasionally experience minor latency or audio artifacts due to the virtualization layer, which is something to keep in mind for real-time voice calls.
+
+**Summary:**
+If you want a lightweight, official solution, use the **Teams PWA via Chrome/Edge**; PSTN calls will work fine as long as the browser is open. If you absolutely need the full feature set of the Windows Teams app and don't mind the heavy resource usage of a background VM, **WinBoat** will handle your PSTN calls by running the actual Windows software.

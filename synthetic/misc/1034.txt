@@ -1,0 +1,49 @@
+§u§
+```python
+        docker_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'docker')
+        dockerfile = os.path.join(docker_dir, 'DOCKERFILE')
+```
+to typescript
+§a§
+Here's the TypeScript equivalent:
+
+```typescript
+import * as path from 'path';
+
+const dockerDir = path.join(path.dirname(path.resolve(__filename)), 'docker');
+const dockerfile = path.join(dockerDir, 'DOCKERFILE');
+```
+
+**Notes on the conversion:**
+
+| Python | TypeScript |
+|--------|-----------|
+| `os.path.join()` | `path.join()` |
+| `os.path.dirname()` | `path.dirname()` |
+| `os.path.abspath(__file__)` | `path.resolve(__filename)` |
+
+A few things to keep in mind:
+
+1. **`__filename`** works in **CommonJS** modules (Node.js default). If you're using **ES modules** (`"type": "module"` in `package.json`), `__filename` won't be available, and you'd use:
+
+```typescript
+import * as path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const dockerDir = path.join(__dirname, 'docker');
+const dockerfile = path.join(dockerDir, 'DOCKERFILE');
+```
+
+2. Since Node.js already provides **`__dirname`**, you can simplify the CommonJS version:
+
+```typescript
+import * as path from 'path';
+
+const dockerDir = path.join(__dirname, 'docker');
+const dockerfile = path.join(dockerDir, 'DOCKERFILE');
+```
+
+Let me know which module system you're using and I can tailor it further!

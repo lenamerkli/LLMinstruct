@@ -1,0 +1,38 @@
+§u§
+When Kimi K3 makes a tool call using the official tool calling format, what tokens does it emit?
+§a§
+Based on the search results, here's what Kimi K3 emits when making tool calls:
+
+## Kimi K3 Tool-Call Control Tokens
+
+K3 emits a single token stream containing reasoning, answer text and tool calls, delimited by model-specific control tokens. vLLM refers to this as the "Kimi K3 (XTML) chat format."
+
+The Kimi model family (K2 through K3) uses the following special control tokens for tool calling:
+
+### Key tokens
+
+From the Kimi tokenizer source and bug reports, the tool-call tokens are:
+
+| Token | Purpose |
+|---|---|
+| `<\|tool_calls_section_begin\|>` | Marks the beginning of the tool-call section. Parsers detect this marker to know tool calls are present and to promote `finish_reason` from `"stop"` to `"tool_calls"`. |
+| `<\|tool_calls_section_end\|>` | Marks the end of the entire tool-calls section |
+| `<\|tool_call_begin\|>` | Marks the start of an individual tool call (`TOOL_CALL_START`) |
+| `<\|tool_call_end\|>` | Marks the end of an individual tool call (`TOOL_CALL_END`) |
+| `<\|tool_call_argument_begin\|>` | Marks the beginning of the tool call's arguments (`TOOL_CALL_ARG_BEGIN`) |
+
+### How the stream looks (when unparsed)
+
+When a serving framework doesn't properly parse these tokens, you can see them leak into the response as raw text — for example, a raw response might contain sequences like `<|tool_calls_section_end|><|tool_call_argument_begin|>functions.get_weather:0<|tool_call_end|>{"city": "Tokyo"}<|media_begin|><|tool_call_begin|>`, though note this particular example from a K2.6 bug report shows a malformed ordering.
+
+### How serving frameworks handle it
+
+K3's raw output contains three distinct regions — reasoning, answer text, and tool calls — that must be separated and turned into an OpenAI-shaped API response. That separation is done by parsers you have to ask for explicitly: `--reasoning-parser kimi_k3` and `--tool-call-parser kimi_k3` on both vLLM and SGLang.
+
+If you omit the parsers, the model's control tokens flow through into your `content` field as literal text — the model appears to refuse to call functions while actually calling them into a string nobody parses.
+
+The reasoning parser also uses `<|tool_calls_section_begin|>` as an implicit reasoning-end signal — reasoning ends when it sees either the dedicated end-of-reasoning token or the tool section start token.
+
+### Important note on K3 vs K2 format
+
+Kimi K3's chat template must encode system, user, and assistant messages, multimodal content, tool definitions, and tool results using exact control tokens. Instead of the common approach of a Jinja chat template that renders the request as text before tokenization, Kimi K3 uses a Python program to build the prompt token sequence directly. The K3 parser is described as composing reasoning and tool parsers for "XTML output", indicating K3 may use a refined format compared to K2, though the core `<|tool_call_*|>` family of control tokens is shared across the Kimi model family.

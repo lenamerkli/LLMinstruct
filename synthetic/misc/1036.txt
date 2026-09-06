@@ -1,0 +1,171 @@
+§u§
+```
+@app.route('/replace_in_file', methods=['POST'])
+def replace_in_file():
+    data = request.get_json()
+    path_str = data.get('path', '')
+    search = data.get('search', '')
+    replace = data.get('replace', '')
+    read = data.get('read', False)
+    if not path_str:
+        return {'error': 'Missing path'}, 400
+    if not search:
+        return {'error': 'Missing search text'}, 400
+    try:
+        path = Path(path_str)
+        if not path.exists():
+            return {'error': f'File not found: {path_str}'}, 404
+        if not path.is_file():
+            return {'error': f'Not a file: {path_str}'}, 400
+        current_content = path.read_text(encoding='utf-8')
+        if search not in current_content:
+            return {'error': 'Search text not found in file'}, 400
+        replacements = current_content.count(search)
+        new_content = current_content.replace(search, replace)
+        path.write_text(new_content, encoding='utf-8')
+        response: dict = {'replacements': replacements}
+        if read:
+            response['content'] = new_content
+        return response
+    except ValueError as e:
+        return {'error': str(e)}, 400
+    except Exception as e:
+        return {'error': str(e)}, 500
+```
+This is my current code. I want it to return at what character index the replace took place and what that character index is now.
+§a§
+Here is the updated code. It tracks the original starting index of every occurrence and calculates its new starting index in the modified text using the length difference (`len(replace) - len(search)`).
+
+### Updated Code
+
+```python
+from pathlib import Path
+from flask import request
+
+@app.route('/replace_in_file', methods=['POST'])
+def replace_in_file():
+    data = request.get_json()
+    path_str = data.get('path', '')
+    search = data.get('search', '')
+    replace = data.get('replace', '')
+    read = data.get('read', False)
+
+    if not path_str:
+        return {'error': 'Missing path'}, 400
+    if not search:
+        return {'error': 'Missing search text'}, 400
+
+    try:
+        path = Path(path_str)
+        if not path.exists():
+            return {'error': f'File not found: {path_str}'}, 404
+        if not path.is_file():
+            return {'error': f'Not a file: {path_str}'}, 400
+
+        current_content = path.read_text(encoding='utf-8')
+
+        search_len = len(search)
+        replace_len = len(replace)
+        delta = replace_len - search_len
+
+        # Find all occurrences and calculate both original and new indices
+        occurrences = []
+        start_search_idx = 0
+        match_count = 0
+
+        while True:
+            orig_idx = current_content.find(search, start_search_idx)
+            if orig_idx == -1:
+                break
+
+            new_idx = orig_idx + (match_count * delta)
+
+            occurrences.append({
+                'original_index': orig_idx,
+                'new_index': new_idx,
+                'original_span': [orig_idx, orig_idx + search_len],
+                'new_span': [new_idx, new_idx + replace_len]
+            })
+
+            start_search_idx = orig_idx + search_len
+            match_count += 1
+
+        if not occurrences:
+            return {'error': 'Search text not found in file'}, 400
+
+        # Perform the actual replacement
+        new_content = current_content.replace(search, replace)
+        path.write_text(new_content, encoding='utf-8')
+
+        response = {
+            'replacements': len(occurrences),
+            'indices': occurrences
+        }
+
+        if read:
+            response['content'] = new_content
+
+        return response
+
+    except ValueError as e:
+        return {'error': str(e)}, 400
+    except Exception as e:
+        return {'error': str(e)}, 500
+```
+
+---
+
+### Example Response
+
+If your file content is:
+> `"Hello world, welcome to the world!"`
+
+And you replace `"world"` with `"universe"`:
+
+```json
+{
+  "replacements": 2,
+  "indices": [
+    {
+      "original_index": 6,
+      "new_index": 6,
+      "original_span": [6, 11],
+      "new_span": [6, 14]
+    },
+    {
+      "original_index": 28,
+      "new_index": 31,
+      "original_span": [28, 33],
+      "new_span": [31, 39]
+    }
+  ]
+}
+```
+
+### How it works:
+1. `current_content.find(search, start_search_idx)` iterates through non-overlapping occurrences just like Python's `str.replace()`.
+2. Each subsequent replacement shifts the indices by `k * (len(replace) - len(search))`, where `k` is the number of replacements made before it.
+3. It returns both the starting points (`original_index` / `new_index`) and full ranges (`original_span` / `new_span`).
+§u§
+If i understand correctly, is the new span end `new_idx + replace_len` and the last included character `new_idx + replace_len - 1`?
+§a§
+Yes, exactly. The spans use Python's **half-open interval** convention `[start, end)`, where the end is **exclusive** — the same convention used by Python slicing.
+
+| | Start | End (exclusive) | Last included index | Length |
+|---|---|---|---|---|
+| `original_span` | `orig_idx` | `orig_idx + search_len` | `orig_idx + search_len - 1` | `search_len` |
+| `new_span` | `new_idx` | `new_idx + replace_len` | `new_idx + replace_len - 1` | `replace_len` |
+
+So you can use the spans directly for slicing:
+
+```python
+text[original_span[0]:original_span[1]]  # gives you the matched search text
+text[new_span[0]:new_span[1]]            # gives you the replacement text
+```
+
+Using the example from before (`"world"` → `"universe"`), first occurrence:
+
+- `new_span = [6, 14]`
+- Last included character is at index **13**
+- `len("universe")` = **8**
+- `14 - 6 = 8` ✓

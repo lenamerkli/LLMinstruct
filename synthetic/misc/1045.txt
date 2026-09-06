@@ -1,0 +1,799 @@
+§u§
+```
+version	1
+schema.0.repetition_type	REQUIRED
+schema.0.name	duckdb_schema
+schema.0.num_children	16
+schema.1.type	BYTE_ARRAY
+schema.1.repetition_type	OPTIONAL
+schema.1.name	id
+schema.1.converted_type	UTF8
+schema.2.type	BYTE_ARRAY
+schema.2.repetition_type	OPTIONAL
+schema.2.name	yymm_id
+schema.2.converted_type	UTF8
+schema.3.type	BYTE_ARRAY
+schema.3.repetition_type	OPTIONAL
+schema.3.name	submitter
+schema.3.converted_type	UTF8
+schema.4.type	BYTE_ARRAY
+schema.4.repetition_type	OPTIONAL
+schema.4.name	authors
+schema.4.converted_type	UTF8
+schema.5.type	BYTE_ARRAY
+schema.5.repetition_type	OPTIONAL
+schema.5.name	title
+schema.5.converted_type	UTF8
+schema.6.type	BYTE_ARRAY
+schema.6.repetition_type	OPTIONAL
+schema.6.name	comments
+schema.6.converted_type	UTF8
+schema.7.type	BYTE_ARRAY
+schema.7.repetition_type	OPTIONAL
+schema.7.name	journal-ref
+schema.7.converted_type	UTF8
+schema.8.type	BYTE_ARRAY
+schema.8.repetition_type	OPTIONAL
+schema.8.name	doi
+schema.8.converted_type	UTF8
+schema.9.type	BYTE_ARRAY
+schema.9.repetition_type	OPTIONAL
+schema.9.name	report-no
+schema.9.converted_type	UTF8
+schema.10.type	BYTE_ARRAY
+schema.10.repetition_type	OPTIONAL
+schema.10.name	categories
+schema.10.converted_type	UTF8
+schema.11.type	BYTE_ARRAY
+schema.11.repetition_type	OPTIONAL
+schema.11.name	license
+schema.11.converted_type	UTF8
+schema.12.type	BYTE_ARRAY
+schema.12.repetition_type	OPTIONAL
+schema.12.name	abstract
+schema.12.converted_type	UTF8
+schema.13.repetition_type	OPTIONAL
+schema.13.name	versions
+schema.13.num_children	1
+schema.13.converted_type	LIST
+schema.14.repetition_type	REPEATED
+schema.14.name	list
+schema.14.num_children	1
+schema.15.repetition_type	OPTIONAL
+schema.15.name	element
+schema.15.num_children	2
+schema.16.type	BYTE_ARRAY
+schema.16.repetition_type	OPTIONAL
+schema.16.name	version
+schema.16.converted_type	UTF8
+schema.17.type	BYTE_ARRAY
+schema.17.repetition_type	OPTIONAL
+schema.17.name	created
+schema.17.converted_type	UTF8
+schema.18.type	BYTE_ARRAY
+schema.18.repetition_type	OPTIONAL
+schema.18.name	update_date
+schema.18.converted_type	UTF8
+schema.19.repetition_type	OPTIONAL
+schema.19.name	authors_parsed
+schema.19.num_children	1
+schema.19.converted_type	LIST
+schema.20.repetition_type	REPEATED
+schema.20.name	list
+schema.20.num_children	1
+schema.21.repetition_type	OPTIONAL
+schema.21.name	element
+schema.21.num_children	1
+schema.21.converted_type	LIST
+schema.22.repetition_type	REPEATED
+schema.22.name	list
+schema.22.num_children	1
+schema.23.type	BYTE_ARRAY
+schema.23.repetition_type	OPTIONAL
+schema.23.name	element
+schema.23.converted_type	UTF8
+schema.24.type	BYTE_ARRAY
+schema.24.repetition_type	OPTIONAL
+schema.24.name	latex
+schema.24.converted_type	UTF8
+num_rows	3,003
+row_groups.0.columns.0.file_offset	0
+row_groups.0.columns.0.meta_data.type	BYTE_ARRAY
+row_groups.0.columns.0.meta_data.encodings.0	PLAIN
+row_groups.0.columns.0.meta_data.path_in_schema.0	id
+row_groups.0.columns.0.meta_data.codec	SNAPPY
+row_groups.0.columns.0.meta_data.num_values	2,048
+row_groups.0.columns.0.meta_data.total_uncompressed_size	28,701
+row_groups.0.columns.0.meta_data.total_compressed_size	9,919
+row_groups.0.columns.0.meta_data.data_page_offset	4
+row_groups.0.columns.0.meta_data.statistics.max	2605.30649
+row_groups.0.columns.0.meta_data.statistics.min	2605.28602
+row_groups.0.columns.0.meta_data.statistics.null_count	0
+row_groups.0.columns.0.meta_data.statistics.max_value	2605.30649
+row_groups.0.columns.0.meta_data.statistics.min_value	2605.28602
+row_groups.0.columns.0.meta_data.statistics.is_max_value_exact	true
+row_groups.0.columns.0.meta_data.statistics.is_min_value_exact	true
+row_groups.0.columns.1.file_offset	0
+row_groups.0.columns.1.meta_data.type	BYTE_ARRAY
+row_groups.0.columns.1.meta_data.encodings.0	PLAIN
+row_groups.0.columns.1.meta_data.path_in_schema.0	yymm_id
+row_groups.0.columns.1.meta_data.codec	SNAPPY
+row_groups.0.columns.1.meta_data.num_values	2,048
+row_groups.0.columns.1.meta_data.total_uncompressed_size	28,701
+row_groups.0.columns.1.meta_data.total_compressed_size	9,919
+row_groups.0.columns.1.meta_data.data_page_offset	9,923
+row_groups.0.columns.1.meta_data.statistics.max	2605.30649
+row_groups.0.columns.1.meta_data.statistics.min	2605.28602
+row_groups.0.columns.1.meta_data.statistics.null_count	0
+row_groups.0.columns.1.meta_data.statistics.max_value	2605.30649
+row_groups.0.columns.1.meta_data.statistics.min_value	2605.28602
+row_groups.0.columns.1.meta_data.statistics.is_max_value_exact	true
+row_groups.0.columns.1.meta_data.statistics.is_min_value_exact	true
+row_groups.0.columns.2.file_offset	0
+row_groups.0.columns.2.meta_data.type	BYTE_ARRAY
+row_groups.0.columns.2.meta_data.encodings.0	PLAIN
+row_groups.0.columns.2.meta_data.path_in_schema.0	submitter
+row_groups.0.columns.2.meta_data.codec	SNAPPY
+row_groups.0.columns.2.meta_data.num_values	2,048
+row_groups.0.columns.2.meta_data.total_uncompressed_size	35,642
+row_groups.0.columns.2.meta_data.total_compressed_size	27,095
+row_groups.0.columns.2.meta_data.data_page_offset	19,842
+row_groups.0.columns.2.meta_data.statistics.max	\'Eric Marchand
+row_groups.0.columns.2.meta_data.statistics.min	Aabesh Bhattacharyya
+row_groups.0.columns.2.meta_data.statistics.null_count	0
+row_groups.0.columns.2.meta_data.statistics.max_value	\'Eric Marchand
+row_groups.0.columns.2.meta_data.statistics.min_value	Aabesh Bhattacharyya
+row_groups.0.columns.2.meta_data.statistics.is_max_value_exact	true
+row_groups.0.columns.2.meta_data.statistics.is_min_value_exact	true
+row_groups.0.columns.3.file_offset	0
+row_groups.0.columns.3.meta_data.type	BYTE_ARRAY
+row_groups.0.columns.3.meta_data.encodings.0	PLAIN
+row_groups.0.columns.3.meta_data.path_in_schema.0	authors
+row_groups.0.columns.3.meta_data.codec	SNAPPY
+row_groups.0.columns.3.meta_data.num_values	2,048
+row_groups.0.columns.3.meta_data.total_uncompressed_size	169,137
+row_groups.0.columns.3.meta_data.total_compressed_size	128,370
+row_groups.0.columns.3.meta_data.data_page_offset	46,937
+row_groups.0.columns.3.meta_data.statistics.max	\'Eric Marchand
+row_groups.0.columns.3.meta_data.statistics.min	A. Bemporad and T. Tatarenko
+row_groups.0.columns.3.meta_data.statistics.null_count	0
+row_groups.0.columns.3.meta_data.statistics.max_value	\'Eric Marchand
+row_groups.0.columns.3.meta_data.statistics.min_value	A. Bemporad and T. Tatarenko
+row_groups.0.columns.3.meta_data.statistics.is_max_value_exact	true
+row_groups.0.columns.3.meta_data.statistics.is_min_value_exact	true
+row_groups.0.columns.4.file_offset	0
+row_groups.0.columns.4.meta_data.type	BYTE_ARRAY
+row_groups.0.columns.4.meta_data.encodings.0	PLAIN
+row_groups.0.columns.4.meta_data.path_in_schema.0	title
+row_groups.0.columns.4.meta_data.codec	SNAPPY
+row_groups.0.columns.4.meta_data.num_values	2,048
+row_groups.0.columns.4.meta_data.total_uncompressed_size	175,904
+row_groups.0.columns.4.meta_data.total_compressed_size	113,441
+row_groups.0.columns.4.meta_data.data_page_offset	175,307
+row_groups.0.columns.4.meta_data.statistics.max	{\Omega}-QVLA: Robust Quantization for Vision-Language-Action Models via Composite Rotation and Per-step Scaling
+row_groups.0.columns.4.meta_data.statistics.min	"It's OK Because...": The Wild West of Student Rationalization of AI Use in Academic Writing
+row_groups.0.columns.4.meta_data.statistics.null_count	0
+row_groups.0.columns.4.meta_data.statistics.max_value	{\Omega}-QVLA: Robust Quantization for Vision-Language-Action Models via Composite Rotation and Per-step Scaling
+row_groups.0.columns.4.meta_data.statistics.min_value	"It's OK Because...": The Wild West of Student Rationalization of AI Use in Academic Writing
+row_groups.0.columns.4.meta_data.statistics.is_max_value_exact	true
+row_groups.0.columns.4.meta_data.statistics.is_min_value_exact	true
+row_groups.0.columns.5.file_offset	0
+row_groups.0.columns.5.meta_data.type	BYTE_ARRAY
+row_groups.0.columns.5.meta_data.encodings.0	PLAIN
+row_groups.0.columns.5.meta_data.path_in_schema.0	comments
+row_groups.0.columns.5.meta_data.codec	SNAPPY
+row_groups.0.columns.5.meta_data.num_values	2,048
+row_groups.0.columns.5.meta_data.total_uncompressed_size	60,738
+row_groups.0.columns.5.meta_data.total_compressed_size	30,747
+row_groups.0.columns.5.meta_data.data_page_offset	288,748
+row_groups.0.columns.5.meta_data.statistics.max	work in progress
+row_groups.0.columns.5.meta_data.statistics.min	10 + 6 pages. Companion article to arXiv:2605.18966. Comments welcome
+row_groups.0.columns.5.meta_data.statistics.null_count	875
+row_groups.0.columns.5.meta_data.statistics.max_value	work in progress
+row_groups.0.columns.5.meta_data.statistics.min_value	10 + 6 pages. Companion article to arXiv:2605.18966. Comments welcome
+row_groups.0.columns.5.meta_data.statistics.is_max_value_exact	true
+row_groups.0.columns.5.meta_data.statistics.is_min_value_exact	true
+row_groups.0.columns.6.file_offset	0
+row_groups.0.columns.6.meta_data.type	BYTE_ARRAY
+row_groups.0.columns.6.meta_data.encodings.0	PLAIN_DICTIONARY
+row_groups.0.columns.6.meta_data.path_in_schema.0	journal-ref
+row_groups.0.columns.6.meta_data.codec	SNAPPY
+row_groups.0.columns.6.meta_data.num_values	2,048
+row_groups.0.columns.6.meta_data.total_uncompressed_size	3,812
+row_groups.0.columns.6.meta_data.total_compressed_size	2,679
+row_groups.0.columns.6.meta_data.data_page_offset	321,953
+row_groups.0.columns.6.meta_data.dictionary_page_offset	319,495
+row_groups.0.columns.6.meta_data.statistics.max	Volume 549, Issue 2, June 2026, stag847
+row_groups.0.columns.6.meta_data.statistics.min	2015 IEEE International Conference on Industrial Technology (ICIT)
+row_groups.0.columns.6.meta_data.statistics.null_count	1,996
+row_groups.0.columns.6.meta_data.statistics.distinct_count	52
+row_groups.0.columns.6.meta_data.statistics.max_value	Volume 549, Issue 2, June 2026, stag847
+row_groups.0.columns.6.meta_data.statistics.min_value	2015 IEEE International Conference on Industrial Technology (ICIT)
+row_groups.0.columns.6.meta_data.statistics.is_max_value_exact	true
+row_groups.0.columns.6.meta_data.statistics.is_min_value_exact	true
+row_groups.0.columns.6.meta_data.bloom_filter_offset	302,070,918
+row_groups.0.columns.6.meta_data.bloom_filter_length	80
+row_groups.0.columns.7.file_offset	0
+row_groups.0.columns.7.meta_data.type	BYTE_ARRAY
+row_groups.0.columns.7.meta_data.encodings.0	PLAIN_DICTIONARY
+row_groups.0.columns.7.meta_data.path_in_schema.0	doi
+row_groups.0.columns.7.meta_data.codec	SNAPPY
+row_groups.0.columns.7.meta_data.num_values	2,048
+row_groups.0.columns.7.meta_data.total_uncompressed_size	2,436
+row_groups.0.columns.7.meta_data.total_compressed_size	1,557
+row_groups.0.columns.7.meta_data.data_page_offset	323,462
+row_groups.0.columns.7.meta_data.dictionary_page_offset	322,174
+row_groups.0.columns.7.meta_data.statistics.max	10.58997/ejde.2026.37
+row_groups.0.columns.7.meta_data.statistics.min	10.1002/lpor.202301272
+row_groups.0.columns.7.meta_data.statistics.null_count	1,981
+row_groups.0.columns.7.meta_data.statistics.distinct_count	67
+row_groups.0.columns.7.meta_data.statistics.max_value	10.58997/ejde.2026.37
+row_groups.0.columns.7.meta_data.statistics.min_value	10.1002/lpor.202301272
+row_groups.0.columns.7.meta_data.statistics.is_max_value_exact	true
+row_groups.0.columns.7.meta_data.statistics.is_min_value_exact	true
+row_groups.0.columns.7.meta_data.bloom_filter_offset	302,070,998
+row_groups.0.columns.7.meta_data.bloom_filter_length	144
+row_groups.0.columns.8.file_offset	0
+row_groups.0.columns.8.meta_data.type	BYTE_ARRAY
+row_groups.0.columns.8.meta_data.encodings.0	PLAIN_DICTIONARY
+row_groups.0.columns.8.meta_data.path_in_schema.0	report-no
+row_groups.0.columns.8.meta_data.codec	SNAPPY
+row_groups.0.columns.8.meta_data.num_values	2,048
+row_groups.0.columns.8.meta_data.total_uncompressed_size	808
+row_groups.0.columns.8.meta_data.total_compressed_size	469
+row_groups.0.columns.8.meta_data.data_page_offset	324,069
+row_groups.0.columns.8.meta_data.dictionary_page_offset	323,731
+row_groups.0.columns.8.meta_data.statistics.max	ZMP-HH/26-11
+row_groups.0.columns.8.meta_data.statistics.min	CERN-TH-2026-100
+row_groups.0.columns.8.meta_data.statistics.null_count	2,027
+row_groups.0.columns.8.meta_data.statistics.distinct_count	21
+row_groups.0.columns.8.meta_data.statistics.max_value	ZMP-HH/26-11
+row_groups.0.columns.8.meta_data.statistics.min_value	CERN-TH-2026-100
+row_groups.0.columns.8.meta_data.statistics.is_max_value_exact	true
+row_groups.0.columns.8.meta_data.statistics.is_min_value_exact	true
+row_groups.0.columns.8.meta_data.bloom_filter_offset	302,071,142
+row_groups.0.columns.8.meta_data.bloom_filter_length	47
+row_groups.0.columns.9.file_offset	0
+row_groups.0.columns.9.meta_data.type	BYTE_ARRAY
+row_groups.0.columns.9.meta_data.encodings.0	PLAIN
+row_groups.0.columns.9.meta_data.path_in_schema.0	categories
+row_groups.0.columns.9.meta_data.codec	SNAPPY
+row_groups.0.columns.9.meta_data.num_values	2,048
+row_groups.0.columns.9.meta_data.total_uncompressed_size	36,239
+row_groups.0.columns.9.meta_data.total_compressed_size	13,010
+row_groups.0.columns.9.meta_data.data_page_offset	324,200
+row_groups.0.columns.9.meta_data.statistics.max	stat.ML cs.LG math.ST stat.ME stat.TH
+row_groups.0.columns.9.meta_data.statistics.min	astro-ph.CO
+row_groups.0.columns.9.meta_data.statistics.null_count	0
+row_groups.0.columns.9.meta_data.statistics.max_value	stat.ML cs.LG math.ST stat.ME stat.TH
+row_groups.0.columns.9.meta_data.statistics.min_value	astro-ph.CO
+row_groups.0.columns.9.meta_data.statistics.is_max_value_exact	true
+row_groups.0.columns.9.meta_data.statistics.is_min_value_exact	true
+row_groups.0.columns.10.file_offset	0
+row_groups.0.columns.10.meta_data.type	BYTE_ARRAY
+row_groups.0.columns.10.meta_data.encodings.0	PLAIN_DICTIONARY
+row_groups.0.columns.10.meta_data.path_in_schema.0	license
+row_groups.0.columns.10.meta_data.codec	SNAPPY
+row_groups.0.columns.10.meta_data.num_values	2,048
+row_groups.0.columns.10.meta_data.total_uncompressed_size	1,130
+row_groups.0.columns.10.meta_data.total_compressed_size	974
+row_groups.0.columns.10.meta_data.data_page_offset	337,375
+row_groups.0.columns.10.meta_data.dictionary_page_offset	337,210
+row_groups.0.columns.10.meta_data.statistics.max	http://creativecommons.org/publicdomain/zero/1.0/
+row_groups.0.columns.10.meta_data.statistics.min	http://arxiv.org/licenses/nonexclusive-distrib/1.0/
+row_groups.0.columns.10.meta_data.statistics.null_count	0
+row_groups.0.columns.10.meta_data.statistics.distinct_count	6
+row_groups.0.columns.10.meta_data.statistics.max_value	http://creativecommons.org/publicdomain/zero/1.0/
+row_groups.0.columns.10.meta_data.statistics.min_value	http://arxiv.org/licenses/nonexclusive-distrib/1.0/
+row_groups.0.columns.10.meta_data.statistics.is_max_value_exact	true
+row_groups.0.columns.10.meta_data.statistics.is_min_value_exact	true
+row_groups.0.columns.10.meta_data.bloom_filter_offset	302,071,189
+row_groups.0.columns.10.meta_data.bloom_filter_length	47
+row_groups.0.columns.11.file_offset	0
+row_groups.0.columns.11.meta_data.type	BYTE_ARRAY
+row_groups.0.columns.11.meta_data.encodings.0	PLAIN
+row_groups.0.columns.11.meta_data.path_in_schema.0	abstract
+row_groups.0.columns.11.meta_data.codec	SNAPPY
+row_groups.0.columns.11.meta_data.num_values	2,048
+row_groups.0.columns.11.meta_data.total_uncompressed_size	2,634,134
+row_groups.0.columns.11.meta_data.total_compressed_size	1,539,290
+row_groups.0.columns.11.meta_data.data_page_offset	338,184
+row_groups.0.columns.11.meta_data.statistics.max	[Note added after submission. After posting the first version of this preprint and corresponding with Ved Kunte and Kuntal Sengupta, we identified an issue with the claimed separation between real quantum theory and ordinary complex quantum theory in the q
+row_groups.0.columns.11.meta_data.statistics.min	$\delta$ Scuti stars are pulsating stars constituting the $\delta$ Scuti instability strip in the Hertzsprung-Russell (HR) diagram, which consists of A and F stars. They are in the transition region between high-mass hot stars and low-mass solar-like stars
+row_groups.0.columns.11.meta_data.statistics.null_count	0
+row_groups.0.columns.11.meta_data.statistics.max_value	[Note added after submission. After posting the first version of this preprint and corresponding with Ved Kunte and Kuntal Sengupta, we identified an issue with the claimed separation between real quantum theory and ordinary complex quantum theory in the q
+row_groups.0.columns.11.meta_data.statistics.min_value	$\delta$ Scuti stars are pulsating stars constituting the $\delta$ Scuti instability strip in the Hertzsprung-Russell (HR) diagram, which consists of A and F stars. They are in the transition region between high-mass hot stars and low-mass solar-like stars
+row_groups.0.columns.11.meta_data.statistics.is_max_value_exact	false
+row_groups.0.columns.11.meta_data.statistics.is_min_value_exact	false
+row_groups.0.columns.12.file_offset	0
+row_groups.0.columns.12.meta_data.type	BYTE_ARRAY
+row_groups.0.columns.12.meta_data.encodings.0	PLAIN_DICTIONARY
+row_groups.0.columns.12.meta_data.path_in_schema.0	versions
+row_groups.0.columns.12.meta_data.path_in_schema.1	list
+row_groups.0.columns.12.meta_data.path_in_schema.2	element
+row_groups.0.columns.12.meta_data.path_in_schema.3	version
+row_groups.0.columns.12.meta_data.codec	SNAPPY
+row_groups.0.columns.12.meta_data.num_values	2,300
+row_groups.0.columns.12.meta_data.total_uncompressed_size	1,263
+row_groups.0.columns.12.meta_data.total_compressed_size	856
+row_groups.0.columns.12.meta_data.data_page_offset	1,877,511
+row_groups.0.columns.12.meta_data.dictionary_page_offset	1,877,474
+row_groups.0.columns.12.meta_data.statistics.max	v4
+row_groups.0.columns.12.meta_data.statistics.min	v1
+row_groups.0.columns.12.meta_data.statistics.null_count	0
+row_groups.0.columns.12.meta_data.statistics.distinct_count	4
+row_groups.0.columns.12.meta_data.statistics.max_value	v4
+row_groups.0.columns.12.meta_data.statistics.min_value	v1
+row_groups.0.columns.12.meta_data.statistics.is_max_value_exact	true
+row_groups.0.columns.12.meta_data.statistics.is_min_value_exact	true
+row_groups.0.columns.12.meta_data.bloom_filter_offset	302,071,236
+row_groups.0.columns.12.meta_data.bloom_filter_length	47
+row_groups.0.columns.13.file_offset	0
+row_groups.0.columns.13.meta_data.type	BYTE_ARRAY
+row_groups.0.columns.13.meta_data.encodings.0	PLAIN
+row_groups.0.columns.13.meta_data.path_in_schema.0	versions
+row_groups.0.columns.13.meta_data.path_in_schema.1	list
+row_groups.0.columns.13.meta_data.path_in_schema.2	element
+row_groups.0.columns.13.meta_data.path_in_schema.3	created
+row_groups.0.columns.13.meta_data.codec	SNAPPY
+row_groups.0.columns.13.meta_data.num_values	2,300
+row_groups.0.columns.13.meta_data.total_uncompressed_size	76,242
+row_groups.0.columns.13.meta_data.total_compressed_size	16,548
+row_groups.0.columns.13.meta_data.data_page_offset	1,878,330
+row_groups.0.columns.13.meta_data.statistics.max	Wed, 27 May 2026 23:57:47 GMT
+row_groups.0.columns.13.meta_data.statistics.min	Fri, 05 Jun 2026 01:20:00 GMT
+row_groups.0.columns.13.meta_data.statistics.null_count	0
+row_groups.0.columns.13.meta_data.statistics.max_value	Wed, 27 May 2026 23:57:47 GMT
+row_groups.0.columns.13.meta_data.statistics.min_value	Fri, 05 Jun 2026 01:20:00 GMT
+row_groups.0.columns.13.meta_data.statistics.is_max_value_exact	true
+row_groups.0.columns.13.meta_data.statistics.is_min_value_exact	true
+row_groups.0.columns.14.file_offset	0
+row_groups.0.columns.14.meta_data.type	BYTE_ARRAY
+row_groups.0.columns.14.meta_data.encodings.0	PLAIN_DICTIONARY
+row_groups.0.columns.14.meta_data.path_in_schema.0	update_date
+row_groups.0.columns.14.meta_data.codec	SNAPPY
+row_groups.0.columns.14.meta_data.num_values	2,048
+row_groups.0.columns.14.meta_data.total_uncompressed_size	1,581
+row_groups.0.columns.14.meta_data.total_compressed_size	931
+row_groups.0.columns.14.meta_data.data_page_offset	1,895,003
+row_groups.0.columns.14.meta_data.dictionary_page_offset	1,894,878
+row_groups.0.columns.14.meta_data.statistics.max	2026-06-19
+row_groups.0.columns.14.meta_data.statistics.min	2026-05-28
+row_groups.0.columns.14.meta_data.statistics.null_count	0
+row_groups.0.columns.14.meta_data.statistics.distinct_count	17
+row_groups.0.columns.14.meta_data.statistics.max_value	2026-06-19
+row_groups.0.columns.14.meta_data.statistics.min_value	2026-05-28
+row_groups.0.columns.14.meta_data.statistics.is_max_value_exact	true
+row_groups.0.columns.14.meta_data.statistics.is_min_value_exact	true
+row_groups.0.columns.14.meta_data.bloom_filter_offset	302,071,283
+row_groups.0.columns.14.meta_data.bloom_filter_length	47
+row_groups.0.columns.15.file_offset	0
+row_groups.0.columns.15.meta_data.type	BYTE_ARRAY
+row_groups.0.columns.15.meta_data.encodings.0	PLAIN
+row_groups.0.columns.15.meta_data.path_in_schema.0	authors_parsed
+row_groups.0.columns.15.meta_data.path_in_schema.1	list
+row_groups.0.columns.15.meta_data.path_in_schema.2	element
+row_groups.0.columns.15.meta_data.path_in_schema.3	list
+row_groups.0.columns.15.meta_data.path_in_schema.4	element
+row_groups.0.columns.15.meta_data.codec	SNAPPY
+row_groups.0.columns.15.meta_data.num_values	32,103
+row_groups.0.columns.15.meta_data.total_uncompressed_size	271,409
+row_groups.0.columns.15.meta_data.total_compressed_size	159,658
+row_groups.0.columns.15.meta_data.data_page_offset	1,895,809
+row_groups.0.columns.15.meta_data.statistics.max	Žlebčík
+row_groups.0.columns.15.meta_data.statistics.null_count	0
+row_groups.0.columns.15.meta_data.statistics.max_value	Žlebčík
+row_groups.0.columns.15.meta_data.statistics.min_value
+row_groups.0.columns.15.meta_data.statistics.is_max_value_exact	true
+row_groups.0.columns.15.meta_data.statistics.is_min_value_exact	true
+row_groups.0.columns.16.file_offset	0
+row_groups.0.columns.16.meta_data.type	BYTE_ARRAY
+row_groups.0.columns.16.meta_data.encodings.0	PLAIN
+row_groups.0.columns.16.meta_data.encodings.1	PLAIN
+row_groups.0.columns.16.meta_data.encodings.2	PLAIN
+row_groups.0.columns.16.meta_data.encodings.3	PLAIN
+row_groups.0.columns.16.meta_data.encodings.4	PLAIN
+row_groups.0.columns.16.meta_data.path_in_schema.0	latex
+row_groups.0.columns.16.meta_data.codec	SNAPPY
+row_groups.0.columns.16.meta_data.num_values	2,048
+row_groups.0.columns.16.meta_data.total_uncompressed_size	553,400,140
+row_groups.0.columns.16.meta_data.total_compressed_size	220,299,580
+row_groups.0.columns.16.meta_data.data_page_offset	2,055,467
+row_groups.0.columns.16.meta_data.statistics.max	================================================ FILE: ws-crop9x6.sty ================================================ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %% For support : Yolande Koh, <ykoh@wspc.com.sg> %% Technical!
+row_groups.0.columns.16.meta_data.statistics.min	================================================ FILE: 0-abstract.tex ================================================ Diffusion models have excellent capacity to model complex distributions of natural data, which has made them a popular and effective cho
+row_groups.0.columns.16.meta_data.statistics.null_count	95
+row_groups.0.columns.16.meta_data.statistics.max_value	================================================ FILE: ws-crop9x6.sty ================================================ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %% For support : Yolande Koh, <ykoh@wspc.com.sg> %% Technical!
+row_groups.0.columns.16.meta_data.statistics.min_value	================================================ FILE: 0-abstract.tex ================================================ Diffusion models have excellent capacity to model complex distributions of natural data, which has made them a popular and effective cho
+row_groups.0.columns.16.meta_data.statistics.is_max_value_exact	false
+row_groups.0.columns.16.meta_data.statistics.is_min_value_exact	false
+row_groups.0.total_byte_size	556,928,017
+row_groups.0.num_rows	2,048
+row_groups.0.file_offset	4
+row_groups.0.total_compressed_size	222,355,043
+row_groups.1.columns.0.file_offset	0
+row_groups.1.columns.0.meta_data.type	BYTE_ARRAY
+row_groups.1.columns.0.meta_data.encodings.0	PLAIN
+row_groups.1.columns.0.meta_data.path_in_schema.0	id
+row_groups.1.columns.0.meta_data.codec	SNAPPY
+row_groups.1.columns.0.meta_data.num_values	955
+row_groups.1.columns.0.meta_data.total_uncompressed_size	13,398
+row_groups.1.columns.0.meta_data.total_compressed_size	4,927
+row_groups.1.columns.0.meta_data.data_page_offset	222,355,047
+row_groups.1.columns.0.meta_data.statistics.max	2605.31604
+row_groups.1.columns.0.meta_data.statistics.min	2605.30650
+row_groups.1.columns.0.meta_data.statistics.null_count	0
+row_groups.1.columns.0.meta_data.statistics.max_value	2605.31604
+row_groups.1.columns.0.meta_data.statistics.min_value	2605.30650
+row_groups.1.columns.0.meta_data.statistics.is_max_value_exact	true
+row_groups.1.columns.0.meta_data.statistics.is_min_value_exact	true
+row_groups.1.columns.1.file_offset	0
+row_groups.1.columns.1.meta_data.type	BYTE_ARRAY
+row_groups.1.columns.1.meta_data.encodings.0	PLAIN
+row_groups.1.columns.1.meta_data.path_in_schema.0	yymm_id
+row_groups.1.columns.1.meta_data.codec	SNAPPY
+row_groups.1.columns.1.meta_data.num_values	955
+row_groups.1.columns.1.meta_data.total_uncompressed_size	13,398
+row_groups.1.columns.1.meta_data.total_compressed_size	4,927
+row_groups.1.columns.1.meta_data.data_page_offset	222,359,974
+row_groups.1.columns.1.meta_data.statistics.max	2605.31604
+row_groups.1.columns.1.meta_data.statistics.min	2605.30650
+row_groups.1.columns.1.meta_data.statistics.null_count	0
+row_groups.1.columns.1.meta_data.statistics.max_value	2605.31604
+row_groups.1.columns.1.meta_data.statistics.min_value	2605.30650
+row_groups.1.columns.1.meta_data.statistics.is_max_value_exact	true
+row_groups.1.columns.1.meta_data.statistics.is_min_value_exact	true
+row_groups.1.columns.2.file_offset	0
+row_groups.1.columns.2.meta_data.type	BYTE_ARRAY
+row_groups.1.columns.2.meta_data.encodings.0	PLAIN
+row_groups.1.columns.2.meta_data.path_in_schema.0	submitter
+row_groups.1.columns.2.meta_data.codec	SNAPPY
+row_groups.1.columns.2.meta_data.num_values	955
+row_groups.1.columns.2.meta_data.total_uncompressed_size	16,725
+row_groups.1.columns.2.meta_data.total_compressed_size	13,059
+row_groups.1.columns.2.meta_data.data_page_offset	222,364,901
+row_groups.1.columns.2.meta_data.statistics.max	\'Angel Chandro-G\'omez
+row_groups.1.columns.2.meta_data.statistics.min	ATLAS Collaboration
+row_groups.1.columns.2.meta_data.statistics.null_count	0
+row_groups.1.columns.2.meta_data.statistics.max_value	\'Angel Chandro-G\'omez
+row_groups.1.columns.2.meta_data.statistics.min_value	ATLAS Collaboration
+row_groups.1.columns.2.meta_data.statistics.is_max_value_exact	true
+row_groups.1.columns.2.meta_data.statistics.is_min_value_exact	true
+row_groups.1.columns.3.file_offset	0
+row_groups.1.columns.3.meta_data.type	BYTE_ARRAY
+row_groups.1.columns.3.meta_data.encodings.0	PLAIN
+row_groups.1.columns.3.meta_data.path_in_schema.0	authors
+row_groups.1.columns.3.meta_data.codec	SNAPPY
+row_groups.1.columns.3.meta_data.num_values	955
+row_groups.1.columns.3.meta_data.total_uncompressed_size	71,762
+row_groups.1.columns.3.meta_data.total_compressed_size	54,775
+row_groups.1.columns.3.meta_data.data_page_offset	222,377,960
+row_groups.1.columns.3.meta_data.statistics.max	\'Angel Chandro-G\'omez (1,2), Claudia del P. Lagos, Chris Power, Willian M. Baker, Alejandro Ben\'itez-Llambay, Evgenii Chaikin, Harry G. Chittenden, Camila Correa, Carlos S. Frenk, Filip Hu\v{s}ko, Kei Ito, Robert J. McGibbon, Themiya Nanayakkara, Sylvib
+row_groups.1.columns.3.meta_data.statistics.min	A. Dalbah, A. V. Afanasjev and B. Osei
+row_groups.1.columns.3.meta_data.statistics.null_count	0
+row_groups.1.columns.3.meta_data.statistics.max_value	\'Angel Chandro-G\'omez (1,2), Claudia del P. Lagos, Chris Power, Willian M. Baker, Alejandro Ben\'itez-Llambay, Evgenii Chaikin, Harry G. Chittenden, Camila Correa, Carlos S. Frenk, Filip Hu\v{s}ko, Kei Ito, Robert J. McGibbon, Themiya Nanayakkara, Sylvib
+row_groups.1.columns.3.meta_data.statistics.min_value	A. Dalbah, A. V. Afanasjev and B. Osei
+row_groups.1.columns.3.meta_data.statistics.is_max_value_exact	false
+row_groups.1.columns.3.meta_data.statistics.is_min_value_exact	true
+row_groups.1.columns.4.file_offset	0
+row_groups.1.columns.4.meta_data.type	BYTE_ARRAY
+row_groups.1.columns.4.meta_data.encodings.0	PLAIN
+row_groups.1.columns.4.meta_data.path_in_schema.0	title
+row_groups.1.columns.4.meta_data.codec	SNAPPY
+row_groups.1.columns.4.meta_data.num_values	955
+row_groups.1.columns.4.meta_data.total_uncompressed_size	82,092
+row_groups.1.columns.4.meta_data.total_compressed_size	53,873
+row_groups.1.columns.4.meta_data.data_page_offset	222,432,735
+row_groups.1.columns.4.meta_data.statistics.max	q-Exponential Random Graphs: higher-order networks from simple constraints
+row_groups.1.columns.4.meta_data.statistics.min	"\^{I}n\c{t}elegi Rom\^ane\c{s}te?'' A Recipe for Romanian Vision-Language Models
+row_groups.1.columns.4.meta_data.statistics.null_count	0
+row_groups.1.columns.4.meta_data.statistics.max_value	q-Exponential Random Graphs: higher-order networks from simple constraints
+row_groups.1.columns.4.meta_data.statistics.min_value	"\^{I}n\c{t}elegi Rom\^ane\c{s}te?'' A Recipe for Romanian Vision-Language Models
+row_groups.1.columns.4.meta_data.statistics.is_max_value_exact	true
+row_groups.1.columns.4.meta_data.statistics.is_min_value_exact	true
+row_groups.1.columns.5.file_offset	0
+row_groups.1.columns.5.meta_data.type	BYTE_ARRAY
+row_groups.1.columns.5.meta_data.encodings.0	PLAIN
+row_groups.1.columns.5.meta_data.path_in_schema.0	comments
+row_groups.1.columns.5.meta_data.codec	SNAPPY
+row_groups.1.columns.5.meta_data.num_values	955
+row_groups.1.columns.5.meta_data.total_uncompressed_size	24,581
+row_groups.1.columns.5.meta_data.total_compressed_size	12,422
+row_groups.1.columns.5.meta_data.data_page_offset	222,486,608
+row_groups.1.columns.5.meta_data.statistics.max	to appear as an invited Research Highlight in the 2026 INFORMS Computing Society Newsletter
+row_groups.1.columns.5.meta_data.statistics.min	'Accepted by CVPR 2026'
+row_groups.1.columns.5.meta_data.statistics.null_count	431
+row_groups.1.columns.5.meta_data.statistics.max_value	to appear as an invited Research Highlight in the 2026 INFORMS Computing Society Newsletter
+row_groups.1.columns.5.meta_data.statistics.min_value	'Accepted by CVPR 2026'
+row_groups.1.columns.5.meta_data.statistics.is_max_value_exact	true
+row_groups.1.columns.5.meta_data.statistics.is_min_value_exact	true
+row_groups.1.columns.6.file_offset	0
+row_groups.1.columns.6.meta_data.type	BYTE_ARRAY
+row_groups.1.columns.6.meta_data.encodings.0	PLAIN_DICTIONARY
+row_groups.1.columns.6.meta_data.path_in_schema.0	journal-ref
+row_groups.1.columns.6.meta_data.codec	SNAPPY
+row_groups.1.columns.6.meta_data.num_values	955
+row_groups.1.columns.6.meta_data.total_uncompressed_size	1,742
+row_groups.1.columns.6.meta_data.total_compressed_size	1,156
+row_groups.1.columns.6.meta_data.data_page_offset	222,500,058
+row_groups.1.columns.6.meta_data.dictionary_page_offset	222,499,030
+row_groups.1.columns.6.meta_data.statistics.max	sibgrapi 2018
+row_groups.1.columns.6.meta_data.statistics.min	2015 IEEE/ACS 12th International Conference of Computer Systems and Applications (AICCSA)
+row_groups.1.columns.6.meta_data.statistics.null_count	928
+row_groups.1.columns.6.meta_data.statistics.distinct_count	26
+row_groups.1.columns.6.meta_data.statistics.max_value	sibgrapi 2018
+row_groups.1.columns.6.meta_data.statistics.min_value	2015 IEEE/ACS 12th International Conference of Computer Systems and Applications (AICCSA)
+row_groups.1.columns.6.meta_data.statistics.is_max_value_exact	true
+row_groups.1.columns.6.meta_data.statistics.is_min_value_exact	true
+row_groups.1.columns.6.meta_data.bloom_filter_offset	302,071,330
+row_groups.1.columns.6.meta_data.bloom_filter_length	47
+row_groups.1.columns.7.file_offset	0
+row_groups.1.columns.7.meta_data.type	BYTE_ARRAY
+row_groups.1.columns.7.meta_data.encodings.0	PLAIN_DICTIONARY
+row_groups.1.columns.7.meta_data.path_in_schema.0	doi
+row_groups.1.columns.7.meta_data.codec	SNAPPY
+row_groups.1.columns.7.meta_data.num_values	955
+row_groups.1.columns.7.meta_data.total_uncompressed_size	1,115
+row_groups.1.columns.7.meta_data.total_compressed_size	715
+row_groups.1.columns.7.meta_data.data_page_offset	222,500,769
+row_groups.1.columns.7.meta_data.dictionary_page_offset	222,500,186
+row_groups.1.columns.7.meta_data.statistics.max	10.5753/wsis.2024.33666
+row_groups.1.columns.7.meta_data.statistics.min	10.1002/lpor.202300149
+row_groups.1.columns.7.meta_data.statistics.null_count	926
+row_groups.1.columns.7.meta_data.statistics.distinct_count	29
+row_groups.1.columns.7.meta_data.statistics.max_value	10.5753/wsis.2024.33666
+row_groups.1.columns.7.meta_data.statistics.min_value	10.1002/lpor.202300149
+row_groups.1.columns.7.meta_data.statistics.is_max_value_exact	true
+row_groups.1.columns.7.meta_data.statistics.is_min_value_exact	true
+row_groups.1.columns.7.meta_data.bloom_filter_offset	302,071,377
+row_groups.1.columns.7.meta_data.bloom_filter_length	80
+row_groups.1.columns.8.file_offset	0
+row_groups.1.columns.8.meta_data.type	BYTE_ARRAY
+row_groups.1.columns.8.meta_data.encodings.0	PLAIN_DICTIONARY
+row_groups.1.columns.8.meta_data.path_in_schema.0	report-no
+row_groups.1.columns.8.meta_data.codec	SNAPPY
+row_groups.1.columns.8.meta_data.num_values	955
+row_groups.1.columns.8.meta_data.total_uncompressed_size	426
+row_groups.1.columns.8.meta_data.total_compressed_size	257
+row_groups.1.columns.8.meta_data.data_page_offset	222,501,084
+row_groups.1.columns.8.meta_data.dictionary_page_offset	222,500,901
+row_groups.1.columns.8.meta_data.statistics.max	RIKEN-iTHEMS-Report-26
+row_groups.1.columns.8.meta_data.statistics.min	BONN-TH-2026-12
+row_groups.1.columns.8.meta_data.statistics.null_count	947
+row_groups.1.columns.8.meta_data.statistics.distinct_count	8
+row_groups.1.columns.8.meta_data.statistics.max_value	RIKEN-iTHEMS-Report-26
+row_groups.1.columns.8.meta_data.statistics.min_value	BONN-TH-2026-12
+row_groups.1.columns.8.meta_data.statistics.is_max_value_exact	true
+row_groups.1.columns.8.meta_data.statistics.is_min_value_exact	true
+row_groups.1.columns.8.meta_data.bloom_filter_offset	302,071,457
+row_groups.1.columns.8.meta_data.bloom_filter_length	47
+row_groups.1.columns.9.file_offset	0
+row_groups.1.columns.9.meta_data.type	BYTE_ARRAY
+row_groups.1.columns.9.meta_data.encodings.0	PLAIN
+row_groups.1.columns.9.meta_data.path_in_schema.0	categories
+row_groups.1.columns.9.meta_data.codec	SNAPPY
+row_groups.1.columns.9.meta_data.num_values	955
+row_groups.1.columns.9.meta_data.total_uncompressed_size	16,336
+row_groups.1.columns.9.meta_data.total_compressed_size	6,134
+row_groups.1.columns.9.meta_data.data_page_offset	222,501,158
+row_groups.1.columns.9.meta_data.statistics.max	stat.ML cs.LG stat.ME
+row_groups.1.columns.9.meta_data.statistics.min	astro-ph.CO
+row_groups.1.columns.9.meta_data.statistics.null_count	0
+row_groups.1.columns.9.meta_data.statistics.max_value	stat.ML cs.LG stat.ME
+row_groups.1.columns.9.meta_data.statistics.min_value	astro-ph.CO
+row_groups.1.columns.9.meta_data.statistics.is_max_value_exact	true
+row_groups.1.columns.9.meta_data.statistics.is_min_value_exact	true
+row_groups.1.columns.10.file_offset	0
+row_groups.1.columns.10.meta_data.type	BYTE_ARRAY
+row_groups.1.columns.10.meta_data.encodings.0	PLAIN_DICTIONARY
+row_groups.1.columns.10.meta_data.path_in_schema.0	license
+row_groups.1.columns.10.meta_data.codec	SNAPPY
+row_groups.1.columns.10.meta_data.num_values	955
+row_groups.1.columns.10.meta_data.total_uncompressed_size	742
+row_groups.1.columns.10.meta_data.total_compressed_size	587
+row_groups.1.columns.10.meta_data.data_page_offset	222,507,458
+row_groups.1.columns.10.meta_data.dictionary_page_offset	222,507,292
+row_groups.1.columns.10.meta_data.statistics.max	http://creativecommons.org/publicdomain/zero/1.0/
+row_groups.1.columns.10.meta_data.statistics.min	http://arxiv.org/licenses/nonexclusive-distrib/1.0/
+row_groups.1.columns.10.meta_data.statistics.null_count	0
+row_groups.1.columns.10.meta_data.statistics.distinct_count	6
+row_groups.1.columns.10.meta_data.statistics.max_value	http://creativecommons.org/publicdomain/zero/1.0/
+row_groups.1.columns.10.meta_data.statistics.min_value	http://arxiv.org/licenses/nonexclusive-distrib/1.0/
+row_groups.1.columns.10.meta_data.statistics.is_max_value_exact	true
+row_groups.1.columns.10.meta_data.statistics.is_min_value_exact	true
+row_groups.1.columns.10.meta_data.bloom_filter_offset	302,071,504
+row_groups.1.columns.10.meta_data.bloom_filter_length	47
+row_groups.1.columns.11.file_offset	0
+row_groups.1.columns.11.meta_data.type	BYTE_ARRAY
+row_groups.1.columns.11.meta_data.encodings.0	PLAIN
+row_groups.1.columns.11.meta_data.path_in_schema.0	abstract
+row_groups.1.columns.11.meta_data.codec	SNAPPY
+row_groups.1.columns.11.meta_data.num_values	955
+row_groups.1.columns.11.meta_data.total_uncompressed_size	1,205,285
+row_groups.1.columns.11.meta_data.total_compressed_size	701,791
+row_groups.1.columns.11.meta_data.data_page_offset	222,507,879
+row_groups.1.columns.11.meta_data.statistics.max	Zeroth-order (black-box) optimization is applied when gradients are unavailable and objective evaluations rely on expensive simulations. In many such applications, the oracle fidelity is tunable: higher-accuracy queries reduce noise but incur higher compuu
+row_groups.1.columns.11.meta_data.statistics.min	A $\mathbf{GL}$-variety is a (typically) infinite dimensional variety $X$ equipped with an action of the infinite general linear group. In recent work of the first two authors with Draisma, a candidate definition for the singular locus of $X$ was put forth
+row_groups.1.columns.11.meta_data.statistics.null_count	0
+row_groups.1.columns.11.meta_data.statistics.max_value	Zeroth-order (black-box) optimization is applied when gradients are unavailable and objective evaluations rely on expensive simulations. In many such applications, the oracle fidelity is tunable: higher-accuracy queries reduce noise but incur higher compuu
+row_groups.1.columns.11.meta_data.statistics.min_value	A $\mathbf{GL}$-variety is a (typically) infinite dimensional variety $X$ equipped with an action of the infinite general linear group. In recent work of the first two authors with Draisma, a candidate definition for the singular locus of $X$ was put forth
+row_groups.1.columns.11.meta_data.statistics.is_max_value_exact	false
+row_groups.1.columns.11.meta_data.statistics.is_min_value_exact	false
+row_groups.1.columns.12.file_offset	0
+row_groups.1.columns.12.meta_data.type	BYTE_ARRAY
+row_groups.1.columns.12.meta_data.encodings.0	PLAIN_DICTIONARY
+row_groups.1.columns.12.meta_data.path_in_schema.0	versions
+row_groups.1.columns.12.meta_data.path_in_schema.1	list
+row_groups.1.columns.12.meta_data.path_in_schema.2	element
+row_groups.1.columns.12.meta_data.path_in_schema.3	version
+row_groups.1.columns.12.meta_data.codec	SNAPPY
+row_groups.1.columns.12.meta_data.num_values	1,052
+row_groups.1.columns.12.meta_data.total_uncompressed_size	467
+row_groups.1.columns.12.meta_data.total_compressed_size	372
+row_groups.1.columns.12.meta_data.data_page_offset	223,209,703
+row_groups.1.columns.12.meta_data.dictionary_page_offset	223,209,670
+row_groups.1.columns.12.meta_data.statistics.max	v3
+row_groups.1.columns.12.meta_data.statistics.min	v1
+row_groups.1.columns.12.meta_data.statistics.null_count	0
+row_groups.1.columns.12.meta_data.statistics.distinct_count	3
+row_groups.1.columns.12.meta_data.statistics.max_value	v3
+row_groups.1.columns.12.meta_data.statistics.min_value	v1
+row_groups.1.columns.12.meta_data.statistics.is_max_value_exact	true
+row_groups.1.columns.12.meta_data.statistics.is_min_value_exact	true
+row_groups.1.columns.12.meta_data.bloom_filter_offset	302,071,551
+row_groups.1.columns.12.meta_data.bloom_filter_length	47
+row_groups.1.columns.13.file_offset	0
+row_groups.1.columns.13.meta_data.type	BYTE_ARRAY
+row_groups.1.columns.13.meta_data.encodings.0	PLAIN
+row_groups.1.columns.13.meta_data.path_in_schema.0	versions
+row_groups.1.columns.13.meta_data.path_in_schema.1	list
+row_groups.1.columns.13.meta_data.path_in_schema.2	element
+row_groups.1.columns.13.meta_data.path_in_schema.3	created
+row_groups.1.columns.13.meta_data.codec	SNAPPY
+row_groups.1.columns.13.meta_data.num_values	1,052
+row_groups.1.columns.13.meta_data.total_uncompressed_size	34,886
+row_groups.1.columns.13.meta_data.total_compressed_size	7,422
+row_groups.1.columns.13.meta_data.data_page_offset	223,210,042
+row_groups.1.columns.13.meta_data.statistics.max	Wed, 17 Jun 2026 19:23:37 GMT
+row_groups.1.columns.13.meta_data.statistics.min	Fri, 05 Jun 2026 06:54:28 GMT
+row_groups.1.columns.13.meta_data.statistics.null_count	0
+row_groups.1.columns.13.meta_data.statistics.max_value	Wed, 17 Jun 2026 19:23:37 GMT
+row_groups.1.columns.13.meta_data.statistics.min_value	Fri, 05 Jun 2026 06:54:28 GMT
+row_groups.1.columns.13.meta_data.statistics.is_max_value_exact	true
+row_groups.1.columns.13.meta_data.statistics.is_min_value_exact	true
+row_groups.1.columns.14.file_offset	0
+row_groups.1.columns.14.meta_data.type	BYTE_ARRAY
+row_groups.1.columns.14.meta_data.encodings.0	PLAIN_DICTIONARY
+row_groups.1.columns.14.meta_data.path_in_schema.0	update_date
+row_groups.1.columns.14.meta_data.codec	SNAPPY
+row_groups.1.columns.14.meta_data.num_values	955
+row_groups.1.columns.14.meta_data.total_uncompressed_size	775
+row_groups.1.columns.14.meta_data.total_compressed_size	421
+row_groups.1.columns.14.meta_data.data_page_offset	223,217,577
+row_groups.1.columns.14.meta_data.dictionary_page_offset	223,217,464
+row_groups.1.columns.14.meta_data.statistics.max	2026-06-19
+row_groups.1.columns.14.meta_data.statistics.min	2026-06-01
+row_groups.1.columns.14.meta_data.statistics.null_count	0
+row_groups.1.columns.14.meta_data.statistics.distinct_count	15
+row_groups.1.columns.14.meta_data.statistics.max_value	2026-06-19
+row_groups.1.columns.14.meta_data.statistics.min_value	2026-06-01
+row_groups.1.columns.14.meta_data.statistics.is_max_value_exact	true
+row_groups.1.columns.14.meta_data.statistics.is_min_value_exact	true
+row_groups.1.columns.14.meta_data.bloom_filter_offset	302,071,598
+row_groups.1.columns.14.meta_data.bloom_filter_length	47
+row_groups.1.columns.15.file_offset	0
+row_groups.1.columns.15.meta_data.type	BYTE_ARRAY
+row_groups.1.columns.15.meta_data.encodings.0	PLAIN
+row_groups.1.columns.15.meta_data.path_in_schema.0	authors_parsed
+row_groups.1.columns.15.meta_data.path_in_schema.1	list
+row_groups.1.columns.15.meta_data.path_in_schema.2	element
+row_groups.1.columns.15.meta_data.path_in_schema.3	list
+row_groups.1.columns.15.meta_data.path_in_schema.4	element
+row_groups.1.columns.15.meta_data.codec	SNAPPY
+row_groups.1.columns.15.meta_data.num_values	13,807
+row_groups.1.columns.15.meta_data.total_uncompressed_size	113,568
+row_groups.1.columns.15.meta_data.total_compressed_size	67,961
+row_groups.1.columns.15.meta_data.data_page_offset	223,217,885
+row_groups.1.columns.15.meta_data.statistics.max	Švec
+row_groups.1.columns.15.meta_data.statistics.null_count	0
+row_groups.1.columns.15.meta_data.statistics.max_value	Švec
+row_groups.1.columns.15.meta_data.statistics.min_value
+row_groups.1.columns.15.meta_data.statistics.is_max_value_exact	true
+row_groups.1.columns.15.meta_data.statistics.is_min_value_exact	true
+row_groups.1.columns.16.file_offset	0
+row_groups.1.columns.16.meta_data.type	BYTE_ARRAY
+row_groups.1.columns.16.meta_data.encodings.0	PLAIN
+row_groups.1.columns.16.meta_data.encodings.1	PLAIN
+row_groups.1.columns.16.meta_data.path_in_schema.0	latex
+row_groups.1.columns.16.meta_data.codec	SNAPPY
+row_groups.1.columns.16.meta_data.num_values	955
+row_groups.1.columns.16.meta_data.total_uncompressed_size	179,636,504
+row_groups.1.columns.16.meta_data.total_compressed_size	78,785,072
+row_groups.1.columns.16.meta_data.data_page_offset	223,285,846
+row_groups.1.columns.16.meta_data.statistics.max	================================================ FILE: visible2torsion.tex ================================================ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% % !
+row_groups.1.columns.16.meta_data.statistics.min	================================================ FILE: 0-abstract_tobi.tex ================================================ \begin{abstract} % A key challenge in Visual Place Recognition (VPR) is matching query images against reference maps capture
+row_groups.1.columns.16.meta_data.statistics.null_count	43
+row_groups.1.columns.16.meta_data.statistics.max_value	================================================ FILE: visible2torsion.tex ================================================ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% % !
+row_groups.1.columns.16.meta_data.statistics.min_value	================================================ FILE: 0-abstract_tobi.tex ================================================ \begin{abstract} % A key challenge in Visual Place Recognition (VPR) is matching query images against reference maps capture
+row_groups.1.columns.16.meta_data.statistics.is_max_value_exact	false
+row_groups.1.columns.16.meta_data.statistics.is_min_value_exact	false
+row_groups.1.total_byte_size	181,233,802
+row_groups.1.num_rows	955
+row_groups.1.file_offset	222,355,047
+row_groups.1.total_compressed_size	79,715,871
+created_by	DuckDB version v1.5.4 (build 08e34c447b)
+metadata_length	10,520
+```
+Will the following code work to extract the text from the `latex` column?
+```python
+from shutil import rmtree
+from subprocess import run
+from pathlib import Path
+from classes import *
+from config import *
+from writer import save
+import pyarrow.parquet as pq
+
+
+def parse(url: str):
+    if url != 'https://huggingface.co/datasets/scholarweave/arxiv-latex':
+        raise ValueError('Can only parse this exact URL: `https://huggingface.co/datasets/scholarweave/arxiv-latex`')
+    temp_dir = TMP_LOCATION / 'co.huggingface.datasets.scholarweave.arxiv-latex'
+    if temp_dir.exists():
+        rmtree(temp_dir)
+    temp_dir.mkdir(parents=True, exist_ok=True)
+    command = ['git', 'clone', '--single-branch', '--branch', 'main', '--depth', '1', url, str(temp_dir)]
+    run(command, check=True, cwd=temp_dir)
+    data_files = (temp_dir / 'data').glob('*.parquet')
+    for data_file in data_files:
+        pf = pq.ParquetFile(data_file)
+        for batch in pf.iter_batches():
+            records = batch.to_pydict()
+            for record in records['latex']:
+                save(TextEntry(record, url))
+```
+§a§
+Looking at your code and the parquet metadata, there are a few concerns to address:
+
+## Main Issue: Git LFS
+
+The biggest problem is that HuggingFace dataset repositories store large binary files (like parquet files) using **Git LFS**. The metadata shows the file is ~300MB compressed (row group 0 alone is 222MB, row group 1 is 79MB), which is far above the size threshold that HuggingFace stores in LFS.
+
+Your `git clone` command doesn't handle LFS. Without `git lfs install` being run first (and LFS installed on the system), the "parquet" files inside `temp_dir/data/` will actually be tiny text pointer files, not real parquet data. Then `pq.ParquetFile(data_file)` will fail with an error about the file not being a valid parquet file.
+
+Fixes:
+- Ensure `git-lfs` is installed on the system and run `git lfs install` before cloning, OR
+- Use `huggingface_hub.snapshot_download(repo_id="scholarweave/arxiv-latex", repo_type="dataset")` instead of `git clone` (recommended — no LFS setup required and it's the canonical way).
+
+## Secondary Issue: Null values in `latex`
+
+The metadata clearly shows the `latex` column contains nulls:
+- Row group 0: `null_count = 95`
+- Row group 1: `null_count = 43`
+
+So a total of 138 out of 3,003 rows will yield `None` when iterated. Your loop passes `record` straight into `TextEntry(record, url)` without a check. Depending on what `TextEntry` expects, you'll likely want:
+
+```python
+for record in records['latex']:
+    if record is None:
+        continue
+    save(TextEntry(record, url))
+```
+
+## Memory/Efficiency Concerns
+
+1. **You're reading all columns.** `pf.iter_batches()` with no `columns=` argument will decode every column (id, authors, title, abstract, versions, authors_parsed, etc.), even though you only use `latex`. Add `columns=['latex']`:
+   ```python
+   for batch in pf.iter_batches(columns=['latex']):
+   ```
+
+2. **Batch size.** The default `batch_size` for `iter_batches` is 65,536 rows. Since row groups are 2,048 and 955 rows, you'll effectively get one batch per row group. Row group 0's `latex` column alone is **553 MB uncompressed**, so `to_pydict()` will materialize that much in Python memory at once. It will work, but if memory is tight, pass a smaller `batch_size` (e.g. `batch_size=64`) to stream more gently.
+
+## Minor observations
+
+- The schema confirms `latex` is `BYTE_ARRAY` with `UTF8` conversion, so `to_pydict()` will give you Python `str` (or `None`) — that part is fine.
+- The `glob('*.parquet')` assumes files are directly under `data/`. That matches the typical HF dataset layout, so should be OK.
+- You're running `git` with `cwd=temp_dir` while also passing `temp_dir` as the clone target. This works because git resolves the target path independently of cwd, but it's slightly unusual — not a bug.
+
+## Summary
+
+**As written, the code will most likely fail at `pq.ParquetFile(data_file)` because git-lfs isn't handled by your clone command.** After fixing that (preferably by switching to `huggingface_hub`), you should also handle `None` entries in the `latex` column and consider restricting `iter_batches` to just the `latex` column for efficiency.

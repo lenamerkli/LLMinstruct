@@ -1,0 +1,315 @@
+§u§
+What is `lenamerkli/lidecode`?
+§a§
+`lenamerkli/lidecode` is a public GitHub repository for **LideCode**, an experimental, self-hosted AI coding-agent harness. The repository itself has no README or formal description, so its purpose has to be inferred from the source code.
+
+It:
+
+- Provides an **Express REST API** and a basic browser-based chat/testing interface.
+- Sends requests to various AI models through **OpenRouter**, with streamed output and usage-cost tracking.
+- Starts a dedicated **Docker container** for each coding chat, optionally mounting a project directory into it.
+- Lets the model execute Bash commands and read, create, overwrite, or patch files. It can optionally search the web, inspect images, and call externally defined HTTP tools.
+- Includes a system prompt describing itself as a coding assistant that operates on a project inside the container.
+
+In short, it resembles a small **web-based, Docker-sandboxed alternative to coding agents such as Claude Code or OpenAI Codex**. Given the absent documentation, minimal test interface, and lack of releases, it appears to be an early-stage personal prototype rather than a polished production tool.
+§u§
+How would I create a Pycharm plugin that does the following:
+- displays a chat interface
+- interacts with LideCode in the background
+- defines http tools like `copy_from_host` and `host_read_file`
+- keeps track of docker mounting points
+§a§
+Below is a complete architectural walkthrough. PyCharm plugins are built on the IntelliJ Platform, so this is really an "IntelliJ plugin + local HTTP glue" problem. I'll use Kotlin (recommended), but Java works too.
+
+**One caveat up front:** LideCode has no documentation, so the exact JSON shapes for its chat endpoints and external-tool definitions must be read directly from its `src/` (the Express route handlers and the tool-dispatch code). I'll mark those spots with `// ← verify against LideCode source`.
+
+---
+
+## 1. Project setup
+
+Use the [IntelliJ Platform Gradle Plugin](https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin.html):
+
+```kotlin
+// build.gradle.kts
+plugins {
+    kotlin("jvm") version "2.0.0"
+    id("org.jetbrains.intellij.platform") version "2.1.0"
+    kotlin("plugin.serialization") version "2.0.0"
+}
+
+repositories {
+    mavenCentral()
+    intellijPlatform { defaultRepositories() }
+}
+
+dependencies {
+    intellijPlatform {
+        pycharmCommunity("2024.2")   // or pycharmProfessional(...)
+    }
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
+}
+```
+
+```xml
+<!-- src/main/resources/META-INF/plugin.xml -->
+<idea-plugin>
+    <id>com.example.lidecode</id>
+    <name>LideCode Chat</name>
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="LideCode"
+                    anchor="right"
+                    factoryClass="com.example.lidecode.ChatToolWindowFactory"/>
+    </extensions>
+</idea-plugin>
+```
+
+---
+
+## 2. The chat interface (Tool Window)
+
+Two options:
+
+- **Swing** — simplest, fine for plain-text chat.
+- **JCEF** (embedded Chromium via `JBCefBrowser`) — if you want markdown rendering, code highlighting, etc.
+
+Swing version:
+
+```kotlin
+class ChatToolWindowFactory : ToolWindowFactory {
+    override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
+        val panel = ChatPanel(project)
+        val content = ContentFactory.getInstance().createContent(panel, "", false)
+        toolWindow.contentManager.addContent(content)
+    }
+}
+
+class ChatPanel(private val project: Project) : JBPanel<ChatPanel>(BorderLayout()) {
+    private val transcript = JBTextArea().apply { isEditable = false; lineWrap = true }
+    private val input = JBTextField()
+
+    init {
+        add(JBScrollPane(transcript), BorderLayout.CENTER)
+        add(input, BorderLayout.SOUTH)
+        input.addActionListener { send(input.text.also { input.text = "" }) }
+    }
+
+    private fun send(message: String) {
+        transcript.append("You: $message\n")
+        val service = project.service<LideCodeService>()
+        service.sendMessage(message) { chunk ->
+            // stream tokens back onto the EDT
+            ApplicationManager.getApplication().invokeLater {
+                transcript.append(chunk)
+            }
+        }
+    }
+}
+```
+
+Key rule: **all UI mutations on the EDT** (`invokeLater`), **all network I/O off the EDT** (coroutines or `Task.Backgroundable`).
+
+---
+
+## 3. Talking to LideCode in the background
+
+Make a project-level service that owns the HTTP client and the chat/container state:
+
+```kotlin
+@Service(Service.Level.PROJECT)
+class LideCodeService(private val project: Project) : Disposable {
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val http = HttpClient.newHttpClient()
+    private val baseUrl = "http://localhost:3000"   // LideCode's Express server
+    private var chatId: String? = null
+
+    fun sendMessage(text: String, onChunk: (String) -> Unit) {
+        scope.launch {
+            if (chatId == null) chatId = createChat()
+            streamResponse(text, onChunk)
+        }
+    }
+
+    private fun createChat(): String {
+        val body = buildJsonObject {
+            put("model", "anthropic/claude-sonnet-4.5")
+            put("mount", project.basePath ?: "")       // host dir to mount into the container
+            put("tools", toolDefinitions())            // ← verify field names against LideCode source
+        }
+        val req = HttpRequest.newBuilder(URI("$baseUrl/api/chats"))  // ← verify route
+            .header("Content-Type", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
+            .build()
+        val resp = http.send(req, HttpResponse.BodyHandlers.ofString())
+        val json = Json.parseToJsonElement(resp.body()).jsonObject
+
+        // Record the mount pair the moment the chat/container is created:
+        project.service<MountRegistry>().register(
+            chatId = json["id"]!!.jsonPrimitive.content,
+            hostPath = project.basePath!!,
+            containerPath = json["containerPath"]?.jsonPrimitive?.content ?: "/project"
+        )
+        return json["id"]!!.jsonPrimitive.content
+    }
+
+    private fun streamResponse(text: String, onChunk: (String) -> Unit) {
+        // LideCode streams output — most likely SSE or chunked text.
+        // Read line-by-line and forward:
+        val req = HttpRequest.newBuilder(URI("$baseUrl/api/chats/$chatId/messages")) // ← verify
+            .header("Content-Type", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(
+                buildJsonObject { put("content", text) }.toString()))
+            .build()
+        http.send(req, HttpResponse.BodyHandlers.ofLines()).body().forEach { line ->
+            val data = line.removePrefix("data: ").trim()
+            if (data.isNotEmpty() && data != "[DONE]") onChunk(parseChunk(data))
+        }
+    }
+
+    override fun dispose() { scope.cancel() }
+}
+```
+
+To find the real routes/fields: look at LideCode's Express router registrations (`app.post(...)`, `app.get(...)`) and how it parses the request body for chat creation and tool definitions.
+
+---
+
+## 4. Defining the HTTP tools (`copy_from_host`, `host_read_file`)
+
+LideCode's "externally defined HTTP tools" means: you give it a tool spec (name, description, parameter schema, **callback URL**), and when the model invokes the tool, the LideCode server makes an HTTP request to that URL. So your plugin must run a tiny **embedded HTTP server**. The JDK's built-in one is enough:
+
+```kotlin
+@Service(Service.Level.PROJECT)
+class ToolServer(private val project: Project) : Disposable {
+    private val server = HttpServer.create(InetSocketAddress("127.0.0.1", 0), 0)
+    val port: Int get() = server.address.port
+
+    init {
+        server.createContext("/tools/host_read_file") { exchange ->
+            val args = Json.parseToJsonElement(
+                exchange.requestBody.readBytes().decodeToString()).jsonObject
+            val path = args["path"]!!.jsonPrimitive.content
+            respond(exchange, hostReadFile(path))
+        }
+        server.createContext("/tools/copy_from_host") { exchange ->
+            val args = Json.parseToJsonElement(
+                exchange.requestBody.readBytes().decodeToString()).jsonObject
+            respond(exchange, copyFromHost(
+                args["host_path"]!!.jsonPrimitive.content,
+                args["container_path"]!!.jsonPrimitive.content))
+        }
+        server.executor = Executors.newCachedThreadPool()
+        server.start()
+    }
+
+    private fun hostReadFile(path: String): String {
+        val allowed = validate(path) ?: return """{"error": "path not allowed"}"""
+        return buildJsonObject { put("content", allowed.readText()) }.toString()
+    }
+
+    private fun copyFromHost(hostPath: String, containerPath: String): String {
+        val registry = project.service<MountRegistry>()
+        // Translate the container path to a host path via the mount table,
+        // then it's just a host-side file copy — no docker exec needed:
+        val target = registry.toHostPath(containerPath)
+            ?: return """{"error": "container path is not under a known mount"}"""
+        val src = validate(hostPath) ?: return """{"error": "path not allowed"}"""
+        src.copyTo(target.toFile(), overwrite = true)
+        return """{"ok": true}"""
+    }
+
+    private fun validate(path: String): File? { /* whitelist check, see §6 */ }
+
+    private fun respond(ex: HttpExchange, body: String) {
+        val bytes = body.toByteArray()
+        ex.responseHeaders.add("Content-Type", "application/json")
+        ex.sendResponseHeaders(200, bytes.size.toLong())
+        ex.responseBody.use { it.write(bytes) }
+    }
+
+    override fun dispose() = server.stop(0)
+}
+```
+
+And the definitions you pass to LideCode at chat creation:
+
+```kotlin
+private fun toolDefinitions(): JsonArray {
+    val port = project.service<ToolServer>().port
+    return buildJsonArray {
+        add(toolDef(
+            name = "host_read_file",
+            description = "Read a file from the host machine (outside the container).",
+            url = "http://127.0.0.1:$port/tools/host_read_file",
+            params = mapOf("path" to "Absolute path on the host")))
+        add(toolDef(
+            name = "copy_from_host",
+            description = "Copy a file from the host into the container filesystem.",
+            url = "http://127.0.0.1:$port/tools/copy_from_host",
+            params = mapOf(
+                "host_path" to "Source path on the host",
+                "container_path" to "Destination path inside the container")))
+    }
+}
+```
+
+The exact envelope (`name`/`description`/`parameters`/`url` field names, and whether it wants a JSON Schema for parameters) must match whatever LideCode's tool-dispatch code expects — check where it iterates over the tools array and fires the outgoing HTTP request. Note `127.0.0.1` works because **LideCode's server runs on the host**, not inside the container — it's the server that calls your tool, not the container.
+
+---
+
+## 5. Tracking Docker mount points
+
+A small registry service, persisted across IDE restarts:
+
+```kotlin
+data class Mount(var chatId: String = "", var hostPath: String = "", var containerPath: String = "")
+
+@Service(Service.Level.PROJECT)
+@State(name = "LideCodeMounts", storages = [Storage("lidecode-mounts.xml")])
+class MountRegistry : PersistentStateComponent<MountRegistry.State> {
+    class State { var mounts: MutableList<Mount> = mutableListOf() }
+    private var state = State()
+
+    fun register(chatId: String, hostPath: String, containerPath: String) {
+        state.mounts.removeAll { it.chatId == chatId }
+        state.mounts.add(Mount(chatId, hostPath, containerPath))
+    }
+
+    /** /project/src/main.py  ->  /home/user/myproject/src/main.py */
+    fun toHostPath(containerPath: String): Path? =
+        state.mounts.firstOrNull { containerPath.startsWith(it.containerPath) }
+            ?.let { Path.of(it.hostPath, containerPath.removePrefix(it.containerPath)) }
+
+    fun toContainerPath(hostPath: String): String? =
+        state.mounts.firstOrNull { hostPath.startsWith(it.hostPath) }
+            ?.let { it.containerPath + hostPath.removePrefix(it.hostPath) }
+
+    override fun getState() = state
+    override fun loadState(s: State) { state = s }
+}
+```
+
+This is the piece that makes the two tools coherent: since LideCode bind-mounts a host directory into each chat's container, "copying into the container" under a mount is just a host-side copy after path translation. Only paths *outside* the mount would require `docker cp`/`docker exec` — if you need that, shell out to the `docker` CLI using the container ID LideCode returns (check whether its chat-creation response exposes it; if not, that's a one-line addition to LideCode itself).
+
+You can also add stale-mount cleanup: on chat close (or by polling `docker ps`), drop registry entries whose containers no longer exist.
+
+---
+
+## 6. Security notes (don't skip these)
+
+1. **Path whitelisting** — the model controls tool arguments. `host_read_file("/home/user/.ssh/id_rsa")` is one prompt-injection away. Restrict to the project directory + an explicit allowlist, and canonicalize paths (`toRealPath()`) to block `../` traversal.
+2. **Bind your tool server to `127.0.0.1` only**, and ideally require a random bearer token you include in the tool URL you register with LideCode.
+3. **Confirmation UI** — consider popping a notification/dialog before executing `copy_from_host`, at least for paths outside the project.
+
+---
+
+## Suggested build order
+
+1. Skeleton plugin + tool window with dummy echo chat (`./gradlew runIde` launches a sandboxed PyCharm).
+2. Wire up chat creation + streaming against a running LideCode instance (read its Express routes first).
+3. Add the `ToolServer` and register one trivial tool (e.g., `ping`) to validate the tool-callback contract.
+4. Implement `MountRegistry`, then the two real tools on top of it.
+5. Harden: path validation, auth token, error surfaces in the chat UI.
+
+The trickiest part is step 3, purely because LideCode's tool contract is undocumented — expect to spend a bit of time in its source pinning down the exact request/response JSON it sends to tool URLs.

@@ -1,0 +1,51 @@
+§u§
+How does pi.dev code implement skills?
+§a§
+In **pi.dev** (the website/documentation for the open-source **Pi Coding Agent**, a minimal agentic coding harness), "skills" are implemented as self-contained capability packages that *teach* the AI agent specialized workflows, rather than executing raw application code (which is what "Extensions" do).
+
+Pi implements skills by adhering to the broader **Agent Skills standard** (a universal format used across several modern coding agents).
+
+Here is exactly how the Pi codebase implements and manages skills under the hood:
+
+### 1. The `SKILL.md` Structure
+At its core, a skill is just a directory containing a `SKILL.md` file alongside any optional helper scripts or documents. Pi relies heavily on **Markdown frontmatter** to parse the skill.
+
+A typical `SKILL.md` looks like this:
+```markdown
+---
+name: my-special-skill
+description: What this skill does and when the agent should use it. Be very specific.
+---
+# My Special Skill
+## Setup
+Run this once: `npm install`
+## Instructions
+Here is how you should think and act when implementing this workflow...
+```
+During initialization, Pi parses this YAML frontmatter and validates it (e.g., checking that the name is under 64 characters and that a valid description exists).
+
+### 2. Progressive Disclosure (Context Window Optimization)
+One of the most important ways Pi implements skills is through a mechanism called **Progressive Disclosure**, which prevents massive skill files from busting the prompt cache or eating up context limits.
+
+* **Startup Phase:** Pi does *not* inject the full text of every installed skill into the system prompt. Instead, it reads the frontmatter of all discovered `SKILL.md` files and provides only a list of their `names` and `descriptions` under an `<available_skills>` section in the initial system prompt.
+* **On-Demand Loading:** When the LLM decides a skill's description is relevant to the user's current request, Pi fetches the skill and dynamically injects the full `SKILL.md` instructions into the active context window.
+
+### 3. File Discovery System
+Pi automatically crawls your filesystem to discover skills. The codebase implementation specifically looks for:
+* **Global directories:** `~/.pi/agent/skills/` or `~/.agents/skills/`
+* **Project-level directories:** `.pi/skills/` or `.agents/skills/`
+
+By default, Pi recursively walks up your parent directories looking for skills but naturally stops at the Git repository boundary.
+
+### 4. Invocation Methods
+There are two ways skills are triggered in Pi's implementation:
+* **Automatic Discovery:** The agent infers the need for a skill based on the `description` in the frontmatter.
+* **Explicit Macro Expansion:** Users can manually force a skill into the context by typing `/skill:skill-name` anywhere in their prompt. Before sending the request to the LLM model (like Claude, GPT-4, or local models), Pi's template expansion engine intercepts the `/skill:name` marker and physically replaces it with the full content of the respective `SKILL.md` file.
+
+### 5. Extensibility (e.g., `pi-skillful`)
+Because Pi is built as a minimal harness, its implementation allows skills to be deeply manipulated by **Extensions**.
+For example, a popular extension called `pi-skillful` hooks into Pi's implementation to offer:
+* **Inline Invocation:** Allowing you to call multiple skills in the middle of a sentence (e.g., *"Please analyze this using `/skill:code-security` and summarize"*).
+* **Skill Hiding:** Allowing developers to hide specific skills from the `<available_skills>` prompt block via a `disable-model-invocation` flag. This saves tokens by preventing the AI from automatically discovering the skill, but keeps the skill explicitly invokable by the human developer via a slash command.
+
+In short, Pi implements skills as lightweight, universally portable Markdown bundles that are lazily loaded into the context window via a highly token-efficient, standard-compliant YAML frontmatter system.

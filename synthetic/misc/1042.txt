@@ -1,0 +1,59 @@
+§u§
+windows 11 `texcount` is installed via miktex but `which texcount` fails.
+§a§
+`which` is a Unix command, so it is not the best test in Windows PowerShell or Command Prompt. In PowerShell, use `Get-Command`; use `where.exe` rather than `where`, because PowerShell aliases `where` to `Where-Object`.
+
+```powershell
+Get-Command texcount -All
+where.exe texcount
+texcount -version
+```
+
+If those fail, check whether MiKTeX installed the underlying script:
+
+```powershell
+findtexmf texcount.pl
+```
+
+MiKTeX’s `texcount` package contains `texmf\scripts\texcount\texcount.pl`; MiKTeX normally creates a command wrapper/link for scripts like this.
+
+### If `findtexmf` finds it but `Get-Command` does not
+
+Recreate MiKTeX’s command links:
+
+```powershell
+miktex fndb refresh
+miktex links install --force
+```
+
+For a shared/all-users MiKTeX installation, run an elevated PowerShell instead:
+
+```powershell
+miktex --admin fndb refresh
+miktex --admin links install --force
+```
+
+MiKTeX officially provides `links install` for installing command links from scripts and formats.
+
+Close and reopen the terminal, then test:
+
+```powershell
+Get-Command texcount
+texcount -version
+```
+
+### If `findtexmf texcount.pl` returns nothing
+
+Reinstall it in the same MiKTeX scope you normally use:
+
+```powershell
+miktex packages install texcount
+miktex fndb refresh
+miktex links install --force
+```
+
+### If even `miktex` or `pdflatex` cannot be found
+
+MiKTeX’s `miktex\bin\x64` directory is missing from your `PATH`. Add the directory containing `miktex.exe` and `pdflatex.exe` to your **user PATH**, then restart the terminal and VS Code.
+
+Also, if you are running `which texcount` **inside WSL**, the Windows MiKTeX installation and the WSL Linux environment are separate; install TeXcount inside WSL or invoke the Windows executable explicitly.

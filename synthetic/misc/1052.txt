@@ -1,0 +1,43 @@
+§u§
+When GLM-5.3 or GLM-5.3-flash makes a tool call using the official tool calling format, what tokens does it emit?
+§a§
+When making a tool call using the official format, **GLM-5.3** and **GLM-5.3-flash** (which inherit the **GLM-4.7** tool-calling format) emit a specific sequence of special tokens and structured tags.
+
+In this format, the model does not emit a raw JSON block. Instead, it uses an XML-like tag structure. The specific tokens emitted by the model during a tool-calling turn are:
+
+### 1. Role and Reasoning Tokens
+Before calling the tool, GLM-5.3 typically generates a reasoning or "thinking" block, as reasoning is always enabled for this model family.
+*   **`<|assistant|>`**: Marks the beginning of the model's response.
+*   **`<think>`** and **`</think>`**: These tokens wrap the model's internal Chain-of-Thought (CoT) reasoning where it plans which tool to use.
+
+### 2. Tool Call Boundary Tokens
+After the reasoning block, the model emits the tool call using the following tags:
+*   **`<tool_call>`**: Signals the start of the function call.
+*   **`</tool_call>`**: Signals the completion of the function call.
+
+### 3. Argument Mapping Tokens
+Inside the `<tool_call>` tags, the model structures the function name and its parameters using these wrappers:
+*   **`<arg_key>`** and **`</arg_key>`**: Wrap the name of a specific argument (e.g., `location`).
+*   **`<arg_value>`** and **`</arg_value>`**: Wrap the value corresponding to that argument (e.g., `Beijing`).
+
+### Example of Emitted Sequence
+If the model decides to call a `get_weather` function, the raw token emission string looks like this:
+
+```text
+<|assistant|>
+<think>The user wants to know the weather. I should use the get_weather tool for Beijing.</think>
+<tool_call>get_weather <arg_key>city</arg_key><arg_value>Beijing</arg_value></tool_call>
+```
+
+### Summary of Special Tokens
+| Token Name | Token String | Purpose |
+| :--- | :--- | :--- |
+| **Assistant Role** | `<|assistant|>` | Indicates the model is starting its turn. |
+| **Reasoning Start** | `<think>` | Begins the reasoning/thought block. |
+| **Reasoning End** | `</think>` | Ends the reasoning/thought block. |
+| **Tool Call Start** | `<tool_call>` | Initiates a tool/function call. |
+| **Argument Key** | `<arg_key>` / `</arg_key>` | Wraps the parameter names. |
+| **Argument Value** | `<arg_value>` / `</arg_value>` | Wraps the parameter values. |
+| **Tool Call End** | `</tool_call>` | Concludes the tool/function call. |
+
+**Note on Input (Tool Results):** When you provide the tool's output back to the model, the official format uses the tokens **`<tool_response>`** and **`</tool_response>`** to wrap the execution result in the subsequent user/system message.

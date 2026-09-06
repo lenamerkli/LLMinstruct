@@ -1,0 +1,62 @@
+§u§
+huggingface dataset viewer
+```
+The dataset viewer is not available for this split.
+Parquet error: Row group ordinal 32768 exceeds i16 max value
+Error code:   UnexpectedError
+```
+§a§
+**This is a known Parquet format limitation** that the Hugging Face Dataset Viewer hits when processing certain files.
+
+### What the error means
+Parquet files organize data into **row groups**. The viewer (and some underlying Arrow/Parquet libraries, especially in Rust) store or reference row-group ordinals (indices) using a **signed 16-bit integer (`i16`)**.
+
+- `i16` max value = **32,767**
+- Your file has reached (or exceeded) ordinal **32,768** → overflow
+
+This typically happens when a single Parquet file contains **> ~32k row groups** (often from very small row groups, e.g., when writing many tiny batches or using a tool that doesn't consolidate them).
+
+### Why it occurs on the HF Dataset Viewer
+The viewer converts/uploads data to Parquet (or processes existing Parquet) and then reads row groups for previews, statistics, etc. It currently cannot handle files that exceed this internal `i16` limit on row-group ordinals.
+
+### How to fix it
+Rewrite the problematic Parquet file(s) with **fewer, larger row groups**:
+
+1. **Using PyArrow (recommended)**:
+   ```python
+   import pyarrow as pa
+   import pyarrow.parquet as pq
+
+   # Read your existing data (or load via datasets)
+   table = pq.read_table("your_file.parquet")
+
+   # Write with a larger row group size (e.g. 100k–1M rows per group)
+   pq.write_table(
+       table,
+       "fixed_file.parquet",
+       row_group_size=100_000,   # adjust based on your data size
+       compression="zstd"        # or snappy, etc.
+   )
+   ```
+
+2. **Using the `datasets` library**:
+   ```python
+   from datasets import load_dataset, Dataset
+
+   ds = load_dataset("your_dataset", split="train")  # or load from files
+   ds.to_parquet("fixed.parquet", row_group_size=100_000)
+   ```
+
+3. **Best practices**:
+   - Target **hundreds to a few thousand row groups max** per file.
+   - Aim for row groups of **~100 MB–1 GB** uncompressed (depending on your data).
+   - If the file is enormous, split it into multiple Parquet files (e.g., `train-00000-of-00010.parquet`, etc.). HF handles sharded Parquet very well.
+   - Re-upload the fixed file(s) to your dataset repo (replace the old ones or add new ones and update the data files configuration if needed).
+
+After fixing, the Dataset Viewer should be able to process the split again (it may take a few minutes for the cache to refresh).
+
+### Additional resources
+- HF docs on Parquet & viewer limits: [Data files configuration](https://huggingface.co/docs/hub/datasets-data-files-configuration)
+- If the issue persists after rewriting, open a discussion on your dataset page and tag `@lhoestq` or `@severo`.
+
+This is almost always resolved by consolidating row groups on the writer side. Let me know the dataset name if you want more specific advice!

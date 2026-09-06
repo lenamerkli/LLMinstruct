@@ -1,0 +1,37 @@
+§u§
+```python
+        docker_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'docker')
+        dockerfile = os.path.join(docker_dir, 'DOCKERFILE')
+```
+to typescript
+§a§
+Here's the TypeScript equivalent:
+
+## For CommonJS (Node.js default, uses `__dirname` directly):
+
+```typescript
+import * as path from 'path';
+
+const dockerDir = path.join(__dirname, 'docker');
+const dockerfile = path.join(dockerDir, 'DOCKERFILE');
+```
+
+## For ES Modules (`"type": "module"` in package.json):
+
+Since `__dirname` isn't available in ES modules, you need to derive it from `import.meta.url`:
+
+```typescript
+import * as path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const dockerDir = path.join(__dirname, 'docker');
+const dockerfile = path.join(dockerDir, 'DOCKERFILE');
+```
+
+### Notes:
+- `path.join` behaves the same way in both languages — it joins path segments intelligently.
+- `os.path.dirname(os.path.abspath(__file__))` in Python is equivalent to `__dirname` in Node.js CommonJS — both give you the absolute directory path of the current file.
+- If you're using **camelCase** convention (idiomatic in TS/JS), rename `docker_dir` → `dockerDir` as shown above.

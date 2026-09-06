@@ -1,0 +1,100 @@
+§u§
+```
+-rw-r--r-- 1 lena lena   150874  1. Nov 2025   **chunkloaders-1.2.9-fabric-mc1.20.1.jar**
+-rw-r--r-- 1 lena lena  1933455 24. Jan 2026   **copycats-2.2.2+mc.1.20.1-fabric.jar**
+-rwxrwxrwx 1 lena lena   171091  1. Nov 2025   **create-cards-1.2.jar**
+-rwxrwxrwx 1 lena lena    21783  1. Nov 2025   **createchunkloading-1.6.0-fabric.jar**
+-rw-r--r-- 1 lena lena   234724  1. Nov 2025   **createcobblestone-1.4.3+fabric-1.20.1-87.jar**
+-rwxrwxrwx 1 lena lena   920629  1. Nov 2025   **create_connected-0.7.4-mc1.20.1+FABRIC+HOTFIX.jar**
+-rw-r--r-- 1 lena lena    87992  1. Nov 2025   **createcontraptionterminals-fabric-1.20-1.1.0.jar**
+-rwxrwxrwx 1 lena lena  3969806  1. Nov 2025   **createdeco-2.0.2-1.20.1-fabric.jar**
+-rwxrwxrwx 1 lena lena  1952791  1. Nov 2025   **createdieselgenerators-2.1.4.jar**
+-rw-r--r-- 1 lena lena   987094  1. Nov 2025   **createenchantablemachinery-2.9.9-mc1.20.1-fabric.jar**
+-rw-r--r-- 1 lena lena   519519 15. Nov 2025   **create_enchantment_industry-1.2.16.jar**
+-rw-r--r-- 1 lena lena 24847443 24. Jan 2026   **create-fabric-0.5.1-j-build.1631+mc1.20.1+createplusplus8.4-local+mc1.20.1.jar**
+-rw-r--r-- 1 lena lena   171702  1. Nov 2025  **'creategoggles-1.20.1-0.5.6-[FABRIC].jar'**
+-rw-r--r-- 1 lena lena   217452 31. Jan 2026   **create_jetpack-fabric-4.3.0.jar**
+-rwxrwxrwx 1 lena lena   657516  1. Nov 2025   **create-new-age-fabric-1.20.1-1.1.2.jar**
+-rw-r--r-- 1 lena lena   711064  1. Nov 2025   **CreateNumismatics-1.0.10+fabric-mc1.20.1.jar**
+-rw-r--r-- 1 lena lena  3297697  1. Nov 2025   **createrailwaysnavigator-fabric-1.20.1-beta-0.8.4.jar**
+-rwxrwxrwx 1 lena lena    50177  1. Nov 2025   **create_trimmed.jar**
+-rwxrwxrwx 1 lena lena   224000  1. Nov 2025   **extendedgears-2.1.1-1.20.1-0.5.1.f-fabric.jar**
+-rw-r--r-- 1 lena lena   105382 24. Jan 2026   **indium-1.0.36+mc1.20.1.jar**
+-rw-r--r-- 1 lena lena   408028  1. Nov 2025   **interiors-0.5.6+fabric-mc1.20.1-build.104.jar**
+-rw-r--r-- 1 lena lena    16909  1. Nov 2025   **liquidburner-1.20.1-0.5-create_plusplus1.0.jar**
+-rwxrwxrwx 1 lena lena  1090523  1. Nov 2025   **moderntrainparts-0.1.7-fabric-mc1.20.1-cr0.5.1-f.jar**
+-rwxrwxrwx 1 lena lena   475232  1. Nov 2025   **observable-4.4.2.jar**
+-rw-r--r-- 1 lena lena  4037973  1. Nov 2025   **pantographsandwires-fabric-1.20.1-beta-0.1.1.jar**
+-rwxrwxrwx 1 lena lena  3577691  1. Nov 2025   **rechiseled-1.1.6-fabric-mc1.20.jar**
+-rwxrwxrwx 1 lena lena   752288  1. Nov 2025   **rechiseledcreate-1.0.2a-fabric-mc1.20.jar**
+-rw-r--r-- 1 lena lena   971399 24. Jan 2026   **sodium-fabric-0.5.13-snapshot+mc1.20.1-local.jar**
+-rw-r--r-- 1 lena lena  9883953  1. Nov 2025   **Steam_Rails-1.6.9+fabric-mc1.20.1.jar**
+-rw-r--r-- 1 lena lena  1537265  1. Nov 2025   **toms_storage_fabric-1.20-1.7.1.jar**
+
+-rw-r--r-- 1 lena lena    5761 11. Aug 15:33 **createplusplus_hopefully_fix_regen-1.0.0.jar**
+-rwxrwxrwx 1 lena lena 5189665 10. Apr 2024  **create-track-map-1.4+mc1.20.1-fabric.jar**
+ ```
+
+Which of these mods have an update avaible to work with Create 6.0 fabric 1.20.1? All of them work with Create 0.5 fabric 1.20.1. Note that some mods are not avaiable on modrinth and some not are not on the internet at all.
+§a§
+Here is the breakdown of your mods and their availability for **Create 6.0 (Fabric 1.20.1)**.
+
+---
+
+### 1. Create Addons with Updates Available for Create 6.0 (Fabric 1.20.1)
+
+These addons have official or community-maintained Fabric 1.20.1 releases updated for Create 6.0:
+
+| Original File | Mod Name | Latest Compatible Version / File | Notes |
+|---|---|---|---|
+| `create-fabric-0.5.1-j...` | **Create Fabric (Core)** | `create-fabric-6.0.8.1+build.1744-mc1.20.1.jar` | The core Create Fabric 6.0 release. |
+| `copycats-2.2.2+mc.1.20.1-fabric.jar` | **Create: Copycats+** | `copycats-3.0.7+mc.1.20.1-fabric.jar` (or `3.0.8`) | Updated for Create Fabric 6.0.7+. |
+| `createcobblestone-1.4.3+...jar` | **Create Cobblestone** | `createcobblestone-1.4.11+fabric-1.20.1-141.jar` | v1.4.7+ added explicit Create 6 support. |
+| `create_connected-0.7.4-...jar` | **Create: Connected** | `create_connected-fabric-1.1.13+patch.1-mc1.20.1.jar` | v1.1.13 branch supports Create 6. |
+| `createcontraptionterminals-...jar` | **Create Contraption Terminals** | `createcontraptionterminals-fabric-1.20-1.2.0.jar` | v1.2.0 is the Create 6 update. |
+| `createdeco-2.0.2-1.20.1-fabric.jar` | **Create Deco** | `createdeco-2.1.1-1.20.1-fabric.jar` | v2.1.1 fixed compatibility with Create 6.0.8.1. |
+| `createdieselgenerators-2.1.4.jar` | **Create: Diesel Generators** | `createdieselgenerators-fabric-restitched-rel7.jar` | Original port was abandoned, but the active **Fabric Restitched** fork has full Create 6 support in `rel7`. |
+| `create_enchantment_industry-1.2.16.jar` | **Create: Enchantment Industry** | `create-enchantment-industry-fabric-1.20.1-2.5.2-e.jar` | Updated specifically for Create Fabric 6.0.8.1. |
+| `creategoggles-1.20.1-0.5.6-[FABRIC].jar` | **Create Goggles** | `creategoggles-1.20.1-6.1.1-[FABRIC].jar` | v6.1.1 is the Create 6 update. |
+| `create_jetpack-fabric-4.3.0.jar` | **Create Jetpack** | `create_jetpack-fabric-4.4.2.jar` | v4.4.0+ rewrote the mod for Create 6+. |
+| `create-new-age-fabric-1.20.1-1.1.2.jar` | **Create: New Age** | `create-new-age-1.2.0+fabric-mc1.20.1.jar` | v1.1.7+ & v1.2.0 updated for Create Fabric 6. |
+| `CreateNumismatics-1.0.10+...jar` | **Create: Numismatics** | `CreateNumismatics-1.0.15+fabric-mc1.20.1.jar` | Ported to Create Update 6 in v1.0.12+. |
+| `createrailwaysnavigator-...jar` | **Create Railways Navigator** | `createrailwaysnavigator-fabric-1.20.1-beta-0.9.1-C6.jar` | Releases with the `-C6` suffix are built for Create 6. |
+| `interiors-0.5.6+fabric...jar` | **Create: Interiors** | `interiors-1.20.1-fabric-0.6.0.jar` | Updated to 0.6.0 for Create 6. |
+| `pantographsandwires-...jar` | **Pantographs and Wires** | `pantographsandwires-fabric-1.20.1-beta-0.2.3-C6.jar` | The `-C6` builds support Create 6. |
+| `rechiseledcreate-1.0.2a-fabric-mc1.20.jar` | **Rechiseled: Create** | `rechiseledcreate-1.1.1-fabric-mc1.20.1.jar` | v1.0.2b+ updated for Create Fabric 6. |
+| `Steam_Rails-1.6.9+fabric-mc1.20.1.jar` | **Create: Steam 'n' Rails** | `Steam_Rails-1.7.2+fabric-mc1.20.1.jar` | Version 1.7.1+ / 1.7.2 (`C6`) is for Create 6. |
+| `create-track-map-1.4+mc1.20.1-fabric.jar` | **Create Track Map** | `create-track-map-2.1+mc1.20.1-fabric.jar` | Original is unmaintained, but the **Create Track Map (Unofficial Fork)** on Modrinth has a 2.1 update for Create 6.0.7+. |
+
+---
+
+### 2. Addons without a Create 6.0 Fabric Update (Yet or Discontinued)
+
+These addons **do not** currently have a working Fabric 1.20.1 build for Create 6.0:
+
+* ❌ **`createchunkloading-1.6.0-fabric.jar`** (*Create Chunkloading*): Main developer ended new feature development; no Create 6 port exists. (Use standalone *Chunk Loaders* instead).
+* ❌ **`create-cards-1.2.jar`** (*Create: Cards*): Only updated up to 1.3.0 for Create 0.5.1; no Create 6 Fabric version available.
+* ❌ **`createenchantablemachinery-2.9.9-mc1.20.1-fabric.jar`** (*Create: Enchantable Machinery*): Received Create 6 updates on Forge/NeoForge (v3.4.0+), but the Fabric port stopped at v2.9.11 (Create 0.5.1).
+* ❌ **`extendedgears-2.1.1-1.20.1-0.5.1.f-fabric.jar`** (*Create: Extended Cogwheels*): Original project is frozen at 2.1.1 for Create 0.5.1f on Fabric.
+* ❌ **`liquidburner-1.20.1-0.5-create_plusplus1.0.jar`** (*Liquid Burner*): Unmaintained; no Create 6 version.
+* ❌ **`moderntrainparts-0.1.7-fabric-mc1.20.1-cr0.5.1-f.jar`** (*Modern Train Parts*): Discontinued in favor of *Pantographs and Wires* (which is updated).
+
+---
+
+### 3. Standalone / Independent Mods (Compatible As-Is)
+
+These mods are not Create addons and do not depend on Create's internal API. They work alongside Create 6.0:
+
+* 🟢 **`chunkloaders-1.2.9-fabric-mc1.20.1.jar`** (*Chunk Loaders*): Already on the latest 1.20.1 release.
+* 🟢 **`indium-1.0.36+mc1.20.1.jar`** (*Indium*): Fully compatible rendering mod.
+* 🟢 **`observable-4.4.2.jar`** (*Observable*): Standalone profiler, fully compatible.
+* 🟢 **`sodium-fabric-0.5.13-snapshot+mc1.20.1-local.jar`** (*Sodium*): Compatible with Create Fabric 6.0 and Indium.
+* 🟢 **`toms_storage_fabric-1.20-1.7.1.jar`** (*Tom's Simple Storage*): Already on the latest 1.20.1 build.
+* 🟢 **`rechiseled-1.1.6-fabric-mc1.20.jar`** (*Rechiseled*): Independent base mod (can optionally be updated to `rechiseled-1.2.5-fabric-mc1.20.1.jar`).
+* 🟢 **`create_trimmed.jar`** (*Create: Trimmed*): Resource/data trim mod; works as-is.
+
+---
+
+### 4. Custom / Private Patch Jars
+
+* ⚠️ **`createplusplus_hopefully_fix_regen-1.0.0.jar`**: This is a custom/private hotfix mod made for your specific Create++ pack. It has no upstream internet release and would need manual verification/rebuilding if it hooked into Create 0.5 code.

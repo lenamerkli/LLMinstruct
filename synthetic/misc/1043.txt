@@ -1,0 +1,284 @@
+§u§
+biblatex \cite{} should render as title not author-year
+§a§
+**The easiest solution is to use `\citetitle{}` instead of `\cite{}`.**
+
+BibLaTeX already provides a dedicated command for this:
+
+```latex
+\citetitle{key}        % prints title (or shorttitle if available)
+\citetitle*{key}       % always prints the full title
+```
+
+### If you really want `\cite{}` to output the title
+
+Add this to your preamble:
+
+```latex
+\usepackage[style=authoryear, backend=biber]{biblatex}  % or whatever style you're using
+
+% Make \cite{} print the title (preserves prenotes/postnotes)
+\DeclareCiteCommand{\cite}
+  {\usebibmacro{prenote}}
+  {\printfield[citetitle]{labeltitle}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+```
+
+You can wrap the output in parentheses/brackets if desired:
+
+```latex
+\DeclareCiteCommand{\cite}[\mkbibparens]
+  {\usebibmacro{prenote}}
+  {\printfield[citetitle]{labeltitle}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+```
+
+### Control the formatting (remove quotes/italics)
+
+By default `\citetitle` formats titles according to entry type (italics for books, quotes for articles, etc.). To print the title completely plain:
+
+```latex
+\DeclareFieldFormat*{citetitle}{#1}
+```
+
+### Better alternatives
+
+1. **Use `style=authortitle`** (or `ext-authortitle` from `biblatex-ext`):
+   ```latex
+   \usepackage[style=authortitle, backend=biber]{biblatex}
+   ```
+   This gives you author + title citations by default, which is often more useful than title-only.
+
+2. **Use the `shorttitle` field** in your `.bib` file for abbreviated citations (very common in classics, law, etc.):
+   ```bibtex
+   @book{aristotle:physics,
+     author     = {Aristotle},
+     title      = {Physics},
+     shorttitle = {Phys.},
+     ...
+   }
+   ```
+
+### Complete minimal example
+
+```latex
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage[style=authoryear, backend=biber]{biblatex}
+
+% Option 1: Make \cite print titles
+\DeclareCiteCommand{\cite}
+  {\usebibmacro{prenote}}
+  {\printfield[citetitle]{labeltitle}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+% Option 2: Plain formatting (no quotes/italics)
+\DeclareFieldFormat*{citetitle}{#1}
+
+\addbibresource{biblatex-examples.bib}
+
+\begin{document}
+
+See \cite{sigfridsson} and \cite{baez/article}.
+
+Or use the dedicated command: \citetitle{sigfridsson}.
+
+\printbibliography
+\end{document}
+```
+
+**Recommendation**: Use `\citetitle{}` (and `\citetitle*` when needed) rather than redefining `\cite`. Redefining `\cite` can cause confusion if you later want author-year citations elsewhere in the document. Most TeX.SE answers suggest sticking with the semantic commands BibLaTeX provides.
+
+If this doesn't match exactly what you want (e.g. you want *author + title*, or title in footnotes, or per-entry switching), provide your current `biblatex` loading line and a sample `.bib` entry.
+§u§
+\citetitle{} behaves the same as \cite{} in my tex file.
+§a§
+That's not normal behavior — it suggests something in your setup is overriding or not defining `\citetitle` properly. To diagnose, could you share:
+
+1. **Your bibliography-related preamble lines** (all `\usepackage` lines related to citations/bibliography)
+2. **The citation style** you're using
+
+Here are the most common causes:
+
+---
+
+### 1. You're using `natbib`, not `biblatex`
+
+`\citetitle` is a **`biblatex` command**. If you're using `natbib`, it doesn't exist, and may silently fall back to `\cite`:
+
+```latex
+% natbib — does NOT have \citetitle
+\usepackage[authoryear]{natbib}
+```
+
+**Fix:** Switch to `biblatex`:
+```latex
+\usepackage[style=authoryear, backend=biber]{biblatex}
+\addbibresource{refs.bib}
+```
+
+---
+
+### 2. You have `natbib=true` compatibility mode
+
+```latex
+\usepackage[style=authoryear, natbib=true, backend=biber]{biblatex}
+```
+
+The `natbib=true` option loads natbib-compatible wrappers which can interfere. Try **removing `natbib=true`**.
+
+---
+
+### 3. A class or style is overriding commands
+
+Some document classes (e.g., certain journal templates) redefine `\cite` and related commands internally.
+
+**Quick test** — add this *after* all your `\usepackage` lines to see if `\citetitle` is even defined as expected:
+
+```latex
+\show\citetitle
+```
+
+Compile and check the `.log` file — it will show you exactly what `\citetitle` is defined as.
+
+---
+
+### 4. Compilation issue
+
+Make sure you're running the full build chain:
+
+```
+pdflatex → biber → pdflatex → pdflatex
+```
+
+(not `bibtex` — that's for natbib, not biblatex)
+
+---
+
+### Quick diagnostic
+
+Please paste the relevant lines from your preamble, and I can give you the exact fix. Something like:
+
+```latex
+\usepackage[???]{???}
+\bibliographystyle{???}   % ← this would indicate natbib/bibtex, not biblatex
+\bibliography{???}
+```
+
+vs.
+
+```latex
+\usepackage[style=???, backend=???]{biblatex}
+\addbibresource{???.bib}
+```
+
+The distinction between these two setups is the key to solving your problem.
+§u§
+```
+\documentclass[12pt, a4paper]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[hyphens]{url}
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage{pdfpages}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{pgfplots}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{setspace}
+\usepackage{xltabular}
+\usepackage[backend=biber, style=authoryear, sorting=nty, urldate=long]{biblatex}
+\usepackage[margin=1.5cm]{geometry}
+
+\pgfplotsset{compat=1.18}
+
+\DeclareNameAlias{sortname}{family-given} % https://tex.stackexchange.com/questions/361486/mixed-last-first-and-first-last-names-in-reference-list
+\renewcommand{\cite}[1]{\textit{\parencite{#1}}}
+
+\setcounter{biburlnumpenalty}{100} % https://tex.stackexchange.com/questions/22854/url-line-breaks-with-biblatex
+\setcounter{biburlucpenalty}{100}
+\setcounter{biburllcpenalty}{100}
+
+\hypersetup{
+    breaklinks=true,
+    hidelinks,
+    colorlinks=false,
+    pdfborder={0 0 0},
+}
+
+\titleformat{\chapter}[block]
+  {\normalfont\huge\bfseries}{\thechapter.}{1em}{\Huge} % tex.stackexchange.com/questions/18604/chapter-formatting
+\titlespacing*{\chapter}{0pt}{-19pt}{0pt}
+
+\addbibresource{quellen.bib}
+
+```
+§a§
+Found it! The problem is this line in your preamble:
+
+```latex
+\renewcommand{\cite}[1]{\textit{\parencite{#1}}}
+```
+
+This redefines `\cite` to just call `\parencite` (author-year in parentheses, italicized). So `\cite` will always produce author-year output regardless.
+
+### Fix
+
+**Replace that line** with:
+
+```latex
+\renewcommand{\cite}[1]{\textit{\citetitle{#1}}}
+```
+
+This makes `\cite{key}` print the title in italics.
+
+---
+
+### Or, for more control, use `\DeclareCiteCommand` instead:
+
+```latex
+% Remove this line:
+% \renewcommand{\cite}[1]{\textit{\parencite{#1}}}
+
+% Replace with:
+\DeclareCiteCommand{\cite}
+  {\usebibmacro{prenote}}
+  {\mkbibemph{\printfield[citetitle]{labeltitle}}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+```
+
+This is the "proper" biblatex way and has advantages:
+- Supports **multiple keys**: `\cite{key1, key2}` works correctly
+- Supports **pre/postnotes**: `\cite[see][42]{key}` works
+- Won't break other biblatex internals
+
+---
+
+### About `\citetitle` appearing to not work
+
+If you were testing `\citetitle{}` **inside** that `\renewcommand`, it would never get called because your `\cite` was hardwired to `\parencite`. If you tested `\citetitle{key}` directly in your document text (not via `\cite`), and it *still* showed author-year, check that your `.bib` entry actually has a `title` field:
+
+```bibtex
+@book{mykey,
+  author = {Müller, Hans},
+  title  = {Ein Beispielbuch},   % ← this must exist
+  year   = {2024},
+}
+```
+
+After making the change, recompile with the full chain:
+
+```
+pdflatex → biber → pdflatex → pdflatex
+```

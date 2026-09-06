@@ -1,0 +1,32 @@
+§u§
+When deepseek v4 pro makes a tool call using the official tool calling format, what tokens does it emit?
+§a§
+When DeepSeek V4 Pro makes a tool call using its official **DSML (DeepSeek Markup Language)** format, it emits a specific set of XML-like tokens to structure the invocation and its parameters.
+
+Here are the exact tokens and structure it emits:
+
+**1. Tool Call Block Tokens**
+*   `<｜DSML｜tool_calls>`: Opens the block containing one or more tool calls.
+*   `</｜DSML｜tool_calls>`: Closes the tool call block.
+
+**2. Tool Invocation Tokens**
+*   `<｜DSML｜invoke name="$TOOL_NAME">`: Starts the invocation of a specific tool, where `$TOOL_NAME` is the function being called.
+*   `</｜DSML｜invoke>`: Closes the specific tool invocation.
+
+**3. Parameter Tokens**
+*   `<｜DSML｜parameter name="$PARAMETER_NAME" string="true|false">`: Defines a parameter passed to the tool.
+    *   It uses `string="true"` if the parameter value is a raw string.
+    *   It uses `string="false"` if the parameter value is a JSON-formatted type (such as a number, boolean, array, or object).
+*   `</｜DSML｜parameter>`: Closes the parameter definition.
+
+### Example Emission
+If you asked the model to get the weather in Hangzhou, it would emit the following sequence of tokens:
+```xml
+<｜DSML｜tool_calls>
+  <｜DSML｜invoke name="get_weather">
+    <｜DSML｜parameter name="location" string="true">Hangzhou</｜DSML｜parameter>
+  </｜DSML｜invoke>
+</｜DSML｜tool_calls>
+```
+
+*(Note: If DeepSeek-V4-Pro is running with **thinking mode** enabled, it is strictly instructed to emit its reasoning process inside `<think>...</think>` tokens **before** it emits the `<｜DSML｜tool_calls>` sequence.)*

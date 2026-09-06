@@ -1,0 +1,31 @@
+§u§
+When deepseek v4 pro makes a tool call using the official tool calling format, what tokens does it emit?
+§a§
+Short answer: **DeepSeek-V4-Pro’s native/raw tool-call output is DSML, not the older `<｜tool▁calls▁begin｜>` format.** The official DeepSeek-V4 encoding doc shows tool calls as a `<｜DSML｜tool_calls>` block, with one or more `<｜DSML｜invoke ...>` entries and `<｜DSML｜parameter ...>` entries, ending with `<｜end▁of▁sentence｜>`.
+
+```xml
+<｜DSML｜tool_calls>
+<｜DSML｜invoke name="function_name">
+<｜DSML｜parameter name="param" string="true">string_value</｜DSML｜parameter>
+<｜DSML｜parameter name="count" string="false">5</｜DSML｜parameter>
+</｜DSML｜invoke>
+</｜DSML｜tool_calls><｜end▁of▁sentence｜>
+```
+
+Generic shape:
+
+```xml
+<｜DSML｜tool_calls>
+<｜DSML｜invoke name="$TOOL_NAME">
+<｜DSML｜parameter name="$PARAMETER_NAME" string="true|false">$PARAMETER_VALUE</｜DSML｜parameter>
+...
+</｜DSML｜invoke>
+</｜DSML｜tool_calls><｜end▁of▁sentence｜>
+```
+
+A few important details:
+
+- The DSML marker is **`｜DSML｜`** with full-width vertical bars, as shown in the official encoding’s special-token list.
+- String arguments are emitted raw with `string="true"`; non-string arguments are emitted as JSON with `string="false"`.
+- In **thinking mode**, the model is instructed to finish its reasoning inside `<think>...</think>` before emitting tool calls; so the raw completion can include `...</think>` before the DSML block. In **chat mode**, `</think>` is typically already in the prompt after `<｜Assistant｜>`, so the completion can start directly with the DSML block.
+- If you’re using DeepSeek’s **OpenAI-compatible API**, you normally won’t see these raw DSML tokens; the service parses them and returns structured `tool_calls` with `finish_reason: "tool_calls"`.

@@ -1,0 +1,550 @@
+§u§
+```
+import typing as t
+from base64 import b64encode
+from filetype import guess as guess_file_type
+
+MediaType = t.Literal['image', 'audio', 'video', 'other_media']
+
+
+class TextContent:
+    def __init__(self, text: str):
+        self._text = text
+
+    def __str__(self) -> str:
+        return self.__repr__()
+
+    def __repr__(self) -> str:
+        return f"TextContent(text={self.text})"
+
+    def __dict__(self) -> dict[str, t.Any]:
+        return {'type': 'text', 'text': self.text}
+
+    @property
+    def text(self) -> str:
+        return self._text
+
+    @text.setter
+    def text(self, text: str) -> None:
+        self._text = text
+
+
+class ImageContent:
+    def __init__(self, content: bytes):
+        self._content = content
+
+    def __str__(self) -> str:
+        return self.__repr__()
+
+    def __repr__(self) -> str:
+        return f"ImageContent(content={self.content})"
+
+    def __dict__(self) -> dict[str, t.Any]:
+        return {'type': 'image_url', 'imageUrl': {'url': f"data:{self._get_mime()};base64,{b64encode(self.content).decode('utf-8')}"}}
+
+    def _get_mime(self):
+        kind = guess_file_type(self.content)
+        if kind is None:
+            return 'image/png'
+        return kind.mime
+
+    @property
+    def content(self) -> bytes:
+        return self._content
+
+    @content.setter
+    def content(self, content: str) -> None:
+        self._content = content
+
+
+class ToolCall:
+    def __init__(self, name: str, arguments: dict[str, t.Any]):
+        self._name = name
+        self._arguments = arguments
+
+    def __str__(self) -> str:
+        return self.__repr__()
+
+    def __repr__(self) -> str:
+        return f"ToolCall(name={self.name}, arguments={self.arguments})"
+
+    def __dict__(self) -> dict[str, t.Any]:
+        return {'name': self.name, 'arguments': self.arguments}
+
+    @property
+    def name(self) -> str:
+        return self._name
+
+    @name.setter
+    def name(self, name: str) -> None:
+        self._name = name
+
+    @property
+    def arguments(self) -> dict[str, t.Any]:
+        return self._arguments
+
+    @arguments.setter
+    def arguments(self, arguments: dict[str, t.Any]) -> None:
+        self._arguments = arguments
+
+
+class SystemMessage:
+    def __init__(self, content: list[t.Union[TextContent, ImageContent]]):
+        self._content = content
+
+    def __str__(self) -> str:
+        return self.__repr__()
+
+    def __repr__(self) -> str:
+        return f"SystemMessage(content={self.content})"
+
+    def __dict__(self) -> dict[str, t.Any]:
+        return {'role': 'system', 'content': [i.__dict__() for i in self.content]}
+
+    @property
+    def content(self) -> list[t.Union[TextContent, ImageContent]]:
+        return self._content
+
+    @content.setter
+    def content(self, content: list[t.Union[TextContent, ImageContent]]) -> None:
+        self._content = content
+
+
+class UserMessage:
+    def __init__(self, content: list[t.Union[TextContent, ImageContent]]):
+        self._content = content
+
+    def __str__(self) -> str:
+        return self.__repr__()
+
+    def __repr__(self) -> str:
+        return f"UserMessage(content={self.content})"
+
+    def __dict__(self) -> dict[str, t.Any]:
+        return {'role': 'user', 'content': [i.__dict__() for i in self.content]}
+
+    @property
+    def content(self) -> list[t.Union[TextContent, ImageContent]]:
+        return self._content
+
+    @content.setter
+    def content(self, content: list[t.Union[TextContent, ImageContent]]) -> None:
+        self._content = content
+
+
+class AssistantMessage:
+    def __init__(self, text: TextContent, tool_calls: t.Optional[list[ToolCall]] = None):
+        self._text = text
+        if not tool_calls:
+            tool_calls = []
+        self._tool_calls = tool_calls
+
+    def __str__(self) -> str:
+        return self.__repr__()
+
+    def __repr__(self) -> str:
+        return f"AssistantMessage(text={self.text}, tool_calls={self.tool_calls})"
+
+    def __dict__(self) -> dict[str, t.Any]:
+        return {'role': 'assistant', 'text': self.text.__dict__(), 'tool_calls': [i.__dict__() for i in self.tool_calls]}
+
+    @property
+    def text(self) -> TextContent:
+        return self._text
+
+    @text.setter
+    def text(self, text: TextContent) -> None:
+        self._text = text
+
+    @property
+    def tool_calls(self) -> list[ToolCall]:
+        return self._tool_calls
+
+    @tool_calls.setter
+    def tool_calls(self, tool_calls: list[ToolCall]) -> None:
+        self._tool_calls = tool_calls
+
+
+class ToolMessage:
+    def __init__(self, content: list[t.Union[TextContent, ImageContent]]):
+        self._content = content
+
+    def __str__(self) -> str:
+        return self.__repr__()
+
+    def __repr__(self) -> str:
+        return f"ToolMessage(content={self.content})"
+
+    def __dict__(self) -> dict[str, t.Any]:
+        return {'role': 'tool', 'content': [i.__dict__() for i in self.content]}
+
+    @property
+    def content(self) -> list[t.Union[TextContent, ImageContent]]:
+        return self._content
+
+    @content.setter
+    def content(self, content: list[t.Union[TextContent, ImageContent]]) -> None:
+        self._content = content
+
+
+class Conversation:
+    def __init__(self, messages: list[t.Union[SystemMessage, UserMessage, AssistantMessage, ToolMessage]]):
+        self._messages = messages
+
+    def __str__(self) -> str:
+        return self.__repr__()
+
+    def __repr__(self) -> str:
+        return f"Conversation(messages={self.messages})"
+
+    def __dict__(self) -> dict[str, t.Any]:
+        return {'messages': [i.__dict__() for i in self.messages]}
+
+    @property
+    def messages(self) -> list[t.Union[SystemMessage, UserMessage, AssistantMessage, ToolMessage]]:
+        return self._messages
+
+    @messages.setter
+    def messages(self, messages: list[t.Union[SystemMessage, UserMessage, AssistantMessage, ToolMessage]]) -> None:
+        self._messages = messages
+```
+to typescript
+§a§
+Here is a fairly direct TypeScript equivalent. Since TypeScript doesn't support Python-style `__dict__()`, I used `toJSON()` for the serialized representation.
+
+```ts
+export type MediaType = "image" | "audio" | "video" | "other_media";
+
+export type Content = TextContent | ImageContent;
+export type Message =
+  | SystemMessage
+  | UserMessage
+  | AssistantMessage
+  | ToolMessage;
+
+
+export class TextContent {
+  private _text: string;
+
+  constructor(text: string) {
+    this._text = text;
+  }
+
+  toString(): string {
+    return `TextContent(text=${this.text})`;
+  }
+
+  toJSON(): Record<string, unknown> {
+    return {
+      type: "text",
+      text: this.text,
+    };
+  }
+
+  get text(): string {
+    return this._text;
+  }
+
+  set text(text: string) {
+    this._text = text;
+  }
+}
+
+
+export class ImageContent {
+  private _content: Uint8Array;
+
+  constructor(content: Uint8Array) {
+    this._content = content;
+  }
+
+  toString(): string {
+    return `ImageContent(content=${this.content})`;
+  }
+
+  toJSON(): Record<string, unknown> {
+    return {
+      type: "image_url",
+      imageUrl: {
+        url: `data:${this.getMime()};base64,${this.toBase64()}`,
+      },
+    };
+  }
+
+  private getMime(): string {
+    const content = this.content;
+
+    // PNG
+    if (
+      content.length >= 8 &&
+      content[0] === 0x89 &&
+      content[1] === 0x50 &&
+      content[2] === 0x4e &&
+      content[3] === 0x47
+    ) {
+      return "image/png";
+    }
+
+    // JPEG
+    if (
+      content.length >= 3 &&
+      content[0] === 0xff &&
+      content[1] === 0xd8 &&
+      content[2] === 0xff
+    ) {
+      return "image/jpeg";
+    }
+
+    // GIF
+    if (
+      content.length >= 6 &&
+      content[0] === 0x47 &&
+      content[1] === 0x49 &&
+      content[2] === 0x46
+    ) {
+      return "image/gif";
+    }
+
+    // WebP: RIFF....WEBP
+    if (
+      content.length >= 12 &&
+      content[0] === 0x52 &&
+      content[1] === 0x49 &&
+      content[2] === 0x46 &&
+      content[3] === 0x46 &&
+      content[8] === 0x57 &&
+      content[9] === 0x45 &&
+      content[10] === 0x42 &&
+      content[11] === 0x50
+    ) {
+      return "image/webp";
+    }
+
+    return "image/png";
+  }
+
+  private toBase64(): string {
+    // Node.js
+    if (typeof Buffer !== "undefined") {
+      return Buffer.from(this.content).toString("base64");
+    }
+
+    // Browser
+    let binary = "";
+    for (const byte of this.content) {
+      binary += String.fromCharCode(byte);
+    }
+
+    return btoa(binary);
+  }
+
+  get content(): Uint8Array {
+    return this._content;
+  }
+
+  set content(content: Uint8Array) {
+    this._content = content;
+  }
+}
+
+
+export class ToolCall {
+  private _name: string;
+  private _arguments: Record<string, unknown>;
+
+  constructor(name: string, args: Record<string, unknown>) {
+    this._name = name;
+    this._arguments = args;
+  }
+
+  toString(): string {
+    return `ToolCall(name=${this.name}, arguments=${JSON.stringify(
+      this.arguments
+    )})`;
+  }
+
+  toJSON(): Record<string, unknown> {
+    return {
+      name: this.name,
+      arguments: this.arguments,
+    };
+  }
+
+  get name(): string {
+    return this._name;
+  }
+
+  set name(name: string) {
+    this._name = name;
+  }
+
+  get arguments(): Record<string, unknown> {
+    return this._arguments;
+  }
+
+  set arguments(args: Record<string, unknown>) {
+    this._arguments = args;
+  }
+}
+
+
+export class SystemMessage {
+  private _content: Content[];
+
+  constructor(content: Content[]) {
+    this._content = content;
+  }
+
+  toString(): string {
+    return `SystemMessage(content=${this.content})`;
+  }
+
+  toJSON(): Record<string, unknown> {
+    return {
+      role: "system",
+      content: this.content.map((item) => item.toJSON()),
+    };
+  }
+
+  get content(): Content[] {
+    return this._content;
+  }
+
+  set content(content: Content[]) {
+    this._content = content;
+  }
+}
+
+
+export class UserMessage {
+  private _content: Content[];
+
+  constructor(content: Content[]) {
+    this._content = content;
+  }
+
+  toString(): string {
+    return `UserMessage(content=${this.content})`;
+  }
+
+  toJSON(): Record<string, unknown> {
+    return {
+      role: "user",
+      content: this.content.map((item) => item.toJSON()),
+    };
+  }
+
+  get content(): Content[] {
+    return this._content;
+  }
+
+  set content(content: Content[]) {
+    this._content = content;
+  }
+}
+
+
+export class AssistantMessage {
+  private _text: TextContent;
+  private _toolCalls: ToolCall[];
+
+  constructor(text: TextContent, toolCalls: ToolCall[] = []) {
+    this._text = text;
+    this._toolCalls = toolCalls;
+  }
+
+  toString(): string {
+    return `AssistantMessage(text=${this.text}, tool_calls=${this.toolCalls})`;
+  }
+
+  toJSON(): Record<string, unknown> {
+    return {
+      role: "assistant",
+      text: this.text.toJSON(),
+      tool_calls: this.toolCalls.map((call) => call.toJSON()),
+    };
+  }
+
+  get text(): TextContent {
+    return this._text;
+  }
+
+  set text(text: TextContent) {
+    this._text = text;
+  }
+
+  get toolCalls(): ToolCall[] {
+    return this._toolCalls;
+  }
+
+  set toolCalls(toolCalls: ToolCall[]) {
+    this._toolCalls = toolCalls;
+  }
+}
+
+
+export class ToolMessage {
+  private _content: Content[];
+
+  constructor(content: Content[]) {
+    this._content = content;
+  }
+
+  toString(): string {
+    return `ToolMessage(content=${this.content})`;
+  }
+
+  toJSON(): Record<string, unknown> {
+    return {
+      role: "tool",
+      content: this.content.map((item) => item.toJSON()),
+    };
+  }
+
+  get content(): Content[] {
+    return this._content;
+  }
+
+  set content(content: Content[]) {
+    this._content = content;
+  }
+}
+
+
+export class Conversation {
+  private _messages: Message[];
+
+  constructor(messages: Message[]) {
+    this._messages = messages;
+  }
+
+  toString(): string {
+    return `Conversation(messages=${this.messages})`;
+  }
+
+  toJSON(): Record<string, unknown> {
+    return {
+      messages: this.messages.map((message) => message.toJSON()),
+    };
+  }
+
+  get messages(): Message[] {
+    return this._messages;
+  }
+
+  set messages(messages: Message[]) {
+    this._messages = messages;
+  }
+}
+```
+
+One difference is MIME detection. Your Python implementation uses `filetype.guess()`. The code above implements the common image signatures directly. If this is Node-only, you can instead use a package such as `file-type`, which is closer to the Python behavior:
+
+```ts
+import { fileTypeFromBuffer } from "file-type";
+
+const result = await fileTypeFromBuffer(content);
+const mime = result?.mime ?? "image/png";
+```
+
+That API is asynchronous, though, so `toJSON()` would need to become asynchronous as well if MIME detection happens there.

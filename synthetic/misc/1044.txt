@@ -1,0 +1,425 @@
+§u§
+```python
+tools = [json.loads('{\n"name"' + i) for i in system.split('Use them if required -')[1].split('{\n"name": ') if len(i) > 16]
+```
+Will this work for the following `system` string:
+```
+SYSTEM: You are a helpful assistant with access to the following functions. Use them if required -
+{
+"name": "calculate_area",
+"description": "Calculate the area of a shape",
+"parameters": {
+"type": "object",
+"properties": {
+"shape": {
+"type": "string",
+"enum": [
+"circle",
+"rectangle",
+"triangle"
+],
+"description": "The shape to calculate the area for"
+},
+"dimensions": {
+"type": "object",
+"properties": {
+"radius": {
+"type": "number",
+"description": "The radius of the circle"
+},
+"length": {
+"type": "number",
+"description": "The length of the rectangle"
+},
+"width": {
+"type": "number",
+"description": "The width of the rectangle"
+},
+"base": {
+"type": "number",
+"description": "The base of the triangle"
+},
+"height": {
+"type": "number",
+"description": "The height of the triangle"
+}
+},
+"required": [
+"radius"
+],
+"oneOf": [
+{
+"properties": {
+"shape": {
+"enum": [
+"circle"
+]
+},
+"dimensions": {
+"required": [
+"radius"
+],
+"properties": {
+"length": {
+"not": {}
+},
+"width": {
+"not": {}
+},
+"base": {
+"not": {}
+},
+"height": {
+"not": {}
+}
+}
+}
+}
+},
+{
+"properties": {
+"shape": {
+"enum": [
+"rectangle"
+]
+},
+"dimensions": {
+"required": [
+"length",
+"width"
+],
+"properties": {
+"radius": {
+"not": {}
+},
+"base": {
+"not": {}
+},
+"height": {
+"not": {}
+}
+}
+}
+}
+},
+{
+"properties": {
+"shape": {
+"enum": [
+"triangle"
+]
+},
+"dimensions": {
+"required": [
+"base",
+"height"
+],
+"properties": {
+"radius": {
+"not": {}
+},
+"length": {
+"not": {}
+},
+"width": {
+"not": {}
+}
+}
+}
+}
+}
+]
+}
+},
+"required": [
+"shape",
+"dimensions"
+]
+}
+}
+
+{
+"name": "get_directions",
+"description": "Get directions between two locations",
+"parameters": {
+"type": "object",
+"properties": {
+"start_location": {
+"type": "string",
+"description": "The starting location"
+},
+"end_location": {
+"type": "string",
+"description": "The ending location"
+}
+}
+}
+}
+```
+and
+```
+SYSTEM: You are a helpful assistant with access to the following functions. Use them if required -
+{
+    "name": "calculate_area",
+    "description": "Calculate the area of a shape",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "shape": {
+                "type": "string",
+                "enum": [
+                    "circle",
+                    "rectangle",
+                    "triangle"
+                ],
+                "description": "The shape to calculate the area for"
+            },
+            "dimensions": {
+                "type": "object",
+                "properties": {
+                    "radius": {
+                        "type": "number",
+                        "description": "The radius of the circle"
+                    },
+                    "length": {
+                        "type": "number",
+                        "description": "The length of the rectangle"
+                    },
+                    "width": {
+                        "type": "number",
+                        "description": "The width of the rectangle"
+                    },
+                    "base": {
+                        "type": "number",
+                        "description": "The base of the triangle"
+                    },
+                    "height": {
+                        "type": "number",
+                        "description": "The height of the triangle"
+                    }
+                },
+                "required": [
+                    "radius"
+                ],
+                "oneOf": [
+                    {
+                        "properties": {
+                            "shape": {
+                                "enum": [
+                                    "circle"
+                                ]
+                            },
+                            "dimensions": {
+                                "required": [
+                                    "radius"
+                                ],
+                                "properties": {
+                                    "length": {
+                                        "not": {}
+                                    },
+                                    "width": {
+                                        "not": {}
+                                    },
+                                    "base": {
+                                        "not": {}
+                                    },
+                                    "height": {
+                                        "not": {}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "properties": {
+                            "shape": {
+                                "enum": [
+                                    "rectangle"
+                                ]
+                            },
+                            "dimensions": {
+                                "required": [
+                                    "length",
+                                    "width"
+                                ],
+                                "properties": {
+                                    "radius": {
+                                        "not": {}
+                                    },
+                                    "base": {
+                                        "not": {}
+                                    },
+                                    "height": {
+                                        "not": {}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "properties": {
+                            "shape": {
+                                "enum": [
+                                    "triangle"
+                                ]
+                            },
+                            "dimensions": {
+                                "required": [
+                                    "base",
+                                    "height"
+                                ],
+                                "properties": {
+                                    "radius": {
+                                        "not": {}
+                                    },
+                                    "length": {
+                                        "not": {}
+                                    },
+                                    "width": {
+                                        "not": {}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "required": [
+            "shape",
+            "dimensions"
+        ]
+    }
+}
+
+{
+    "name": "get_directions",
+    "description": "Get directions between two locations",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "start_location": {
+                "type": "string",
+                "description": "The starting location"
+            },
+            "end_location": {
+                "type": "string",
+                "description": "The ending location"
+            }
+        }
+    }
+}
+```
+§a§
+No. It will fail for both strings.
+
+### Problems
+
+1. **The reconstructed JSON is invalid**
+
+You split using:
+
+```python
+'{\n"name": '
+```
+
+but reconstruct using:
+
+```python
+'{\n"name"' + i
+```
+
+The colon and space are missing. This produces something like:
+
+```json
+{"name"calculate_area...
+```
+
+instead of:
+
+```json
+{"name": "calculate_area"...
+```
+
+which causes `json.JSONDecodeError`.
+
+2. **The second format does not match the split delimiter**
+
+The first string contains:
+
+```text
+{
+"name": ...
+```
+
+but the second contains indentation:
+
+```text
+{
+    "name": ...
+```
+
+Therefore this exact delimiter:
+
+```python
+'{\n"name": '
+```
+
+will not be found in the second string.
+
+3. **Splitting JSON text manually is fragile**
+
+It is better to locate each top-level function object and parse it with `json.JSONDecoder`.
+
+For these strings, you could use:
+
+```python
+import json
+import re
+
+pattern = re.compile(r'(?m)^\s*\{\s*"name"\s*:')
+
+decoder = json.JSONDecoder()
+
+tools = []
+for match in pattern.finditer(system):
+    start = match.start()
+
+    # Skip leading whitespace
+    while system[start].isspace():
+        start += 1
+
+    tool, _ = decoder.raw_decode(system, start)
+    tools.append(tool)
+```
+
+This handles both:
+
+```text
+{
+"name": ...
+```
+
+and:
+
+```text
+{
+    "name": ...
+```
+
+The result will be a list containing the two tool dictionaries:
+
+```python
+[
+    {"name": "calculate_area", ...},
+    {"name": "get_directions", ...}
+]
+```
+
+If you only wanted to fix the first version, the reconstruction would at least need to be:
+
+```python
+json.loads('{\n"name": ' + i)
+```
+
+but that approach still would not handle the indented version reliably.

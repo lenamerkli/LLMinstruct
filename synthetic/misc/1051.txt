@@ -1,0 +1,39 @@
+§u§
+When GLM-5.3 or GLM-5.3-flash makes a tool call using the official tool calling format, what tokens does it emit?
+§a§
+If you mean the **raw text markers** produced by the open-weight checkpoints with the **official chat template**, then **GLM-5.3 and GLM-5.3-Flash use the same XML-like tool-call format**: the model emits a tool call as
+
+```text
+<tool_call>{function_name}<arg_key>{arg1_name}</arg_key><arg_value>{arg1_value}</arg_value><arg_key>{arg2_name}</arg_key><arg_value>{arg2_value}</arg_value>...</tool_call>
+```
+
+The official templates for both models explicitly instruct that format, and both render prior assistant tool calls in exactly that layout.
+
+So the important emitted markers are:
+
+- `<tool_call>`
+- `</tool_call>`
+- `<arg_key>`
+- `</arg_key>`
+- `<arg_value>`
+- `</arg_value>`
+
+A few details that matter for parsers:
+
+- the **function name comes immediately after** `<tool_call>` with **no separator**;
+- the model may emit **multiple** `<arg_key>...</arg_key><arg_value>...</arg_value>` pairs;
+- a tool call **may have no arguments**, in which case it can just be `<tool_call>func_name</tool_call>`.
+
+With thinking enabled, the assistant turn is typically framed so generation starts in a think block, so in practice you may see something like:
+
+```text
+<think>...</think><tool_call>get_weather<arg_key>city</arg_key><arg_value>Boston</arg_value></tool_call>
+```
+
+Both official chat templates include `<think>...</think>` for assistant messages and append tool calls after that content.
+
+If you're using the **official API**, you normally do **not** consume those raw markers directly; the API surfaces them as structured fields like `message.tool_calls[].function.name` and `message.tool_calls[].function.arguments` instead.
+
+One more related marker: when **you send tool results back** into the next prompt, the official templates wrap tool observations with `<|observation|>` and tool-response wrappers such as `<tool_response>...</tool_response>`, but those are for the follow-up prompt, not the model's initial tool-call emission.
+
+If you want, I can also give you a **regex/parser** for GLM-5.3 tool calls.

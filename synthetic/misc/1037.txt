@@ -1,0 +1,41 @@
+§u§
+```python
+TOKEN_DIR = Path('/opt/LideCode')
+TOKEN_FILE = TOKEN_DIR / 'access_token'
+
+def _get_or_create_access_token() -> str:
+    TOKEN_DIR.mkdir(parents=True, exist_ok=True)
+    if TOKEN_FILE.exists():
+        return TOKEN_FILE.read_text().strip()
+    token = f"sk-{secrets.token_hex(32)}"
+    TOKEN_FILE.write_text(token)
+    TOKEN_FILE.chmod(0o600)
+    return token
+```
+to typescript
+§a§
+```ts
+import { existsSync, mkdirSync, readFileSync, writeFileSync, chmodSync } from "node:fs";
+import { randomBytes } from "node:crypto";
+import { join } from "node:path";
+
+const TOKEN_DIR = "/opt/LideCode";
+const TOKEN_FILE = join(TOKEN_DIR, "access_token");
+
+function getOrCreateAccessToken(): string {
+  mkdirSync(TOKEN_DIR, { recursive: true });
+
+  if (existsSync(TOKEN_FILE)) {
+    return readFileSync(TOKEN_FILE, "utf8").trim();
+  }
+
+  const token = `sk-${randomBytes(32).toString("hex")}`;
+
+  writeFileSync(TOKEN_FILE, token, { encoding: "utf8", mode: 0o600 });
+  chmodSync(TOKEN_FILE, 0o600);
+
+  return token;
+}
+
+export { getOrCreateAccessToken };
+```

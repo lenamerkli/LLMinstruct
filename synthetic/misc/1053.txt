@@ -1,0 +1,48 @@
+§u§
+When any LLM of the Qwen3.8 series (27B, Flash, Flash next, Max, 2.4T) makes a tool call using the official tool calling format, what tokens does it emit?
+§a§
+The Qwen3.8 family uses the **Qwen3‑Coder‑style XML tool‑call format** (the same one introduced with Qwen3‑Coder and carried through Qwen3.5/3.6), not the older Hermes‑style JSON format. The chat template shipped with Qwen3.8 is the one that vLLM/SGLang parse with `--tool-call-parser qwen3_coder`. Qwen3.8-27B's chat_template.jinja is identical across the -FP8, -AWQ-INT4, and -W4A16-AWQ copies, and is served in vLLM with flags --reasoning-parser qwen3 --tool-call-parser qwen3_coder --enable-auto-tool-choice. Quantized derivatives use the same setup: SGLang launch for Qwen3.8-27B-NVFP4 uses --reasoning-parser qwen3 --tool-call-parser qwen3_coder.
+
+## What the model actually emits
+
+When the assistant turn decides to call a tool, the token sequence (as text) is:
+
+```
+<|im_start|>assistant
+<think>
+...optional reasoning...
+</think>
+
+<tool_call>
+<function=get_weather>
+<parameter=location>
+San Francisco
+</parameter>
+<parameter=unit>
+celsius
+</parameter>
+</function>
+</tool_call><|im_end|>
+```
+
+Key points about the structure:
+
+- **Wrapper**: each call is enclosed in `<tool_call>` … `</tool_call>`. The parser side confirms this: tool_call_start_token is '<tool_call>', tool_call_end_token is '</tool_call>', and tool_call_prefix is '<function='.
+- **Function name**: encoded as an attribute-like XML tag, `<function=NAME>` … `</function>`.
+- **Arguments**: each argument is its own `<parameter=KEY>` block with the value on its own line between the open and close tags (no JSON object). This is the documented format from the template lineage — the tokenizer_config.json chat_template specifies (verbatim): <tool_call> <function=example_function_name> <parameter=example_parameter_1> value_1 </parameter> </function> </tool_call> ... "Function calls MUST follow the specified format: an inner <function=...></function> block must be nested within <tool_call></tool_call> XML tags".
+- **Multiple calls**: the template loops over tool calls and emits one `<tool_call>…</tool_call>` block per call before the turn ends. The Qwen3.8 template snippet shows this: {{- '</function>\n</tool_call>' }} {%- endfor %} {%- endif %} {{- '<|im_end|>\n' }}.
+- **Turn terminator**: `<|im_end|>` closes the assistant turn after the last `</tool_call>`.
+
+## How tool results are fed back
+
+The same template renders tool outputs inside a `user` turn wrapped in `<tool_response>` tags rather than a separate `tool` role: {%- elif message.role == "tool" %} {%- if loop.previtem and loop.previtem.role != "tool" %} {{- '<|im_start|>user' }} {%- endif %} {{- '\n<tool_response>\n' }} {{- content }} {{- '\n</tool_response>' }}. Consecutive tool results are grouped into one user turn.
+
+## Thinking prefix
+
+Because reasoning is on by default, the generation prompt seeds the turn with `<think>\n` (or an empty `<think>\n\n</think>\n\n` when thinking is disabled): {%- if enable_thinking is defined and enable_thinking is false %} {{- '<think>\n\n</think>\n\n' }} {%- else %} {{- '<think>\n' }} {%- endif %}. So a tool call in thinking mode is preceded by the reasoning block and its `</think>` closer.
+
+## Caveats
+
+- **Hosted variants (Flash, Max, 2.4T MoE)**: these are only accessible through the API (Model Studio / OpenRouter), which returns parsed `tool_calls` objects, so you never see the raw tokens. Qwen3.8 Max (0902) accepts tools and tool_choice for function calling, and it is a 2.4-trillion-parameter mixture-of-experts model. The underlying template is presumed to be the same family format, but only the open‑weight 27B lets you verify it directly.
+- **Format drift**: the tags are plain BPE text, not single reserved special tokens, so models can occasionally deviate. For example, the 3.6 predecessor sometimes emits an extra </function> close tag and a stray </function_invocation> closing tag with no matching open, and a Qwen3.8‑27B user notes the old tool call issue persists. Qwen's own docs caution that it is not guaranteed that the model generation will always follow the protocol even with proper prompting or templates.
+- **Alternate parser**: vLLM also has a `qwen3_xml` parser for this format; according to vllm PR 25028, qwen3_xml is the more advanced tool call parser for qwen3 models also relevant for coder models, though the official Qwen3.8 cards still recommend `qwen3_coder`.
